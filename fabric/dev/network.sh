@@ -45,6 +45,19 @@ function r_e() {
     fabric-ca-client enroll -u https://$PEER:$PEERPWD@localhost:7054 --caname ca -M "$PEER_DIR/tls" --enrollment.profile tls --csr.hosts $PEER_DOMAIN --csr.hosts localhost --tls.certfiles "$PWD/$CADIR/tls-cert.pem"
     fabric-ca-client enroll -u https://$ADMIN:$ADMINPWD@localhost:7054 --caname ca -M "$ADMIN_DIR/msp" --tls.certfiles "$PWD/$CADIR/tls-cert.pem"
     fabric-ca-client enroll -u https://$USER:$USERPWD@localhost:7054 --caname ca -M "$USER_DIR/msp" --tls.certfiles "$PWD/$CADIR/tls-cert.pem"
+
+    cp "$PEER_DIR/tls/tlscacerts/"* "$PEER_DIR/tls/ca.crt"
+    cp "$PEER_DIR/tls/signcerts/"* "$PEER_DIR/tls/server.crt"
+    cp "$PEER_DIR/tls/keystore/"* "$PEER_DIR/tls/server.key"
+
+    mkdir -p "$ORG_DIR/msp/tlscacerts"
+    cp "$PEER_DIR/tls/tlscacerts/"* "$ORG_DIR/msp/tlscacerts/ca.crt"
+
+    mkdir -p "$ORG_DIR/tlsca"
+    cp "$PEER_DIR/tls/tlscacerts/"* "$ORG_DIR/tlsca/tlsca.$ORD_DOMAIN.pem"
+
+    mkdir -p "$ORG_DIR/ca"
+    cp "$PEER_DIR/msp/cacerts/"* "$ORG_DIR/ca/ca.$ORD_DOMAIN.pem"
   fi
 }
 
