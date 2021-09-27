@@ -17,22 +17,22 @@ function caUp() {
   docker-compose -f docker/docker-compose-ca.yaml up -d
 }
 
-function r_e() {
+function registerEnrollPeer() {
   ORG=$1
-  ORD_DOMAIN=${ORG}.${DOMAIN}
-  ORG_DIR=$PWD/organizations/peerOrganizations/$ORD_DOMAIN
+  ORG_DOMAIN=${ORG}.${DOMAIN}
+  ORG_DIR=$PWD/organizations/peerOrganizations/$ORG_DOMAIN
 
   infoln $PEER_DIR
   if [ ! -d $ORG_DIR ]; then
-    PEER_DOMAIN=peer0.$ORD_DOMAIN
+    PEER_DOMAIN=peer0.$ORG_DOMAIN
     PEER_DIR=$ORG_DIR/peers/$PEER_DOMAIN
     PEER=${ORG}peer0
     PEERPWD=${PEER}pw
-    ADMIN_DOMAIN=Admin@$ORD_DOMAIN
+    ADMIN_DOMAIN=Admin@$ORG_DOMAIN
     ADMIN_DIR=$ORG_DIR/users/$ADMIN_DOMAIN
     ADMIN=${ORG}admin
     ADMINPWD=${ADMIN}pw
-    USER_DOMAIN=User1@$ORD_DOMAIN
+    USER_DOMAIN=User1@$ORG_DOMAIN
     USER_DIR=$ORG_DIR/users/$USER_DOMAIN
     USER=${ORG}user1
     USERPWD=${USER}pw
@@ -54,10 +54,45 @@ function r_e() {
     cp "$PEER_DIR/tls/tlscacerts/"* "$ORG_DIR/msp/tlscacerts/ca.crt"
 
     mkdir -p "$ORG_DIR/tlsca"
-    cp "$PEER_DIR/tls/tlscacerts/"* "$ORG_DIR/tlsca/tlsca.$ORD_DOMAIN.pem"
+    cp "$PEER_DIR/tls/tlscacerts/"* "$ORG_DIR/tlsca/tlsca.$ORG_DOMAIN-cert.pem"
 
     mkdir -p "$ORG_DIR/ca"
-    cp "$PEER_DIR/msp/cacerts/"* "$ORG_DIR/ca/ca.$ORD_DOMAIN.pem"
+    cp "$PEER_DIR/msp/cacerts/"* "$ORG_DIR/ca/ca.$ORG_DOMAIN-cert.pem"
+  fi
+}
+
+function registerEnrollOrderer() {
+  ORDERER=$1
+  ORDERER_DOMAIN=${ORDERER}.${DOMAIN}
+  ORDERER_DIR=$PWD/organizations/ordererOrganizations/$DOMAIN/orderers/$ORDERER_DOMAIN
+
+  infoln $ORDERER_DIR
+  if [ ! -d $ORDERER_DIR ]; then
+    mkdir -p $ORDERER_DIR
+
+    ORDERER=orderer
+    ORDERER_PWD=${ORDERER_PWD}pw
+    ADMIN_DOMAIN=Admin@$DOMAIN
+    ADMIN_DIR=$ORDERER_DIR/users/$ADMIN_DOMAIN
+    ADMIN=${ORDERER}admin
+    ADMINPWD=${ADMIN}pw
+    
+    fabric-ca-client register --caname ca --id.name $ORDERER --id.secret $ORDERER_PWD --id.type orderer --tls.certfiles "${PWD}/${CADIR}/tls-cert.pem"
+    fabric-ca-client register --caname ca --id.name $ADMIN --id.secret $ADMINPWD --id.type admin --tls.certfiles "${PWD}/${CADIR}/tls-cert.pem"
+
+    fabric-ca-client enroll -u https://$ORDERER:$ORDERER_PWD@localhost:7054 --caname ca -M "$ORDERER_DIR/msp" --csr.hosts $ORDERER_DOMAIN --csr.hosts localhost --tls.certfiles "$PWD/$CADIR/tls-cert.pem"
+    fabric-ca-client enroll -u https://$ORDERER:$ORDERER_PWD@localhost:7054 --caname ca -M "$ORDERER_DIR/tls" --enrollment.profile tls --csr.hosts $ORDERER_DOMAIN --csr.hosts localhost --tls.certfiles "$PWD/$CADIR/tls-cert.pem"
+    fabric-ca-client enroll -u https://$ADMIN:$ADMINPWD@localhost:7054 --caname ca -M "$ADMIN_DIR/msp" --tls.certfiles "$PWD/$CADIR/tls-cert.pem"
+
+    cp "$ORDERER_DIR/tls/tlscacerts/"* "$ORDERER_DIR/tls/ca.crt"
+    cp "$ORDERER_DIR/tls/signcerts/"* "$ORDERER_DIR/tls/server.crt"
+    cp "$ORDERER_DIR/tls/keystore/"* "$ORDERER_DIR/tls/server.key"
+
+    mkdir -p "$ORDERER_DIR/msp/tlscacerts"
+    cp "$ORDERER_DIR/tls/tlscacerts/"* "$ORDERER_DIR/msp/tlscacerts/tlsca.$DOMAIN-cert.pem"
+
+    mkdir -p "$PWD/organizations/ordererOrganizations/$DOMAIN/msp/tlscacerts"
+    cp "$ORDERER_DIR/tls/tlscacerts/"* "$PWD/organizations/ordererOrganizations/$DOMAIN/msp/tlscacerts/tlsca.$DOMAIN-cert.pem"
   fi
 }
 
@@ -71,14 +106,16 @@ function registerEnroll() {
     fabric-ca-client enroll -u https://admin:adminpw@localhost:7054 --caname ca --tls.certfiles "${PWD}/${CADIR}/tls-cert.pem"
     
     for REGULATED_ORG in $REGULATED_ORGS; do
-      r_e $REGULATED_ORG
+      registerEnrollPeer $REGULATED_ORG
     done
     for REGULATORY_ORG in $REGULATORY_ORGS; do
-      r_e $REGULATORY_ORG
+      registerEnrollPeer $REGULATORY_ORG
     done
     for FINANCIAL_ORG in $FINANCIAL_ORGS; do
-      r_e $FINANCIAL_ORG
+      registerEnrollPeer $FINANCIAL_ORG
     done
+
+    registerEnrollOrderer orderer
   fi
 }
 
