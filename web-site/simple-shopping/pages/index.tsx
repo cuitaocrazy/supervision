@@ -7,13 +7,13 @@ const Home: NextPage = () => {
   )
 
   return <div>
-    <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'
+    <button className='px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700'
       onClick={() => refetch()}
     >
       Refresh
     </button>
     {/* <Button name="test" /> */}
-    <div className="bg-gray-500 text-white">{
+    <div className="text-white bg-gray-500">{
       loading ? "Loading..." : `Hello World!${data.name}`
     }</div>
   </div>
