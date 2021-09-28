@@ -1,0 +1,6 @@
+.formDiv{
+  @apply flex flex-col mb-4
+}
+.formLable{
+  @apply mb-2 text-lg font-bold
+}
