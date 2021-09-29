@@ -16,7 +16,7 @@ const CreateOrder: NextPage = () => {
 
   const onSubmit:SubmitHandler<FormData> = (data: FormData) => {
     saveData();
-    alert(JSON.stringify(data.school))
+    alert(JSON.stringify(data))
   }
   
   //TODO 保存数据
