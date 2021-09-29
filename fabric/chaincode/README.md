@@ -12,4 +12,9 @@ MICROFAB_CONFIG='{"port":8080,  "endorsing_organizations": [{"name": "Bank"},{"n
 使用的通道名称 `edb-supervision-channel`。
 端口是`8080`。
 
-
+### 数据结构
+订购合约ID由四个字段组成，之间都由 `.` (英文句号)进行连接
+- `USVOrgID`: 订购合约创建时提供
+- `BankID`: 订购合约创建时提供
+- `SVOrgID`: 订购合约创建时提供
+- TxnID: 订购合约创建时的请求背书时，在链码上的TxnID。
