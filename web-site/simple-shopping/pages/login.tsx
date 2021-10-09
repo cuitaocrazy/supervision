@@ -32,18 +32,18 @@ const Login: NextPage = () => {
       <legend className="mb-4 text-3xl font-semibold text-center text-gray-800">登录</legend>
       <div>
         <label className="block mb-2 text-xs font-semibold text-gray-600">用户名</label>
-        <input type="text" className="block w-full px-1 py-3 border-2 rounded-md bg-primaryColor-50 border-primaryColor-200 focus:bg-gray-500 focus:ring-opacity-20 focus:border-secondaryColor-500 focus:ring-offset-blue-300 focus:ring-4"
+        <input type="text" className="block w-full px-1 py-3 border-2 rounded-md bg-primaryColor-50 border-primaryColor-200 focus:bg-white focus:ring-opacity-20 focus:border-secondaryColor-500 focus:ring-offset-blue-300 focus:ring-4"
           {...register('username', { required: true },)} placeholder="请输入用户名" />
         {errors.username && <p className="pt-2 pl-3 text-base text-errorColor-500">用户名不能为空</p>}
       </div>
       <div className="mt-6">
         <label className="block mb-2 text-xs font-semibold text-gray-600">密码</label>
-        <input type="text" className="block w-full px-1 py-3 border-2 rounded-md bg-primaryColor-50 border-primaryColor-200 focus:bg-gray-500 focus:ring-opacity-20 focus:border-secondaryColor-500 focus:ring-offset-blue-300 focus:ring-4"
+        <input type="text" className="block w-full px-1 py-3 border-2 rounded-md bg-primaryColor-50 border-primaryColor-200 focus:bg-white focus:ring-opacity-20 focus:border-secondaryColor-500 focus:ring-offset-blue-300 focus:ring-4"
           {...register('password', { required: true })} placeholder="请输入密码" />
         {errors.password && <p className="pt-2 pl-3 text-base text-errorColor-500">密码不能为空</p>}
       </div>
     </fieldset>
-    <input type="submit" className="w-full py-3 my-10 font-medium rounded-md shadow-md text-primaryColor-50 bg-secondaryColor-500 focus:outline-none hover:bg-secondaryColor-500 hover:shadow-none"
+    <input type="submit" className="w-full py-3 my-10 font-medium text-white rounded-md shadow-md bg-secondaryColor-500 focus:outline-none hover:bg-secondaryColor-500 hover:shadow-none"
       value="登录" />
   </form>
 </div>

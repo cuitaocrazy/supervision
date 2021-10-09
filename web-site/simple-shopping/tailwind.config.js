@@ -4,9 +4,10 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     colors:{
+      ...colors,
       primaryColor:colors.gray,
       secondaryColor:colors.blue,
-      errorColor:colors.red,
+      errorColor:colors.red
     },
     extend: {},
   },
