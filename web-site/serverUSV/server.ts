@@ -1,7 +1,9 @@
 const express = require('express')
-const crypto = require("crypto")
+const cryptoModel = require("crypto")
 var bodyParser = require('body-parser')
 const axios = require('axios')
+import { SubscribeWithSign,Subscribe } from './API';
+
 
 
 const app = express()
@@ -16,23 +18,22 @@ const appId = "12345"
 const key = "abcdef"
 
 
-
 app.get('/test', (req, res) => {
   res.send('test connect')
 })
 
 app.post('/buy',jsonParser,async (req,res) => {
     const {data} = await axios.post(nonseUrl, {"appId":appId},{headers: {'Content-Type': 'application/json'}})
-    const body = {...req.body,...{"appId":appId,"nonse":data}}
+    const body:SubscribeWithSign = {...req.body,...{"appId":appId,"nonse":data}}
     const newBody = sortObjByKey(body)
-    const signResult = sign(newBody)
+    const signResult:string = sign(newBody)
     newBody["sign"] = signResult
     const result = await axios.post(preOrder,newBody,{headers: {'Content-Type': 'application/json'}})
     res.redirect(301,result.data.codeUrl+"tradeNo="+result.data.tradeNo)
 })
 
 
-const sign = (body)=>{ //只能对平坦的jsonObject进行签名
+const sign = (body:SubscribeWithSign)=>{ //只能对平坦的jsonObject进行签名
   var paramKv = ""
   var newbody = sortObjByKey(body)
   var keys = Object.keys(newbody).sort()
@@ -42,14 +43,14 @@ const sign = (body)=>{ //只能对平坦的jsonObject进行签名
   if(paramKv.lastIndexOf("&")+1===paramKv.length){
     paramKv =paramKv.substring(0,paramKv.length-1)
   }
-  const hmac = crypto.createHmac('sha256', key)
+  const hmac = cryptoModel.createHmac('sha256', key)
   hmac.update(paramKv)
   return hmac.digest('hex').toLocaleLowerCase()
 }
 
-const sortObjByKey =(obj)=>{
+const sortObjByKey =(obj:SubscribeWithSign)=>{
   var keys = Object.keys(obj).sort()
-  var newObj = {}
+  var newObj = {} as SubscribeWithSign
   for(var i = 0 ;i < keys.length ;i++){
     var index = keys[i]
     newObj[index] = obj[index]
