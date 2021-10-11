@@ -3,6 +3,7 @@ package internal
 import (
 	"encoding/json"
 	"fmt"
+	"strings"
 
 	"github.com/hyperledger/fabric-chaincode-go/shim"
 	"github.com/hyperledger/fabric-contract-api-go/contractapi"
@@ -32,6 +33,13 @@ type Subscribe struct {
 	SubscribeDurationDays int    `json:"SubscribeDurationDays"` // 订购合约持续天数
 }
 
+type SubscribeID struct {
+	USVOrgID   string `json:"USVOrgID"`   // 受监管机构ID
+	BankID     string `json:"BankID"`     // 支付渠道ID
+	SVOrgID    string `json:"SVOrgID"`    // 监管机构ID
+	USVOrderNo string `json:"USVOrderNo"` // 受监管机构订单号
+}
+
 // 订购合约
 func (s *SubscribeContract) Create(ctx contractapi.TransactionContextInterface) (string, error) {
 	// TODO 缺少数据完整性校验
@@ -41,12 +49,12 @@ func (s *SubscribeContract) Create(ctx contractapi.TransactionContextInterface) 
 	}
 	subscribeBytes, ok := transientMap["Subscribe"]
 	if !ok {
-		return "", fmt.Errorf("无法在临时区中找到json对象subscribe: %v", err)
+		return "", fmt.Errorf("临时区缺少数据 Subscribe: %v", err)
 	}
 	var subscribe Subscribe
 	err = json.Unmarshal(subscribeBytes, &subscribe)
 	if err != nil {
-		return "", fmt.Errorf("json对象subscribe无法反序列化: %v", err)
+		return "", fmt.Errorf("无法将临时区的数据反序列化成对象: %v", err)
 	}
 	clientMSPID, err := ctx.GetClientIdentity().GetMSPID()
 	if err != nil {
@@ -76,20 +84,33 @@ func (s *SubscribeContract) Create(ctx contractapi.TransactionContextInterface) 
 	return subscribeID, nil
 }
 
-func (s *SubscribeContract) Cancel(ctx contractapi.TransactionContextInterface) error {
+// 合约取消
+func (s *SubscribeContract) Cancel(ctx contractapi.TransactionContextInterface, subscribeID string) error {
 	// TODO 待实现
 	return nil
 }
 
-func (s *SubscribeContract) Complete(ctx contractapi.TransactionContextInterface) error {
+// 合约完成
+func (s *SubscribeContract) Complete(ctx contractapi.TransactionContextInterface, subscribeID string) error {
 	// TODO 待实现
 	return nil
+}
+
+func splitSubscribeID(subscribeID string) SubscribeID {
+	ids := strings.SplitN(subscribeID, "-", 4)
+	sub := SubscribeID{
+		USVOrgID:   ids[0],
+		BankID:     ids[1],
+		SVOrgID:    ids[2],
+		USVOrderNo: ids[3],
+	}
+	return sub
 }
 
 func createSubscribeID(subscribe Subscribe, ctx contractapi.TransactionContextInterface) string {
-	return subscribe.USVOrgID + "." + subscribe.BankID + "." + subscribe.SVOrgID + "." + ctx.GetStub().GetTxID()
+	return strings.Join([]string{subscribe.USVOrgID, subscribe.BankID, subscribe.SVOrgID, subscribe.USVOrderNo}, "-")
 }
 
 func getCollectionName(subscribe Subscribe) string {
-	return subscribe.USVOrgID + "." + subscribe.BankID + "." + subscribe.SVOrgID + "."
+	return strings.Join([]string{subscribe.USVOrgID, subscribe.BankID, subscribe.SVOrgID}, "-")
 }
