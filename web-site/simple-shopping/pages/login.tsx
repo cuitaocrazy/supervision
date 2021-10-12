@@ -33,7 +33,7 @@ const Login: NextPage = () => {
         <div>
           <label className="block mb-2 text-sm font-semibold text-gray-600">用户名</label>
           <div className="relative group">
-            <div className="absolute transition duration-200 rounded-lg -inset-0.5 opacity-10 blur filter bg-secondary-500 group-hover:opacity-50"></div>
+            <div className="absolute inset-0 transition duration-200 rounded-lg opacity-10 blur filter bg-secondary-500 group-hover:opacity-50"></div>
             <input type="text" className="relative block w-full px-1 py-3 pl-4 bg-white border rounded-md border-primary-200 focus:outline-none"
               {...register('username', { required: true },)} placeholder="请输入用户名" />   
           </div>
@@ -42,7 +42,7 @@ const Login: NextPage = () => {
         <div className="mt-6">
           <label className="block mb-2 text-sm font-semibold text-gray-600">密码</label>
           <div className="relative group">
-            <div className="absolute transition duration-200 rounded-lg opacity-10 -inset-0 blur filter bg-secondary-500 group-hover:opacity-100"></div>
+            <div className="absolute inset-0 transition duration-200 rounded-lg opacity-10 blur filter bg-secondary-500 group-hover:opacity-50"></div>
             <input type="text" className="relative block w-full px-1 py-3 pl-4 bg-white border rounded-md border-primary-200 focus:outline-none"
               {...register('password', { required: true })} placeholder="请输入密码" />
           </div>
