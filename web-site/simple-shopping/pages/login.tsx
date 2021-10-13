@@ -51,11 +51,9 @@ const Login: NextPage = () => {
         </div>
       </fieldset>
       <input type="submit" className="w-full py-3 my-10 text-sm font-medium text-white rounded-md shadow-md bg-secondary-500 focus:outline-none hover:bg-secondary-700 hover:shadow-none"
-        value="登录" />
+        value="登录"/>
     </form>
   </div>
 }
-
-
 
 export default Login
