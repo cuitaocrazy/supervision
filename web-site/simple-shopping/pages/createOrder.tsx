@@ -32,8 +32,6 @@ const CreateOrder: NextPage = () => {
           <div className="relative group">
             <div className="absolute inset-0 transition duration-200 rounded-lg opacity-10 blur filter bg-secondary-500 group-hover:opacity-50"></div>
             <input className="relative w-full px-3 py-2 text-sm bg-white border rounded-lg text-grey-800 focus:outline-none" type="text"  {...register('school', { required: true, minLength: 2, maxLength: 10, pattern: /[^/+\x00-\xff]$/ })} placeholder="请输入学校名称" />
-            {/* <input className="relative block w-full px-1 py-3 pl-4 text-sm bg-white border rounded-md border-primary-200 focus:outline-none"
-              {...register('username', { required: true },)} placeholder="请输入用户名" /> */}
           </div>
           {errors.school && <p className="pt-2 pl-3 text-sm text-red-500 ">至少输入2个汉字</p>}
         </div>
