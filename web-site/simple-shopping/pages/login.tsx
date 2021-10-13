@@ -50,7 +50,7 @@ const Login: NextPage = () => {
           {errors.password && <p className="pt-2 pl-3 text-base text-error-400">密码不能为空</p>}
         </div>
       </fieldset>
-      <input type="submit" className="w-full py-3 my-10 font-medium text-white rounded-md shadow-md bg-secondary-500 focus:outline-none hover:bg-secondary-500 hover:shadow-none"
+      <input type="submit" className="w-full py-3 my-10 font-medium text-white rounded-md shadow-md bg-secondary-500 focus:outline-none hover:bg-secondary-700 hover:shadow-none"
         value="登录" />
     </form>
   </div>
