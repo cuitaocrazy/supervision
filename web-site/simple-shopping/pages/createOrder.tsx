@@ -23,7 +23,7 @@ const CreateOrder: NextPage = () => {
    
 
   return <div className="flex items-center justify-center w-full h-screen bg-primary-50">
-    <div className="w-1/2 p-8 m-4 bg-white rounded shadow-2xl sm:w-5/6 md:w-3/5 lg:w-1/2 ">
+    <div className="p-8 m-4 bg-white rounded shadow-2xl w-80 md:w-3/5 lg:w-1/2 xl:w-2/5 ">
       <h1 className="block w-full text-3xl font-bold tracking-wider text-center text-gray-800">学生缴费页面</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="flex flex-col mb-4">
