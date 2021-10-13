@@ -13,8 +13,8 @@ const Login: NextPage = () => {
   const router = useRouter()
 
   const onSubmit: SubmitHandler<FormData> = (data: FormData) => {
-     saveLoginData()
-     router.push('/createOrder')
+    saveLoginData()
+    router.push('/createOrder')
   }
 
   //TODO 保存数据
@@ -36,7 +36,7 @@ const Login: NextPage = () => {
           <div className="relative group">
             <div className="absolute inset-0 transition duration-200 rounded-lg opacity-10 blur filter bg-secondary-500 group-hover:opacity-50"></div>
             <input type="text" className="relative block w-full px-1 py-3 pl-4 text-sm bg-white border rounded-md border-primary-200 focus:outline-none"
-              {...register('username', { required: true },)} placeholder="请输入用户名" />   
+              {...register('username', { required: true },)} placeholder="请输入用户名" />
           </div>
           {errors.username && <p className="pt-2 pl-3 text-base text-error-400">用户名不能为空</p>}
         </div>
@@ -51,7 +51,7 @@ const Login: NextPage = () => {
         </div>
       </fieldset>
       <input type="submit" className="w-full py-3 my-10 text-sm font-medium text-white rounded-md shadow-md bg-secondary-500 focus:outline-none hover:bg-secondary-700 hover:shadow-none"
-        value="登录"/>
+        value="登录" />
     </form>
   </div>
 }
