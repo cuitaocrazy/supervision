@@ -29,7 +29,7 @@ const Login: NextPage = () => {
 
   return <div className="flex h-screen bg-primary-50">
     <form onSubmit={handleSubmit(onSubmit)} className="p-12 px-6 py-10 pt-4 mx-auto my-auto bg-white rounded-lg shadow-md border-primaryColor-300 w-80">
-      <fieldset >
+      <fieldset>
         <legend className="mb-4 text-3xl font-semibold text-center text-gray-800">登录</legend>
         <div>
           <label className="block mb-2 text-sm font-semibold text-gray-600">用户名</label>
