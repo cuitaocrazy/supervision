@@ -25,3 +25,13 @@ vscode中打开`IBM Blockchain Platform`中连接测试环境区块链环境的�
 - `BankID`: 订购合约创建时提供
 - `SVOrgID`: 订购合约创建时提供
 - `USVOrderNo`: 订购合约创建时提供
+
+### 插件使用
+#### ibm blockchain 监听链码事件
+1. 快捷键 `ctrl+shift+P` 打开vscode的执行命令窗口
+2. 搜索 `IBM Blockchain Platform: Subscribe to Events` 并选择
+3. (可选) 选择连接的网关及使用的用户。
+4. 选择目标链码。
+5. 输入要监听的事件名称。
+
+注意，监听名称为 `test` 的事件，也同样会收到 `test1` 这样的事件。

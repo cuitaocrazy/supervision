@@ -3,7 +3,6 @@ package internal
 import (
 	"encoding/json"
 	"fmt"
-	"strings"
 
 	"github.com/hyperledger/fabric-chaincode-go/shim"
 	"github.com/hyperledger/fabric-contract-api-go/contractapi"
@@ -44,19 +43,24 @@ func (s *SubscribeContract) Create(ctx contractapi.TransactionContextInterface) 
 	if !((subscribe.USVOrgID == serverMSPID) || (subscribe.BankID == serverMSPID) || (subscribe.SVOrgID == serverMSPID)) {
 		return "", fmt.Errorf("背书节点必须和报文中的相应节点对应。")
 	}
-	subscribeID := createSubscribeID(subscribe, ctx)
-	subscribe.SubscribeID = subscribeID
+	subscribeID := NewSubscribeIDFromSubscribe(subscribe)
+	subscribeIDString := subscribeID.GetSubscribeIDString()
+	subscribe.SubscribeID = subscribeIDString
 	subscribe.Status = SUBSCRIBE_STATUS_CREATE
 	collectionName := subscribe.GetCollectionName()
 	valueBytes, err := json.Marshal(subscribe)
 	if err != nil {
 		return "", fmt.Errorf("序列化subscribe对象出错: %v", subscribe)
 	}
-	err = ctx.GetStub().PutPrivateData(collectionName, subscribeID, valueBytes)
+	err = ctx.GetStub().PutPrivateData(collectionName, subscribeIDString, valueBytes)
 	if err != nil {
 		return "", fmt.Errorf("保存数据失败: %v", err)
 	}
-	return subscribeID, nil
+	err = PushEvent(SUBSCRIBE_EVENT_TYPE_CREATE, subscribeID, ctx)
+	if err != nil {
+		return subscribeIDString, fmt.Errorf("合约[%v]推送事件失败: %v", subscribeIDString, err)
+	}
+	return subscribeIDString, nil
 }
 
 // 合约取消
@@ -74,7 +78,7 @@ func (s *SubscribeContract) Cancel(ctx contractapi.TransactionContextInterface) 
 	if err != nil {
 		return fmt.Errorf("合约[%v]无法判断发起者", subscribeIDString)
 	}
-	subID := splitSubscribeIDString(subscribeIDString)
+	subID := NewSubscribeIDFromString(subscribeIDString)
 	if subID.SVOrgID != clientMSP {
 		return fmt.Errorf("合约[%v]撤销的发起者只能是被监管机构，当前的机构是[%v]", subscribeIDString, clientMSP)
 	}
@@ -98,7 +102,11 @@ func (s *SubscribeContract) Cancel(ctx contractapi.TransactionContextInterface) 
 	}
 	err = ctx.GetStub().PutPrivateData(collectionName, subscribeIDString, valueBytes)
 	if err != nil {
-		return fmt.Errorf("合约[%v]完成操作", err)
+		return fmt.Errorf("合约[%v]完成无法更新数据: %v", subscribeIDString, err)
+	}
+	err = PushEvent(SUBSCRIBE_EVENT_TYPE_CANCEL, subID, ctx)
+	if err != nil {
+		return fmt.Errorf("合约[%v]推送事件失败: %v", subscribeIDString, err)
 	}
 	return nil
 }
@@ -118,7 +126,7 @@ func (s *SubscribeContract) Complete(ctx contractapi.TransactionContextInterface
 	if err != nil {
 		return fmt.Errorf("合约[%v]无法判断发起者", subscribeIDString)
 	}
-	subID := splitSubscribeIDString(subscribeIDString)
+	subID := NewSubscribeIDFromString(subscribeIDString)
 	if subID.SVOrgID != clientMSP {
 		return fmt.Errorf("合约[%v]完成的发起者只能是监管机构，当前的机构是[%v]", subscribeIDString, clientMSP)
 	}
@@ -142,7 +150,11 @@ func (s *SubscribeContract) Complete(ctx contractapi.TransactionContextInterface
 	}
 	err = ctx.GetStub().PutPrivateData(collectionName, subscribeIDString, valueBytes)
 	if err != nil {
-		return fmt.Errorf("合约[%v]完成操作", err)
+		return fmt.Errorf("合约[%v]无法完成更新操作: %v", subscribeIDString, err)
+	}
+	err = PushEvent(SUBSCRIBE_EVENT_TYPE_COMPLETE, subID, ctx)
+	if err != nil {
+		return fmt.Errorf("合约[%v]推送事件失败: %v", subscribeIDString, err)
 	}
 	return nil
 }
@@ -154,8 +166,8 @@ func (s *SubscribeContract) Query(ctx contractapi.TransactionContextInterface, s
 	if err != nil {
 		return subscribe, fmt.Errorf("无法获取客户端的[MSPID]")
 	}
-	subID := splitSubscribeIDString(subscribeIDString)
-	ok := subID.isAllowClient(clientMSPID)
+	subID := NewSubscribeIDFromString(subscribeIDString)
+	ok := subID.IsAllowClient(clientMSPID)
 	if !ok {
 		return subscribe, fmt.Errorf("合约[%v]查询发起的客户端[%v]错误", subscribeIDString, clientMSPID)
 	}
@@ -169,8 +181,4 @@ func (s *SubscribeContract) Query(ctx contractapi.TransactionContextInterface, s
 		return subscribe, fmt.Errorf("合约[%v]查询结果无法反序列化: %v", subscribeIDString, err)
 	}
 	return subscribe, nil
-}
-
-func createSubscribeID(subscribe Subscribe, ctx contractapi.TransactionContextInterface) string {
-	return strings.Join([]string{subscribe.USVOrgID, subscribe.BankID, subscribe.SVOrgID, subscribe.USVOrderNo}, "-")
 }

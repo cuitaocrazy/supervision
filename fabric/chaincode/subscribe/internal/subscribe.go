@@ -3,7 +3,7 @@ package internal
 import "strings"
 
 type Subscribe struct {
-	SubscribeID           string `json:"SubscribeID"`           // 订购合约ID（格式：监管机构ID.受监管机构ID.支付渠道ID.创建时的TxnID）
+	SubscribeID           string `json:"SubscribeID"`           // 订购合约ID（格式：监管机构ID.受监管机构ID.支付渠道ID.创建时的 USVOrderNo）
 	USVOrgID              string `json:"USVOrgID"`              // 受监管机构ID
 	USVItemID             string `json:"USVItemID"`             // 受监管机构项目ID
 	USVItemName           string `json:"USVItemName"`           // 受监管机构项目名称
@@ -22,14 +22,11 @@ type Subscribe struct {
 	Status                string `json:"Status"`                // 合约状态，有create/cancel/complete
 }
 
-// 合约处于创建状态
-const SUBSCRIBE_STATUS_CREATE = "create"
-
-// 合约处于取消状态
-const SUBSCRIBE_STATUS_CANCEL = "cancel"
-
-// 合约处于完成状态
-const SUBSCRIBE_STATUS_COMPLETE = "complete"
+const (
+	SUBSCRIBE_STATUS_CREATE   = "create"   // 合约处于创建状态
+	SUBSCRIBE_STATUS_CANCEL   = "cancel"   // 合约处于取消状态
+	SUBSCRIBE_STATUS_COMPLETE = "complete" // 合约处于完成状态
+)
 
 func (subscribe *Subscribe) GetCollectionName() string {
 	return strings.Join([]string{subscribe.USVOrgID, subscribe.BankID, subscribe.SVOrgID}, "-")
