@@ -39,7 +39,7 @@ const CreateOrder: NextPage = () => {
           <label className="mb-2 text-sm font-bold tracking-wider">班级</label>
           <div className="relative group">
             <div className="absolute inset-0 transition duration-200 rounded-lg opacity-10 blur filter bg-secondary-500 group-hover:opacity-50"></div>
-            <input className="relative w-full px-3 py-2 text-sm bg-white border rounded-lg text-grey-800 focus:none" type="text" {...register('class', { required: true, minLength: 2, maxLength: 10, pattern: /[^/+\x00-\xff]$/ })} placeholder="请输入班级名称" />
+            <input className="relative w-full px-3 py-2 text-sm bg-white border rounded-lg text-grey-800 focus:outline-none" type="text" {...register('class', { required: true, minLength: 2, maxLength: 10, pattern: /[^/+\x00-\xff]$/ })} placeholder="请输入班级名称" />
           </div>
           {errors.class && <p className="pt-2 pl-3 text-sm text-red-500">至少输入2个汉字</p>}
         </div>
@@ -47,7 +47,7 @@ const CreateOrder: NextPage = () => {
           <label className="mb-2 text-sm font-bold tracking-wider">姓名</label>
           <div className="relative group">
             <div className="absolute inset-0 transition duration-200 rounded-lg opacity-10 blur filter bg-secondary-500 group-hover:opacity-50"></div>
-            <input className="relative w-full px-3 py-2 text-sm bg-white border rounded-lg focus:none text-grey-800" type="text" {...register('name', { required: true, minLength: 2, maxLength: 10, pattern: /[^/+\x00-\xff]$/ })} placeholder="请输入姓名" />
+            <input className="relative w-full px-3 py-2 text-sm bg-white border rounded-lg focus:outline-none text-grey-800" type="text" {...register('name', { required: true, minLength: 2, maxLength: 10, pattern: /[^/+\x00-\xff]$/ })} placeholder="请输入姓名" />
           </div>
           {errors.name && <p className="pt-2 pl-3 text-sm text-red-500">至少输入2个汉字</p>}
         </div>
