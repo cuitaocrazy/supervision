@@ -28,7 +28,7 @@ func PushEvent(eventType SubscribeEventType, subscribeID SubscribeID, ctx contra
 	if err != nil {
 		return fmt.Errorf("合约[%v]事件[%v]序列化失败: %v", idstr, eventType, err)
 	}
-	err = ctx.GetStub().SetEvent(string(eventType), dataBytes)
+	err = ctx.GetStub().SetEvent(string(eventType)+"-"+idstr, dataBytes)
 	if err != nil {
 		return fmt.Errorf("合约[%v]事件[%v]发送失败: %v", idstr, eventType, err)
 	}
