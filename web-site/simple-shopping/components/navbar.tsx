@@ -1,4 +1,5 @@
 import { FC } from "react";
+import NavOrderBtn from './NavOrderBtn'
 
 const Navbar: FC = () => <nav className="flex flex-wrap items-center justify-between px-6 py-4 bg-primary-900">
   <div className="flex items-center space-x-2 text-white">
@@ -7,11 +8,7 @@ const Navbar: FC = () => <nav className="flex flex-wrap items-center justify-bet
     </svg>
     <span className="text-xl font-semibold tracking-tight">Course Shopping</span>
   </div>
-  <div className="text-white">
-    <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-    </svg>
-  </div>
+  <NavOrderBtn />
 </nav>
 
 export default Navbar
