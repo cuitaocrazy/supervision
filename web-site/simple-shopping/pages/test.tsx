@@ -1,25 +1,13 @@
-import Button from "../components/Button"
 import type { NextPage } from 'next'
-import { useForm } from "react-hook-form";
+import Layout from '../components/layout'
+import Card from '../components/Card'
 
 const Test: NextPage = () => {
-  const {register, handleSubmit, formState: { errors }} = useForm()
-
-  const onSubmit = (data: any) => console.log(data)
-
-  return <div>
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <input {...register('school', {required: true})} placeholder="学校" />
-      {errors.school && <p>school is required.</p>}
-      <input {...register('class', {required: true})} placeholder="班级" />
-      {errors.class && <p>class is required.</p>}
-      <input {...register('name', {required: true})} placeholder="姓名" />
-      {errors.name && <p>name is required.</p>}
-      <input {...register('amt', {required: true})} placeholder="金额" />
-      {errors.amt && <p>amt is required.</p>}
-      <input type="submit" />
-    </form>
-  </div>
+  return <Layout title="测试">
+    <div className="grid grid-cols-3 py-6 m-auto max-w-7xl">
+      <Card key="123" image="1.jpeg" title="Test" descript="test descript" amt={1} onAdd={ () => alert('123')}/>
+    </div>
+  </Layout>
 }
 
 export default Test
