@@ -1,4 +1,5 @@
-
+#### 基础信息
+[结构验证使用的框架文档](https://github.com/go-playground/validator)
 #### 事件类型规则
 ```
 [EventType]-[SubscribeID]

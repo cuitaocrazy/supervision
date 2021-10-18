@@ -15,7 +15,7 @@ type SubscribeContract struct {
 
 // 订购合约
 func (s *SubscribeContract) Create(ctx contractapi.TransactionContextInterface) (string, error) {
-	// TODO 缺少数据完整性校验
+	// TODO 缺少重复检查
 	transientMap, err := ctx.GetStub().GetTransient()
 	if err != nil {
 		return "", fmt.Errorf("获取私有临时区数据失败: %v", err)
@@ -28,6 +28,11 @@ func (s *SubscribeContract) Create(ctx contractapi.TransactionContextInterface) 
 	err = json.Unmarshal(subscribeBytes, &subscribe)
 	if err != nil {
 		return "", fmt.Errorf("无法将临时区的数据反序列化成对象: %v", err)
+	}
+	validate := GetValidate()
+	err = validate.Struct(subscribe)
+	if err != nil {
+		return "", fmt.Errorf("字段格式不正确: %v", err)
 	}
 	clientMSPID, err := ctx.GetClientIdentity().GetMSPID()
 	if err != nil {
