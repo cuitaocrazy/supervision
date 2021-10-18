@@ -8,10 +8,7 @@
 
 const fs = require('fs')
 const path = require('path')
-import {
-	Wallets,
-	GatewayOptions
-} from 'fabric-network'
+
 
 exports.buildUSV = () => {
 	// todo 修改为实际地址
@@ -59,7 +56,7 @@ exports.buildFinance = () => {
 	return ccp;
 };
 
-exports.buildWallet = async (Wallets, walletPath) => {
+exports.buildWallet = async (Wallets: { newFileSystemWallet: (arg0: any) => any; newInMemoryWallet: () => any; }, walletPath: any) => {
 	// Create a new  wallet : Note that wallet is for managing identities.
 	let wallet;
 	if (walletPath) {
@@ -73,7 +70,7 @@ exports.buildWallet = async (Wallets, walletPath) => {
 	return wallet;
 };
 
-exports.prettyJSONString = (inputString) => {
+exports.prettyJSONString = (inputString: string) => {
 	if (inputString) {
 		return JSON.stringify(JSON.parse(inputString), null, 2);
 	}
