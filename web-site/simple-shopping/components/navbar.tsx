@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC } from 'react'
 import NavOrderBtn from './NavOrderBtn'
 
 const Navbar: FC = () => <nav className="flex flex-wrap items-center justify-between px-6 py-4 bg-primary-900">
