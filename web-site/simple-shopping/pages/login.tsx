@@ -1,7 +1,6 @@
 import type { NextPage } from 'next'
-import { useForm, SubmitHandler } from "react-hook-form"
+import { useForm, SubmitHandler } from 'react-hook-form'
 import { useRouter } from 'next/router'
-
 
 type FormData = {
   username: string
@@ -9,7 +8,7 @@ type FormData = {
 }
 
 const Login: NextPage = () => {
-  const { register, handleSubmit, formState: { errors }, setValue } = useForm<FormData>()
+  const { register, handleSubmit, formState: { errors } } = useForm<FormData>()
   const router = useRouter()
 
   const onSubmit: SubmitHandler<FormData> = (data: FormData) => {
@@ -17,13 +16,8 @@ const Login: NextPage = () => {
     router.push('/createOrder')
   }
 
-  //TODO 保存数据
-  function saveLoginData(): void {
-
-  }
-
-  function isVerify(): void {
-
+  // TODO 保存数据
+  function saveLoginData (): void {
 
   }
 
@@ -34,7 +28,7 @@ const Login: NextPage = () => {
         <div>
           <label className="block mb-2 text-sm font-semibold text-gray-600">用户名</label>
           <input type="text" className="relative block w-full px-1 py-3 pl-4 text-sm bg-white border rounded-md border-primary-200 focus:outline-none focus:glow-secondary-500"
-            {...register('username', { required: true },)} placeholder="请输入用户名" />
+            {...register('username', { required: true })} placeholder="请输入用户名" />
           {errors.username && <p className="pt-2 pl-3 text-base text-error-400">用户名不能为空</p>}
         </div>
         <div className="mt-6">

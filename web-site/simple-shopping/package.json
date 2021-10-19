@@ -29,6 +29,7 @@
     "react-redux": "^7.2.5"
   },
   "devDependencies": {
+    "@types/qrcode.react": "^1.0.2",
     "@types/react": "17.0.24",
     "autoprefixer": "^10.3.5",
     "eslint": "^7.12.1",
