@@ -1,0 +1,58 @@
+[
+    {
+        "transactionName": "subscriptionExists",
+        "transactionLabel": "A test subscriptionExists transaction",
+        "arguments": [
+            "001"
+        ],
+        "transientData": {}
+    },
+    {
+        "transactionName": "createSubscription",
+        "transactionLabel": "A test createSubscription transaction",
+        "arguments": [
+            "001"
+        ],
+        "transientData": {
+            "privateValue": "some value"
+        }
+    },
+    {
+        "transactionName": "readSubscription",
+        "transactionLabel": "A test readSubscription transaction",
+        "arguments": [
+            "001"
+        ],
+        "transientData": {}
+    },
+    {
+        "transactionName": "updateSubscription",
+        "transactionLabel": "A test updateSubscription transaction",
+        "arguments": [
+            "001"
+        ],
+        "transientData": {
+            "privateValue": "some other value"
+        }
+    },
+    {
+        "transactionName": "deleteSubscription",
+        "transactionLabel": "A test deleteSubscription transaction",
+        "arguments": [
+            "001"
+        ],
+        "transientData": {}
+    },
+    {
+        "transactionName": "verifySubscription",
+        "transactionLabel": "A test verifySubscription transaction",
+        "arguments":[
+            "Org1MSP",
+            "001",
+            {
+                "privateValue": "some other value"
+            }
+        ],
+        "transientData": {}
+    }
+]
