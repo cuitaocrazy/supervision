@@ -2,8 +2,8 @@ import useAxios from 'axios-hooks'
 import type { NextPage } from 'next'
 
 const Home: NextPage = () => {
-  const [{ data, loading, error }, refetch] = useAxios(
-    '/api/hello'
+  const [{ data, loading }, refetch] = useAxios(
+    '/api/hello',
   )
 
   return <div>
@@ -14,7 +14,7 @@ const Home: NextPage = () => {
     </button>
     {/* <Button name="test" /> */}
     <div className="text-white bg-gray-500">{
-      loading ? "Loading..." : `Hello World!${data.name}`
+      loading ? 'Loading...' : `Hello World!${data.name}`
     }</div>
   </div>
 }
