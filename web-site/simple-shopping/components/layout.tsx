@@ -9,7 +9,7 @@ interface LayoutProps {
 const Layout: FC<LayoutProps> = (props) => <>
   <Head>{props.title}</Head>
   <Navbar />
-  <main className="min-h-screen text-primary-100 bg-primary-800">{props.children}</main>
+  <main className="min-h-screen pt-20 text-primary-100 bg-primary-800">{props.children}</main>
 </>
 
 export default Layout
