@@ -25,19 +25,18 @@ export class SubscriptionContract extends Contract {
         if (subscription.BankID !== clientMSPID) {
             throw new Error(`只能由支付渠道[${subscription.BankID}]发起`)
         }
-        // TODO 检查服务节点
         const subscriptionID = SubscriptionID.fromSubscription(subscription)
-
-        const idstr = subscriptionID.getIDStr()
-        subscription.SubscribeID = idstr
+        const subscriptionIDString = subscriptionID.getIDStr()
+        subscription.SubscribeID = subscriptionIDString
         subscription.Status = SubscriptionStatus.create
         const collectionName = subscriptionID.getCollectionName()
-        console.log(`${subscription}`)
-        // TODO 数据重复检查
-        await ctx.stub.putPrivateData(collectionName, idstr, subscription.toUint8Array())
-        const event = new SubscriptionEvent(idstr, SubscriptionEventType.create)
+        if (this.subscriptionExists(ctx, collectionName, subscriptionIDString)) {
+            throw new Error(`目标合约[${subscriptionIDString}]已经存在`)
+        }
+        await ctx.stub.putPrivateData(collectionName, subscriptionIDString, subscription.toUint8Array())
+        const event = new SubscriptionEvent(subscriptionIDString, SubscriptionEventType.create)
         ctx.stub.setEvent(event.getName(), event.getPayload())
-        return idstr
+        return subscriptionIDString
     }
 
     @Transaction()
@@ -48,22 +47,24 @@ export class SubscriptionContract extends Contract {
             throw new Error(`在 transient 中没有找到 [${transientSubscriptionIDKey}] 域`)
         }
         const clientMSPID = ctx.clientIdentity.getMSPID()
-        const subscriptionIDStr = transientData.get(transientSubscriptionIDKey).toString()
-        const subscriptionID = SubscriptionID.fromSubscriptionIDString(subscriptionIDStr)
+        const subscriptionIDString = transientData.get(transientSubscriptionIDKey).toString()
+        const subscriptionID = SubscriptionID.fromSubscriptionIDString(subscriptionIDString)
         const usvOrgID = subscriptionID.USVOrgID
         if (usvOrgID !== clientMSPID) {
             throw new Error(`取消目标合约只能由受监管机构[${usvOrgID}]发起，实际是由[${clientMSPID}]发起。`)
         }
         const collectionName = subscriptionID.getCollectionName()
-        // TODO 先检查数据是否存在
-        const dataBytes = await ctx.stub.getPrivateData(collectionName, subscriptionIDStr)
+        if (!this.subscriptionExists(ctx, collectionName, subscriptionIDString)) {
+            throw new Error(`目标合约[${subscriptionIDString}]不存在`)
+        }
+        const dataBytes = await ctx.stub.getPrivateData(collectionName, subscriptionIDString)
         const subscription: Subscription = Subscription.fromUint8Array(dataBytes)
         if (subscription.Status !== SubscriptionStatus.create) {
-            throw new Error(`取消目标合约的状态[${subscription.Status}]不是[${SubscriptionStatus.create}]`)
+            throw new Error(`取消目标合约的状态[${subscription.Status}]，应该是[${SubscriptionStatus.create}]`)
         }
         subscription.Status = SubscriptionStatus.cancel
-        await ctx.stub.putPrivateData(collectionName, subscriptionIDStr, subscription.toUint8Array())
-        const event = new SubscriptionEvent(subscriptionIDStr, SubscriptionEventType.cancel)
+        await ctx.stub.putPrivateData(collectionName, subscriptionIDString, subscription.toUint8Array())
+        const event = new SubscriptionEvent(subscriptionIDString, SubscriptionEventType.cancel)
         ctx.stub.setEvent(event.getName(), event.getPayload())
         return
     }
@@ -76,22 +77,24 @@ export class SubscriptionContract extends Contract {
             throw new Error(`在 transient 中没有找到 [${transientSubscriptionIDKey}] 域`)
         }
         const clientMSPID = ctx.clientIdentity.getMSPID()
-        const subscriptionIDStr = transientData.get(transientSubscriptionIDKey).toString()
-        const subscriptionID = SubscriptionID.fromSubscriptionIDString(subscriptionIDStr)
+        const subscriptionIDString = transientData.get(transientSubscriptionIDKey).toString()
+        const subscriptionID = SubscriptionID.fromSubscriptionIDString(subscriptionIDString)
         const svOrgID = subscriptionID.SVOrgID
         if (svOrgID !== clientMSPID) {
             throw new Error(`完成目标合约只能由监管机构[${svOrgID}]发起，实际是由[${clientMSPID}]发起。`)
         }
         const collectionName = subscriptionID.getCollectionName()
-        // TODO 先检查数据是否存在
-        const dataBytes = await ctx.stub.getPrivateData(collectionName, subscriptionIDStr)
+        if (!this.subscriptionExists(ctx, collectionName, subscriptionIDString)) {
+            throw new Error(`目标合约[${subscriptionIDString}]不存在`)
+        }
+        const dataBytes = await ctx.stub.getPrivateData(collectionName, subscriptionIDString)
         const subscription: Subscription = Subscription.fromUint8Array(dataBytes)
         if (subscription.Status !== SubscriptionStatus.create) {
-            throw new Error(`取消目标合约的状态[${subscription.Status}]不是[${SubscriptionStatus.create}]`)
+            throw new Error(`取消目标合约的状态[${subscription.Status}]，应该是[${SubscriptionStatus.create}]`)
         }
         subscription.Status = SubscriptionStatus.complete
-        await ctx.stub.putPrivateData(collectionName, subscriptionIDStr, subscription.toUint8Array())
-        const event = new SubscriptionEvent(subscriptionIDStr, SubscriptionEventType.complete)
+        await ctx.stub.putPrivateData(collectionName, subscriptionIDString, subscription.toUint8Array())
+        const event = new SubscriptionEvent(subscriptionIDString, SubscriptionEventType.complete)
         ctx.stub.setEvent(event.getName(), event.getPayload())
         return
     }
@@ -101,19 +104,20 @@ export class SubscriptionContract extends Contract {
     public async query(ctx: Context, subscriptionIDString: string): Promise<Subscription> {
         const clientMSPID = ctx.clientIdentity.getMSPID()
         const subscriptionID = SubscriptionID.fromSubscriptionIDString(subscriptionIDString)
-        // TODO 检查查询机构
+        if (![subscriptionID.USVOrgID, subscriptionID.BankID, subscriptionID.SVOrgID].find(value => value === clientMSPID)) {
+            throw new Error(`查询合约[${subscriptionIDString}]的发起机构[${clientMSPID}]不是授权机构`)
+        }
         const collectionName = subscriptionID.getCollectionName()
-        // TODO 检查数据是否存在
+        if (!this.subscriptionExists(ctx, collectionName, subscriptionIDString)) {
+            throw new Error(`查询合约[${subscriptionIDString}]的结果为空`)
+        }
         const data = await ctx.stub.getPrivateData(collectionName, subscriptionIDString)
         return Subscription.fromUint8Array(data)
     }
 
-    // @Transaction(false)
-    // @Returns('boolean')
-    // public async subscriptionExists(ctx: Context, subscriptionId: string): Promise<boolean> {
-    //     const collectionName: string = await getCollectionName(ctx);
-    //     const data: Uint8Array = await ctx.stub.getPrivateDataHash(collectionName, subscriptionId);
-    //     return (!!data && data.length > 0);
-    // }
+    public async subscriptionExists(ctx: Context, collectionName: string, id: string): Promise<boolean> {
+        const data: Uint8Array = await ctx.stub.getPrivateDataHash(collectionName, id);
+        return (!!data && data.length > 0);
+    }
 
 }
