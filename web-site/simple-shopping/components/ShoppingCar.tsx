@@ -6,9 +6,9 @@ interface CarProps {
 }
 
 const ShoppingCar: FC<CarProps> = (props) => <div>
-  <div className="flex flex-row justify-center mb-5 bg-white border border-gray-200 rounded-lg shadow-md mx-80">
+  <div className="flex flex-row justify-center w-1/2 mb-5 bg-white border border-gray-200 rounded-lg shadow-md mx-80">
     <div className="ml-2">
-      <input type="radio" name="option1" className="mt-10 mr-8" />
+      <input type="radio" name="option" className="mt-10 mr-8" />
     </div>
     <div className="ml-2">
       <img src={props.image} className="h-24 rounded-lg w-36" />
