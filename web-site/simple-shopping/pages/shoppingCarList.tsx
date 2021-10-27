@@ -23,12 +23,12 @@ const ShoppingCarList: NextPage = () => {
 
   return <Layout title="购物车" >
     <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-1 py-6 m-auto max-w-7xl">
-    <ShoppingCar image="102.jpeg" title="哈佛学霸养成计划——培养孩子超强学习力" amt={1000} {...register('isChecked')} />
-    <ShoppingCar image="102.jpeg" title="哈佛学霸养成计划——培养孩子超强学习力" amt={1000} {...register('isChecked')} />
-    <ShoppingCar image="102.jpeg" title="哈佛学霸养成计划——培养孩子超强学习力" amt={1000} {...register('isChecked')} />
-    <ShoppingCar image="102.jpeg" title="哈佛学霸养成计划——培养孩子超强学习力" amt={1000} {...register('isChecked')} />
-    <ShoppingCar image="102.jpeg" title="哈佛学霸养成计划——培养孩子超强学习力" amt={1000} {...register('isChecked')} />
-    <input type="button" value="立即支付" className="py-3 my-10 text-sm font-medium text-white rounded-md shadow-md mx-80 bg-secondary-500 focus:outline-none hover:bg-secondary-700 hover:shadow-none"></input>
+      <ShoppingCar image="102.jpeg" title="哈佛学霸养成计划——培养孩子超强学习力" amt={1000} {...register('isChecked')} />
+      <ShoppingCar image="102.jpeg" title="哈佛学霸养成计划——培养孩子超强学习力" amt={1000} {...register('isChecked')} />
+      <ShoppingCar image="102.jpeg" title="哈佛学霸养成计划——培养孩子超强学习力" amt={1000} {...register('isChecked')} />
+      <ShoppingCar image="102.jpeg" title="哈佛学霸养成计划——培养孩子超强学习力" amt={1000} {...register('isChecked')} />
+      <ShoppingCar image="102.jpeg" title="哈佛学霸养成计划——培养孩子超强学习力" amt={1000} {...register('isChecked')} />
+      <input type="submit" value="立即支付" className="py-3 my-10 text-sm font-medium text-white rounded-md shadow-md mx-80 bg-secondary-500 focus:outline-none hover:bg-secondary-700 hover:shadow-none"></input>
     </form>
   </Layout>
 }
