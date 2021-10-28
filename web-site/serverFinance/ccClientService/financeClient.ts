@@ -31,19 +31,17 @@ export async function createSubscribe(item: SubscribeWithSign) {
 		const network = await gateway.getNetwork(channelName)
 		const contract = network.getContract(chainCodeName, subscribeContract)
 		const itemStr = JSON.stringify(item)
-
 		const tmapDataJson = {
 			Subscribe: Buffer.from(itemStr)
 		}
-
 		const statefulTxn = contract.createTransaction(createSubscribeStr)
 		await statefulTxn.setTransient(tmapDataJson)
+
 		const channelPeers = await getChannelPeers(gateway, channelName, ["bankpeer-api.127-0-0-1.nip.io:8080", "edbpeer-api.127-0-0-1.nip.io:8080", "edu1peer-api.127-0-0-1.nip.io:8080"])
 		statefulTxn.setEndorsingPeers(channelPeers)
 
 		const transactionId = statefulTxn.getTransactionId()
 		const subscribeID = await statefulTxn.submit()
-		console.log(subscribeID)
 		// const subscribeID = await contract.evaluateTransaction(createSubscribeStr)
 		gateway.disconnect()
 		return subscribeID
@@ -89,6 +87,8 @@ const getChannelPeers = async (gateway: Gateway, channelName: string, peerNames:
 		const network = await gateway.getNetwork(channelName);
 		const channel = network.getChannel();
 		const channelPeers = [];
+		console.log("sssssssssss")
+		console.log(channel.getEndorsers().length)
 		for (const peer of channel.getEndorsers()) {
 			channelPeers.push(peer);
 		}
@@ -113,33 +113,33 @@ const getChainCodeName = () => {
 const buildGateWayOption = async () => {
 	const walletPath = path.join(__dirname, 'Wallet', 'Bank')
 	const wallet = await buildWallet(Wallets, walletPath)
-	const gateWapOption: GatewayOptions = { wallet: wallet, identity: appUser, discovery: { enabled: true, asLocalhost: true } }
+	const gateWapOption: GatewayOptions = { wallet: wallet, identity: appUser, discovery: { enabled: true, asLocalhost: false } }
 	return gateWapOption
 }
 
-export async function financeInit() {
-	const walletPath = path.join(__dirname, 'Wallet', 'Bank')
-	const wallet = await buildWallet(Wallets, walletPath)
-	// const caClient = buildCAClient(FabricCAServices, ccp, 'ca.org1.example.com');
-	// /mnt/d/wslnodeproject/supervision/fabric/dev/organizations
-	const ccp = await buildOrg("Bank")
-	const caClient = buildCAClient(ccp, 'bankca-api.127-0-0-1.nip.io:8080') //todo
-	await enrollAdmin(caClient, wallet, 'BankMSP');
-	await registerAndEnrollUser(caClient, wallet, 'BankMSP', appUser)
-	console.log("初始化完成")
-}
+// export async function financeInit() {
+// 	const walletPath = path.join(__dirname, 'Wallet', 'Bank')
+// 	const wallet = await buildWallet(Wallets, walletPath)
+// 	// const caClient = buildCAClient(FabricCAServices, ccp, 'ca.org1.example.com');
+// 	// /mnt/d/wslnodeproject/supervision/fabric/dev/organizations
+// 	const ccp = await buildOrg("Bank")
+// 	const caClient = buildCAClient(ccp, 'bankca-api.127-0-0-1.nip.io:8080') //todo
+// 	await enrollAdmin(caClient, wallet, 'BankMSP');
+// 	await registerAndEnrollUser(caClient, wallet, 'BankMSP', appUser)
+// 	console.log("初始化完成")
+// }
 
-export async function USVInit() {
-	const walletPath = path.join(__dirname, 'Wallet', 'Edu1')
-	const wallet = await buildWallet(Wallets, walletPath)
-	// const caClient = buildCAClient(FabricCAServices, ccp, 'ca.org1.example.com');
-	// /mnt/d/wslnodeproject/supervision/fabric/dev/organizations
-	const ccp = await buildOrg("Edu1")
-	const caClient = buildCAClient(ccp, 'edu1ca-api.127-0-0-1.nip.io:8080') //todo
-	await enrollAdmin(caClient, wallet, 'Edu1MSP');
-	await registerAndEnrollUser(caClient, wallet, 'Edu1MSP', appUser)
-	console.log("初始化完成")
-}
+// export async function USVInit() {
+// 	const walletPath = path.join(__dirname, 'Wallet', 'Edu1')
+// 	const wallet = await buildWallet(Wallets, walletPath)
+// 	// const caClient = buildCAClient(FabricCAServices, ccp, 'ca.org1.example.com');
+// 	// /mnt/d/wslnodeproject/supervision/fabric/dev/organizations
+// 	const ccp = await buildOrg("Edu1")
+// 	const caClient = buildCAClient(ccp, 'edu1ca-api.127-0-0-1.nip.io:8080') //todo
+// 	await enrollAdmin(caClient, wallet, 'Edu1MSP');
+// 	await registerAndEnrollUser(caClient, wallet, 'Edu1MSP', appUser)
+// 	console.log("初始化完成")
+// }
 
 
 

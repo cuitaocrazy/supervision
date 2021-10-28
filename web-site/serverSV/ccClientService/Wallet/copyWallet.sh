@@ -1,0 +1,1 @@
+cp -r /home/zhmouohz/.fabric-vscode/environments/edutest5/wallets/Edb ./
