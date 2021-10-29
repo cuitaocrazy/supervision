@@ -11,7 +11,6 @@ import * as path from 'path'
 
 
 export async function buildOrg(org: string) {
-	// todo 修改为实际地址
 	const ccpPath = path.resolve(__dirname, 'CCP',
 		'gateways', org.substring(0, org.length - 3) + ' Gateway.json')
 	const fileExists = fs.existsSync(ccpPath)
@@ -24,7 +23,7 @@ export async function buildOrg(org: string) {
 };
 
 
-export async function prettyJSONString(inputString) {
+export function prettyJSONString(inputString) {
 	if (inputString) {
 		return JSON.stringify(JSON.parse(inputString), null, 2)
 	}

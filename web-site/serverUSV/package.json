@@ -2,7 +2,7 @@
   "name": "serverusv",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "type": "commonjs",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -14,6 +14,7 @@
     "express": "^4.17.1",
     "fabric-ca-client": "^2.2.9",
     "fabric-network": "^2.2.9",
+    "jws": "^4.0.0",
     "socket.io": "^4.2.0"
   },
   "devDependencies": {
