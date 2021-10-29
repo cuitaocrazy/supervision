@@ -1,6 +1,6 @@
 import type { NextPage } from 'next'
-import Layout from '../components/layout'
-import ShoppingCar from '../components/ShoppingCar'
+import Layout from '@/components/layout'
+import ShoppingCar from '@/components/ShoppingCar'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { useRouter } from 'next/router'
 

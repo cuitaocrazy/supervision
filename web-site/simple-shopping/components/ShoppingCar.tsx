@@ -1,5 +1,4 @@
 import { FC } from 'react'
-import { useRouter } from 'next/router'
 
 interface CarProps {
   image: string
@@ -12,15 +11,15 @@ function deleteFun () {
   const isDeleteMessage = confirm('你确定要删除商品吗？')
   // const router = useRouter()
   if (isDeleteMessage === true) {
-    // deleteDate()
+    deleteDate()
     alert('删除成功')
   } else if (isDeleteMessage === false) {
     alert('取消成功')
   }
 }
 
-// function deleteDate () {
-// }
+function deleteDate () {
+}
 
 const ShoppingCar: FC<CarProps> = (props) => <div>
   <div className="flex flex-row justify-center w-1/2 mb-5 bg-white border border-gray-200 rounded-lg shadow-md mx-80">

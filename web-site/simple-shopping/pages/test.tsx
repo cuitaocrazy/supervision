@@ -1,8 +1,8 @@
 import type { NextPage } from 'next'
-import Layout from '../components/layout'
-import Card from '../components/Card'
-import { useAppDispatch } from '../app/hook'
-import { increment } from '../features/order-cart/counterSlice'
+import Layout from '@/components/layout'
+import Card from '@/components/Card'
+import { useAppDispatch } from '@/app/hook'
+import { increment } from '@/features/order-cart/counterSlice'
 
 const Test: NextPage = () => {
   const dispatch = useAppDispatch()
