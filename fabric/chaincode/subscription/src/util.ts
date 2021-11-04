@@ -5,7 +5,7 @@
  * @returns 字节数组
  */
 export const obj2Uint8Array = (obj: any): Uint8Array => {
-    const json = JSON.stringify(this)
+    const json = JSON.stringify(obj)
     return new TextEncoder().encode(json)
 }
 

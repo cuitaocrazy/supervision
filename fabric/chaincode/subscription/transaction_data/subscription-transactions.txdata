@@ -1,58 +1,34 @@
 [
     {
-        "transactionName": "subscriptionExists",
-        "transactionLabel": "A test subscriptionExists transaction",
-        "arguments": [
-            "001"
-        ],
-        "transientData": {}
-    },
-    {
-        "transactionName": "createSubscription",
-        "transactionLabel": "A test createSubscription transaction",
-        "arguments": [
-            "001"
-        ],
+        "transactionName": "create",
+        "transactionLabel": "合约1--创建",
+        "arguments": [],
         "transientData": {
-            "privateValue": "some value"
+            "Subscribe": "{\"USVOrgID\":\"Edu1MSP\",\"USVItemID\":\"1\",\"USVItemName\":\"系统架构师2021年下半年班\",\"USVItemDesc\":\"系统架构师2021年下半年及2022年上半年有效的培训课程\",\"USVOrderNo\":\"orderid001\",\"BankID\":\"BankMSP\",\"BankTranID\":\"0000001\",\"BankTranDate\":\"20210929\",\"BankTranTime\":\"100130\",\"PayerRemark\":\"用于准备xx考试\",\"PayerStub\":\"付款凭证\",\"TranAmt\":100,\"SVOrgID\":\"EdbMSP\",\"SubscribeStartDate\":\"20211030\",\"SubscribeDurationDays\":365}"
         }
     },
     {
-        "transactionName": "readSubscription",
-        "transactionLabel": "A test readSubscription transaction",
+        "transactionName": "query",
+        "transactionLabel": "合约1--查询",
         "arguments": [
-            "001"
+            "Edu1MSP-BankMSP-EdbMSP-orderid001"
         ],
         "transientData": {}
     },
     {
-        "transactionName": "updateSubscription",
-        "transactionLabel": "A test updateSubscription transaction",
-        "arguments": [
-            "001"
-        ],
+        "transactionName": "delete",
+        "transactionLabel": "合约1--删除",
+        "arguments": [],
         "transientData": {
-            "privateValue": "some other value"
+            "SubscribeID": "Edu1MSP-BankMSP-EdbMSP-orderid001"
         }
     },
     {
-        "transactionName": "deleteSubscription",
-        "transactionLabel": "A test deleteSubscription transaction",
-        "arguments": [
-            "001"
-        ],
-        "transientData": {}
-    },
-    {
-        "transactionName": "verifySubscription",
-        "transactionLabel": "A test verifySubscription transaction",
-        "arguments":[
-            "Org1MSP",
-            "001",
-            {
-                "privateValue": "some other value"
-            }
-        ],
-        "transientData": {}
+        "transactionName": "create",
+        "transactionLabel": "合约2--创建",
+        "arguments": [],
+        "transientData": {
+            "Subscribe": "{\"USVOrgID\":\"Edu1MSP\",\"USVItemID\":\"1\",\"USVItemName\":\"系统架构师2021年下半年班\",\"USVItemDesc\":\"系统架构师2021年下半年及2022年上半年有效的培训课程\",\"USVOrderNo\":\"orderid002\",\"BankID\":\"BankMSP\",\"BankTranID\":\"0000001\",\"BankTranDate\":\"20210929\",\"BankTranTime\":\"100130\",\"PayerRemark\":\"用于准备xx考试\",\"PayerStub\":\"付款凭证\",\"TranAmt\":100,\"SVOrgID\":\"EdbMSP\",\"SubscribeStartDate\":\"20211030\",\"SubscribeDurationDays\":365}"
+        }
     }
 ]

@@ -4,7 +4,6 @@
 
 import crypto = require('crypto');
 import { Context, Contract, Info, Returns, Transaction } from 'fabric-contract-api';
-import { Shim } from 'fabric-shim';
 import { Subscription, SubscriptionStatus } from './subscription';
 import { SubscriptionEvent, SubscriptionEventType } from './subscription-event';
 import { SubscriptionID } from './subscription-id';
@@ -69,7 +68,6 @@ export class SubscriptionContract extends Contract {
         await ctx.stub.putPrivateData(collectionName, subscriptionIDString, obj2Uint8Array(subscription))
         const event = new SubscriptionEvent(subscriptionIDString, SubscriptionEventType.cancel)
         ctx.stub.setEvent(event.getName(), event.getPayload())
-        return
     }
 
     @Transaction()
@@ -99,11 +97,11 @@ export class SubscriptionContract extends Contract {
         await ctx.stub.putPrivateData(collectionName, subscriptionIDString, obj2Uint8Array(subscription))
         const event = new SubscriptionEvent(subscriptionIDString, SubscriptionEventType.complete)
         ctx.stub.setEvent(event.getName(), event.getPayload())
-        return
     }
 
 
     @Transaction(false)
+    @Returns("Subscription")
     public async query(ctx: Context, subscriptionIDString: string): Promise<Subscription> {
         const clientMSPID = ctx.clientIdentity.getMSPID()
         const subscriptionID = SubscriptionID.fromSubscriptionIDString(subscriptionIDString)
@@ -121,6 +119,31 @@ export class SubscriptionContract extends Contract {
     public async subscriptionExists(ctx: Context, collectionName: string, id: string): Promise<boolean> {
         const data: Uint8Array = await ctx.stub.getPrivateDataHash(collectionName, id);
         return (!!data && data.length > 0);
+    }
+
+    /**
+     * 删除合约
+     * @param ctx 
+     */
+    @Transaction()
+    public async delete(ctx: Context): Promise<void> {
+        const transientSubscriptionIDKey = "SubscribeID"
+        const transientData = ctx.stub.getTransient()
+        if (transientData.size === 0 || !transientData.has(transientSubscriptionIDKey)) {
+            throw new Error(`在 transient 中没有找到 [${transientSubscriptionIDKey}] 域`)
+        }
+        const clientMSPID = ctx.clientIdentity.getMSPID()
+        const subscriptionIDString = transientData.get(transientSubscriptionIDKey)!.toString()
+        const subscriptionID = SubscriptionID.fromSubscriptionIDString(subscriptionIDString)
+        const svOrgID = subscriptionID.SVOrgID
+        if (svOrgID !== clientMSPID) {
+            throw new Error(`删除合约只能由监管机构[${svOrgID}]发起，实际是由[${clientMSPID}]发起。`)
+        }
+        const collectionName = subscriptionID.getCollectionName()
+        if (! await this.subscriptionExists(ctx, collectionName, subscriptionIDString)) {
+            throw new Error(`目标合约[${subscriptionIDString}]不存在`)
+        }
+        await ctx.stub.deletePrivateData(collectionName, subscriptionIDString)
     }
 
 }
