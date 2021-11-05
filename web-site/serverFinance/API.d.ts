@@ -15,7 +15,7 @@ export interface Subscribe {
 	SVOrgID: string // 监管机构ID 
 	SubscribeStartDate: string // 订购合约开始日期（格式：yyyyMMdd） 
 	SubscribeDurationDays: number // 订购合约持续天数 
-	status: string
+	Status: string
 }
 
 export interface SignInfo {

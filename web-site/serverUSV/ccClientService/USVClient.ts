@@ -10,7 +10,9 @@ const { buildOrg, buildWallet } = require('./AppUtil')
 
 
 const appUser = 'Edu1 Admin'
-const subscribeContract = 'SubscribeContract'
+const cancelSubscribeStr = 'cancel'
+const subscribeContract = 'SubscriptionContract'
+const chainCode = "subscription"  //"sadf"
 
 export const listenCreateResult = async (subscribeID: string, USVId: string, emitter) => {
 	const gateway = new Gateway()
@@ -40,12 +42,65 @@ const buildGateWayOption = async () => {
 	return gateWapOption
 }
 
+export async function cleanSubscribe(orgSV: string, SubscribeID: string) {
+	try {
+		const ccp = await buildOrg(orgSV)
+		const gatewayOptions = await buildGateWayOption()
+		const gateway = new Gateway()
+		await gateway.connect(ccp, gatewayOptions)
+		const channelName = getChannelName()
+		const chainCodeName = getChainCodeName()
+		const network = await gateway.getNetwork(channelName)
+		const contract = network.getContract(chainCodeName, subscribeContract)
+		const tmapDataJson = {
+			"SubscribeID": Buffer.from(SubscribeID)
+		}
+		const statefulTxn = contract.createTransaction(cancelSubscribeStr)
+		await statefulTxn.setTransient(tmapDataJson)
+		const channelPeers = await getChannelPeers(gateway, channelName, ["bankpeer-api.127-0-0-1.nip.io:8080", "edbpeer-api.127-0-0-1.nip.io:8080", "edu1peer-api.127-0-0-1.nip.io:8080"])
+		statefulTxn.setEndorsingPeers(channelPeers)
+		const result = await statefulTxn.submit()
+		console.log(result.toString())
+		gateway.disconnect()
+		return result
+	} catch (error) {
+		console.error(`******** FAILED to submit bid: ${error}`)
+		return "FAIL"
+	}
+}
+
+
+const getChannelPeers = async (gateway: Gateway, channelName: string, peerNames: string[]) => {
+	try {
+		const network = await gateway.getNetwork(channelName);
+		const channel = network.getChannel();
+		const channelPeers = [];
+		for (const peer of channel.getEndorsers()) {
+			const inArray = (search, array) => {
+				for (var i in array) {
+					if (array[i] == search) {
+						return true;
+					}
+				}
+				return false;
+			}
+			if (inArray(peer.name, peerNames)) {
+				channelPeers.push(peer);
+			}
+		}
+		return channelPeers;
+	}
+	catch (error) {
+		throw new Error(`Unable to get channel peers: ${error.message}`);
+	}
+}
+
 const getChannelName = () => {
 	return "edb-supervision-channel"
 }
 
 //todo
 const getChainCodeName = () => {
-	return "eduTest"
+	return chainCode
 }
 

@@ -80,6 +80,14 @@ const getTradeNoBySubscribeID = (subscribeID) => {
   return subscribeID
 }
 
+app.put('/clean', jsonParser, async (req, res) => { //todo 进行支付 
+  console.log('clean')
+  console.log('do something on cc')
+  console.log(req.body.SubscribeID)
+  const result = await cc.cleanSubscribe("EdbMSP", req.body.SubscribeID)
+  res.send(result)
+})
+
 
 
 const serverInstance = app.listen(port, () => {

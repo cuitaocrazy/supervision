@@ -1,1 +1,1 @@
-cp -r /home/zhmouohz/.fabric-vscode/environments/edutest6/gateways ./
+cp -r /home/zhmouohz/.fabric-vscode/environments/edutest8/gateways ./

@@ -9,7 +9,10 @@ const { buildCAClient, enrollAdmin, registerAndEnrollUser } = require('./CAUtil'
 import { Subscribe } from '../API'
 const cancelSubscribeStr = 'cancel'
 const appUser = 'Edb Admin'
-const subscribeContract = 'SubscribeContract'
+const subscribeContract = 'SubscriptionContract'
+const completeSubscribeStr = "complete"
+const queryStr = "query"
+const chainCode = "subscription"  //"sadf"
 
 const buildGateWayOption = async () => {
 	const walletPath = path.join(__dirname, 'Wallet', 'Edb')
@@ -18,9 +21,8 @@ const buildGateWayOption = async () => {
 	return gateWapOption
 }
 
-export async function cleanSubscribe(item: Subscribe, SubscribeID: string) {
+export async function cleanSubscribe(orgSV: string, SubscribeID: string) {
 	try {
-		const orgSV = item.SVOrgID
 		const ccp = await buildOrg(orgSV)
 		const gatewayOptions = await buildGateWayOption()
 		const gateway = new Gateway()
@@ -37,11 +39,68 @@ export async function cleanSubscribe(item: Subscribe, SubscribeID: string) {
 		const channelPeers = await getChannelPeers(gateway, channelName, ["bankpeer-api.127-0-0-1.nip.io:8080", "edbpeer-api.127-0-0-1.nip.io:8080", "edu1peer-api.127-0-0-1.nip.io:8080"])
 		statefulTxn.setEndorsingPeers(channelPeers)
 		const result = await statefulTxn.submit()
-		console.log(result.toString())
 		gateway.disconnect()
 		return result
 	} catch (error) {
 		console.error(`******** FAILED to submit bid: ${error}`)
+		return "FAIL"
+	}
+}
+
+export async function completeSubscribe(svID: string, subscribeID: string) {
+	try {
+		const ccp = await buildOrg(svID)
+		const gatewayOptions = await buildGateWayOption()
+		const channelName = getChannelName()
+		const chainCodeName = getChainCodeName()
+		const gateway = new Gateway()
+		await gateway.connect(ccp, gatewayOptions)
+		const network = await gateway.getNetwork(channelName)
+		const contract = network.getContract(chainCodeName, subscribeContract)
+		// const tmapData = Buffer.from(JSON.stringify(item))
+		const statefulTxn = contract.createTransaction(completeSubscribeStr)
+		const channelPeers = await getChannelPeers(gateway, channelName, ["bankpeer-api.127-0-0-1.nip.io:8080", "edbpeer-api.127-0-0-1.nip.io:8080", "edu1peer-api.127-0-0-1.nip.io:8080"])
+		statefulTxn.setEndorsingPeers(channelPeers)
+		const tmapDataJson = {
+			"SubscribeID": Buffer.from(subscribeID)
+		}
+		await statefulTxn.setTransient(tmapDataJson)
+		const result = await statefulTxn.submit()
+		gateway.disconnect()
+		return subscribeID
+	} catch (error) {
+		console.error(`******** FAILED to submit bid: ${error}`)
+		return "FAIL"
+	}
+}
+
+
+export async function querySubscribe(svID: string, subscribeID: string) {
+	try {
+		const ccp = await buildOrg(svID)
+		const gatewayOptions = await buildGateWayOption()
+		const channelName = getChannelName()
+		const chainCodeName = getChainCodeName()
+		const gateway = new Gateway()
+		await gateway.connect(ccp, gatewayOptions)
+		const network = await gateway.getNetwork(channelName)
+		const contract = network.getContract(chainCodeName, subscribeContract)
+		// const tmapData = Buffer.from(JSON.stringify(item))
+		const statefulTxn = contract.createTransaction(queryStr)
+		const channelPeers = await getChannelPeers(gateway, channelName, ["bankpeer-api.127-0-0-1.nip.io:8080", "edbpeer-api.127-0-0-1.nip.io:8080", "edu1peer-api.127-0-0-1.nip.io:8080"])
+		statefulTxn.setEndorsingPeers(channelPeers)
+		// const tmapDataJson = {
+		// 	"SubscribeID": Buffer.from(subscribeID)
+		// }
+		// await statefulTxn.setTransient(tmapDataJson)
+		// const result = await statefulTxn.submit(subscribeID)
+		// console.log(result)
+		const result = await statefulTxn.evaluate(subscribeID)
+		gateway.disconnect()
+		return prettyJSONString(result.toString())
+	} catch (error) {
+		console.error(`******** FAILED to submit bid: ${error}`)
+		return "FAIL"
 	}
 }
 
@@ -58,7 +117,7 @@ const getChannelName = () => {
 
 //todo 确认下
 const getChainCodeName = () => {
-	return "eduTest"
+	return chainCode
 }
 export async function SVInit() {
 	const walletPath = path.join(__dirname, 'Wallet', 'Edb')
@@ -77,14 +136,23 @@ const getChannelPeers = async (gateway: Gateway, channelName: string, peerNames:
 		const network = await gateway.getNetwork(channelName);
 		const channel = network.getChannel();
 		const channelPeers = [];
-		for (const peerName of peerNames) {
-			const endorser = channel.getEndorser(peerName)
-			channelPeers.push(endorser);
+		for (const peer of channel.getEndorsers()) {
+			const inArray = (search, array) => {
+				for (var i in array) {
+					if (array[i] == search) {
+						return true;
+					}
+				}
+				return false;
+			}
+			if (inArray(peer.name, peerNames)) {
+				channelPeers.push(peer);
+			}
 		}
 		return channelPeers;
 	}
 	catch (error) {
-		throw new Error(`Unable to get channel peers: ${error}`);
+		throw new Error(`Unable to get channel peers: ${error.message}`);
 	}
 }
 

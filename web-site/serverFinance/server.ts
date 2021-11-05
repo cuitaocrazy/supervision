@@ -17,15 +17,12 @@ app.use(express.static('public'))
 const demoQrUrl = "http://localhost:3001/qrCodePay.html?"
 
 app.post('/pay', jsonParser, async (req, res) => { //todo 进行支付 
-  console.log('pay1')
-  console.log('do something on cc')
   const subscribeId = await cc.createSubscribe(req.body)
   res.send(subscribeId)
 })
 
 app.post('/preOrder', jsonParser, (req, res) => {
   const verifySignResult = verifySign(req.body)
-  console.log(verifySignResult)
   if (!verifySignResult) {
     res.status(401).send("签名错误")//签名错误
     return;
@@ -33,6 +30,9 @@ app.post('/preOrder', jsonParser, (req, res) => {
   const tradeNo = geneTradeNo()
   res.send({ "codeUrl": demoQrUrl, "tradeNo": tradeNo })
 })
+
+
+
 
 const geneTradeNo = () => { //获取预订单号
   return v4()
@@ -48,7 +48,6 @@ const verifySign = (body: SubscribeWithSign) => { //验证签名
   console.log(body.sign)
   console.log(body.appID)
   if (body.sign == null || body.appID == null) {
-    console.log('???')
     return false
   }
   const key = getKey(body.appID);

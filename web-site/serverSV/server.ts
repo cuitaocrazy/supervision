@@ -15,23 +15,33 @@ var jsonParser = bodyParser.json();
 app.use(express.static('public'))
 
 app.put('/clean', jsonParser, async (req, res) => { //todo 进行支付 
-  console.log('clean1')
-  const item: Subscribe = getItemBySubscribeId(req.body.SubscribeID)
+  console.log('clean')
   console.log('do something on cc')
   console.log(req.body.SubscribeID)
-  const result = await cc.cleanSubscribe(item, req.body.SubscribeID)
+  const result = await cc.cleanSubscribe("EdbMSP", req.body.SubscribeID)
   res.send(result)
 })
 
-const getItemBySubscribeId = (subscribeId: string) => {
-  //todo
-  const item: Subscribe = { "SubscribeDurationDays": 365, "TranAmt": 100, "USVOrgID": "Edu1MSP", "USVItemID": "1", "USVItemName": "系统架构师2021年下半年班", "USVItemDesc": "系统架构师2021年下半年及2022年上半年有效的培训课程", "USVOrderNo": "orderid0022", "BankID": "BankMSP", "BankTranID": "0000001", "BankTranDate": "20210929", "BankTranTime": "100130", "PayerRemark": "用于准备xx考试", "PayerStub": "付款凭证", "SVOrgID": "EdbMSP", "SubscribeStartDate": "20211030" }
-  return item
-}
+app.put('/complete', jsonParser, async (req, res) => { //todo 进行支付 
+  console.log('complete')
+  const subscribeId = await cc.completeSubscribe("EdbMSP", req.body.SubscribeID)
+  res.send(subscribeId)
+})
+
+// const getItemBySubscribeId = (subscribeId: string) => {
+//   const item: Subscribe = { "SubscribeDurationDays": 365, "TranAmt": 100, "USVOrgID": "Edu1MSP", "USVItemID": "1", "USVItemName": "系统架构师2021年下半年班", "USVItemDesc": "系统架构师2021年下半年及2022年上半年有效的培训课程", "USVOrderNo": "orderid0022", "BankID": "BankMSP", "BankTranID": "0000001", "BankTranDate": "20210929", "BankTranTime": "100130", "PayerRemark": "用于准备xx考试", "PayerStub": "付款凭证", "SVOrgID": "EdbMSP", "SubscribeStartDate": "20211030" }
+//   return item
+// }
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
 })
+
+// const test = async (subscribeId: string) => {
+//   const result = await cc.querySubscribe("EdbMSP", subscribeId)
+//   console.log(result)
+// }
+// test("Edu1MSP-BankMSP-EdbMSP-orderid0032")
 
 
 
