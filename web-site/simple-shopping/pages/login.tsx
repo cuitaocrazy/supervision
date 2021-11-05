@@ -33,7 +33,7 @@ const Login: NextPage = () => {
         </div>
         <div className="mt-6">
           <label className="block mb-2 text-sm font-semibold text-gray-600">密码</label>
-          <input type="text" className="relative block w-full px-1 py-3 pl-4 text-sm bg-white border rounded-md border-primary-200 focus:outline-none focus:glow-secondary-500"
+          <input type="password" className="relative block w-full px-1 py-3 pl-4 text-sm bg-white border rounded-md border-primary-200 focus:outline-none focus:glow-secondary-500"
             {...register('password', { required: true })} placeholder="请输入密码" />
           {errors.password && <p className="pt-2 pl-3 text-base text-error-400">密码不能为空</p>}
         </div>
