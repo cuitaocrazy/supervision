@@ -2,7 +2,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import crypto = require('crypto');
 import { Context, Contract, Info, Returns, Transaction } from 'fabric-contract-api';
 import { Subscription, SubscriptionStatus } from './subscription';
 import { SubscriptionEvent, SubscriptionEventType } from './subscription-event';
@@ -47,7 +46,6 @@ export class SubscriptionContract extends Contract {
         if (transientData.size === 0 || !transientData.has(transientSubscriptionIDKey)) {
             throw new Error(`在 transient 中没有找到 [${transientSubscriptionIDKey}] 域`)
         }
-        // TODO shim server msp id check
         const clientMSPID = ctx.clientIdentity.getMSPID()
         const subscriptionIDString = transientData.get(transientSubscriptionIDKey)!.toString()
         const subscriptionID = SubscriptionID.fromSubscriptionIDString(subscriptionIDString)
