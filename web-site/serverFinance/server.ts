@@ -2,6 +2,7 @@
 // import * as bodyParser from 'body-parser';
 const express = require('express')
 const bodyParser = require('body-parser')
+const moment = require('moment')
 // const uuidv4 = require('uuid')
 import { v4 } from 'uuid'
 import { SubscribeWithSign } from './API';
@@ -18,7 +19,11 @@ const demoQrUrl = "http://localhost:3001/qrCodePay.html?"
 
 app.post('/pay', jsonParser, async (req, res) => { //todo 进行支付 
   const subscribeId = await cc.createSubscribe(req.body)
-  res.send(subscribeId)
+  if (subscribeId === "FAIL") {
+    res.send(500)
+  } else {
+    res.send({ "result": subscribeId })
+  }
 })
 
 app.post('/preOrder', jsonParser, (req, res) => {
@@ -28,7 +33,8 @@ app.post('/preOrder', jsonParser, (req, res) => {
     return;
   }
   const tradeNo = geneTradeNo()
-  res.send({ "codeUrl": demoQrUrl, "tradeNo": tradeNo })
+  const PayerStub = genePayerStub()
+  res.send({ "codeUrl": demoQrUrl, "BankTranId": tradeNo, PayerStub: PayerStub, "BankTranDate": moment(Date.now()).format('YYYYMMDD'), "BankTranTime": moment(Date.now()).format('HHmmss') })
 })
 
 
@@ -37,6 +43,12 @@ app.post('/preOrder', jsonParser, (req, res) => {
 const geneTradeNo = () => { //获取预订单号
   return v4()
 }
+
+const genePayerStub = () => { //获取存根
+  return v4()
+}
+
+
 
 const getKey = (appId: string) => { //获取key
   console.log("DEMO中key为固定值")

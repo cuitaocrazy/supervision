@@ -16,12 +16,9 @@ const adminUserPasswd = 'adminpw';
  */
 export function buildCAClient(ccp: Record<string, any>, caHostName: string) {
     // Create a new CA client for interacting with the CA.
-    console.log(ccp)
-    console.log('-----------------------')
     const caInfo = ccp.certificateAuthorities[caHostName]; // lookup CA details from config
     // const caTLSCACerts = caInfo.tlsCACerts.pem;
     const caClient = new FabricCAServices(caInfo.url);
-
     console.log(`Built a CA Client `);
     return caClient;
 }
@@ -61,7 +58,6 @@ export async function registerAndEnrollUser(caClient: FabricCAServices, wallet: 
             console.log(`An identity for the user ${userId} already exists in the wallet`);
             return;
         }
-        console.log('y')
         // Must use an admin to register a new user
         const adminIdentity = await wallet.get(adminUserId);
         if (!adminIdentity) {
@@ -69,12 +65,9 @@ export async function registerAndEnrollUser(caClient: FabricCAServices, wallet: 
             console.log('Enroll the admin user before retrying');
             return;
         }
-        console.log('yy')
         // build a user object for authenticating with the CA
         const provider = wallet.getProviderRegistry().getProvider(adminIdentity.type);
         const adminUser = await provider.getUserContext(adminIdentity, adminUserId);
-        console.log('yyy')
-        console.log(userId)
         // Register the user, enroll the user, and import the new identity into the wallet.
         // if affiliation is specified by client, the affiliation value must be configured in CA
         const secret = await caClient.register({
@@ -82,7 +75,6 @@ export async function registerAndEnrollUser(caClient: FabricCAServices, wallet: 
             enrollmentID: userId,
             role: 'client',
         }, adminUser);
-        console.log('yyyy')
         const enrollment = await caClient.enroll({
             enrollmentID: userId,
             enrollmentSecret: secret,

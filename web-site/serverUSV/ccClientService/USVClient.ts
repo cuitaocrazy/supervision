@@ -60,9 +60,8 @@ export async function cleanSubscribe(orgSV: string, SubscribeID: string) {
 		const channelPeers = await getChannelPeers(gateway, channelName, ["bankpeer-api.127-0-0-1.nip.io:8080", "edbpeer-api.127-0-0-1.nip.io:8080", "edu1peer-api.127-0-0-1.nip.io:8080"])
 		statefulTxn.setEndorsingPeers(channelPeers)
 		const result = await statefulTxn.submit()
-		console.log(result.toString())
 		gateway.disconnect()
-		return result
+		return "Success"
 	} catch (error) {
 		console.error(`******** FAILED to submit bid: ${error}`)
 		return "FAIL"

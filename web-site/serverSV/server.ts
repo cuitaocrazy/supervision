@@ -14,18 +14,26 @@ var jsonParser = bodyParser.json();
 
 app.use(express.static('public'))
 
-app.put('/clean', jsonParser, async (req, res) => { //todo 进行支付 
+app.put('/cancel', jsonParser, async (req, res) => { //todo 进行支付 
   console.log('clean')
   console.log('do something on cc')
   console.log(req.body.SubscribeID)
   const result = await cc.cleanSubscribe("EdbMSP", req.body.SubscribeID)
-  res.send(result)
+  if (result === "FAIL") {
+    res.send(500)
+  } else {
+    res.send({ "result": result })
+  }
 })
 
 app.put('/complete', jsonParser, async (req, res) => { //todo 进行支付 
   console.log('complete')
   const subscribeId = await cc.completeSubscribe("EdbMSP", req.body.SubscribeID)
-  res.send(subscribeId)
+  if (subscribeId === "FAIL") {
+    res.send(500)
+  } else {
+    res.send({ "result": subscribeId })
+  }
 })
 
 // const getItemBySubscribeId = (subscribeId: string) => {
