@@ -36,11 +36,11 @@ function registerEnrollPeer() {
     USER_DIR=$ORG_DIR/users/$USER_DOMAIN
     USER=${ORG}user1
     USERPWD=${USER}pw
-    
+
     fabric-ca-client register --caname ca --id.name $PEER --id.secret $PEERPWD --id.type peer --tls.certfiles "${PWD}/${CADIR}/tls-cert.pem"
     fabric-ca-client register --caname ca --id.name $ADMIN --id.secret $ADMINPWD --id.type admin --tls.certfiles "${PWD}/${CADIR}/tls-cert.pem"
     fabric-ca-client register --caname ca --id.name $USER --id.secret $USERPWD --id.type client --tls.certfiles "${PWD}/${CADIR}/tls-cert.pem"
-    
+
     fabric-ca-client enroll -u https://$PEER:$PEERPWD@localhost:7054 --caname ca -M "$PEER_DIR/msp" --csr.hosts $PEER_DOMAIN --tls.certfiles "$PWD/$CADIR/tls-cert.pem"
     fabric-ca-client enroll -u https://$PEER:$PEERPWD@localhost:7054 --caname ca -M "$PEER_DIR/tls" --enrollment.profile tls --csr.hosts $PEER_DOMAIN --csr.hosts localhost --tls.certfiles "$PWD/$CADIR/tls-cert.pem"
     fabric-ca-client enroll -u https://$ADMIN:$ADMINPWD@localhost:7054 --caname ca -M "$ADMIN_DIR/msp" --tls.certfiles "$PWD/$CADIR/tls-cert.pem"
@@ -58,6 +58,15 @@ function registerEnrollPeer() {
 
     mkdir -p "$ORG_DIR/ca"
     cp "$PEER_DIR/msp/cacerts/"* "$ORG_DIR/ca/ca.$ORG_DOMAIN-cert.pem"
+    echo 'NodeOUs:
+  Enable: true
+  PeerOUIdentifier:
+    Certificate: cacerts/localhost-7054-ca.pem
+    OrganizationalUnitIdentifier: peer
+  AdminOUIdentifier:
+    Certificate: cacerts/localhost-7054-ca.pem
+    OrganizationalUnitIdentifier: admin
+' >"$PEER_DIR/msp/config.yaml"
   fi
 }
 
@@ -76,7 +85,7 @@ function registerEnrollOrderer() {
     ADMIN_DIR=$ORDERER_DIR/users/$ADMIN_DOMAIN
     ADMIN=${ORDERER}admin
     ADMINPWD=${ADMIN}pw
-    
+
     fabric-ca-client register --caname ca --id.name $ORDERER --id.secret $ORDERER_PWD --id.type orderer --tls.certfiles "${PWD}/${CADIR}/tls-cert.pem"
     fabric-ca-client register --caname ca --id.name $ADMIN --id.secret $ADMINPWD --id.type admin --tls.certfiles "${PWD}/${CADIR}/tls-cert.pem"
 
@@ -93,6 +102,15 @@ function registerEnrollOrderer() {
 
     mkdir -p "$PWD/organizations/ordererOrganizations/$DOMAIN/msp/tlscacerts"
     cp "$ORDERER_DIR/tls/tlscacerts/"* "$PWD/organizations/ordererOrganizations/$DOMAIN/msp/tlscacerts/tlsca.$DOMAIN-cert.pem"
+    echo 'NodeOUs:
+  Enable: true
+  AdminOUIdentifier:
+    Certificate: cacerts/localhost-7054-ca.pem
+    OrganizationalUnitIdentifier: admin
+  OrdererOUIdentifier:
+    Certificate: cacerts/localhost-7054-ca.pem
+    OrganizationalUnitIdentifier: orderer
+' >"$PWD/organizations/ordererOrganizations/$DOMAIN/orderers/orderer.yadadev.com/msp/config.yaml"
   fi
 }
 
@@ -104,7 +122,7 @@ function registerEnroll() {
     sleep 1
     mkdir -p $MSP_DIR
     fabric-ca-client enroll -u https://admin:adminpw@localhost:7054 --caname ca --tls.certfiles "${PWD}/${CADIR}/tls-cert.pem"
-    
+
     for REGULATED_ORG in $REGULATED_ORGS; do
       registerEnrollPeer $REGULATED_ORG
     done
@@ -119,9 +137,19 @@ function registerEnroll() {
   fi
 }
 
+function nodeUp() {
+  docker-compose -f docker/docker-compose-test-net.yaml up -d
+}
+
+function nodeDown() {
+  docker-compose -f docker/docker-compose-test-net.yaml down -v --remove-orphans
+  rm -rf "system-genesis-block"
+}
+
 function up() {
   caUp
   registerEnroll
+  nodeUp
 }
 
 function caDown() {
@@ -131,7 +159,7 @@ function caDown() {
 
 function down() {
   caDown
-
+  nodeDown
   removeUnwantedImages
 }
 

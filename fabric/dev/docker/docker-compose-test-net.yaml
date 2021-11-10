@@ -1,0 +1,219 @@
+# Copyright IBM Corp. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+version: '3'
+
+networks:
+  test:
+    name: fabric_test
+
+volumes:
+  orderer.yadadev.com:
+  peer0.bank1.yadadev.com:
+  peer0.edb.yadadev.com:
+  peer0.edu1.yadadev.com:
+  peer0.edu2.yadadev.com:
+
+services:
+
+  orderer.yadadev.com:
+    container_name: orderer.yadadev.com
+    image: hyperledger/fabric-orderer:latest
+    labels:
+      service: hyperledger-fabric
+    environment:
+      - FABRIC_LOGGING_SPEC=INFO
+      - ORDERER_GENERAL_LISTENADDRESS=0.0.0.0
+      - ORDERER_GENERAL_LISTENPORT=7050
+      - ORDERER_GENERAL_LOCALMSPID=OrdererMSP
+      - ORDERER_GENERAL_LOCALMSPDIR=/var/hyperledger/orderer/msp
+      # enabled TLS
+      - ORDERER_GENERAL_TLS_ENABLED=true
+      - ORDERER_GENERAL_TLS_PRIVATEKEY=/var/hyperledger/orderer/tls/server.key
+      - ORDERER_GENERAL_TLS_CERTIFICATE=/var/hyperledger/orderer/tls/server.crt
+      - ORDERER_GENERAL_TLS_ROOTCAS=[/var/hyperledger/orderer/tls/ca.crt]
+      - ORDERER_GENERAL_CLUSTER_CLIENTCERTIFICATE=/var/hyperledger/orderer/tls/server.crt
+      - ORDERER_GENERAL_CLUSTER_CLIENTPRIVATEKEY=/var/hyperledger/orderer/tls/server.key
+      - ORDERER_GENERAL_CLUSTER_ROOTCAS=[/var/hyperledger/orderer/tls/ca.crt]
+      - ORDERER_GENERAL_BOOTSTRAPMETHOD=none
+      - ORDERER_CHANNELPARTICIPATION_ENABLED=true
+      - ORDERER_ADMIN_TLS_ENABLED=true
+      - ORDERER_ADMIN_TLS_CERTIFICATE=/var/hyperledger/orderer/tls/server.crt
+      - ORDERER_ADMIN_TLS_PRIVATEKEY=/var/hyperledger/orderer/tls/server.key
+      - ORDERER_ADMIN_TLS_ROOTCAS=[/var/hyperledger/orderer/tls/ca.crt]
+      - ORDERER_ADMIN_TLS_CLIENTROOTCAS=[/var/hyperledger/orderer/tls/ca.crt]
+      - ORDERER_ADMIN_LISTENADDRESS=0.0.0.0:7053
+      - ORDERER_OPERATIONS_LISTENADDRESS=0.0.0.0:17050
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric
+    command: orderer
+    volumes:
+        - ../system-genesis-block/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
+        - ../organizations/ordererOrganizations/yadadev.com/orderers/orderer.yadadev.com/msp:/var/hyperledger/orderer/msp
+        - ../organizations/ordererOrganizations/yadadev.com/orderers/orderer.yadadev.com/tls/:/var/hyperledger/orderer/tls
+        - orderer.yadadev.com:/var/hyperledger/production/orderer
+    ports:
+      - 7050:7050
+      - 7053:7053
+      - 17050:17050
+    networks:
+      - test
+
+  peer0.bank1.yadadev.com:
+    container_name: peer0.bank1.yadadev.com
+    image: hyperledger/fabric-peer:latest
+    labels:
+      service: hyperledger-fabric
+    environment:
+      #Generic peer variables
+      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+      - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=fabric_test
+      - FABRIC_LOGGING_SPEC=INFO
+      #- FABRIC_LOGGING_SPEC=DEBUG
+      - CORE_PEER_TLS_ENABLED=true
+      - CORE_PEER_PROFILE_ENABLED=false
+      - CORE_PEER_TLS_CERT_FILE=/etc/hyperledger/fabric/tls/server.crt
+      - CORE_PEER_TLS_KEY_FILE=/etc/hyperledger/fabric/tls/server.key
+      - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/fabric/tls/ca.crt
+      # Peer specific variables
+      - CORE_PEER_ID=peer0.bank1.yadadev.com
+      - CORE_PEER_ADDRESS=peer0.bank1.yadadev.com:7051
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:7051
+      - CORE_PEER_CHAINCODEADDRESS=peer0.bank1.yadadev.com:7052
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:7052
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.bank1.yadadev.com:7051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.bank1.yadadev.com:7051
+      - CORE_PEER_LOCALMSPID=Bank1MSP
+      - CORE_OPERATIONS_LISTENADDRESS=0.0.0.0:17051
+    volumes:
+        - /var/run/docker.sock:/host/var/run/docker.sock
+        - ../organizations/peerOrganizations/bank1.yadadev.com/peers/peer0.bank1.yadadev.com/msp:/etc/hyperledger/fabric/msp
+        - ../organizations/peerOrganizations/bank1.yadadev.com/peers/peer0.bank1.yadadev.com/tls:/etc/hyperledger/fabric/tls
+        - peer0.bank1.yadadev.com:/var/hyperledger/production
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
+    command: peer node start
+    ports:
+      - 7051:7051
+      - 17051:17051
+    networks:
+      - test
+
+  peer0.edb.yadadev.com:
+    container_name: peer0.edb.yadadev.com
+    image: hyperledger/fabric-peer:latest
+    labels:
+      service: hyperledger-fabric
+    environment:
+      #Generic peer variables
+      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+      - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=fabric_test
+      - FABRIC_LOGGING_SPEC=INFO
+      #- FABRIC_LOGGING_SPEC=DEBUG
+      - CORE_PEER_TLS_ENABLED=true
+      - CORE_PEER_PROFILE_ENABLED=false
+      - CORE_PEER_TLS_CERT_FILE=/etc/hyperledger/fabric/tls/server.crt
+      - CORE_PEER_TLS_KEY_FILE=/etc/hyperledger/fabric/tls/server.key
+      - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/fabric/tls/ca.crt
+      # Peer specific variables
+      - CORE_PEER_ID=peer0.edb.yadadev.com
+      - CORE_PEER_ADDRESS=peer0.edb.yadadev.com:7151
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:7151
+      - CORE_PEER_CHAINCODEADDRESS=peer0.edb.yadadev.com:7152
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:7152
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.edb.yadadev.com:7151
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.edb.yadadev.com:7151
+      - CORE_PEER_LOCALMSPID=EdbMSP
+      - CORE_OPERATIONS_LISTENADDRESS=0.0.0.0:17151
+    volumes:
+        - /var/run/docker.sock:/host/var/run/docker.sock
+        - ../organizations/peerOrganizations/edb.yadadev.com/peers/peer0.edb.yadadev.com/msp:/etc/hyperledger/fabric/msp
+        - ../organizations/peerOrganizations/edb.yadadev.com/peers/peer0.edb.yadadev.com/tls:/etc/hyperledger/fabric/tls
+        - peer0.edb.yadadev.com:/var/hyperledger/production
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
+    command: peer node start
+    ports:
+      - 7151:7151
+      - 17151:17151
+    networks:
+      - test
+
+  peer0.edu1.yadadev.com:
+    container_name: peer0.edu1.yadadev.com
+    image: hyperledger/fabric-peer:latest
+    labels:
+      service: hyperledger-fabric
+    environment:
+      #Generic peer variables
+      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+      - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=fabric_test
+      - FABRIC_LOGGING_SPEC=INFO
+      #- FABRIC_LOGGING_SPEC=DEBUG
+      - CORE_PEER_TLS_ENABLED=true
+      - CORE_PEER_PROFILE_ENABLED=false
+      - CORE_PEER_TLS_CERT_FILE=/etc/hyperledger/fabric/tls/server.crt
+      - CORE_PEER_TLS_KEY_FILE=/etc/hyperledger/fabric/tls/server.key
+      - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/fabric/tls/ca.crt
+      # Peer specific variables
+      - CORE_PEER_ID=peer0.edu1.yadadev.com
+      - CORE_PEER_ADDRESS=peer0.edu1.yadadev.com:7251
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:7251
+      - CORE_PEER_CHAINCODEADDRESS=peer0.edu1.yadadev.com:7252
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:7252
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.edu1.yadadev.com:7251
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.edu1.yadadev.com:7251
+      - CORE_PEER_LOCALMSPID=Edu1MSP
+      - CORE_OPERATIONS_LISTENADDRESS=0.0.0.0:17251
+    volumes:
+        - /var/run/docker.sock:/host/var/run/docker.sock
+        - ../organizations/peerOrganizations/edu1.yadadev.com/peers/peer0.edu1.yadadev.com/msp:/etc/hyperledger/fabric/msp
+        - ../organizations/peerOrganizations/edu1.yadadev.com/peers/peer0.edu1.yadadev.com/tls:/etc/hyperledger/fabric/tls
+        - peer0.edu1.yadadev.com:/var/hyperledger/production
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
+    command: peer node start
+    ports:
+      - 7251:7251
+      - 17251:17251
+    networks:
+      - test
+
+
+  peer0.edu2.yadadev.com:
+    container_name: peer0.edu2.yadadev.com
+    image: hyperledger/fabric-peer:latest
+    labels:
+      service: hyperledger-fabric
+    environment:
+      #Generic peer variables
+      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+      - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=fabric_test
+      - FABRIC_LOGGING_SPEC=INFO
+      #- FABRIC_LOGGING_SPEC=DEBUG
+      - CORE_PEER_TLS_ENABLED=true
+      - CORE_PEER_PROFILE_ENABLED=false
+      - CORE_PEER_TLS_CERT_FILE=/etc/hyperledger/fabric/tls/server.crt
+      - CORE_PEER_TLS_KEY_FILE=/etc/hyperledger/fabric/tls/server.key
+      - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/fabric/tls/ca.crt
+      # Peer specific variables
+      - CORE_PEER_ID=peer0.edu2.yadadev.com
+      - CORE_PEER_ADDRESS=peer0.edu2.yadadev.com:7351
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:7351
+      - CORE_PEER_CHAINCODEADDRESS=peer0.edu2.yadadev.com:7352
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:7352
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.edu2.yadadev.com:7351
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.edu2.yadadev.com:7351
+      - CORE_PEER_LOCALMSPID=Edu2MSP
+      - CORE_OPERATIONS_LISTENADDRESS=0.0.0.0:17351
+    volumes:
+        - /var/run/docker.sock:/host/var/run/docker.sock
+        - ../organizations/peerOrganizations/edu2.yadadev.com/peers/peer0.edu2.yadadev.com/msp:/etc/hyperledger/fabric/msp
+        - ../organizations/peerOrganizations/edu2.yadadev.com/peers/peer0.edu2.yadadev.com/tls:/etc/hyperledger/fabric/tls
+        - peer0.edu2.yadadev.com:/var/hyperledger/production
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
+    command: peer node start
+    ports:
+      - 7351:7351
+      - 17351:17351
+    networks:
+      - test
+
