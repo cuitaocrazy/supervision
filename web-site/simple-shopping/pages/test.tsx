@@ -25,4 +25,17 @@ const Test: NextPage = () => {
   </Layout>
 }
 
+fetch('http://localhost:3000/Subscribe', {
+  method: 'POST',
+  body: JSON.stringify({
+    SubscribeID: '333',
+    body: '444',
+    USVItemDesc: '555',
+  }),
+  headers: {
+    'Content-type': 'application/json;charset=UTF-8',
+  },
+})
+  .then((response) => response.json())
+  .then((json) => console.log(json))
 export default Test
