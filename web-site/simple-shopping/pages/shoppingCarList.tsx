@@ -3,6 +3,7 @@ import Layout from '@/components/layout'
 import ShoppingCar from '@/components/ShoppingCar'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { useRouter } from 'next/router'
+import { useEffect } from 'react'
 // import { increment } from '@/features/order-cart/counterSlice'
 // import { useReducer } from 'react'
 
@@ -18,6 +19,10 @@ const ShoppingCarList: NextPage = () => {
   const onSubmit: SubmitHandler<FormData> = (data: FormData) => {
     router.push('/qrCode')
   }
+  useEffect(() => {
+    reqQrCode()
+  })
+
   // 向后台发送要够买的课程数据
   function saveDate (): void {
     fetch('http://localhost:3000/Subscribe', {
@@ -55,7 +60,6 @@ const ShoppingCarList: NextPage = () => {
       <input type="submit" value="立即支付" className="py-3 my-10 text-sm font-medium text-white rounded-md shadow-md mx-80 bg-secondary-500 focus:outline-none hover:bg-secondary-700 hover:shadow-none"
       onClick={() => {
         saveDate()
-        reqQrCode()
       }}></input>
     </form>
   </Layout>
