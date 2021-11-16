@@ -1,9 +1,20 @@
 import { FC } from 'react'
 
+type Order ={
+  USVOrgID?: string,
+  USVItemID?: string,
+  USVItemName?: string,
+  USVItemDesc?: string,
+  PayerRemark?: string,
+  TranAmt: number,
+  image:string
+}
 interface CarProps {
   image: string
   title: string
   amt: number
+  setChosenLesson: any
+  order: Order
 }
 
 // TODO购物车删除商品
@@ -21,10 +32,15 @@ function deleteFun () {
 function deleteDate () {
 }
 
-const ShoppingCar: FC<CarProps> = (props) => <div>
+const ShoppingCar: FC<CarProps> = (props) => {
+  const choose = () => {
+    props.setChosenLesson(props.order)
+    return () => {}
+  }
+  return <div>
   <div className="flex flex-row justify-center w-1/2 mb-5 bg-white border border-gray-200 rounded-lg shadow-md mx-80">
     <div className="ml-2">
-      <input type="radio" name="option" className="mt-10 mr-8" />
+      <input type="radio" name="option" className="mt-10 mr-8" onClick={choose}/>
     </div>
     <div className="ml-2">
       <img src={props.image} className="h-24 rounded-lg w-36" />
@@ -43,5 +59,6 @@ const ShoppingCar: FC<CarProps> = (props) => <div>
     </div>
   </div>
 </div>
+}
 
 export default ShoppingCar
