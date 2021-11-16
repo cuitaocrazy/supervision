@@ -1,13 +1,16 @@
 import { FC } from 'react'
 import { useAppSelector } from '../app/hook'
-import { selectCount } from '../features/order-cart/counterSlice'
+import { selectCount, selectCarList } from '../features/order-cart/counterSlice'
 import { motion } from 'framer-motion'
-import { useRouter } from 'next/router'
+import Router from 'next/router'
 
 const NavOrderBtn: FC = () => {
   const count = useAppSelector(selectCount)
-  const router = useRouter()
-  return <button className="relative text-white" onClick={() => { router.push('/shoppingCarList') }}>
+  const carList = useAppSelector(selectCarList)
+  const CarListStr = carList.map((item) => {
+    return JSON.stringify(item)
+  })
+  return <button className="relative text-white" onClick={() => { Router.push({ pathname: '/shoppingCarList', query: { carList: CarListStr } }) }}>
   <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
   </svg>

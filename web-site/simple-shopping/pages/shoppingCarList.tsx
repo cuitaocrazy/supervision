@@ -2,7 +2,7 @@ import type { NextPage } from 'next'
 import Layout from '@/components/layout'
 import ShoppingCar from '@/components/ShoppingCar'
 // import { useForm, SubmitHandler } from 'react-hook-form'
-import Router from 'next/router'
+import Router, { useRouter } from 'next/router'
 import { useState } from 'react'
 
 type Order ={
@@ -17,21 +17,18 @@ type Order ={
 
 const ShoppingCarList: NextPage = () => {
   const [chosenLesson, setChosenLesson] = useState<Order>({ TranAmt: 0, image: '' })
-
+  const router = useRouter()
+  const { carList } = router.query
   const onSubmit = () => {
     Router.push({
       pathname: '/qrCode',
       query: chosenLesson,
     })
   }
+  console.log('aaaaa')
+  console.log(carList)
+  const demoShoppingList : Order[] = carList.map((item: string) => { return JSON.parse(item) })
 
-  const demoShoppingList : Order[] = [
-    { USVOrgID: 'Edu1', USVItemID: 'Id1', USVItemName: '哈佛学霸养成计划——培养孩子超强学习力', USVItemDesc: '哈佛学霸养成计划——培养孩子超强学习力', TranAmt: 100, image: '102.jpeg' },
-    { USVOrgID: 'Edu1', USVItemID: 'Id1', USVItemName: '哈佛学霸养成计划——培养孩子超强学习力', USVItemDesc: '哈佛学霸养成计划——培养孩子超强学习力', TranAmt: 100, image: '102.jpeg' },
-    { USVOrgID: 'Edu1', USVItemID: 'Id1', USVItemName: '哈佛学霸养成计划——培养孩子超强学习力', USVItemDesc: '哈佛学霸养成计划——培养孩子超强学习力', TranAmt: 100, image: '102.jpeg' },
-    { USVOrgID: 'Edu1', USVItemID: 'Id1', USVItemName: '哈佛学霸养成计划——培养孩子超强学习力', USVItemDesc: '哈佛学霸养成计划——培养孩子超强学习力', TranAmt: 100, image: '102.jpeg' },
-    { USVOrgID: 'Edu1', USVItemID: 'Id1', USVItemName: '哈佛学霸养成计划——培养孩子超强学习力', USVItemDesc: '哈佛学霸养成计划——培养孩子超强学习力', TranAmt: 100, image: '102.jpeg' },
-  ]
   console.log(demoShoppingList)
 
   // 向后台发送要够买的课程数据
