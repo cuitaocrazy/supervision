@@ -5,7 +5,7 @@ const bodyParser = require('body-parser')
 const moment = require('moment')
 // const uuidv4 = require('uuid')
 import { v4 } from 'uuid'
-import { SubscribeWithSign } from './API';
+import { SubscribeWithSign, Subscribe } from './API';
 import { verify } from 'jws'
 import * as cc from './ccClientService/financeClient'
 
@@ -15,7 +15,9 @@ var textParser = bodyParser.text();
 var jsonParser = bodyParser.json();
 
 app.use(express.static('public'))
-const demoQrUrl = "http://localhost:3001/qrCodePay.html?"
+const demoQrUrl = "http://localhost:3001/pay"
+
+let demoOrderInfo = {};//demo中模拟数据库中的保存信息
 
 app.post('/pay', jsonParser, async (req, res) => { //todo 进行支付 
   const subscribeId = await cc.createSubscribe(req.body)
@@ -26,6 +28,17 @@ app.post('/pay', jsonParser, async (req, res) => { //todo 进行支付
   }
 })
 
+app.get('/pay', jsonParser, async (req, res) => { //二维码扫码后返回信息
+  const { bankTranId, USVOrderNo, BankID, SVOrgID } = req.query
+  const orderInfo = demoOrderInfo[bankTranId]
+  orderInfo.USVOrderNo = USVOrderNo
+  orderInfo.BankID = BankID
+  orderInfo.SVOrgID = SVOrgID
+  res.send({ "result": orderInfo })
+})
+
+
+
 app.post('/preOrder', jsonParser, (req, res) => {
   const verifySignResult = verifySign(req.body)
   if (!verifySignResult) {
@@ -34,8 +47,13 @@ app.post('/preOrder', jsonParser, (req, res) => {
   }
   const tradeNo = geneTradeNo()
   const PayerStub = genePayerStub()
-  res.send({ "codeUrl": demoQrUrl, "BankTranId": tradeNo, PayerStub: PayerStub, "BankTranDate": moment(Date.now()).format('YYYYMMDD'), "BankTranTime": moment(Date.now()).format('HHmmss') })
+  mockSaveLocalDB({ ...req.body, ...{ "BankTranId": tradeNo, PayerStub: PayerStub, "BankTranDate": moment(Date.now()).format('YYYYMMDD'), "BankTranTime": moment(Date.now()).format('HHmmss') } })
+  res.send({ "codeUrl": demoQrUrl, "BankTranId": tradeNo })
 })
+
+const mockSaveLocalDB = (orderInfo: Subscribe) => {
+  demoOrderInfo[orderInfo.BankTranID] = orderInfo
+}
 
 
 
@@ -51,19 +69,15 @@ const genePayerStub = () => { //获取存根
 
 
 const getKey = (appId: string) => { //获取key
-  console.log("DEMO中key为固定值")
   return "abcdef"
 }
 
 
 const verifySign = (body: SubscribeWithSign) => { //验证签名
-  console.log(body.sign)
-  console.log(body.appID)
   if (body.sign == null || body.appID == null) {
     return false
   }
   const key = getKey(body.appID);
-  console.log(key)
   return verify(body.sign, 'HS256', key)
 }
 

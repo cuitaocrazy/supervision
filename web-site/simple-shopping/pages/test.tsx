@@ -3,39 +3,43 @@ import Layout from '@/components/layout'
 import Card from '@/components/Card'
 import { useAppDispatch } from '@/app/hook'
 import { increment } from '@/features/order-cart/counterSlice'
+// import type Order from '@/interface'
+type Order ={
+  USVOrgID?: string,
+  USVItemID?: string,
+  USVItemName?: string,
+  USVItemDesc?: string,
+  PayerRemark?: string,
+  TranAmt: number,
+  image:string
+}
 
 const Test: NextPage = () => {
   const dispatch = useAppDispatch()
+
+  const demoOrder : Order[] = [
+    { USVOrgID: 'Edu1', USVItemID: 'Id1', USVItemName: '哈佛学霸养成计划', USVItemDesc: '哈佛学霸养成计划——培养孩子超强学习力', TranAmt: 100, image: '1.jpeg' },
+    { USVOrgID: 'Edu1', USVItemID: 'Id2', USVItemName: '实验课程', USVItemDesc: '实验课程', TranAmt: 100, image: '1.jpeg' },
+    { USVOrgID: 'Edu1', USVItemID: 'Id3', USVItemName: '3-8岁兴趣英语课程', USVItemDesc: '3-8岁兴趣英语课程', TranAmt: 100, image: '1.jpeg' },
+    { USVOrgID: 'Edu1', USVItemID: 'Id4', USVItemName: '体能运动课程', USVItemDesc: '体能运动课程', TranAmt: 100, image: '1.jpeg' },
+    { USVOrgID: 'Edu1', USVItemID: 'Id5', USVItemName: '篮球课程', USVItemDesc: '篮球课程', TranAmt: 100, image: '1.jpeg' },
+    { USVOrgID: 'Edu1', USVItemID: 'Id6', USVItemName: '美术课程', USVItemDesc: '美术课程', TranAmt: 100, image: '1.jpeg' },
+    { USVOrgID: 'Edu1', USVItemID: 'Id7', USVItemName: '奥尔夫音乐课程', USVItemDesc: '奥尔夫音乐课程', TranAmt: 100, image: '1.jpeg' },
+    { USVOrgID: 'Edu1', USVItemID: 'Id8', USVItemName: '早教认知课程', USVItemDesc: '早教认知课程', TranAmt: 100, image: '1.jpeg' },
+    { USVOrgID: 'Edu1', USVItemID: 'Id9', USVItemName: '机器人编程课程', USVItemDesc: '机器人编程课程', TranAmt: 100, image: '1.jpeg' },
+    { USVOrgID: 'Edu1', USVItemID: 'Id10', USVItemName: '戏剧表演课程', USVItemDesc: '戏剧表演课程', TranAmt: 100, image: '1.jpeg' },
+    { USVOrgID: 'Edu1', USVItemID: 'Id11', USVItemName: '非洲鼓课程', USVItemDesc: '非洲鼓课程', TranAmt: 100, image: '1.jpeg' },
+    { USVOrgID: 'Edu1', USVItemID: 'Id12', USVItemName: '钢琴课程', USVItemDesc: '钢琴课程', TranAmt: 100, image: '1.jpeg' },
+    { USVOrgID: 'Edu1', USVItemID: 'Id13', USVItemName: '古筝课程', USVItemDesc: '古筝课程', TranAmt: 100, image: '1.jpeg' },
+  ]
+
   return <Layout title="测试">
     <div className="grid col-span-4 py-6 m-auto xl:grid-cols-3 lg:grid-cols-2 max-w-7xl">
-      <Card key="123" image="1.jpeg" title="哈佛学霸养成计划" descript="共包含四个课程：哈佛学霸养成计划，哈佛学霸学习力之道，哈佛学霸学习力之术，哈佛学霸的学科启蒙应试宝典" amt={1} onAdd={ () => dispatch(increment())}/>
-      <Card key="123" image="1.jpeg" title="实验课程" descript="共包含四个课程：哈佛学霸养成计划，哈佛学霸学习力之道，哈佛学霸学习力之术，哈佛学霸的学科启蒙应试宝典" amt={1} onAdd={ () => dispatch(increment())}/>
-      <Card key="123" image="1.jpeg" title="3-8岁兴趣英语课程" descript="共包含四个课程：哈佛学霸养成计划，哈佛学霸学习力之道，哈佛学霸学习力之术，哈佛学霸的学科启蒙应试宝典" amt={1} onAdd={ () => dispatch(increment())}/>
-      <Card key="123" image="1.jpeg" title="体能运动课程" descript="共包含四个课程：哈佛学霸养成计划，哈佛学霸学习力之道，哈佛学霸学习力之术，哈佛学霸的学科启蒙应试宝典" amt={1} onAdd={ () => dispatch(increment())}/>
-      <Card key="123" image="1.jpeg" title="篮球课程" descript="共包含四个课程：哈佛学霸养成计划，哈佛学霸学习力之道，哈佛学霸学习力之术，哈佛学霸的学科启蒙应试宝典" amt={1} onAdd={ () => dispatch(increment())}/>
-      <Card key="123" image="1.jpeg" title="美术课程" descript="共包含四个课程：哈佛学霸养成计划，哈佛学霸学习力之道，哈佛学霸学习力之术，哈佛学霸的学科启蒙应试宝典" amt={1} onAdd={ () => dispatch(increment())}/>
-      <Card key="123" image="1.jpeg" title="奥尔夫音乐课程" descript="共包含四个课程：哈佛学霸养成计划，哈佛学霸学习力之道，哈佛学霸学习力之术，哈佛学霸的学科启蒙应试宝典" amt={1} onAdd={ () => dispatch(increment())}/>
-      <Card key="123" image="1.jpeg" title="早教认知课程" descript="共包含四个课程：哈佛学霸养成计划，哈佛学霸学习力之道，哈佛学霸学习力之术，哈佛学霸的学科启蒙应试宝典" amt={1} onAdd={ () => dispatch(increment())}/>
-      <Card key="123" image="1.jpeg" title="机器人编程课程" descript="共包含四个课程：哈佛学霸养成计划，哈佛学霸学习力之道，哈佛学霸学习力之术，哈佛学霸的学科启蒙应试宝典" amt={1} onAdd={ () => dispatch(increment())}/>
-      <Card key="123" image="1.jpeg" title="戏剧表演课程" descript="共包含四个课程：哈佛学霸养成计划，哈佛学霸学习力之道，哈佛学霸学习力之术，哈佛学霸的学科启蒙应试宝典" amt={1} onAdd={ () => dispatch(increment())}/>
-      <Card key="123" image="1.jpeg" title="非洲鼓课程" descript="共包含四个课程：哈佛学霸养成计划，哈佛学霸学习力之道，哈佛学霸学习力之术，哈佛学霸的学科启蒙应试宝典" amt={1} onAdd={ () => dispatch(increment())}/>
-      <Card key="123" image="1.jpeg" title="钢琴课程" descript="共包含四个课程：哈佛学霸养成计划，哈佛学霸学习力之道，哈佛学霸学习力之术，哈佛学霸的学科启蒙应试宝典" amt={1} onAdd={ () => dispatch(increment())}/>
-      <Card key="123" image="1.jpeg" title="古筝课程" descript="共包含四个课程：哈佛学霸养成计划，哈佛学霸学习力之道，哈佛学霸学习力之术，哈佛学霸的学科启蒙应试宝典" amt={1} onAdd={ () => dispatch(increment())}/>
+      {demoOrder.map((item, index) => {
+        return <Card key={index} image={item.image} title={item.USVItemName || ''} descript={item.USVItemDesc || ''} amt={item.TranAmt} onAdd={ () => dispatch(increment({ payload: item }))}/>
+      })}
     </div>
   </Layout>
 }
 
-fetch('http://localhost:3000/Subscribe', {
-  method: 'POST',
-  body: JSON.stringify({
-    SubscribeID: '333',
-    body: '444',
-    USVItemDesc: '555',
-  }),
-  headers: {
-    'Content-type': 'application/json;charset=UTF-8',
-  },
-})
-  .then((response) => response.json())
-  .then((json) => console.log(json))
 export default Test

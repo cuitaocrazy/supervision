@@ -3,6 +3,7 @@ var bodyParser = require('body-parser')
 const axios = require('axios')
 const EventEmitter = require('events').EventEmitter
 const sign = require('jws').sign
+var cors = require("cors");
 
 
 // import * as express from 'express';
@@ -14,6 +15,7 @@ const sign = require('jws').sign
 var http = require('http');
 import { SubscribeWithSign } from './API';
 const app = express()
+app.use(cors());
 var server = http.createServer(app);
 import * as cc from './ccClientService/USVClient'
 
@@ -46,7 +48,7 @@ app.post('/preorder', jsonParser, async (req, res) => {
   const result = await axios.post(preOrder, newBody, { headers: { 'Content-Type': 'application/json' } })
   //{ "codeUrl": demoQrUrl, "BankTranId": tradeNo, PayerStub: PayerStub, "BankTranDate": moment(Date.now()).format('YYYYMMDD'), "BankTranTime": moment(Date.now()).format('HHmmss') }
   result.data = { ...result.data, ...{ "USVOrderNo": geneUSVOrderNo(), "BankID": "Bank", "SVOrgID": "Edb" } }
-  res.send(JSON.stringify(result.data));
+  res.send(result.data);
 })
 
 const getStartDateAndDurDaysByItemId = (body: SubscribeWithSign) => {
