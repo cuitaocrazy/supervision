@@ -16,7 +16,7 @@ export CC_NAME=supervision
 export CC_SRC_PATH=${PWD}
 export CC_RUNTIME_LANGUAGE=node
 export CC_VERSION='0.0.1'
-export CC_SEQUENCE="1"
+export CC_SEQUENCE=1
 export CC_END_POLICY=""
 export CC_COLL_CONFIG=""
 export PACKAGE_ID=""
@@ -34,7 +34,7 @@ setGlobals() {
   local PEER_MSP_ID=''
   local PEER_NAME=''
   local PEER_PORT=0
-  println "use env $USI_ORG"
+  println "use env $USING_ORG"
   if [ $USING_ORG == 'bank1' ]; then
     PEER_MSP_ID="Bank1MSP"
     PEER_NAME='bank1'
