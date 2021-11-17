@@ -79,3 +79,6 @@ typings/
 # Compiled TypeScript files
 dist
 
+# fabric dev
+channel-artifacts
+supervision.tar.gz

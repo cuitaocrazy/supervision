@@ -67,6 +67,7 @@ function registerEnrollPeer() {
     Certificate: cacerts/localhost-7054-ca.pem
     OrganizationalUnitIdentifier: admin
 ' >"$PEER_DIR/msp/config.yaml"
+    cp "$PEER_DIR/msp/config.yaml" "$ADMIN_DIR/msp"
   fi
 }
 
