@@ -1,4 +1,4 @@
-export type Order ={
+export interface Order {
   USVOrgID?: string,
   USVItemID?: string,
   USVItemName?: string,

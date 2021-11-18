@@ -1,45 +1,57 @@
 import type { NextPage } from 'next'
 import Layout from '@/components/layout'
 import ShoppingCar from '@/components/ShoppingCar'
-// import { useForm, SubmitHandler } from 'react-hook-form'
 import Router, { useRouter } from 'next/router'
 import { useState } from 'react'
+import { Order } from '@/types/types'
 
-type Order ={
-  USVOrgID?: string,
-  USVItemID?: string,
-  USVItemName?: string,
-  USVItemDesc?: string,
-  PayerRemark?: string,
-  TranAmt: number,
-  image:string
+type State = {
+  chooseOrder? : Order,
+  carList : Order[]
 }
 
 const ShoppingCarList: NextPage = () => {
-  const [chosenLesson, setChosenLesson] = useState<Order>({ TranAmt: 0, image: '' })
   const router = useRouter()
   const { carList } = router.query
   const onSubmit = () => {
-    Router.push({
-      pathname: '/qrCode',
-      query: chosenLesson,
-    })
+    if (state.chooseOrder != null) {
+      Router.push({
+        pathname: '/qrCode',
+        query: state.chooseOrder,
+      })
+    } else {
+      alert('请选择课程')
+    }
   }
-  console.log('aaaaa')
-  console.log(carList)
-  const demoShoppingList : Order[] = carList.map((item: string) => { return JSON.parse(item) })
+  let shoppingList : Order[] = []
+  if (typeof carList === 'object') {
+    shoppingList = carList.map((item: string) => { return JSON.parse(item) })
+  } else if (typeof carList === 'string') {
+    shoppingList.push(JSON.parse(carList))
+  }
 
-  console.log(demoShoppingList)
+  const [state, setState] = useState<State>({ carList: shoppingList })
+  const setChosenLesson = (chooseOrder:Order) => {
+    setState({ ...state, ...{ chooseOrder: chooseOrder } })
+  }
+  const onDelete = (delOrder:Order) => {
+    const newCarList = state.carList
+    for (let i = 0; i < newCarList.length; i++) {
+      if (newCarList[i].USVItemID === delOrder.USVItemID) {
+        newCarList.splice(i, 1)
+        break
+      }
+    }
+    setState({ ...state, ...{ carList: newCarList } })
+  }
 
   // 向后台发送要够买的课程数据
 
   return <Layout title="购物车" >
-    {/* <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-1 py-6 m-auto max-w-7xl"> */}
     <div className="grid grid-cols-1 py-6 m-auto max-w-7xl">
-      {demoShoppingList.map((item, index) => {
-        return <ShoppingCar key={index} image={item.image} title={item.USVItemDesc || ''} amt={item.TranAmt} setChosenLesson={setChosenLesson} order={item} />
+      {state.carList.map((item, index) => {
+        return <ShoppingCar key={index} image={item.image} title={item.USVItemDesc || ''} amt={item.TranAmt} setChosenLesson={setChosenLesson} onDelete={onDelete} order={item} />
       })}
-
       <input type="button" onClick={onSubmit} value="立即支付" className="py-3 my-10 text-sm font-medium text-white rounded-md shadow-md mx-80 bg-secondary-500 focus:outline-none hover:bg-secondary-700 hover:shadow-none"
       ></input>
       </div>

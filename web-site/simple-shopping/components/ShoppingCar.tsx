@@ -1,41 +1,35 @@
 import { FC } from 'react'
+import { useAppDispatch } from '@/app/hook'
+import { decrement } from '@/features/order-cart/counterSlice'
+import { Order } from '@/types/types'
 
-type Order ={
-  USVOrgID?: string,
-  USVItemID?: string,
-  USVItemName?: string,
-  USVItemDesc?: string,
-  PayerRemark?: string,
-  TranAmt: number,
-  image:string
-}
 interface CarProps {
   image: string
   title: string
   amt: number
   setChosenLesson: any
+  onDelete:any
   order: Order
 }
 
 // TODO购物车删除商品
-function deleteFun () {
-  const isDeleteMessage = confirm('你确定要删除商品吗？')
-  // const router = useRouter()
-  if (isDeleteMessage === true) {
-    deleteDate()
-    alert('删除成功')
-  } else if (isDeleteMessage === false) {
-    alert('取消成功')
-  }
-}
-
-function deleteDate () {
-}
 
 const ShoppingCar: FC<CarProps> = (props) => {
+  const dispatch = useAppDispatch()
   const choose = () => {
     props.setChosenLesson(props.order)
     return () => {}
+  }
+
+  const deleteFun = () => {
+    const isDeleteMessage = confirm('你确定要删除商品吗？')
+    // const router = useRouter()
+    if (isDeleteMessage === true) {
+      dispatch(decrement(props.order.USVItemID))
+      props.onDelete(props.order)
+    } else if (isDeleteMessage === false) {
+      alert('取消成功')
+    }
   }
   return <div>
   <div className="flex flex-row justify-center w-1/2 mb-5 bg-white border border-gray-200 rounded-lg shadow-md mx-80">

@@ -1,34 +1,27 @@
 import { createSlice, ReducersMapObject, Action, AnyAction } from '@reduxjs/toolkit'
-export type Order ={
-  USVOrgID?: string,
-  USVItemID?: string,
-  USVItemName?: string,
-  USVItemDesc?: string,
-  PayerRemark?: string,
-  TranAmt: number,
-  image:string
-}
+import { Order } from '@/types/types'
+
+const carListInit : Order[] = []
 
 export const counterSlice = createSlice({
   name: 'orderCartItemCounter',
   initialState: {
     value: 0,
-    carList: [],
+    carList: carListInit,
   },
   reducers: {
     increment: (state, { payload }) => {
       state.value += 1
       state.carList.push(payload.payload)
     },
-    decrement: (state, { payload }) => {
-      state.value -= 1
-      // for (let i = 0; i < state.carList.length; i++) {
-      //   if (state.carList.USVItemID === payload.payload.USVItemID) {
-      //     state.carList.splice(i, 1)
-      //     state.value -= 1
-      //     break
-      //   }
-      // }
+    decrement: (state, { payload }) => { // payload为USVItemID
+      for (let i = 0; i < state.carList.length; i++) {
+        if (state.carList[i].USVItemID === payload) {
+          state.carList.splice(i, 1)
+          state.value -= 1
+          break
+        }
+      }
     },
     clear: (state) => {
       state.value = 0

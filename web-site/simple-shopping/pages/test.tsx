@@ -3,16 +3,18 @@ import Layout from '@/components/layout'
 import Card from '@/components/Card'
 import { useAppDispatch } from '@/app/hook'
 import { increment } from '@/features/order-cart/counterSlice'
-// import type Order from '@/interface'
-type Order ={
-  USVOrgID?: string,
-  USVItemID?: string,
-  USVItemName?: string,
-  USVItemDesc?: string,
-  PayerRemark?: string,
-  TranAmt: number,
-  image:string
-}
+// import { Order } from '../types/types'
+import { Order } from '@/types/types'
+
+// type Order ={
+//   USVOrgID?: string,
+//   USVItemID?: string,
+//   USVItemName?: string,
+//   USVItemDesc?: string,
+//   PayerRemark?: string,
+//   TranAmt: number,
+//   image:string
+// }
 
 const Test: NextPage = () => {
   const dispatch = useAppDispatch()
@@ -36,7 +38,7 @@ const Test: NextPage = () => {
   return <Layout title="测试">
     <div className="grid col-span-4 py-6 m-auto xl:grid-cols-3 lg:grid-cols-2 max-w-7xl">
       {demoOrder.map((item, index) => {
-        return <Card key={index} image={item.image} title={item.USVItemName || ''} descript={item.USVItemDesc || ''} amt={item.TranAmt} onAdd={ () => dispatch(increment({ payload: item }))}/>
+        return <Card key={index} item = {item} image={item.image} title={item.USVItemName || ''} descript={item.USVItemDesc || ''} amt={item.TranAmt} onAdd={ () => dispatch(increment({ payload: item }))}/>
       })}
     </div>
   </Layout>
