@@ -60,12 +60,18 @@ function registerEnrollPeer() {
     cp "$PEER_DIR/msp/cacerts/"* "$ORG_DIR/ca/ca.$ORG_DOMAIN-cert.pem"
     echo 'NodeOUs:
   Enable: true
+  ClientOUIdentifier:
+    Certificate: cacerts/localhost-7054-ca.pem
+    OrganizationalUnitIdentifier: client
   PeerOUIdentifier:
     Certificate: cacerts/localhost-7054-ca.pem
     OrganizationalUnitIdentifier: peer
   AdminOUIdentifier:
     Certificate: cacerts/localhost-7054-ca.pem
     OrganizationalUnitIdentifier: admin
+  OrdererOUIdentifier:
+    Certificate: cacerts/localhost-7054-ca.pem
+    OrganizationalUnitIdentifier: orderer
 ' >"$PEER_DIR/msp/config.yaml"
     cp "$PEER_DIR/msp/config.yaml" "$ADMIN_DIR/msp"
   fi
@@ -105,12 +111,18 @@ function registerEnrollOrderer() {
     cp "$ORDERER_DIR/tls/tlscacerts/"* "$PWD/organizations/ordererOrganizations/$DOMAIN/msp/tlscacerts/tlsca.$DOMAIN-cert.pem"
     echo 'NodeOUs:
   Enable: true
+  ClientOUIdentifier:
+    Certificate: cacerts/localhost-7054-ca.pem
+    OrganizationalUnitIdentifier: client
+  PeerOUIdentifier:
+    Certificate: cacerts/localhost-7054-ca.pem
+    OrganizationalUnitIdentifier: peer
   AdminOUIdentifier:
     Certificate: cacerts/localhost-7054-ca.pem
     OrganizationalUnitIdentifier: admin
   OrdererOUIdentifier:
     Certificate: cacerts/localhost-7054-ca.pem
-    OrganizationalUnitIdentifier: orderer
+    OrganizationalUnitIdentifier: orderer 
 ' >"$PWD/organizations/ordererOrganizations/$DOMAIN/orderers/orderer.yadadev.com/msp/config.yaml"
   fi
 }

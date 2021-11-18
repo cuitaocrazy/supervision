@@ -74,29 +74,29 @@ joinChannel() {
 	verifyResult $res "After $MAX_RETRY attempts, peer0.${USING_ORG} has failed to join channel '$CHANNEL_NAME' "
 }
 
-FABRIC_CFG_PATH=${PWD}/config/
+# FABRIC_CFG_PATH=${PWD}/config/
 
 ## Create channel genesis block
 infoln "Generating channel genesis block '${CHANNEL_NAME}.block'"
-# createChannelGenesisBlock
+createChannelGenesisBlock
 
 # FABRIC_CFG_PATH=$PWD/../config/
 export BLOCKFILE="./channel-artifacts/${CHANNEL_NAME}.block"
 
 ## Create channel
 infoln "Creating channel ${CHANNEL_NAME}"
-# createChannel
-# successln "Channel '$CHANNEL_NAME' created"
+createChannel
+successln "Channel '$CHANNEL_NAME' created"
 
-## Join all the peers to the channel
+# Join all the peers to the channel
 infoln "Joining bank1 peer to the channel..."
-# joinChannel bank1
+joinChannel bank1
 infoln "Joining edb peer to the channel..."
-# joinChannel edb
+joinChannel edb
 infoln "Joining edu1 peer to the channel..."
-# joinChannel edu1
+joinChannel edu1
 infoln "Joining edu2 peer to the channel..."
-# joinChannel edu2
+joinChannel edu2
 
 ## Set the anchor peers for each org in the channel
 # infoln "Setting anchor peer for org1..."

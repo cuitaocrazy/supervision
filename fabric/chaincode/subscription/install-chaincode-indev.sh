@@ -38,7 +38,7 @@ queryInstalled() {
 }
 
 approveForMyOrg() {
-    # setGlobals $1
+    setGlobals $1
     set -x
     peer lifecycle chaincode approveformyorg -o localhost:7050 \
         --ordererTLSHostnameOverride orderer.yadadev.com \
@@ -54,12 +54,14 @@ approveForMyOrg() {
     successln "Chaincode definition approved on orderer on channel '$CHANNEL_NAME'"
 }
 
+# . scripts/createChannel.sh
+
 # packageChaincode
 
-# installChaincode "bank1"
-# installChaincode "edb"
-# installChaincode "edu1"
-# installChaincode "edu2"
+installChaincode "bank1"
+installChaincode "edb"
+installChaincode "edu1"
+installChaincode "edu2"
 
 queryInstalled "bank1"
-approveForMyOrg
+approveForMyOrg "bank1"
