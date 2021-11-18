@@ -19,7 +19,7 @@ const Detail: NextPage = () => {
       <div className="md:w-full">
         <img src={order.image} className="w-full rounded-md" />
       </div>
-      <div className="md:w-full">
+      <div className="self-start md:w-full">
         <div className="mb-1 text-2xl text-red-500">¥{order.TranAmt}</div>
         <div className="mb-3 text-lg font-medium text-primary-800">{order.USVItemName}</div>
         <div className="mb-5 text-base leading-6 text-primary-500">{order.USVItemDesc}</div>

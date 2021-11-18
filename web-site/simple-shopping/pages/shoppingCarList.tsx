@@ -48,7 +48,7 @@ const ShoppingCarList: NextPage = () => {
   // 向后台发送要够买的课程数据
 
   return <Layout title="购物车" >
-    <div className="flex flex-col items-center max-w-full py-6 m-auto">
+    <div className="flex flex-col items-center py-6 m-auto max-w-7xl">
       {state.carList.map((item, index) => {
         return <ShoppingCar key={index} image={item.image} title={item.USVItemDesc || ''} amt={item.TranAmt} setChosenLesson={setChosenLesson} onDelete={onDelete} order={item} />
       })}
