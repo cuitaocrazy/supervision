@@ -48,11 +48,11 @@ const ShoppingCarList: NextPage = () => {
   // 向后台发送要够买的课程数据
 
   return <Layout title="购物车" >
-    <div className="grid grid-cols-1 py-6 m-auto max-w-7xl">
+    <div className="grid grid-cols-1 py-6 m-auto border-2 border-red-900 max-w-7xl">
       {state.carList.map((item, index) => {
         return <ShoppingCar key={index} image={item.image} title={item.USVItemDesc || ''} amt={item.TranAmt} setChosenLesson={setChosenLesson} onDelete={onDelete} order={item} />
       })}
-      <input type="button" onClick={onSubmit} value="立即支付" className="py-3 my-10 text-sm font-medium text-white rounded-md shadow-md mx-80 bg-secondary-500 focus:outline-none hover:bg-secondary-700 hover:shadow-none"
+      <input type="button" onClick={onSubmit} value="立即支付" className="px-3 py-3 my-10 text-sm font-medium text-white rounded-md shadow-md mx-80 bg-secondary-500 focus:outline-none hover:bg-secondary-700 hover:shadow-none"
       ></input>
       </div>
   </Layout>

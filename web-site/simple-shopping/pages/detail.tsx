@@ -16,10 +16,10 @@ const Detail: NextPage = () => {
   const dispatch = useAppDispatch()
   return <Layout title="详细信息">
     <div className="flex flex-col items-center justify-center p-8 bg-primary-100">
-      <div className="w-4/5">
+      <div className="md:w-4/5">
         <img src={order.image} className="w-full rounded-md" />
       </div>
-      <div className="w-4/5">
+      <div className="md:w-4/5">
         <div className="mb-1 text-2xl text-red-500">¥{order.TranAmt}</div>
         <div className="mb-3 text-lg font-medium text-primary-800">{order.USVItemName}</div>
         <div className="mb-5 text-base leading-6 text-primary-500">{order.USVItemDesc}</div>
