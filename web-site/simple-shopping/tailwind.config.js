@@ -10,6 +10,12 @@ module.exports = {
         secondary: colors.blue,
         error: colors.red,
       },
+      screens: {
+        sm1: '414px',
+        sm2: '375px',
+        sm3: '320px',
+      },
+
       // boxShadow: {
       //   glow: '0 0 10px rgba(59, 130, 246, 1)'
       // }
