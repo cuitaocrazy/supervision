@@ -24,6 +24,7 @@ export const listenCreateResult = async (subscribeID: string, USVId: string, emi
 	const network = await gateway.getNetwork(channelName)
 	const contract = network.getContract(chainCodeName, subscribeContract)
 	const listener = async (event: ContractEvent) => {
+		console.log('eventname:' + event.eventName)
 		if (event.eventName.indexOf("create") > -1 && event.eventName.indexOf(USVId) > -1) {
 			const payLoad = event.payload.toString()
 			const payLoadSubscribeId = JSON.parse(payLoad).SubscribeID

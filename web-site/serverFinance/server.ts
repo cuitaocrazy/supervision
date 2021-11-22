@@ -14,27 +14,40 @@ const port = 3001
 var textParser = bodyParser.text();
 var jsonParser = bodyParser.json();
 
-app.use(express.static('public'))
+app.use(express.static('out'))
 const demoQrUrl = "http://localhost:3001/pay"
 
 let demoOrderInfo = {};//demo中模拟数据库中的保存信息
 
 app.post('/pay', jsonParser, async (req, res) => { //todo 进行支付 
-  const subscribeId = await cc.createSubscribe(req.body)
+  const BankTranID = req.body.BankTranID
+  const orderInfo = demoOrderInfo[BankTranID]
+  const subscribeId = await cc.createSubscribe(orderInfo)
   if (subscribeId === "FAIL") {
-    res.send(500)
+    res.send({ "result": "FAIL" })
   } else {
     res.send({ "result": subscribeId })
   }
 })
 
+
+// app.post('/paytest', jsonParser, async (req, res) => { //todo 进行支付 
+//   const subscribeId = await cc.createSubscribe(req.body)
+
+//   if (subscribeId === "FAIL") {
+//     res.send({ "result": "FAIL" })
+//   } else {
+//     res.send({ "result": subscribeId })
+//   }
+// })
+
 app.get('/pay', jsonParser, async (req, res) => { //二维码扫码后返回信息
-  const { bankTranId, USVOrderNo, BankID, SVOrgID } = req.query
-  const orderInfo = demoOrderInfo[bankTranId]
+  const { BankTranID, USVOrderNo, BankID, SVOrgID } = req.query
+  const orderInfo = demoOrderInfo[BankTranID]
   orderInfo.USVOrderNo = USVOrderNo
   orderInfo.BankID = BankID
   orderInfo.SVOrgID = SVOrgID
-  res.send({ "result": orderInfo })
+  res.redirect(301, '/pay.html?BankTranID=' + BankTranID);
 })
 
 
@@ -47,11 +60,15 @@ app.post('/preOrder', jsonParser, (req, res) => {
   }
   const tradeNo = geneTradeNo()
   const PayerStub = genePayerStub()
-  mockSaveLocalDB({ ...req.body, ...{ "BankTranId": tradeNo, PayerStub: PayerStub, "BankTranDate": moment(Date.now()).format('YYYYMMDD'), "BankTranTime": moment(Date.now()).format('HHmmss') } })
-  res.send({ "codeUrl": demoQrUrl, "BankTranId": tradeNo })
+  mockSaveLocalDB({ ...req.body, ...{ "BankTranID": tradeNo, PayerStub: PayerStub, "BankTranDate": moment(Date.now()).format('YYYYMMDD'), "BankTranTime": moment(Date.now()).format('HHmmss') } })
+  res.send({ "codeUrl": demoQrUrl, "BankTranID": tradeNo })
 })
 
+
+
+
 const mockSaveLocalDB = (orderInfo: Subscribe) => {
+  orderInfo.TranAmt = yuanToFen(orderInfo.TranAmt)
   demoOrderInfo[orderInfo.BankTranID] = orderInfo
 }
 
@@ -59,7 +76,8 @@ const mockSaveLocalDB = (orderInfo: Subscribe) => {
 
 
 const geneTradeNo = () => { //获取预订单号
-  return v4()
+  let tradeNo: string = v4()
+  return tradeNo.replace('-', '').replace('-', '').replace('-', '').replace('-', '')
 }
 
 const genePayerStub = () => { //获取存根
@@ -70,6 +88,14 @@ const genePayerStub = () => { //获取存根
 
 const getKey = (appId: string) => { //获取key
   return "abcdef"
+}
+
+const yuanToFen = (tranAmtYuan: string | number) => {
+  if (typeof tranAmtYuan === 'number') {
+    return tranAmtYuan * 100
+  } else {
+    return parseFloat(tranAmtYuan) * 100
+  }
 }
 
 

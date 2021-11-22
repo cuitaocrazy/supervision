@@ -37,7 +37,7 @@ export async function createSubscribe(item: Subscribe) {
 		statefulTxn.setEndorsingPeers(channelPeers)
 		const subscribeID = await statefulTxn.submit()
 		gateway.disconnect()
-		return subscribeID
+		return subscribeID.toString()
 	} catch (error) {
 		console.error(`******** FAILED to submit bid: ${error}`)
 		return "FAIL"

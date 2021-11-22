@@ -2,28 +2,35 @@ import type { NextPage } from 'next'
 import QRCode from 'qrcode.react'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
+import { io } from 'socket.io-client'
+import { decrement } from '@/features/order-cart/counterSlice'
+import { useAppDispatch } from '@/app/hook'
 
 /** 二维码支付页面 */
 const preOrderURL = 'http://localhost:3004/preOrder'
 
 type UrlInfo = {
   codeUrl:string,
-  BankTranId:string,
+  BankTranID:string,
   BankID:string,
   SVOrgID:string,
   USVOrderNo:string
 }
 
 const qrCode:NextPage = () => {
-// const qrCode = () => {
+  const dispatch = useAppDispatch()
+  const socket = io('http://localhost:3004')
+  socket.on('open', () => {
+    console.log('socket io is open !')
+  })
+
   const router = useRouter()
-  console.log(router.query)
   const { USVOrgID, USVItemID, USVItemName, USVItemDesc, TranAmt } = router.query
-  const [qrCodeUrl, setQrCodeUrl] = useState({ codeUrl: '', BankTranId: '', BankID: '', SVOrgID: '', USVOrderNo: '' })
+  const [qrCodeUrl, setQrCodeUrl] = useState({ codeUrl: '', BankTranID: '', BankID: '', SVOrgID: '', USVOrderNo: '' })
 
   const getUrl = (urlInfo:UrlInfo) => {
-    const { codeUrl, BankTranId, USVOrderNo, BankID, SVOrgID } = urlInfo
-    return codeUrl + '&BankTranId=' + BankTranId + '&BankID=' + BankID + '&SVOrgID=' + SVOrgID + '&USVOrderNo=' + USVOrderNo
+    const { codeUrl, BankTranID, USVOrderNo, BankID, SVOrgID } = urlInfo
+    return codeUrl + '?BankTranID=' + BankTranID + '&BankID=' + BankID + '&SVOrgID=' + SVOrgID + '&USVOrderNo=' + USVOrderNo
   }
 
   useEffect(() => {
@@ -42,10 +49,18 @@ const qrCode:NextPage = () => {
       },
     }).then(res => res.json())
       .then((json) => {
-        const { codeUrl, BankTranId, USVOrderNo, BankID, SVOrgID } = json
-        const urlInfo : UrlInfo = { codeUrl, BankTranId, USVOrderNo, BankID, SVOrgID }
-        // qrCodeurl = codeUrl + '&BankTranId=' + BankTranId + '&BankID=' + BankID + '&SVOrgID=' + SVOrgID + '&USVOrderNo=' + USVOrderNo
-        // setQrCodeUrl(codeUrl + '&BankTranId=' + BankTranId + '&BankID=' + BankID + '&SVOrgID=' + SVOrgID + '&USVOrderNo=' + USVOrderNo)
+        const { codeUrl, BankTranID, USVOrderNo, BankID, SVOrgID } = json
+        const urlInfo : UrlInfo = { codeUrl, BankTranID, USVOrderNo, BankID, SVOrgID }
+        socket.emit('pay', USVOrderNo)
+        socket.on(USVOrderNo + '_create', () => {
+          const confirmResult = confirm('支付成功，是否返回首页？')
+          if (confirmResult) {
+            dispatch(decrement(USVItemID))
+            router.push('/test')
+          }
+        })
+        // qrCodeurl = codeUrl + '&BankTranID=' + BankTranID + '&BankID=' + BankID + '&SVOrgID=' + SVOrgID + '&USVOrderNo=' + USVOrderNo
+        // setQrCodeUrl(codeUrl + '&BankTranID=' + BankTranID + '&BankID=' + BankID + '&SVOrgID=' + SVOrgID + '&USVOrderNo=' + USVOrderNo)
         setQrCodeUrl(urlInfo)
       })
   }, [])
@@ -56,6 +71,7 @@ const qrCode:NextPage = () => {
     <div className="flex justify-center">
       <QRCode value={getUrl(qrCodeUrl)} renderAs="svg" size={200} imageSettings={{ src: 'https://static.zpao.com/favicon.png', height: 50, width: 50, excavate: true }}></QRCode>
     </div>
+    <div>{getUrl(qrCodeUrl)}</div>
     <div className="m-2 text-sm text-center text-gray-600">请您在&nbsp;<span className="text-red-500">23时59分43秒</span>&nbsp;内完成支付，否则订单会被自动取消</div>
   </>
 }
