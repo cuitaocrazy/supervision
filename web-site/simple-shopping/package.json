@@ -8,6 +8,24 @@
     "start": "next start",
     "lint": "next lint"
   },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
   "dependencies": {
     "@reduxjs/toolkit": "^1.6.2",
     "@typescript-eslint/eslint-plugin": "^5.1.0",
@@ -26,7 +44,41 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-hook-form": "^7.16.1",
-    "react-redux": "^7.2.5"
+    "react-redux": "^7.2.5",
+    "@capacitor/app": "1.0.6",
+    "@capacitor/core": "3.3.2",
+    "@capacitor/haptics": "1.1.3",
+    "@capacitor/keyboard": "1.1.3",
+    "@capacitor/status-bar": "1.0.6",
+    "@ionic/react": "^5.5.0",
+    "@ionic/react-router": "^5.5.0",
+    "@testing-library/jest-dom": "^5.11.9",
+    "@testing-library/react": "^11.2.5",
+    "@testing-library/user-event": "^12.6.3",
+    "@types/jest": "^26.0.20",
+    "@types/node": "^12.19.15",
+    "@types/react": "^16.14.3",
+    "@types/react-dom": "^16.9.10",
+    "@types/react-router": "^5.1.11",
+    "@types/react-router-dom": "^5.1.7",
+    "ionicons": "^5.4.0",
+    "react-router": "^5.2.0",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "4.0.2",
+    "typescript": "^4.1.3",
+    "web-vitals": "^0.2.4",
+    "workbox-background-sync": "^5.1.4",
+    "workbox-broadcast-update": "^5.1.4",
+    "workbox-cacheable-response": "^5.1.4",
+    "workbox-core": "^5.1.4",
+    "workbox-expiration": "^5.1.4",
+    "workbox-google-analytics": "^5.1.4",
+    "workbox-navigation-preload": "^5.1.4",
+    "workbox-precaching": "^5.1.4",
+    "workbox-range-requests": "^5.1.4",
+    "workbox-routing": "^5.1.4",
+    "workbox-strategies": "^5.1.4",
+    "workbox-streams": "^5.1.4"
   },
   "devDependencies": {
     "@types/qrcode.react": "^1.0.2",
@@ -36,6 +88,8 @@
     "eslint-config-next": "11.1.2",
     "postcss": "^8.3.8",
     "tailwindcss": "^2.2.15",
-    "typescript": "4.4.3"
-  }
+    "typescript": "4.4.3",
+    "@capacitor/cli": "3.3.2"
+  },
+  "description": "An Ionic project"
 }

@@ -5,6 +5,20 @@ import { useAppDispatch } from '@/app/hook'
 import { increment } from '@/features/order-cart/counterSlice'
 // import { Order } from '../types/types'
 import { Order } from '@/types/types'
+import {
+  IonBackButton,
+  IonButtons,
+  IonCheckbox,
+  IonContent,
+  IonHeader,
+  IonItem,
+  IonLabel,
+  IonList,
+  IonPage,
+  IonTitle,
+  IonToolbar,
+  IonListHeader,
+} from '@ionic/react'
 
 // type Order ={
 //   USVOrgID?: string,
@@ -35,13 +49,48 @@ const Test: NextPage = () => {
     { USVOrgID: 'Edu1', USVItemID: 'Id13', USVItemName: '古筝课程', USVItemDesc: '古筝课程', TranAmt: 100, image: '1.jpeg' },
   ]
 
-  return <Layout title="测试">
-    <div className="grid col-span-4 py-6 m-auto xl:grid-cols-3 lg:grid-cols-2 max-w-7xl">
-      {demoOrder.map((item, index) => {
-        return <Card key={index} item = {item} image={item.image} title={item.USVItemName || ''} descript={item.USVItemDesc || ''} amt={item.TranAmt} onAdd={ () => dispatch(increment({ payload: item }))}/>
-      })}
-    </div>
-  </Layout>
+  return (
+  // <IonPage>
+  //   <IonHeader>
+  //     <IonToolbar>
+  //       <IonButtons>
+  //         <IonBackButton defaultHref="" />
+  //       </IonButtons>
+  //       <IonTitle>111144</IonTitle>
+  //     </IonToolbar>
+  //   </IonHeader>
+  //   <IonContent>
+  //   <h2 className="text-red-500 bg-green-200">Built with Ionic React</h2>
+  //       <p>
+  //         <b>Disclaimer: this app does not actually play audio (due to licensing and lack of public APIs reasons)</b>
+  //       </p>
+  //   {/* <Layout title="测试">
+  //       <div className="grid col-span-4 py-6 m-auto xl:grid-cols-3 lg:grid-cols-2 max-w-7xl">
+  //       {demoOrder.map((item, index) => {
+  //         return <Card key={index} item = {item} image={item.image} title={item.USVItemName || ''} descript={item.USVItemDesc || ''} amt={item.TranAmt} onAdd={ () => dispatch(increment({ payload: item }))}/>
+  //       })}
+  //       </div>
+  //       <div>3333</div>
+  //     </Layout> */}
+  //   </IonContent>
+  // </IonPage>
+  <IonPage>
+  <IonHeader>
+    <IonToolbar>
+      <IonTitle>Tab 1</IonTitle>
+    </IonToolbar>
+  </IonHeader>
+  <IonContent fullscreen>
+    <IonHeader collapse="condense">
+      <IonToolbar>
+        <IonTitle size="large">Tab 1</IonTitle>
+      </IonToolbar>
+    </IonHeader>
+4444
+  </IonContent>
+</IonPage>
+
+  )
 }
 
 export default Test
