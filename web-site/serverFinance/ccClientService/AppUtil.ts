@@ -11,9 +11,8 @@ import * as path from 'path'
 
 
 export async function buildOrg(org: string) {
-	// todo 修改为实际地址
 	const ccpPath = path.resolve(__dirname, 'CCP',
-		'gateways', org + ' Gateway.json')
+		'gateways', org.substring(0, org.length - 3) + ' Gateway.json')
 	const fileExists = fs.existsSync(ccpPath)
 	if (!fileExists) {
 		throw new Error(`no such file or directory: ${ccpPath}`)

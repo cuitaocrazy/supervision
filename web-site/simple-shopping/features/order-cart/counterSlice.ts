@@ -14,14 +14,18 @@ export const counterSlice = createSlice({
       state.value += 1
       state.carList.push(payload.payload)
     },
-    decrement: (state, { payload }) => { // payload为USVItemID
-      for (let i = 0; i < state.carList.length; i++) {
-        if (state.carList[i].USVItemID === payload) {
-          state.carList.splice(i, 1)
-          state.value -= 1
-          break
-        }
-      }
+    // decrement: (state, { payload }) => {
+    //   for (let i = 0; i < state.carList.length; i++) {
+    //     if (state.carList[i].USVItemID === payload) {
+    //       state.carList.splice(i, 1)
+    //       state.value -= 1
+    //       break
+    //     }
+    //   }
+    // },
+    decrement: (state, { payload }) => {
+      state.carList.splice(payload, 1)
+      state.value -= 1
     },
     clear: (state) => {
       state.value = 0

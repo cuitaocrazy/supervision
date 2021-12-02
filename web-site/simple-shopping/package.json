@@ -10,6 +10,10 @@
     "export": "next build && next export"
   },
   "dependencies": {
+    "@capacitor/android": "^3.3.2",
+    "@capacitor/cli": "^3.3.2",
+    "@capacitor/core": "^3.3.2",
+    "@capacitor/ios": "^3.3.2",
     "@reduxjs/toolkit": "^1.6.2",
     "@typescript-eslint/eslint-plugin": "^5.1.0",
     "axios": "^0.21.4",

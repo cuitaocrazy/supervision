@@ -1,9 +1,6 @@
-// import * as express from 'express';
-// import * as bodyParser from 'body-parser';
-const express = require('express')
-const bodyParser = require('body-parser')
-const moment = require('moment')
-// const uuidv4 = require('uuid')
+import * as express from 'express';
+import * as bodyParser from 'express';
+import * as moment from 'moment';
 import { v4 } from 'uuid'
 import { SubscribeWithSign, Subscribe } from './API';
 import { verify } from 'jws'
@@ -20,7 +17,7 @@ const demoQrUrl = "http://localhost:3001/pay"
 let demoOrderInfo = {};//demo中模拟数据库中的保存信息
 
 app.post('/pay', jsonParser, async (req, res) => { //todo 进行支付 
-  const BankTranID = req.body.BankTranID
+  const BankTranID: string = req.body.BankTranID
   const orderInfo = demoOrderInfo[BankTranID]
   const subscribeId = await cc.createSubscribe(orderInfo)
   if (subscribeId === "FAIL") {
@@ -31,19 +28,19 @@ app.post('/pay', jsonParser, async (req, res) => { //todo 进行支付
 })
 
 
-// app.post('/paytest', jsonParser, async (req, res) => { //todo 进行支付 
-//   const subscribeId = await cc.createSubscribe(req.body)
+app.post('/paytest', jsonParser, async (req, res) => { //todo 进行支付 
+  const subscribeId = await cc.createSubscribe(req.body)
 
-//   if (subscribeId === "FAIL") {
-//     res.send({ "result": "FAIL" })
-//   } else {
-//     res.send({ "result": subscribeId })
-//   }
-// })
+  if (subscribeId === "FAIL") {
+    res.send({ "result": "FAIL" })
+  } else {
+    res.send({ "result": subscribeId })
+  }
+})
 
 app.get('/pay', jsonParser, async (req, res) => { //二维码扫码后返回信息
   const { BankTranID, USVOrderNo, BankID, SVOrgID } = req.query
-  const orderInfo = demoOrderInfo[BankTranID]
+  const orderInfo = demoOrderInfo[BankTranID as string]
   orderInfo.USVOrderNo = USVOrderNo
   orderInfo.BankID = BankID
   orderInfo.SVOrgID = SVOrgID
