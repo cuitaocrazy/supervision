@@ -5,6 +5,7 @@ import { increment } from '@/features/order-cart/counterSlice'
 import { useRouter } from 'next/router'
 import { Order } from '@/types/types'
 
+// 商品详细信息页面
 const Detail: NextPage = () => {
   const router = useRouter()
   const { item } = router.query
