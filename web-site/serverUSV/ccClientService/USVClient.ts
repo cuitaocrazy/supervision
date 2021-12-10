@@ -13,6 +13,7 @@ const appUser = 'Edu1 Admin'
 const cancelSubscribeStr = 'cancel'
 const subscribeContract = 'SubscriptionContract'
 const chainCode = "subscription"  //"sadf"
+const channelName = "edb-supervision-channel"
 
 export const listenCreateResult = async (subscribeID: string, USVId: string, emitter) => {
 	const gateway = new Gateway()
@@ -74,20 +75,7 @@ const getChannelPeers = async (gateway: Gateway, channelName: string, peerNames:
 	try {
 		const network = await gateway.getNetwork(channelName);
 		const channel = network.getChannel();
-		const channelPeers = [];
-		for (const peer of channel.getEndorsers()) {
-			const inArray = (search, array) => {
-				for (var i in array) {
-					if (array[i] == search) {
-						return true;
-					}
-				}
-				return false;
-			}
-			if (inArray(peer.name, peerNames)) {
-				channelPeers.push(peer);
-			}
-		}
+		const channelPeers = channel.getEndorsers().filter(peer => peerNames.includes(peer.name))
 		return channelPeers;
 	}
 	catch (error) {
@@ -96,10 +84,9 @@ const getChannelPeers = async (gateway: Gateway, channelName: string, peerNames:
 }
 
 const getChannelName = () => {
-	return "edb-supervision-channel"
+	return channelName
 }
 
-//todo
 const getChainCodeName = () => {
 	return chainCode
 }

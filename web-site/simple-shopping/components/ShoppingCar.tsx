@@ -10,6 +10,7 @@ interface CarProps {
   setChosenLesson: any
   onDelete:any
   order: Order
+  keyIndex:number
 }
 
 // TODO购物车删除商品
@@ -23,10 +24,11 @@ const ShoppingCar: FC<CarProps> = (props) => {
 
   const deleteFun = () => {
     const isDeleteMessage = confirm('你确定要删除商品吗？')
-    // const router = useRouter()
     if (isDeleteMessage === true) {
-      dispatch(decrement(props.order.USVItemID))
-      props.onDelete(props.order)
+      // dispatch(decrement(props.order.USVItemID))
+      console.log(props.keyIndex)
+      dispatch(decrement(props.keyIndex))
+      props.onDelete(props.keyIndex)
     } else if (isDeleteMessage === false) {
       alert('取消成功')
     }

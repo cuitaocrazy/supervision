@@ -5,6 +5,7 @@ import Router, { useRouter } from 'next/router'
 import { useState } from 'react'
 import { Order } from '@/types/types'
 
+const pathname = '/qrCode'
 type State = {
   chooseOrder? : Order,
   carList : Order[]
@@ -16,7 +17,7 @@ const ShoppingCarList: NextPage = () => {
   const onSubmit = () => {
     if (state.chooseOrder != null) {
       Router.push({
-        pathname: '/qrCode',
+        pathname: pathname,
         query: state.chooseOrder as any,
       })
     } else {
@@ -34,14 +35,10 @@ const ShoppingCarList: NextPage = () => {
   const setChosenLesson = (chooseOrder:Order) => {
     setState({ ...state, ...{ chooseOrder: chooseOrder } })
   }
-  const onDelete = (delOrder:Order) => {
+
+  const onDelete = (key:number) => {
     const newCarList = state.carList
-    for (let i = 0; i < newCarList.length; i++) {
-      if (newCarList[i].USVItemID === delOrder.USVItemID) {
-        newCarList.splice(i, 1)
-        break
-      }
-    }
+    newCarList.splice(key, 1)
     setState({ ...state, ...{ carList: newCarList } })
   }
 
@@ -50,7 +47,7 @@ const ShoppingCarList: NextPage = () => {
   return <Layout title="购物车" >
     <div className="grid grid-cols-1 py-6 m-auto max-w-7xl">
       {state.carList.map((item, index) => {
-        return <ShoppingCar key={index} image={item.image} title={item.USVItemDesc || ''} amt={item.TranAmt} setChosenLesson={setChosenLesson} onDelete={onDelete} order={item} />
+        return <ShoppingCar key={index} keyIndex={index} image={item.image} title={item.USVItemDesc || ''} amt={item.TranAmt} setChosenLesson={setChosenLesson} onDelete={onDelete} order={item} />
       })}
       <input type="button" onClick={onSubmit} value="立即支付" className="py-3 my-10 text-sm font-medium text-white rounded-md shadow-md mx-80 bg-secondary-500 focus:outline-none hover:bg-secondary-700 hover:shadow-none"
       ></input>
