@@ -1,6 +1,7 @@
 import { NextPage } from "next";
 import Layout from "../components/layout";
 
+// 用户信息页面
 const userInfo:NextPage=()=>{
  return <div>
    <Layout>
