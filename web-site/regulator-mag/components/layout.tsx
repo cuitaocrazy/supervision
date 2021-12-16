@@ -5,7 +5,7 @@ import Router from 'next/router'
 const Layout:FC=(props)=>{
   return (
     <div className="flex bg-gray-700 shadow-xl w-full">
-      <aside className="border border-red-300 flex flex-col px-10 space-y-16 pt-16  mr-2 items-center justify-start rounded-tl-xl  rounded-bl-xl bg-gray-800 shadow-lg">
+      <aside className="flex flex-col px-10 space-y-16 pt-16  mr-2 items-center justify-start rounded-tl-xl  rounded-bl-xl bg-gray-800 shadow-lg">
         <div className="flex items-center justify-center shadow-lg">
           <h1 className="text-white font-black text-xl break-normal bg-blue-700 rounded-md p-2">监管机构管理端</h1>
         </div>
