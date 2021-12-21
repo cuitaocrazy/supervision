@@ -13,7 +13,10 @@ VERBOSE="$4"
 : ${MAX_RETRY:="5"}
 : ${VERBOSE:="false"}
 
+export BLOCKFILE="./channel-artifacts/${CHANNEL_NAME}.block"
+
 if [ ! -d "channel-artifacts" ]; then
+	# 目录不存在，创建目录
 	mkdir channel-artifacts
 fi
 
@@ -25,7 +28,7 @@ createChannelGenesisBlock() {
 	set -x
 	configtxgen \
 		-profile YadaDevOrgsApplicationGenesis \
-		-outputBlock ./channel-artifacts/${CHANNEL_NAME}.block \
+		-outputBlock ${BLOCKFILE} \
 		-channelID $CHANNEL_NAME
 	res=$?
 	{ set +x; } 2>/dev/null
@@ -74,34 +77,59 @@ joinChannel() {
 	verifyResult $res "After $MAX_RETRY attempts, peer0.${USING_ORG} has failed to join channel '$CHANNEL_NAME' "
 }
 
-# FABRIC_CFG_PATH=${PWD}/config/
+listChannel() {
+	println "尝试列出渠道 ${CHANNEL_NAME}"
+	local LIST_RESULT="$(osnadmin channel list --channelID $CHANNEL_NAME \
+			-o localhost:7053 \
+			--ca-file $ORDERER_CA \
+			--client-cert $ORDERER_ADMIN_TLS_SIGN_CERT \
+			--client-key $ORDERER_ADMIN_TLS_PRIVATE_KEY 2>&1)"
+	println "${LIST_RESULT}"
+	if [[ ${LIST_RESULT} == "Status: 200"* ]] ;
+	then
+		return 0
+	else
+		return 1
+	fi
+}
 
-## Create channel genesis block
-infoln "Generating channel genesis block '${CHANNEL_NAME}.block'"
-createChannelGenesisBlock
+## 生成初始快文件
+if [ ! -f ${BLOCKFILE} ]; then
+	# 渠道链码不存在则创建
+	infoln "生成该渠道初始区块文件 ${BLOCKFILE}。"
+	createChannelGenesisBlock
+	else 
+	infoln "该渠道区块文件 ${BLOCKFILE} 已存在，不重复生成文件。"
+fi
 
-# FABRIC_CFG_PATH=$PWD/../config/
-export BLOCKFILE="./channel-artifacts/${CHANNEL_NAME}.block"
 
-## Create channel
-infoln "Creating channel ${CHANNEL_NAME}"
-createChannel
-successln "Channel '$CHANNEL_NAME' created"
 
-# Join all the peers to the channel
-infoln "Joining bank1 peer to the channel..."
-joinChannel bank1
-infoln "Joining edb peer to the channel..."
-joinChannel edb
-infoln "Joining edu1 peer to the channel..."
-joinChannel edu1
-infoln "Joining edu2 peer to the channel..."
-joinChannel edu2
+## 创建渠道
+listChannel 
+if [[ $? -eq 0 ]]; then
+	# 渠道存在
+	infoln "渠道已存在，跳过创建渠道。"
+else
+	# 渠道不存在，执行创建
+	infoln "渠道 ${CHANNEL_NAME} 不存在，开始新建"
+	# createChannel
+	successln "渠道 '$CHANNEL_NAME' 创建完毕"
+fi
 
-## Set the anchor peers for each org in the channel
-# infoln "Setting anchor peer for org1..."
-# setAnchorPeer bank1
-# infoln "Setting anchor peer for org2..."
-# setAnchorPeer 2
+# # Join all the peers to the channel
+# infoln "Joining bank1 peer to the channel..."
+# joinChannel bank1
+# infoln "Joining edb peer to the channel..."
+# joinChannel edb
+# infoln "Joining edu1 peer to the channel..."
+# joinChannel edu1
+# infoln "Joining edu2 peer to the channel..."
+# joinChannel edu2
 
-successln "Channel '$CHANNEL_NAME' joined"
+# ## Set the anchor peers for each org in the channel
+# # infoln "Setting anchor peer for org1..."
+# # setAnchorPeer bank1
+# # infoln "Setting anchor peer for org2..."
+# # setAnchorPeer 2
+
+# successln "Channel '$CHANNEL_NAME' joined"

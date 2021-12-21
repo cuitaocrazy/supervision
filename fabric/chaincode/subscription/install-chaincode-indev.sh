@@ -54,14 +54,14 @@ approveForMyOrg() {
     successln "Chaincode definition approved on orderer on channel '$CHANNEL_NAME'"
 }
 
-# . scripts/createChannel.sh
+. scripts/createChannel.sh
 
 # packageChaincode
 
-installChaincode "bank1"
-installChaincode "edb"
-installChaincode "edu1"
-installChaincode "edu2"
+# installChaincode "bank1"
+# installChaincode "edb"
+# installChaincode "edu1"
+# installChaincode "edu2"
 
-queryInstalled "bank1"
-approveForMyOrg "bank1"
+# queryInstalled "bank1"
+# approveForMyOrg "bank1"
