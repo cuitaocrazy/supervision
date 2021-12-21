@@ -1,0 +1,23 @@
+{
+  "editor.bracketPairColorization.enabled": true,
+    "editor.guides.bracketPairs":"active",
+    "bracket-pair-colorizer-2.forceUniqueOpeningColor":true,
+    "bracket-pair-colorizer-2.forceIterationColorCycle":true,
+    "bracket-pair-colorizer-2.colorMode":true,
+    "bracket-pair-colorizer-2.highlightActiveScope":true,
+    "bracket-pair-colorizer-2.activeScopeCSS":true,
+    "bracket-pair-colorizer-2.showBracketsInGutter":true,
+    "bracket-pair-colorizer-2.showBracketsInRuler":true,
+    "bracket-pair-colorizer-2.colors" : [
+      " Gold " ,
+      " Orchid " ,
+      " LightSkyBlue " 
+ ],
+    "bracket-pair-colorizer-2.scopeLineCSS":[
+      "borderStyle：solid ",
+      "borderWidth：1px",
+      "borderColor：{color}",
+      "opacity：0.5 "
+ ]
+ 
+}
