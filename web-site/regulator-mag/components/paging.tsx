@@ -3,7 +3,7 @@ import {FC} from 'react'
 // 分页组件
 const Paging:FC=()=>{
   return (
-    <div className="flex items-center justify-between px-4 py-3 mt-10 bg-white border-t border-gray-200 sm:px-6">
+    <div className="flex items-center justify-between px-4 py-3 mx-10 mt-10 bg-white border-t border-gray-200 sm:px-6">
       <div className="flex justify-between flex-1 sm:hidden">
         <a
           href="#"
