@@ -8,9 +8,8 @@ const DatePick = () => {
    const [dateRange, setDateRange] = useState([null, null]);
    const [startDate, endDate] = dateRange;
   return (
-      // <DatePicker className="p-2 rounded-md outline-none" selected={startDate} onChange={(date) => setStartDate(date)} />
       <DatePicker
-      className="p-2 rounded-md"
+      className="p-2 rounded-md "
       selectsRange={true}
       startDate={startDate}
       endDate={endDate}
@@ -21,15 +20,6 @@ const DatePick = () => {
       dateFormat="yy-MM-dd"
       placeholderText="请选择交易日期区间"
     />
-    // <DatePicker
-    //   selectsRange={true}
-    //   startDate={startDate}
-    //   endDate={endDate}
-    //   onChange={(update) => {
-    //     setDateRange(update);
-    //   }}
-    //   isClearable={true}
-    // />
   );
 };
 
