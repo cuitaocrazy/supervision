@@ -26,6 +26,8 @@ export class SubscriptionEvent {
 
 export enum SubscriptionEventType {
     create = 'create',
+    preorder = 'preorder',
+    pay = "pay",
     cancel = 'cancel',
     complete = 'complete'
 }

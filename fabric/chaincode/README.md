@@ -1,7 +1,7 @@
 
 ### 必须前提
 - 开发工具`vscode`安装`IBM Blockchain Platform`插件。
-- [目录规范引用](https://github.com/golang-standards/project-layout/blob/master/README_zh.md)
+
 
 ### 初始化 microfab 的开发环境
 执行脚本如下：

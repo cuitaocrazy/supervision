@@ -4,49 +4,106 @@
 
 import { Object as FabricObject, Property } from 'fabric-contract-api';
 import { IsAlphanumeric, IsPositive } from 'class-validator'
+
 @FabricObject()
 export class Subscription {
 
+    /**
+     * 订购合约ID
+     */
     @Property()
     public SubscribeID: string
+    /**
+     * 受监管机构唯一标识
+     */
     @Property()
     @IsAlphanumeric()
     public USVOrgID: string
+    /**
+     * 受监管机构商品ID
+     */
     @Property()
     public USVItemID: string
+    /**
+     * 受监管机构商品名称
+     */
     @Property()
     public USVItemName: string
+    /**
+     * 受监管机构商品描述
+     */
     @Property()
     public USVItemDesc: string
+    /**
+     * 受监管机构订单号
+     */
     @Property()
     @IsAlphanumeric()
     public USVOrderNo: string
+    /**
+     * 银行机构唯一标识
+     */
     @Property()
     @IsAlphanumeric()
     public BankID: string
+    /**
+     * 银行交易流水号（预下单产生）
+     */
     @Property()
     public BankTranID: string
+    /**
+     * 银行交易日期（支付完产生）
+     */
     @Property()
     public BankTranDate: string
+    /**
+     * 银行交易时间（支付完产生）
+     */
     @Property()
     public BankTranTime: string
+    /**
+     * 付款方备注（支付完产生）
+     */
     @Property()
     public PayerRemark: string
+    /**
+     * 付款方存根（预下单产生）
+     */
     @Property()
     public PayerStub: string
+    /**
+     * 交易金额
+     */
     @Property()
     @IsPositive()
     public TranAmt: number
+    /**
+     * 监管机构唯一标识
+     */
     @Property()
     @IsAlphanumeric()
     public SVOrgID: string
+    /**
+     * 订购开始日期
+     */
     @Property()
     public SubscribeStartDate: string
+    /**
+     * 订购持续天数
+     */
     @Property()
     @IsPositive()
     public SubscribeDurationDays: number
+    /**
+     * 订购合约状态
+     */
     @Property()
     public Status: SubscriptionStatus
+    /**
+     * 支付地址（预下单产生）
+     */
+    @Property()
+    public PayUrl: string
 
     static fromUint8Array(bytes: Uint8Array): Subscription {
         const jsonStr = new TextDecoder().decode(bytes)
@@ -57,32 +114,10 @@ export class Subscription {
 }
 export enum SubscriptionStatus {
     create = 'create',
+    preorder = 'preorder',
+    pay = 'pay',
     cancel = 'cancel',
     complete = 'complete'
 }
 
 
-
-// const schema: JSONSchemaType<Subscription> = {
-//     type: 'object',
-//     properties: {
-//         SubscribeID: { type: "string" },
-//         USVOrgID: { type: "string", pattern: "^[\w\d]+$" },
-//         USVItemID: { type: "string" },
-//         USVItemName: { type: "string" },
-//         USVItemDesc: { type: "string" },
-//         USVOrderNo: { type: "string", pattern: "^[\w\d]+$" },
-//         BankID: { type: "string", pattern: "^[\w\d]+$" },
-//         BankTranID: { type: "string" },
-//         BankTranDate: { type: "string" },
-//         BankTranTime: { type: "string" },
-//         PayerRemark: { type: "string" },
-//         PayerStub: { type: "string" },
-//         TranAmt: { type: "number", minimum: 1 },
-//         SVOrgID: { type: "string", pattern: "^[\w\d]+$" },
-//         SubscribeStartDate: { type: "string" },
-//         SubscribeDurationDays: { type: "number", minimum: 1 },
-//         Status: { type: 'string', enum: [SubscriptionStatus.create, SubscriptionStatus.cancel, SubscriptionStatus.complete] }
-//     },
-//     required: ["BankID", "USVOrgID", "USVOrderNo", "SVOrgID"],
-// }

@@ -8,6 +8,39 @@
         }
     },
     {
+        "transactionName": "create",
+        "transactionLabel": "合约1--预下单",
+        "arguments": [],
+        "transientData": {
+            "SubscribeID": "Edu1MSP-BankMSP-EdbMSP-orderid001",
+            "QrCode": "http://test.qrocde.com"
+        }
+    },
+    {
+        "transactionName": "create",
+        "transactionLabel": "合约1--支付",
+        "arguments": [],
+        "transientData": {
+            "SubscribeID": "Edu1MSP-BankMSP-EdbMSP-orderid001"
+        }
+    },
+    {
+        "transactionName": "create",
+        "transactionLabel": "合约1--取消",
+        "arguments": [],
+        "transientData": {
+            "SubscribeID": "Edu1MSP-BankMSP-EdbMSP-orderid001"
+        }
+    },
+    {
+        "transactionName": "create",
+        "transactionLabel": "合约1--完成",
+        "arguments": [],
+        "transientData": {
+            "SubscribeID": "Edu1MSP-BankMSP-EdbMSP-orderid001"
+        }
+    },
+    {
         "transactionName": "query",
         "transactionLabel": "合约1--查询",
         "arguments": [

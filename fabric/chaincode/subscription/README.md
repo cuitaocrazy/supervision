@@ -7,7 +7,11 @@
 6. 划拨合约的开发
 7. 机构由BankMSP调整到Bank1MSP
 8. 脚本重构以完成快速打包部署
-
+#### 订购链码流程
+1. 创建(create by 受监管机构)
+2. 预下单(pre by 银行)
+3. 支付(pay by 银行)
+4. 撤销(cancel by 受监管机构) / 完成(complete by 监管机构)
 #### 事件类型规则
 ```
 [EventType]-[SubscribeID]

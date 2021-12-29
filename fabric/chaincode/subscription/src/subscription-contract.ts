@@ -8,6 +8,7 @@ import { SubscriptionEvent, SubscriptionEventType } from './subscription-event';
 import { SubscriptionID } from './subscription-id';
 import { obj2Uint8Array } from './util';
 import { validateOrReject } from 'class-validator';
+import { update } from './subscription-update';
 
 @Info({ title: 'SubscriptionContract', description: '用于订购时的合约' })
 export class SubscriptionContract extends Contract {
@@ -38,63 +39,30 @@ export class SubscriptionContract extends Contract {
         ctx.stub.setEvent(event.getName(), event.getPayload())
         return subscriptionIDString
     }
-
+    /**
+         * 预下单
+         * @param ctx 上下文
+         * @returns 预下单结果
+         */
     @Transaction()
-    public async cancel(ctx: Context): Promise<void> {
-        const transientSubscriptionIDKey = "SubscribeID"
-        const transientData = ctx.stub.getTransient()
-        if (transientData.size === 0 || !transientData.has(transientSubscriptionIDKey)) {
-            throw new Error(`在 transient 中没有找到 [${transientSubscriptionIDKey}] 域`)
-        }
-        const clientMSPID = ctx.clientIdentity.getMSPID()
-        const subscriptionIDString = transientData.get(transientSubscriptionIDKey)!.toString()
-        const subscriptionID = SubscriptionID.fromSubscriptionIDString(subscriptionIDString)
-        const usvOrgID = subscriptionID.USVOrgID
-        if (usvOrgID !== clientMSPID) {
-            throw new Error(`取消目标合约只能由受监管机构[${usvOrgID}]发起，实际是由[${clientMSPID}]发起。`)
-        }
-        const collectionName = subscriptionID.getCollectionName()
-        if (! await this.subscriptionExists(ctx, collectionName, subscriptionIDString)) {
-            throw new Error(`目标合约[${subscriptionIDString}]不存在`)
-        }
-        const dataBytes = await ctx.stub.getPrivateData(collectionName, subscriptionIDString)
-        const subscription: Subscription = Subscription.fromUint8Array(dataBytes)
-        if (subscription.Status !== SubscriptionStatus.create) {
-            throw new Error(`取消目标合约的状态[${subscription.Status}]，应该是[${SubscriptionStatus.create}]`)
-        }
-        subscription.Status = SubscriptionStatus.cancel
-        await ctx.stub.putPrivateData(collectionName, subscriptionIDString, obj2Uint8Array(subscription))
-        const event = new SubscriptionEvent(subscriptionIDString, SubscriptionEventType.cancel)
-        ctx.stub.setEvent(event.getName(), event.getPayload())
+    public async preorder(ctx: Context): Promise<string> {
+        return await update({ ctx: ctx, name: "预下单" })
     }
 
     @Transaction()
-    public async complete(ctx: Context): Promise<void> {
-        const transientSubscriptionIDKey = "SubscribeID"
-        const transientData = ctx.stub.getTransient()
-        if (transientData.size === 0 || !transientData.has(transientSubscriptionIDKey)) {
-            throw new Error(`在 transient 中没有找到 [${transientSubscriptionIDKey}] 域`)
-        }
-        const clientMSPID = ctx.clientIdentity.getMSPID()
-        const subscriptionIDString = transientData.get(transientSubscriptionIDKey)!.toString()
-        const subscriptionID = SubscriptionID.fromSubscriptionIDString(subscriptionIDString)
-        const svOrgID = subscriptionID.SVOrgID
-        if (svOrgID !== clientMSPID) {
-            throw new Error(`完成目标合约只能由监管机构[${svOrgID}]发起，实际是由[${clientMSPID}]发起。`)
-        }
-        const collectionName = subscriptionID.getCollectionName()
-        if (! await this.subscriptionExists(ctx, collectionName, subscriptionIDString)) {
-            throw new Error(`目标合约[${subscriptionIDString}]不存在`)
-        }
-        const dataBytes = await ctx.stub.getPrivateData(collectionName, subscriptionIDString)
-        const subscription: Subscription = Subscription.fromUint8Array(dataBytes)
-        if (subscription.Status !== SubscriptionStatus.create) {
-            throw new Error(`取消目标合约的状态[${subscription.Status}]，应该是[${SubscriptionStatus.create}]`)
-        }
-        subscription.Status = SubscriptionStatus.complete
-        await ctx.stub.putPrivateData(collectionName, subscriptionIDString, obj2Uint8Array(subscription))
-        const event = new SubscriptionEvent(subscriptionIDString, SubscriptionEventType.complete)
-        ctx.stub.setEvent(event.getName(), event.getPayload())
+    public async pay(ctx: Context): Promise<string> {
+        return await update({ ctx: ctx, name: "支付" })
+    }
+
+
+    @Transaction()
+    public async cancel(ctx: Context): Promise<string> {
+        return await update({ ctx: ctx, name: "取消" })
+    }
+
+    @Transaction()
+    public async complete(ctx: Context): Promise<string> {
+        return await update({ ctx: ctx, name: "完成" })
     }
 
 
@@ -145,3 +113,5 @@ export class SubscriptionContract extends Contract {
     }
 
 }
+
+
