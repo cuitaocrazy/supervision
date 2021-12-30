@@ -1,6 +1,6 @@
 import { Context, Contract, Info, Returns, Transaction } from 'fabric-contract-api';
 import { Subscription, SubscriptionStatus } from './subscription';
-import { SubscriptionEvent, SubscriptionEventType } from './subscription-event';
+import { SubscriptionEvent } from './subscription-event';
 import { SubscriptionID } from './subscription-id';
 import { obj2Uint8Array } from './util';
 import { validateOrReject } from 'class-validator';
@@ -17,7 +17,6 @@ class UpdatingContrastInfo {
     shouldBeOrg: string
     shouldBeOrgType: "受监管机构" | "监管机构" | "银行"
     shouldBeState: SubscriptionStatus
-    eventType: SubscriptionEventType
     newState: SubscriptionStatus
 }
 
@@ -28,7 +27,6 @@ const switchByUpdateName = (name: UPDATE_NAME, subscriptionID: SubscriptionID): 
                 shouldBeOrg: subscriptionID.BankID,
                 shouldBeOrgType: "银行",
                 shouldBeState: SubscriptionStatus.create,
-                eventType: SubscriptionEventType.create,
                 newState: SubscriptionStatus.preorder
             };
         case "支付":
@@ -36,7 +34,6 @@ const switchByUpdateName = (name: UPDATE_NAME, subscriptionID: SubscriptionID): 
                 shouldBeOrg: subscriptionID.BankID,
                 shouldBeOrgType: "银行",
                 shouldBeState: SubscriptionStatus.preorder,
-                eventType: SubscriptionEventType.preorder,
                 newState: SubscriptionStatus.pay
             };
         case "取消":
@@ -44,7 +41,6 @@ const switchByUpdateName = (name: UPDATE_NAME, subscriptionID: SubscriptionID): 
                 shouldBeOrg: subscriptionID.USVOrgID,
                 shouldBeOrgType: "受监管机构",
                 shouldBeState: SubscriptionStatus.pay,
-                eventType: SubscriptionEventType.pay,
                 newState: SubscriptionStatus.cancel
             };
         case "完成":
@@ -52,7 +48,6 @@ const switchByUpdateName = (name: UPDATE_NAME, subscriptionID: SubscriptionID): 
                 shouldBeOrg: subscriptionID.SVOrgID,
                 shouldBeOrgType: "监管机构",
                 shouldBeState: SubscriptionStatus.pay,
-                eventType: SubscriptionEventType.pay,
                 newState: SubscriptionStatus.complete
             };
         default:
@@ -81,7 +76,7 @@ export const update = async ({ ctx, name }: UpdateOperation): Promise<string> =>
     const subscriptionIDString = payload.SubscribeID
     const clientMSPID = ctx.clientIdentity.getMSPID()
     const subscriptionID = SubscriptionID.fromSubscriptionIDString(subscriptionIDString)
-    const { shouldBeOrg, shouldBeOrgType, shouldBeState, eventType, newState } = switchByUpdateName(name, subscriptionID)
+    const { shouldBeOrg, shouldBeOrgType, shouldBeState, newState } = switchByUpdateName(name, subscriptionID)
     if (shouldBeOrg !== clientMSPID) {
         throw new Error(`操作[${name}] 由 ${shouldBeOrgType}[${shouldBeOrg}]发起，实际是由[${clientMSPID}]发起。`)
     }
@@ -96,7 +91,7 @@ export const update = async ({ ctx, name }: UpdateOperation): Promise<string> =>
     }
     const r: Subscription = { ...origSubscription, ...payload, Status: newState }
     await ctx.stub.putPrivateData(collectionName, subscriptionIDString, obj2Uint8Array(origSubscription))
-    const event = new SubscriptionEvent(subscriptionIDString, eventType)
+    const event = new SubscriptionEvent(subscriptionIDString, newState)
     ctx.stub.setEvent(event.getName(), event.getPayload())
     return subscriptionIDString
 }

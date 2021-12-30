@@ -1,3 +1,4 @@
+import { SubscriptionStatus } from "./subscription"
 
 export class SubscriptionEventBody {
     public SubscribeID: string
@@ -6,9 +7,9 @@ export class SubscriptionEventBody {
 export class SubscriptionEvent {
 
     private payload: SubscriptionEventBody
-    private subscriptionEventType: SubscriptionEventType
+    private subscriptionEventType: SubscriptionStatus
 
-    constructor(SubscribeIDStr: string, eventType: SubscriptionEventType) {
+    constructor(SubscribeIDStr: string, eventType: SubscriptionStatus) {
         this.payload = new SubscriptionEventBody()
         this.payload.SubscribeID = SubscribeIDStr
         this.subscriptionEventType = eventType
@@ -22,12 +23,4 @@ export class SubscriptionEvent {
         return Buffer.from(JSON.stringify(this.payload))
     }
 
-}
-
-export enum SubscriptionEventType {
-    create = 'create',
-    preorder = 'preorder',
-    pay = "pay",
-    cancel = 'cancel',
-    complete = 'complete'
 }

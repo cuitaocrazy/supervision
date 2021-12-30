@@ -4,7 +4,7 @@
 
 import { Context, Contract, Info, Returns, Transaction } from 'fabric-contract-api';
 import { Subscription, SubscriptionStatus } from './subscription';
-import { SubscriptionEvent, SubscriptionEventType } from './subscription-event';
+import { SubscriptionEvent } from './subscription-event';
 import { SubscriptionID } from './subscription-id';
 import { obj2Uint8Array } from './util';
 import { validateOrReject } from 'class-validator';
@@ -35,7 +35,7 @@ export class SubscriptionContract extends Contract {
             throw new Error(`目标合约[${subscriptionIDString}]已经存在`)
         }
         await ctx.stub.putPrivateData(collectionName, subscriptionIDString, obj2Uint8Array(subscription))
-        const event = new SubscriptionEvent(subscriptionIDString, SubscriptionEventType.create)
+        const event = new SubscriptionEvent(subscriptionIDString, SubscriptionStatus.create)
         ctx.stub.setEvent(event.getName(), event.getPayload())
         return subscriptionIDString
     }
