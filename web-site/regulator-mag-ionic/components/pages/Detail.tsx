@@ -25,55 +25,63 @@ export const CardExamples: React.FC = () => {
     <IonPage>
       <IonCard>
       <IonCardHeader>
-        <IonCardSubtitle>详细信息</IonCardSubtitle>
-        <IonCardTitle>合约ID:{SubscribeID}</IonCardTitle>
+        <IonCardSubtitle className="mx-8 text-3xl text-gray-600">详细信息</IonCardSubtitle>
+        {/* <IonCardTitle className="mx-8 text-2xl text-gray-600">合约ID:{SubscribeID}</IonCardTitle> */}
       </IonCardHeader>
       <IonCardContent>
-      <table className='mt-4'>
-        <tr className='text-white '>
-          <td>
-              合约ID:{SubscribeID}
-            </td>
-        </tr>
-        <tr className='text-white '>
-          <td>
-              教育机构订单ID:{USVOrderNo}
+      <table className='mx-8 mt-4'>
+        <tr>
+          <td className='flex gap-2 leading-6'>
+              <div className='font-bold text-gray-600'>合约ID:</div>
+              <div className='text-gray-500'>{SubscribeID}</div>
             </td>
         </tr>
         <tr>
-          <td>
-              项目ID:{USVItemID}
+          <td className='flex gap-2 leading-6'>
+              <div className='font-bold text-gray-600'>教育机构订单ID:</div>
+              <div className='text-gray-500'>{USVOrderNo}</div>
             </td>
         </tr>
         <tr>
-          <td>
-              项目名称:{USVItemName}
+          <td className='flex gap-2 leading-6'>
+              <div className='font-bold text-gray-600'>项目ID:</div>
+              <div className='text-gray-500'>{USVItemID}</div>
+            </td>
+        </tr>
+        <tr>
+          <td className='flex gap-2 leading-6'>
+            <div className='font-bold text-gray-600'>项目名称:</div>
+            <div className='text-gray-500'>{USVItemName}</div>
             </td>
         </tr>
 
         <tr>
-          <td>
-              订单金额（分）:{TranAmt}
+          <td className='flex gap-2 leading-6'>
+            <div className='font-bold text-gray-600'>订单金额（分）:</div>
+            <div className='text-gray-500'>{TranAmt}</div>
             </td>
         </tr>
         <tr>
-          <td>
-              教育机构ID:{USVOrgID}
+          <td className='flex gap-2 leading-6'>
+            <div className='font-bold text-gray-600'>教育机构ID:</div>
+            <div className='text-gray-500'>{USVOrgID}</div>
             </td>
         </tr>
         <tr>
-          <td>
-              开始时间:{SubscribeStartDate}
+          <td className='flex gap-2 leading-6'>
+            <div className='font-bold text-gray-600'>开始时间:</div>
+            <div className='text-gray-500'>{SubscribeStartDate}</div>
             </td>
         </tr>
         <tr>
-          <td>
-              订单有效天数:{SubscribeDurationDays}
+          <td className='flex gap-2 leading-6'>
+            <div className='font-bold text-gray-600'>订单有效天数:</div>
+            <div className='text-gray-500'>{SubscribeDurationDays}</div>
             </td>
         </tr>
      </table>
-        <IonItem>
-          <IonButton onClick={onBack()} fill="solid">返回</IonButton>
+        <IonItem className="">
+          <IonButton className="m-5 text-base " onClick={onBack()} fill="solid">返回</IonButton>
         </IonItem>
         {/* <Link to="/tabs/query"> 返回 </Link> */}
       </IonCardContent>

@@ -13,7 +13,9 @@ import {
   IonDatetime,
   IonPicker,
   IonButton,
-  IonPickerColumn
+  IonPickerColumn,
+  IonSelect,
+  IonSelectOption
   // PickerController 
   
 } from '@ionic/react';
@@ -108,51 +110,62 @@ const Query:React.FC =()=>{
   const ListEntry = ({ orderInfo,key, ...props } : {orderInfo:Order,key:any}) => (
     <IonItem key={key}>
       <IonLabel>
-        <p>{orderInfo.USVOrgID}</p>
+        <p className='text-center'>{orderInfo.USVOrgID}</p>
       </IonLabel>
       <IonLabel>
-        <p>{orderInfo.USVItemName}</p>
+        <p  className='text-center'>{orderInfo.USVItemName}</p>
       </IonLabel>
       <IonLabel>
-        <p>{orderInfo.USVOrderNo}</p>
+        <p  className='text-center'>{orderInfo.USVOrderNo}</p>
       </IonLabel>
       <IonLabel>
-        <p>{orderInfo.BankTranID}</p>
+        <p  className='text-center'>{orderInfo.BankTranID}</p>
       </IonLabel>
       <IonLabel>
-        <p>{orderInfo.BankTranDate}</p>
+        <p  className='text-center'>{orderInfo.BankTranDate}</p>
       </IonLabel>
       <IonLabel>
-        <p>{orderInfo.BankTranTime}</p>
+        <p  className='text-center'>{orderInfo.BankTranTime}</p>
       </IonLabel>
       <IonLabel>
-        <p>{orderInfo.TranAmt}</p>
+        <p  className='text-center'>{orderInfo.TranAmt}</p>
       </IonLabel>
       <IonLabel>
-        <button onClick={onCancel(orderInfo)}>撤销  </button> 
-         <button onClick={onComplete(orderInfo)}>完成  </button>
-         <button onClick={onDetail(orderInfo)}>详情  </button>
+         <div className='flex gap-2'>
+            <button className='p-1 text-white bg-blue-500 rounded-md' onClick={onCancel(orderInfo)}>撤销  </button> 
+            <button className='p-1 text-white bg-blue-500 rounded-md'  onClick={onComplete(orderInfo)}>完成  </button>
+            <button className='p-1 text-white bg-blue-500 rounded-md'  onClick={onDetail(orderInfo)}>详情  </button>
+         </div>
       </IonLabel>
     </IonItem>
     );
     
     if(state.detail==null||state.detail==undefined){
-          return   <IonPage>
+          return   <IonPage >
                     {/* <form> */}
-                      <IonRow>
-                        <IonCol>
-                        <div className='mb-4'>
-                          <label className='pr-4 font-bold'>交易日期:</label>
-                          <IonItem>
-                            <IonDatetime value={queryInfo.SubscribeStartDate} name='TranDate' displayFormat='YYYYMMDD' onIonChange={e=>{setQueryInfo({...queryInfo,...{SubscribeStartDate:e.detail.value!}})}}></IonDatetime>
-                          </IonItem>
-                        </div>
+                      <IonRow className='flex flex-row justify-around gap-x-6'>
+                        <IonCol className='inline-flex my-3'>
+                          <IonLabel className='px-6 py-2 text-base font-bold text-gray-800'>交易日期：</IonLabel>
+                          <IonDatetime className="text-center bg-white border-2 rounded-md w-80" value={queryInfo.SubscribeStartDate} name='TranDate' displayFormat='YYYYMMDD' onIonChange={e=>{setQueryInfo({...queryInfo,...{SubscribeStartDate:e.detail.value!}})}}></IonDatetime>
                         </IonCol>
-                        <IonCol>
-                          <IonButton onClick={()=>setQueryInfo({...queryInfo,...{isOpen:!queryInfo.isOpen}})}>
-                              选择教育机构
+                        {/* <IonCol>
+                          <IonItem className="rounded-md w-80">
+                          <IonLabel className='py-1 pt-3 text-base font-bold text-gray-800'>请选择教育机构</IonLabel>
+                            <IonSelect class="custom-options">
+                              <IonSelectOption value="brown">Brown</IonSelectOption>
+                              <IonSelectOption value="blonde">Blonde</IonSelectOption>
+                              <IonSelectOption value="black">Black</IonSelectOption>
+                              <IonSelectOption value="red">Red</IonSelectOption>
+                            </IonSelect>
+                          </IonItem>
+                        </IonCol> */}
+
+                        <IonCol className="inline-flex">
+
+                          <IonButton className="w-32 my-2 text-base text-gray-800 bg-white rounded-md" onClick={()=>setQueryInfo({...queryInfo,...{isOpen:!queryInfo.isOpen}})}>
+                              请选择教育机构
                           </IonButton>
-                          <label className='pt-2 pr-4 font-bold'>{queryInfo.USVOrgName}</label>
+                          <IonLabel className='w-56 h-12 p-2 text-center bg-white rounded-md focus:pr-4 font-boldt ext-gray-800'>{queryInfo.USVOrgName}</IonLabel>
                           <IonPicker
                               isOpen={queryInfo.isOpen}
                               columns={[usvPickerColumn]}
@@ -173,36 +186,36 @@ const Query:React.FC =()=>{
                               ]}
                             ></IonPicker>
                         </IonCol>
+                        <IonButton >查询</IonButton>
                       </IonRow>
                     <div>
                       <IonList>
-                          <IonItem key='title'>
-                        <IonLabel>
-                          <h2>教育机构名称</h2>
-                        </IonLabel>
-                        <IonLabel>
-                          <h2>项目名称</h2>
-                        </IonLabel>
-                        <IonLabel>
-                          <h2>教育机构订单号</h2>
-                        </IonLabel>
-                        <IonLabel>
-                          <h2>支付渠道交易流水号</h2>
-                        </IonLabel>
-                        <IonLabel>
-                          <h2>支付渠道交易日期</h2>
-                        </IonLabel>
-                        <IonLabel>
-                          <h2>支付渠道交易时间</h2>
-                        </IonLabel>
-                        <IonLabel>
-                          <h2>交易金额（单位分）</h2>
-                        </IonLabel>
-                        <IonLabel>
-                          <h2>操作</h2>
-                        </IonLabel>
+                        <IonItem key='title'>
+                          <IonLabel> 
+                            <h2 className='text-center'>教育机构名称</h2>
+                          </IonLabel>
+                          <IonLabel>
+                            <h2 className='text-center'>项目名称</h2>
+                          </IonLabel>
+                          <IonLabel>
+                            <h2 className='text-center'>教育机构订单号</h2>
+                          </IonLabel>
+                          <IonLabel>
+                            <h2 className='text-center'>支付渠道交易流水号</h2>
+                          </IonLabel>
+                          <IonLabel>
+                            <h2 className='text-center'>支付渠道交易日期</h2>
+                          </IonLabel>
+                          <IonLabel>
+                            <h2 className='text-center'>支付渠道交易时间</h2>
+                          </IonLabel>
+                          <IonLabel>
+                            <h2 className='text-center'>交易金额（单位分）</h2>
+                          </IonLabel>
+                          <IonLabel>
+                            <h2 className='text-center'>操作</h2>
+                          </IonLabel>
                       </IonItem>
-                        {/* <Test test={state}></Test> */}
                           {state.orderList.map((list:Order, i: any) => (
                           <ListEntry orderInfo={list} key={i} />
                         ))}

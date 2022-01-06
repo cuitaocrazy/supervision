@@ -13,6 +13,7 @@ import {
 } from '@ionic/react';
 import { useEffect, useState } from 'react';
 import {  flash } from 'ionicons/icons';
+import Router from 'next/router'
 
 const pages = [
   {
@@ -45,24 +46,25 @@ const Menu = () => {
 
   return (
     <IonMenu side="start" contentId="main" onIonDidOpen={handleOpen} onIonDidClose={handleClose}>
-      <IonHeader>
+      <IonHeader >
         <IonToolbar>
-          <IonTitle>Menu</IonTitle>
+          <IonTitle className="text-center">教育资金监管机构管理端</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>
-        <IonList>
+        <IonList >
           {pages.map((p, k) => (
             <IonMenuToggle autoHide={false} key={k}>
-              <IonItem routerLink={p.url} routerDirection="none" detail={false} lines="none">
-                <IonIcon icon={p.icon} slot="start" />
-                <IonLabel>{p.title}</IonLabel>
+              <IonItem className="flex flex-row justify-center text-center" routerLink={p.url} routerDirection="none" detail={false} lines="none">
+                <IonIcon className="border-2 " icon={p.icon} slot="start" />
+                <IonLabel className="border-2 ">{p.title}</IonLabel>
               </IonItem>
             </IonMenuToggle>
           ))}
         </IonList>
       </IonContent>
     </IonMenu>
+
   );
 };
 
