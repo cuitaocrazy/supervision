@@ -12,8 +12,7 @@
         "transactionLabel": "合约1--预下单",
         "arguments": [],
         "transientData": {
-            "SubscribeID": "Edu1MSP-BankMSP-EdbMSP-orderid001",
-            "QrCode": "http://test.qrocde.com"
+            "Payload": "{\"SubscribeID\":\"Edu1MSP-BankMSP-EdbMSP-orderid001\",\"BankTranID\":\"ls0000001\",\"PayerStub\":\"https://test.com/stub/111111\",\"PayUrl\":\"https://test.com/1111111\"}"
         }
     },
     {
@@ -21,7 +20,7 @@
         "transactionLabel": "合约1--支付",
         "arguments": [],
         "transientData": {
-            "SubscribeID": "Edu1MSP-BankMSP-EdbMSP-orderid001"
+            "Payload": "{\"SubscribeID\":\"Edu1MSP-BankMSP-EdbMSP-orderid001\",\"BankTranDate\":\"20220106\",\"BankTranTime\":\"102803\",\"PayerRemark\":\"付款者想填写的备注\"}"
         }
     },
     {
@@ -29,7 +28,7 @@
         "transactionLabel": "合约1--取消",
         "arguments": [],
         "transientData": {
-            "SubscribeID": "Edu1MSP-BankMSP-EdbMSP-orderid001"
+            "Payload": "{\"SubscribeID\":\"Edu1MSP-BankMSP-EdbMSP-orderid001\"}"
         }
     },
     {
@@ -37,7 +36,7 @@
         "transactionLabel": "合约1--完成",
         "arguments": [],
         "transientData": {
-            "SubscribeID": "Edu1MSP-BankMSP-EdbMSP-orderid001"
+            "Payload": "{\"SubscribeID\":\"Edu1MSP-BankMSP-EdbMSP-orderid001\"}"
         }
     },
     {
@@ -53,7 +52,7 @@
         "transactionLabel": "合约1--删除",
         "arguments": [],
         "transientData": {
-            "SubscribeID": "Edu1MSP-BankMSP-EdbMSP-orderid001"
+            "Payload": "{\"SubscribeID\":\"Edu1MSP-BankMSP-EdbMSP-orderid001\"}"
         }
     },
     {

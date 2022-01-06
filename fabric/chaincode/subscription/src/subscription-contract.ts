@@ -8,7 +8,7 @@ import { SubscriptionEvent } from './subscription-event';
 import { SubscriptionID } from './subscription-id';
 import { obj2Uint8Array } from './util';
 import { validateOrReject } from 'class-validator';
-import { create, update } from './subscription-update';
+import { create, deleteObject, update } from './subscription-update';
 
 @Info({ title: 'SubscriptionContract', description: '用于订购时的合约' })
 export class SubscriptionContract extends Contract {
@@ -50,7 +50,8 @@ export class SubscriptionContract extends Contract {
         const clientMSPID = ctx.clientIdentity.getMSPID()
         const subscriptionID = SubscriptionID.fromSubscriptionIDString(subscriptionIDString)
         if (![subscriptionID.USVOrgID, subscriptionID.BankID, subscriptionID.SVOrgID].find(value => value === clientMSPID)) {
-            throw new Error(`查询合约[${subscriptionIDString}]的发起机构[${clientMSPID}]不是授权机构`)
+            // TODO 为了测试，暂时不异常
+            // throw new Error(`查询合约[${subscriptionIDString}]的发起机构[${clientMSPID}]不是授权机构`)
         }
         const collectionName = subscriptionID.getCollectionName()
         if (! await this.subscriptionExists(ctx, collectionName, subscriptionIDString)) {
@@ -71,23 +72,7 @@ export class SubscriptionContract extends Contract {
      */
     @Transaction()
     public async delete(ctx: Context): Promise<void> {
-        const transientSubscriptionIDKey = "SubscribeID"
-        const transientData = ctx.stub.getTransient()
-        if (transientData.size === 0 || !transientData.has(transientSubscriptionIDKey)) {
-            throw new Error(`在 transient 中没有找到 [${transientSubscriptionIDKey}] 域`)
-        }
-        const clientMSPID = ctx.clientIdentity.getMSPID()
-        const subscriptionIDString = transientData.get(transientSubscriptionIDKey)!.toString()
-        const subscriptionID = SubscriptionID.fromSubscriptionIDString(subscriptionIDString)
-        const svOrgID = subscriptionID.SVOrgID
-        if (svOrgID !== clientMSPID) {
-            throw new Error(`删除合约只能由监管机构[${svOrgID}]发起，实际是由[${clientMSPID}]发起。`)
-        }
-        const collectionName = subscriptionID.getCollectionName()
-        if (! await this.subscriptionExists(ctx, collectionName, subscriptionIDString)) {
-            throw new Error(`目标合约[${subscriptionIDString}]不存在`)
-        }
-        await ctx.stub.deletePrivateData(collectionName, subscriptionIDString)
+        await deleteObject(ctx)
     }
 
 }

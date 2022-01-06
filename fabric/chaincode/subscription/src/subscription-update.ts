@@ -77,7 +77,8 @@ export const update = async ({ ctx, name }: UpdateOperation): Promise<string> =>
     const subscriptionID = SubscriptionID.fromSubscriptionIDString(subscriptionIDString)
     const { shouldBeOrg, shouldBeOrgType, shouldBeState, newState } = switchByUpdateName(name, subscriptionID)
     if (shouldBeOrg !== clientMSPID) {
-        throw new Error(`操作[${name}] 由 ${shouldBeOrgType}[${shouldBeOrg}]发起，实际是由[${clientMSPID}]发起。`)
+        // TODO 暂时关闭
+        // throw new Error(`操作[${name}] 由 ${shouldBeOrgType}[${shouldBeOrg}]发起，实际是由[${clientMSPID}]发起。`)
     }
     const collectionName = subscriptionID.getCollectionName()
     if (! await isExist(ctx, collectionName, subscriptionIDString)) {
@@ -88,14 +89,14 @@ export const update = async ({ ctx, name }: UpdateOperation): Promise<string> =>
     if (origSubscription.Status !== shouldBeState) {
         throw new Error(`操作[${name}] 失败，目标合约状态[${origSubscription.Status}]，应该是[${shouldBeState}]`)
     }
-    const r: Subscription = { ...origSubscription, ...payload, Status: newState }
-    await ctx.stub.putPrivateData(collectionName, subscriptionIDString, obj2Uint8Array(origSubscription))
+    const newSubscription: Subscription = { ...origSubscription, ...payload, Status: newState }
+    await ctx.stub.putPrivateData(collectionName, subscriptionIDString, obj2Uint8Array(newSubscription))
     const event = new SubscriptionEvent(subscriptionIDString, newState)
     ctx.stub.setEvent(event.getName(), event.getPayload())
     return subscriptionIDString
 }
 
-const readPayload = (ctx: Context, opName: UPDATE_NAME | '创建'): Subscription => {
+const readPayload = (ctx: Context, opName: UPDATE_NAME | '创建' | '删除'): Subscription => {
     const key = 'Payload'
     const transientData = ctx.stub.getTransient()
     if (transientData.size === 0 || !transientData.has(key)) {
@@ -123,4 +124,23 @@ export const create = async (ctx: Context): Promise<string> => {
     const event = new SubscriptionEvent(subscriptionIDString, SubscriptionStatus.create)
     ctx.stub.setEvent(event.getName(), event.getPayload())
     return subscriptionIDString
+}
+
+
+export const deleteObject = async (ctx: Context): Promise<string> => {
+    const payload = readPayload(ctx, "删除")
+    const clientMSPID = ctx.clientIdentity.getMSPID()
+    const subscriptionID = SubscriptionID.fromSubscriptionIDString(payload.SubscribeID)
+    const svOrgID = subscriptionID.SVOrgID
+    if (svOrgID !== clientMSPID) {
+        // TODO 暂时关闭
+        // throw new Error(`删除合约只能由监管机构[${svOrgID}]发起，实际是由[${clientMSPID}]发起。`)
+    }
+    const collectionName = subscriptionID.getCollectionName()
+    if (! await isExist(ctx, collectionName, payload.SubscribeID)) {
+        throw new Error(`目标合约[${payload.SubscribeID}]不存在`)
+    }
+    await ctx.stub.deletePrivateData(collectionName, payload.SubscribeID)
+    console.log(`----------${collectionName}--------------${payload.SubscribeID}-------------------`)
+    return payload.SubscribeID
 }
