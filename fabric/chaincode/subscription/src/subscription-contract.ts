@@ -8,36 +8,14 @@ import { SubscriptionEvent } from './subscription-event';
 import { SubscriptionID } from './subscription-id';
 import { obj2Uint8Array } from './util';
 import { validateOrReject } from 'class-validator';
-import { update } from './subscription-update';
+import { create, update } from './subscription-update';
 
 @Info({ title: 'SubscriptionContract', description: '用于订购时的合约' })
 export class SubscriptionContract extends Contract {
 
     @Transaction()
     public async create(ctx: Context): Promise<string> {
-        const transientSubscriptionKey = 'Subscribe'
-        const transientData = ctx.stub.getTransient()
-        if (transientData.size === 0 || !transientData.has(transientSubscriptionKey)) {
-            throw new Error(`在 transient 中没有找到 [${transientSubscriptionKey}] 域`)
-        }
-        const subscription: Subscription = Subscription.fromUint8Array(transientData.get(transientSubscriptionKey)!)
-        await validateOrReject(subscription)
-        const clientMSPID = ctx.clientIdentity.getMSPID()
-        if (subscription.BankID !== clientMSPID) {
-            throw new Error(`只能由支付渠道[${subscription.BankID}]发起`)
-        }
-        const subscriptionID = SubscriptionID.fromSubscription(subscription)
-        const subscriptionIDString = subscriptionID.getIDStr()
-        subscription.SubscribeID = subscriptionIDString
-        subscription.Status = SubscriptionStatus.create
-        const collectionName = subscriptionID.getCollectionName()
-        if (await this.subscriptionExists(ctx, collectionName, subscriptionIDString)) {
-            throw new Error(`目标合约[${subscriptionIDString}]已经存在`)
-        }
-        await ctx.stub.putPrivateData(collectionName, subscriptionIDString, obj2Uint8Array(subscription))
-        const event = new SubscriptionEvent(subscriptionIDString, SubscriptionStatus.create)
-        ctx.stub.setEvent(event.getName(), event.getPayload())
-        return subscriptionIDString
+        return await create(ctx)
     }
     /**
          * 预下单

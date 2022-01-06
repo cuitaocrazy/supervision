@@ -95,7 +95,7 @@ export class Subscription {
     @IsPositive()
     public SubscribeDurationDays: number
     /**
-     * 订购合约状态
+     * 订购合约状态（查询时返回）
      */
     @Property()
     public Status: SubscriptionStatus

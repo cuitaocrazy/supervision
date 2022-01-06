@@ -7,7 +7,6 @@ import { validateOrReject } from 'class-validator';
 
 export type UPDATE_NAME = "预下单" | "支付" | "取消" | "完成"
 
-
 class UpdateOperation {
     ctx: Context
     name: UPDATE_NAME
@@ -72,7 +71,7 @@ export const isExist = async (ctx: Context, collectionName: string, id: string):
  * @returns 
  */
 export const update = async ({ ctx, name }: UpdateOperation): Promise<string> => {
-    const payload = readPayload(ctx)
+    const payload = readPayload(ctx, name)
     const subscriptionIDString = payload.SubscribeID
     const clientMSPID = ctx.clientIdentity.getMSPID()
     const subscriptionID = SubscriptionID.fromSubscriptionIDString(subscriptionIDString)
@@ -96,11 +95,32 @@ export const update = async ({ ctx, name }: UpdateOperation): Promise<string> =>
     return subscriptionIDString
 }
 
-const readPayload = (ctx: Context): Subscription => {
+const readPayload = (ctx: Context, opName: UPDATE_NAME | '创建'): Subscription => {
     const key = 'Payload'
     const transientData = ctx.stub.getTransient()
     if (transientData.size === 0 || !transientData.has(key)) {
-        throw new Error(`在 transient 中没有找到 [${key}] 域`)
+        throw new Error(`操作[${opName}]，在 transient 中没有找到 [${key}] 域`)
     }
     return Subscription.fromUint8Array(transientData.get(key)!)
+}
+
+
+export const create = async (ctx: Context): Promise<string> => {
+    const payload = readPayload(ctx, "创建")
+    await validateOrReject(payload)
+    const clientMSPID = ctx.clientIdentity.getMSPID()
+    if (payload.USVOrgID !== clientMSPID) {
+        throw new Error(`只能由受监管渠道[${payload.USVOrgID}]发起，实际发起者`)
+    }
+    const subscriptionID = SubscriptionID.fromSubscription(payload)
+    const subscriptionIDString = subscriptionID.getIDStr()
+    const collectionName = subscriptionID.getCollectionName()
+    if (await isExist(ctx, collectionName, subscriptionIDString)) {
+        throw new Error(`目标合约[${subscriptionIDString}]已经存在`)
+    }
+    const subscription: Subscription = { ...payload, SubscribeID: subscriptionIDString, Status: SubscriptionStatus.create }
+    await ctx.stub.putPrivateData(collectionName, subscriptionIDString, obj2Uint8Array(subscription))
+    const event = new SubscriptionEvent(subscriptionIDString, SubscriptionStatus.create)
+    ctx.stub.setEvent(event.getName(), event.getPayload())
+    return subscriptionIDString
 }
