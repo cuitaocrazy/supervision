@@ -142,30 +142,18 @@ const Query:React.FC =()=>{
     
     if(state.detail==null||state.detail==undefined){
           return   <IonPage >
-                    {/* <form> */}
-                      <IonRow className='flex flex-row justify-around gap-x-6'>
-                        <IonCol className='inline-flex my-3'>
-                          <IonLabel className='px-6 py-2 text-base font-bold text-gray-800'>交易日期：</IonLabel>
-                          <IonDatetime className="text-center bg-white border-2 rounded-md w-80" value={queryInfo.SubscribeStartDate} name='TranDate' displayFormat='YYYYMMDD' onIonChange={e=>{setQueryInfo({...queryInfo,...{SubscribeStartDate:e.detail.value!}})}}></IonDatetime>
+                      <div className='flex '>
+                      <IonRow className='flex justify-between gap-10'>
+                        <IonCol className='flex justify-center'>
+                          <IonLabel className='w-56 h-12 p-2 font-bold text-center text-gray-600'>交易日期：</IonLabel>
+                          <IonDatetime className="w-56 h-12 p-2 font-bold text-center text-gray-600 bg-white rounded-md" value={queryInfo.SubscribeStartDate} name='TranDate' displayFormat='YYYYMMDD' onIonChange={e=>{setQueryInfo({...queryInfo,...{SubscribeStartDate:e.detail.value!}})}}></IonDatetime>
                         </IonCol>
-                        {/* <IonCol>
-                          <IonItem className="rounded-md w-80">
-                          <IonLabel className='py-1 pt-3 text-base font-bold text-gray-800'>请选择教育机构</IonLabel>
-                            <IonSelect class="custom-options">
-                              <IonSelectOption value="brown">Brown</IonSelectOption>
-                              <IonSelectOption value="blonde">Blonde</IonSelectOption>
-                              <IonSelectOption value="black">Black</IonSelectOption>
-                              <IonSelectOption value="red">Red</IonSelectOption>
-                            </IonSelect>
-                          </IonItem>
-                        </IonCol> */}
-
-                        <IonCol className="inline-flex">
-
-                          <IonButton className="w-32 my-2 text-base text-gray-800 bg-white rounded-md" onClick={()=>setQueryInfo({...queryInfo,...{isOpen:!queryInfo.isOpen}})}>
+                        <IonCol className="flex justify-center">
+                          {/* <IonButton className="w-32 my-2 text-base text-gray-800 bg-white rounded-md" onClick={()=>setQueryInfo({...queryInfo,...{isOpen:!queryInfo.isOpen}})}>
                               请选择教育机构
-                          </IonButton>
-                          <IonLabel className='w-56 h-12 p-2 text-center bg-white rounded-md focus:pr-4 font-boldt ext-gray-800'>{queryInfo.USVOrgName}</IonLabel>
+                          </IonButton> */}
+                          <IonLabel className='py-2 mr-2 text-base font-bold text-gray-800 w-52'>教育机构：</IonLabel>
+                          <IonLabel className='w-56 h-12 font-bold text-center text-gray-600 bg-white rounded-md' onClick={()=>setQueryInfo({...queryInfo,...{isOpen:!queryInfo.isOpen}})}>{queryInfo.USVOrgName}</IonLabel>
                           <IonPicker
                               isOpen={queryInfo.isOpen}
                               columns={[usvPickerColumn]}
@@ -186,13 +174,16 @@ const Query:React.FC =()=>{
                               ]}
                             ></IonPicker>
                         </IonCol>
-                        <IonButton >查询</IonButton>
+                        <IonCol className="flex">
+                          <IonButton >查询</IonButton>
+                        </IonCol>
                       </IonRow>
+                      </div>
                     <div>
                       <IonList>
                         <IonItem key='title'>
                           <IonLabel> 
-                            <h2 className='text-center'>教育机构名称</h2>
+                            <h2 className='font-black text-center'>教育机构名称</h2>
                           </IonLabel>
                           <IonLabel>
                             <h2 className='text-center'>项目名称</h2>
