@@ -56,8 +56,8 @@ const Menu = () => {
           {pages.map((p, k) => (
             <IonMenuToggle autoHide={false} key={k}>
               <IonItem className="flex flex-row justify-center text-center" routerLink={p.url} routerDirection="none" detail={false} lines="none">
-                <IonIcon className="border-2 " icon={p.icon} slot="start" />
-                <IonLabel className="border-2 ">{p.title}</IonLabel>
+                <IonIcon icon={p.icon} slot="start" />
+                <IonLabel className="font-bold">{p.title}</IonLabel>
               </IonItem>
             </IonMenuToggle>
           ))}

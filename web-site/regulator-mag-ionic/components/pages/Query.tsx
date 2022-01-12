@@ -108,8 +108,8 @@ const Query:React.FC =()=>{
   
 
   const ListEntry = ({ orderInfo,key, ...props } : {orderInfo:Order,key:any}) => (
-    <IonItem key={key}>
-      <IonLabel>
+    <IonItem key={key} >
+      <IonLabel className="bg-gray-500">
         <p className='text-center'>{orderInfo.USVOrgID}</p>
       </IonLabel>
       <IonLabel>
