@@ -132,9 +132,9 @@ const Query:React.FC =()=>{
       </IonLabel>
       <IonLabel>
          <div className='flex gap-2'>
-            <button className='p-1 text-white bg-blue-500 rounded-md' onClick={onCancel(orderInfo)}>撤销  </button> 
-            <button className='p-1 text-white bg-blue-500 rounded-md'  onClick={onComplete(orderInfo)}>完成  </button>
-            <button className='p-1 text-white bg-blue-500 rounded-md'  onClick={onDetail(orderInfo)}>详情  </button>
+            <button className='p-1 text-white bg-blue-500 rounded-md' onClick={onCancel(orderInfo)}>撤销</button> 
+            <button className='p-1 text-white bg-blue-500 rounded-md'  onClick={onComplete(orderInfo)}>完成</button>
+            <button className='p-1 text-white bg-blue-500 rounded-md'  onClick={onDetail(orderInfo)}>详情</button>
          </div>
       </IonLabel>
     </IonItem>
@@ -142,18 +142,18 @@ const Query:React.FC =()=>{
     
     if(state.detail==null||state.detail==undefined){
           return   <IonPage >
-                      <div className='flex '>
+                      <div className='flex'>
                       <IonRow className='flex justify-between gap-10'>
-                        <IonCol className='flex justify-center'>
-                          <IonLabel className='w-56 h-12 p-2 font-bold text-center text-gray-600'>交易日期：</IonLabel>
-                          <IonDatetime className="w-56 h-12 p-2 font-bold text-center text-gray-600 bg-white rounded-md" value={queryInfo.SubscribeStartDate} name='TranDate' displayFormat='YYYYMMDD' onIonChange={e=>{setQueryInfo({...queryInfo,...{SubscribeStartDate:e.detail.value!}})}}></IonDatetime>
+                        <IonCol className='flex justify-center ml-8 border-2'>
+                          <IonLabel className='flex h-12 p-2 font-bold text-center text-gray-600 border-2 w-28'>交易日期：</IonLabel>
+                          <IonDatetime className="flex w-56 h-12 p-2 pt-3 font-bold text-center text-gray-600 bg-white border-2 rounded-md" value={queryInfo.SubscribeStartDate} name='TranDate' displayFormat='YYYYMMDD' onIonChange={e=>{setQueryInfo({...queryInfo,...{SubscribeStartDate:e.detail.value!}})}}></IonDatetime>
                         </IonCol>
-                        <IonCol className="flex justify-center">
+                        <IonCol className="flex justify-center ml-8 border-2">
                           {/* <IonButton className="w-32 my-2 text-base text-gray-800 bg-white rounded-md" onClick={()=>setQueryInfo({...queryInfo,...{isOpen:!queryInfo.isOpen}})}>
                               请选择教育机构
                           </IonButton> */}
-                          <IonLabel className='py-2 mr-2 text-base font-bold text-gray-800 w-52'>教育机构：</IonLabel>
-                          <IonLabel className='w-56 h-12 font-bold text-center text-gray-600 bg-white rounded-md' onClick={()=>setQueryInfo({...queryInfo,...{isOpen:!queryInfo.isOpen}})}>{queryInfo.USVOrgName}</IonLabel>
+                          <IonLabel className='flex h-12 p-2 font-bold text-center text-gray-600 border-2 w-28'>教育机构：</IonLabel>
+                          <IonLabel className='flex w-56 h-12 pt-2 font-bold text-center text-gray-600 bg-white border-2 rounded-md' onClick={()=>setQueryInfo({...queryInfo,...{isOpen:!queryInfo.isOpen}})}>{queryInfo.USVOrgName}</IonLabel>
                           <IonPicker
                               isOpen={queryInfo.isOpen}
                               columns={[usvPickerColumn]}
@@ -174,8 +174,8 @@ const Query:React.FC =()=>{
                               ]}
                             ></IonPicker>
                         </IonCol>
-                        <IonCol className="flex">
-                          <IonButton >查询</IonButton>
+                        <IonCol className="flex justify-center">
+                          <IonButton className="bg-blue-500 rounded-md focus:bg-blue-700">查询</IonButton>
                         </IonCol>
                       </IonRow>
                       </div>
@@ -186,25 +186,25 @@ const Query:React.FC =()=>{
                             <h2 className='font-black text-center'>教育机构名称</h2>
                           </IonLabel>
                           <IonLabel>
-                            <h2 className='text-center'>项目名称</h2>
+                            <h2 className='font-black text-center'>项目名称</h2>
                           </IonLabel>
                           <IonLabel>
-                            <h2 className='text-center'>教育机构订单号</h2>
+                            <h2 className='font-black text-center'>教育机构订单号</h2>
                           </IonLabel>
                           <IonLabel>
-                            <h2 className='text-center'>支付渠道交易流水号</h2>
+                            <h2 className='font-black text-center'>支付渠道交易流水号</h2>
                           </IonLabel>
                           <IonLabel>
-                            <h2 className='text-center'>支付渠道交易日期</h2>
+                            <h2 className='font-black text-center'>支付渠道交易日期</h2>
                           </IonLabel>
                           <IonLabel>
-                            <h2 className='text-center'>支付渠道交易时间</h2>
+                            <h2 className='font-black text-center'>支付渠道交易时间</h2>
                           </IonLabel>
                           <IonLabel>
-                            <h2 className='text-center'>交易金额（单位分）</h2>
+                            <h2 className='font-black text-center'>交易金额（单位分）</h2>
                           </IonLabel>
                           <IonLabel>
-                            <h2 className='text-center'>操作</h2>
+                            <h2 className='font-black text-center'>操作</h2>
                           </IonLabel>
                       </IonItem>
                           {state.orderList.map((list:Order, i: any) => (
