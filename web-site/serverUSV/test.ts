@@ -8,7 +8,7 @@ const testEventListener = async () => {
   emitter.on(subscribeID + '_createSuccess', function () {
     console.log('get CC Event')
   });
-  await cc.listenCreateResult("Edu1MSP-BankMSP-EdbMSP-orderid0034", "Edu1MSP", emitter)
+  await cc.listenPayResult("Edu1MSP-BankMSP-EdbMSP-orderid0034", "Edu1MSP", emitter)
 }
 
 const testPreOrder = ()=>{

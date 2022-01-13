@@ -16,6 +16,7 @@ export interface Subscribe {
 	SubscribeStartDate: string // 订购合约开始日期（格式：yyyyMMdd） 
 	SubscribeDurationDays: number // 订购合约持续天数 
 	Status: string
+	PayUrl: string
 }
 
 export interface SignInfo {

@@ -12,15 +12,8 @@ type FormData = {
 const CreateOrder: NextPage = () => {
   const { register, handleSubmit, formState: { errors } } = useForm<FormData>()
   const router = useRouter()
-
   const onSubmit: SubmitHandler<FormData> = (data: FormData) => {
-    saveData()
     router.push('/qrCode')
-  }
-
-  // TODO 保存数据
-  function saveData (): void {
-
   }
 
   return <div className="flex items-center justify-center w-full h-screen bg-primary-50">

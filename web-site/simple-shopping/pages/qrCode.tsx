@@ -9,13 +9,13 @@ import { useAppDispatch } from '@/app/hook'
 /** 二维码支付页面 */
 const preOrderURL = 'http://localhost:3004/preOrder'
 const socketUrl = 'http://localhost:3004'
-type UrlInfo = {
-  codeUrl:string,
-  BankTranID:string,
-  BankID:string,
-  SVOrgID:string,
-  USVOrderNo:string
-}
+// type UrlInfo = {
+//   codeUrl:string,
+//   BankTranID:string,
+//   BankID:string,
+//   SVOrgID:string,
+//   USVOrderNo:string
+// }
 const qrCode:NextPage = () => {
   const dispatch = useAppDispatch()
 
@@ -24,10 +24,10 @@ const qrCode:NextPage = () => {
   const [state, setState] = useState({ codeUrl: '', BankTranID: '', BankID: '', SVOrgID: '', USVOrderNo: '', time: 15 * 60 })
   const [time, setTime] = useState(15 * 60)
 
-  const getUrl = (urlInfo:UrlInfo) => {
-    const { codeUrl, BankTranID, USVOrderNo, BankID, SVOrgID } = urlInfo
-    return codeUrl + '?BankTranID=' + BankTranID + '&BankID=' + BankID + '&SVOrgID=' + SVOrgID + '&USVOrderNo=' + USVOrderNo
-  }
+  // const getUrl = (urlInfo:UrlInfo) => {
+  //   const { codeUrl, BankTranID, USVOrderNo, BankID, SVOrgID } = urlInfo
+  //   return codeUrl + '?BankTranID=' + BankTranID + '&BankID=' + BankID + '&SVOrgID=' + SVOrgID + '&USVOrderNo=' + USVOrderNo
+  // }
 
   const min = Math.floor(time / 60)
   const second = time % 60
@@ -52,10 +52,13 @@ const qrCode:NextPage = () => {
       },
     }).then(res => res.json())
       .then((json) => {
-        const { codeUrl, BankTranID, USVOrderNo, BankID, SVOrgID } = json
-        const urlInfo : UrlInfo = { codeUrl, BankTranID, USVOrderNo, BankID, SVOrgID }
-        socket.emit('pay', USVOrderNo)
-        socket.on(USVOrderNo + '_create', () => {
+        // const { codeUrl, BankTranID, USVOrderNo, BankID, SVOrgID } = json
+        // const urlInfo : UrlInfo = { codeUrl, BankTranID, USVOrderNo, BankID, SVOrgID }
+
+        const { PayUrl, SubscribeID } = json
+        console.log(PayUrl)
+        socket.emit('pay', SubscribeID)
+        socket.on(SubscribeID + '_pay', () => {
           console.log('支付成功')
           const confirmResult = confirm('支付成功，是否返回首页？')
           if (confirmResult) {
@@ -63,7 +66,7 @@ const qrCode:NextPage = () => {
             router.push('/test')
           }
         })
-        setState({ ...state, ...urlInfo })
+        setState({ ...state, ...{ codeUrl: PayUrl } })
         return () => socket.close()
       })
   }
@@ -78,9 +81,10 @@ const qrCode:NextPage = () => {
     <div className="m-1 text-center text-gray-600">订单提交成功，请尽快付款！订单号：<span>{state.USVOrderNo}</span></div>
     <div className="m-1 text-center text-gray-600">应付金额&nbsp;<span className="text-lg text-red-500">{TranAmt}</span>&nbsp;元</div>
     <div className="flex justify-center">
-      <QRCode value={getUrl(state)} renderAs="svg" size={200} imageSettings={{ src: 'https://static.zpao.com/favicon.png', height: 50, width: 50, excavate: true }}></QRCode>
+      <QRCode value={state.codeUrl} renderAs="svg" size={200} imageSettings={{ src: 'https://static.zpao.com/favicon.png', height: 50, width: 50, excavate: true }}></QRCode>
     </div>
-    <div>{getUrl(state)}</div>
+    {/* <div>{getUrl(state)}</div> */}
+    <div>{state.codeUrl}</div>
     <div className="m-2 text-sm text-center text-gray-600">请您在&nbsp;<span className="text-red-500">{min}分{second}秒</span>&nbsp;内完成支付，否则订单会被自动取消</div>
   </>
 }

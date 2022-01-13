@@ -31,14 +31,19 @@ app.get('/test', (req, res) => {
 
 app.post('/preorder', jsonParser, async (req, res) => {
   const body: SubscribeWithSign = { ...req.body, ...{ "appID": appID, "BankID": "BankMSP", "SVOrgID": "EdbMSP", "USVOrgID": "Edu1MSP" } }
-  const bodyWithStartDateAndDurDays = getStartDateAndDurDaysByItemId(body)
-  const newBody = sortObjByKey(bodyWithStartDateAndDurDays)
-  const signResult: string = signSubscribe(newBody)
-  newBody["sign"] = signResult
-  const result = await axios.default.post(preOrder, newBody, { headers: { 'Content-Type': 'application/json' } })
-  //{ "codeUrl": demoQrUrl, "BankTranId": tradeNo, PayerStub: PayerStub, "BankTranDate": moment(Date.now()).format('YYYYMMDD'), "BankTranTime": moment(Date.now()).format('HHmmss') }
-  result.data = { ...result.data, ...{ "USVOrderNo": geneUSVOrderNo(), "BankID": "BankMSP", "SVOrgID": "EdbMSP" } }
-  res.send(result.data);
+  const newBody: SubscribeWithSign = getStartDateAndDurDaysByItemId(body)
+  newBody.USVOrderNo = geneUSVOrderNo()
+  newBody.BankID = "BankMSP"
+  newBody.SVOrgID = "EdbMSP"
+  newBody.TranAmt = yuanToFen(newBody.TranAmt)
+  const subscribeID = getSubscribeIDByUSVOrderNo(newBody.USVOrderNo)
+  cc.listenPreOrderResult(subscribeID, "Edu1MSP", emitter)
+  await cc.preOrder(newBody)
+  emitter.once(subscribeID + '_preorder', function (subscribe:SubscribeWithSign) {
+    res.send({"SubscribeID":subscribeID,PayUrl:subscribe.PayUrl});
+    // socket.emit(USVOrderNo + '_create', 'Success')
+  });
+  // res.send(result.data);
 })
 
 //todo this is a demo
@@ -79,7 +84,7 @@ export const getSubscribeIDByUSVOrderNo = (USVOrderNo) => {
   return "Edu1MSP-BankMSP-EdbMSP-" + USVOrderNo
 }
 
-app.put('/cancel', jsonParser, async (req, res) => { //todo 进行支付 
+app.put('/cancel', jsonParser, async (req, res) => { 
   const result = await cc.cleanSubscribe("EdbMSP", req.body.SubscribeID)
   if (result === "FAIL") {
     res.send(500)
@@ -98,13 +103,22 @@ const io = require('socket.io')(serverInstance);
 io.on('connection', function (socket) { // socket相关
   console.log('somebody connection')
   socket.emit('open');
-  socket.on('pay', async function (USVOrderNo) {
-    const subscribeID = getSubscribeIDByUSVOrderNo(USVOrderNo)
-    emitter.once(subscribeID + '_createSuccess', function () {
-      socket.emit(USVOrderNo + '_create', 'Success')
+
+  socket.on('pay', async function (subscribeID) {
+    cc.listenPayResult(subscribeID, "Edu1MSP", emitter)
+    emitter.once(subscribeID + '_paySuccess', function () {
+      console.log('do pay emit')
+      socket.emit(subscribeID + '_pay', 'Success')
     });
-    cc.listenCreateResult(subscribeID, "Edu1MSP", emitter)
+    
   })
 });
 
 
+const yuanToFen = (tranAmtYuan: string | number) => {
+  if (typeof tranAmtYuan === 'number') {
+    return tranAmtYuan * 100
+  } else {
+    return parseFloat(tranAmtYuan) * 100
+  }
+}

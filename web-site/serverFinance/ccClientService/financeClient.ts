@@ -1,19 +1,24 @@
 import {
 	Gateway,
 	Wallets,
-	GatewayOptions
+	GatewayOptions,
+	ContractEvent
 } from 'fabric-network'
 import * as path from 'path'
 import { buildOrg, buildWallet } from './AppUtil'
 import { Subscribe } from '../API'
-
+import { v4 } from 'uuid'
+import {mockSaveLocalDB,mockgetLocalDB} from '../mockDb'
+import * as moment from 'moment';
 
 const createSubscribeStr = 'create'
+const preOrderStr = 'preorder'
+const payStr = 'pay'
 const appUser = 'Bank Admin'
 const subscribeContract = 'SubscriptionContract'
 const chainCode = "subscription"
-
-export async function createSubscribe(item: Subscribe) {
+const queryContract = 'query'
+export async function paySubscribe(item: Subscribe) {
 	try {
 		const orgFinance = item.BankID
 		const ccp = await buildOrg(orgFinance)
@@ -26,11 +31,10 @@ export async function createSubscribe(item: Subscribe) {
 		const contract = network.getContract(chainCodeName, subscribeContract)
 		const itemStr = JSON.stringify(item)
 		const tmapDataJson = {
-			Subscribe: Buffer.from(itemStr)
+			Payload: Buffer.from(itemStr)
 		}
-		const statefulTxn = contract.createTransaction(createSubscribeStr)
+		const statefulTxn = contract.createTransaction(payStr)
 		await statefulTxn.setTransient(tmapDataJson)
-
 		const channelPeers = await getChannelPeers(gateway, channelName, ["bankpeer-api.127-0-0-1.nip.io:8080", "edbpeer-api.127-0-0-1.nip.io:8080", "edu1peer-api.127-0-0-1.nip.io:8080"])
 		statefulTxn.setEndorsingPeers(channelPeers)
 		const subscribeID = await statefulTxn.submit()
@@ -42,7 +46,51 @@ export async function createSubscribe(item: Subscribe) {
 	}
 }
 
+export const listenCreateResult = async (orgBankId: string) => {
+	const gateway = new Gateway()
+	const ccp = await buildOrg(orgBankId)
+	const gatewayOptions = await buildGateWayOption()
+	await gateway.connect(ccp, gatewayOptions)
+	const channelName = getChannelName()
+	const chainCodeName = getChainCodeName()
+	const network = await gateway.getNetwork(channelName)
+	const contract = network.getContract(chainCodeName, subscribeContract)
+	const listener = async (event: ContractEvent) => {
 
+		if (event.eventName.indexOf("create") > -1 && event.eventName.indexOf(orgBankId) > -1) {
+			const payLoad = event.payload.toString()
+			const subscribeId = JSON.parse(payLoad).SubscribeID
+			console.log('listenCreateResult')
+			console.log(payLoad)
+			const querystatefulTxn = contract.createTransaction(queryContract)
+			const querychannelPeers = await getChannelPeers(gateway, channelName, ["bankpeer-api.127-0-0-1.nip.io:8080", "edbpeer-api.127-0-0-1.nip.io:8080", "edu1peer-api.127-0-0-1.nip.io:8080"])					
+			querystatefulTxn.setEndorsingPeers(querychannelPeers)
+			const result = await querystatefulTxn.evaluate(subscribeId)
+
+			const subscribe:Subscribe = JSON.parse(result.toString())
+
+			// const subscribe:Subscribe = JSON.parse(payLoad)
+			subscribe.BankTranDate = moment(Date.now()).format('YYYYMMDD'),
+			subscribe.BankTranTime =  moment(Date.now()).format('HHmmss')
+			subscribe.PayerStub = genePayerStub()
+			subscribe.BankTranID = geneTradeNo()
+			subscribe.PayUrl = "http://localhost:3001/pay?BankTranID="+subscribe.BankTranID
+			console.log(subscribe)
+			const itemStr = JSON.stringify(subscribe)
+			const tmapDataJson = {
+				Payload: Buffer.from(itemStr)
+			}
+			const statefulTxn = contract.createTransaction(preOrderStr)
+			await statefulTxn.setTransient(tmapDataJson)
+			const channelPeers = await getChannelPeers(gateway, channelName, ["bankpeer-api.127-0-0-1.nip.io:8080", "edbpeer-api.127-0-0-1.nip.io:8080", "edu1peer-api.127-0-0-1.nip.io:8080"])
+			statefulTxn.setEndorsingPeers(channelPeers)
+			const saveResult = await statefulTxn.submit()
+			mockSaveLocalDB(subscribe)
+			// emitter.emit(payLoadSubscribeId + '_preOrderSuccess')
+		}
+	} 
+	await contract.addContractListener(listener)
+}
 
 
 
@@ -58,16 +106,12 @@ const getChannelPeers = async (gateway: Gateway, channelName: string, peerNames:
 	}
 }
 
-
-//todo 确认下
 const getChannelName = () => {
 	return "edb-supervision-channel"
 }
 
-//todo 确认下
 const getChainCodeName = () => {
 	return chainCode
-	// return "sadf"
 }
 
 const buildGateWayOption = async () => {
@@ -76,6 +120,15 @@ const buildGateWayOption = async () => {
 	const gateWapOption: GatewayOptions = { wallet: wallet, identity: appUser, discovery: { enabled: true, asLocalhost: false } }
 	return gateWapOption
 }
+
+
+const geneTradeNo = () => { //获取预订单号
+  return v4().replaceAll('-', '')
+}
+const genePayerStub = () => { //获取存根
+  return v4()
+}
+
 
 
 
