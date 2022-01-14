@@ -19,9 +19,9 @@ window.matchMedia("(prefers-color-scheme: dark)").addListener(async (status) => 
 const AppShell = () => {
   return (
     <AppContextProvider>
-      <IonApp className="flex w-full bg-red-100">
+      <IonApp>
         <IonReactRouter>
-          <IonSplitPane contentId="main" className="mr-2 space-y-16 bg-gray-300 shadow-lg rounded-tl-xl rounded-bl-xl">
+          <IonSplitPane contentId="main" className="space-y-16 bg-gray-300 shadow-lg rounded-tl-xl rounded-bl-xl">
             <Menu />
             <IonRouterOutlet id="main">
               <Route path="/tabs" render={() => <Tabs />} />
