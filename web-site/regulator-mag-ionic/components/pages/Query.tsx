@@ -109,7 +109,7 @@ const Query:React.FC =()=>{
 
   const ListEntry = ({ orderInfo,key, ...props } : {orderInfo:Order,key:any}) => (
     <IonItem key={key} >
-      <IonLabel className="bg-gray-500">
+      <IonLabel>
         <p className='text-center'>{orderInfo.USVOrgID}</p>
       </IonLabel>
       <IonLabel>
@@ -132,28 +132,25 @@ const Query:React.FC =()=>{
       </IonLabel>
       <IonLabel>
          <div className='flex gap-2'>
-            <button className='p-1 text-white bg-blue-500 rounded-md' onClick={onCancel(orderInfo)}>撤销</button> 
-            <button className='p-1 text-white bg-blue-500 rounded-md'  onClick={onComplete(orderInfo)}>完成</button>
-            <button className='p-1 text-white bg-blue-500 rounded-md'  onClick={onDetail(orderInfo)}>详情</button>
+            <button className='p-1 text-white rounded-md bg-secondary-500 hover:bg-secondary-700' onClick={onCancel(orderInfo)}>撤销</button> 
+            <button className='p-1 text-white rounded-md bg-secondary-500 hover:bg-secondary-700' onClick={onComplete(orderInfo)}>完成</button>
+            <button className='p-1 text-white rounded-md bg-secondary-500 hover:bg-secondary-700' onClick={onDetail(orderInfo)}>详情</button>
          </div>
       </IonLabel>
     </IonItem>
     );
     
     if(state.detail==null||state.detail==undefined){
-          return   <IonPage >
+          return   <IonPage>
                       <div className='flex'>
                       <IonRow className='flex justify-between gap-10'>
                         <IonCol className='flex ml-8'>
-                          <IonLabel className='flex h-12 p-2 font-bold text-center text-gray-600 w-28'>交易日期：</IonLabel>
-                          <IonDatetime className="flex w-56 h-12 pt-2.5 font-bold text-center text-gray-600 bg-white rounded-md" value={queryInfo.SubscribeStartDate} name='TranDate' displayFormat='YYYYMMDD' onIonChange={e=>{setQueryInfo({...queryInfo,...{SubscribeStartDate:e.detail.value!}})}}></IonDatetime>
+                          <IonLabel className='flex h-12 p-2 font-bold text-center text-primary-600 w-28'>交易日期：</IonLabel>
+                          <IonDatetime className="flex w-56 h-12 pt-2.5 font-bold text-center text-primary-600 bg-white rounded-md" value={queryInfo.SubscribeStartDate} name='TranDate' displayFormat='YYYYMMDD' onIonChange={e=>{setQueryInfo({...queryInfo,...{SubscribeStartDate:e.detail.value!}})}}></IonDatetime>
                         </IonCol>
                         <IonCol className="flex ml-8">
-                          {/* <IonButton className="w-32 my-2 text-base text-gray-800 bg-white rounded-md" onClick={()=>setQueryInfo({...queryInfo,...{isOpen:!queryInfo.isOpen}})}>
-                              请选择教育机构
-                          </IonButton> */}
-                          <IonLabel className='flex h-12 p-2 font-bold text-center text-gray-600 w-28'>教育机构：</IonLabel>
-                          <IonLabel className='flex w-56 h-12 pt-2.5 pl-20 font-bold text-center text-gray-600 bg-white rounded-md' onClick={()=>setQueryInfo({...queryInfo,...{isOpen:!queryInfo.isOpen}})}>{queryInfo.USVOrgName}</IonLabel>
+                          <IonLabel className='flex h-12 p-2 font-bold text-center text-primary-600 w-28'>教育机构：</IonLabel>
+                          <IonLabel className='flex w-56 h-12 pt-2.5 pl-20 font-bold text-center text-primary-600 bg-white rounded-md' onClick={()=>setQueryInfo({...queryInfo,...{isOpen:!queryInfo.isOpen}})}>{queryInfo.USVOrgName}</IonLabel>
                           <IonPicker
                               isOpen={queryInfo.isOpen}
                               columns={[usvPickerColumn]}
@@ -175,7 +172,7 @@ const Query:React.FC =()=>{
                             ></IonPicker>
                         </IonCol>
                         <IonCol className="flex justify-center">
-                          <IonButton className="bg-blue-500 rounded-md focus:bg-blue-700">查询</IonButton>
+                          <button className="w-24 text-white rounded-md bg-secondary-500 hover:bg-secondary-700">查询</button>
                         </IonCol>
                       </IonRow>
                       </div>
