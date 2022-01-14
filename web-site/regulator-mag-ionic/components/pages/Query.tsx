@@ -146,7 +146,7 @@ const Query:React.FC =()=>{
                       <IonRow className='flex justify-between gap-10'>
                         <IonCol className='flex ml-8'>
                           <IonLabel className='flex h-12 p-2 font-bold text-center text-gray-600 w-28'>交易日期：</IonLabel>
-                          <IonDatetime className="flex w-56 h-12 pt-2.5 font-bold text-center text-gray-600 bg-white border-2 rounded-md" value={queryInfo.SubscribeStartDate} name='TranDate' displayFormat='YYYYMMDD' onIonChange={e=>{setQueryInfo({...queryInfo,...{SubscribeStartDate:e.detail.value!}})}}></IonDatetime>
+                          <IonDatetime className="flex w-56 h-12 pt-2.5 font-bold text-center text-gray-600 bg-white rounded-md" value={queryInfo.SubscribeStartDate} name='TranDate' displayFormat='YYYYMMDD' onIonChange={e=>{setQueryInfo({...queryInfo,...{SubscribeStartDate:e.detail.value!}})}}></IonDatetime>
                         </IonCol>
                         <IonCol className="flex ml-8">
                           {/* <IonButton className="w-32 my-2 text-base text-gray-800 bg-white rounded-md" onClick={()=>setQueryInfo({...queryInfo,...{isOpen:!queryInfo.isOpen}})}>
