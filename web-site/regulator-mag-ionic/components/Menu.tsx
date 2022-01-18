@@ -23,6 +23,14 @@ const pages = [
   },
 ];
 
+const pages1 = [
+  {
+    title: '汇总',
+    icon: flash,
+    url: '/tabs/transum',
+  },
+];
+
 const Menu = () => {
   const [isDark, setIsDark] = useState(false);
   const handleOpen = async () => {
@@ -54,6 +62,16 @@ const Menu = () => {
       <IonContent>
         <IonList >
           {pages.map((p, k) => (
+            <IonMenuToggle autoHide={false} key={k}>
+              <IonItem className="flex flex-row justify-center text-center" routerLink={p.url} routerDirection="none" detail={false} lines="none">
+                <IonIcon icon={p.icon} slot="start" />
+                <IonLabel className="font-bold">{p.title}</IonLabel>
+              </IonItem>
+            </IonMenuToggle>
+          ))}
+        </IonList>
+        <IonList >
+          {pages1.map((p, k) => (
             <IonMenuToggle autoHide={false} key={k}>
               <IonItem className="flex flex-row justify-center text-center" routerLink={p.url} routerDirection="none" detail={false} lines="none">
                 <IonIcon icon={p.icon} slot="start" />

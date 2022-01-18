@@ -133,23 +133,23 @@ const Query:React.FC =()=>{
       <IonLabel>
         <p  className='text-center'>{orderInfo.USVItemName}</p>
       </IonLabel>
-      <IonLabel>
+      {/* <IonLabel>
         <p  className='text-center'>{orderInfo.USVOrderNo}</p>
       </IonLabel>
       <IonLabel>
         <p  className='text-center'>{orderInfo.BankTranID}</p>
-      </IonLabel>
+      </IonLabel> */}
       <IonLabel>
         <p  className='text-center'>{orderInfo.BankTranDate}</p>
       </IonLabel>
-      <IonLabel>
+      {/* <IonLabel>
         <p  className='text-center'>{orderInfo.BankTranTime}</p>
-      </IonLabel>
+      </IonLabel> */}
       <IonLabel>
         <p  className='text-center'>{orderInfo.TranAmt}</p>
       </IonLabel>
       <IonLabel>
-         <div className='flex gap-2'>
+         <div className='flex justify-center gap-2'>
             <button className='p-1 text-white rounded-md bg-secondary-500 hover:bg-secondary-700' onClick={onCancel(orderInfo)}>撤销</button> 
             <button className='p-1 text-white rounded-md bg-secondary-500 hover:bg-secondary-700' onClick={onComplete(orderInfo)}>完成</button>
             <button className='p-1 text-white rounded-md bg-secondary-500 hover:bg-secondary-700' onClick={onDetail(orderInfo)}>详情</button>
@@ -204,18 +204,18 @@ const Query:React.FC =()=>{
                           <IonLabel>
                             <div className='font-black text-center'>项目名称</div>
                           </IonLabel>
-                          <IonLabel>
+                          {/* <IonLabel>
                             <div className='font-black text-center'>教育机构订单号</div>
                           </IonLabel>
                           <IonLabel>
                             <div className='font-black text-center'>支付渠道交易流水号</div>
-                          </IonLabel>
+                          </IonLabel> */}
                           <IonLabel>
                             <div className='font-black text-center'>支付渠道交易日期</div>
                           </IonLabel>
-                          <IonLabel>
+                          {/* <IonLabel>
                             <div className='font-black text-center'>支付渠道交易时间</div>
-                          </IonLabel>
+                          </IonLabel> */}
                           <IonLabel>
                             <div className='font-black text-center'>交易金额（单位分）</div>
                           </IonLabel>

@@ -61,3 +61,24 @@ You can think of [Capacitor](https://capacitorjs.com/) as a sort of "electron fo
 Capacitor provides access to Native APIs and a plugin system for building any native functionality your app needs.
 
 Capacitor apps can also run in the browser as a Progressive Web App with the same code.
+
+## 字典表
+
+SubscribeID:订购合约ID
+USVOrgID:受监管机构ID
+USVItemID:受监管机构项目ID
+USVItemName:受监管机构项目名称
+USVItemDesc:受监管机构项目简介
+USVOrderNo:受监管机构订单号
+BankID:支付渠道ID
+BankTranID:支付渠道交易流水号
+BankTranDate:支付渠道交易日期（格式：yyyyMMdd）
+BankTranTime:支付渠道交易时间（格式：HHmmss）
+PayerRemark:付款方备注
+PayerStub:付款方存根
+TranAmt:交易金额（单位分）
+SVOrgID:监管机构ID
+SubscribeStartDate:订购合约开始日期（格式：yyyyMMdd）
+SubscribeDurationDays:订购合约持续天数
+
+

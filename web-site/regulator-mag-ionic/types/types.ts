@@ -14,6 +14,17 @@ export interface Order {
   BankTranTime:string,
   PayerStub?:string,
   SVOrgID:string,
-  SubscribeStartDate:string
+  SubscribeStartDate:string,
+}
+export interface TranSum{
+  USVOrgID?: string,
+  USVItemID?: string,
+  USVItemName?: string,
+  TranSumAmt?: number,
+}
 
+export interface TranSupeSum{
+  USVOrgID?: string,
+  DisbursedAmt?:number,
+  NotDisbursedAmt?:number,
 }
