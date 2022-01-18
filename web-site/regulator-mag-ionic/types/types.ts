@@ -18,9 +18,11 @@ export interface Order {
 }
 export interface TranSum{
   USVOrgID?: string,
+  USVOrgName?:string,
   USVItemID?: string,
   USVItemName?: string,
   TranSumAmt?: number,
+  TranMonth?:string,
 }
 
 export interface TranSupeSum{

@@ -27,7 +27,7 @@ const cancelURL = 'http://localhost:3003/cancel'
 const completeURL = 'http://localhost:3003/complete'
 const queryURL = 'http://localhost:3003/query'
 const demoOrderList:TranSum[] = [
-  {"USVOrgID":"Edu1MSP","USVItemID":"1","USVItemName":"系统架构师2020年下半年班","TranSumAmt":100000},
+  {"USVOrgName":"监管机构A","USVItemName":"系统架构师2020年下半年班","TranSumAmt":100000,"TranMonth":"202201"},
 ]
 
 const demoUSVList = [
@@ -35,121 +35,65 @@ const demoUSVList = [
   {USVOrgID:'Edu2MSP',name:'测试机构'}
 ]
 
-const tranList = [
-  {USVOrgID:'Edu1MSP',name:'灵纳教育'},
-  {USVOrgID:'Edu2MSP',name:'测试机构'}
-]
 
-// 交易汇总页面(教育资金监管机构)
-const Query:React.FC =()=>{
+// USVOrgID?: string,
+// USVOrgName?:string,
+// USVItemID?: string,
+// USVItemName?: string,
+// TranSumAmt?: number,
+// TranMonth?:string,
+
+//交易汇总页面(教育资金监管机构)
+const TranSumQuery:React.FC =()=>{
 
   const { state, dispatch } = useContext(AppContext);
-  const [queryInfo, setQueryInfo] = useState({SubscribeStartDate:'',USVOrgID:'',isOpen:false,USVOrgName:''});
-  useEffect(() => { 
-    refreshOrderList(demoOrderList.filter(order=>order.USVOrgID===queryInfo.USVOrgID||queryInfo.USVOrgID===''))
-    refreshUSVList(demoUSVList)
-    return 
-  },[queryInfo.USVOrgID, queryInfo.SubscribeStartDate])
+  const [queryInfo, setQueryInfo] = useState({USVOrgID:'',USVOrgName:'',USVItemID:'',USVItemName:'',TranSumAmt:0,TranMonth:'',isOpen:false,});
+  // useEffect(() => { 
+  //   refreshOrderList(demoOrderList.filter(tranSum=>tranSum.USVOrgID===queryInfo.USVOrgID||queryInfo.USVOrgID===''))
+  //   refreshUSVList(demoUSVList)
+  //   return 
+  // },[queryInfo.USVOrgID, queryInfo.SubscribeStartDate])
 
   const usvPickerColumn = {
     name: "USVOrg",
     options: state.USVList.map((usv: { name: any; USVOrgID: any; })=>{ return {'text': usv.name, 'value': usv.USVOrgID} })
   } as PickerColumn;
 
-  const doSetDetail = useCallback(order => {
-    dispatch(setDetail(order));
-  },[dispatch]);
+//   const doSetDetail = useCallback(order => {
+//     dispatch(setDetail(order));
+//   },[dispatch]);
 
-  const refreshOrderList = useCallback((orders:Order[]) => {
-    dispatch(setOrder(orders));
-  },[dispatch]);
-  const refreshUSVList = useCallback((USVList:{USVOrgID:string,name:string}[]) => {
-    dispatch(setUSV(USVList));
-  },[dispatch]);
+  // const refreshOrderList = useCallback((orders:TranSum[]) => {
+  //   dispatch(setOrder(orders));
+  // },[dispatch]);
+  // const refreshUSVList = useCallback((USVList:{USVOrgID:string,name:string}[]) => {
+  //   dispatch(setUSV(USVList));
+  // },[dispatch]);
 
-  const onCancel = (item:Order)=>() => {
-    fetch(cancelURL, {
-      method: 'PUT',
-      body: JSON.stringify({
-        "SubscribeID":item.SubscribeID,
-      }),
-      headers: {
-        'Content-type': 'application/json;charset=UTF-8',
-      },
-    }).then(res => res.json())
-    .then((json) => {
-      alert(json.result)
-    })
-  }
 
-  const onComplete = (item:Order)=>() => {
-    fetch(completeURL, {
-      method: 'PUT',
-      body: JSON.stringify({
-        "SubscribeID":item.SubscribeID,
-
-      }),
-      headers: {
-        'Content-type': 'application/json;charset=UTF-8',
-      },
-    }).then(res => res.json())
-    .then((json) => {
-      alert(json.result)
-    })
-  }
-
-  const onDetail = (item:Order)=>() => {
-    doSetDetail(item)
-  }
-
-  // const Test = ({ test }) => (
-  //    <h2>{JSON.stringify(test)}</h2>
-  // )
-
-  
-
-  const ListEntry = ({ orderInfo,key, ...props } : {orderInfo:Order,key:any}) => (
+  const ListEntry = ({ tranSumInfo,key, ...props } : {tranSumInfo:TranSum,key:any}) => (
     <div className=''>
       <IonItem key={key} >
       <IonLabel>
-        <p className='text-center'>{orderInfo.USVOrgID}</p>
+        <p  className='text-center'>监管机构1</p>
       </IonLabel>
       <IonLabel>
-        <p  className='text-center'>{orderInfo.USVItemName}</p>
+        <p  className='text-center'>领纳教育</p>
       </IonLabel>
       <IonLabel>
-        <p  className='text-center'>{orderInfo.USVOrderNo}</p>
-      </IonLabel>
-      <IonLabel>
-        <p  className='text-center'>{orderInfo.BankTranID}</p>
-      </IonLabel>
-      <IonLabel>
-        <p  className='text-center'>{orderInfo.BankTranDate}</p>
-      </IonLabel>
-      <IonLabel>
-        <p  className='text-center'>{orderInfo.BankTranTime}</p>
-      </IonLabel>
-      <IonLabel>
-        <p  className='text-center'>{orderInfo.TranAmt}</p>
-      </IonLabel>
-      <IonLabel>
-         <div className='flex gap-2'>
-            <button className='p-1 text-white rounded-md bg-secondary-500 hover:bg-secondary-700' onClick={onCancel(orderInfo)}>撤销</button> 
-            <button className='p-1 text-white rounded-md bg-secondary-500 hover:bg-secondary-700' onClick={onComplete(orderInfo)}>完成</button>
-            <button className='p-1 text-white rounded-md bg-secondary-500 hover:bg-secondary-700' onClick={onDetail(orderInfo)}>详情</button>
-         </div>
+        <p  className='text-center'>100000000000</p>
       </IonLabel>
     </IonItem>
     </div>
     );
     
-    if(state.detail==null||state.detail==undefined){
+    if(true){
           return   <IonPage>
                       <div className='flex mb-20'>
                       <IonRow className='flex justify-between gap-10'>
-                        <IonCol className='flex ml-8'>
-                          <IonLabel className='flex h-12 p-2 font-bold text-center text-primary-600 w-28'>交易日期：</IonLabel>
-                          <IonDatetime className="flex w-56 h-12 pt-2.5 font-bold text-center text-primary-600 bg-white rounded-md" value={queryInfo.SubscribeStartDate} name='TranDate' displayFormat='YYYYMMDD' onIonChange={e=>{setQueryInfo({...queryInfo,...{SubscribeStartDate:e.detail.value!}})}}></IonDatetime>
+                      <IonCol className='flex ml-8'>
+                          <IonLabel className='flex h-12 p-2 font-bold text-center text-primary-600 w-28'>年月：</IonLabel>
+                          <IonDatetime className="flex w-56 h-12 pt-2.5 font-bold text-center text-primary-600 bg-white rounded-md" value={queryInfo.TranMonth} name='TranMonth' displayFormat='YYYYMM' onIonChange={e=>{setQueryInfo({...queryInfo,...{TranMonth:e.detail.value!}})}}></IonDatetime>
                         </IonCol>
                         <IonCol className="flex ml-8">
                           <IonLabel className='flex h-12 p-2 font-bold text-center text-primary-600 w-28'>教育机构：</IonLabel>
@@ -189,34 +133,31 @@ const Query:React.FC =()=>{
                             <div className='font-black text-center'>项目名称</div>
                           </IonLabel>
                           <IonLabel>
-                            <div className='font-black text-center'>教育机构订单号</div>
-                          </IonLabel>
-                          <IonLabel>
-                            <div className='font-black text-center'>支付渠道交易流水号</div>
-                          </IonLabel>
-                          <IonLabel>
-                            <div className='font-black text-center'>支付渠道交易日期</div>
-                          </IonLabel>
-                          <IonLabel>
-                            <div className='font-black text-center'>支付渠道交易时间</div>
-                          </IonLabel>
-                          <IonLabel>
-                            <div className='font-black text-center'>交易金额（单位分）</div>
-                          </IonLabel>
-                          <IonLabel>
-                            <div className='font-black text-center'>操作</div>
+                            <div className='font-black text-center'>交易金额</div>
                           </IonLabel>
                       </IonItem>
-                          {state.orderList.map((list:Order, i: any) => (
-                          <ListEntry orderInfo={list} key={i} />
-                        ))}
+                          {/* {state.orderList.map((list:TranSum, i: any) => (
+                          <ListEntry tranSumInfo={list} key={i} />
+                        ))} */}
+                        <div className=''>
+                          <IonItem >
+                          <IonLabel>
+                            <p  className='text-center'>监管机构1</p>
+                          </IonLabel>
+                          <IonLabel>
+                            <p  className='text-center'>领纳教育</p>
+                          </IonLabel>
+                          <IonLabel>
+                            <p  className='text-center'>100000000000</p>
+                          </IonLabel>
+                        </IonItem>
+                        </div>
                       </IonList>
                   </div>             
             </IonPage>
          }
          else{
-           return <Redirect to="/tabs/detail" />
          }
 
 }
-export default Query
+export default TranSumQuery
