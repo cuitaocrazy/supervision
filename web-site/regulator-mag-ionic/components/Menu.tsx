@@ -15,27 +15,35 @@ import { useEffect, useState } from 'react';
 import {  flash } from 'ionicons/icons';
 import Router from 'next/router'
 
-const pages = [
+const Monitorpages1 = [
   {
-    title: '交易明细查询',
+    title: '交易明细查询(监管机构)',
     icon: flash,
     url: '/tabs/query',
   },
 ];
 
-const pages1 = [
+const Monitorpages2 = [
   {
-    title: '交易汇总查询',
+    title: '交易汇总查询(监管机构)',
     icon: flash,
     url: '/tabs/transum',
   },
 ];
 
-const pages2 = [
+const Monitorpages3 = [
   {
-    title: '交易监管查询',
+    title: '交易监管查询(监管机构)',
     icon: flash,
     url: '/tabs/monitor',
+  },
+];
+
+const Bankpages1 = [
+  {
+    title: '交易明细查询(银行)',
+    icon: flash,
+    url: '/tabs/bankQuery',
   },
 ];
 
@@ -69,7 +77,7 @@ const Menu = () => {
       </IonHeader>
       <IonContent>
         <IonList >
-          {pages.map((p, k) => (
+          {Monitorpages1.map((p, k) => (
             <IonMenuToggle autoHide={false} key={k}>
               <IonItem className="flex flex-row justify-center text-center" routerLink={p.url} routerDirection="none" detail={false} lines="none">
                 <IonIcon icon={p.icon} slot="start" />
@@ -79,7 +87,7 @@ const Menu = () => {
           ))}
         </IonList>
         <IonList >
-          {pages1.map((p, k) => (
+          {Monitorpages2.map((p, k) => (
             <IonMenuToggle autoHide={false} key={k}>
               <IonItem className="flex flex-row justify-center text-center" routerLink={p.url} routerDirection="none" detail={false} lines="none">
                 <IonIcon icon={p.icon} slot="start" />
@@ -89,7 +97,17 @@ const Menu = () => {
           ))}
         </IonList>
         <IonList >
-        {pages2.map((p, k) => (
+        {Monitorpages3.map((p, k) => (
+            <IonMenuToggle autoHide={false} key={k}>
+              <IonItem className="flex flex-row justify-center text-center" routerLink={p.url} routerDirection="none" detail={false} lines="none">
+                <IonIcon icon={p.icon} slot="start" />
+                <IonLabel className="font-bold">{p.title}</IonLabel>
+              </IonItem>
+            </IonMenuToggle>
+          ))}
+        </IonList>
+        <IonList >
+        {Bankpages1.map((p, k) => (
             <IonMenuToggle autoHide={false} key={k}>
               <IonItem className="flex flex-row justify-center text-center" routerLink={p.url} routerDirection="none" detail={false} lines="none">
                 <IonIcon icon={p.icon} slot="start" />

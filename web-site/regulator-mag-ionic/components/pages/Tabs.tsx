@@ -6,6 +6,7 @@ import Query from './Query';
 import Detail from './Detail';
 import TranSum from './TranSumQuery'
 import Monitor from './Monitor'
+import BankQuery from './BankQuery'
 
 
 const Tabs = () => {
@@ -17,6 +18,7 @@ const Tabs = () => {
         <Route path="/tabs" render={() => <Redirect to="/tabs/feed" />} exact={true} />
         <Route path="/tabs/transum" component={TranSum} exact={true} />
         <Route path="/tabs/monitor" component={Monitor} exact={true} />
+        <Route path="/tabs/bankquery" component={BankQuery} exact={true} />
       </IonRouterOutlet>
       <IonTabBar slot="bottom">
         <IonTabButton tab="tab1" href="/tabs/query">
