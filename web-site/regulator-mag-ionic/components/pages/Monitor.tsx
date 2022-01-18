@@ -2,7 +2,7 @@
 import { useEffect,useCallback,useContext,useState } from 'react'
 import { Redirect } from 'react-router-dom';
 import {AppContext,setOrder,setDetail,setUSV} from '../../appState';
-import {TranSum} from '../../types/types'
+import {TranMonitor} from '../../types/types'
 import {
   IonPage,
   IonList,
@@ -21,8 +21,8 @@ import {
 } from '@ionic/react';
 import { PickerColumn } from "@ionic/core";
 
-const demoOrderList:TranSum[] = [
-  {"USVOrgName":"监管机构A","USVItemName":"系统架构师2020年下半年班","TranSumAmt":100000,"TranMonth":"202201"},
+const demoOrderList:TranMonitor[] = [
+  {"USVOrgID":"1111","USVOrgName":"监管机构A","DisbursedAmt":1000000,"NotDisbursedAmt":2000000, "date":"202201"},
 ]
 
 const demoUSVList = [
@@ -31,11 +31,11 @@ const demoUSVList = [
 ]
 
 
-//交易汇总页面(教育资金监管机构)
-const TranSumQuery:React.FC =()=>{
+//监管页面(教育资金监管机构)
+const Monitor:React.FC =()=>{
 
   const { state, dispatch } = useContext(AppContext);
-  const [queryInfo, setQueryInfo] = useState({USVOrgID:'',USVOrgName:'',USVItemID:'',USVItemName:'',TranSumAmt:0,TranMonth:'',isOpen:false,});
+  const [queryInfo, setQueryInfo] = useState({USVOrgID:'',USVOrgName:'',DisbursedAmt:0,NotDisbursedAmt:0,isOpen:false,});
   // useEffect(() => { 
   //   refreshOrderList(demoOrderList.filter(tranSum=>tranSum.USVOrgID===queryInfo.USVOrgID||queryInfo.USVOrgID===''))
   //   refreshUSVList(demoUSVList)
@@ -59,14 +59,14 @@ const TranSumQuery:React.FC =()=>{
   // },[dispatch]);
 
 
-  const ListEntry = ({ tranSumInfo,key, ...props } : {tranSumInfo:TranSum,key:any}) => (
+  const ListEntry = ({ MonitorInfo,key, ...props } : {MonitorInfo:TranMonitor,key:any}) => (
     <div className=''>
       <IonItem key={key} >
       <IonLabel>
-        <p  className='text-center'>监管机构1</p>
+        <p  className='text-center'>领纳教育</p>
       </IonLabel>
       <IonLabel>
-        <p  className='text-center'>领纳教育</p>
+        <p  className='text-center'>10000000000</p>
       </IonLabel>
       <IonLabel>
         <p  className='text-center'>100000000000</p>
@@ -79,10 +79,6 @@ const TranSumQuery:React.FC =()=>{
           return   <IonPage>
                       <div className='flex mb-20'>
                       <IonRow className='flex justify-between gap-10'>
-                      <IonCol className='flex ml-8'>
-                          <IonLabel className='flex h-12 p-2 font-bold text-center text-primary-600 w-28'>年月：</IonLabel>
-                          <IonDatetime className="flex w-56 h-12 pt-2.5 font-bold text-center text-primary-600 bg-white rounded-md" value={queryInfo.TranMonth} name='TranMonth' displayFormat='YYYYMM' onIonChange={e=>{setQueryInfo({...queryInfo,...{TranMonth:e.detail.value!}})}}></IonDatetime>
-                        </IonCol>
                         <IonCol className="flex ml-8">
                           <IonLabel className='flex h-12 p-2 font-bold text-center text-primary-600 w-28'>教育机构：</IonLabel>
                           <IonLabel className='flex w-56 h-12 pt-2.5 pl-20 font-bold text-center text-primary-600 bg-white rounded-md' onClick={()=>setQueryInfo({...queryInfo,...{isOpen:!queryInfo.isOpen}})}>{queryInfo.USVOrgName}</IonLabel>
@@ -118,11 +114,21 @@ const TranSumQuery:React.FC =()=>{
                             <div className='font-black text-center'>教育机构名称</div>
                           </IonLabel>
                           <IonLabel>
-                            <div className='font-black text-center'>项目名称</div>
+                            <div className='font-black text-center'>已放款金额（元）</div>
                           </IonLabel>
                           <IonLabel>
-                            <div className='font-black text-center'>交易金额</div>
+                            <div className='font-black text-center'>未放款金额（元）</div>
                           </IonLabel>
+                          <IonLabel>
+                            <div className='font-black text-center'>年月</div>
+                          </IonLabel>
+                          <IonLabel>
+                            <div className='font-black text-center'>共发放（次）</div>
+                          </IonLabel>
+                          <IonLabel>
+                            <div className='font-black text-center'>已发放（次）</div>
+                          </IonLabel>
+
                       </IonItem>
                           {/* {state.orderList.map((list:TranSum, i: any) => (
                           <ListEntry tranSumInfo={list} key={i} />
@@ -130,13 +136,22 @@ const TranSumQuery:React.FC =()=>{
                         <div>
                           <IonItem >
                           <IonLabel>
-                            <p  className='text-center'>监管机构1</p>
+                            <p  className='text-center'>灵纳教育机构</p>
                           </IonLabel>
                           <IonLabel>
-                            <p  className='text-center'>领纳教育</p>
+                            <p  className='text-center'>1000000</p>
                           </IonLabel>
                           <IonLabel>
-                            <p  className='text-center'>100000000000</p>
+                            <p  className='text-center'>1000000</p>
+                          </IonLabel>
+                          <IonLabel>
+                            <p  className='text-center'>2021-12</p>
+                          </IonLabel>
+                          <IonLabel>
+                            <p  className='text-center'>10</p>
+                          </IonLabel>
+                          <IonLabel>
+                            <p  className='text-center'>5</p>
                           </IonLabel>
                         </IonItem>
                         </div>
@@ -148,4 +163,4 @@ const TranSumQuery:React.FC =()=>{
          }
 
 }
-export default TranSumQuery
+export default Monitor

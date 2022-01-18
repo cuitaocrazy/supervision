@@ -25,8 +25,10 @@ export interface TranSum{
   TranMonth?:string,
 }
 
-export interface TranSupeSum{
-  USVOrgID?: string,
+export interface TranMonitor{
+  USVOrgID: string,
+  USVOrgName?:string,
   DisbursedAmt?:number,
   NotDisbursedAmt?:number,
+  date?:string
 }

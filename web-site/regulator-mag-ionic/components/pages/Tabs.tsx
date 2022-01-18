@@ -5,6 +5,7 @@ import {  flash } from 'ionicons/icons';
 import Query from './Query';
 import Detail from './Detail';
 import TranSum from './TranSumQuery'
+import Monitor from './Monitor'
 
 
 const Tabs = () => {
@@ -15,15 +16,20 @@ const Tabs = () => {
         <Route path="/tabs/detail" component={Detail} exact={true} />
         <Route path="/tabs" render={() => <Redirect to="/tabs/feed" />} exact={true} />
         <Route path="/tabs/transum" component={TranSum} exact={true} />
+        <Route path="/tabs/monitor" component={Monitor} exact={true} />
       </IonRouterOutlet>
       <IonTabBar slot="bottom">
         <IonTabButton tab="tab1" href="/tabs/query">
           <IonIcon icon={flash} />
-          <IonLabel>查询</IonLabel>
+          <IonLabel>交易明细查询</IonLabel>
         </IonTabButton>
         <IonTabButton tab="tab1" href="/tabs/transum">
           <IonIcon icon={flash} />
-          <IonLabel>汇总</IonLabel>
+          <IonLabel>交易明细汇总查询</IonLabel>
+        </IonTabButton>
+        <IonTabButton tab="tab1" href="/tabs/monitor">
+          <IonIcon icon={flash} />
+          <IonLabel>交易监管查询</IonLabel>
         </IonTabButton>
         {/* <IonTabButton tab="tab2" href="/tabs/detail">
           <IonIcon icon={flash} />

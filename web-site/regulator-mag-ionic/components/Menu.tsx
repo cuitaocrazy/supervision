@@ -17,7 +17,7 @@ import Router from 'next/router'
 
 const pages = [
   {
-    title: '查询',
+    title: '交易明细查询',
     icon: flash,
     url: '/tabs/query',
   },
@@ -25,9 +25,17 @@ const pages = [
 
 const pages1 = [
   {
-    title: '汇总',
+    title: '交易汇总查询',
     icon: flash,
     url: '/tabs/transum',
+  },
+];
+
+const pages2 = [
+  {
+    title: '交易监管查询',
+    icon: flash,
+    url: '/tabs/monitor',
   },
 ];
 
@@ -72,6 +80,16 @@ const Menu = () => {
         </IonList>
         <IonList >
           {pages1.map((p, k) => (
+            <IonMenuToggle autoHide={false} key={k}>
+              <IonItem className="flex flex-row justify-center text-center" routerLink={p.url} routerDirection="none" detail={false} lines="none">
+                <IonIcon icon={p.icon} slot="start" />
+                <IonLabel className="font-bold">{p.title}</IonLabel>
+              </IonItem>
+            </IonMenuToggle>
+          ))}
+        </IonList>
+        <IonList >
+        {pages2.map((p, k) => (
             <IonMenuToggle autoHide={false} key={k}>
               <IonItem className="flex flex-row justify-center text-center" routerLink={p.url} routerDirection="none" detail={false} lines="none">
                 <IonIcon icon={p.icon} slot="start" />
