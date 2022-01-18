@@ -63,10 +63,10 @@ const TranSumQuery:React.FC =()=>{
     <div className=''>
       <IonItem key={key} >
       <IonLabel>
-        <p  className='text-center'>监管机构1</p>
+        <p  className='text-center'>领纳教育机构</p>
       </IonLabel>
       <IonLabel>
-        <p  className='text-center'>领纳教育</p>
+        <p  className='text-center'>英语兴趣班</p>
       </IonLabel>
       <IonLabel>
         <p  className='text-center'>100000000000</p>
@@ -130,10 +130,10 @@ const TranSumQuery:React.FC =()=>{
                         <div>
                           <IonItem >
                           <IonLabel>
-                            <p  className='text-center'>监管机构1</p>
+                            <p  className='text-center'>领纳教育机构</p>
                           </IonLabel>
                           <IonLabel>
-                            <p  className='text-center'>领纳教育</p>
+                            <p  className='text-center'>英语兴趣班</p>
                           </IonLabel>
                           <IonLabel>
                             <p  className='text-center'>100000000000</p>
