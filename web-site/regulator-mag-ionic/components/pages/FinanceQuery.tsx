@@ -162,15 +162,16 @@ const FinanceQuery:React.FC =()=>{
     
     if(state.detail==null||state.detail==undefined){
           return   <IonPage >
-                      <div className='h-24'>
-                      <IonRow className='justify-between '>
+                      <div className='relative'>
+                      <div className='flex'>
+                      <IonRow className='flex justify-between gap-10'>
                         <IonCol className='flex ml-8'>
-                          <IonLabel className='flex p-2 font-bold text-center text-gray-600 w-28'>交易日期：</IonLabel>
-                          <IonDatetime className="flex w-28 pt-2.5 font-bold text-center text-gray-600 bg-white border-2 rounded-md" value={queryInfo.SubscribeStartDate} name='TranDate' displayFormat='YYYYMMDD' onIonChange={e=>{setQueryInfo({...queryInfo,...{SubscribeStartDate:e.detail.value!}})}}></IonDatetime>
+                          <IonLabel className='flex h-12 p-2 font-bold text-center text-primary-600 w-28'>交易日期：</IonLabel>
+                          <IonDatetime className="flex w-56 h-12 pt-2.5 font-bold text-center text-primary-600 bg-white rounded-md" value={queryInfo.SubscribeStartDate} name='TranDate' displayFormat='YYYYMMDD' onIonChange={e=>{setQueryInfo({...queryInfo,...{SubscribeStartDate:e.detail.value!}})}}></IonDatetime>
                         </IonCol>
                         <IonCol className="flex ml-8">
-                          <IonLabel className='flex p-2 font-bold text-center text-gray-600 w-28'>教育机构：</IonLabel>
-                          <IonLabel className='flex w-28  pt-2.5 pl-20 font-bold text-center text-gray-600 bg-white rounded-md' onClick={()=>setQueryInfo({...queryInfo,...{isOpen:!queryInfo.isOpen}})}>{queryInfo.USVOrgName}</IonLabel>
+                          <IonLabel className='flex h-12 p-2 font-bold text-center text-primary-600 w-28'>教育机构：</IonLabel>
+                          <IonLabel className='flex w-56 h-12 pt-2.5 pl-20 font-bold text-center text-primary-600 bg-white rounded-md' onClick={()=>setQueryInfo({...queryInfo,...{isOpen:!queryInfo.isOpen}})}>{queryInfo.USVOrgName}</IonLabel>
                           <IonPicker
                               isOpen={queryInfo.isOpen}
                               columns={[usvPickerColumn]}
@@ -191,9 +192,12 @@ const FinanceQuery:React.FC =()=>{
                               ]}
                             ></IonPicker>
                         </IonCol>
+                        <IonCol className="flex justify-center">
+                          <button className="w-24 p-2 text-white rounded-md bg-secondary-500 hover:bg-secondary-700 focus:outline-none">查询</button>
+                        </IonCol>
                       </IonRow>
                       </div>
-                    <div className='absolute w-full mt-28'>
+                    <div className='absolute w-full mt-10'>
                       <IonList>
                         <IonItem key='title'>
                           <IonLabel> 
@@ -203,16 +207,7 @@ const FinanceQuery:React.FC =()=>{
                             <div className='font-black text-center'>项目名称</div>
                           </IonLabel>
                           <IonLabel>
-                            <div className='font-black text-center'>教育机构订单号</div>
-                          </IonLabel>
-                          <IonLabel>
-                            <div className='font-black text-center'>支付渠道交易流水号</div>
-                          </IonLabel>
-                          <IonLabel>
                             <div className='font-black text-center'>支付渠道交易日期</div>
-                          </IonLabel>
-                          <IonLabel>
-                            <div className='font-black text-center'>支付渠道交易时间</div>
                           </IonLabel>
                           <IonLabel>
                             <div className='font-black text-center'>交易金额（单位分）</div>
@@ -227,7 +222,8 @@ const FinanceQuery:React.FC =()=>{
                         ))}
                           </div>
                       </IonList>
-                  </div>             
+                  </div> 
+                  </div>            
             </IonPage>
          }
          else{

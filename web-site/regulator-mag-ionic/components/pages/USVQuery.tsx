@@ -103,16 +103,7 @@ const USVQuery:React.FC =()=>{
         <p  className='text-center'>{orderInfo.USVItemName}</p>
       </IonLabel>
       <IonLabel>
-        <p  className='text-center'>{orderInfo.USVOrderNo}</p>
-      </IonLabel>
-      <IonLabel>
-        <p  className='text-center'>{orderInfo.BankTranID}</p>
-      </IonLabel>
-      <IonLabel>
         <p  className='text-center'>{orderInfo.BankTranDate}</p>
-      </IonLabel>
-      <IonLabel>
-        <p  className='text-center'>{orderInfo.BankTranTime}</p>
       </IonLabel>
       <IonLabel>
         <p  className='text-center'>{orderInfo.TranAmt}</p>
