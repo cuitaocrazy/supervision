@@ -209,7 +209,7 @@ const Query:React.FC =()=>{
                         </IonCol>
                       </IonRow>
                       </div>
-                    <div>
+                    <div className='absolute w-full mt-28'>
                       <IonList>
                         <IonItem key='title'>
                           <IonLabel> 

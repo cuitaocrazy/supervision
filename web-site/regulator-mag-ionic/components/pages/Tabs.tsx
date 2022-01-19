@@ -15,10 +15,11 @@ const Tabs = () => {
       <IonRouterOutlet>
         <Route path="/tabs/query" component={Query} exact={true} />
         <Route path="/tabs/detail" component={Detail} exact={true} />
-        <Route path="/tabs" render={() => <Redirect to="/tabs/feed" />} exact={true} />
+        {/* <Route path="/tabs" render={() => <Redirect to="/tabs/feed" />} exact={true} /> */}
         <Route path="/tabs/transum" component={TranSum} exact={true} />
         <Route path="/tabs/financeQuery" component={FinanceQuery} exact={true} />
         <Route path="/tabs/USVQuery" component={USVQuery} exact={true} />
+        <Route path="/" render={() => <Redirect to="/login" />} exact={true} />
       </IonRouterOutlet>
       <IonTabBar slot="bottom">
         <IonTabButton tab="tab1" href="/tabs/query">

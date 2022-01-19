@@ -155,7 +155,7 @@ const FinanceQuery:React.FC =()=>{
     
     if(state.detail==null||state.detail==undefined){
           return   <IonPage >
-                      <div className='h-24 border-2 border-green-300'>
+                      <div className='h-24'>
                       <IonRow className='justify-between '>
                         <IonCol className='flex ml-8'>
                           <IonLabel className='flex p-2 font-bold text-center text-gray-600 w-28'>交易日期：</IonLabel>
@@ -186,8 +186,8 @@ const FinanceQuery:React.FC =()=>{
                         </IonCol>
                       </IonRow>
                       </div>
-                    <div className='absolute border-2 border-red-500 mt-28'>
-                      <IonList className="border-2 border-red-200">
+                    <div className='absolute w-full mt-28'>
+                      <IonList>
                         <IonItem key='title'>
                           <IonLabel> 
                             <div className='font-black text-center'>教育机构名称</div>
