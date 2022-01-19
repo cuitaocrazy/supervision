@@ -41,7 +41,7 @@ const demoUSVList = [
 ]
 
 // 清算流水交易查询页面
-const Query:React.FC =()=>{
+const USVQuery:React.FC =()=>{
 
   const { state, dispatch } = useContext(AppContext);
   const [queryInfo, setQueryInfo] = useState({SubscribeStartDate:'',USVOrgID:'',isOpen:false,USVOrgName:''});
@@ -227,4 +227,4 @@ const Query:React.FC =()=>{
          }
 
 }
-export default Query
+export default USVQuery

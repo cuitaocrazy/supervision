@@ -25,7 +25,7 @@ const AppShell = () => {
             <Menu />
             <IonRouterOutlet id="main">
               <Route path="/tabs" render={() => <Tabs />} />
-              <Route exact path="/" render={() => <Redirect to="/tabs" />} />
+              <Route exact path="/" render={() => <Redirect to="/login" />} />
             </IonRouterOutlet>
           </IonSplitPane>
         </IonReactRouter>
