@@ -64,7 +64,7 @@ const Query:React.FC =()=>{
 
   useEffect(() => { 
     fetch(queryURL, {
-      method: 'GET',
+      method: 'PUT',
       body: JSON.stringify({
         SubscribeStartDate:queryInfo.SubscribeStartDate,
         USVOrgID:queryInfo.USVOrgID
@@ -114,7 +114,7 @@ const Query:React.FC =()=>{
 
   const onComplete = (item:Order)=>() => {
     fetch(completeURL, {
-      method: 'PUT',
+      method: 'GET',
       body: JSON.stringify({
         "SubscribeID":item.SubscribeID,
 
@@ -175,7 +175,8 @@ const Query:React.FC =()=>{
     
     if(state.detail==null||state.detail==undefined){
           return   <IonPage>
-                      <div className='flex mb-20'>
+                     <div className='relative'>
+                      <div className='flex'>
                       <IonRow className='flex justify-between gap-10'>
                         <IonCol className='flex ml-8'>
                           <IonLabel className='flex h-12 p-2 font-bold text-center text-primary-600 w-28'>交易日期：</IonLabel>
@@ -209,8 +210,8 @@ const Query:React.FC =()=>{
                         </IonCol>
                       </IonRow>
                       </div>
-                    <div className='absolute w-full mt-28'>
-                      <IonList>
+                    <div className='absolute w-full mt-10'>
+                      <IonList >
                         <IonItem key='title'>
                           <IonLabel> 
                             <div className='font-black text-center'>教育机构名称</div>
@@ -241,6 +242,7 @@ const Query:React.FC =()=>{
                           <ListEntry orderInfo={list} key={i} />
                         ))}
                       </IonList>
+                  </div>
                   </div>             
             </IonPage>
          }

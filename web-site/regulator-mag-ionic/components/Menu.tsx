@@ -17,7 +17,7 @@ import Router from 'next/router'
 
 const pages = [
   {
-    title: '查询',
+    title: '监管机构查询',
     icon: flash,
     url: '/tabs/query',
   },
@@ -32,7 +32,7 @@ const pages = [
     url: '/tabs/financeQuery',
   },
   {
-    title: '汇总',
+    title: '监管机构汇总',
     icon: flash,
     url: '/tabs/transum',
   },

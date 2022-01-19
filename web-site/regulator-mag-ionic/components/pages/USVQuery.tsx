@@ -36,8 +36,8 @@ const demoOrderList:Order[] = [
 ]
 
 const demoUSVList = [
-  {USVOrgID:'Edu1MSP',name:'灵纳教育'},
-  {USVOrgID:'Edu2MSP',name:'测试机构'}
+  {USVOrgID:'Edu1MSP',name:'英语'},
+  {USVOrgID:'Edu2MSP',name:'机器人'}
 ]
 
 // 清算流水交易查询页面
@@ -80,37 +80,6 @@ const USVQuery:React.FC =()=>{
     dispatch(setUSV(USVList));
   },[dispatch]);
 
-  const onCancel = (item:Order)=>() => {
-    fetch(cancelURL, {
-      method: 'PUT',
-      body: JSON.stringify({
-        "SubscribeID":item.SubscribeID,
-      }),
-      headers: {
-        'Content-type': 'application/json;charset=UTF-8',
-      },
-    }).then(res => res.json())
-    .then((json) => {
-      alert(json.result)
-    })
-  }
-
-  const onComplete = (item:Order)=>() => {
-    fetch(completeURL, {
-      method: 'PUT',
-      body: JSON.stringify({
-        "SubscribeID":item.SubscribeID,
-
-      }),
-      headers: {
-        'Content-type': 'application/json;charset=UTF-8',
-      },
-    }).then(res => res.json())
-    .then((json) => {
-      alert(json.result)
-    })
-  }
-
   const onDetail = (item:Order)=>() => {
     doSetDetail(item)
   }
@@ -123,9 +92,6 @@ const USVQuery:React.FC =()=>{
 
   const ListEntry = ({ orderInfo,key, ...props } : {orderInfo:Order,key:any}) => (
     <IonItem key={key} >
-      <IonLabel className="bg-gray-500">
-        <p className='text-center'>{orderInfo.USVOrgID}</p>
-      </IonLabel>
       <IonLabel>
         <p  className='text-center'>{orderInfo.USVItemName}</p>
       </IonLabel>
@@ -146,8 +112,6 @@ const USVQuery:React.FC =()=>{
       </IonLabel>
       <IonLabel>
          <div className='flex gap-2'>
-            <button className='p-1 text-white bg-blue-500 rounded-md' onClick={onCancel(orderInfo)}>撤销</button> 
-            <button className='p-1 text-white bg-blue-500 rounded-md'  onClick={onComplete(orderInfo)}>完成</button>
             <button className='p-1 text-white bg-blue-500 rounded-md'  onClick={onDetail(orderInfo)}>详情</button>
          </div>
       </IonLabel>
@@ -163,7 +127,7 @@ const USVQuery:React.FC =()=>{
                           <IonDatetime className="flex w-28 pt-2.5 font-bold text-center text-gray-600 bg-white border-2 rounded-md" value={queryInfo.SubscribeStartDate} name='TranDate' displayFormat='YYYYMMDD' onIonChange={e=>{setQueryInfo({...queryInfo,...{SubscribeStartDate:e.detail.value!}})}}></IonDatetime>
                         </IonCol>
                         <IonCol className="flex ml-8">
-                          <IonLabel className='flex p-2 font-bold text-center text-gray-600 w-28'>教育机构：</IonLabel>
+                          <IonLabel className='flex p-2 font-bold text-center text-gray-600 w-28'>课程名称：</IonLabel>
                           <IonLabel className='flex w-28  pt-2.5 pl-20 font-bold text-center text-gray-600 bg-white rounded-md' onClick={()=>setQueryInfo({...queryInfo,...{isOpen:!queryInfo.isOpen}})}>{queryInfo.USVOrgName}</IonLabel>
                           <IonPicker
                               isOpen={queryInfo.isOpen}
@@ -190,9 +154,6 @@ const USVQuery:React.FC =()=>{
                     <div className='absolute w-full mt-28'>
                       <IonList>
                         <IonItem key='title'>
-                          <IonLabel> 
-                            <div className='font-black text-center'>教育机构名称</div>
-                          </IonLabel>
                           <IonLabel>
                             <div className='font-black text-center'>项目名称</div>
                           </IonLabel>
