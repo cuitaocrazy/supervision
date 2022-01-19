@@ -40,7 +40,7 @@ const demoUSVList = [
   {USVOrgID:'Edu2MSP',name:'机器人'}
 ]
 
-// 清算流水交易查询页面
+// 清算流水交易查询页面(教育机构)
 const USVQuery:React.FC =()=>{
 
   const { state, dispatch } = useContext(AppContext);
@@ -158,9 +158,6 @@ const USVQuery:React.FC =()=>{
                 <div className='absolute w-full mt-10'>
                   <IonList >
                     <IonItem key='title'>
-                      <IonLabel> 
-                        <div className='font-black text-center'>教育机构名称</div>
-                      </IonLabel>
                       <IonLabel>
                         <div className='font-black text-center'>项目名称</div>
                       </IonLabel>
