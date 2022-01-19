@@ -45,13 +45,19 @@ const USVQuery:React.FC =()=>{
 
   const { state, dispatch } = useContext(AppContext);
   const [queryInfo, setQueryInfo] = useState({SubscribeStartDate:'',USVOrgID:'',isOpen:false,USVOrgName:''});
+  const getParamStr = (params:any,url:string) =>{
+    let result = '?'
+    Object.keys(params).forEach(key => result = result+key+'='+params[key]+'&')
+    return url+result
+  }
+  const paramStr = getParamStr({
+    SubscribeStartDate:queryInfo.SubscribeStartDate,
+    USVOrgID:queryInfo.USVOrgID
+  },queryURL)
+  
   useEffect(() => { 
-    fetch(queryURL, {
+    fetch(paramStr, {
       method: 'GET',
-      body: JSON.stringify({
-        SubscribeStartDate:queryInfo.SubscribeStartDate,
-        USVOrgID:queryInfo.USVOrgID
-      }),
       headers: {
         'Content-type': 'application/json;charset=UTF-8',
       },
