@@ -74,17 +74,11 @@ const Query:React.FC =()=>{
   
   useEffect(() => { 
     fetch(queryURL, {
-      method: 'PUT',
+      method: 'GET',
       body: JSON.stringify({
         SubscribeStartDate:queryInfo.SubscribeStartDate,
         USVOrgID:queryInfo.USVOrgID
       }),
-
-    fetch(paramStr, {
-      method: 'GET',
-      headers: {
-        'Content-type': 'application/json;charset=UTF-8',
-      },
     }).then(res => res.json())
     .then((json) => {
     const {orderList,USVList} = json

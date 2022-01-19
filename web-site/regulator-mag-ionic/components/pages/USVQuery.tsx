@@ -57,7 +57,7 @@ const USVQuery:React.FC =()=>{
   
   useEffect(() => { 
     fetch(queryURL, {
-      method: 'PUT',
+      method: 'GET',
       body: JSON.stringify({
         SubscribeStartDate:queryInfo.SubscribeStartDate,
         USVOrgID:queryInfo.USVOrgID
