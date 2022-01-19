@@ -6,7 +6,6 @@ import {
 	GatewayOptions
 } from 'fabric-network'
 const path = require('path')
-// const { buildOrg, buildWallet } = require('./AppUtil')
 import { buildOrg, buildWallet } from './AppUtil'
 import { Subscribe } from '../API'
 
@@ -17,9 +16,6 @@ const preOrderContract = 'create'
 const chainCode = "subscription"  //"sadf"
 const channelName = "edb-supervision-channel"
 const queryContract =  'query'
-
-
-
 
 export async function preOrder(item: Subscribe) {
 	try {
@@ -61,13 +57,10 @@ export const listenPayResult = async (subscribeID: string, USVId: string, emitte
 	const network = await gateway.getNetwork(channelName)
 	const contract = network.getContract(chainCodeName, subscribeContract)
 	const listener = async (event: ContractEvent) => {
-		console.log(event.eventName)
 		if (event.eventName.indexOf("pay") > -1 && event.eventName.indexOf(USVId) > -1) { //todo 不用indexOf查找
-			console.log('USVID: '+ USVId)
 			const payLoad = event.payload.toString()
 			const payLoadSubscribeId = JSON.parse(payLoad).SubscribeID
 			if (subscribeID === payLoadSubscribeId) {
-				console.log('_paySuccess')
 				emitter.emit(payLoadSubscribeId + '_paySuccess')
 			}
 			

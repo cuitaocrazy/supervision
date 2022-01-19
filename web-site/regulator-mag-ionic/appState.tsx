@@ -1,5 +1,5 @@
 import React from 'react';
-import { Order } from './types/types'
+import { Order,TranSum } from './types/types'
 /**
  * This is a simple redux-like state management pattern for React using hooks
  * that might be useful in your simpler Ionic React apps that don't
@@ -15,12 +15,15 @@ const initialState = {
   detail : null,
   orderList: [],
   query:{SubscribeStartDate:'',USVOrgID:''},
-  USVList:  [{USVOrgID:'Edu1MSP',name:'灵纳教育'},{USVOrgID:'Edu2MSP',name:'测试机构'}]
+  USVList:  [{USVOrgID:'Edu1MSP',name:'灵纳教育'},{USVOrgID:'Edu2MSP',name:'测试机构'}],
+  sumQuery: {SubscribeStartDateStart:'',SubscribeStartDateEnd:'',USVOrgID:''},
+  sumList: []
 };
 export const AppContext = React.createContext<{state:any,dispatch:React.Dispatch<any>}>({state:initialState,dispatch:()=>{}});
-export const GetDetail = (state) => state.detail
-export const GetOrderList = (state) => state.orderList 
-export const AppContextProvider = (props) => {
+export const GetDetail = (state: { detail: any; }) => state.detail
+export const GetOrderList = (state: { orderList: any; }) => state.orderList 
+export const GetSumList = (state: { sumList: any; }) => state.sumList 
+export const AppContextProvider = (props: { children: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined; }) => {
   const fullInitialState = {
     ...initialState,
   }
@@ -40,11 +43,19 @@ export const setQuery = (query:any) => ({
   type: 'Query',
   query:query
 });
+export const setSumQuery = (sumQuery:any) => ({
+  type: 'SumQuery',
+  sumQuery:sumQuery
+});
+export const setSum = (sumList:TranSum[]) => ({
+  type: 'Sum',
+  sumList:sumList
+});
 export const setUSV = (USVList:any) => ({
   type: 'USVList',
   USVList:USVList
 });
-export const reducer = (state, action) => {
+export const reducer = (state: any, action: { type: any; detail: any; orderList: any; query: any; USVList: any; sumQuery: any; sumList: any; }) => {
   switch (action.type) {
     case 'Detail': {
       return {
@@ -71,6 +82,21 @@ export const reducer = (state, action) => {
         USVList:action.USVList
       }
     }
+    ///////////////////
+    case 'SumQuery': {
+      return {
+        ...state,
+        sumQuery:action.sumQuery
+      }
+    }
+    case 'Sum': {
+      return {
+        ...state,
+        sumList:action.sumList
+      }
+    }
+
+
   }
 }
 

@@ -1,1 +1,1 @@
-cp -r /home/zhmouohz/.fabric-vscode/environments/edutest5/wallets/Edb ./
+cp -r /home/zhmouohz/.fabric-vscode/environments/edutest15/wallets/Edb ./

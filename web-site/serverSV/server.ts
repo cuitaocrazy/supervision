@@ -3,8 +3,10 @@
 import * as express from 'express'
 import * as bodyParser from 'body-parser'
 import * as cc from './ccClientService/SVClient'
-
+import {mockgetLocalDB} from './mockDb'
+import * as cors from 'cors'
 const app = express()
+app.use(cors());
 const port = 3003
 var textParser = bodyParser.text();
 var jsonParser = bodyParser.json();
@@ -48,15 +50,51 @@ app.put('/complete', jsonParser, async (req, res) => { //todo 进行支付
   }
 })
 
-app.put('/query', jsonParser, async (req, res) => { 
-  // const subscribeId = await cc.querySubscribe("EdbMSP", req.body.SubscribeID)
-  // if (subscribeId === "FAIL") {
-  //   res.send(500)
-  // } else {
-  //   res.send({ "result": subscribeId })
-  // }
-  res.send({ "orderList": demoOrderList,USVList:demoUSVList })
+//todo remove
+// app.put('/query', jsonParser, async (req, res) => { 
+//   const {USVOrgID,SubscribeStartDate} = req.body
+//   const orderList = mockgetLocalDB()
+//   res.send({ "orderList": orderList,USVList:demoUSVList })
+// })
+
+app.get('/query', jsonParser, async (req, res) => { 
+  const {USVOrgID,SubscribeStartDate} = req.query
+  const orderList = mockgetLocalDB()
+  res.send({ "orderList": orderList,USVList:demoUSVList })
 })
+
+app.get('/querySum', jsonParser, async (req, res) => { 
+  const {USVOrgID,SubscribeStartDateStart,SubscribeStartDateEnd} = req.query
+  const orderList = mockgetLocalDB()
+  const sumObject = orderList.filter((order)=>{
+    if(USVOrgID==''){
+      return true
+    }
+    if(USVOrgID===order.USVOrgID){
+      return true
+    }
+    return false
+  }).reduce((previousValue,order)=>{
+    if(previousValue[order.USVOrgID]==undefined){
+      const TranSumAmt = order.TranAmt
+      const TranCount = 1
+      previousValue[order.USVOrgID]={TranSumAmt:TranSumAmt,TranCount:TranCount}
+    }else{
+      const TranSumAmt = order.TranAmt+previousValue[order.USVOrgID].TranSumAmt
+      const TranCount = 1+previousValue[order.USVOrgID].TranCount
+      previousValue[order.USVOrgID]={TranSumAmt:TranSumAmt,TranCount:TranCount}
+    }
+
+    return previousValue
+  },[])
+
+  const sumList = []
+  var keys = Object.keys(sumObject);
+  keys.forEach(key=>sumList.push({...{"USVOrgID":key},...sumObject[key]}))
+  res.send({ "sumList": sumList,USVList:demoUSVList })
+})
+
+cc.listenPayResult("Edu1MSP")
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)

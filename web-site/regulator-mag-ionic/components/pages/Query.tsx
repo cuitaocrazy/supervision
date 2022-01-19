@@ -61,10 +61,24 @@ const Query:React.FC =()=>{
 
   const { state, dispatch } = useContext(AppContext);
   const [queryInfo, setQueryInfo] = useState({SubscribeStartDate:'',USVOrgID:'',isOpen:false,USVOrgName:''});
+
   useEffect(() => { 
-    refreshOrderList(demoOrderList.filter(order=>order.USVOrgID===queryInfo.USVOrgID||queryInfo.USVOrgID===''))
-    refreshUSVList(demoUSVList)
+    fetch(queryURL, {
+      method: 'GET',
+      body: JSON.stringify({
+        SubscribeStartDate:queryInfo.SubscribeStartDate,
+        USVOrgID:queryInfo.USVOrgID
+      }),
+      headers: {
+        'Content-type': 'application/json;charset=UTF-8',
+      },
+    }).then(res => res.json())
+    .then((json) => {
+    const {orderList,USVList} = json
+    refreshOrderList(orderList.filter((order: { USVOrgID: string; })=>order.USVOrgID===queryInfo.USVOrgID||queryInfo.USVOrgID===''))
+    refreshUSVList(USVList)
     return 
+    })
   },[queryInfo.USVOrgID, queryInfo.SubscribeStartDate])
 
   const usvPickerColumn = {

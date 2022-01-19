@@ -5,8 +5,8 @@ import {  flash } from 'ionicons/icons';
 import Query from './Query';
 import Detail from './Detail';
 import TranSum from './TranSumQuery'
-import Monitor from './Monitor'
-import BankQuery from './BankQuery'
+import USVQuery from './USVQuery'
+import FinanceQuery from './FinanceQuery'
 
 
 const Tabs = () => {
@@ -17,8 +17,8 @@ const Tabs = () => {
         <Route path="/tabs/detail" component={Detail} exact={true} />
         <Route path="/tabs" render={() => <Redirect to="/tabs/feed" />} exact={true} />
         <Route path="/tabs/transum" component={TranSum} exact={true} />
-        <Route path="/tabs/monitor" component={Monitor} exact={true} />
-        <Route path="/tabs/bankquery" component={BankQuery} exact={true} />
+        <Route path="/tabs/financeQuery" component={FinanceQuery} exact={true} />
+        <Route path="/tabs/USVQuery" component={USVQuery} exact={true} />
       </IonRouterOutlet>
       <IonTabBar slot="bottom">
         <IonTabButton tab="tab1" href="/tabs/query">
@@ -28,10 +28,6 @@ const Tabs = () => {
         <IonTabButton tab="tab1" href="/tabs/transum">
           <IonIcon icon={flash} />
           <IonLabel>交易明细汇总查询</IonLabel>
-        </IonTabButton>
-        <IonTabButton tab="tab1" href="/tabs/monitor">
-          <IonIcon icon={flash} />
-          <IonLabel>交易监管查询</IonLabel>
         </IonTabButton>
         {/* <IonTabButton tab="tab2" href="/tabs/detail">
           <IonIcon icon={flash} />

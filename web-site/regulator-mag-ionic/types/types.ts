@@ -21,6 +21,7 @@ export interface TranSum{
   USVOrgName?:string,
   USVItemID?: string,
   USVItemName?: string,
+  TranCount?: number,
   TranSumAmt?: number,
   TranMonth?:string,
 }
