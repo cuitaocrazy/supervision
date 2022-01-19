@@ -13,7 +13,7 @@ const Login: NextPage = () => {
 
   const onSubmit: SubmitHandler<FormData> = (data: FormData) => {
     saveLoginData()
-    router.push('/createOrder')
+    router.push('/tabs/query')
   }
 
   // TODO 保存数据

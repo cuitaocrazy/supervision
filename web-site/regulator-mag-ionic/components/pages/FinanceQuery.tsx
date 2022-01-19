@@ -41,7 +41,7 @@ const demoUSVList = [
 ]
 
 // 清算流水交易查询页面
-const Query:React.FC =()=>{
+const FinanceQuery:React.FC =()=>{
 
   const { state, dispatch } = useContext(AppContext);
   const [queryInfo, setQueryInfo] = useState({SubscribeStartDate:'',USVOrgID:'',isOpen:false,USVOrgName:''});
@@ -122,7 +122,7 @@ const Query:React.FC =()=>{
 
   const ListEntry = ({ orderInfo,key, ...props } : {orderInfo:Order,key:any}) => (
     <IonItem key={key} >
-      <IonLabel className="bg-gray-500">
+      <IonLabel>
         <p className='text-center'>{orderInfo.USVOrgID}</p>
       </IonLabel>
       <IonLabel>
@@ -155,7 +155,7 @@ const Query:React.FC =()=>{
     
     if(state.detail==null||state.detail==undefined){
           return   <IonPage >
-                      <div className='h-24'>
+                      <div className='h-24 border-2 border-green-300'>
                       <IonRow className='justify-between '>
                         <IonCol className='flex ml-8'>
                           <IonLabel className='flex p-2 font-bold text-center text-gray-600 w-28'>交易日期：</IonLabel>
@@ -186,8 +186,8 @@ const Query:React.FC =()=>{
                         </IonCol>
                       </IonRow>
                       </div>
-                    <div>
-                      <IonList>
+                    <div className='absolute border-2 border-red-500 mt-28'>
+                      <IonList className="border-2 border-red-200">
                         <IonItem key='title'>
                           <IonLabel> 
                             <div className='font-black text-center'>教育机构名称</div>
@@ -214,9 +214,11 @@ const Query:React.FC =()=>{
                             <div className='font-black text-center'>操作</div>
                           </IonLabel>
                       </IonItem>
+                          <div className=''>
                           {state.orderList.map((list:Order, i: any) => (
                           <ListEntry orderInfo={list} key={i} />
                         ))}
+                          </div>
                       </IonList>
                   </div>             
             </IonPage>
@@ -226,4 +228,4 @@ const Query:React.FC =()=>{
          }
 
 }
-export default Query
+export default FinanceQuery
