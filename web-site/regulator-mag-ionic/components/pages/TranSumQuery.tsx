@@ -92,8 +92,6 @@ const Query:React.FC =()=>{
     </IonItem>
     </div>
     );
-    console.log('state')
-    console.log(state)
         return <IonPage>
                     <div className='flex mb-20'>
                       <IonRow className='flex justify-between gap-10'>

@@ -60,6 +60,7 @@ app.put('/complete', jsonParser, async (req, res) => { //todo 进行支付
 app.get('/query', jsonParser, async (req, res) => { 
   const {USVOrgID,SubscribeStartDate} = req.query
   const orderList = mockgetLocalDB()
+  orderList.map(order=>{order.TranAmt=fenToYuan(order.TranAmt)})
   res.send({ "orderList": orderList,USVList:demoUSVList })
 })
 
@@ -76,11 +77,11 @@ app.get('/querySum', jsonParser, async (req, res) => {
     return false
   }).reduce((previousValue,order)=>{
     if(previousValue[order.USVOrgID]==undefined){
-      const TranSumAmt = order.TranAmt
+      const TranSumAmt = fenToYuan(order.TranAmt)
       const TranCount = 1
       previousValue[order.USVOrgID]={TranSumAmt:TranSumAmt,TranCount:TranCount}
     }else{
-      const TranSumAmt = order.TranAmt+previousValue[order.USVOrgID].TranSumAmt
+      const TranSumAmt = order.TranAmt+fenToYuan(previousValue[order.USVOrgID].TranSumAmt)
       const TranCount = 1+previousValue[order.USVOrgID].TranCount
       previousValue[order.USVOrgID]={TranSumAmt:TranSumAmt,TranCount:TranCount}
     }
@@ -96,6 +97,17 @@ app.get('/querySum', jsonParser, async (req, res) => {
 
 cc.listenPayResult("Edu1MSP")
 
+
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
 })
+
+
+//todo
+const fenToYuan = (tranAmtFen: string | number) => {
+  if (typeof tranAmtFen === 'number') {
+    return tranAmtFen 
+  } else {
+    return parseFloat(tranAmtFen) 
+  }
+}
