@@ -6,6 +6,7 @@ import { Redirect, Route } from 'react-router-dom';
 import Menu from './Menu';
 
 import Tabs from './pages/Tabs';
+import Login from './pages/Login';
 import {AppContextProvider} from '../appState'
 
 window.matchMedia("(prefers-color-scheme: dark)").addListener(async (status) => {
@@ -25,6 +26,7 @@ const AppShell = () => {
             <Menu />
             <IonRouterOutlet id="main">
               <Route path="/tabs" render={() => <Tabs />} />
+              <Route path="/login" render={() => <Login />} />
               <Route exact path="/" render={() => <Redirect to="/login" />} />
             </IonRouterOutlet>
           </IonSplitPane>

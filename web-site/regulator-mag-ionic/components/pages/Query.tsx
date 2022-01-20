@@ -73,12 +73,8 @@ const Query:React.FC =()=>{
   },queryURL)
   
   useEffect(() => { 
-    fetch(queryURL, {
+    fetch(paramStr, {
       method: 'GET',
-      body: JSON.stringify({
-        SubscribeStartDate:queryInfo.SubscribeStartDate,
-        USVOrgID:queryInfo.USVOrgID
-      }),
     }).then(res => res.json())
     .then((json) => {
     const {orderList,USVList} = json

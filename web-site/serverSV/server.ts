@@ -102,8 +102,13 @@ app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
 })
 
+app.post('/login', jsonParser, async (req, res) => { 
+  const {username,role} = req.body
+  res.send({ "role": role,"username":username })
+})
 
-//todo
+
+//todo 尚未使用
 const fenToYuan = (tranAmtFen: string | number) => {
   if (typeof tranAmtFen === 'number') {
     return tranAmtFen 
