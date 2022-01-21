@@ -52,7 +52,7 @@ const Login = () => {
           </div>
           <div className="mt-6">
             <label className="block mb-2 text-sm font-semibold text-gray-600">角色</label>
-            <select {...register('role', { required: true })} name="role" id="role">
+            <select {...register('role', { required: true })} name="role" id="role" className='w-full p-3 border rounded-md'>
               <option value="SV" selected>监管机构</option>
               <option value="USV">教育机构</option>
               <option value="Finance">金融机构</option>

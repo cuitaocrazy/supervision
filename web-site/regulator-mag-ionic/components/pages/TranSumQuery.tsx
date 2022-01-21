@@ -3,7 +3,6 @@ import { useEffect,useCallback,useContext,useState } from 'react'
 import { Redirect } from 'react-router-dom';
 import {AppContext,setDetail,setUSV,setSum,setSumQuery} from '../../appState';
 import {TranSum} from '../../types/types'
-// import {Order} from '../../types/types'
 import {
   IonPage,
   IonList,
@@ -125,9 +124,9 @@ const Query:React.FC =()=>{
                               <div className='font-black text-center'>交易金额</div>
                             </IonLabel>
                         </IonItem>
-                            {state.sumList.map((list:TranSum, i: any) => (
+                            {/* {state.sumList.map((list:TranSum, i: any) => (
                             <ListEntry sumInfo={list} key={i} />
-                          ))}
+                          ))} */}
                         </IonList>
                     </div>             
               </IonPage>
