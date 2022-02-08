@@ -7,6 +7,7 @@ import Detail from './Detail';
 import TranSum from './TranSumQuery'
 import USVQuery from './USVQuery'
 import FinanceQuery from './FinanceQuery'
+import ConsumerStubQuery from './ConsumerStubQuery'
 
 
 const Tabs = () => {
@@ -19,6 +20,7 @@ const Tabs = () => {
         <Route path="/tabs/transum" component={TranSum} exact={true} />
         <Route path="/tabs/financeQuery" component={FinanceQuery} exact={true} />
         <Route path="/tabs/USVQuery" component={USVQuery} exact={true} />
+        <Route path="/tabs/consumerStubQuery" component={ConsumerStubQuery} exact={true} />
         <Route path="/" render={() => <Redirect to="/login" />} exact={true} />
       </IonRouterOutlet>
       <IonTabBar slot="bottom">

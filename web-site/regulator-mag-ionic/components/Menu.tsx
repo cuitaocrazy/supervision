@@ -41,6 +41,12 @@ const pages = [
     url: '/tabs/transum',
     role: 'SV',
   },
+  {
+    title: '消费者订单存根查询',
+    icon: flash,
+    url: '/tabs/ConsumerStubQuery',
+    role: 'Consumer',
+  },
 ];
 
 

@@ -29,7 +29,7 @@ const demoUSVList = [
 ]
 
 // 交易汇总页面(教育资金监管机构)
-const Query:React.FC =()=>{
+const TranSumQuery:React.FC =()=>{
   const { state, dispatch } = useContext(AppContext);
   const [queryInfo, setQueryInfo] = useState({SubscribeStartDateStart:'',SubscribeStartDateEnd:'',USVOrgID:'',isOpen:false,USVOrgName:''});
   // useEffect(() => { 
@@ -131,4 +131,4 @@ const Query:React.FC =()=>{
                     </div>             
               </IonPage>
 }
-export default Query
+export default TranSumQuery
