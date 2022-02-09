@@ -46,16 +46,6 @@ const demoOrderList:Order[] = [
   {"SubscribeID":"Edu1MSP-BankMSP-EdbMSP-523456","USVOrderNo":"523456","SubscribeDurationDays":365,"TranAmt":100,"USVOrgID":"Edu1MSP","USVItemID":"1","USVItemName":"系统架构师2020年下半年班","USVItemDesc":"系统架构师2021年下半年及2022年上半年有效的培训课程","BankID":"BankMSP","BankTranID":"0000001","BankTranDate":"20210929","BankTranTime":"100130","PayerRemark":"用于准备xx考试","PayerStub":"付款凭证","SVOrgID":"EdbMSP","SubscribeStartDate":"20211030"},
 ]
 
-const demoUSVList = [
-  {USVOrgID:'Edu1MSP',name:'灵纳教育'},
-  {USVOrgID:'Edu2MSP',name:'测试机构'}
-]
-
-const tranList = [
-  {USVOrgID:'Edu1MSP',name:'灵纳教育'},
-  {USVOrgID:'Edu2MSP',name:'测试机构'}
-]
-
 // 清算流水交易查询页面(教育资金监管机构)
 const ConsumerStubQuery:React.FC =()=>{
 
@@ -183,7 +173,7 @@ const ConsumerStubQuery:React.FC =()=>{
                       <IonRow className='flex justify-between gap-10'>
                         <IonCol className='flex ml-8'>
                           <IonLabel className='flex h-12 p-2 font-bold text-center text-primary-600 w-28'>订单存根：</IonLabel>
-                          <input type='text' className="flex w-56 h-12 pt-2.5 font-bold text-center text-primary-600 bg-white rounded-md"  />
+                          <input type='text' className="flex w-56 h-12 pt-2.5 font-bold text-center text-primary-600 bg-white rounded-md focus:outline-none focus:glow-secondary-500"  />
                         </IonCol>
                         
                         <IonCol className="flex justify-center">
