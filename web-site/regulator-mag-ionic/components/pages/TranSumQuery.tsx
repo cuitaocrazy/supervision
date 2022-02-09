@@ -96,7 +96,8 @@ const TranSumQuery:React.FC =()=>{
     </div>
     );
         return <IonPage>
-                    <div className='flex mb-20'>
+                    <div className='relative'>
+                    <div className='flex mb-10'>
                       <IonRow className='flex justify-between gap-10'>
                         <IonCol className='flex ml-8'>
                           <IonLabel className='flex h-12 p-2 font-bold text-center text-primary-600 w-28'>交易日期开始：</IonLabel>
@@ -135,7 +136,7 @@ const TranSumQuery:React.FC =()=>{
                         </IonRow>
                         </div>
                       <div>
-                        <IonList>
+                        <IonList className="absolute w-full mt-10">
                           <IonItem key='title'>
                             <IonLabel> 
                               <div className='font-black text-center'>教育机构名称</div>
@@ -151,7 +152,8 @@ const TranSumQuery:React.FC =()=>{
                             <ListEntry sumInfo={list} key={i} />
                           ))} */}
                         </IonList>
-                    </div>             
+                    </div>  
+                    </div>           
               </IonPage>
 }
 export default TranSumQuery
