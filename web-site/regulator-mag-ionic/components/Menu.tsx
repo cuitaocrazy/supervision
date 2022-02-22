@@ -30,7 +30,7 @@ const pages = [
     role: 'USV',
   },
   {
-    title: '金融机构查询',
+    title: '金融机构明细查询',
     icon: flash,
     url: '/tabs/financeQuery',
     role: 'Finance',
@@ -52,6 +52,12 @@ const pages = [
     icon: flash,
     url: '/tabs/USVTranSumQuery',
     role: 'USV',
+  },
+  {
+    title: '金融机构汇总查询',
+    icon: flash,
+    url: '/tabs/FianceTranSumQuery',
+    role: 'Finance',
   },
 ];
 
@@ -85,7 +91,7 @@ const Menu = () => {
     <IonMenu hidden={state.userInfo.role===''} side="start" contentId="main" onIonDidOpen={handleOpen} onIonDidClose={handleClose}>
       <IonHeader >
         <IonToolbar>
-          <IonTitle className="text-center">教育资金监管机构管理端</IonTitle>
+          <IonTitle className="text-center">教育资金监管管理端</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>

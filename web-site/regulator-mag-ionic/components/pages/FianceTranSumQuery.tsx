@@ -28,8 +28,8 @@ const demoUSVList = [
   {USVOrgID:'Edu2MSP',name:'测试机构'}
 ]
 
-// 交易汇总页面(教育机构)
-const USVTranSumQuery:React.FC =()=>{
+// 交易汇总页面(金融机构)
+const FianceTranSumQuery:React.FC =()=>{
   const { state, dispatch } = useContext(AppContext);
   const [queryInfo, setQueryInfo] = useState({SubscribeStartDateStart:'',SubscribeStartDateEnd:'',USVOrgID:'',isOpen:false,USVOrgName:''});
   // useEffect(() => { 
@@ -84,7 +84,7 @@ const USVTranSumQuery:React.FC =()=>{
     <div className=''>
       <IonItem key={key} >
       <IonLabel>
-        <p className='text-center'>{sumInfo.USVOrgID}</p>
+        {/* <p className='text-center'>{sumInfo.USVOrgID}</p> */}
       </IonLabel>
       <IonLabel>
         <p  className='text-center'>{sumInfo.TranCount}</p>
@@ -119,7 +119,7 @@ const USVTranSumQuery:React.FC =()=>{
                         <IonList className="absolute w-full mt-10">
                           <IonItem key='title'>
                             <IonLabel> 
-                              <div className='font-black text-center'>教育机构名称</div>
+                              <div className='font-black text-center'>金融机构名称</div>
                             </IonLabel>
                             <IonLabel>
                               <div className='font-black text-center'>交易笔数</div>
@@ -128,12 +128,12 @@ const USVTranSumQuery:React.FC =()=>{
                               <div className='font-black text-center'>交易金额</div>
                             </IonLabel>
                         </IonItem>
-                            {state.sumList.map((list:TranSum, i: any) => (
+                            {/* {state.sumList.map((list:TranSum, i: any) => (
                             <ListEntry sumInfo={list} key={i} />
-                          ))}
+                          ))} */}
                         </IonList>
                     </div>  
                     </div>           
               </IonPage>
 }
-export default USVTranSumQuery
+export default FianceTranSumQuery
