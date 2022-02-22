@@ -24,7 +24,7 @@ const pages = [
     role: 'SV',
   },
   {
-    title: '教育机构查询',
+    title: '教育机构明细查询',
     icon: flash,
     url: '/tabs/USVQuery',
     role: 'USV',
@@ -46,6 +46,12 @@ const pages = [
     icon: flash,
     url: '/tabs/ConsumerStubQuery',
     role: 'Consumer',
+  },
+  {
+    title: '教育机构汇总查询',
+    icon: flash,
+    url: '/tabs/USVTranSumQuery',
+    role: 'USV',
   },
 ];
 
