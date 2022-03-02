@@ -5,6 +5,7 @@ import { useRouter } from 'next/router'
 import { io } from 'socket.io-client'
 import { decrement } from '@/features/order-cart/counterSlice'
 import { useAppDispatch } from '@/app/hook'
+import Layout from '@/components/layout'
 
 /** 二维码支付页面 */
 const preOrderURL = 'http://localhost:3004/preOrder'
@@ -76,17 +77,19 @@ const qrCode:NextPage = () => {
     const interval = setInterval(() => setTime(time - 1), 1000)
     return () => clearInterval(interval)
   }, [time])
-  return <>
-    <div className="pt-6 mx-2 mb-4 text-3xl font-semibold text-center text-gray-800">XX银行</div>
-    <div className="m-1 text-center text-gray-600">订单提交成功，请尽快付款！订单号：<span>{state.USVOrderNo}</span></div>
-    <div className="m-1 text-center text-gray-600">应付金额&nbsp;<span className="text-lg text-red-500">{TranAmt}</span>&nbsp;元</div>
-    <div className="flex justify-center">
-      <QRCode value={state.codeUrl} renderAs="svg" size={200} imageSettings={{ src: 'https://static.zpao.com/favicon.png', height: 50, width: 50, excavate: true }}></QRCode>
+  return <Layout title="支付">
+    <div className="pb-10 mt-16 bg-white rounded-md 2xl:mx-96 xl:mx-60 md:mx-40">
+      <div className="pt-6 mx-2 mb-4 text-3xl font-semibold text-center text-gray-800">XX银行</div>
+      <div className="m-1 text-center text-gray-600">订单提交成功，请尽快付款！订单号：<span>{state.USVOrderNo}</span></div>
+      <div className="m-1 text-center text-gray-600">应付金额&nbsp;<span className="text-lg text-red-500">{TranAmt}</span>&nbsp;元</div>
+      <div className="flex justify-center">
+        <QRCode value={state.codeUrl} renderAs="svg" size={200} imageSettings={{ src: 'https://static.zpao.com/favicon.png', height: 50, width: 50, excavate: true }}></QRCode>
+      </div>
+      {/* <div>{getUrl(state)}</div> */}
+      <div>{state.codeUrl}</div>
+      <div className="m-2 text-sm text-center text-gray-600">请您在&nbsp;<span className="text-red-500">{min}分{second}秒</span>&nbsp;内完成支付，否则订单会被自动取消</div>
     </div>
-    {/* <div>{getUrl(state)}</div> */}
-    <div>{state.codeUrl}</div>
-    <div className="m-2 text-sm text-center text-gray-600">请您在&nbsp;<span className="text-red-500">{min}分{second}秒</span>&nbsp;内完成支付，否则订单会被自动取消</div>
-  </>
+  </Layout>
 }
 
 export default qrCode
