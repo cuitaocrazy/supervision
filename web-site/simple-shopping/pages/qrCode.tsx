@@ -78,16 +78,18 @@ const qrCode:NextPage = () => {
     return () => clearInterval(interval)
   }, [time])
   return <LayoutNoCar title="支付">
-    <div className="pb-8 mt-16 bg-white rounded-md 2xl:mx-96 xl:mx-60 md:mx-40 sm:mx-28">
-      <div className="pt-8 mx-2 mb-4 text-3xl font-semibold text-center text-gray-800">XX银行</div>
-      <div className="m-1 text-center text-gray-600">订单提交成功，请尽快付款！订单号：<span>{state.USVOrderNo}</span></div>
-      <div className="m-1 text-center text-gray-600">应付金额&nbsp;<span className="text-lg text-red-500">{TranAmt}</span>&nbsp;元</div>
-      <div className="flex justify-center">
-        <QRCode value={state.codeUrl} renderAs="svg" size={200} imageSettings={{ src: 'https://static.zpao.com/favicon.png', height: 50, width: 50, excavate: true }}></QRCode>
+    <div className="flex">
+      <div className="pb-8 mx-auto mt-16 bg-white rounded-md w-96">
+        <div className="pt-8 mx-2 mb-4 text-3xl font-semibold text-center text-gray-800">XX银行</div>
+        <div className="m-1 text-lg text-center text-gray-600">订单提交成功，请扫码完成支付！</div>
+        <div className="m-1 font-bold text-center text-gray-600">订单总计:&nbsp;<span className="text-lg text-red-700">¥{TranAmt}</span>&nbsp;</div>
+        <div className="flex justify-center py-4 mx-20 border border-gray-200 rounded-md">
+          <QRCode value={state.codeUrl} renderAs="svg" size={200} imageSettings={{ src: 'https://static.zpao.com/favicon.png', height: 50, width: 50, excavate: true }}></QRCode>
+        </div>
+        {/* <div>{getUrl(state)}</div> */}
+        <div>{state.codeUrl}</div>
+        <div className="m-2 text-sm text-center text-gray-600">请您在&nbsp;<span className="text-green-700">{min}分{second}秒</span>&nbsp;内完成支付，否则订单会被自动取消</div>
       </div>
-      {/* <div>{getUrl(state)}</div> */}
-      <div>{state.codeUrl}</div>
-      <div className="m-2 text-sm text-center text-gray-600">请您在&nbsp;<span className="text-red-500">{min}分{second}秒</span>&nbsp;内完成支付，否则订单会被自动取消</div>
     </div>
   </LayoutNoCar>
 }
