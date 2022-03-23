@@ -5,7 +5,7 @@ import Router, { useRouter } from 'next/router'
 import { useState } from 'react'
 import { Order } from '@/types/types'
 
-const pathname = '/qrCode'
+const pathname = '/payment'
 type State = {
   chooseOrder? : Order,
   carList : Order[]
