@@ -6,7 +6,7 @@ import { io } from 'socket.io-client'
 import { decrement } from '@/features/order-cart/counterSlice'
 import { useAppDispatch } from '@/app/hook'
 import LayoutNoCar from '@/components/layout-nocar'
-import style from '@/components/Button.module.css'
+// import style from '@/components/Button.module.css'
 
 /** 二维码支付页面 */
 const preOrderURL = 'http://localhost:3004/preOrder'
@@ -92,7 +92,7 @@ const payment:NextPage = () => {
             </div>
             <div className="absolute z-30 flex items-center justify-center h-12 text-center text-red-500 bg-gray-300 w-60">二维码已过期</div>
           </section>
-          <button className={props.className || style.btn}></button>
+          {/* <button className={props.className || style.btn}></button> */}
         {/* <div>{getUrl(state)}</div> */}
         <div>{state.codeUrl}</div>
         <div className="m-2 text-sm text-center text-gray-700">请您在&nbsp;<span className="text-green-700">{second}秒</span>&nbsp;内完成支付，否则订单会被自动取消</div>
