@@ -97,20 +97,20 @@ const FianceTranSumQuery:React.FC =()=>{
     );
         return <IonPage>
                     <div className='relative'>
-                    <div className='flex mb-10'>
+                    <div className='flex'>
                       <IonRow className='flex justify-between gap-10'>
                         <IonCol className='flex ml-8'>
-                          <IonLabel className='flex h-12 p-2 font-bold text-center text-primary-600 w-28'>交易日期开始：</IonLabel>
+                          <IonLabel className='flex h-12 p-2 font-bold text-center text-primary-600 w-36'>交易日期开始：</IonLabel>
                           <IonDatetime className="flex w-56 h-12 pt-2.5 font-bold text-center text-primary-600 bg-white rounded-md" value={queryInfo.SubscribeStartDateStart} name='SubscribeStartDateStart' displayFormat='YYYYMMDD' onIonChange={e=>{setQueryInfo({...queryInfo,...{SubscribeStartDate:e.detail.value!}})}}></IonDatetime>
                         </IonCol>
                           <IonCol className='flex ml-8'>
-                            <IonLabel className='flex h-12 p-2 font-bold text-center text-primary-600 w-28'>交易日期结束：</IonLabel>
+                            <IonLabel className='flex h-12 p-2 font-bold text-center text-primary-600 w-36'>交易日期结束：</IonLabel>
                             <IonDatetime className="flex w-56 h-12 pt-2.5 font-bold text-center text-primary-600 bg-white rounded-md" value={queryInfo.SubscribeStartDateEnd} name='SubscribeStartDateEnd' displayFormat='YYYYMMDD' onIonChange={e=>{setQueryInfo({...queryInfo,...{SubscribeStartDate:e.detail.value!}})}}></IonDatetime>
                           </IonCol>
-                          <IonCol className="flex ml-8">
+                          {/* <IonCol className="flex ml-8">
                          
-                        </IonCol>
-                          <IonCol className="flex justify-center">
+                        </IonCol> */}
+                          <IonCol className="flex justify-center ml-8">
                             <button className="w-24 p-2 text-white rounded-md bg-secondary-500 hover:bg-secondary-700 focus:outline-none">查询</button>
                           </IonCol>
                         </IonRow>
