@@ -176,7 +176,7 @@ const ConsumerStubQuery:React.FC =()=>{
                           <input type='text' className="flex w-56 h-12 pt-2.5 font-bold text-center text-primary-600 bg-white rounded-md focus:outline-none focus:glow-secondary-500"  />
                         </IonCol>
                         
-                        <IonCol className="flex justify-center">
+                        <IonCol className="flex justify-center ml-8">
                           <button className="w-24 p-2 text-white rounded-md bg-secondary-500 hover:bg-secondary-700 focus:outline-none">查询</button>
                         </IonCol>
                       </IonRow>
