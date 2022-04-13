@@ -148,7 +148,7 @@ const USVQuery:React.FC =()=>{
                           ]}
                         ></IonPicker>
                     </IonCol>
-                    <IonCol className="flex justify-center">
+                    <IonCol className="flex justify-center ml-8">
                       <button className="w-24 p-2 text-white rounded-md bg-secondary-500 hover:bg-secondary-700 focus:outline-none">查询</button>
                     </IonCol>
                   </IonRow>
