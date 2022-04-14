@@ -1,5 +1,6 @@
 import { StatusBar, Style } from '@capacitor/status-bar';
 import {
+  IonButton,
   IonContent,
   IonHeader,
   IonIcon,
@@ -107,6 +108,11 @@ const Menu = () => {
             </IonMenuToggle>
           ))}
         </IonList>
+      </IonContent> 
+      <IonContent>
+       <IonToolbar className='h-72 mt-36'> 
+          <IonButton className="self-end  rounded-md  mt-60 text-lg bg-secondary-500 hover:bg-secondary-700 focus:outline-non">退出</IonButton>
+       </IonToolbar>
       </IonContent>
     </IonMenu>
 
