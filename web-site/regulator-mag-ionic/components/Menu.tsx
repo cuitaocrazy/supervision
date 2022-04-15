@@ -111,7 +111,7 @@ const Menu = () => {
       </IonContent> 
       <IonContent>
        <IonToolbar className='h-72 mt-36'> 
-          <button className="mt-60 w-24 p-2 text-white rounded-md bg-secondary-500 hover:bg-secondary-700 focus:outline-none">退出</button>
+          <button className="mt-60 w-24 p-2 text-white rounded-md bg-primary-500 hover:bg-primary-700 focus:outline-none">退出</button>
        </IonToolbar>
       </IonContent>
     </IonMenu>
