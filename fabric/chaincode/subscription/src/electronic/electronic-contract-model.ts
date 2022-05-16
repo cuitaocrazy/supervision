@@ -2,6 +2,7 @@ import { Object as FabricObject, Property } from 'fabric-contract-api';
 /**
  * 电子合同实体
  */
+
 @FabricObject()
 export class ElectronicContractModel {
     /** 甲方 */
@@ -24,7 +25,7 @@ export class ElectronicContractModel {
     public ContractType: string
     /** 合同状态*/
     @Property()
-    public ContractStatus: string
+    public ContractStatus: 'valid' | 'complete' | 'termination'
     /** 合同更新日期*/
     @Property()
     public ContractUpdateDate: string
@@ -36,5 +37,5 @@ export class ElectronicContractModel {
     public ContractUpdateReason: string
     /** 合同细节*/
     @Property()
-    public ContractDetail: Array<object>
+    public ContractDetail: Array<string>
 }
