@@ -14,10 +14,8 @@ export class ElectronicContractModelTerminateReq {
 /**
  * 电子合同--终止响应
  */
-@FabricObject()
 export class ElectronicContractModelTerminateResp {
     /** 合同ID */
-    @Property()
     public readonly ContractId: string;
 
     constructor(contractId: string) {

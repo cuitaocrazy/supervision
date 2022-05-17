@@ -25,6 +25,8 @@ export class ElectronicContractModelCreateReq {
         if (!transient.has("B")) throw new Error("B is required");
         if (!transient.has("ContractType")) throw new Error("ContractType is required");
         if (!transient.has("ContractDetail")) throw new Error("ContractDetail is required");
+        if (!transient.has("ContractDate")) throw new Error("ContractDate is required");
+        if (!transient.has("ContractTime")) throw new Error("ContractTime is required");
 
         this.A = new TextDecoder().decode(transient.get("A"));
         this.B = new TextDecoder().decode(transient.get("B"));
@@ -41,9 +43,9 @@ export class ElectronicContractModelCreateReq {
 export class ElectronicContractModelCreateResp {
     /** 合同ID */
     @Property()
-    public readonly ContractID: string
+    public readonly ContractId: string
 
-    constructor(contractID: string) {
-        this.ContractID = contractID;
+    constructor(contractId: string) {
+        this.ContractId = contractId;
     }
 }

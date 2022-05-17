@@ -1,0 +1,19 @@
+[
+    {
+        "transactionName": "create",
+        "transactionLabel": "电子合同：创建",
+        "arguments": [
+            "EdbMSP",
+            "Edu1MSP",
+            "BankMSP"
+        ],
+        "transientData": {
+            "A": "mytestA",
+            "B": "mytestB",
+            "ContractType": "mytestContractType",
+            "ContractDate": "20220103",
+            "ContractTime": "121011",
+            "ContractDetail": "mytestContractDetail"
+        }
+    }
+]

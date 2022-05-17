@@ -1,4 +1,4 @@
-import { Context, Contract, Transaction } from "fabric-contract-api";
+import { Context, Contract, Info, Returns, Transaction } from "fabric-contract-api";
 import { ElectronicContractModel } from "./electronic-contract-model";
 import { ElectronicContractModelCreateReq, ElectronicContractModelCreateResp } from "./electronic-contract-model-create";
 import { ElectronicContractModelFinishReq, ElectronicContractModelFinishResp } from "./electronic-contract-model-finish";
@@ -8,7 +8,13 @@ import { ElectronicContractModelUpdateReq, ElectronicContractModelUpdateResp } f
 /**
  * 电子合同
  */
+@Info({ title: 'ElectronicContract', description: '电子合同' })
 export class ElectronicContract extends Contract {
+
+    @Transaction()
+    public async testHello(ctx: Context): Promise<string> {
+        return "hello11";
+    }
 
     /** 
      * 获取集合名称
@@ -29,6 +35,7 @@ export class ElectronicContract extends Contract {
      * @returns 
      */
     @Transaction()
+    @Returns("ElectronicContractModelCreateResp")
     public async create(ctx: Context, svOrgID: string, usvOrgID: string, bankID: string): Promise<ElectronicContractModelCreateResp> {
         const transient = ctx.stub.getTransient();
         const req = new ElectronicContractModelCreateReq(transient);
@@ -45,9 +52,9 @@ export class ElectronicContract extends Contract {
         model.ContractType = req.ContractType;
         model.ContractDate = req.ContractDate;
         model.ContractTime = req.ContractTime;
-        model.ContractDetail = [req.ContractDetail];
+        model.ContractDetails = [req.ContractDetail];
         model.ContractStatus = "valid";
-        // 存入私有集合
+        // // 存入私有集合
         await ctx.stub.putPrivateData(collectionName, contractID, new TextEncoder().encode(JSON.stringify(model)));
         return new ElectronicContractModelCreateResp(contractID);
     }
@@ -61,6 +68,7 @@ export class ElectronicContract extends Contract {
      * @returns 
      */
     @Transaction()
+    @Returns("ElectronicContractModelUpdateResp")
     public async update(ctx: Context, svOrgID: string, usvOrgID: string, bankID: string): Promise<ElectronicContractModelUpdateResp> {
         const transient = ctx.stub.getTransient();
         const req = new ElectronicContractModelUpdateReq(transient);
@@ -77,7 +85,7 @@ export class ElectronicContract extends Contract {
         model.ContractUpdateDate = req.ContractUpdateDate;
         model.ContractUpdateTime = req.ContractUpdateTime;
         model.ContractUpdateReason = req.ContractUpdateReason;
-        model.ContractDetail.push(req.ContractDetail);
+        model.ContractDetails.push(req.ContractDetail);
         // 保存合约
         await ctx.stub.putPrivateData(collectionName, req.ContractId, new TextEncoder().encode(JSON.stringify(model)));
         return new ElectronicContractModelUpdateResp(req.ContractId);
@@ -92,6 +100,7 @@ export class ElectronicContract extends Contract {
      * @returns
      */
     @Transaction()
+    @Returns("ElectronicContractModelFinishResp")
     public async finish(ctx: Context, svOrgID: string, usvOrgID: string, bankID: string): Promise<ElectronicContractModelFinishResp> {
         const transient = ctx.stub.getTransient();
         const req = new ElectronicContractModelFinishReq(transient);
@@ -111,6 +120,7 @@ export class ElectronicContract extends Contract {
      * 终止电子合同
      */
     @Transaction()
+    @Returns("ElectronicContractModelTerminateResp")
     public async terminate(ctx: Context, svOrgID: string, usvOrgID: string, bankID: string): Promise<ElectronicContractModelTerminateResp> {
         const transient = ctx.stub.getTransient();
         const req = new ElectronicContractModelTerminateReq(transient);
@@ -130,6 +140,7 @@ export class ElectronicContract extends Contract {
      * 查询电子合同
      */
     @Transaction()
+    @Returns("ElectronicContractModel")
     public async query(ctx: Context, svOrgID: string, usvOrgID: string, bankID: string): Promise<ElectronicContractModel> {
         const transient = ctx.stub.getTransient();
         if (!transient.has("ContractId")) throw new Error("ContractId is required");
@@ -145,6 +156,7 @@ export class ElectronicContract extends Contract {
      * 删除电子合同
      */
     @Transaction()
+    @Returns("ElectronicContractModel")
     public async delete(ctx: Context, svOrgID: string, usvOrgID: string, bankID: string): Promise<ElectronicContractModel> {
         const transient = ctx.stub.getTransient();
         if (!transient.has("ContractId")) throw new Error("ContractId is required");

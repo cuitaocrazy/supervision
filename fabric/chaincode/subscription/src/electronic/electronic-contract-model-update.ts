@@ -31,13 +31,11 @@ export class ElectronicContractModelUpdateReq {
 /**
  * 电子合同实体--更新响应
  */
-@FabricObject()
 export class ElectronicContractModelUpdateResp {
     /** 合同ID */
-    @Property()
-    public readonly ContractID: string
+    public readonly ContractId: string
 
-    constructor(contractID: string) {
-        this.ContractID = contractID;
+    constructor(contractId: string) {
+        this.ContractId = contractId;
     }
 }
