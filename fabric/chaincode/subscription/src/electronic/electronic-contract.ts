@@ -11,11 +11,6 @@ import { ElectronicContractModelUpdateReq, ElectronicContractModelUpdateResp } f
 @Info({ title: 'ElectronicContract', description: '电子合同' })
 export class ElectronicContract extends Contract {
 
-    @Transaction()
-    public async testHello(ctx: Context): Promise<string> {
-        return "hello11";
-    }
-
     /** 
      * 获取集合名称
      * @param svOrgID 监管机构ID
