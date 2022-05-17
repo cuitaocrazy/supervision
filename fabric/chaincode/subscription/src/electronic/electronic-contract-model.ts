@@ -25,7 +25,7 @@ export class ElectronicContractModel {
     public ContractType: string
     /** 合同状态*/
     @Property()
-    public ContractStatus: 'valid' | 'complete' | 'termination'
+    public ContractStatus: 'valid' | 'finished' | 'terminated'
     /** 合同更新日期*/
     @Property()
     public ContractUpdateDate: string
