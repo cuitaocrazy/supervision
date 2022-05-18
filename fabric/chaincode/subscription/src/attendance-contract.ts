@@ -1,7 +1,6 @@
 import { Context, Contract, Transaction } from "fabric-contract-api";
 import { AttendanceContractModel, AttendanceCreateReq, AttendanceDetail } from "./attendance-contract-model";
-import { ElectronicContract } from "./electronic/electronic-contract";
-import { ElectronicContractModel } from "./electronic/electronic-contract-model";
+import { ElectronicContractModel } from "./electronic-contract-model";
 import { checkContractExist } from "./util";
 
 /**
