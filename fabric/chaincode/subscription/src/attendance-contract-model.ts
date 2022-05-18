@@ -6,11 +6,6 @@ export type AttendanceStatusType = "valid" | "invalid" | "negotiating";
 
 export class AttendanceContractModel {
     /**
-     * 电子合同ID
-     */
-    public electronicContractId: string;
-
-    /**
      * 考勤详情列表
      */
     public AttendanceDetails: AttendanceDetail[];
@@ -44,15 +39,15 @@ export class AttendanceDetail {
     /**
      * 考勤更新日期
      */
-    public AttendanceUpdateDate: string;
+    public attendanceUpdateDate: string;
     /**
      * 考勤更新时间
      */
-    public AttendanceUpdateTime: string;
+    public attendanceUpdateTime: string;
     /**
      * 考勤更新原因
      */
-    public AttendanceUpdateReason: string;
+    public attendanceUpdateReason: string;
     /**
      * 考勤附加信息
      */
@@ -126,25 +121,54 @@ export class AttendanceUpdateReq {
      */
     public readonly electronicContractId: string;
     /**
+     * 考勤Id
+     */
+    public readonly attendanceId: string;
+    /**
      * 考勤状态
      */
     public readonly attendanceStatus: 'valid' | 'invalid' | 'negotiating';
     /**
      * 考勤更新日期
      */
-    public readonly AttendanceUpdateDate: string;
+    public readonly attendanceUpdateDate: string;
     /**
      * 考勤更新时间
      */
-    public readonly AttendanceUpdateTime: string;
+    public readonly attendanceUpdateTime: string;
     /**
      * 考勤更新原因
      */
-    public readonly AttendanceUpdateReason: string;
+    public readonly attendanceUpdateReason: string;
     /**
     * 考勤附加信息
     */
     public readonly attendanceExtraInfo: string;
+
+    constructor(transient: Map<string, Uint8Array>) {
+        if (!transient.has("electronicContractId")) throw new Error("electronicContractId is required");
+        if (!transient.has("attendanceId")) throw new Error("attendanceId is required");
+        if (!transient.has("attendanceStatus")) throw new Error("attendanceStatus is required");
+        if (!transient.has("attendanceUpdateDate")) throw new Error("attendanceUpdateDate is required");
+        if (!transient.has("attendanceUpdateTime")) throw new Error("attendanceUpdateTime is required");
+        if (!transient.has("attendanceUpdateReason")) throw new Error("attendanceUpdateReason is required");
+        if (!transient.has("attendanceExtraInfo")) throw new Error("attendanceExtraInfo is required");
+
+        this.electronicContractId = new TextDecoder().decode(transient.get('electronicContractId'));
+        this.attendanceId = new TextDecoder().decode(transient.get('attendanceId'));
+        const as = new TextDecoder().decode(transient.get('attendanceStatus'));
+        // 判断考勤状态值不合法时，抛出异常
+        if (as !== "valid" && as !== "invalid" && as !== "negotiating") throw new Error("attendanceStatus must be valid, invalid or negotiating");
+        this.attendanceStatus = as;
+        this.attendanceUpdateDate = new TextDecoder().decode(transient.get('attendanceUpdateDate'));
+        // 判断日期格式是否正确
+        if (!/^\d{8}$/.test(this.attendanceUpdateDate)) throw new Error("attendanceUpdateDate format is incorrect");
+        this.attendanceUpdateTime = new TextDecoder().decode(transient.get('attendanceUpdateTime'));
+        // 判断时间格式是否正确
+        if (!/^\d{6}$/.test(this.attendanceUpdateTime)) throw new Error("attendanceUpdateTime format is incorrect");
+        this.attendanceUpdateReason = new TextDecoder().decode(transient.get('attendanceUpdateReason'));
+        this.attendanceExtraInfo = new TextDecoder().decode(transient.get('attendanceExtraInfo'));
+    }
 }
 /**
  * 考勤查询请求模型
@@ -154,7 +178,44 @@ export class AttendanceQueryReq {
      * 电子合同ID
      */
     public readonly electronicContractId: string;
+
+    constructor(transient: Map<string, Uint8Array>) {
+        if (!transient.has("electronicContractId")) throw new Error("electronicContractId is required");
+
+        this.electronicContractId = new TextDecoder().decode(transient.get('electronicContractId'));
+    }
 }
 /**
- * 
+ * 查询考勤明细请求模型
  */
+export class AttendanceDetailQueryReq {
+    /**
+     * 电子合同ID
+     */
+    public readonly electronicContractId: string;
+    /**
+     * 考勤Id
+     */
+    public readonly attendanceId: string;
+
+    constructor(transient: Map<string, Uint8Array>) {
+        if (!transient.has("electronicContractId")) throw new Error("electronicContractId is required");
+        if (!transient.has("attendanceId")) throw new Error("attendanceId is required");
+
+        this.electronicContractId = new TextDecoder().decode(transient.get('electronicContractId'));
+        this.attendanceId = new TextDecoder().decode(transient.get('attendanceId'));
+    }
+}
+/**
+ * 删除考勤请求模型
+ */
+export class AttendanceDeleteReq {
+    /**
+     * 电子合同ID
+     */
+    public readonly electronicContractId: string;
+    constructor(transient: Map<string, Uint8Array>) {
+        if (!transient.has("electronicContractId")) throw new Error("electronicContractId is required");
+        this.electronicContractId = new TextDecoder().decode(transient.get('electronicContractId'));
+    }
+}
