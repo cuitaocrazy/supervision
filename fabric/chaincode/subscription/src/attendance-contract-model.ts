@@ -8,7 +8,7 @@ export class AttendanceContractModel {
     /**
      * 考勤详情列表
      */
-    public AttendanceDetails: AttendanceDetail[];
+    public attendanceDetails: AttendanceDetail[];
 
 }
 

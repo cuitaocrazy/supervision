@@ -30,7 +30,8 @@ export class AttendanceContract extends Contract {
         // 考勤合约存在时从链码中获取考勤合约，否则创建考勤合约
         const acModel = await this.getAttendanceContractOrNew(ctx, collectionName, acId);
         // 从考勤明细中判断是否已经录入过，通过考勤id
-        if (acModel.AttendanceDetails.find(x => x.attendanceId === req.attendanceId)) throw new Error("attendanceId already exists");
+        if (!acModel.attendanceDetails) acModel.attendanceDetails = [];
+        if (acModel.attendanceDetails.find(x => x.attendanceId === req.attendanceId)) throw new Error("attendanceId already exists");
         // 新建考勤明细
         const ad = new AttendanceDetail();
         ad.attendanceId = req.attendanceId;
@@ -39,8 +40,7 @@ export class AttendanceContract extends Contract {
         ad.attendanceType = req.attendanceType;
         ad.attendanceStatus = req.attendanceStatus;
         ad.attendanceExtraInfo = req.attendanceExtraInfo;
-        if (!acModel.AttendanceDetails) acModel.AttendanceDetails = [];
-        acModel.AttendanceDetails.push(ad);
+        acModel.attendanceDetails.push(ad);
         // 更新考勤合约
         await ctx.stub.putPrivateData(collectionName, acId, new TextEncoder().encode(JSON.stringify(acModel)));
     }
@@ -65,8 +65,10 @@ export class AttendanceContract extends Contract {
         if (!await checkContractExist(ctx, collectionName, acId)) throw new Error("AttendanceContract not exists");
         // 获取考勤合约
         const acModel = JSON.parse(new TextDecoder().decode(await ctx.stub.getPrivateData(collectionName, acId))) as AttendanceContractModel;
+        // 考勤明细列表不存在时抛出异常，不存在考勤明细
+        if (!acModel.attendanceDetails) throw new Error("AttendanceDetail not exists");
         // 获取考勤明细
-        const ad = acModel.AttendanceDetails.find(x => x.attendanceId === req.attendanceId);
+        const ad = acModel.attendanceDetails.find(x => x.attendanceId === req.attendanceId);
         if (!ad) throw new Error("AttendanceDetail not exists");
         // 更新考勤明细
         ad.attendanceStatus = req.attendanceStatus;
@@ -107,8 +109,10 @@ export class AttendanceContract extends Contract {
         if (!await checkContractExist(ctx, collectionName, acId)) throw new Error("AttendanceContract not exists");
         // 获取考勤合约
         const acModel = JSON.parse(new TextDecoder().decode(await ctx.stub.getPrivateData(collectionName, acId))) as AttendanceContractModel;
+        // 考勤明细列表不存在时抛出异常，不存在考勤明细
+        if (!acModel.attendanceDetails) throw new Error("AttendanceDetail not exists");
         // 获取考勤明细
-        const ad = acModel.AttendanceDetails.find(x => x.attendanceId === req.attendanceId);
+        const ad = acModel.attendanceDetails.find(x => x.attendanceId === req.attendanceId);
         if (!ad) throw new Error("AttendanceDetail not exists");
         return ad;
     }
@@ -157,8 +161,10 @@ export class AttendanceContract extends Contract {
             throw new Error("AttendanceContract not exists");
         // 获取考勤合约
         const acModel = JSON.parse(new TextDecoder().decode(await ctx.stub.getPrivateData(collectionName, acId))) as AttendanceContractModel;
+        // 考勤明细列表不存在时抛出异常，不存在考勤明细
+        if (!acModel.attendanceDetails) throw new Error("AttendanceDetail not exists");
         // 查询考勤明细
-        const ad = acModel.AttendanceDetails.find(x => x.attendanceId === req.attendanceId);
+        const ad = acModel.attendanceDetails.find(x => x.attendanceId === req.attendanceId);
         // 考勤明细不存在抛出异常
         if (!ad)
             throw new Error("AttendanceDetail not exists");
