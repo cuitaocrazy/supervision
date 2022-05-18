@@ -113,6 +113,19 @@ export class AttendanceCreateReq {
     }
 }
 /**
+ * 考勤创建响应模型
+ */
+export class AttendanceCreateResp {
+    /**
+     * 考勤合约Id
+     */
+    public readonly attendanceContractId: string;
+
+    constructor(attendanceContractId: string) {
+        this.attendanceContractId = attendanceContractId;
+    }
+}
+/**
  * 考勤更新请求模型
  */
 export class AttendanceUpdateReq {

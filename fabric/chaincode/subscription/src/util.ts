@@ -31,6 +31,6 @@ export const getCollectionName = (svOrgID: string, usvOrgID: string, bankID: str
 /**
 * 把电子合同Id转换为考勤合约Id
 */
-export const getAttendanceContractId = (electronicContractId: string): string => {
-    return electronicContractId.replace(/^ec/, "ac");
+export const getAttendanceContractIdByElectronicContractId = (electronicContractId: string): string => {
+    return electronicContractId.replace(/ec/, "ac");
 }

@@ -1,7 +1,7 @@
-import { Context, Contract, Transaction } from "fabric-contract-api";
-import { AttendanceContractModel, AttendanceCreateReq, AttendanceDeleteReq, AttendanceDetail, AttendanceDetailQueryReq, AttendanceChangeStatusReq as AttendanceNegotiateReq, AttendanceQueryReq, AttendanceUpdateReq } from "./attendance-contract-model";
+import { Context, Contract, Returns, Transaction } from "fabric-contract-api";
+import { AttendanceContractModel, AttendanceCreateReq, AttendanceDeleteReq, AttendanceDetail, AttendanceDetailQueryReq, AttendanceChangeStatusReq as AttendanceNegotiateReq, AttendanceQueryReq, AttendanceUpdateReq, AttendanceCreateResp } from "./attendance-contract-model";
 import { ElectronicContractModel } from "./electronic-contract-model";
-import { checkContractExist, getAttendanceContractId as getAttendanceContractIdByElectronicContractId, getCollectionName } from "./util";
+import { checkContractExist, getAttendanceContractIdByElectronicContractId, getCollectionName } from "./util";
 
 /**
  * 考勤合约
@@ -15,7 +15,8 @@ export class AttendanceContract extends Contract {
      * 录入考勤
      */
     @Transaction()
-    public async create(ctx: Context, svOrgID: string, usvOrgID: string, bankID: string): Promise<void> {
+    @Returns("AttendanceCreateResp")
+    public async create(ctx: Context, svOrgID: string, usvOrgID: string, bankID: string): Promise<AttendanceCreateResp> {
         const transient = ctx.stub.getTransient();
         const req = new AttendanceCreateReq(transient);
         // 获取考勤合约Id
@@ -43,6 +44,8 @@ export class AttendanceContract extends Contract {
         acModel.attendanceDetails.push(ad);
         // 更新考勤合约
         await ctx.stub.putPrivateData(collectionName, acId, new TextEncoder().encode(JSON.stringify(acModel)));
+        // 返回响应
+        return new AttendanceCreateResp(acId);
     }
 
     /** 
@@ -98,6 +101,7 @@ export class AttendanceContract extends Contract {
         return acModel;
     }
     /** 查询考勤明细 */
+    @Transaction(false)
     public async queryDetail(ctx: Context, svOrgID: string, usvOrgID: string, bankID: string): Promise<AttendanceDetail> {
         // 获取集合名称
         const collectionName = getCollectionName(svOrgID, usvOrgID, bankID);

@@ -19,7 +19,7 @@
     },
     {
         "transactionName": "update",
-        "transactionLabel": "考勤合约：更新到协商",
+        "transactionLabel": "考勤合约：更新",
         "arguments": [
             "EdbMSP",
             "Edu1MSP",
@@ -32,7 +32,8 @@
             "attendanceUpdateTime": "131012",
             "attendanceType": "auto",
             "attendanceStatus": "negotiating",
-            "attendanceExtraInfo": "考勤额外信息JSON结构"
+            "attendanceExtraInfo": "考勤额外信息JSON结构",
+            "attendanceUpdateReason": "考勤更新原因"
         }
     },
     {
@@ -84,6 +85,34 @@
             "electronicContractId": "\u0000ec\u0000mytestA\u0000mytestB\u000020220103\u0000121012\u0000",
             "attendanceId": "mytestattendanceId",
             "attendanceStatus": "valid"
+        }
+    },
+    {
+        "transactionName": "changeDetailStatus",
+        "transactionLabel": "考勤合约：更改详情状态到协商中",
+        "arguments": [
+            "EdbMSP",
+            "Edu1MSP",
+            "BankMSP"
+        ],
+        "transientData": {
+            "electronicContractId": "\u0000ec\u0000mytestA\u0000mytestB\u000020220103\u0000121012\u0000",
+            "attendanceId": "mytestattendanceId",
+            "attendanceStatus": "negotiating"
+        }
+    },
+    {
+        "transactionName": "changeDetailStatus",
+        "transactionLabel": "考勤合约：更改详情状态到无效",
+        "arguments": [
+            "EdbMSP",
+            "Edu1MSP",
+            "BankMSP"
+        ],
+        "transientData": {
+            "electronicContractId": "\u0000ec\u0000mytestA\u0000mytestB\u000020220103\u0000121012\u0000",
+            "attendanceId": "mytestattendanceId",
+            "attendanceStatus": "invalid"
         }
     }
 ]
