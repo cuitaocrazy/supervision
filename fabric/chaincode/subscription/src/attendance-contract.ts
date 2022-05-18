@@ -81,6 +81,7 @@ export class AttendanceContract extends Contract {
     /**
      * 查询考勤合约
      */
+    @Transaction(false)
     public async query(ctx: Context, svOrgID: string, usvOrgID: string, bankID: string): Promise<AttendanceContractModel> {
         // 获取集合名称
         const collectionName = getCollectionName(svOrgID, usvOrgID, bankID);

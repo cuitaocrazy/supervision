@@ -130,7 +130,7 @@ export class ElectronicContract extends Contract {
     /**
      * 查询电子合同
      */
-    @Transaction()
+    @Transaction(false)
     @Returns("ElectronicContractModel")
     public async query(ctx: Context, svOrgID: string, usvOrgID: string, bankID: string): Promise<ElectronicContractModel> {
         const transient = ctx.stub.getTransient();
