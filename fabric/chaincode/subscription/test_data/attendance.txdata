@@ -19,7 +19,7 @@
     },
     {
         "transactionName": "update",
-        "transactionLabel": "考勤合约：更新",
+        "transactionLabel": "考勤合约：更新到协商",
         "arguments": [
             "EdbMSP",
             "Edu1MSP",
@@ -70,6 +70,20 @@
         ],
         "transientData": {
             "electronicContractId": "\u0000ec\u0000mytestA\u0000mytestB\u000020220103\u0000121012\u0000"
+        }
+    },
+    {
+        "transactionName": "changeDetailStatus",
+        "transactionLabel": "考勤合约：更改详情状态到有效",
+        "arguments": [
+            "EdbMSP",
+            "Edu1MSP",
+            "BankMSP"
+        ],
+        "transientData": {
+            "electronicContractId": "\u0000ec\u0000mytestA\u0000mytestB\u000020220103\u0000121012\u0000",
+            "attendanceId": "mytestattendanceId",
+            "attendanceStatus": "valid"
         }
     }
 ]

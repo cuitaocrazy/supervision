@@ -219,3 +219,75 @@ export class AttendanceDeleteReq {
         this.electronicContractId = new TextDecoder().decode(transient.get('electronicContractId'));
     }
 }
+/**
+ * 协商考勤请求模型
+ */
+export class AttendanceChangeStatusReq {
+    /**
+     * 电子合同ID
+     */
+    public readonly electronicContractId: string;
+    /**
+     * 考勤Id
+     */
+    public attendanceId: string;
+    /**
+     * 考勤状态
+     */
+    public attendanceStatus: AttendanceStatusType;
+
+    constructor(transient: Map<string, Uint8Array>) {
+        if (!transient.has("electronicContractId")) throw new Error("electronicContractId is required");
+        if (!transient.has("attendanceId")) throw new Error("attendanceId is required");
+        if (!transient.has("attendanceStatus")) throw new Error("attendanceStatus is required");
+
+        this.electronicContractId = new TextDecoder().decode(transient.get('electronicContractId'));
+        this.attendanceId = new TextDecoder().decode(transient.get('attendanceId'));
+        const as = new TextDecoder().decode(transient.get('attendanceStatus'));
+        // 判断考勤状态值不合法时，抛出异常
+        if (as !== "valid" && as !== "invalid" && as !== "negotiating") throw new Error("attendanceStatus must be valid, invalid or negotiating");
+        this.attendanceStatus = as;
+    }
+}
+
+/**
+ * 有效考勤请求模型
+ */
+export class AttendanceValidReq {
+    /**
+     * 电子合同ID
+     */
+    public readonly electronicContractId: string;
+    /**
+    * 考勤Id
+    */
+    public attendanceId: string;
+    constructor(transient: Map<string, Uint8Array>) {
+        if (!transient.has("electronicContractId")) throw new Error("electronicContractId is required");
+        if (!transient.has("attendanceId")) throw new Error("attendanceId is required");
+
+        this.electronicContractId = new TextDecoder().decode(transient.get('electronicContractId'));
+        this.attendanceId = new TextDecoder().decode(transient.get('attendanceId'));
+    }
+}
+
+/**
+ * 无效考勤请求模型
+ */
+export class AttendanceInvalidReq {
+    /**
+     * 电子合同ID
+     */
+    public readonly electronicContractId: string;
+    /**
+    * 考勤Id
+    */
+    public attendanceId: string;
+    constructor(transient: Map<string, Uint8Array>) {
+        if (!transient.has("electronicContractId")) throw new Error("electronicContractId is required");
+        if (!transient.has("attendanceId")) throw new Error("attendanceId is required");
+
+        this.electronicContractId = new TextDecoder().decode(transient.get('electronicContractId'));
+        this.attendanceId = new TextDecoder().decode(transient.get('attendanceId'));
+    }
+}

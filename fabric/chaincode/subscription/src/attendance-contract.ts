@@ -1,5 +1,5 @@
 import { Context, Contract, Transaction } from "fabric-contract-api";
-import { AttendanceContractModel, AttendanceCreateReq, AttendanceDeleteReq, AttendanceDetail, AttendanceDetailQueryReq, AttendanceQueryReq, AttendanceUpdateReq } from "./attendance-contract-model";
+import { AttendanceContractModel, AttendanceCreateReq, AttendanceDeleteReq, AttendanceDetail, AttendanceDetailQueryReq, AttendanceChangeStatusReq as AttendanceNegotiateReq, AttendanceQueryReq, AttendanceUpdateReq } from "./attendance-contract-model";
 import { ElectronicContractModel } from "./electronic-contract-model";
 import { checkContractExist, getAttendanceContractId as getAttendanceContractIdByElectronicContractId, getCollectionName } from "./util";
 
@@ -133,6 +133,36 @@ export class AttendanceContract extends Contract {
         // 删除考勤合约
         await ctx.stub.deletePrivateData(collectionName, acId);
         return acModel;
+    }
+
+    /** 协商考勤 */
+    @Transaction()
+    public async changeDetailStatus(ctx: Context, svOrgID: string, usvOrgID: string, bankID: string): Promise<void> {
+        const transient = ctx.stub.getTransient();
+        const req = new AttendanceNegotiateReq(transient);
+        // 获取集合名称
+        const collectionName = getCollectionName(svOrgID, usvOrgID, bankID);
+        // 获取考勤合约Id
+        const acId = getAttendanceContractIdByElectronicContractId(req.electronicContractId);
+        // 检查电子合同是否存在
+        if (!await checkContractExist(ctx, collectionName, req.electronicContractId))
+            throw new Error("ElectronicContract not exists");
+        // 检查电子合同状态是否为valid
+        const model: ElectronicContractModel = JSON.parse(new TextDecoder().decode(await ctx.stub.getPrivateData(collectionName, req.electronicContractId)));
+        if (model.ContractStatus !== "valid")
+            throw new Error("ElectronicContractModel status is not valid");
+        // 考勤合约不存在，抛出异常
+        if (!await checkContractExist(ctx, collectionName, acId))
+            throw new Error("AttendanceContract not exists");
+        // 获取考勤合约
+        const acModel = JSON.parse(new TextDecoder().decode(await ctx.stub.getPrivateData(collectionName, acId))) as AttendanceContractModel;
+        // 查询考勤明细
+        const ad = acModel.AttendanceDetails.find(x => x.attendanceId === req.attendanceId);
+        // 考勤明细不存在抛出异常
+        if (!ad)
+            throw new Error("AttendanceDetail not exists");
+        ad.attendanceStatus = req.attendanceStatus;
+        await ctx.stub.putPrivateData(collectionName, acId, new TextEncoder().encode(JSON.stringify(acModel)));
     }
 
     /**
