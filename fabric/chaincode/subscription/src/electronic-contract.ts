@@ -1,5 +1,6 @@
 import { Context, Contract, Info, Returns, Transaction } from "fabric-contract-api";
 import { ElectronicContractModel, ElectronicContractModelCreateReq, ElectronicContractModelCreateResp, ElectronicContractModelFinishReq, ElectronicContractModelFinishResp, ElectronicContractModelTerminateReq, ElectronicContractModelTerminateResp, ElectronicContractModelUpdateReq, ElectronicContractModelUpdateResp } from "./electronic-contract-model";
+import { checkContractExist } from "./util";
 
 /**
  * 电子合同
@@ -36,7 +37,7 @@ export class ElectronicContract extends Contract {
         if (!/^\d{6}$/.test(req.contractTime)) throw new Error("contractTime format error, must be 6 digits");
         const contractID = await ctx.stub.createCompositeKey("ec", [req.a, req.b, req.contractDate, req.contractTime]);
         const collectionName = this.getCollectionName(svOrgID, usvOrgID, bankID);
-        if (await this.checkContractExist(ctx, collectionName, contractID)) throw new Error("Contract already exists");
+        if (await checkContractExist(ctx, collectionName, contractID)) throw new Error("Contract already exists");
         const model = new ElectronicContractModel();
         model.a = req.a;
         model.b = req.b;
@@ -68,7 +69,7 @@ export class ElectronicContract extends Contract {
         // 检查更新时间格式
         if (!/^\d{6}$/.test(req.contractUpdateTime)) throw new Error("contractUpdateTime format error, must be 6 digits");
         const collectionName = this.getCollectionName(svOrgID, usvOrgID, bankID);
-        if (!await this.checkContractExist(ctx, collectionName, req.contractId)) throw new Error("Contract not exists");
+        if (!await checkContractExist(ctx, collectionName, req.contractId)) throw new Error("Contract not exists");
         const buffer = await ctx.stub.getPrivateData(collectionName, req.contractId);
         const model: ElectronicContractModel = JSON.parse(new TextDecoder().decode(buffer));
         // 合约状态非有效状态时不允许更新
@@ -96,7 +97,7 @@ export class ElectronicContract extends Contract {
         const transient = ctx.stub.getTransient();
         const req = new ElectronicContractModelFinishReq(transient);
         const collectionName = this.getCollectionName(svOrgID, usvOrgID, bankID);
-        if (!await this.checkContractExist(ctx, collectionName, req.contractId)) throw new Error("Contract not exists");
+        if (!await checkContractExist(ctx, collectionName, req.contractId)) throw new Error("Contract not exists");
         const buffer = await ctx.stub.getPrivateData(collectionName, req.contractId);
         const model: ElectronicContractModel = JSON.parse(new TextDecoder().decode(buffer));
         // 合约状态非有效状态时不允许更新
@@ -116,7 +117,7 @@ export class ElectronicContract extends Contract {
         const transient = ctx.stub.getTransient();
         const req = new ElectronicContractModelTerminateReq(transient);
         const collectionName = this.getCollectionName(svOrgID, usvOrgID, bankID);
-        if (!await this.checkContractExist(ctx, collectionName, req.contractId)) throw new Error("Contract not exists");
+        if (!await checkContractExist(ctx, collectionName, req.contractId)) throw new Error("Contract not exists");
         const buffer = await ctx.stub.getPrivateData(collectionName, req.contractId);
         const model: ElectronicContractModel = JSON.parse(new TextDecoder().decode(buffer));
         // 合约状态非有效状态时不允许更新
@@ -137,7 +138,7 @@ export class ElectronicContract extends Contract {
         if (!transient.has("contractId")) throw new Error("contractId is required");
         const contractId = new TextDecoder().decode(transient.get("contractId"));
         const collectionName = this.getCollectionName(svOrgID, usvOrgID, bankID);
-        if (!await this.checkContractExist(ctx, collectionName, contractId)) throw new Error("Contract not exists");
+        if (!await checkContractExist(ctx, collectionName, contractId)) throw new Error("Contract not exists");
         const buffer = await ctx.stub.getPrivateData(collectionName, contractId);
         const model: ElectronicContractModel = JSON.parse(new TextDecoder().decode(buffer));
         return model;
@@ -153,7 +154,7 @@ export class ElectronicContract extends Contract {
         if (!transient.has("contractId")) throw new Error("contractId is required");
         const contractId = new TextDecoder().decode(transient.get("contractId"));
         const collectionName = this.getCollectionName(svOrgID, usvOrgID, bankID);
-        if (!await this.checkContractExist(ctx, collectionName, contractId)) throw new Error("Contract not exists");
+        if (!await checkContractExist(ctx, collectionName, contractId)) throw new Error("Contract not exists");
         const buffer = await ctx.stub.getPrivateData(collectionName, contractId);
         const model: ElectronicContractModel = JSON.parse(new TextDecoder().decode(buffer));
         // 合同状态必须是完成或终止状态才能删除
@@ -161,15 +162,5 @@ export class ElectronicContract extends Contract {
         // 删除合约
         await ctx.stub.deletePrivateData(collectionName, contractId);
         return model;
-    }
-
-    /** 
-     * 检查合约是否存在
-     * @param ctx 上下文
-     * @param contractID 合约ID
-     */
-    public async checkContractExist(ctx: Context, collectionName: string, contractID: string): Promise<boolean> {
-        const buffer = await ctx.stub.getPrivateDataHash(collectionName, contractID);
-        return buffer != null && buffer.length > 0;
     }
 }

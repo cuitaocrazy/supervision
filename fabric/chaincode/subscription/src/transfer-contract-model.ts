@@ -85,7 +85,14 @@ export class TransferCreateReq {
         this.sourceAccount = new TextDecoder().decode(transient.get('sourceAccount'));
         this.targetAccount = new TextDecoder().decode(transient.get('targetAccount'));
         this.transferAmount = new TextDecoder().decode(transient.get('transferAmount'));
+        // 用正则判断划拨金额必须是数字，否则抛出异常
+        if (!/^[0-9]*$/.test(this.transferAmount)) throw new Error("transferAmount must be a number");
         this.transferDate = new TextDecoder().decode(transient.get('transferDate'));
+        // 用正则判断划拨日期必须是yyyyMMdd，否则抛出异常
+        if (!/^[0-9]{8}$/.test(this.transferDate)) throw new Error("transferDate must be a yyyyMMdd");
+        // 用正则判断划拨时间必须时HHmmss，否则抛出异常
+        if (!/^[0-9]{6}$/.test(this.transferTime)) throw new Error("transferTime must be a HHmmss");
+
         this.transferTime = new TextDecoder().decode(transient.get('transferTime'));
         const transferResult = new TextDecoder().decode(transient.get('transferResult'));
         // 划拨结果必须为成功，否则抛出异常

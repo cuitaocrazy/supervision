@@ -1,15 +1,12 @@
 import { Context, Contract, Returns, Transaction } from "fabric-contract-api";
 import { AttendanceContractModel, AttendanceCreateReq, AttendanceDeleteReq, AttendanceDetail, AttendanceDetailQueryReq, AttendanceChangeStatusReq as AttendanceNegotiateReq, AttendanceQueryReq, AttendanceUpdateReq, AttendanceCreateResp } from "./attendance-contract-model";
 import { ElectronicContractModel } from "./electronic-contract-model";
-import { checkContractExist, getAttendanceContractIdByElectronicContractId, getCollectionName } from "./util";
+import { checkContractExist, getAttendanceContractIdByElectronicContractId, getCollectionName, getOrCreateContract } from "./util";
 
 /**
  * 考勤合约
  */
 export class AttendanceContract extends Contract {
-
-
-
 
     /**
      * 录入考勤
@@ -29,7 +26,7 @@ export class AttendanceContract extends Contract {
         const model: ElectronicContractModel = JSON.parse(new TextDecoder().decode(await ctx.stub.getPrivateData(collectionName, req.electronicContractId)));
         if (model.ContractStatus !== "valid") throw new Error("ElectronicContractModel status is not valid");
         // 考勤合约存在时从链码中获取考勤合约，否则创建考勤合约
-        const acModel = await this.getAttendanceContractOrNew(ctx, collectionName, acId);
+        const acModel = await getOrCreateContract(ctx, collectionName, acId, () => new AttendanceContractModel())
         // 从考勤明细中判断是否已经录入过，通过考勤id
         if (!acModel.attendanceDetails) acModel.attendanceDetails = [];
         if (acModel.attendanceDetails.find(x => x.attendanceId === req.attendanceId)) throw new Error("attendanceId already exists");
@@ -174,21 +171,5 @@ export class AttendanceContract extends Contract {
             throw new Error("AttendanceDetail not exists");
         ad.attendanceStatus = req.attendanceStatus;
         await ctx.stub.putPrivateData(collectionName, acId, new TextEncoder().encode(JSON.stringify(acModel)));
-    }
-
-    /**
-     * 获取考勤合约或者创建考勤合约
-     * @param ctx 上下文
-     * @param collectionName 集合名称
-     * @param acId 考勤合约Id
-     * @returns 
-     */
-    private async getAttendanceContractOrNew(ctx: Context, collectionName: string, acId: string): Promise<AttendanceContractModel> {
-        if (await checkContractExist(ctx, collectionName, acId)) {
-            return JSON.parse(new TextDecoder().decode(await ctx.stub.getPrivateData(collectionName, acId))) as AttendanceContractModel;
-        } else {
-            const acModel = new AttendanceContractModel();
-            return acModel
-        }
     }
 }
