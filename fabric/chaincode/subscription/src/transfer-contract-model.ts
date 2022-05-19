@@ -90,10 +90,9 @@ export class TransferCreateReq {
         this.transferDate = new TextDecoder().decode(transient.get('transferDate'));
         // 用正则判断划拨日期必须是yyyyMMdd，否则抛出异常
         if (!/^[0-9]{8}$/.test(this.transferDate)) throw new Error("transferDate must be a yyyyMMdd");
+        this.transferTime = new TextDecoder().decode(transient.get('transferTime'));
         // 用正则判断划拨时间必须时HHmmss，否则抛出异常
         if (!/^[0-9]{6}$/.test(this.transferTime)) throw new Error("transferTime must be a HHmmss");
-
-        this.transferTime = new TextDecoder().decode(transient.get('transferTime'));
         const transferResult = new TextDecoder().decode(transient.get('transferResult'));
         // 划拨结果必须为成功，否则抛出异常
         if (transferResult !== 'success') throw new Error('transferResult must be success');
