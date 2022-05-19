@@ -2,7 +2,7 @@
  * 考勤合约模型
  */
 
-export type AttendanceStatusType = "valid" | "invalid" | "negotiating";
+export type AttendanceStatusType = "valid" | "invalid" | "negotiating" | "final";
 
 export class AttendanceContractModel {
     /**

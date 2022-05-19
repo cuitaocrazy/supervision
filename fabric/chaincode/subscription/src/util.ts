@@ -17,6 +17,21 @@ export const checkContractExist = async (ctx: Context, collectionName: string, c
     const buffer = await ctx.stub.getPrivateDataHash(collectionName, contractID)
     return !!buffer && buffer.length > 0
 }
+/**
+ * 获取合约
+ */
+export const getContract = async <T>(ctx: Context, collectionName: string, contractID: string): Promise<T> => {
+    const buffer = await ctx.stub.getPrivateData(collectionName, contractID)
+    return JSON.parse(new TextDecoder().decode(buffer))
+}
+/** 获取合约，不存在时创建 */
+export const getOrCreateContract = async <T>(ctx: Context, collectionName: string, contractID: string, createFunc: () => T): Promise<T> => {
+    const exist = await checkContractExist(ctx, collectionName, contractID)
+    if (!exist) {
+        return createFunc();
+    }
+    return getContract(ctx, collectionName, contractID);
+}
 
 /**
   * 获取集合名称
@@ -33,4 +48,8 @@ export const getCollectionName = (svOrgID: string, usvOrgID: string, bankID: str
 */
 export const getAttendanceContractIdByElectronicContractId = (electronicContractId: string): string => {
     return electronicContractId.replace(/ec/, "ac");
+}
+
+export const getTransferContractIdByElectronicContractId = (electronicContractId: string): string => {
+    return electronicContractId.replace(/ec/, "tc");
 }
