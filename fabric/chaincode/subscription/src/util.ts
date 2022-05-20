@@ -37,9 +37,16 @@ export const getCollectionName = (svOrgID: string, usvOrgID: string, bankID: str
 * 把电子合同Id转换为考勤合约Id
 */
 export const getAttendanceContractIdByElectronicContractId = (electronicContractId: string): string => {
+    if (!electronicContractId.startsWith("\u0000ec")) throw new Error("electronicContractId is not a valid electronicContractId");
     return electronicContractId.replace(/ec/, "ac");
 }
-
+/**
+ * 把考勤合约Id转换为划拨合约Id
+ * @param electronicContractId 电子合同Id
+ * @returns 
+ */
 export const getTransferContractIdByElectronicContractId = (electronicContractId: string): string => {
+    // 如果不是\u0000ec开头，则不是电子合同Id
+    if (!electronicContractId.startsWith("\u0000ec")) throw new Error("electronicContractId is not a valid electronicContractId");
     return electronicContractId.replace(/ec/, "tc");
 }

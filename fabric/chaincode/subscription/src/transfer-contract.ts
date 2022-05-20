@@ -1,6 +1,6 @@
 import { Context, Contract, Transaction } from "fabric-contract-api";
 import { AttendanceContractModel } from "./attendance-contract-model";
-import { TransferContractModel, TransferCreateReq, TransferCreateResp, TransferDetail, TransferQueryDetailReq, TransferQueryReq } from "./transfer-contract-model";
+import { TransferContractModel, TransferCreateReq, TransferCreateResp, TransferDeleteReq, TransferDetail, TransferQueryDetailReq, TransferQueryReq } from "./transfer-contract-model";
 import { checkContractExist, getAttendanceContractIdByElectronicContractId, getCollectionName, getContract, getOrCreateContract, getTransferContractIdByElectronicContractId } from "./util";
 
 /**
@@ -39,7 +39,7 @@ export class TransferContract extends Contract {
         // 如果划拨明细不存在，则创建
         const td = new TransferDetail();
         // 对划拨明细赋值
-        td.transferId = tcId;
+        td.transferId = req.transferId;
         td.attendanceId = req.attendanceId;
         td.transferType = req.transferType;
         td.transactionId = req.transactionId;
@@ -90,5 +90,23 @@ export class TransferContract extends Contract {
         const td = tc.transferDetails.find(td => td.transferId == req.transferId);
         if (!td) throw new Error(`TransferDetail does not exist.`);
         return td;
+    }
+
+    /**
+     * 删除划拨合约
+     */
+    @Transaction()
+    public async delete(ctx: Context, svOrgID: string, usvOrgID: string, bankID: string): Promise<TransferContractModel> {
+        const transientMap = ctx.stub.getTransient();
+        const req = new TransferDeleteReq(transientMap);
+        const collectionName = getCollectionName(svOrgID, usvOrgID, bankID);
+        const tcId = getTransferContractIdByElectronicContractId(req.electronicContractId);
+        // 划拨合约不存在时，抛出异常
+        if (! await checkContractExist(ctx, collectionName, tcId)) throw new Error(`TransferContract does not exist.`);
+        // 查询划拨合约
+        const tc = await getContract<TransferContractModel>(ctx, collectionName, tcId);
+        // 删除划拨合约
+        await ctx.stub.deletePrivateData(collectionName, tcId);
+        return tc;
     }
 }
