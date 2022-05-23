@@ -1,0 +1,62 @@
+[
+    {
+        "transactionName": "create",
+        "transactionLabel": "划拨合约：创建",
+        "arguments": [
+            "EdbMSP",
+            "Edu1MSP",
+            "BankMSP"
+        ],
+        "transientData": {
+            "electronicContractId": "\u0000ec\u0000mytestA\u0000mytestB\u000020220103\u0000121012\u0000",
+            "transferId": "mytesttransferId",
+            "attendanceId": "mytestattendanceId",
+            "transferType": "企业公对公",
+            "transactionId": "mytesttransactionId",
+            "sourceAccount": "my test source account",
+            "targetAccount": "my test target account",
+            "transferAmount": "100",
+            "transferDate": "20201212",
+            "transferTime": "121212",
+            "transferResult": "success",
+            "transferExtraInfo": "mytesttransferExtraInfo"
+        }
+    },
+    {
+        "transactionName": "query",
+        "transactionLabel": "划拨合约：查询",
+        "arguments": [
+            "EdbMSP",
+            "Edu1MSP",
+            "BankMSP"
+        ],
+        "transientData": {
+            "electronicContractId": "\u0000ec\u0000mytestA\u0000mytestB\u000020220103\u0000121012\u0000"
+        }
+    },
+    {
+        "transactionName": "queryTransferDetail",
+        "transactionLabel": "划拨合约：查询划拨明细",
+        "arguments": [
+            "EdbMSP",
+            "Edu1MSP",
+            "BankMSP"
+        ],
+        "transientData": {
+            "electronicContractId": "\u0000ec\u0000mytestA\u0000mytestB\u000020220103\u0000121012\u0000",
+            "transferId": "mytesttransferId"
+        }
+    },
+    {
+        "transactionName": "delete",
+        "transactionLabel": "划拨合约：删除",
+        "arguments": [
+            "EdbMSP",
+            "Edu1MSP",
+            "BankMSP"
+        ],
+        "transientData": {
+            "electronicContractId": "\u0000ec\u0000mytestA\u0000mytestB\u000020220103\u0000121012\u0000"
+        }
+    }
+]

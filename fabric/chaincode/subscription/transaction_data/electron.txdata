@@ -1,0 +1,83 @@
+[
+    {
+        "transactionName": "create",
+        "transactionLabel": "电子合同：创建",
+        "arguments": [
+            "EdbMSP",
+            "Edu1MSP",
+            "BankMSP"
+        ],
+        "transientData": {
+            "a": "mytestA",
+            "b": "mytestB",
+            "contractType": "mytestContractType",
+            "contractDate": "20220103",
+            "contractTime": "121012",
+            "contractDetail": "mytestContractDetail"
+        }
+    },
+    {
+        "transactionName": "update",
+        "transactionLabel": "电子合同：修改",
+        "arguments": [
+            "EdbMSP",
+            "Edu1MSP",
+            "BankMSP"
+        ],
+        "transientData": {
+            "contractId": "\u0000ec\u0000mytestA\u0000mytestB\u000020220103\u0000121012\u0000",
+            "contractUpdateDate": "20220104",
+            "contractUpdateTime": "131000",
+            "contractUpdateReason": "mytest update reason",
+            "contractDetail": "mytestContractDetail22"
+        }
+    },
+    {
+        "transactionName": "delete",
+        "transactionLabel": "电子合同：删除",
+        "arguments": [
+            "EdbMSP",
+            "Edu1MSP",
+            "BankMSP"
+        ],
+        "transientData": {
+            "contractId": "\u0000ec\u0000mytestA\u0000mytestB\u000020220103\u0000121012\u0000"
+        }
+    },
+    {
+        "transactionName": "query",
+        "transactionLabel": "电子合同：查询",
+        "arguments": [
+            "EdbMSP",
+            "Edu1MSP",
+            "BankMSP"
+        ],
+        "transientData": {
+            "contractId": "\u0000ec\u0000mytestA\u0000mytestB\u000020220103\u0000121012\u0000"
+        }
+    },
+    {
+        "transactionName": "finish",
+        "transactionLabel": "电子合同：完成",
+        "arguments": [
+            "EdbMSP",
+            "Edu1MSP",
+            "BankMSP"
+        ],
+        "transientData": {
+            "contractId": "\u0000ec\u0000mytestA\u0000mytestB\u000020220103\u0000121012\u0000"
+        }
+    },
+    {
+        "transactionName": "terminate",
+        "transactionLabel": "电子合同：终止",
+        "arguments": [
+            "EdbMSP",
+            "Edu1MSP",
+            "BankMSP"
+        ],
+        "transientData": {
+            "contractId": "\u0000ec\u0000mytestA\u0000mytestB\u000020220103\u0000121012\u0000"
+        }
+    }
+]
