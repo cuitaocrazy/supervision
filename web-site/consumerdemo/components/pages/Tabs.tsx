@@ -2,8 +2,10 @@ import { Route } from 'react-router-dom';
 import { IonRouterOutlet, IonTabs, IonTabBar, IonTabButton, IonIcon, IonLabel } from '@ionic/react';
 import {
   home,
-  flash,
-  search
+  school,
+  cart,
+  person,
+  list
 } from 'ionicons/icons';
 
 const Tabs = () => {
@@ -14,17 +16,25 @@ const Tabs = () => {
         
       </IonRouterOutlet>
       <IonTabBar slot="bottom">
-        <IonTabButton tab="tab1" href = "/home">
+        <IonTabButton tab="首页" href = "/home">
           <IonIcon icon={home} />
-          <IonLabel>Tab1</IonLabel>
+          <IonLabel>首页</IonLabel>
         </IonTabButton>
-        <IonTabButton tab="tab2" href="/login">
-          <IonIcon icon={flash} />
-          <IonLabel>Tab2</IonLabel>
+        <IonTabButton tab="机构" href="/login">
+          <IonIcon icon={school} />
+          <IonLabel>机构</IonLabel>
         </IonTabButton>
-        <IonTabButton tab="tab3" href="/">
-          <IonIcon icon={search} />
-          <IonLabel>Tab3</IonLabel>
+        <IonTabButton tab="课程" href="/">
+          <IonIcon icon={list} />
+          <IonLabel>课程</IonLabel>
+        </IonTabButton>
+        <IonTabButton tab="购物车" href="/">
+          <IonIcon icon={cart} />
+          <IonLabel>购物车</IonLabel>
+        </IonTabButton>
+        <IonTabButton tab="购物车" href="/">
+          <IonIcon icon={person} />
+          <IonLabel>我的</IonLabel>
         </IonTabButton>
       </IonTabBar>
     </IonTabs>
