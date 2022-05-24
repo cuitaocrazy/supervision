@@ -1,12 +1,13 @@
 import { IonApp, IonRouterOutlet, IonSplitPane, setupIonicReact } from '@ionic/react';
 import { StatusBar, Style } from '@capacitor/status-bar';
 import { IonReactRouter, } from '@ionic/react-router';
-import { Route, Redirect } from 'react-router-dom';
+import { Route, Redirect, Router } from 'react-router-dom';
 
 import Tabs from './pages/Tabs';
 import Menu from './pages/Menu';
 import Login from './pages/Login';
 import Home from './pages/Home';
+import First from './pages/First';
 
 
 import { AppContextProvider } from '../appState'
@@ -34,6 +35,7 @@ const AppShell = () => {
               <Route path="/tabs" render={() => <Tabs />} />
               <Route path="/login" render={() => <Login />} />
               <Route path="/home" render={() => <Home />} />
+              <Route path="/first" render={()=> <First />} />
               <Route exact={true} path="/" render={() => <Redirect to="/tabs" />} />
             </IonRouterOutlet>
           </IonSplitPane>

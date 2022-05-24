@@ -16,7 +16,7 @@ const Tabs = () => {
         
       </IonRouterOutlet>
       <IonTabBar slot="bottom">
-        <IonTabButton tab="首页" href = "/home">
+        <IonTabButton tab="首页" href = "/first">
           <IonIcon icon={home} />
           <IonLabel>首页</IonLabel>
         </IonTabButton>
@@ -24,7 +24,7 @@ const Tabs = () => {
           <IonIcon icon={school} />
           <IonLabel>机构</IonLabel>
         </IonTabButton>
-        <IonTabButton tab="课程" href="/">
+        <IonTabButton tab="课程" href="/home">
           <IonIcon icon={list} />
           <IonLabel>课程</IonLabel>
         </IonTabButton>
