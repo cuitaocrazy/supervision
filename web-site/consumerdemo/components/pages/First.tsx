@@ -13,7 +13,7 @@ const First=()=>{
 
   return <IonPage>
     <IonHeader>
-      <div className='grid h-10 grid-cols-10 pt-2 font-medium text-center text-white bg-indigo-600 margin-auto'>
+      <div className='grid h-10 grid-cols-10 pt-2 font-medium text-center text-white bg-primary-600 margin-auto'>
         <div className='col-span-9'>教育资金监管平台</div>
         <div className=''>
         <svg className="w-5 h-5 text-white"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  strokeWidth="2"  strokeLinecap="round"  strokeLinejoin="round">  <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />  <path d="M13.73 21a2 2 0 0 1-3.46 0" /></svg>
@@ -21,7 +21,7 @@ const First=()=>{
       </div>
     </IonHeader>
     <IonContent>
-        <div className='bg-indigo-600'>
+        <div className='bg-primary-600'>
             <div className='bg-white rounded-t-3xl'>
               {/* 搜索框 */}
               <div className='flex items-center justify-center pt-4'>
@@ -31,7 +31,7 @@ const First=()=>{
                               placeholder="请输入搜索关键词" x-model="search" />
                       </div>
                       <div>
-                          <button type="submit" className="flex items-center justify-center w-20 h-8 text-white bg-indigo-600 rounded-r-3xl">
+                          <button type="submit" className="flex items-center justify-center w-20 h-8 text-white bg-primary-600 rounded-r-3xl">
                           <svg className="w-5 h-5 text-white" fill="currentColor" xmlns="http://www.w3.org/2000/svg"
                               viewBox="0 0 24 24">
                               <path
@@ -49,7 +49,7 @@ const First=()=>{
                {/* 课程列表 */}
                <div className='grid items-center grid-cols-6 mt-3'>
                  <div className='col-span-5 text-sm font-bold text-gray-900'>
-                   <svg className="inline w-5 h-5 ml-1 text-indigo-600"  width="24" height="24" viewBox="0 0 24 24" strokeWidth="4" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <line x1="12" y1="4" x2="12" y2="19" /></svg>
+                   <svg className="inline w-5 h-5 ml-1 text-primary-600"  width="24" height="24" viewBox="0 0 24 24" strokeWidth="4" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <line x1="12" y1="4" x2="12" y2="19" /></svg>
                    <div className='inline'>精选推荐</div>
                  </div>
                  <div className='flex mb-1 mr-3 text-xs text-gray-400 justify-self-end'>
