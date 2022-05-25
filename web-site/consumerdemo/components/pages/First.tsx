@@ -23,25 +23,32 @@ const First=()=>{
       </div>
     </IonHeader>
     <IonContent>
-        <div className='bg-primary-600'>
-            <div className='bg-white rounded-t-3xl'>
+        <div className='relative bg-primary-600'>
+            <div className='fixed left-0 right-0 h-5 bg-primary-600 top-15'>
+                <div className='fixed left-0 right-0 h-4 bg-white rounded-t-3xl top-15'></div>
+            </div>
+            <div className='bg-white'>
+              
               {/* 搜索框 */}
-              <div className="flex pt-3 font-mono text-xs">
-                <input type="search" className="flex items-center justify-center pl-2 ml-3 text-gray-800 border shadow-lg rounded-l-3xl grow focus:outline-none focus:glow-primary-600"
-                              placeholder="请输入搜索关键词" x-model="search" />
-                <button type="submit" className="flex items-center justify-center flex-none h-8 mr-3 bg-primary-600 rounded-r-3xl w-14 focus:outline-none hover:bg-primary-700 ">
-                  <svg className="w-5 h-5 text-white" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                    <path d="M16.32 14.9l5.39 5.4a1 1 0 0 1-1.42 1.4l-5.38-5.38a8 8 0 1 1 1.41-1.41zM10 16a6 6 0 1 0 0-12 6 6 0 0 0 0 12z" />
-                  </svg>
-                </button>          
+              <div className='fixed left-0 right-0 mt-3 bg-white'>
+                <div className="flex pt-3 font-mono text-xs ">
+                  <input type="search" className="flex items-center justify-center pl-2 ml-3 text-gray-800 border shadow-lg rounded-l-3xl grow focus:outline-none focus:glow-primary-600"
+                                placeholder="请输入搜索关键词" x-model="search" />
+                  <button type="submit" className="flex items-center justify-center flex-none h-8 mr-3 bg-primary-600 rounded-r-3xl w-14 focus:outline-none hover:bg-primary-700 ">
+                    <svg className="w-5 h-5 text-white" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                      <path d="M16.32 14.9l5.39 5.4a1 1 0 0 1-1.42 1.4l-5.38-5.38a8 8 0 1 1 1.41-1.41zM10 16a6 6 0 1 0 0-12 6 6 0 0 0 0 12z" />
+                    </svg>
+                  </button>          
+                </div>
               </div>
 
-              {/* 轮播图 */}
-              <div className='pt-4 mx-3'>
+              {/* 搜索框以下内容设置为滚动 */}
+                {/* 轮播图 */}
+              <div className='pt-20 mx-3'>
               <img className="w-full h-32 rounded-lg cursor-pointer " src='http://placekitten.com/g/200/300' alt="" />
               </div>
 
-               {/* 课程列表 */}
+               {/* 课程列表card */}
                <div className='grid items-center grid-cols-6 mt-3'>
                  <div className='col-span-5 text-sm font-bold text-gray-900'>
                    <svg className="inline w-5 h-5 ml-1 text-primary-600"  width="24" height="24" viewBox="0 0 24 24" strokeWidth="4" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <line x1="12" y1="4" x2="12" y2="19" /></svg>
@@ -112,7 +119,6 @@ const First=()=>{
                         <p className="text-xs text-gray-400 truncate">地址：廊坊市安次区和平路荣益广场3层206</p>
                     </div>
                   </div>
-                  
                   </div>
                 </div>
               </div>
