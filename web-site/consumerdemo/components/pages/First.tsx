@@ -15,8 +15,8 @@ const First=()=>{
     <IonHeader>
       <div className='grid h-10 grid-cols-10 pt-2 font-medium text-center text-white bg-primary-600 margin-auto'>
         <div className='col-span-9'>教育资金监管平台</div>
-        <div className=''>
-        <svg className="w-5 h-5 text-white"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  strokeWidth="2"  strokeLinecap="round"  strokeLinejoin="round">  <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />  <path d="M13.73 21a2 2 0 0 1-3.46 0" /></svg>
+        <div className='text-center'>
+        <svg className="w-4 h-5 pt-1 text-white"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  strokeWidth="2"  strokeLinecap="round"  strokeLinejoin="round">  <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />  <path d="M13.73 21a2 2 0 0 1-3.46 0" /></svg>
         </div>
       </div>
     </IonHeader>
@@ -24,23 +24,16 @@ const First=()=>{
         <div className='bg-primary-600'>
             <div className='bg-white rounded-t-3xl'>
               {/* 搜索框 */}
-              <div className='flex items-center justify-center pt-4'>
-                  <div className="flex items-center bg-white ">
-                      <div className="w-full">
-                          <input type="search" className="w-full px-4 py-1 text-sm text-gray-800 border rounded-l-3xl focus:outline-none"
+              <div className="flex pt-3 font-mono text-xs text-white">
+                <input type="search" className="flex items-center justify-center pl-2 ml-3 border shadow-lg rounded-l-3xl grow"
                               placeholder="请输入搜索关键词" x-model="search" />
-                      </div>
-                      <div>
-                          <button type="submit" className="flex items-center justify-center w-20 h-8 text-white bg-primary-600 rounded-r-3xl">
-                          <svg className="w-5 h-5 text-white" fill="currentColor" xmlns="http://www.w3.org/2000/svg"
-                              viewBox="0 0 24 24">
-                              <path
-                                  d="M16.32 14.9l5.39 5.4a1 1 0 0 1-1.42 1.4l-5.38-5.38a8 8 0 1 1 1.41-1.41zM10 16a6 6 0 1 0 0-12 6 6 0 0 0 0 12z" />
-                          </svg>
-                          </button>
-                      </div>
-                  </div>
+                <button type="submit" className="flex items-center justify-center flex-none h-8 mr-3 bg-primary-600 rounded-r-3xl w-14 ">
+                  <svg className="w-5 h-5 text-white" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M16.32 14.9l5.39 5.4a1 1 0 0 1-1.42 1.4l-5.38-5.38a8 8 0 1 1 1.41-1.41zM10 16a6 6 0 1 0 0-12 6 6 0 0 0 0 12z" />
+                  </svg>
+                </button>          
               </div>
+
               {/* 轮播图 */}
               <div className='pt-4 mx-3'>
               <img className="w-full h-32 rounded-lg cursor-pointer " src='http://placekitten.com/g/200/300' alt="" />
