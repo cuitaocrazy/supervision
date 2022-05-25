@@ -24,10 +24,10 @@ const First=()=>{
         <div className='bg-primary-600'>
             <div className='bg-white rounded-t-3xl'>
               {/* 搜索框 */}
-              <div className="flex pt-3 font-mono text-xs text-white">
-                <input type="search" className="flex items-center justify-center pl-2 ml-3 border shadow-lg rounded-l-3xl grow"
+              <div className="flex pt-3 font-mono text-xs">
+                <input type="search" className="flex items-center justify-center pl-2 ml-3 text-gray-800 border shadow-lg rounded-l-3xl grow focus:outline-none focus:glow-primary-600"
                               placeholder="请输入搜索关键词" x-model="search" />
-                <button type="submit" className="flex items-center justify-center flex-none h-8 mr-3 bg-primary-600 rounded-r-3xl w-14 ">
+                <button type="submit" className="flex items-center justify-center flex-none h-8 mr-3 bg-primary-600 rounded-r-3xl w-14 focus:outline-none hover:bg-primary-700 ">
                   <svg className="w-5 h-5 text-white" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                     <path d="M16.32 14.9l5.39 5.4a1 1 0 0 1-1.42 1.4l-5.38-5.38a8 8 0 1 1 1.41-1.41zM10 16a6 6 0 1 0 0-12 6 6 0 0 0 0 12z" />
                   </svg>
