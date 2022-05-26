@@ -1,0 +1,60 @@
+import React, { useState } from 'react';
+import Router from 'next/router'
+import {IonPage,IonHeader,IonToolbar,IonContent,IonTitle,IonSearchbar,IonImg,IonList,IonItem,IonThumbnail,IonLabel,IonAvatar,IonChip,IonCard,IonCardHeader,IonCardSubtitle,IonCardTitle,IonCardContent}from "@ionic/react"
+import {motion} from 'framer-motion'
+
+type Item = {
+  src: string;
+  text: string;
+};
+const items: Item[] = [{ src: 'http://placekitten.com/g/200/300', text: 'a picture of a cat' },
+];
+
+const OrgLessonList=()=>{
+
+  return <IonPage>
+    <IonHeader>
+      <div className='grid h-10 grid-cols-10 pt-2 font-medium text-center text-white bg-primary-600 margin-auto'>
+        <div className='col-span-9'>教育资金监管平台</div>
+        <div className='text-center'>
+        <svg className="w-5 h-6 text-white"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  strokeWidth="2"  strokeLinecap="round"  strokeLinejoin="round">  <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />  <path d="M13.73 21a2 2 0 0 1-3.46 0" /></svg>
+        <motion.div key="2" className={'absolute top-2 right-5 ' } animate={{ scale: [1, 1.2, 1] }} transition={{ duration: 0.2 }}><span className="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full">2</span></motion.div>
+        </div>
+      </div>
+    </IonHeader>
+    <IonContent>
+        <div className='relative bg-white'>
+          {/* 机构图片 */}
+          <div className=''>
+            <img className='fixed w-full h-36' src="http://placekitten.com/g/200/300"></img>
+          </div>
+          {/* 机构logo */}
+          <div className=''>
+            <img className='fixed z-20 h-24 border border-red-300 rounded-lg w-28 top-32 left-3' src="http://placekitten.com/g/200/300"></img>
+            <div className='fixed pl-2 top-44 left-32'>
+              <div className='pt-3 text-sm font-bold text-gray-900'>核桃编程</div>
+              <div className='text-xs text-gray-700'>孩子的第一堂编程课</div>
+            </div>
+          </div>
+          <div className='flex items-center pt-48 pb-3 mx-3 text-xs text-gray-400 border border-red-300 justify-items-stretch'>
+              <div className='flex items-center justify-center justify-self-center grow'>好评度98%</div>
+              <svg className="flex-none w-5 h-5"  width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <line x1="12" y1="5" x2="12" y2="19" /></svg>
+              <div className='flex items-center justify-center grow'>课程数32</div>
+              <svg className="flex-none w-5 h-5"  width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <line x1="12" y1="5" x2="12" y2="19" /></svg>
+              <div className='flex justify-center grow'>教师数22</div>
+          </div>
+          <div className='border-2 '>
+            <div className='grid h-12 grid-cols-3 border border-green-400'>
+
+            </div>
+            
+          </div>
+            
+        </div>
+    </IonContent>
+  </IonPage>
+}
+
+export default OrgLessonList
+
+
