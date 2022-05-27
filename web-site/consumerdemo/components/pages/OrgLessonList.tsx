@@ -30,14 +30,14 @@ const OrgLessonList=()=>{
           </div>
           {/* 机构logo和机构名称等信息 */}
           <div className=''>
-            <img className='fixed z-20 h-24 border border-red-300 rounded-lg w-28 top-32 left-3' src="http://placekitten.com/g/200/300"></img>
-            <div className='fixed pl-2 top-44 left-32'>
-              <div className='pt-3 text-xs font-bold text-gray-900'>核桃编程</div>
-              <div className='text-xs text-gray-700 '>孩子的第一堂编程课</div>
+            <img className='fixed z-20 h-24 rounded-lg w-28 top-32 left-3 ' src="http://placekitten.com/g/200/300"></img>
+            <div className='fixed pl-2 bg-white top-44 left-32'>
+              <div className='fixed pt-3 text-xs font-bold text-gray-900'>核桃编程</div>
+              <div className='fixed text-xs text-gray-700 pt-7'>孩子的第一堂编程课</div>
             </div>
           </div>
-          {/* 好评度、课程数、老师数 */}
-          <div>
+          {/* 好评度、课程数、老师数：TODO 好评度等，会一起滚动待完善  */}
+          <div className=''>
             <div className='flex pt-48 pb-3 mx-3 text-xs text-gray-400 border-b justify-items-stretch'>
                 <div className='flex justify-center grow'>好评度&nbsp;98%</div>
                 <svg className="flex-none w-4 h-4"  width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <line x1="12" y1="5" x2="12" y2="19" /></svg>
