@@ -28,7 +28,7 @@ const AppShell = () => {
     <AppContextProvider>
       <IonApp>
         <IonReactRouter>
-          {/* <Menu></Menu> */}
+          <Menu></Menu>
 
           <IonSplitPane contentId="main" className="space-y-16 bg-gray-300 shadow-lg rounded-tl-xl rounded-bl-xl">
             <Menu />
@@ -36,7 +36,6 @@ const AppShell = () => {
               <Route path="/tabs" render={() => <Tabs />} />
               <Route path="/login" render={() => <Login />} />
               <Route path="/home" render={() => <Home />} />
-              <Route path="/first" render={()=> <First />} />
               <Route path="/org" render={()=> <Org />} />
               <Route path="/orgLessonList" render={()=> <OrgLessonList />} />
               <Route exact={true} path="/" render={() => <Redirect to="/tabs" />} />

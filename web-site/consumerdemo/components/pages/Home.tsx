@@ -10,8 +10,7 @@ type Item = {
 const items: Item[] = [{ src: 'http://placekitten.com/g/200/300', text: 'a picture of a cat' },
 ];
 
-const First=()=>{
-
+const Home=()=>{
   return <IonPage>
     <IonHeader>
       <div className='grid h-10 grid-cols-10 pt-2 font-medium text-center text-white bg-primary-600 margin-auto'>
@@ -122,11 +121,8 @@ const First=()=>{
                 </div>
               </div>
         </div>
-
-    
-
     </IonContent>
   </IonPage>
 }
 
-export default First
+export default Home
