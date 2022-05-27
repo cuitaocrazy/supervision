@@ -7,7 +7,6 @@ import Tabs from './pages/Tabs';
 import Menu from './pages/Menu';
 import Login from './pages/Login';
 import Home from './pages/Home';
-import First from './pages/First';
 import Org from './pages/Org'
 import OrgLessonList from './pages/OrgLessonList'
 
