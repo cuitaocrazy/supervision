@@ -8,7 +8,8 @@ module.exports = {
       colors: {
         primary: colors.indigo,
         secondary: colors.orange,
-        error: colors.red,
+        third:colors.gray,
+        remind: colors.red,
       },
       screens: {
         sm1: '414px',
@@ -23,7 +24,7 @@ module.exports = {
   },
   plugins: [
     plugin(function ({ addUtilities, theme, variants }) {
-      const keys = ['primary', 'secondary']
+      const keys = ['primary', 'secondary','third']
       const styles = {}
 
       for (const key of keys) {

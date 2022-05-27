@@ -28,26 +28,97 @@ const OrgLessonList=()=>{
           <div className=''>
             <img className='fixed w-full h-36' src="http://placekitten.com/g/200/300"></img>
           </div>
-          {/* 机构logo */}
+          {/* 机构logo和机构名称等信息 */}
           <div className=''>
             <img className='fixed z-20 h-24 border border-red-300 rounded-lg w-28 top-32 left-3' src="http://placekitten.com/g/200/300"></img>
             <div className='fixed pl-2 top-44 left-32'>
-              <div className='pt-3 text-sm font-bold text-gray-900'>核桃编程</div>
-              <div className='text-xs text-gray-700'>孩子的第一堂编程课</div>
+              <div className='pt-3 text-xs font-bold text-gray-900'>核桃编程</div>
+              <div className='text-xs text-gray-700 '>孩子的第一堂编程课</div>
             </div>
           </div>
-          <div className='flex items-center pt-48 pb-3 mx-3 text-xs text-gray-400 border border-red-300 justify-items-stretch'>
-              <div className='flex items-center justify-center justify-self-center grow'>好评度98%</div>
-              <svg className="flex-none w-5 h-5"  width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <line x1="12" y1="5" x2="12" y2="19" /></svg>
-              <div className='flex items-center justify-center grow'>课程数32</div>
-              <svg className="flex-none w-5 h-5"  width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <line x1="12" y1="5" x2="12" y2="19" /></svg>
-              <div className='flex justify-center grow'>教师数22</div>
+          {/* 好评度、课程数、老师数 */}
+          <div>
+            <div className='flex pt-48 pb-3 mx-3 text-xs text-gray-400 border-b justify-items-stretch'>
+                <div className='flex justify-center grow'>好评度&nbsp;98%</div>
+                <svg className="flex-none w-4 h-4"  width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <line x1="12" y1="5" x2="12" y2="19" /></svg>
+                <div className='flex justify-center grow'>课程数&nbsp;32</div>
+                <svg className="flex-none w-4 h-4"  width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <line x1="12" y1="5" x2="12" y2="19" /></svg>
+                <div className='flex justify-center grow'>教师数&nbsp;22</div>
+            </div>
           </div>
-          <div className='border-2 '>
-            <div className='grid h-12 grid-cols-3 border border-green-400'>
+          {/* 课程列表card */}
+          <div className='mx-2 mt-3 border rounded-lg glow-third-300'>
+            <div className='grid grid-cols-3 mx-2 h-28 rounde-xl'>
+              <img className='w-24 h-24 col-span-1 mt-2 ml-1 rounded-xl' src="http://placekitten.com/g/200/300"></img>
+              <div className='flex flex-col col-span-2 mt-2 justify-items-start'>
+                <div className='mt-2 text-sm'>思维逻辑小游戏</div>
+                <div className='mt-1 text-xs text-gray-500'>锻炼孩子动手能力，提高孩子思维能力，学习完课程可组装不同形状。</div>
+                <div className='flex gap-3 mt-3'>
+                  <div className='text-xs font-bold text-remind-500'>¥3558.00</div>
+                  <div className='text-xs text-gray-700'>36课时</div>
+                  <div className='text-xs text-gray-700'>核桃编程</div>
+                </div>
+              </div>
+            </div>
+          </div>
 
+          <div className='mx-2 mt-3 border rounded-lg glow-third-300'>
+            <div className='grid grid-cols-3 mx-2 h-28 rounde-xl'>
+              <img className='w-24 h-24 col-span-1 mt-2 ml-1 rounded-xl' src="http://placekitten.com/g/200/300"></img>
+              <div className='flex flex-col col-span-2 mt-2 justify-items-start'>
+                <div className='mt-2 text-sm'>思维逻辑小游戏</div>
+                <div className='mt-1 text-xs text-gray-500'>锻炼孩子动手能力，提高孩子思维能力，学习完课程可组装不同形状。</div>
+                <div className='flex gap-3 mt-3'>
+                  <div className='text-xs font-bold text-remind-500'>¥3558.00</div>
+                  <div className='text-xs text-gray-700'>36课时</div>
+                  <div className='text-xs text-gray-700'>核桃编程</div>
+                </div>
+              </div>
             </div>
-            
+          </div>
+
+          <div className='mx-2 mt-3 border rounded-lg glow-third-300'>
+            <div className='grid grid-cols-3 mx-2 h-28 rounde-xl'>
+              <img className='w-24 h-24 col-span-1 mt-2 ml-1 rounded-xl' src="http://placekitten.com/g/200/300"></img>
+              <div className='flex flex-col col-span-2 mt-2 justify-items-start'>
+                <div className='mt-2 text-sm'>思维逻辑小游戏</div>
+                <div className='mt-1 text-xs text-gray-500'>锻炼孩子动手能力，提高孩子思维能力，学习完课程可组装不同形状。</div>
+                <div className='flex gap-3 mt-3'>
+                  <div className='text-xs font-bold text-remind-500'>¥3558.00</div>
+                  <div className='text-xs text-gray-700'>36课时</div>
+                  <div className='text-xs text-gray-700'>核桃编程</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className='mx-2 mt-3 border rounded-lg glow-third-300'>
+            <div className='grid grid-cols-3 mx-2 h-28 rounde-xl'>
+              <img className='w-24 h-24 col-span-1 mt-2 ml-1 rounded-xl' src="http://placekitten.com/g/200/300"></img>
+              <div className='flex flex-col col-span-2 mt-2 justify-items-start'>
+                <div className='mt-2 text-sm'>思维逻辑小游戏</div>
+                <div className='mt-1 text-xs text-gray-500'>锻炼孩子动手能力，提高孩子思维能力，学习完课程可组装不同形状。</div>
+                <div className='flex gap-3 mt-3'>
+                  <div className='text-xs font-bold text-remind-500'>¥3558.00</div>
+                  <div className='text-xs text-gray-700'>36课时</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className='mx-2 mt-3 border rounded-lg glow-third-300'>
+            <div className='grid grid-cols-3 mx-2 h-28 rounde-xl'>
+              <img className='w-24 h-24 col-span-1 mt-2 ml-1 rounded-xl' src="http://placekitten.com/g/200/300"></img>
+              <div className='flex flex-col col-span-2 mt-2 justify-items-start'>
+                <div className='mt-2 text-sm'>思维逻辑小游戏</div>
+                <div className='mt-1 text-xs text-gray-500'>锻炼孩子动手能力，提高孩子思维能力，学习完课程可组装不同形状。</div>
+                <div className='flex gap-3 mt-3'>
+                  <div className='text-xs font-bold text-remind-500'>¥3558.00</div>
+                  <div className='text-xs text-gray-700'>36课时</div>
+                  <div className='text-xs text-gray-700'>核桃编程</div>
+                </div>
+              </div>
+            </div>
           </div>
             
         </div>
