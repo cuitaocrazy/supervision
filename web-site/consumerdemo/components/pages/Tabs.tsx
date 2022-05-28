@@ -20,11 +20,11 @@ const Tabs = () => {
           <IonIcon icon={home} />
           <IonLabel>首页</IonLabel>
         </IonTabButton>
-        <IonTabButton tab="机构" href="/login">
+        <IonTabButton tab="机构" href="/org">
           <IonIcon icon={school} />
           <IonLabel>机构</IonLabel>
         </IonTabButton>
-        <IonTabButton tab="课程" href="/">
+        <IonTabButton tab="课程" href="/orgLessonList">
           <IonIcon icon={list} />
           <IonLabel>课程</IonLabel>
         </IonTabButton>
@@ -32,7 +32,7 @@ const Tabs = () => {
           <IonIcon icon={cart} />
           <IonLabel>购物车</IonLabel>
         </IonTabButton>
-        <IonTabButton tab="购物车" href="/">
+        <IonTabButton tab="我的" href="/">
           <IonIcon icon={person} />
           <IonLabel>我的</IonLabel>
         </IonTabButton>
