@@ -9,6 +9,7 @@ import Login from './pages/Login';
 import Home from './pages/Home';
 import Org from './pages/Org'
 import OrgLessonList from './pages/OrgLessonList'
+import LessonList from './pages/LessonList'
 
 
 import { AppContextProvider } from '../appState'
@@ -38,6 +39,7 @@ const AppShell = () => {
               <Route path="/home" render={() => <Home />} />
               <Route path="/org" render={()=> <Org />} />
               <Route path="/orgLessonList" render={()=> <OrgLessonList />} />
+              <Route path="/lessonList" render={()=><LessonList />} />
               <Route exact={true} path="/" render={() => <Redirect to="/tabs" />} />
             </IonRouterOutlet>
           </IonSplitPane>
