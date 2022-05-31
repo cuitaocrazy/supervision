@@ -20,7 +20,7 @@ const LessonOrg=()=>{
             <div className='bg-white'>
               
               {/* 搜索框 */}
-              <div className='fixed left-0 right-0 mt-3 bg-white'>
+              <div className='fixed left-0 right-0 pb-2 mt-3 bg-white'>
                 <div className="flex pt-3 font-mono text-xs ">
                   <input type="search" className="flex items-center justify-center pl-2 ml-3 text-gray-800 border shadow-lg rounded-l-3xl grow focus:outline-none focus:glow-primary-600"
                                 placeholder="请输入搜索关键词" x-model="search" />

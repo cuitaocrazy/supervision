@@ -18,17 +18,35 @@ You can start editing the page by modifying `pages/index.tsx`. The page auto-upd
 
 The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
 
-## Learn More
 
-To learn more about Next.js, take a look at the following resources:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 消费者端-前端口开发计划
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+| 任务列表 | 页面名称      | 计划时间              | 完成时间              | 是否完成 |
+| -------- | ------------- | --------------------- | --------------------- | -------- |
+| 首页     | 首页          | 2022.05.24-2022.05.25 | 2022.05.24-2022.05.25 | 是       |
+|          | 搜索-搜索结果 | 2022.05.30            | 2022.05.30            | 是       |
+|          | 搜索-课程详情 | 2022.05.30            |                       | 否       |
+|          | 搜索-课程大纲 | 2022.05.31            |                       | 否       |
+|          | 搜索-评价     | 2022.06.01            |                       | 否       |
+|          | 课程列表      | 2022.06.02            |                       | 否       |
+| 机构     | 机构列表      | 2022.05.26            | 2022.05.26            | 是       |
+|          | 机构-课程列表 | 2022.05.27            | 2022.05.27            | 是       |
+| 课程列表 | 课程列表      | 2022                  |                       |          |
+|          | 课程详情      |                       |                       |          |
+|          | 签到、请假    |                       |                       |          |
+|          |               |                       |                       |          |
+|          |               |                       |                       |          |
+|          |               |                       |                       |          |
 
-## Deploy on Vercel
+上周：
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- 会议沟通消费者端的原型设计，绘制、调整流程图，调整需求。
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- 消费者端前端页面开发完成：首页、机构信息列表、机构-课程列表
+- 阿里云：
+
+本周：
+
+- 沟通教育监管端原型设计沟通、修改。
+- 消费者端
