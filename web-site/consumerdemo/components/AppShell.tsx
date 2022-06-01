@@ -7,10 +7,11 @@ import Tabs from './pages/Tabs';
 import Menu from './pages/Menu';
 import Login from './pages/Login';
 import Home from './pages/Home';
-import Org from './pages/Org'
+import OrgList from './pages/OrgList'
 import OrgLessonList from './pages/OrgLessonList'
 import SearchLessonList from './pages/SearchLessonList'
 import SearchLessonDetail from './pages/SearchLessonDetail';
+import ShoppingCar from './pages/ShoppingCar';
 
 
 import { AppContextProvider } from '../appState'
@@ -38,10 +39,11 @@ const AppShell = () => {
               <Route path="/tabs" render={() => <Tabs />} />
               <Route path="/login" render={() => <Login />} />
               <Route path="/home" render={() => <Home />} />
-              <Route path="/org" render={()=> <Org />} />
+              <Route path="/orgList" render={()=> <OrgList />} />
               <Route path="/orgLessonList" render={()=> <OrgLessonList />} />
               <Route path="/searchLessonList" render={()=><SearchLessonList />} />
               <Route path="/searchLessonDetail" render={()=><SearchLessonDetail />} />
+              <Route path="/shoppingCar" render={()=><ShoppingCar />} />
               <Route exact={true} path="/" render={() => <Redirect to="/tabs" />} />
             </IonRouterOutlet>
           </IonSplitPane>

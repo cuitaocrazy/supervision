@@ -20,7 +20,7 @@ const Tabs = () => {
           <IonIcon icon={home} />
           <IonLabel>首页</IonLabel>
         </IonTabButton>
-        <IonTabButton tab="机构" href="/org">
+        <IonTabButton tab="机构" href="/orgList">
           <IonIcon icon={school} />
           <IonLabel>机构</IonLabel>
         </IonTabButton>

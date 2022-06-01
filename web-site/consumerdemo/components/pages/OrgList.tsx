@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Router from 'next/router'
+import {useRouter} from 'next/router'
 import {IonPage,IonHeader,IonToolbar,IonContent,IonTitle,IonSearchbar,IonImg,IonList,IonItem,IonThumbnail,IonLabel,IonAvatar,IonChip,IonCard,IonCardHeader,IonCardSubtitle,IonCardTitle,IonCardContent}from "@ionic/react"
 import {motion} from 'framer-motion'
 
@@ -10,7 +10,8 @@ type Item = {
 const items: Item[] = [{ src: 'http://placekitten.com/g/200/300', text: 'a picture of a cat' },
 ];
 
-const Org=()=>{
+const OrgList=()=>{
+  const router = useRouter()
 
   return <IonPage>
     <IonHeader>
@@ -68,7 +69,6 @@ const Org=()=>{
                   <div className="flex flex-col max-w-sm mb-3 ml-2 mr-2 bg-white border border-gray-200 rounded-lg shadow-md h-36">
                     <img className="h-20 rounded-t-lg cursor-pointer" src='http://placekitten.com/g/200/300' alt="" />
                     <div className="flex flex-col justify-center px-2 pt-1">
-                        
                         <div className='flex items-center justify-center'>
                           <div className='flex flex-auto text-xs font-bold text-gray-900 truncate cursor-pointer justify-self-start'>核桃编程</div>
                           <div className='flex flex-auto justify-self-end'>
@@ -89,11 +89,15 @@ const Org=()=>{
                             </svg>
                           </div>
                         </div>
+                        
                         {/* <p className="text-xs font-bold text-gray-900 truncate cursor-pointer ">核桃编程</p> */}
                         <p className='pt-1 text-xs text-gray-400 truncate'>地址：廊坊市安次区和平路荣益广场3层206</p>
                         <p className="text-xs text-gray-400 truncate">电话：0316-1234569</p>
+                        
                     </div>
+                    
                   </div>
+
 
                   <div className="flex flex-col max-w-sm mb-3 ml-2 mr-2 bg-white border border-gray-200 rounded-lg shadow-md h-36">
                     <img className="h-20 rounded-t-lg cursor-pointer" src='http://placekitten.com/g/200/300' alt="" />
@@ -147,6 +151,6 @@ const Org=()=>{
   </IonPage>
 }
 
-export default Org
+export default OrgList
 
 
