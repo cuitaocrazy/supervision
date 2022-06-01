@@ -20,7 +20,12 @@ const SearchLessonDetail=()=>{
               <img className='w-full h-40' src="http://placekitten.com/g/200/300"></img>
             </div>
             <div className='flex py-2 mx-10 text-xs text-gray-500 justify-items-stretch'>
-              <div className='flex justify-center grow'>课程详情</div>
+              <div className='grid grow justify-items-center'>
+                <div className='font-medium text-primary-600'>课程详情</div>
+                <div className=''>
+                  <svg className="w-5 h-5 text-primary-500"  viewBox="0 7 24 24"  fill="none"  stroke="currentColor"  strokeWidth="4"  strokeLinecap="round"  strokeLinejoin="round">  <line x1="5" y1="12" x2="19" y2="12" /></svg>
+                </div>
+              </div>
               <div className='flex justify-center grow'>课程大纲</div>
               <div className='flex justify-center grow'>评价(148)</div>
             </div>
@@ -78,7 +83,7 @@ const SearchLessonDetail=()=>{
         </div>
         
         {/* 底部菜单 */}
-        <div className='fixed bottom-0 flex w-full mx-5 mt-6 mr-3 bg-white h-14'>
+        <div className='fixed bottom-0 flex w-full pl-5 mt-6 ml-3 mr-5 bg-white h-14'>
               <div className='mt-2 mr-6'>
                 <div>
                   <svg className="w-5 h-5 ml-1 text-gray-500"  width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <path d="M3 21v-13l9-4l9 4v13" />  <path d="M13 13h4v8h-10v-6h6" />  <path d="M13 21v-9a1 1 0 0 0 -1 -1h-2a1 1 0 0 0 -1 1v3" /></svg>
@@ -87,12 +92,12 @@ const SearchLessonDetail=()=>{
               </div>
               <div className='mt-2 '>
                 <div>
-                  <svg className="w-5 h-5 ml-2 text-gray-500"  width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <path d="M3 21v-13l9-4l9 4v13" />  <path d="M13 13h4v8h-10v-6h6" />  <path d="M13 21v-9a1 1 0 0 0 -1 -1h-2a1 1 0 0 0 -1 1v3" /></svg>
+                  <svg className="w-5 h-5 ml-2 text-gray-500"  width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <circle cx="9" cy="19" r="2" />  <circle cx="17" cy="19" r="2" />  <path d="M3 3h2l2 12a3 3 0 0 0 3 2h7a3 3 0 0 0 3 -2l1 -7h-15.2" /></svg>
                 </div>
                 <div className='mr-4 text-xs text-gray-500'>购物车</div>
               </div>
               <button className='h-10 mt-2 ml-8 text-sm font-medium text-white bg-orange-400 rounded-l-3xl grow'>加入购物车</button>
-              <button className='h-10 mt-2 mr-8 text-sm font-medium text-white grow bg-primary-500 rounded-r-3xl'>立即购买</button>
+              <button className='h-10 px-3 mt-2 mr-8 text-sm font-medium text-white grow bg-primary-500 rounded-r-3xl'>立即购买</button>
             </div>
     </IonContent>
   </IonPage>
