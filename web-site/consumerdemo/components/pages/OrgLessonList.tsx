@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Router from 'next/router'
+import {useRouter} from 'next/router'
 import {IonPage,IonHeader,IonToolbar,IonContent,IonTitle,IonSearchbar,IonImg,IonList,IonItem,IonThumbnail,IonLabel,IonAvatar,IonChip,IonCard,IonCardHeader,IonCardSubtitle,IonCardTitle,IonCardContent}from "@ionic/react"
 import {motion} from 'framer-motion'
 
@@ -11,6 +11,7 @@ const items: Item[] = [{ src: 'http://placekitten.com/g/200/300', text: 'a pictu
 ];
 
 const OrgLessonList=()=>{
+  const router = useRouter()
 
   return <IonPage>
     <IonHeader>

@@ -1,16 +1,19 @@
-import React, { useState } from 'react';
-import Router from 'next/router'
-import {IonPage,IonHeader,IonToolbar,IonContent,IonTitle,IonSearchbar,IonImg,IonList,IonItem,IonThumbnail,IonLabel,IonAvatar,IonChip,IonCard,IonCardHeader,IonCardSubtitle,IonCardTitle,IonCardContent}from "@ionic/react"
+import React from 'react';
+import {IonPage,IonHeader,IonContent}from "@ionic/react"
 import {motion} from 'framer-motion'
+import { useForm, SubmitHandler } from 'react-hook-form'
+import { useRouter } from 'next/router'
 
-type Item = {
-  src: string;
-  text: string;
-};
-const items: Item[] = [{ src: 'http://placekitten.com/g/200/300', text: 'a picture of a cat' },
-];
+type FormData = {
+  name: string;
+}
 
 const Home=()=>{
+  const { register, handleSubmit, formState: { errors } } = useForm<FormData>()
+  const router = useRouter()
+  const onSubmit: SubmitHandler<FormData> = (data: FormData) => {
+    router.push('/searchLessonList')
+  }
   return <IonPage>
     <IonHeader>
       <div className='grid h-10 grid-cols-10 pt-2 font-medium text-center text-white bg-primary-600 margin-auto'>
@@ -29,17 +32,20 @@ const Home=()=>{
             <div className='bg-white'>
               
               {/* 搜索框 */}
-              <div className='fixed left-0 right-0 mt-3 bg-white'>
-                <div className="flex pt-3 font-mono text-xs ">
-                  <input type="search" className="flex items-center justify-center pl-2 ml-3 text-gray-800 border shadow-lg rounded-l-3xl grow focus:outline-none focus:glow-primary-600"
-                                placeholder="请输入搜索关键词" x-model="search" />
-                  <button type="submit" className="flex items-center justify-center flex-none h-8 mr-3 bg-primary-600 rounded-r-3xl w-14 focus:outline-none hover:bg-primary-700 ">
-                    <svg className="w-5 h-5 text-white" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                      <path d="M16.32 14.9l5.39 5.4a1 1 0 0 1-1.42 1.4l-5.38-5.38a8 8 0 1 1 1.41-1.41zM10 16a6 6 0 1 0 0-12 6 6 0 0 0 0 12z" />
-                    </svg>
-                  </button>          
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <div className='fixed left-0 right-0 pb-2 mt-3 bg-white'>
+                  <div className="flex pt-3 font-mono text-xs ">
+                    <input type="text" className="flex items-center justify-center pl-2 ml-3 text-gray-800 border shadow-lg rounded-l-3xl grow focus:outline-none focus:glow-primary-600"
+                      {...register('name', { required: true})}
+                                  placeholder="请输入搜索关键词" x-model="search" />
+                    <button type="submit" className="flex items-center justify-center flex-none h-8 mr-3 bg-primary-600 rounded-r-3xl w-14 focus:outline-none hover:bg-primary-700 ">
+                      <svg className="w-5 h-5 text-white" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M16.32 14.9l5.39 5.4a1 1 0 0 1-1.42 1.4l-5.38-5.38a8 8 0 1 1 1.41-1.41zM10 16a6 6 0 1 0 0-12 6 6 0 0 0 0 12z" />
+                      </svg>
+                    </button>          
+                  </div>
                 </div>
-              </div>
+              </form>
 
               {/* 搜索框以下内容设置为滚动 */}
                 {/* 轮播图 */}
@@ -65,6 +71,11 @@ const Home=()=>{
                
               <div>
                 <div className="grid py-2 sm1:grid-cols-2 sm2:grid-cols-2 sm3:grid-cols-2">
+                <a onClick={
+                      () => {
+                        router.push('/searchLessonDetail')
+                      }
+                    }>
                   <div className="flex flex-col max-w-sm mb-3 ml-2 mr-2 bg-white border border-gray-200 rounded-lg shadow-md h-36">
                     <img className="h-20 rounded-t-lg cursor-pointer" src='http://placekitten.com/g/200/300' alt="" />
                     <div className="flex flex-col justify-center px-2 pt-1">
@@ -73,6 +84,7 @@ const Home=()=>{
                         <p className="text-xs text-gray-400 truncate">地址：廊坊市安次区和平路荣益广场3层206</p>
                     </div>
                   </div>
+                  </a>
 
                   <div className="flex flex-col max-w-sm mb-3 ml-2 mr-2 bg-white border border-gray-200 rounded-lg shadow-md h-36">
                     <img className="h-20 rounded-t-lg cursor-pointer" src='http://placekitten.com/g/200/300' alt="" />
