@@ -14,7 +14,7 @@ const SearchLessonDetail=()=>{
       </div>
     </IonHeader>
     <IonContent>
-        <div className='relative bg-white'>
+        <div className='relative mb-3 bg-white pb-14 scroll-auto'>
           {/* 课程图片 */}
             <div>
               <img className='w-full h-40' src="http://placekitten.com/g/200/300"></img>
@@ -73,11 +73,12 @@ const SearchLessonDetail=()=>{
             {/* 教师简介 */}
             <div className='p-2 mx-3 mt-2 text-xs border rounded-lg'>
               <div className='text-sm font-bold text-gray-600'>教师简介</div>
-              <div className='pt-1 leading-5 text-gray-500'>李雷，清华大学美术学院，学士、硕士，7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖,7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖......</div>
-            </div>
-            {/* 底部菜单 */}
-
-            <div className='fixed flex w-full h-10 mx-5 mt-6 mr-3 bg-white bottom-2'>
+              <div className='pt-1 leading-5 text-gray-500'>李雷，清华大学美术学院，学士、硕士，7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖,7年资深美育教研从业经验，20年媒体从业经历。清华大学美术学院，学士、硕士，7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖,7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖......</div>
+            </div>       
+        </div>
+        
+        {/* 底部菜单 */}
+        <div className='fixed bottom-0 flex w-full mx-5 mt-6 mr-3 bg-white h-14'>
               <div className='mt-2 mr-6'>
                 <div>
                   <svg className="w-5 h-5 ml-1 text-gray-500"  width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <path d="M3 21v-13l9-4l9 4v13" />  <path d="M13 13h4v8h-10v-6h6" />  <path d="M13 21v-9a1 1 0 0 0 -1 -1h-2a1 1 0 0 0 -1 1v3" /></svg>
@@ -90,10 +91,9 @@ const SearchLessonDetail=()=>{
                 </div>
                 <div className='mr-4 text-xs text-gray-500'>购物车</div>
               </div>
-              <button className='mt-2 ml-8 text-sm text-white bg-orange-400 rounded-l-3xl grow'>加入购物车</button>
-              <button className='mt-2 mr-8 text-sm text-white grow bg-primary-500 rounded-r-3xl'>立即购买</button>
+              <button className='h-10 mt-2 ml-8 text-sm font-medium text-white bg-orange-400 rounded-l-3xl grow'>加入购物车</button>
+              <button className='h-10 mt-2 mr-8 text-sm font-medium text-white grow bg-primary-500 rounded-r-3xl'>立即购买</button>
             </div>
-        </div>
     </IonContent>
   </IonPage>
 }
