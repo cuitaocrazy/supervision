@@ -86,7 +86,7 @@ const LessonQuery:React.FC =()=>{
     }).then(res => res.json())
     .then((json) => {
     const {userInfoList} = json //todo
-    refreshLessonList(demoLessonList.filter((userInfo:SupervisorUser)=>userInfo.supervisorUsername.indexOf(queryInfo.supervisorUsername)>-1).filter((userInfo:SupervisorUser)=>userInfo.supervisorLoginName.indexOf(queryInfo.supervisorLoginName)>-1))
+    refreshLessonList(demoLessonList.filter((userInfo:SupervisorUser)=>userInfo.supervisorUsername&&userInfo.supervisorUsername.indexOf(queryInfo.supervisorUsername)>-1).filter((userInfo:SupervisorUser)=>userInfo.supervisorLoginName.indexOf(queryInfo.supervisorLoginName)>-1))
     return 
     })
   },[queryInfo.supervisorLoginName, queryInfo.supervisorLoginName, paramStr, refreshLessonList]);

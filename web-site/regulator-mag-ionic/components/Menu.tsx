@@ -89,7 +89,7 @@ const Menu = () => {
 
 
   return (
-    <IonMenu hidden={state.userInfo.role===''} side="start" contentId="main" onIonDidOpen={handleOpen} onIonDidClose={handleClose}>
+    <IonMenu hidden={state.userInfo.role===''&&false} side="start" contentId="main" onIonDidOpen={handleOpen} onIonDidClose={handleClose}>
       <IonHeader >
         <IonToolbar>
           <IonTitle className="text-center">教育资金监管管理端</IonTitle>
@@ -98,7 +98,8 @@ const Menu = () => {
       <IonContent>
         <IonList >
           {pages.filter((p)=>{
-              return p.role===state.userInfo.role
+              // return p.role===state.userInfo.role
+              return true
           }).map((p, k) => (
             <IonMenuToggle autoHide={false} key={k}>
               <IonItem className="flex flex-row justify-center text-center" routerLink={p.url} routerDirection="none" detail={false} lines="none">
@@ -111,7 +112,7 @@ const Menu = () => {
       </IonContent> 
       <IonContent>
        <IonToolbar className='h-72 mt-36'> 
-          <button className="mt-60 w-24 p-2 text-white rounded-md bg-primary-500 hover:bg-primary-700 focus:outline-none">退出</button>
+          <button className="w-24 p-2 text-white rounded-md mt-60 bg-primary-500 hover:bg-primary-700 focus:outline-none">退出</button>
        </IonToolbar>
       </IonContent>
     </IonMenu>

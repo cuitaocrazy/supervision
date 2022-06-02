@@ -147,7 +147,7 @@ const ListEntry = ({ announcement,key, ...props } : {announcement:Announcement,k
       </IonPage>
    }
    else{
-     return <Redirect to="/tabs/teacher/detail" />
+     return <Redirect to="/tabs/announcement/detail" />
    }  
 }
 export default TeacherQuery;
