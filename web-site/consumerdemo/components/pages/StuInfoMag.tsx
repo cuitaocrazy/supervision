@@ -11,9 +11,7 @@ type FormData = {
 const StuInfoMag=()=>{
   const { register, handleSubmit, formState: { errors } } = useForm<FormData>()
   const router = useRouter()
-  const onSubmit: SubmitHandler<FormData> = (data: FormData) => {
-    router.push('/searchLessonList')
-  }
+  
   return <IonPage>
     <IonHeader>
       <div className='grid h-10 grid-cols-10 pt-2 font-medium text-center text-white bg-primary-600 margin-auto'>
@@ -102,12 +100,14 @@ const StuInfoMag=()=>{
                       <div className='text-gray-800'>孔莉</div>
                     </div>
                     </div>
-                    <a className='mr-2 cursor-pointer justify-self-end'  onClick={()=>{router.push("")}}>
+                    <a className='mr-2 cursor-pointer justify-self-end'  onClick={()=>{router.push("editStuInfo")}}>
                       <svg className="w-5 h-5 text-gray-300"  width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <path d="M4 20h4l10.5 -10.5a1.5 1.5 0 0 0 -4 -4l-10.5 10.5v4" />  <line x1="13.5" y1="6.5" x2="17.5" y2="10.5" /></svg>
                     </a>
                   </div>
         </div>
-
+        <div className='fixed bottom-0 flex w-full mt-6 bg-white border-t h-14 justify-items-center'>
+            <button className='self-center w-full h-10 mx-6 mt-1 text-sm font-medium text-white bg-primary-500 rounded-3xl' onClick={()=>{router.push("addStuInfo")}}>立即支付</button>
+        </div>
     </IonContent>
   </IonPage>
 }
