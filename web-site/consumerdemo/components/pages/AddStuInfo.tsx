@@ -40,12 +40,12 @@ const AddStuInfo=()=>{
 
               <div className='grid grid-cols-2 gap-4 mt-3 justify-items-stretch'>
                 <div className='pr-2 text-gray-400'>出生日期:</div>
-                <input className='pl-2 text-gray-800 ' value="2020.01.01"></input>
+                <input className='pl-2 text-gray-800 border' placeholder='请输入日期'></input>
               </div>
               <div className='grid grid-cols-2 gap-4 mt-3 justify-items-stretch'>
                 <div className='pr-2 text-gray-400'>学生性别:</div>
                 <select className='w-full pl-2 mr-4 text-gray-800 border rounded-md'>
-                  <option value="" selected>男</option>
+                  <option value="" selected >男</option>
                   <option value="">女</option>
                 </select>
               </div>
