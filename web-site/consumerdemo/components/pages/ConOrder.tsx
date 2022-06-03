@@ -86,12 +86,10 @@ const ConOrder=()=>{
         
         {/* 底部菜单 */}
         <div className='fixed bottom-0 flex w-full pl-5 mt-6 bg-white border-t h-14 justify-items-stretch'>
-              {/* <div className='flex justify-items-end'> */}
                 <div className='self-center justify-around text-xs text-gray-500'>合计：</div>
                 <div className='self-center mr-4 text-2xl font-black text-red-500 grow justify-self-end'>¥11120.00</div>
                 <button className='self-center h-10 px-6 mt-1 mr-2 text-sm font-medium text-white justify-self-end bg-primary-500 rounded-3xl'>立即支付</button>
-              </div>
-            {/* </div> */}
+        </div>
     </IonContent>
   </IonPage>
 }
