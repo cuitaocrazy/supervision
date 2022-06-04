@@ -17,6 +17,7 @@ import StuInfoMag from './pages/stuInfoMag';
 import AddStuInfo from './pages/AddStuInfo'
 import EditStuInfo from './pages/EditStuInfo'
 import PayResult from './pages/PayResult';
+import LessonList from './pages/LessonList';
 
 
 import { AppContextProvider } from '../appState'
@@ -54,6 +55,7 @@ const AppShell = () => {
               <Route path="/addStuInfo" render={()=><AddStuInfo />} />
               <Route path="/editStuInfo" render={()=><EditStuInfo />} />
               <Route path="/payResult" render={()=><PayResult />} />
+              <Route path="/lessonList" render={()=><LessonList />} />
               <Route exact={true} path="/" render={() => <Redirect to="/tabs" />} />
             </IonRouterOutlet>
           </IonSplitPane>

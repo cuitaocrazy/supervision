@@ -3,7 +3,7 @@ import {IonPage,IonHeader,IonContent}from "@ionic/react"
 import {motion} from 'framer-motion'
 import {useRouter} from 'next/router'
 
-const LessonOrg=()=>{
+const SearchLessonList=()=>{
   const router = useRouter()
   return <IonPage>
     <IonHeader>
@@ -131,4 +131,4 @@ const LessonOrg=()=>{
   </IonPage>
 }
 
-export default LessonOrg
+export default SearchLessonList
