@@ -76,7 +76,7 @@ const Home=()=>{
                         router.push('/searchLessonDetail')
                       }
                     }>
-                  <div className="flex flex-col max-w-sm mb-3 ml-2 mr-2 bg-white border border-gray-200 rounded-lg shadow-md h-36">
+                  <div className="flex flex-col max-w-sm mb-3 ml-3 mr-2 bg-white border-gray-200 rounded-lg shadow-md h-36">
                     <img className="h-20 rounded-t-lg cursor-pointer" src='http://placekitten.com/g/200/300' alt="" />
                     <div className="flex flex-col justify-center px-2 pt-1">
                         <p className="text-xs font-bold text-gray-900 truncate cursor-pointer ">幼小衔接</p>
@@ -86,7 +86,7 @@ const Home=()=>{
                   </div>
                   </a>
 
-                  <div className="flex flex-col max-w-sm mb-3 ml-2 mr-2 bg-white border border-gray-200 rounded-lg shadow-md h-36">
+                  <div className="flex flex-col max-w-sm mb-3 ml-3 mr-2 bg-white border-gray-200 rounded-lg shadow-md h-36">
                     <img className="h-20 rounded-t-lg cursor-pointer" src='http://placekitten.com/g/200/300' alt="" />
                     <div className="flex flex-col justify-center px-2 pt-1">
                         <p className="text-xs font-bold text-gray-900 truncate cursor-pointer ">幼小衔接</p>
@@ -95,7 +95,7 @@ const Home=()=>{
                     </div>
                   </div>
 
-                  <div className="flex flex-col max-w-sm mb-3 ml-2 mr-2 bg-white border border-gray-200 rounded-lg shadow-md h-36">
+                  <div className="flex flex-col max-w-sm mb-3 ml-3 mr-2 bg-white border-gray-200 rounded-lg shadow-md h-36">
                     <img className="h-20 rounded-t-lg cursor-pointer" src='http://placekitten.com/g/200/300' alt="" />
                     <div className="flex flex-col justify-center px-2 pt-1">
                         <p className="text-xs font-bold text-gray-900 truncate cursor-pointer ">幼小衔接</p>
@@ -104,7 +104,7 @@ const Home=()=>{
                     </div>
                   </div>
 
-                  <div className="flex flex-col max-w-sm mb-3 ml-2 mr-2 bg-white border border-gray-200 rounded-lg shadow-md h-36">
+                  <div className="flex flex-col max-w-sm mb-3 ml-3 mr-2 bg-white border-gray-200 rounded-lg shadow-md h-36">
                     <img className="h-20 rounded-t-lg cursor-pointer" src='http://placekitten.com/g/200/300' alt="" />
                     <div className="flex flex-col justify-center px-2 pt-1">
                         <p className="text-xs font-bold text-gray-900 truncate cursor-pointer ">幼小衔接</p>
@@ -113,7 +113,7 @@ const Home=()=>{
                     </div>
                   </div>
 
-                  <div className="flex flex-col max-w-sm mb-3 ml-2 mr-2 bg-white border border-gray-200 rounded-lg shadow-md h-36">
+                  <div className="flex flex-col max-w-sm mb-3 ml-3 mr-2 bg-white border-gray-200 rounded-lg shadow-md h-36">
                     <img className="h-20 rounded-t-lg cursor-pointer" src='http://placekitten.com/g/200/300' alt="" />
                     <div className="flex flex-col justify-center px-2 pt-1">
                         <p className="text-xs font-bold text-gray-900 truncate cursor-pointer ">幼小衔接</p>
@@ -122,7 +122,7 @@ const Home=()=>{
                     </div>
                   </div>
 
-                  <div className="flex flex-col max-w-sm mb-3 ml-2 mr-2 bg-white border border-gray-200 rounded-lg shadow-md h-36">
+                  <div className="flex flex-col max-w-sm mb-3 ml-3 mr-2 bg-white border-gray-200 rounded-lg shadow-md h-36">
                     <img className="h-20 rounded-t-lg cursor-pointer" src='http://placekitten.com/g/200/300' alt="" />
                     <div className="flex flex-col justify-center px-2 pt-1">
                         <p className="text-xs font-bold text-gray-900 truncate cursor-pointer ">幼小衔接</p>
