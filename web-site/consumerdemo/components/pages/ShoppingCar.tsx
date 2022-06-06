@@ -26,7 +26,7 @@ const ShoppingCar=()=>{
                     <label className='text-sm text-center text-gray-500 '>核桃编程培训机构</label>
                   </div>
 
-                    <div className='border rounded-lg'>
+                    <div className='rounded-lg shadow-md glow-third-200'>
                     <div className='grid grid-cols-12 mx-2 h-28 rounde-xl'>
                     <div className='flex items-center justify-center'>
                       <input className='col-span-1' type="checkbox"  />
@@ -65,7 +65,7 @@ const ShoppingCar=()=>{
                     <input className='mr-3' type="checkbox" id="cbox1" value="first_checkbox" />
                     <label className='text-sm text-center text-gray-500 '>核桃编程培训机构</label>
                   </div>
-                    <div className='border rounded-lg'>
+                    <div className='rounded-lg shadow-md glow-third-200'>
                     <div className='grid grid-cols-12 mx-2 h-28 rounde-xl'>
                     <div className='flex items-center justify-center'>
                       <input className='col-span-1' type="checkbox"  />
@@ -104,7 +104,7 @@ const ShoppingCar=()=>{
                     <input className='mr-3' type="checkbox" id="cbox1" value="first_checkbox" />
                     <label className='text-sm text-center text-gray-500 '>核桃编程培训机构</label>
                   </div>
-                    <div className='border rounded-lg'>
+                    <div className='rounded-lg shadow-md glow-third-200'>
                     <div className='grid grid-cols-12 mx-2 h-28 rounde-xl'>
                     <div className='flex items-center justify-center'>
                       <input className='col-span-1' type="checkbox"  />
@@ -143,7 +143,7 @@ const ShoppingCar=()=>{
                     <input className='mr-3' type="checkbox" id="cbox1" value="first_checkbox" />
                     <label className='text-sm text-center text-gray-500 '>核桃编程培训机构</label>
                   </div>
-                    <div className='border rounded-lg'>
+                    <div className='rounded-lg shadow-md glow-third-200'>
                     <div className='grid grid-cols-12 mx-2 h-28 rounde-xl'>
                     <div className='flex items-center justify-center'>
                       <input className='col-span-1' type="checkbox"  />
