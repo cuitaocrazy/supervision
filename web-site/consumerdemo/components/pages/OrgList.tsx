@@ -66,7 +66,7 @@ const OrgList=()=>{
              {/* 机构列表card */}       
               <div>
                 <div className="grid py-2 sm1:grid-cols-2 sm2:grid-cols-2 sm3:grid-cols-2">
-                  <div className="flex flex-col max-w-sm mb-3 ml-2 mr-2 bg-white border border-gray-200 rounded-lg shadow-md h-36">
+                  <div className="flex flex-col max-w-sm mb-3 ml-2 mr-2 bg-white rounded-lg shadow-md h-36">
                     <img className="h-20 rounded-t-lg cursor-pointer" src='http://placekitten.com/g/200/300' alt="" />
                     <div className="flex flex-col justify-center px-2 pt-1">
                         <div className='flex items-center justify-center'>
@@ -99,7 +99,7 @@ const OrgList=()=>{
                   </div>
 
 
-                  <div className="flex flex-col max-w-sm mb-3 ml-2 mr-2 bg-white border border-gray-200 rounded-lg shadow-md h-36">
+                  <div className="flex flex-col max-w-sm mb-3 ml-2 mr-2 bg-white rounded-lg shadow-md h-36">
                     <img className="h-20 rounded-t-lg cursor-pointer" src='http://placekitten.com/g/200/300' alt="" />
                     <div className="flex flex-col justify-center px-2 pt-1">
                         <p className="text-xs font-bold text-gray-900 truncate cursor-pointer ">核桃编程</p>
@@ -108,7 +108,7 @@ const OrgList=()=>{
                     </div>
                   </div>
 
-                  <div className="flex flex-col max-w-sm mb-3 ml-2 mr-2 bg-white border border-gray-200 rounded-lg shadow-md h-36">
+                  <div className="flex flex-col max-w-sm mb-3 ml-2 mr-2 bg-white rounded-lg shadow-md h-36">
                     <img className="h-20 rounded-t-lg cursor-pointer" src='http://placekitten.com/g/200/300' alt="" />
                     <div className="flex flex-col justify-center px-2 pt-1">
                         <p className="text-xs font-bold text-gray-900 truncate cursor-pointer ">核桃编程</p>
@@ -117,7 +117,7 @@ const OrgList=()=>{
                     </div>
                   </div>
 
-                  <div className="flex flex-col max-w-sm mb-3 ml-2 mr-2 bg-white border border-gray-200 rounded-lg shadow-md h-36">
+                  <div className="flex flex-col max-w-sm mb-3 ml-2 mr-2 bg-white rounded-lg shadow-md h-36">
                     <img className="h-20 rounded-t-lg cursor-pointer" src='http://placekitten.com/g/200/300' alt="" />
                     <div className="flex flex-col justify-center px-2 pt-1">
                         <p className="text-xs font-bold text-gray-900 truncate cursor-pointer ">核桃编程</p>
@@ -126,7 +126,7 @@ const OrgList=()=>{
                     </div>
                   </div>
 
-                  <div className="flex flex-col max-w-sm mb-3 ml-2 mr-2 bg-white border border-gray-200 rounded-lg shadow-md h-36">
+                  <div className="flex flex-col max-w-sm mb-3 ml-2 mr-2 bg-white rounded-lg shadow-md h-36">
                     <img className="h-20 rounded-t-lg cursor-pointer" src='http://placekitten.com/g/200/300' alt="" />
                     <div className="flex flex-col justify-center px-2 pt-1">
                         <p className="text-xs font-bold text-gray-900 truncate cursor-pointer ">核桃编程</p>
@@ -135,7 +135,7 @@ const OrgList=()=>{
                     </div>
                   </div>
 
-                  <div className="flex flex-col max-w-sm mb-3 ml-2 mr-2 bg-white border border-gray-200 rounded-lg shadow-md h-36">
+                  <div className="flex flex-col max-w-sm mb-3 ml-2 mr-2 bg-white rounded-lg shadow-md h-36">
                     <img className="h-20 rounded-t-lg cursor-pointer" src='http://placekitten.com/g/200/300' alt="" />
                     <div className="flex flex-col justify-center px-2 pt-1">
                         <p className="text-xs font-bold text-gray-900 truncate cursor-pointer ">核桃编程</p>
