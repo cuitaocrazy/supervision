@@ -36,7 +36,7 @@ const SearchLessonList=()=>{
 
                {/* 课程列表card */}
                <div className='mx-3 pt-14 '>
-                  <div className='mt-3 bg-white border rounded-lg '>
+                  <div className='mt-3 bg-white rounded-lg shadow-md '>
                     <div className='grid grid-cols-3 mx-2 h-28 rounde-xl'>
                     <a onClick={
                       () => {
@@ -63,7 +63,7 @@ const SearchLessonList=()=>{
                     </div>
                   </div>
 
-                  <div className='mt-3 border rounded-lg glow-third-100'>
+                  <div className='mt-3 rounded-lg shadow-md'>
                     <div className='grid grid-cols-3 mx-2 h-28 rounde-xl'>
                       <img className='w-24 h-24 col-span-1 mt-2 ml-1 rounded-xl' src="http://placekitten.com/g/200/300"></img>
                       <div className='flex flex-col col-span-2 mt-2 justify-items-start'>
@@ -78,7 +78,7 @@ const SearchLessonList=()=>{
                     </div>
                   </div>
 
-                  <div className='mt-3 border rounded-lg glow-third-200'>
+                  <div className='mt-3 rounded-lg shadow-md'>
                     <div className='grid grid-cols-3 mx-2 h-28 rounde-xl'>
                       <img className='w-24 h-24 col-span-1 mt-2 ml-1 rounded-xl' src="http://placekitten.com/g/200/300"></img>
                       <div className='flex flex-col col-span-2 mt-2 justify-items-start'>
@@ -93,7 +93,7 @@ const SearchLessonList=()=>{
                     </div>
                   </div>
 
-                  <div className='mt-3 border rounded-lg glow-third-300'>
+                  <div className='mt-3 rounded-lg shadow-md'>
                     <div className='grid grid-cols-3 mx-2 h-28 rounde-xl'>
                       <img className='w-24 h-24 col-span-1 mt-2 ml-1 rounded-xl' src="http://placekitten.com/g/200/300"></img>
                       <div className='flex flex-col col-span-2 mt-2 justify-items-start'>
@@ -108,7 +108,7 @@ const SearchLessonList=()=>{
                     </div>
                   </div>
 
-                  <div className='mt-3 border rounded-lg glow-third-300'>
+                  <div className='mt-3 rounded-lg shadow-md'>
                     <div className='grid grid-cols-3 mx-2 h-28 rounde-xl'>
                       <img className='w-24 h-24 col-span-1 mt-2 ml-1 rounded-xl' src="http://placekitten.com/g/200/300"></img>
                       <div className='flex flex-col col-span-2 mt-2 justify-items-start'>
