@@ -23,7 +23,7 @@ const ConOrder=()=>{
                   <div className='pt-3 ml-1 text-base font-bold text-gray-800'>
                     请选择学员
                   </div>
-                  <div className='grid items-center grid-cols-2 py-3 pl-2 mt-3 text-base bg-white border rounded-lg'>
+                  <div className='grid items-center grid-cols-2 py-3 pl-2 mt-3 text-base bg-white rounded-lg shadow-md'>
                     <div className='items-center justify-center font-medium text-gray-700'>可新增或修改学员信息</div>
                     <a className='mr-2 cursor-pointer justify-self-end'  onClick={()=>{router.push("")}}>
                      <svg className="w-5 h-5 text-gray-500"  width="24" height="24" viewBox="0 0 24 24" strokeWidth="3" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <polyline points="9 6 15 12 9 18" /></svg>
@@ -31,7 +31,7 @@ const ConOrder=()=>{
                   </div>           
  
                    {/* 订单信息 */}
-                  <div className='pt-1 pb-2 mt-3 mb-3 bg-white border rounded-lg'>
+                  <div className='pt-1 pb-2 mt-3 mb-3 bg-white rounded-lg shadow-md'>
                     <div className='mt-2 rounded-lg'>
                       <div className='py-2 pl-3 font-medium'>核桃编程培训机构</div>
                       <div className='grid grid-cols-12 mx-2 rounded-lg h-28'>

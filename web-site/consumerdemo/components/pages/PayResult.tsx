@@ -33,9 +33,9 @@ const PayResult=()=>{
             <div className='pt-4 pb-16 text-lg text-center text-gray-700'>恭喜您支付成功！</div>
           </div>
           <div className='grid grid-cols-3 gap-3 mx-3'>
-            <button className='py-2 text-sm text-white shadow-2xl bg-primary-500 rounded-3xl'>返回首页</button>
-            <button className='py-2 text-sm text-white shadow-2xl bg-secondary-300 rounded-3xl'>继续购买</button>
-            <button className='py-2 text-sm text-white bg-red-300 shadow-2xl rounded-3xl'>查看详情</button>
+            <button className='py-2 text-sm text-white shadow-md shadow-primary-500 bg-primary-500 rounded-3xl'>返回首页</button>
+            <button className='py-2 text-sm text-white shadow-md shadow-secondary-300 bg-secondary-300 rounded-3xl'>继续购买</button>
+            <button className='py-2 text-sm text-white bg-red-400 shadow-md shadow-remind-400 rounded-3xl'>查看详情</button>
           </div>
             
            
