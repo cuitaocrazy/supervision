@@ -74,7 +74,7 @@ const LessonDetail=()=>{
             <div className='px-2 pt-3 pb-4 mx-3 mt-2 text-xs rounded-lg shadow-md'>
               <div className='flex'>
                 <div className='font-bold tracking-wider text-primary-500'>张大宝</div>
-                <div className='font-bold text-gray-700'>学习里程碑</div>
+                <div className='font-bold text-gray-600'>学习里程碑</div>
                 <div className='text-gray-500'>(56课时)</div>
               </div>
               <div className='pt-2 tracking-wider text-center text-gray-500'>
@@ -146,19 +146,22 @@ const LessonDetail=()=>{
         <div className='fixed bottom-0 grid w-full grid-cols-3 mt-6 bg-white border-t h-14 justify-items-center'>
               <div className='mt-2 text-primary-500'>
                 <div className=''>
-                  <svg className="w-5 h-5 ml-4 "  width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <path d="M3 21v-13l9-4l9 4v13" />  <path d="M13 13h4v8h-10v-6h6" />  <path d="M13 21v-9a1 1 0 0 0 -1 -1h-2a1 1 0 0 0 -1 1v3" /></svg>
+                  {/* <svg className="w-5 h-5 ml-4 "  width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <path d="M3 21v-13l9-4l9 4v13" />  <path d="M13 13h4v8h-10v-6h6" />  <path d="M13 21v-9a1 1 0 0 0 -1 -1h-2a1 1 0 0 0 -1 1v3" /></svg> */}
+                  <svg className="w-5 h-5 ml-4"  fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                  </svg>
                 </div>
                 <div className='text-xs'>签到/请假</div>
               </div>
-              <div className='mt-2 text-green-500'>
-                <div>
-                  <svg className="w-5 h-5 ml-3"  width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <circle cx="9" cy="19" r="2" />  <circle cx="17" cy="19" r="2" />  <path d="M3 3h2l2 12a3 3 0 0 0 3 2h7a3 3 0 0 0 3 -2l1 -7h-15.2" /></svg>
+              <div className='mt-2 text-green-500 '>
+                <div className='pl-3'>
+                  <svg className="w-5 h-5"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  strokeWidth="2"  strokeLinecap="round"  strokeLinejoin="round">  <line x1="8" y1="6" x2="21" y2="6" />  <line x1="8" y1="12" x2="21" y2="12" />  <line x1="8" y1="18" x2="21" y2="18" />  <line x1="3" y1="6" x2="3.01" y2="6" />  <line x1="3" y1="12" x2="3.01" y2="12" />  <line x1="3" y1="18" x2="3.01" y2="18" /></svg>
                 </div>
                 <div className='mr-4 text-xs'>签到列表</div>
               </div>
               <div className='mt-2 text-secondary-300'>
                 <div>
-                  <svg className="w-5 h-5 "  width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <circle cx="9" cy="19" r="2" />  <circle cx="17" cy="19" r="2" />  <path d="M3 3h2l2 12a3 3 0 0 0 3 2h7a3 3 0 0 0 3 -2l1 -7h-15.2" /></svg>
+                  <svg className="w-5 h-5 "  width="24"  height="24"  viewBox="0 0 24 24"  xmlns="http://www.w3.org/2000/svg"  fill="none"  stroke="currentColor"  strokeWidth="2"  strokeLinecap="round"  strokeLinejoin="round">  <path d="M12 20h9" />  <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" /></svg>
                 </div>
                 <div className='mr-4 text-xs'>评价</div>
               </div>
