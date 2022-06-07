@@ -13,11 +13,12 @@ import SearchLessonList from './pages/SearchLessonList'
 import SearchLessonDetail from './pages/SearchLessonDetail';
 import ShoppingCar from './pages/ShoppingCar';
 import ConOrder from './pages/ConOrder';
-import StuInfoMag from './pages/stuInfoMag';
+import StuInfoMag from './pages/StuInfoMag';
 import AddStuInfo from './pages/AddStuInfo'
 import EditStuInfo from './pages/EditStuInfo'
 import PayResult from './pages/PayResult';
 import LessonList from './pages/LessonList';
+import LessonDetail from './pages/LessonDetail';
 
 
 import { AppContextProvider } from '../appState'
@@ -56,6 +57,7 @@ const AppShell = () => {
               <Route path="/editStuInfo" render={()=><EditStuInfo />} />
               <Route path="/payResult" render={()=><PayResult />} />
               <Route path="/lessonList" render={()=><LessonList />} />
+              <Route path="/lessonDetail" render={()=><LessonDetail />} />
               <Route exact={true} path="/" render={() => <Redirect to="/tabs" />} />
             </IonRouterOutlet>
           </IonSplitPane>
