@@ -15,14 +15,14 @@ const RefoundLesson=()=>{
         <div className='text-gray-700'>少儿编程</div>
       </div>
       <div className='flex px-4 py-2 mb-3 text-sm rounded-md bg-primary-50'>
-        <div>学生姓名</div>
+        <div className='pr-4 text-gray-500'>学生姓名</div>
         <div>张大宝</div>
       </div>
       <div className='flex px-4 py-2 mb-2 text-sm rounded-md bg-primary-50'>
-        <div>退订金额</div>
-        <div>¥</div>
-        <div>710.4</div>
-        <div>元</div>
+        <div className='pr-4 text-gray-500'>退订金额</div>
+        <div className='text-gray-700'>¥</div>
+        <div className='text-gray-700'>710.4</div>
+        <div className='text-gray-700'>元</div>
       </div>
       <p className='mb-3 text-xs leading-4 text-primary-600'>按照当地政府要求，监管账户的资金已部分划拨到机构账户中本系统仅支持未划拨部分退款，其余部分与机构进行沟通协商。退款金额会按原交易渠道进行退回。</p>
       <div className='text-sm text-gray-700'>协商原因</div>
