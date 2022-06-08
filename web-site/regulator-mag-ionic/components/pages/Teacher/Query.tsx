@@ -63,22 +63,48 @@ const doSetDetail = useCallback(teacher => {
   dispatch({...setTeacherDetail(teacher),...{backPage:'/tabs/teacher/query'}});
 },[dispatch]);
 useEffect(() => { 
-  fetch(paramStr, {
-    method: 'GET',
-  /* `teacher` is a property of `Lesson` */
-    headers: {
-      'Content-type': 'application/json;charset=UTF-8',
-    },
-  }).then(res => res.json())
-  .then((json) => {
-  const {TeacherList} = json //todo
+  // fetch(paramStr, {
+  //   method: 'GET',
+  //   headers: {
+  //     'Content-type': 'application/json;charset=UTF-8',
+  //   },
+  // }).then(res => res.json())
+  // .then((json) => {
+  // const {TeacherList} = json 
   
-  refreshList(demoTeacherList.filter((teacher:Teacher)=>teacher.teacherName.indexOf(queryInfo.teacherName)>-1))
-  return 
-  })
-},[queryInfo.teacherName, paramStr, refreshList]);
+  // refreshList(demoTeacherList.filter((teacher:Teacher)=>teacher.teacherName.indexOf(queryInfo.teacherName)>-1))
+  // return 
+  // })
+
+  refreshList(demoTeacherList)
+},[refreshList]);
+
+const onQuery = ()=>{
+  // fetch(paramStr, {
+  //   method: 'GET',
+  //   headers: {
+  //     'Content-type': 'application/json;charset=UTF-8',
+  //   },
+  // }).then(res => res.json())
+  // .then((json) => {
+  // const {TeacherList} = json 
+  
+  // refreshList(demoTeacherList.filter((teacher:Teacher)=>teacher.teacherName.indexOf(queryInfo.teacherName)>-1))
+  // return 
+  // })
+    refreshList(demoTeacherList.filter((teacher:Teacher)=>teacher.teacherName.indexOf(queryInfo.teacherName)>-1))
+    return 
+  }
+
+
 const ListEntry = ({ teacher,key, ...props } : {teacher:Teacher,key:any}) => (
   <IonItem key={key} >
+    <IonLabel>
+      <p  className='text-center'>{teacher.eduName}</p>
+    </IonLabel>
+    <IonLabel>
+      <p  className='text-center'>{teacher.eduName}</p>
+    </IonLabel>
     <IonLabel>
       <p  className='text-center'>{teacher.teacherName}</p>
     </IonLabel>
@@ -106,14 +132,20 @@ const ListEntry = ({ teacher,key, ...props } : {teacher:Teacher,key:any}) => (
                       <IonCol className='flex ml-8'>
                         <IonLabel className='flex h-12 p-2 font-bold text-center text-primary-600 w-28'>教育机构名称查询：</IonLabel>
                         <input type='text' className="flex w-56 h-12 pt-2.5 font-bold text-center text-primary-600 bg-white rounded-md focus:outline-none focus:glow-secondary-500" onChange={e=>setQueryInfo({...queryInfo,...{eduName:e.target.value}})} />
-                      </IonCol>   
+                      </IonCol>
+                      <IonCol className='flex ml-8'> 
+                        <button onClick={()=>onQuery()} >查询</button>
+                      </IonCol>
                 </IonRow>
                 </div>
               <div className='absolute w-full mt-10'>
                 <IonList>
                   <IonItem key='title'>
                     <IonLabel> 
-                      <div className='font-black text-center'>教师名称</div>
+                      <div className='font-black text-center'>所属机构</div>
+                    </IonLabel>
+                    <IonLabel> 
+                      <div className='font-black text-center'>教师姓名</div>
                     </IonLabel>
                     <IonLabel>
                       <div className='font-black text-center'>专业领域</div>
@@ -122,7 +154,7 @@ const ListEntry = ({ teacher,key, ...props } : {teacher:Teacher,key:any}) => (
                       <div className='font-black text-center'>从业经历</div>
                     </IonLabel>
                     <IonLabel>
-                      <div className='font-black text-center'>注册日期</div>
+                      <div className='font-black text-center'>日期</div>
                     </IonLabel>
                     <IonLabel>
                       <div className='font-black text-center'>操作</div>

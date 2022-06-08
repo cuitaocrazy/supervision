@@ -60,7 +60,8 @@ const initialState = {
   },
   eduOrg:{//教育机构
     eduOrgList:[],
-    eduOrgDetail:null
+    eduOrgDetail:null,
+    eduOrgEdit:null,
   },
   announcement:{//公告
     announcementList:[],
@@ -156,7 +157,7 @@ export const setAttendanceList = (attendanceList:Attendance[]) => {
     attendanceList:attendanceList
   }
 }
-export const setAttendanceDetail = (attendanceDetail:Attendance) => {
+export const setAttendanceDetail = (attendanceDetail?:Attendance) => {
   return {
     type: 'setAttendanceDetail',
     attendanceDetail:attendanceDetail
@@ -186,18 +187,36 @@ export const setEduOrgDetail = (eduOrgDetail?:EduOrg) => {
     eduOrgDetail:eduOrgDetail
   }
 }
+export const setEduOrgEdit = (eduOrgDetail?:EduOrg) => {
+  return {
+    type: 'setEduOrgEdit',
+    eduOrgDetail:eduOrgDetail
+  }
+}
+
+
 export const setAnnouncementList = (announcementList:Announcement[]) => {
   return {
     type: 'setAnnouncementList',
     announcementList:announcementList
   }
 }
-export const setAnnouncementDetail = (announcementDetail:Announcement) => {
+export const setAnnouncementDetail = (announcementDetail?:Announcement) => {
   return {
     type: 'setAnnouncementDetail',
     announcementDetail:announcementDetail
   }
 }
+
+export const setAnnouncementEdit = (announcementEdit?:Announcement) => {
+  return {
+    type: 'setAnnouncementEdit',
+    announcementEdit:announcementEdit
+  }
+}
+
+
+
 export const setComplaintList = (complaintList:Complaint[]) => {
   return {
     type: 'setComplaintList',
@@ -237,6 +256,64 @@ export const reducer = (state: any, action: any) => {
       return {
         ...state,
         loginUser:action.loginUser
+      }
+    }
+    case 'setEduOrgList':{
+      return {
+        ...state,
+        eduOrg:{
+          ...state.eduOrg,
+          eduOrgList:action.eduOrgList
+        }
+      }
+    }
+    case 'setEduOrgDetail':{
+      return {
+        ...state,
+        eduOrg:{
+          ...state.eduOrg,
+          eduOrgDetail:action.eduOrgDetail
+        }
+      }
+    }
+    case 'setEduOrgEdit':{
+      return {
+        ...state,
+        eduOrg:{
+          ...state.eduOrg,
+          eduOrgEdit:action.eduOrgEdit
+        }
+      }
+    }
+
+    case 'setAnnouncementList':{
+      return {
+        ...state,
+        announcement:{
+          ...state.announcement,
+          announcementList:action.announcementList
+        },
+        backPage:action.backPage||state.backPage
+      }
+    }
+    case 'setAnnouncementDetail':{
+      return {
+        ...state,
+        announcement:{
+          ...state.announcement,
+          announcementDetail:action.announcementDetail
+        },
+        backPage:action.backPage||state.backPage
+      }
+    }
+    case 'setAnnouncementEdit':{
+      return {
+        ...state,
+        announcement:{
+          ...state.announcement,
+          announcementEdit:action.announcementEdit
+        },
+        backPage:action.backPage||state.backPage
       }
     }
     case 'setUserInfoList': {
@@ -334,11 +411,24 @@ export const reducer = (state: any, action: any) => {
         ...state,
         attendance:{
           attendanceList:state.attendance.attendanceList,
+          attendanceEdit:state.attendance.attendanceEdit,
           attendanceDetail:action.attendanceDetail
         },
         backPage:action.backPage||state.backPage
       }
     }
+
+    case 'setAttendanceEdit':{
+      return {
+          ...state,
+          attendance:{
+            attendanceList:state.attendance.attendanceList,
+            attendanceEdit:action.attendanceEdit,
+            attendanceDetail:state.attendance.attendanceDetail
+          },
+      }
+    }
+
     case 'setComplaintList':{
       return {
         ...state,
@@ -385,5 +475,7 @@ export const reducer = (state: any, action: any) => {
         backPage:action.backPage||state.backPage
       }
     }
+    default:
+      return state
   }
 }

@@ -76,7 +76,7 @@ const demoContractList:Contract[] = [
 
 const ContractQuery:React.FC = () => {
   const { state, dispatch } = useContext(AppContext);
-  const [queryInfo, setQueryInfo] = useState({eduName:'',lessonName:''})
+  const [queryInfo, setQueryInfo] = useState({eduName:'',lessonName:'',consumerName:''})
   const getParamStr = (params:any,url:string) =>{
     let result = '?'
     Object.keys(params).forEach(key => result = result+key+'='+params[key]+'&')
@@ -84,12 +84,27 @@ const ContractQuery:React.FC = () => {
   }
   const paramStr = getParamStr({
     eduName:queryInfo.eduName,
+    consumerName:queryInfo.consumerName,
+    lessonName:queryInfo.lessonName
  },queryURL)
  const refreshList = useCallback((eduOrgs:Contract[]) => {
   dispatch(setContractList(eduOrgs));
 },[dispatch]);
 const onDetail = (item:Contract)=>() => {
   doSetDetail(item)
+}
+const onQuery = ()=>{
+  fetch(paramStr, {
+    method: 'GET',
+    headers: {
+      'Content-type': 'application/json;charset=UTF-8',
+    },
+  }).then(res => res.json())
+  .then((json) => {
+  const {ContractList} = json 
+  
+  refreshList(demoContractList.filter((contract:Contract)=>contract.eduName.indexOf(queryInfo.eduName)>-1).filter((contract:Contract)=>contract.consumerName.indexOf(queryInfo.consumerName)>-1).filter((contract:Contract)=>contract.lessonName.indexOf(queryInfo.lessonName)>-1))
+  })
 }
 
 
@@ -98,20 +113,20 @@ const doSetDetail = useCallback(contract => {
   dispatch({...setContractDetail(contract),...{backPage:'/tabs/contract/query'}});
 },[dispatch]);
 useEffect(() => { 
-  fetch(paramStr, {
-    method: 'GET',
-  /* `teacher` is a property of `Lesson` */
-    headers: {
-      'Content-type': 'application/json;charset=UTF-8',
-    },
-  }).then(res => res.json())
-  .then((json) => {
-  const {ContractList} = json //todo
+  // fetch(paramStr, {
+  //   method: 'GET',
+  //   headers: {
+  //     'Content-type': 'application/json;charset=UTF-8',
+  //   },
+  // }).then(res => res.json())
+  // .then((json) => {
+  // const {ContractList} = json 
   
-  refreshList(demoContractList.filter((contract:Contract)=>contract.eduName.indexOf(queryInfo.eduName)>-1))
-  return 
-  })
-},[queryInfo.eduName, paramStr, refreshList]);
+  // refreshList(demoContractList.filter((contract:Contract)=>contract.eduName.indexOf(queryInfo.eduName)>-1))
+  // return 
+  // })
+  refreshList(demoContractList)
+},[]);
 const ListEntry = ({ contract,key, ...props } : {contract:Contract,key:any}) => (
   <IonItem key={key} >
     <IonLabel>
@@ -136,19 +151,32 @@ const ListEntry = ({ contract,key, ...props } : {contract:Contract,key:any}) => 
     </IonLabel>
   </IonItem>
   );
+
+  if(state.contract.contractDetail){
+    return <Redirect to="/tabs/contract/detail" />
+  }
   if(state.contract.contractDetail==null||state.contract.contractDetail==undefined){
     return   <IonPage >
                 <div className='relative'>
                 <div className='flex'>
                 <IonRow className='flex justify-between '>
                       <IonCol className='flex ml-8'>
-                        <IonLabel className='flex h-12 p-2 font-bold text-center text-primary-600 w-28'>教育机构名称查询：</IonLabel>
+                        <IonLabel className='flex h-12 p-2 font-bold text-center text-primary-600 w-28'>教育机构名称：</IonLabel>
                         <input type='text' className="flex w-56 h-12 pt-2.5 font-bold text-center text-primary-600 bg-white rounded-md focus:outline-none focus:glow-secondary-500" onChange={e=>setQueryInfo({...queryInfo,...{eduName:e.target.value}})} />
                       </IonCol>   
                       <IonCol className='flex ml-8'>
-                        <IonLabel className='flex h-12 p-2 font-bold text-center text-primary-600 w-28'>课程名称查询：</IonLabel>
+                        <IonLabel className='flex h-12 p-2 font-bold text-center text-primary-600 w-28'>课程名称：</IonLabel>
                         <input type='text' className="flex w-56 h-12 pt-2.5 font-bold text-center text-primary-600 bg-white rounded-md focus:outline-none focus:glow-secondary-500" onChange={e=>setQueryInfo({...queryInfo,...{lessonName:e.target.value}})} />
                       </IonCol>   
+                </IonRow>
+                <IonRow className='flex justify-between '>
+                      <IonCol className='flex ml-8'>
+                        <IonLabel className='flex h-12 p-2 font-bold text-center text-primary-600 w-28'>客户姓名</IonLabel>
+                        <input type='text' className="flex w-56 h-12 pt-2.5 font-bold text-center text-primary-600 bg-white rounded-md focus:outline-none focus:glow-secondary-500" onChange={e=>setQueryInfo({...queryInfo,...{consumerName:e.target.value}})} />
+                      </IonCol>   
+                      <IonCol className='flex ml-8'> 
+                        <button onClick={()=>onQuery()} >查询</button>
+                      </IonCol>
                 </IonRow>
                 </div>
               <div className='absolute w-full mt-10'>

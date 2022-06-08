@@ -15,11 +15,13 @@ export const CardExamples: React.FC = () => {
     setBack()
   }
   if(state.detail===undefined){
-    return <Redirect to="/tabs/query" />
+    return <Redirect to={state.backPage} />
   }
   const {SubscribeID,USVOrderNo,SubscribeDurationDays,TranAmt,USVOrgID,USVItemName,USVItemID,SubscribeStartDate} = state.detail
 
-
+  const onModify = ()=>() => {
+    setBack()
+  }
   
   return (
     <IonPage>
@@ -29,7 +31,9 @@ export const CardExamples: React.FC = () => {
         {/* <IonCardTitle className="mx-8 text-2xl text-gray-600">合约ID:{SubscribeID}</IonCardTitle> */}
       </IonCardHeader>
       <IonCardContent>
-      <table className='mx-8 mt-4'>
+      <form noValidate onSubmit={onModify}>
+        
+      {/* <table className='mx-8 mt-4'>
         <tr>
           <td className='flex gap-2 leading-6'>
               <div className='font-bold text-gray-600'>合约ID:</div>
@@ -79,7 +83,8 @@ export const CardExamples: React.FC = () => {
             <div className='text-gray-500'>{SubscribeDurationDays}</div>
             </td>
         </tr>
-     </table>
+     </table> */}
+     </form>
         <IonItem className="">
           <IonButton className="m-5 text-base " onClick={onBack()} fill="solid">返回</IonButton>
         </IonItem>

@@ -2,7 +2,7 @@
 import { useEffect,useCallback,useContext,useState } from 'react'
 import { Redirect } from 'react-router-dom';
 import {AppContext,setOrder,setDetail,setUSV} from '../../appState';
-import {Order} from '../../types/types'
+import {Contract} from '../../types/types'
 import {
   IonPage,
   IonList,
@@ -27,7 +27,7 @@ import { PickerColumn } from "@ionic/core";
 const cancelURL = 'http://localhost:3003/cancel'
 const completeURL = 'http://localhost:3003/complete'
 const queryURL = 'http://localhost:3003/query'
-const demoOrderList:Order[] = [
+const demoOrderList:Contract[] = [
   {"SubscribeID":"Edu1MSP-BankMSP-EdbMSP-123456","USVOrderNo":"123456","SubscribeDurationDays":365,"TranAmt":100,"USVOrgID":"Edu1MSP","USVItemID":"1","USVItemName":"系统架构师2020年下半年班","USVItemDesc":"系统架构师2021年下半年及2022年上半年有效的培训课程","BankID":"BankMSP","BankTranID":"0000001","BankTranDate":"20210929","BankTranTime":"100130","PayerRemark":"用于准备xx考试","PayerStub":"付款凭证","SVOrgID":"EdbMSP","SubscribeStartDate":"20211030"},
   {"SubscribeID":"Edu1MSP-BankMSP-EdbMSP-223456","USVOrderNo":"223456","SubscribeDurationDays":365,"TranAmt":100,"USVOrgID":"Edu1MSP","USVItemID":"1","USVItemName":"系统架构师2020年下半年班","USVItemDesc":"系统架构师2021年下半年及2022年上半年有效的培训课程","BankID":"BankMSP","BankTranID":"0000001","BankTranDate":"20210929","BankTranTime":"100130","PayerRemark":"用于准备xx考试","PayerStub":"付款凭证","SVOrgID":"EdbMSP","SubscribeStartDate":"20211030"},
   {"SubscribeID":"Edu1MSP-BankMSP-EdbMSP-323456","USVOrderNo":"323456","SubscribeDurationDays":365,"TranAmt":100,"USVOrgID":"Edu1MSP","USVItemID":"1","USVItemName":"系统架构师2020年下半年班","USVItemDesc":"系统架构师2021年下半年及2022年上半年有效的培训课程","BankID":"BankMSP","BankTranID":"0000001","BankTranDate":"20210929","BankTranTime":"100130","PayerRemark":"用于准备xx考试","PayerStub":"付款凭证","SVOrgID":"EdbMSP","SubscribeStartDate":"20211030"},
@@ -80,14 +80,14 @@ const USVQuery:React.FC =()=>{
     dispatch(setDetail(order));
   },[dispatch]);
 
-  const refreshOrderList = useCallback((orders:Order[]) => {
+  const refreshOrderList = useCallback((orders:Contract[]) => {
     dispatch(setOrder(orders));
   },[dispatch]);
   const refreshUSVList = useCallback((USVList:{USVOrgID:string,name:string}[]) => {
     dispatch(setUSV(USVList));
   },[dispatch]);
 
-  const onDetail = (item:Order)=>() => {
+  const onDetail = (item:Contract)=>() => {
     doSetDetail(item)
   }
 
@@ -97,7 +97,7 @@ const USVQuery:React.FC =()=>{
 
   
 
-  const ListEntry = ({ orderInfo,key, ...props } : {orderInfo:Order,key:any}) => (
+  const ListEntry = ({ orderInfo,key, ...props } : {orderInfo:Contract,key:any}) => (
     <IonItem key={key} >
       <IonLabel>
         <p  className='text-center'>{orderInfo.USVItemName}</p>
@@ -178,7 +178,7 @@ const USVQuery:React.FC =()=>{
                         <div className='font-black text-center'>操作</div>
                       </IonLabel>
                   </IonItem>
-                      {state.orderList.map((list:Order, i: any) => (
+                      {state.orderList.map((list:Contract, i: any) => (
                       <ListEntry orderInfo={list} key={i} />
                     ))}
                   </IonList>

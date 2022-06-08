@@ -9,11 +9,12 @@ import { PickerColumn } from "@ionic/core";
 
 
 export const LessonDetail: React.FC = () => {
+  console.log('LessonDetail')
   const modifyURL = 'http://localhost:3003/lesson/modifyURL'
   const { state, dispatch } = useContext(AppContext);
   // const {SubscribeDurationDays,TranAmt,USVOrgID,USVItemName,USVItemID,USVItemDesc,SubscribeStartDate,LessonType} = state.lessonDetail
 
-  const [lessonState, setLessonState] = useState(state.lessonDetail);
+  const [lessonState, setLessonState] = useState(state.lesson.lessonDetail);
   const [isPickOpen, setPickOpen] = useState(false);
   const setBack = useCallback(() => {
     dispatch(setLessonDetail(undefined));
@@ -21,7 +22,7 @@ export const LessonDetail: React.FC = () => {
   const onBack = ()=>() => {
     setBack()
   }
-  if(state.lessonDetail===undefined){
+  if(state.lesson.lessonDetail===undefined){
     return <Redirect to={state.backPage} />
   }
 

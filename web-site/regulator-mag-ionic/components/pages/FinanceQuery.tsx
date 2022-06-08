@@ -2,7 +2,7 @@
 import { useEffect,useCallback,useContext,useState } from 'react'
 import { Redirect } from 'react-router-dom';
 import {AppContext,setOrder,setDetail,setUSV} from '../../appState';
-import {Order} from '../../types/types'
+import {Contract} from '../../types/types'
 import {
   IonPage,
   IonList,
@@ -27,14 +27,13 @@ import { PickerColumn } from "@ionic/core";
 const cancelURL = 'http://localhost:3003/cancel'
 const completeURL = 'http://localhost:3003/complete'
 const queryURL = 'http://localhost:3003/query'
-const demoOrderList:Order[] = [
+const demoOrderList:Contract[] = [
   {"SubscribeID":"Edu1MSP-BankMSP-EdbMSP-123456","USVOrderNo":"123456","SubscribeDurationDays":365,"TranAmt":100,"USVOrgID":"Edu1MSP","USVItemID":"1","USVItemName":"系统架构师2020年下半年班","USVItemDesc":"系统架构师2021年下半年及2022年上半年有效的培训课程","BankID":"BankMSP","BankTranID":"0000001","BankTranDate":"20210929","BankTranTime":"100130","PayerRemark":"用于准备xx考试","PayerStub":"付款凭证","SVOrgID":"EdbMSP","SubscribeStartDate":"20211030"},
   {"SubscribeID":"Edu1MSP-BankMSP-EdbMSP-223456","USVOrderNo":"223456","SubscribeDurationDays":365,"TranAmt":100,"USVOrgID":"Edu1MSP","USVItemID":"1","USVItemName":"系统架构师2020年下半年班","USVItemDesc":"系统架构师2021年下半年及2022年上半年有效的培训课程","BankID":"BankMSP","BankTranID":"0000001","BankTranDate":"20210929","BankTranTime":"100130","PayerRemark":"用于准备xx考试","PayerStub":"付款凭证","SVOrgID":"EdbMSP","SubscribeStartDate":"20211030"},
   {"SubscribeID":"Edu1MSP-BankMSP-EdbMSP-323456","USVOrderNo":"323456","SubscribeDurationDays":365,"TranAmt":100,"USVOrgID":"Edu1MSP","USVItemID":"1","USVItemName":"系统架构师2020年下半年班","USVItemDesc":"系统架构师2021年下半年及2022年上半年有效的培训课程","BankID":"BankMSP","BankTranID":"0000001","BankTranDate":"20210929","BankTranTime":"100130","PayerRemark":"用于准备xx考试","PayerStub":"付款凭证","SVOrgID":"EdbMSP","SubscribeStartDate":"20211030"},
   {"SubscribeID":"Edu1MSP-BankMSP-EdbMSP-423456","USVOrderNo":"423456","SubscribeDurationDays":365,"TranAmt":100,"USVOrgID":"Edu1MSP","USVItemID":"1","USVItemName":"系统架构师2020年下半年班","USVItemDesc":"系统架构师2021年下半年及2022年上半年有效的培训课程","BankID":"BankMSP","BankTranID":"0000001","BankTranDate":"20210929","BankTranTime":"100130","PayerRemark":"用于准备xx考试","PayerStub":"付款凭证","SVOrgID":"EdbMSP","SubscribeStartDate":"20211030"},
   {"SubscribeID":"Edu1MSP-BankMSP-EdbMSP-523456","USVOrderNo":"523456","SubscribeDurationDays":365,"TranAmt":100,"USVOrgID":"Edu1MSP","USVItemID":"1","USVItemName":"系统架构师2020年下半年班","USVItemDesc":"系统架构师2021年下半年及2022年上半年有效的培训课程","BankID":"BankMSP","BankTranID":"0000001","BankTranDate":"20210929","BankTranTime":"100130","PayerRemark":"用于准备xx考试","PayerStub":"付款凭证","SVOrgID":"EdbMSP","SubscribeStartDate":"20211030"},
 ]
-
 const demoUSVList = [
   {USVOrgID:'Edu1MSP',name:'灵纳教育'},
   {USVOrgID:'Edu2MSP',name:'测试机构'}
@@ -44,6 +43,7 @@ const demoUSVList = [
 const FinanceQuery:React.FC =()=>{
 
   const { state, dispatch } = useContext(AppContext);
+  state.userInfo.userName
   const [queryInfo, setQueryInfo] = useState({SubscribeStartDate:'',USVOrgID:'',isOpen:false,USVOrgName:''});
   const getParamStr = (params:any,url:string) =>{
     let result = '?'
@@ -64,8 +64,11 @@ const FinanceQuery:React.FC =()=>{
     }).then(res => res.json())
     .then((json) => {
     const {orderList,USVList} = json
-    refreshOrderList(orderList.filter((order: { USVOrgID: string; })=>order.USVOrgID===queryInfo.USVOrgID||queryInfo.USVOrgID===''))
-    refreshUSVList(USVList)
+    // refreshOrderList(orderList.filter((order: { USVOrgID: string; })=>order.USVOrgID===queryInfo.USVOrgID||queryInfo.USVOrgID===''))
+    // refreshUSVList(USVList)
+    refreshOrderList(demoOrderList.filter((order:Contract)=>order.USVOrgID===queryInfo.USVOrgID||queryInfo.USVOrgID===''))
+    refreshUSVList(demoUSVList)    
+
     return 
     })
   },[queryInfo.USVOrgID, queryInfo.SubscribeStartDate])
@@ -76,17 +79,18 @@ const FinanceQuery:React.FC =()=>{
   } as PickerColumn;
 
   const doSetDetail = useCallback(order => {
-    dispatch(setDetail(order));
+    dispatch({...setDetail(order),...{backPage:'/tabs/financeQuery'}});
   },[dispatch]);
 
-  const refreshOrderList = useCallback((orders:Order[]) => {
+  const refreshOrderList = useCallback((orders:Contract[]) => {
+
     dispatch(setOrder(orders));
   },[dispatch]);
   const refreshUSVList = useCallback((USVList:{USVOrgID:string,name:string}[]) => {
     dispatch(setUSV(USVList));
   },[dispatch]);
 
-  const onCancel = (item:Order)=>() => {
+  const onCancel = (item:Contract)=>() => {
     fetch(cancelURL, {
       method: 'PUT',
       body: JSON.stringify({
@@ -101,12 +105,11 @@ const FinanceQuery:React.FC =()=>{
     })
   }
 
-  const onComplete = (item:Order)=>() => {
+  const onComplete = (item:Contract)=>() => {
     fetch(completeURL, {
       method: 'PUT',
       body: JSON.stringify({
         "SubscribeID":item.SubscribeID,
-
       }),
       headers: {
         'Content-type': 'application/json;charset=UTF-8',
@@ -117,7 +120,7 @@ const FinanceQuery:React.FC =()=>{
     })
   }
 
-  const onDetail = (item:Order)=>() => {
+  const onDetail = (item:Contract)=>() => {
     doSetDetail(item)
   }
 
@@ -127,7 +130,7 @@ const FinanceQuery:React.FC =()=>{
 
   
 
-  const ListEntry = ({ orderInfo,key, ...props } : {orderInfo:Order,key:any}) => (
+  const ListEntry = ({ orderInfo,key, ...props } : {orderInfo:Contract,key:any}) => (
     <IonItem key={key} >
       <IonLabel>
         <p className='text-center'>{orderInfo.USVOrgID}</p>
@@ -159,19 +162,18 @@ const FinanceQuery:React.FC =()=>{
       </IonLabel>
     </IonItem>
     );
-    
     if(state.detail==null||state.detail==undefined){
           return   <IonPage >
                       <div className='relative'>
                       <div className='flex'>
-                      <IonRow className='flex justify-between gap-10'>
+                      <IonRow className='flex justify-between '>
                         <IonCol className='flex ml-8'>
-                          <IonLabel className='flex h-12 p-2 font-bold text-center text-primary-600 w-28'>交易日期：</IonLabel>
-                          <IonDatetime className="flex w-56 h-12 pt-2.5 font-bold text-center text-primary-600 bg-white rounded-md" value={queryInfo.SubscribeStartDate} name='TranDate' displayFormat='YYYYMMDD' onIonChange={e=>{setQueryInfo({...queryInfo,...{SubscribeStartDate:e.detail.value!}})}}></IonDatetime>
+                          <IonLabel className='flex h-6 p-2 font-bold text-center text-primary-600 w-28'>交易日期：</IonLabel>
+                          <IonDatetime className="flex w-56 h-6 pt-2.5 font-bold text-center text-primary-600 bg-white rounded-md" value={queryInfo.SubscribeStartDate} name='TranDate' displayFormat='YYYYMMDD' onIonChange={e=>{setQueryInfo({...queryInfo,...{SubscribeStartDate:e.detail.value!}})}}></IonDatetime>
                         </IonCol>
                         <IonCol className="flex ml-8">
-                          <IonLabel className='flex h-12 p-2 font-bold text-center text-primary-600 w-28'>教育机构：</IonLabel>
-                          <IonLabel className='flex w-56 h-12 pt-2.5 pl-20 font-bold text-center text-primary-600 bg-white rounded-md' onClick={()=>setQueryInfo({...queryInfo,...{isOpen:!queryInfo.isOpen}})}>{queryInfo.USVOrgName}</IonLabel>
+                          <IonLabel className='flex h-6 p-2 font-bold text-center text-primary-600 w-28'>教育机构：</IonLabel>
+                          <IonLabel className='flex w-56 h-6 pt-2.5 pl-20 font-bold text-center text-primary-600 bg-white rounded-md' onClick={()=>setQueryInfo({...queryInfo,...{isOpen:!queryInfo.isOpen}})}>{queryInfo.USVOrgName}</IonLabel>
                           <IonPicker
                               isOpen={queryInfo.isOpen}
                               columns={[usvPickerColumn]}
@@ -201,6 +203,9 @@ const FinanceQuery:React.FC =()=>{
                       <IonList>
                         <IonItem key='title'>
                           <IonLabel> 
+                            <div className='font-black text-center'>教育机构名称ID</div>
+                          </IonLabel>
+                          <IonLabel> 
                             <div className='font-black text-center'>教育机构名称</div>
                           </IonLabel>
                           <IonLabel>
@@ -217,7 +222,7 @@ const FinanceQuery:React.FC =()=>{
                           </IonLabel>
                       </IonItem>
                           <div className=''>
-                          {state.orderList.map((list:Order, i: any) => (
+                          {state.orderList.map((list:Contract, i: any) => (
                           <ListEntry orderInfo={list} key={i} />
                         ))}
                           </div>
@@ -227,6 +232,7 @@ const FinanceQuery:React.FC =()=>{
             </IonPage>
          }
          else{
+          // <IonButton routerLink="/tabs/detail" color="light" expand="block">Signup</IonButton>
            return <Redirect to="/tabs/detail" />
          }
 

@@ -50,37 +50,17 @@ export const AnnouncementDetail: React.FC = () => {
       <form onSubmit={onModify}>
       <IonList>
       <IonLabel position="stacked" color="primary">发布者</IonLabel>
-      <IonInput name="announcementAnnouncer" type="text" value={announcementState.announcementAnnouncer} spellCheck={false} autocapitalize="off" onIonChange={e => setAnnouncementDetail({...announcementState,...{announcementAnnouncer:e.detail.value!}})} required>      </IonInput>
+      <IonInput name="announcementAnnouncer" type="text" value={announcementState.announcementAnnouncer} spellCheck={false} autocapitalize="off" readonly required>      </IonInput>
       <IonLabel position="stacked" color="primary">标题</IonLabel>
-              <IonInput name="supervisorPhone" type="text" value={announcementState.announcementTitle} spellCheck={false} autocapitalize="off" onIonChange={e => setAnnouncementDetail({...announcementState,...{announcementTitle:e.detail.value!}})} required>
+              <IonInput name="supervisorPhone" type="text" value={announcementState.announcementTitle} spellCheck={false} autocapitalize="off" readonly  required>
       </IonInput>
       <IonLabel position="stacked" color="primary">内容</IonLabel>
-              <IonInput name="announcementContent" type="text" value={announcementState.announcementContent} spellCheck={false} autocapitalize="off" onIonChange={e => setAnnouncementDetail({...announcementState,...{announcementContent:e.detail.value!}})} required>
+              <IonInput name="announcementContent" type="text" value={announcementState.announcementContent} spellCheck={false} autocapitalize="off" readonly required>
       </IonInput>
       <IonLabel position="stacked" color="primary">状态</IonLabel>
-      <IonPicker
-                              isOpen={isPickOpen}
-                              columns={[statueTypePickerColumn]}
-                              buttons={[
-                                {
-                                  text: "取消",
-                                  role: "cancel",
-                                  handler: value => {
-                                    setPickOpen(false);
-                                  }
-                                },
-                                {
-                                  text: "确认",
-                                  handler: value => { 
-                                    setPickOpen(false);
-                                    setAnnouncementDetail({...announcementState,...{announcementContent:value.statueTypePickerColumn.value}})
-                                  }
-                                }
-                              ]}
-                            ></IonPicker>
+      <IonInput name="announcementStatus" type="text" value={announcementState.announcementStatus} spellCheck={false} autocapitalize="off" readonly required></IonInput>
       </IonList>
       <IonItem className="">
-           <IonButton type="submit" expand="block">确认</IonButton>
           <IonButton className="m-5 text-base " onClick={onBack()} fill="solid">返回</IonButton>
         </IonItem>
      </form>

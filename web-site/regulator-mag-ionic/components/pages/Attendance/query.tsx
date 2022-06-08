@@ -20,7 +20,7 @@ const demoattendanceList:Attendance[] = [
     attendanceDate:'2020-01-01',
     attendanceTime:'00:00:00',
     attendanceType:'vaild',
-    attendanceLessionQuantity:'111',
+    attendanceLessionQuantity:111,
     eduId:'1',
     eduName:'教育机构1',
     lessonId:'1',
@@ -40,7 +40,7 @@ const demoattendanceList:Attendance[] = [
     attendanceDate:'2020-01-01',
     attendanceTime:'00:00:00',
     attendanceType:'vaild',
-    attendanceLessionQuantity:'111',
+    attendanceLessionQuantity:111,
     eduId:'1',
     eduName:'教育机构1',
     lessonId:'1',
@@ -83,20 +83,23 @@ const doSetDetail = useCallback(attendance => {
   dispatch({...setAttendanceDetail(attendance),...{backPage:'/tabs/attendance/query'}});
 },[dispatch]);
 useEffect(() => { 
-  fetch(paramStr, {
-    method: 'GET',
-  /* `teacher` is a property of `Lesson` */
-    headers: {
-      'Content-type': 'application/json;charset=UTF-8',
-    },
-  }).then(res => res.json())
-  .then((json) => {
-  const {attendanceList} = json //todo
+  // fetch(paramStr, {
+  //   method: 'GET',
+  //   headers: {
+  //     'Content-type': 'application/json;charset=UTF-8',
+  //   },
+  // }).then(res => res.json())
+  // .then((json) => {
+  // const {attendanceList} = json 
   
-  refreshList(demoattendanceList.filter((attendance:Attendance)=>attendance.consumerName.indexOf(queryInfo.consumerName)>-1).filter((attendance:Attendance)=>attendance.lessonName.indexOf(queryInfo.lessonName)>-1).filter((attendance:Attendance)=>attendance.consumerStuName.indexOf(queryInfo.consumerStuName)>-1))
-  return 
-  })
-},[queryInfo.consumerStuName,queryInfo.lessonName,queryInfo.consumerName, paramStr, refreshList]);
+  // refreshList(demoattendanceList.filter((attendance:Attendance)=>attendance.consumerName.indexOf(queryInfo.consumerName)>-1).filter((attendance:Attendance)=>attendance.lessonName.indexOf(queryInfo.lessonName)>-1).filter((attendance:Attendance)=>attendance.consumerStuName.indexOf(queryInfo.consumerStuName)>-1))
+  // return 
+  // })
+  refreshList(demoattendanceList)
+},[]);
+const onQuery = () => {
+  refreshList(demoattendanceList.filter((attendance:Attendance)=>attendance.consumerName.indexOf(queryInfo.consumerName)>-1).filter((attendance:Attendance)=>attendance.lessonName.indexOf(queryInfo.lessonName)>-1))
+}
 const ListEntry = ({ attendance,key, ...props } : {attendance:Attendance,key:any}) => (
   <IonItem key={key} >
     <IonLabel>
@@ -133,13 +136,18 @@ const ListEntry = ({ attendance,key, ...props } : {attendance:Attendance,key:any
                 <div className='flex'>
                 <IonRow className='flex justify-between '>
                       <IonCol className='flex ml-8'>
-                        <IonLabel className='flex h-12 p-2 font-bold text-center text-primary-600 w-28'>教育机构名称查询：</IonLabel>
-                        <input type='text' className="flex w-56 h-12 pt-2.5 font-bold text-center text-primary-600 bg-white rounded-md focus:outline-none focus:glow-secondary-500" onChange={e=>setQueryInfo({...queryInfo,...{eduName:e.target.value}})} />
+                        <IonLabel className='flex h-12 p-2 font-bold text-center text-primary-600 w-28'>客户姓名：</IonLabel>
+                        <input type='text' className="flex w-56 h-12 pt-2.5 font-bold text-center text-primary-600 bg-white rounded-md focus:outline-none focus:glow-secondary-500" onChange={e=>setQueryInfo({...queryInfo,...{consumerName:e.target.value}})} />
                       </IonCol>   
                       <IonCol className='flex ml-8'>
-                        <IonLabel className='flex h-12 p-2 font-bold text-center text-primary-600 w-28'>课程名称查询：</IonLabel>
+                        <IonLabel className='flex h-12 p-2 font-bold text-center text-primary-600 w-28'>课程名称：</IonLabel>
                         <input type='text' className="flex w-56 h-12 pt-2.5 font-bold text-center text-primary-600 bg-white rounded-md focus:outline-none focus:glow-secondary-500" onChange={e=>setQueryInfo({...queryInfo,...{lessonName:e.target.value}})} />
                       </IonCol>   
+                </IonRow>
+                <IonRow className='flex justify-between '>
+                    <IonCol className='flex ml-8' aria-colspan={2}> 
+                        <button onClick={()=>onQuery()} >查询</button>
+                    </IonCol>
                 </IonRow>
                 </div>
               <div className='absolute w-full mt-10'>

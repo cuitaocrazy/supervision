@@ -29,7 +29,7 @@ const demoLessonList:Lesson[] = [
     lessonStartTime: '00:00:00',
     lessonEndDate: '2021-01-01',
     lessonEndTime: '00:00:00',
-    lessonStatus: '未开始',
+    lessonStatus: 'pending',
     lessonCreateDate: '2020-01-01',
     lessonCreateTime: '00:00:00',
     lessonUpdateDate: '2020-01-01',
@@ -59,7 +59,7 @@ const demoLessonList:Lesson[] = [
           lessonStartTime: '00:00:00',
           lessonEndDate: '2021-01-01',
           lessonEndTime: '00:00:00',
-          lessonStatus: '未开始',
+          lessonStatus: 'on',
           lessonCreateDate: '2020-01-01',
           lessonCreateTime: '00:00:00',
           lessonUpdateDate: '2020-01-01',
@@ -119,15 +119,15 @@ const LessonQuery:React.FC =()=>{
   }
 
   const { state, dispatch } = useContext(AppContext);
-  const [queryInfo, setQueryInfo] = useState({lessonName:'',eduId:''})
+  const [queryInfo, setQueryInfo] = useState({lessonName:'',lessonStatus:null})
   const getParamStr = (params:any,url:string) =>{
     let result = '?'
     Object.keys(params).forEach(key => result = result+key+'='+params[key]+'&')
     return url+result
   }
   const paramStr = getParamStr({
-    lessonId: state.loginUser.role==='SV'?queryInfo.eduId:state.loginUser.orgId,
     lessonName:queryInfo.lessonName,
+    lessonStatus:queryInfo.lessonStatus,
   },queryURL)
 
   const refreshLessonList = useCallback((lessons:Lesson[]) => {
@@ -139,44 +139,82 @@ const LessonQuery:React.FC =()=>{
   }
 
   const doSetDetail = useCallback(lessons => {
-    dispatch({...setLessonDetail(lessons),...{backPage:'/tabs/lessonQuery'}});
+    dispatch({...setLessonDetail(lessons),...{backPage:'/tabs/lesson/query'}});
   },[dispatch]);
   useEffect(() => { 
-    fetch(paramStr, {
-      method: 'GET',
-      headers: {
-        'Content-type': 'application/json;charset=UTF-8',
-      },
-    }).then(res => res.json())
-    .then((json) => {
-    const {LessonList} = json //todo
-    refreshLessonList(demoLessonList.filter((lesson:Lesson)=>lesson.eduId===queryInfo.eduId||(lesson.eduId===state.loginUser.orgId&&state.loginUser.role==='Edu')).filter((lesson:Lesson)=>lesson.lessonName.indexOf(queryInfo.lessonName)>-1))
+    // fetch(paramStr, {
+    //   method: 'GET',
+    //   headers: {
+    //     'Content-type': 'application/json;charset=UTF-8',
+    //   },
+    // }).then(res => res.json())
+    // .then((json) => {
+    // const {LessonList} = json 
+    // refreshLessonList(demoLessonList.filter((lesson:Lesson)=>lesson.eduId===queryInfo.eduId||(lesson.eduId===state.loginUser.orgId&&state.loginUser.role==='Edu')).filter((lesson:Lesson)=>lesson.lessonName.indexOf(queryInfo.lessonName)>-1))
+    // return 
+    // })
+    refreshLessonList(demoLessonList)
     return 
-    })
-  },[queryInfo.eduId, queryInfo.lessonName, paramStr, refreshLessonList]);
+  },[]);
+  
+  const onQuery = ()=>{
+    refreshLessonList(demoLessonList.filter((lesson:Lesson)=>lesson.lessonName.indexOf(queryInfo.lessonName)>-1).filter((lesson:Lesson)=>queryInfo.lessonStatus==null||lesson.lessonStatus===queryInfo.lessonStatus))
+  }
+
+  const getStatus = (statusEnglish:any)=>{
+      if(statusEnglish==='pending'){
+        return '待审核'
+      }
+      if(statusEnglish==='reject'){
+        return '审核未通过'
+      }
+      if(statusEnglish==='on'){
+        return '上架'
+      }
+      if(statusEnglish==='off'){
+        return '下架'
+      }
+      return statusEnglish
+  }
+  
 
   const ListEntry = ({ lesson,key, ...props } : {lesson:Lesson,key:any}) => (
     <IonItem key={key} >
       <IonLabel>
-        <p className='text-center'>{lesson.eduId}</p>
+        <p className='text-center'>{lesson.edu.eduName}</p>
       </IonLabel>
       <IonLabel>
         <p  className='text-center'>{lesson.lessonName}</p>
       </IonLabel>
       <IonLabel>
-        <p  className='text-center'>{lesson.lessonTotalPrice}</p>
+        <p  className='text-center'>{lesson.lessonTotalPrice/lesson.lessonPerPrice}{'课时'}</p>
+      </IonLabel>
+      <IonLabel>
+        <p  className='text-center'>{lesson.lessonTotalPrice/100}</p>
+      </IonLabel>
+      <IonLabel>
+        <p  className='text-center'>{lesson.lessonStartDate}</p>
+      </IonLabel>
+      <IonLabel>
+        <p  className='text-center'>{lesson.lessonStartTime}</p>
+      </IonLabel>
+      <IonLabel>
+        <p  className='text-center'>{getStatus(lesson.lessonStatus)}</p>
       </IonLabel>
       <IonLabel>
          <div className='flex gap-2'>
-            <button className='p-1 text-white bg-blue-500 rounded-md' onClick={onCancel(lesson)}>删除</button> 
-            <button className='p-1 text-white bg-blue-500 rounded-md'  onClick={onDetail(lesson)}>详情</button>
-            <button className='p-1 text-white bg-blue-500 rounded-md'  onClick={onAttendance(lesson)}>签到</button>
+         <button className='p-1 text-white bg-blue-500 rounded-md'  onClick={onDetail(lesson)}>详情</button>
+            {lesson.lessonStatus==='on'?<button className='p-1 text-white bg-blue-500 rounded-md' onClick={onCancel(lesson)}>下架</button>:<></> }
+            {lesson.lessonStatus==='pending'?<button className='p-1 text-white bg-blue-500 rounded-md'  onClick={onAttendance(lesson)}>审核</button>:<></> }
          </div>
       </IonLabel>
     </IonItem>
     );
-    if(state.lesson.lessonDetail==null||state.lesson.lessonDetail==undefined){
-      return   <IonPage >
+    if(state.lesson.lessonDetail){
+      return <Redirect to="/tabs/lesson/detail" />
+    }
+
+    return   <IonPage >
                   <div className='relative'>
                   <div className='flex'>
                   <IonRow className='flex justify-between '>
@@ -190,13 +228,25 @@ const LessonQuery:React.FC =()=>{
                   <IonList>
                     <IonItem key='title'>
                       <IonLabel> 
-                        <div className='font-black text-center'>教育机构名称ID</div>
+                        <div className='font-black text-center'>教育机构名称</div>
                       </IonLabel>
                       <IonLabel>
-                        <div className='font-black text-center'>项目名称</div>
+                        <div className='font-black text-center'>课程名称</div>
                       </IonLabel>
                       <IonLabel>
-                        <div className='font-black text-center'>交易金额（单位分）</div>
+                        <div className='font-black text-center'>总课时</div>
+                      </IonLabel>
+                      <IonLabel>
+                        <div className='font-black text-center'>总价格</div>
+                      </IonLabel>
+                      <IonLabel>
+                        <div className='font-black text-center'>开课日期</div>
+                      </IonLabel>
+                      <IonLabel>
+                        <div className='font-black text-center'>结束日期</div>
+                      </IonLabel>
+                      <IonLabel>
+                        <div className='font-black text-center'>课程状态</div>
                       </IonLabel>
                       <IonLabel>
                         <div className='font-black text-center'>操作</div>
@@ -211,9 +261,6 @@ const LessonQuery:React.FC =()=>{
               </div> 
               </div>            
         </IonPage>
-     }
-     else{
-       return <Redirect to="/tabs/lesson/detail" />
-     }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
 }
 export default LessonQuery

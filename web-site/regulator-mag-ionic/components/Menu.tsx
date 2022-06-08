@@ -13,60 +13,34 @@ import {
   IonToolbar,
 } from '@ionic/react';
 import { useEffect, useState,useContext } from 'react';
-import {  flash } from 'ionicons/icons';
+import {  flash,arrowDown,arrowUp } from 'ionicons/icons';
 import Router from 'next/router'
 import {AppContext} from '../appState';
 
 const pages = [
-  {
-    title: '监管机构查询',
-    icon: flash,
-    url: '/tabs/query',
-    role: 'SV',
-  },
-  {
-    title: '教育机构明细查询',
-    icon: flash,
-    url: '/tabs/USVQuery',
-    role: 'USV',
-  },
-  {
-    title: '金融机构明细查询',
-    icon: flash,
-    url: '/tabs/financeQuery',
-    role: 'Finance',
-  },
-  {
-    title: '监管机构汇总',
-    icon: flash,
-    url: '/tabs/transum',
-    role: 'SV',
-  },
-  {
-    title: '消费者订单存根查询',
-    icon: flash,
-    url: '/tabs/ConsumerStubQuery',
-    role: 'Consumer',
-  },
-  {
-    title: '教育机构汇总查询',
-    icon: flash,
-    url: '/tabs/USVTranSumQuery',
-    role: 'USV',
-  },
-  {
-    title: '金融机构汇总查询',
-    icon: flash,
-    url: '/tabs/FianceTranSumQuery',
-    role: 'Finance',
-  },
+  // {
+  //   title: '基本信息维护',
+  //   item:[
+  //     {
+  //       title: '教育机构管理0',
+  //       icon: flash,
+  //       url: '/tabs/orgMag/query',
+  //     },
+  //     {
+  //       title: '教育机构管理1',
+  //       icon: flash,
+  //       url: '/tabs/orgMag/query',
+  //     },
+  //   ]
+  // },
 ];
-
-
 
 
 const Menu = () => {
   const [isDark, setIsDark] = useState(false);
+  const [baseInfoVisible, setBaseInfoVisible] = useState(false);
+  const [eduOrgMagVisible, setEduOrgMagVisible] = useState(false);
+  const [fundVisible, setFundVisible] = useState(false);
   const { state } = useContext(AppContext);
   const handleOpen = async () => {
     try {
@@ -85,11 +59,11 @@ const Menu = () => {
 
   useEffect(() => {
     setIsDark(window.matchMedia('(prefers-color-scheme: dark)').matches);
-  }, [state.userInfo.role]);
+  }, []);
 
 
   return (
-    <IonMenu hidden={state.userInfo.role===''&&false} side="start" contentId="main" onIonDidOpen={handleOpen} onIonDidClose={handleClose}>
+    <IonMenu hidden={false} side="start" contentId="main" onIonDidOpen={handleOpen} onIonDidClose={handleClose}>
       <IonHeader >
         <IonToolbar>
           <IonTitle className="text-center">教育资金监管管理端</IonTitle>
@@ -97,17 +71,104 @@ const Menu = () => {
       </IonHeader>
       <IonContent>
         <IonList >
-          {pages.filter((p)=>{
-              // return p.role===state.userInfo.role
-              return true
-          }).map((p, k) => (
-            <IonMenuToggle autoHide={false} key={k}>
-              <IonItem className="flex flex-row justify-center text-center" routerLink={p.url} routerDirection="none" detail={false} lines="none">
-                <IonIcon icon={p.icon} slot="start" />
-                <IonLabel className="font-bold">{p.title}</IonLabel>
+
+              <IonItem className="flex flex-row justify-center text-center" button onClick={()=>{
+                  setBaseInfoVisible(!baseInfoVisible)
+              }}>
+                <IonIcon slot="start" icon={'informationCircleOutline'}></IonIcon>
+                <IonLabel>基本信息维护</IonLabel>
+                <IonIcon
+                  slot="end"
+                  icon={baseInfoVisible ? arrowDown : arrowUp}
+                ></IonIcon>
               </IonItem>
+              <IonMenuToggle autoHide={!baseInfoVisible} key={'baseInfo'}>
+                <IonItem  className="flex flex-row justify-center text-center" routerLink={'/tabs'} routerDirection="none" detail={false} lines="none">
+                  <IonIcon icon={flash} slot="start" />
+                  <IonLabel className="font-bold">{'用户管理'}</IonLabel>
+                </IonItem>
+                <IonItem  className="flex flex-row justify-center text-center" routerLink={'/tabs'} routerDirection="none" detail={false} lines="none">
+                  <IonIcon icon={flash} slot="start" />
+                  <IonLabel className="font-bold">{'监管机构管理'}</IonLabel>
+                </IonItem>
+                <IonItem  className="flex flex-row justify-center text-center" routerLink={'/tabs'} routerDirection="none" detail={false} lines="none">
+                  <IonIcon icon={flash} slot="start" />
+                  <IonLabel className="font-bold">{'系统字典维护'}</IonLabel>
+                </IonItem>
+                <IonItem  className="flex flex-row justify-center text-center" routerLink={'/tabs'} routerDirection="none" detail={false} lines="none">
+                  <IonIcon icon={flash} slot="start" />
+                  <IonLabel className="font-bold">{'修改密码'}</IonLabel>
+                </IonItem>
             </IonMenuToggle>
-          ))}
+            <IonItem className="flex flex-row justify-center text-center" button onClick={()=>{
+                  setEduOrgMagVisible(!eduOrgMagVisible)
+              }}>
+                <IonLabel>教育机构管理</IonLabel>
+                <IonIcon
+                  slot="end"
+                  icon={eduOrgMagVisible ? arrowDown : arrowUp}
+                ></IonIcon>
+            </IonItem>
+            <IonMenuToggle autoHide={!eduOrgMagVisible} key={'eduMag'}>
+                <IonItem  className="flex flex-row justify-center text-center" routerLink={'/tabs/orgMag/query'} routerDirection="none" detail={false} lines="none">
+                  <IonIcon icon={flash} slot="start" />
+                  <IonLabel className="font-bold">{'教育机构管理'}</IonLabel>
+                </IonItem>
+                <IonItem  className="flex flex-row justify-center text-center" routerLink={'/tabs/teacher/query'} routerDirection="none" detail={false} lines="none">
+                  <IonIcon icon={flash} slot="start" />
+                  <IonLabel className="font-bold">{'查看教师信息'}</IonLabel>
+                </IonItem>
+                <IonItem  className="flex flex-row justify-center text-center" routerLink={'/tabs/lesson/query'} routerDirection="none" detail={false} lines="none">
+                  <IonIcon icon={flash} slot="start" />
+                  <IonLabel className="font-bold">{'课程管理'}</IonLabel>
+                </IonItem>
+                <IonItem  className="flex flex-row justify-center text-center" routerLink={'/tabs/announcement/query'} routerDirection="none" detail={false} lines="none">
+                  <IonIcon icon={flash} slot="start" />
+                  <IonLabel className="font-bold">{'政策公告'}</IonLabel>
+                </IonItem>
+                <IonItem  className="flex flex-row justify-center text-center" routerLink={'/tabs'} routerDirection="none" detail={false} lines="none">
+                  <IonIcon icon={flash} slot="start" />
+                  <IonLabel className="font-bold">{'黑名单管理'}</IonLabel>
+                </IonItem>
+            </IonMenuToggle>
+            <IonItem  className="flex flex-row justify-center text-center" routerLink={'/tabs/contract/query'} routerDirection="none" detail={false} lines="none">
+                  <IonIcon icon={flash} slot="start" />
+                  <IonLabel className="font-bold">{'合同管理'}</IonLabel>
+            </IonItem>
+            <IonItem  className="flex flex-row justify-center text-center" routerLink={'/tabs/attendance/query'} routerDirection="none" detail={false} lines="none">
+                  <IonIcon icon={flash} slot="start" />
+                  <IonLabel className="font-bold">{'考勤管理'}</IonLabel>
+            </IonItem>
+
+            <IonItem className="flex flex-row justify-center text-center" button onClick={()=>{
+                  setFundVisible(!fundVisible)
+              }}>
+                <IonLabel>资金管理</IonLabel>
+                <IonIcon
+                  slot="end"
+                  icon={fundVisible ? arrowDown : arrowUp}
+                ></IonIcon>
+            </IonItem>
+            <IonMenuToggle autoHide={!fundVisible} key={'fund'}>
+              <IonItem  className="flex flex-row justify-center text-center" routerLink={'/tabs/tranferManual/query'} routerDirection="none" detail={false} lines="none">
+                <IonLabel className="font-bold">{'手动划拨'}</IonLabel>
+              </IonItem>
+              <IonItem  className="flex flex-row justify-center text-center" routerLink={'/tabs/contractNego/query'} routerDirection="none" detail={false} lines="none">
+                <IonLabel className="font-bold">{'手动退课'}</IonLabel>
+              </IonItem>
+              <IonItem  className="flex flex-row justify-center text-center" routerLink={'/tabs/contractNego/query'} routerDirection="none" detail={false} lines="none">
+                <IonLabel className="font-bold">{'查看账户余额'}</IonLabel>
+              </IonItem>
+              <IonItem  className="flex flex-row justify-center text-center" routerLink={'/tabs/contractNego/query'} routerDirection="none" detail={false} lines="none">
+                <IonLabel className="font-bold">{'划拨清单'}</IonLabel>
+              </IonItem>
+            </IonMenuToggle>         
+            <IonItem  className="flex flex-row justify-center text-center" routerLink={'/tabs/complaint/query'} routerDirection="none" detail={false} lines="none">
+                  <IonIcon icon={flash} slot="start" />
+                  <IonLabel className="font-bold">{'投诉管理'}</IonLabel>
+            </IonItem>
+
+            
         </IonList>
       </IonContent> 
       <IonContent>

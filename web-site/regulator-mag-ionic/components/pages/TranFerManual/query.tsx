@@ -96,19 +96,18 @@ const doHandle = async (item:Transfer)=>() => {
   })
 }
 useEffect(() => { 
-  fetch(paramStr, {
-    method: 'GET',
-  /* `teacher` is a property of `Lesson` */
-    headers: {
-      'Content-type': 'application/json;charset=UTF-8',
-    },
-  }).then(res => res.json())
-  .then((json) => {
-  const {transferList} = json //todo
+  // fetch(paramStr, {
+  //   method: 'GET',
+  //   headers: {
+  //     'Content-type': 'application/json;charset=UTF-8',
+  //   },
+  // }).then(res => res.json())
+  // .then((json) => {
+  // const {transferList} = json 
   
-  return 
-  })
-},[ paramStr, refreshList]);
+  // return })
+  refreshList(demotransferList)
+},[]);
 const ListEntry = ({ transfer,key, ...props } : {transfer:Transfer,key:any}) => (
   <IonItem key={key} >
     <IonLabel>
