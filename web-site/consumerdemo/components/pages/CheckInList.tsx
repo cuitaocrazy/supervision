@@ -15,40 +15,40 @@ const CheckInList=()=>{
         {/* 签到信息card */}
         <div className='pl-2 mx-3 mt-3'>
           <div className='text-sm leading-7'>
-            <div className='inline text-green-500'>已签到</div>
-            <div className='inline pl-2 text-gray-500'>签到类型：</div>
-            <div className='inline pl-1 text-gray-500'>自动签到</div>
+            <span className='text-green-500 '>已签到</span>
+            <span className='pl-2 text-gray-500 '>签到类型：</span>
+            <span className='pl-1 text-gray-500 '>自动签到</span>
           </div>
           <div className='text-sm leading-7'>
-            <div className='inline '>少儿编程</div>
-            <div className='inline'>（张大宝）</div>
-            <div className='inline'>第</div>
-            <div className='inline'>12</div>
-            <div className='inline'>课</div>
+            <span>少儿编程</span>
+            <span>（张大宝）</span>
+            <span>第</span>
+            <span>12</span>
+            <span className='inline'>课</span>
           </div>
           <div className='leading-7'>
-            <div className='inline font-bold'>签到时间:</div>
-            <div className='inline font-bold'>08:21</div>
+            <span className='font-bold'>签到时间:</span>
+            <span className='font-bold'>08:21</span>
             <input className='inline px-2 ml-4 text-xs text-center border border-secondary-300 text-secondary-300 rounded-3xl' type="button" value="去协商" />
           </div>
         </div>
 
         <div className='pl-2 mx-3 mt-3'>
           <div className='text-sm leading-7'>
-            <div className='inline text-remind-500'>已请假</div>
-            <div className='inline pl-2 text-gray-500'>签到类型：</div>
-            <div className='inline pl-1 text-gray-500'>未签到</div>
+            <span className=' text-remind-500'>已请假</span>
+            <span className='pl-2 text-gray-500 '>签到类型：</span>
+            <span className='pl-1 text-gray-500 '>未签到</span>
           </div>
           <div className='text-sm leading-7'>
-            <div className='inline '>少儿编程</div>
-            <div className='inline'>（张大宝）</div>
-            <div className='inline'>第</div>
-            <div className='inline'>12</div>
-            <div className='inline'>课</div>
+            <span>少儿编程</span>
+            <span>（张大宝）</span>
+            <span>第</span>
+            <span>12</span>
+            <span className='inline'>课</span>
           </div>
           <div className='leading-7'>
-            <div className='inline font-bold'>签到时间:</div>
-            <div className='inline font-bold'>08:21</div>
+            <span className='font-bold'>签到时间:</span>
+            <span className='font-bold'>08:21</span>
             <input className='inline px-2 ml-4 text-xs text-center border border-secondary-300 text-secondary-300 rounded-3xl' type="button" value="去协商" />
           </div>
         </div>
