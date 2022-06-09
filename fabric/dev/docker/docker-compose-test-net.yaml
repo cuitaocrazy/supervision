@@ -11,7 +11,7 @@ networks:
 
 volumes:
   orderer.yadadev.com:
-  peer0.bank1.yadadev.com:
+  peer0.bank.yadadev.com:
   peer0.edb.yadadev.com:
   peer0.edu1.yadadev.com:
   peer0.edu2.yadadev.com:
@@ -60,8 +60,8 @@ services:
     networks:
       - test
 
-  peer0.bank1.yadadev.com:
-    container_name: peer0.bank1.yadadev.com
+  peer0.bank.yadadev.com:
+    container_name: peer0.bank.yadadev.com
     image: hyperledger/fabric-peer:latest
     labels:
       service: hyperledger-fabric
@@ -77,20 +77,20 @@ services:
       - CORE_PEER_TLS_KEY_FILE=/etc/hyperledger/fabric/tls/server.key
       - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/fabric/tls/ca.crt
       # Peer specific variables
-      - CORE_PEER_ID=peer0.bank1.yadadev.com
-      - CORE_PEER_ADDRESS=peer0.bank1.yadadev.com:7051
+      - CORE_PEER_ID=peer0.bank.yadadev.com
+      - CORE_PEER_ADDRESS=peer0.bank.yadadev.com:7051
       - CORE_PEER_LISTENADDRESS=0.0.0.0:7051
-      - CORE_PEER_CHAINCODEADDRESS=peer0.bank1.yadadev.com:7052
+      - CORE_PEER_CHAINCODEADDRESS=peer0.bank.yadadev.com:7052
       - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:7052
-      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.bank1.yadadev.com:7051
-      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.bank1.yadadev.com:7051
-      - CORE_PEER_LOCALMSPID=Bank1MSP
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.bank.yadadev.com:7051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.bank.yadadev.com:7051
+      - CORE_PEER_LOCALMSPID=BankMSP
       - CORE_OPERATIONS_LISTENADDRESS=0.0.0.0:17051
     volumes:
         - /var/run/docker.sock:/host/var/run/docker.sock
-        - ../organizations/peerOrganizations/bank1.yadadev.com/peers/peer0.bank1.yadadev.com/msp:/etc/hyperledger/fabric/msp
-        - ../organizations/peerOrganizations/bank1.yadadev.com/peers/peer0.bank1.yadadev.com/tls:/etc/hyperledger/fabric/tls
-        - peer0.bank1.yadadev.com:/var/hyperledger/production
+        - ../organizations/peerOrganizations/bank.yadadev.com/peers/peer0.bank.yadadev.com/msp:/etc/hyperledger/fabric/msp
+        - ../organizations/peerOrganizations/bank.yadadev.com/peers/peer0.bank.yadadev.com/tls:/etc/hyperledger/fabric/tls
+        - peer0.bank.yadadev.com:/var/hyperledger/production
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
     command: peer node start
     ports:
