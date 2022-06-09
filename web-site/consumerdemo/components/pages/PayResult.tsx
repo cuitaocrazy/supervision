@@ -8,6 +8,7 @@ type FormData = {
   name: string;
 }
 
+// 支付结果页面
 const PayResult=()=>{
   const { register, handleSubmit, formState: { errors } } = useForm<FormData>()
   const router = useRouter()

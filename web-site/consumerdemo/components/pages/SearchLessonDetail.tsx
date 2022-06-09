@@ -2,6 +2,7 @@ import React from 'react';
 import {IonPage,IonHeader,IonContent}from "@ionic/react"
 import {motion} from 'framer-motion'
 
+// 首页查询课程详情页面
 const SearchLessonDetail=()=>{
   return <IonPage>
     <IonHeader>

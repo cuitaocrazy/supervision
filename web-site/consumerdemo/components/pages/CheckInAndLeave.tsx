@@ -1,6 +1,7 @@
 import React from 'react';
 import { IonPage,IonHeader,IonContent } from '@ionic/react';
 
+// 签到和请假页面
 const CheckInAndLeave=()=>{
   return <IonPage>
     <IonHeader>

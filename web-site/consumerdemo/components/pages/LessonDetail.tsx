@@ -2,6 +2,7 @@ import React from 'react';
 import {IonPage,IonHeader,IonContent}from "@ionic/react"
 // import Schedule from '../Schedule'
 
+// 课程详情页面
 const LessonDetail=()=>{
   return <IonPage>
     <IonHeader>

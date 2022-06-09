@@ -8,6 +8,7 @@ type FormData = {
   name: string;
 }
 
+// 编辑学生信息页面
 const EditStuInfo=()=>{
   const { register, handleSubmit, formState: { errors } } = useForm<FormData>()
   const router = useRouter()

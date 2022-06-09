@@ -8,6 +8,7 @@ type FormData = {
   name: string;
 }
 
+// 首页
 const Home=()=>{
   const { register, handleSubmit, formState: { errors } } = useForm<FormData>()
   const router = useRouter()

@@ -2,6 +2,7 @@ import React from 'react'
 import { IonPage,IonContent,IonHeader } from '@ionic/react'
 import Calendar from '../Calendar'
 
+// 签到列表页面
 const CheckInList=()=>{
   return <IonPage>
     <IonHeader>
