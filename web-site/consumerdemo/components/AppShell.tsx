@@ -24,6 +24,7 @@ import CheckInAndLeave from './pages/CheckInAndLeave';
 import CheckInList from './pages/CheckInList'
 import FileComp from './pages/FileComp';
 import LessonEval from './pages/LessonEval';
+import PersonalCenter from './pages/PersonalCenter';
 
 import { AppContextProvider } from '../appState'
 
@@ -67,6 +68,7 @@ const AppShell = () => {
               <Route path="/checkInList" render={()=><CheckInList />} />
               <Route path="/fileComp" render={()=><FileComp />} />
               <Route path="/lessonEval" render={()=><LessonEval />} />
+              <Route path="/personalCenter" render={()=><PersonalCenter />} />
               <Route exact={true} path="/" render={() => <Redirect to="/tabs" />} />
             </IonRouterOutlet>
           </IonSplitPane>
