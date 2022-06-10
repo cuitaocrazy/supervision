@@ -47,6 +47,7 @@ const AddStuInfo=()=>{
                 <select className='w-full pl-2 mr-4 text-gray-800 border rounded-md'>
                   <option value="" selected >男</option>
                   <option value="">女</option>
+                  <option value="">保密</option>
                 </select>
               </div>
             </div>
