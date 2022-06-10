@@ -27,6 +27,7 @@ import LessonEval from './pages/LessonEval';
 import PersonalCenter from './pages/PersonalCenter';
 import NoticeInfoList from './pages/NoticeInfoList';
 import NoticeDetail from './pages/NoticeDetail';
+import CompList from './pages/CompList';
 import { AppContextProvider } from '../appState'
 
 // 装载ionic样式，ionic6 必须执行。
@@ -72,6 +73,7 @@ const AppShell = () => {
               <Route path="/personalCenter" render={()=><PersonalCenter />} />
               <Route path="/noticeInfoList" render={()=><NoticeInfoList />} />
               <Route path="/noticeDetail" render={()=><NoticeDetail />} />
+              <Route path="/compList" render={()=><CompList />} />
               <Route exact={true} path="/" render={() => <Redirect to="/tabs" />} />
             </IonRouterOutlet>
           </IonSplitPane>
