@@ -1,6 +1,7 @@
 import React from 'react'
 import { IonPage,IonHeader,IonContent } from '@ionic/react'
 
+// 公告详情
 const NoticeDetail=()=>{
   return <IonPage>
     <IonHeader>
