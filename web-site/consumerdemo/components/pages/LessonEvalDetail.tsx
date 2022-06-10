@@ -2,7 +2,7 @@ import React from 'react'
 import { IonPage,IonHeader,IonContent } from '@ionic/react'
 
 // 课程评价
-const LessonEval =()=>{
+const LessonEvalDetail =()=>{
   return <IonPage>
     <IonHeader>
       <div className='h-10 pt-2 font-medium text-center text-white bg-primary-600 margin-auto'>
@@ -81,4 +81,4 @@ const LessonEval =()=>{
   </IonPage>
 }
 
-export default LessonEval
+export default LessonEvalDetail
