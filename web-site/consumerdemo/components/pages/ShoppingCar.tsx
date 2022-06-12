@@ -3,6 +3,7 @@ import {IonPage,IonHeader,IonContent}from "@ionic/react"
 import {motion} from 'framer-motion'
 import {useRouter} from 'next/router'
 
+// 购物车页面
 const ShoppingCar=()=>{
   const router=useRouter();
   return <IonPage>

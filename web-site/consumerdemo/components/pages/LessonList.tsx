@@ -3,6 +3,7 @@ import {IonPage,IonHeader,IonContent}from "@ionic/react"
 import {motion} from 'framer-motion'
 import {useRouter} from 'next/router'
 
+// 课程列表页面
 const LessonList=()=>{
   const router = useRouter()
   return <IonPage>

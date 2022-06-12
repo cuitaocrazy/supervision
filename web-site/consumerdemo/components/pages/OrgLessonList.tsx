@@ -10,6 +10,7 @@ type Item = {
 const items: Item[] = [{ src: 'http://placekitten.com/g/200/300', text: 'a picture of a cat' },
 ];
 
+// 教育机构课程列表页面
 const OrgLessonList=()=>{
   const router = useRouter()
 

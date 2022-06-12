@@ -2,6 +2,8 @@ import { IonButton, IonContent, IonHeader, IonIcon, IonInput, IonItem, IonItemDi
 import { phonePortrait, mailOutline } from 'ionicons/icons';
 
 import styles from './Login.module.css';
+
+// 登录页面
 const Login = () => {
   return <IonPage>
     <IonHeader>

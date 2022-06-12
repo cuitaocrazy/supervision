@@ -35,9 +35,9 @@ setGlobals() {
   local PEER_NAME=''
   local PEER_PORT=0
   println "use env $USING_ORG"
-  if [ $USING_ORG == 'bank1' ]; then
-    PEER_MSP_ID="Bank1MSP"
-    PEER_NAME='bank1'
+  if [ $USING_ORG == 'bank' ]; then
+    PEER_MSP_ID="BankMSP"
+    PEER_NAME='bank'
     PEER_PORT=7051
   elif [ $USING_ORG == 'edb' ]; then
     PEER_MSP_ID="EdbMSP"

@@ -13,142 +13,141 @@
 #
 ################################################################################
 Organizations:
-
     # SampleOrg defines an MSP using the sampleconfig.  It should never be used
     # in production but may be used as a template for other definitions
     - &OrdererOrg
-        # DefaultOrg defines the organization which is used in the sampleconfig
-        # of the fabric.git development environment
-        Name: OrdererOrg
+      # DefaultOrg defines the organization which is used in the sampleconfig
+      # of the fabric.git development environment
+      Name: OrdererOrg
 
-        # ID to load the MSP definition as
-        ID: OrdererMSP
+      # ID to load the MSP definition as
+      ID: OrdererMSP
 
-        # MSPDir is the filesystem path which contains the MSP configuration
-        MSPDir: ../../../dev/organizations/ordererOrganizations/yadadev.com/orderers/orderer.yadadev.com/msp
+      # MSPDir is the filesystem path which contains the MSP configuration
+      MSPDir: ../../../dev/organizations/ordererOrganizations/yadadev.com/orderers/orderer.yadadev.com/msp
 
-        # Policies defines the set of policies at this level of the config tree
-        # For organization policies, their canonical path is usually
-        #   /Channel/<Application|Orderer>/<OrgName>/<PolicyName>
-        Policies:
-            Readers:
-                Type: Signature
-                Rule: "OR('OrdererMSP.member')"
-            Writers:
-                Type: Signature
-                Rule: "OR('OrdererMSP.member')"
-            Admins:
-                Type: Signature
-                Rule: "OR('OrdererMSP.admin')"
+      # Policies defines the set of policies at this level of the config tree
+      # For organization policies, their canonical path is usually
+      #   /Channel/<Application|Orderer>/<OrgName>/<PolicyName>
+      Policies:
+          Readers:
+              Type: Signature
+              Rule: "OR('OrdererMSP.member')"
+          Writers:
+              Type: Signature
+              Rule: "OR('OrdererMSP.member')"
+          Admins:
+              Type: Signature
+              Rule: "OR('OrdererMSP.admin')"
 
-        OrdererEndpoints:
-            - orderer.yadadev.com:7050
+      OrdererEndpoints:
+          - orderer.yadadev.com:7050
 
-    - &Bank1
-        # DefaultOrg defines the organization which is used in the sampleconfig
-        # of the fabric.git development environment
-        Name: Bank1MSP
+    - &Bank
+      # DefaultOrg defines the organization which is used in the sampleconfig
+      # of the fabric.git development environment
+      Name: BankMSP
 
-        # ID to load the MSP definition as
-        ID: Bank1MSP
+      # ID to load the MSP definition as
+      ID: BankMSP
 
-        MSPDir: ../../../dev/organizations/peerOrganizations/bank1.yadadev.com/peers/peer0.bank1.yadadev.com/msp
+      MSPDir: ../../../dev/organizations/peerOrganizations/bank.yadadev.com/peers/peer0.bank.yadadev.com/msp
 
-        # Policies defines the set of policies at this level of the config tree
-        # For organization policies, their canonical path is usually
-        #   /Channel/<Application|Orderer>/<OrgName>/<PolicyName>
-        Policies:
-            Readers:
-                Type: Signature
-                Rule: "OR('Bank1MSP.admin', 'Bank1MSP.peer', 'Bank1MSP.client')"
-            Writers:
-                Type: Signature
-                Rule: "OR('Bank1MSP.admin', 'Bank1MSP.client')"
-            Admins:
-                Type: Signature
-                Rule: "OR('Bank1MSP.admin')"
-            Endorsement:
-                Type: Signature
-                Rule: "OR('Bank1MSP.peer')"
+      # Policies defines the set of policies at this level of the config tree
+      # For organization policies, their canonical path is usually
+      #   /Channel/<Application|Orderer>/<OrgName>/<PolicyName>
+      Policies:
+          Readers:
+              Type: Signature
+              Rule: "OR('BankMSP.admin', 'BankMSP.peer', 'BankMSP.client')"
+          Writers:
+              Type: Signature
+              Rule: "OR('BankMSP.admin', 'BankMSP.client')"
+          Admins:
+              Type: Signature
+              Rule: "OR('BankMSP.admin')"
+          Endorsement:
+              Type: Signature
+              Rule: "OR('BankMSP.peer')"
 
     - &Edb
-        # DefaultOrg defines the organization which is used in the sampleconfig
-        # of the fabric.git development environment
-        Name: EdbMSP
+      # DefaultOrg defines the organization which is used in the sampleconfig
+      # of the fabric.git development environment
+      Name: EdbMSP
 
-        # ID to load the MSP definition as
-        ID: EdbMSP
+      # ID to load the MSP definition as
+      ID: EdbMSP
 
-        MSPDir: ../../../dev/organizations/peerOrganizations/edb.yadadev.com/peers/peer0.edb.yadadev.com/msp
+      MSPDir: ../../../dev/organizations/peerOrganizations/edb.yadadev.com/peers/peer0.edb.yadadev.com/msp
 
-        # Policies defines the set of policies at this level of the config tree
-        # For organization policies, their canonical path is usually
-        #   /Channel/<Application|Orderer>/<OrgName>/<PolicyName>
-        Policies:
-            Readers:
-                Type: Signature
-                Rule: "OR('EdbMSP.admin', 'EdbMSP.peer', 'EdbMSP.client')"
-            Writers:
-                Type: Signature
-                Rule: "OR('EdbMSP.admin', 'EdbMSP.client')"
-            Admins:
-                Type: Signature
-                Rule: "OR('EdbMSP.admin')"
-            Endorsement:
-                Type: Signature
-                Rule: "OR('EdbMSP.peer')"
+      # Policies defines the set of policies at this level of the config tree
+      # For organization policies, their canonical path is usually
+      #   /Channel/<Application|Orderer>/<OrgName>/<PolicyName>
+      Policies:
+          Readers:
+              Type: Signature
+              Rule: "OR('EdbMSP.admin', 'EdbMSP.peer', 'EdbMSP.client')"
+          Writers:
+              Type: Signature
+              Rule: "OR('EdbMSP.admin', 'EdbMSP.client')"
+          Admins:
+              Type: Signature
+              Rule: "OR('EdbMSP.admin')"
+          Endorsement:
+              Type: Signature
+              Rule: "OR('EdbMSP.peer')"
     - &Edu1
-        # DefaultOrg defines the organization which is used in the sampleconfig
-        # of the fabric.git development environment
-        Name: Edu1MSP
+      # DefaultOrg defines the organization which is used in the sampleconfig
+      # of the fabric.git development environment
+      Name: Edu1MSP
 
-        # ID to load the MSP definition as
-        ID: Edu1MSP
+      # ID to load the MSP definition as
+      ID: Edu1MSP
 
-        MSPDir: ../../../dev/organizations/peerOrganizations/edu1.yadadev.com/peers/peer0.edu1.yadadev.com/msp
+      MSPDir: ../../../dev/organizations/peerOrganizations/edu1.yadadev.com/peers/peer0.edu1.yadadev.com/msp
 
-        # Policies defines the set of policies at this level of the config tree
-        # For organization policies, their canonical path is usually
-        #   /Channel/<Application|Orderer>/<OrgName>/<PolicyName>
-        Policies:
-            Readers:
-                Type: Signature
-                Rule: "OR('Edu1MSP.admin', 'Edu1MSP.peer', 'Edu1MSP.client')"
-            Writers:
-                Type: Signature
-                Rule: "OR('Edu1MSP.admin', 'Edu1MSP.client')"
-            Admins:
-                Type: Signature
-                Rule: "OR('Edu1MSP.admin')"
-            Endorsement:
-                Type: Signature
-                Rule: "OR('Edu1MSP.peer')"
+      # Policies defines the set of policies at this level of the config tree
+      # For organization policies, their canonical path is usually
+      #   /Channel/<Application|Orderer>/<OrgName>/<PolicyName>
+      Policies:
+          Readers:
+              Type: Signature
+              Rule: "OR('Edu1MSP.admin', 'Edu1MSP.peer', 'Edu1MSP.client')"
+          Writers:
+              Type: Signature
+              Rule: "OR('Edu1MSP.admin', 'Edu1MSP.client')"
+          Admins:
+              Type: Signature
+              Rule: "OR('Edu1MSP.admin')"
+          Endorsement:
+              Type: Signature
+              Rule: "OR('Edu1MSP.peer')"
     - &Edu2
-        # DefaultOrg defines the organization which is used in the sampleconfig
-        # of the fabric.git development environment
-        Name: Edu2MSP
+      # DefaultOrg defines the organization which is used in the sampleconfig
+      # of the fabric.git development environment
+      Name: Edu2MSP
 
-        # ID to load the MSP definition as
-        ID: Edu2MSP
+      # ID to load the MSP definition as
+      ID: Edu2MSP
 
-        MSPDir: ../../../dev/organizations/peerOrganizations/edu2.yadadev.com/peers/peer0.edu2.yadadev.com/msp
+      MSPDir: ../../../dev/organizations/peerOrganizations/edu2.yadadev.com/peers/peer0.edu2.yadadev.com/msp
 
-        # Policies defines the set of policies at this level of the config tree
-        # For organization policies, their canonical path is usually
-        #   /Channel/<Application|Orderer>/<OrgName>/<PolicyName>
-        Policies:
-            Readers:
-                Type: Signature
-                Rule: "OR('Edu2MSP.admin', 'Edu2MSP.peer', 'Edu2MSP.client')"
-            Writers:
-                Type: Signature
-                Rule: "OR('Edu2MSP.admin', 'Edu2MSP.client')"
-            Admins:
-                Type: Signature
-                Rule: "OR('Edu2MSP.admin')"
-            Endorsement:
-                Type: Signature
-                Rule: "OR('Edu2MSP.peer')"
+      # Policies defines the set of policies at this level of the config tree
+      # For organization policies, their canonical path is usually
+      #   /Channel/<Application|Orderer>/<OrgName>/<PolicyName>
+      Policies:
+          Readers:
+              Type: Signature
+              Rule: "OR('Edu2MSP.admin', 'Edu2MSP.peer', 'Edu2MSP.client')"
+          Writers:
+              Type: Signature
+              Rule: "OR('Edu2MSP.admin', 'Edu2MSP.client')"
+          Admins:
+              Type: Signature
+              Rule: "OR('Edu2MSP.admin')"
+          Endorsement:
+              Type: Signature
+              Rule: "OR('Edu2MSP.peer')"
 
 ################################################################################
 #
@@ -215,7 +214,6 @@ Capabilities:
 #
 ################################################################################
 Application: &ApplicationDefaults
-
     # Organizations is the list of orgs which are defined as participants on
     # the application side of the network
     Organizations:
@@ -250,9 +248,7 @@ Application: &ApplicationDefaults
 #   genesis block for orderer related parameters
 #
 ################################################################################
-Orderer: &OrdererDefaults
-
-    # Orderer Type: The orderer implementation to start
+Orderer: &OrdererDefaults # Orderer Type: The orderer implementation to start
     OrdererType: etcdraft
     # Addresses used to be the list of orderer addresses that clients and peers
     # could connect to.  However, this does not allow clients to associate orderer
@@ -264,17 +260,16 @@ Orderer: &OrdererDefaults
 
     EtcdRaft:
         Consenters:
-        - Host: orderer.yadadev.com
-          Port: 7050
-          ClientTLSCert: ../../../dev/organizations/ordererOrganizations/yadadev.com/orderers/orderer.yadadev.com/tls/server.crt
-          ServerTLSCert: ../../../dev/organizations/ordererOrganizations/yadadev.com/orderers/orderer.yadadev.com/tls/server.crt
+            - Host: orderer.yadadev.com
+              Port: 7050
+              ClientTLSCert: ../../../dev/organizations/ordererOrganizations/yadadev.com/orderers/orderer.yadadev.com/tls/server.crt
+              ServerTLSCert: ../../../dev/organizations/ordererOrganizations/yadadev.com/orderers/orderer.yadadev.com/tls/server.crt
 
     # Batch Timeout: The amount of time to wait before creating a batch
     BatchTimeout: 2s
 
     # Batch Size: Controls the number of messages batched into a block
     BatchSize:
-
         # Max Message Count: The maximum number of messages to permit in a batch
         MaxMessageCount: 10
 
@@ -351,7 +346,6 @@ Channel: &ChannelDefaults
 #
 ################################################################################
 Profiles:
-
     YadaDevOrgsApplicationGenesis:
         <<: *ChannelDefaults
         Orderer:
@@ -362,7 +356,7 @@ Profiles:
         Application:
             <<: *ApplicationDefaults
             Organizations:
-                - *Bank1
+                - *Bank
                 - *Edb
                 - *Edu1
                 - *Edu2

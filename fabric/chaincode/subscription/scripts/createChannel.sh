@@ -112,24 +112,24 @@ if [[ $? -eq 0 ]]; then
 else
 	# 渠道不存在，执行创建
 	infoln "渠道 ${CHANNEL_NAME} 不存在，开始新建"
-	# createChannel
+	createChannel
 	successln "渠道 '$CHANNEL_NAME' 创建完毕"
 fi
 
-# # Join all the peers to the channel
-# infoln "Joining bank1 peer to the channel..."
-# joinChannel bank1
-# infoln "Joining edb peer to the channel..."
-# joinChannel edb
-# infoln "Joining edu1 peer to the channel..."
-# joinChannel edu1
-# infoln "Joining edu2 peer to the channel..."
-# joinChannel edu2
+# Join all the peers to the channel
+infoln "Joining bank peer to the channel..."
+joinChannel bank
+infoln "Joining edb peer to the channel..."
+joinChannel edb
+infoln "Joining edu1 peer to the channel..."
+joinChannel edu1
+infoln "Joining edu2 peer to the channel..."
+joinChannel edu2
 
-# ## Set the anchor peers for each org in the channel
-# # infoln "Setting anchor peer for org1..."
-# # setAnchorPeer bank1
-# # infoln "Setting anchor peer for org2..."
-# # setAnchorPeer 2
+## Set the anchor peers for each org in the channel
+# infoln "Setting anchor peer for org1..."
+# setAnchorPeer bank
+# infoln "Setting anchor peer for org2..."
+# setAnchorPeer 2
 
-# successln "Channel '$CHANNEL_NAME' joined"
+successln "Channel '$CHANNEL_NAME' joined"

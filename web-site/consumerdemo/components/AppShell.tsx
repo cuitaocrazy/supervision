@@ -21,8 +21,15 @@ import LessonList from './pages/LessonList';
 import LessonDetail from './pages/LessonDetail';
 import RefoundLesson from './pages/RefundLesson';
 import CheckInAndLeave from './pages/CheckInAndLeave';
-
-
+import CheckInList from './pages/CheckInList'
+import FileComp from './pages/FileComp';
+import LessonEvalDetail from './pages/LessonEvalDetail';
+import PersonalCenter from './pages/PersonalCenter';
+import NoticeInfoList from './pages/NoticeInfoList';
+import NoticeDetail from './pages/NoticeDetail';
+import CompList from './pages/CompList';
+import CompDetail from './pages/CompDetail';
+import LessonEvalList from './pages/LessonEvalList';
 import { AppContextProvider } from '../appState'
 
 // 装载ionic样式，ionic6 必须执行。
@@ -62,6 +69,15 @@ const AppShell = () => {
               <Route path="/lessonDetail" render={()=><LessonDetail />} />
               <Route path="/refoundLesson" render={()=><RefoundLesson />} />
               <Route path="/checkInAndLeave" render={()=><CheckInAndLeave />} />
+              <Route path="/checkInList" render={()=><CheckInList />} />
+              <Route path="/fileComp" render={()=><FileComp />} />
+              <Route path="/lessonEvalDetail" render={()=><LessonEvalDetail />} />
+              <Route path="/personalCenter" render={()=><PersonalCenter />} />
+              <Route path="/noticeInfoList" render={()=><NoticeInfoList />} />
+              <Route path="/noticeDetail" render={()=><NoticeDetail />} />
+              <Route path="/compList" render={()=><CompList />} />
+              <Route path="/compDetail" render={()=><CompDetail />} />
+              <Route path="/lessonEvalList" render={()=><LessonEvalList />} />
               <Route exact={true} path="/" render={() => <Redirect to="/tabs" />} />
             </IonRouterOutlet>
           </IonSplitPane>
