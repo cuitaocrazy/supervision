@@ -69,13 +69,11 @@ export interface Lesson {
 }
 
 export interface Teacher {
-  eduName?:string,
   teacherId: string,
   teacherName: string,
   teacherIdentityNo?: string,
   teacherExperience?: number,
   teacherIntroduce?: string,
-  teacherField?:string,
   teacherRating?: number,
   teacherCreatedDate?: string,
   teacherUpdatedDate?: string,
@@ -89,7 +87,7 @@ export interface Attendance{
   attendanceDate:string,
   attendanceTime:string,
   attendanceType:string,
-  attendanceLessionQuantity:number,
+  attendanceLessionQuantity:string,
   contractId:string,
   eduId:string,
   eduName:string,

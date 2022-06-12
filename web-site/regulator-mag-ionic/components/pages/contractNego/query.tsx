@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { useEffect,useCallback,useContext
  } from 'react'
-import { IonPage, IonRow,IonCol,IonCard,IonRadioGroup,IonRadio, IonCardHeader, IonCardSubtitle,IonLabel,IonInput, IonCardContent,IonItem,IonButton,IonList,IonDatetime,IonPicker } from '@ionic/react';
+import { IonPage, IonModal,IonRow,IonCol,IonCard,IonRadioGroup,IonRadio, IonCardHeader, IonCardSubtitle,IonLabel,IonInput, IonCardContent,IonItem,IonButton,IonList,IonDatetime,IonPicker } from '@ionic/react';
 import { Redirect } from 'react-router-dom';
 import {AppContext,setContractNegoList,setContractNegoDetail} from '../../../appState';
 import {ContractNego} from '../../../types/types'
@@ -66,6 +66,8 @@ const democontractNegoList:ContractNego[] = [
 const ContractNegoQuery:React.FC = () => {
   const { state, dispatch } = useContext(AppContext);
   const [queryInfo, setQueryInfo] = useState({contractId:'',orderId:''})
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [detail,setDetail]= useState({} as ContractNego);
   const getParamStr = (params:any,url:string) =>{
     let result = '?'
     Object.keys(params).forEach(key => result = result+key+'='+params[key]+'&')
@@ -79,7 +81,14 @@ const ContractNegoQuery:React.FC = () => {
   dispatch(setContractNegoList(eduOrgs));
 },[dispatch]);
 const onDetail = (item:ContractNego)=>() => {
-  doSetDetail(item)
+  setDetail(item);
+  setIsModalOpen(true);
+  
+  // doSetDetail(item)
+}
+
+const onManual =()=>{
+  console.log('提交')
 }
 
 
@@ -88,20 +97,37 @@ const doSetDetail = useCallback(contractNego => {
   dispatch({...setContractNegoDetail(contractNego),...{backPage:'/tabs/contractNego/query'}});
 },[dispatch]);
 useEffect(() => { 
-  fetch(paramStr, {
-    method: 'GET',
-  /* `teacher` is a property of `Lesson` */
-    headers: {
-      'Content-type': 'application/json;charset=UTF-8',
-    },
-  }).then(res => res.json())
-  .then((json) => {
-  const {contractNegoList} = json //todo
+  // fetch(paramStr, {
+  //   method: 'GET',
+  //   headers: {
+  //     'Content-type': 'application/json;charset=UTF-8',
+  //   },
+  // }).then(res => res.json())
+  // .then((json) => {
+  // const {contractNegoList} = json 
   
+  // refreshList(democontractNegoList.filter((contractNego:ContractNego)=>contractNego.contractId.indexOf(queryInfo.contractId)>-1))
+  // return 
+  // })
+  refreshList(democontractNegoList)
+},[]);
+
+const onQuery = () => {
+    // fetch(paramStr, {
+  //   method: 'GET',
+  //   headers: {
+  //     'Content-type': 'application/json;charset=UTF-8',
+  //   },
+  // }).then(res => res.json())
+  // .then((json) => {
+  // const {contractNegoList} = json 
+  
+  // refreshList(democontractNegoList.filter((contractNego:ContractNego)=>contractNego.contractId.indexOf(queryInfo.contractId)>-1))
+  // return 
+  // })
   refreshList(democontractNegoList.filter((contractNego:ContractNego)=>contractNego.contractId.indexOf(queryInfo.contractId)>-1))
-  return 
-  })
-},[queryInfo.contractId,queryInfo.orderId, paramStr, refreshList]);
+}
+
 const ListEntry = ({ contractNego,key, ...props } : {contractNego:ContractNego,key:any}) => (
   <IonItem key={key} >
     <IonLabel>
@@ -126,21 +152,90 @@ const ListEntry = ({ contractNego,key, ...props } : {contractNego:ContractNego,k
     </IonLabel>
   </IonItem>
   );
-  if(state.contractNego.contractNegoDetail==null||state.contractNego.contractNegoDetail==undefined){
+  
     return   <IonPage >
                 <div className='relative'>
                 <div className='flex'>
                 <IonRow className='flex justify-between '>
                       <IonCol className='flex ml-8'>
-                        <IonLabel className='flex h-12 p-2 font-bold text-center text-primary-600 w-28'>教育机构名称查询：</IonLabel>
-                        <input type='text' className="flex w-56 h-12 pt-2.5 font-bold text-center text-primary-600 bg-white rounded-md focus:outline-none focus:glow-secondary-500" onChange={e=>setQueryInfo({...queryInfo,...{eduName:e.target.value}})} />
-                      </IonCol>   
+                        <IonLabel className='flex h-12 p-2 font-bold text-center text-primary-600 w-28'>合同ID</IonLabel>
+                        <input type='text' className="flex w-56 h-12 pt-2.5 font-bold text-center text-primary-600 bg-white rounded-md focus:outline-none focus:glow-secondary-500" onChange={e=>setQueryInfo({...queryInfo,...{contractId:e.target.value}})} />
+                      </IonCol>     
                       <IonCol className='flex ml-8'>
-                        <IonLabel className='flex h-12 p-2 font-bold text-center text-primary-600 w-28'>课程名称查询：</IonLabel>
-                        <input type='text' className="flex w-56 h-12 pt-2.5 font-bold text-center text-primary-600 bg-white rounded-md focus:outline-none focus:glow-secondary-500" onChange={e=>setQueryInfo({...queryInfo,...{lessonName:e.target.value}})} />
-                      </IonCol>   
+                          <button onClick={()=>{onQuery()}}>查询</button>
+                        </IonCol>  
                 </IonRow>
                 </div>
+                <IonModal isOpen={isModalOpen}>
+                        < IonCardContent>
+                          <form onSubmit={onManual}>
+                              <IonList>
+                                <IonRow>
+                                  <IonCol>
+                                    <IonLabel>
+                                      <p  className='text-center'>教育机构名称：</p>
+                                    </IonLabel> 
+                                  </IonCol>
+                                  <IonCol>
+                                    <IonLabel>
+                                      <p  className='text-center'>{detail.contract?.eduName}</p>
+                                    </IonLabel> 
+                                  </IonCol>
+                                </IonRow>
+                                <IonRow>
+                                  <IonCol>
+                                    <IonLabel>
+                                      <p  className='text-center'>课程名称：</p>
+                                    </IonLabel> 
+                                  </IonCol>
+                                  <IonCol>
+                                    <IonLabel>
+                                      <p  className='text-center'>{detail.contract?.lessonName}</p>
+                                    </IonLabel> 
+                                  </IonCol>
+                                  </IonRow>
+                                  <IonRow>
+                                    <IonCol>
+                                      <IonLabel>
+                                        <p  className='text-center'>划拨金额：</p>
+                                      </IonLabel> 
+                                    </IonCol>
+                                    <IonCol>
+                                      <IonLabel>
+                                        <p  className='text-center'></p>
+                                      </IonLabel> 
+                                    </IonCol>
+                                  </IonRow>
+                                  <IonRow>
+                                    <IonCol>
+                                      <IonLabel>
+                                        <p  className='text-center'>退款金额：</p>
+                                      </IonLabel> 
+                                    </IonCol>
+                                    <IonCol>
+                                      <IonLabel>
+                                        <p  className='text-center'></p>
+                                      </IonLabel> 
+                                    </IonCol>
+                                  </IonRow>
+                                  <IonRow>
+                                    <IonCol>
+                                      <IonLabel>
+                                       <button type='submit'>确认</button>
+                                      </IonLabel> 
+                                    </IonCol>
+                                    <IonCol>
+                                      <IonLabel>
+                                        <button onClick={()=>{setIsModalOpen(false)}}>取消</button>
+                                      </IonLabel> 
+                                    </IonCol>
+                                  </IonRow>                               
+                              </IonList>
+                              
+                              
+                          </form>
+                        </IonCardContent>
+                    </IonModal> 
               <div className='absolute w-full mt-10'>
                 <IonList>
                   <IonItem key='title'>
@@ -172,10 +267,6 @@ const ListEntry = ({ contractNego,key, ...props } : {contractNego:ContractNego,k
             </div> 
             </div>            
       </IonPage>
-   }
-   else{
-     return <Redirect to="/tabs/contractNegoList/detail" />
-   }  
 }
 export default ContractNegoQuery;
 

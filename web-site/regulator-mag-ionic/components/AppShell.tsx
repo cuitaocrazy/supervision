@@ -24,15 +24,21 @@ import {ContractDetail} from './pages/Contract/detail'
 import ContractNego from './pages/contractNego/query'
 import Lesson from './pages/lesson/Query'
 import LessonDetail from './pages/lesson/Detail'
-
-
 import OrgMag from './pages/orgMag/Query'
 import OrgMagDetail from './pages/orgMag/Detail'
 import OrgMagEdit from './pages/orgMag/Edit'
 import Teacher from './pages/Teacher/query'
 import Tranfer from './pages/TranFer/query'
+import TranferDetail from './pages/Tranfer/detail'
 import TranferManul from './pages/TranFerManual/query'
 import TeacherDetail from './pages/Teacher/Detail';
+import ComplaintDetail from './pages/Complaint/Detail';
+import Subject from './pages/statistics/Subject';
+import OrgSum from './pages/statistics/OrgSum';
+import Student from './pages/statistics/student';
+
+
+
 
 window.matchMedia("(prefers-color-scheme: dark)").addListener(async (status) => {
   try {
@@ -59,6 +65,7 @@ const AppShell = () => {
             {/* <Route path="/tabs" render={() => <Redirect to="/tabs/feed" />} exact={true} /> */}
             <Route path="/tabs/baseInfo/query" component={BaseInfo} exact={true} />
             <Route path="/tabs/complaint/query" component={Complaint} exact={true} />
+            <Route path="/tabs/complaint/detail" component={ComplaintDetail} exact={true} />
             <Route path="/tabs/contract/query" component={Contract} exact={true} />
             <Route path="/tabs/contract/detail" component={ContractDetail} exact={true} />
             <Route path="/tabs/contractNego/query" component={ContractNego} exact={true} />
@@ -69,8 +76,13 @@ const AppShell = () => {
             <Route path="/tabs/orgMag/edit" component={OrgMagEdit} exact={true} />
             <Route path="/tabs/teacher/query" component={Teacher} exact={true} />
             <Route path="/tabs/teacher/detail" component={TeacherDetail} exact={true} />
-            <Route path="/tabs/tranfer/query" component={Tranfer} exact={true} />
+            <Route path="/tabs/transfer/query" component={Tranfer} exact={true} />
+            <Route path="/tabs/transfer/detail" component={TranferDetail} exact={true} />
             <Route path="/tabs/tranferManual/query" component={TranferManul} exact={true} />
+            <Route path="/tabs/contractNego/query" component={ContractNego} exact={true} />
+            <Route path="/tabs/statistics/orgSum" component={OrgSum} exact={true} />
+            <Route path="/tabs/statistics/subject" component={Subject} exact={true} />
+            <Route path="/tabs/statistics/student" component={Student} exact={true} />
             <Route path="/login" render={() => <Login />} />
             <Route exact path="/" render={() => <Redirect to="/login" />} />
             </IonRouterOutlet>

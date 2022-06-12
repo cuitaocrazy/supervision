@@ -19,6 +19,7 @@ const handleTransfer = 'http://localhost:3003/attendannce/handleTransfer'
 
 const demotransferList:Transfer[] = [
   {
+    contractId:'1',
     transferId:'1',
     attendanceId:'1',
     attendanceDate:'2020-01-01',
@@ -39,6 +40,7 @@ const demotransferList:Transfer[] = [
     
   },
   {
+    contractId:'2',
     transferId:'2',
     attendanceId:'1',
     attendanceDate:'2020-01-01',
@@ -62,14 +64,18 @@ const demotransferList:Transfer[] = [
 
 const TransferQuery:React.FC = () => {
   const { state, dispatch } = useContext(AppContext);
-  const [queryInfo, setQueryInfo] = useState({})
+  const [queryInfo, setQueryInfo] = useState({consumerName:'',eduName:'',lessonName:''})
 
   const onDetail = (item:Transfer)=>() => {
     doSetDetail(item)
   }
+
+
+
   
-  const doSetDetail = useCallback(teacher => {
-    dispatch({...setTransferDetail(teacher),...{backPage:'/tabs/teacher/query'}});
+  
+  const doSetDetail = useCallback(item => {
+    dispatch({...setTransferDetail(item),...{backPage:'/tabs/tranfer/query'}});
   },[dispatch]);
   const getParamStr = (params:any,url:string) =>{
     let result = '?'
@@ -77,9 +83,9 @@ const TransferQuery:React.FC = () => {
     return url+result
   }
   const paramStr = getParamStr({
-    // consumerName:queryInfo.consumerName,
-    // lessonName:queryInfo.lessonName,
-    // consumerStuName:queryInfo.consumerStuName,
+    consumerName:queryInfo.consumerName,
+    lessonName:queryInfo.lessonName,
+    eduName:queryInfo.eduName,
  },queryURL)
  const refreshList = useCallback((eduOrgs:Transfer[]) => {
   dispatch(setTransferList(eduOrgs));
@@ -105,19 +111,34 @@ const doHandle = async (item:Transfer)=>() => {
   })
 }
 useEffect(() => { 
-  fetch(paramStr, {
-    method: 'GET',
-  /* `teacher` is a property of `Lesson` */
-    headers: {
-      'Content-type': 'application/json;charset=UTF-8',
-    },
-  }).then(res => res.json())
-  .then((json) => {
-  const {transferList} = json //todo
+  // fetch(paramStr, {
+  //   method: 'GET',
+  //   headers: {
+  //     'Content-type': 'application/json;charset=UTF-8',
+  //   },
+  // }).then(res => res.json())
+  // .then((json) => {
+  // const {transferList} = json 
   
-  return 
-  })
-},[ paramStr, refreshList]);
+  // return })
+  refreshList(demotransferList)
+},[]);
+console.log(state)
+
+const onQuery = ()=>{
+      // fetch(paramStr, {
+  //   method: 'GET',
+  //   headers: {
+  //     'Content-type': 'application/json;charset=UTF-8',
+  //   },
+  // }).then(res => res.json())
+  // .then((json) => {
+  // const {transferList} = json 
+  
+  // return })
+  refreshList(demotransferList.filter(item=>item.consumerName===queryInfo.consumerName).filter(item=>item.eduName===queryInfo.eduName).filter(item=>item.lessonName===queryInfo.lessonName))
+}
+
 const ListEntry = ({ transfer,key, ...props } : {transfer:Transfer,key:any}) => (
   <IonItem key={key} >
     <IonLabel>
@@ -140,7 +161,7 @@ const ListEntry = ({ transfer,key, ...props } : {transfer:Transfer,key:any}) => 
     </IonLabel>
     <IonLabel>
        <div className='flex gap-2'>
-          <button className='p-1 text-white bg-blue-500 rounded-md'  onClick={onDetail(transfer)}>手动划拨</button>
+          <button className='p-1 text-white bg-blue-500 rounded-md'  onClick={onDetail(transfer)}>查看详情</button>
        </div>
     </IonLabel>
   </IonItem>
@@ -151,12 +172,21 @@ const ListEntry = ({ transfer,key, ...props } : {transfer:Transfer,key:any}) => 
                 <div className='flex'>
                 <IonRow className='flex justify-between '>
                       <IonCol className='flex ml-8'>
+                        <IonLabel className='flex h-12 p-2 font-bold text-center text-primary-600 w-28'>客户姓名：</IonLabel>
+                        <input type='text' className="flex w-56 h-12 pt-2.5 font-bold text-center text-primary-600 bg-white rounded-md focus:outline-none focus:glow-secondary-500" onChange={e=>setQueryInfo({...queryInfo,...{eduName:e.target.value}})} />
+                      </IonCol>
+                      <IonCol className='flex ml-8'>
                         <IonLabel className='flex h-12 p-2 font-bold text-center text-primary-600 w-28'>教育机构名称查询：</IonLabel>
                         <input type='text' className="flex w-56 h-12 pt-2.5 font-bold text-center text-primary-600 bg-white rounded-md focus:outline-none focus:glow-secondary-500" onChange={e=>setQueryInfo({...queryInfo,...{eduName:e.target.value}})} />
-                      </IonCol>   
-                      <IonCol className='flex ml-8'>
+                      </IonCol>      
+                </IonRow>
+                <IonRow className='flex justify-between '>
+                <IonCol className='flex ml-8'>
                         <IonLabel className='flex h-12 p-2 font-bold text-center text-primary-600 w-28'>课程名称查询：</IonLabel>
                         <input type='text' className="flex w-56 h-12 pt-2.5 font-bold text-center text-primary-600 bg-white rounded-md focus:outline-none focus:glow-secondary-500" onChange={e=>setQueryInfo({...queryInfo,...{lessonName:e.target.value}})} />
+                      </IonCol>  
+                      <IonCol className='flex ml-8'>
+                        <button onClick={()=>onQuery()}>查询</button>
                       </IonCol>   
                 </IonRow>
                 </div>

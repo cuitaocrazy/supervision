@@ -1,7 +1,7 @@
 
 import { useEffect,useCallback,useContext,useState } from 'react'
 import { Redirect } from 'react-router-dom';
-import {AppContext,setTransferList,setTransferDetail} from '../../../appState';
+import {AppContext,setTransferManualList} from '../../../appState';
 import {Transfer} from '../../../types/types'
 import {
   IonPage,
@@ -10,6 +10,8 @@ import {
   IonItem,
   IonRow,
   IonCol,
+  IonModal,
+  IonCardContent
 } from '@ionic/react';
 
 const queryURL = 'http://localhost:3003/attendannce/query'
@@ -62,6 +64,8 @@ const demotransferList:Transfer[] = [
 const TransferManualQuery:React.FC = () => {
   const { state, dispatch } = useContext(AppContext);
   const [queryInfo, setQueryInfo] = useState({})
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [detail, setDetail] = useState({} as Transfer);
   const getParamStr = (params:any,url:string) =>{
     let result = '?'
     Object.keys(params).forEach(key => result = result+key+'='+params[key]+'&')
@@ -73,10 +77,12 @@ const TransferManualQuery:React.FC = () => {
     // consumerStuName:queryInfo.consumerStuName,
  },queryURL)
  const refreshList = useCallback((eduOrgs:Transfer[]) => {
-  dispatch(setTransferList(eduOrgs));
+  dispatch(setTransferManualList(eduOrgs));
 },[dispatch]);
 const onTransfer = (item:Transfer)=>() => {
-  doHandle(item)
+  setDetail(item);
+  setIsModalOpen(true);
+  // doHandle(item)
 }
 
 
@@ -95,6 +101,10 @@ const doHandle = async (item:Transfer)=>() => {
     alert(json.result)
   })
 }
+
+const onManual =()=>{
+  doHandle(detail)
+}
 useEffect(() => { 
   // fetch(paramStr, {
   //   method: 'GET',
@@ -108,6 +118,8 @@ useEffect(() => {
   // return })
   refreshList(demotransferList)
 },[]);
+
+
 const ListEntry = ({ transfer,key, ...props } : {transfer:Transfer,key:any}) => (
   <IonItem key={key} >
     <IonLabel>
@@ -135,22 +147,69 @@ const ListEntry = ({ transfer,key, ...props } : {transfer:Transfer,key:any}) => 
     </IonLabel>
   </IonItem>
   );
-  if(state.transfer.transferDetail==null||state.transfer.transferDetail==undefined){
-    return   <IonPage >
+  return   <IonPage >
                 <div className='relative'>
                 <div className='flex'>
-                <IonRow className='flex justify-between '>
-                      <IonCol className='flex ml-8'>
-                        <IonLabel className='flex h-12 p-2 font-bold text-center text-primary-600 w-28'>教育机构名称查询：</IonLabel>
-                        <input type='text' className="flex w-56 h-12 pt-2.5 font-bold text-center text-primary-600 bg-white rounded-md focus:outline-none focus:glow-secondary-500" onChange={e=>setQueryInfo({...queryInfo,...{eduName:e.target.value}})} />
-                      </IonCol>   
-                      <IonCol className='flex ml-8'>
-                        <IonLabel className='flex h-12 p-2 font-bold text-center text-primary-600 w-28'>课程名称查询：</IonLabel>
-                        <input type='text' className="flex w-56 h-12 pt-2.5 font-bold text-center text-primary-600 bg-white rounded-md focus:outline-none focus:glow-secondary-500" onChange={e=>setQueryInfo({...queryInfo,...{lessonName:e.target.value}})} />
-                      </IonCol>   
-                </IonRow>
                 </div>
               <div className='absolute w-full mt-10'>
+                    <IonModal isOpen={isModalOpen}>
+                        < IonCardContent>
+                          <form onSubmit={onManual}>
+                              <IonList>
+                                <IonRow>
+                                  <IonCol>
+                                    <IonLabel>
+                                      <p  className='text-center'>教育机构名称：</p>
+                                    </IonLabel> 
+                                  </IonCol>
+                                  <IonCol>
+                                    <IonLabel>
+                                      <p  className='text-center'>{detail.eduName}</p>
+                                    </IonLabel> 
+                                  </IonCol>
+                                </IonRow>
+                                <IonRow>
+                                  <IonCol>
+                                    <IonLabel>
+                                      <p  className='text-center'>课程名称：</p>
+                                    </IonLabel> 
+                                  </IonCol>
+                                  <IonCol>
+                                    <IonLabel>
+                                      <p  className='text-center'>{detail.lessonName}</p>
+                                    </IonLabel> 
+                                  </IonCol>
+                                  </IonRow>
+                                  <IonRow>
+                                    <IonCol>
+                                      <IonLabel>
+                                        <p  className='text-center'>划拨金额：</p>
+                                      </IonLabel> 
+                                    </IonCol>
+                                    <IonCol>
+                                      <IonLabel>
+                                        <p  className='text-center'>{detail.transferAmt/100}</p>
+                                      </IonLabel> 
+                                    </IonCol>
+                                  </IonRow>
+                                  <IonRow>
+                                    <IonCol>
+                                      <IonLabel>
+                                       <button type='submit'>确认</button>
+                                      </IonLabel> 
+                                    </IonCol>
+                                    <IonCol>
+                                      <IonLabel>
+                                        <button onClick={()=>{setIsModalOpen(false)}}>取消</button>
+                                      </IonLabel> 
+                                    </IonCol>
+                                  </IonRow>                               
+                              </IonList>
+                              
+                              
+                          </form>
+                        </IonCardContent>
+                    </IonModal> 
                 <IonList>
                   <IonItem key='title'>
                     <IonLabel> 
@@ -179,7 +238,7 @@ const ListEntry = ({ transfer,key, ...props } : {transfer:Transfer,key:any}) => 
                     </IonLabel>
                 </IonItem>
                     <div className=''>
-                    {state.transfer.transferList.map((list:Transfer, i: any) => (
+                    {state.transferManual.transferManualList.map((list:Transfer, i: any) => (
                     <ListEntry transfer={list}
                     key={i} />
                   ))}
@@ -188,10 +247,6 @@ const ListEntry = ({ transfer,key, ...props } : {transfer:Transfer,key:any}) => 
             </div> 
             </div>            
       </IonPage>
-   }
-   else{
-     return <Redirect to="/tabs/transferManual/detail" />
-   }  
 }
 export default TransferManualQuery;
 
