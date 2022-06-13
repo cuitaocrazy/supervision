@@ -1,7 +1,7 @@
 import React from 'react'
 import { IonPage,IonHeader,IonContent } from '@ionic/react'
 
-// 我的投诉
+// 我的投诉列表
 const CompList=()=>{
   return <IonPage>
     <IonHeader>
