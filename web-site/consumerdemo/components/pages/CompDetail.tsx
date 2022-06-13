@@ -1,6 +1,7 @@
 import React from 'react'
 import { IonPage,IonHeader,IonContent } from '@ionic/react'
 
+// 投诉详情
 const CompDetail =()=>{
   return <IonPage>
     <IonHeader>

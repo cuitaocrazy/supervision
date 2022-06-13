@@ -2,6 +2,7 @@ import React,{useState} from 'react'
 import { IonPage,IonHeader,IonContent } from '@ionic/react'
 import { useRouter } from 'next/router'
 
+// 修改密码
 export interface Pwd{
   oldPwd:string,
   NewPwd:string,
