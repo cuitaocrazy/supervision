@@ -90,13 +90,14 @@ const PersonalCenter=()=>{
               <div className='text-gray-500'>批量签到</div>
             </div>
 
-            <div className='flex flex-col items-center w-24 h-24 mt-4 bg-purple-100 rounded-md shadow-md justify-items-center shadow-purple-200'>
+            <a className='flex flex-col items-center w-24 h-24 mt-4 bg-purple-100 rounded-md shadow-md justify-items-center shadow-purple-200'
+               href="./autoCheckIn">
               {/* <motion.div key="2" className={'reactive ' } animate={{ scale: [1, 1.2, 1] }} transition={{ duration: 0.2 }}><span className="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full">2</span></motion.div> */}
-              <div className='mt-4'>
+              <p className='mt-4'>
               <svg className="w-10 h-10 text-purple-400"  viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <path d="M9 7 h-3a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-3" />  <path d="M9 15h3l8.5 -8.5a1.5 1.5 0 0 0 -3 -3l-8.5 8.5v3" />  <line x1="16" y1="5" x2="19" y2="8" /></svg>
-              </div>
-              <div className='text-gray-500'>自动签到</div>
-            </div>
+              </p>
+              <p className='text-gray-500'>自动签到</p>
+            </a>
 
             <div className='flex flex-col items-center w-24 h-24 mt-4 bg-orange-100 rounded-md shadow-md justify-items-center shadow-orange-200'>
               {/* <motion.div key="2" className={'reactive ' } animate={{ scale: [1, 1.2, 1] }} transition={{ duration: 0.2 }}><span className="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full">2</span></motion.div> */}
