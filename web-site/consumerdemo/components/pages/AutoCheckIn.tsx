@@ -12,7 +12,7 @@ const AutoCheckIn = () => {
     <IonContent>
       <div className='mx-3'>
         <div className='mt-3 rounded-lg shadow-md '>
-          <div className='grid grid-cols-3 mx-2 h-28 rounde-xl'>
+          <div className='grid h-24 grid-cols-3 mx-2 rounde-xl'>
             <img className='w-20 h-20 col-span-1 mt-2 ml-1 rounded-xl' src="http://placekitten.com/g/200/300"></img>
             <div className='flex flex-col col-span-2 mt-2 justify-items-start'>
               <p className='mt-2 text-sm'>思维逻辑小游戏</p>
@@ -32,7 +32,7 @@ const AutoCheckIn = () => {
         </div>
 
         <div className='mt-3 rounded-lg shadow-md'>
-          <div className='grid grid-cols-3 mx-2 h-28 rounde-xl'>
+          <div className='grid h-24 grid-cols-3 mx-2 rounde-xl'>
             <img className='w-20 h-20 col-span-1 mt-2 ml-1 rounded-xl' src="http://placekitten.com/g/200/300"></img>
             <div className='flex flex-col col-span-2 mt-2 justify-items-start'>
               <p className='mt-2 text-sm'>思维逻辑小游戏</p>
@@ -52,7 +52,7 @@ const AutoCheckIn = () => {
         </div>
 
         <div className='mt-3 rounded-lg shadow-md'>
-          <div className='grid grid-cols-3 mx-2 h-28 rounde-xl'>
+          <div className='grid h-24 grid-cols-3 mx-2 rounde-xl'>
             <img className='w-20 h-20 col-span-1 mt-2 ml-1 rounded-xl' src="http://placekitten.com/g/200/300"></img>
             <div className='flex flex-col col-span-2 mt-2 justify-items-start'>
               <p className='mt-2 text-sm'>思维逻辑小游戏</p>
@@ -72,7 +72,7 @@ const AutoCheckIn = () => {
         </div>
 
         <div className='mt-3 rounded-lg shadow-md'>
-          <div className='grid grid-cols-3 mx-2 h-28 rounde-xl'>
+          <div className='grid h-24 grid-cols-3 mx-2 rounde-xl'>
             <img className='w-20 h-20 col-span-1 mt-2 ml-1 rounded-xl' src="http://placekitten.com/g/200/300"></img>
             <div className='flex flex-col col-span-2 mt-2 justify-items-start'>
               <p className='mt-2 text-sm'>思维逻辑小游戏</p>
