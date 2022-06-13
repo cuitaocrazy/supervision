@@ -34,6 +34,7 @@ import EditPwd from './pages/EditPwd';
 import AutoCheckIn from './pages/AutoCheckIn';
 import BatchCheckIn from './pages/BatchCheckIn';
 import AllCheckInList from './pages/AllCheckInList';
+import PersonalInfo from './pages/PersonalInfo';
 import { AppContextProvider } from '../appState'
 
 // 装载ionic样式，ionic6 必须执行。
@@ -86,6 +87,7 @@ const AppShell = () => {
               <Route path="/autoCheckIn" render={()=><AutoCheckIn />} />
               <Route path="/batchCheckIn" render={()=><BatchCheckIn />} />
               <Route path="/allCheckInList" render={()=><AllCheckInList />} />
+              <Route path="/personalInfo" render={()=><PersonalInfo />} />
               <Route exact={true} path="/" render={() => <Redirect to="/tabs" />} />
             </IonRouterOutlet>
           </IonSplitPane>

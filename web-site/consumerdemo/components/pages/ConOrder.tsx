@@ -22,10 +22,10 @@ const ConOrder=()=>{
           <div className='h-full mx-3 bg-white'>
 
                   <div className='pt-3 ml-1 text-base font-bold text-gray-800'>
-                    请选择学员
+                    请选择学生
                   </div>
                   <div className='grid items-center grid-cols-2 py-3 pl-2 mt-3 text-base bg-white rounded-lg shadow-md'>
-                    <div className='items-center justify-center font-medium text-gray-700'>可新增或修改学员信息</div>
+                    <div className='items-center justify-center font-medium text-gray-700'>可新增或修改学生信息</div>
                     <a className='mr-2 cursor-pointer justify-self-end'  onClick={()=>{router.push("")}}>
                      <svg className="w-5 h-5 text-gray-500"  width="24" height="24" viewBox="0 0 24 24" strokeWidth="3" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <polyline points="9 6 15 12 9 18" /></svg>
                     </a>
@@ -35,8 +35,8 @@ const ConOrder=()=>{
                   <div className='pt-1 pb-2 mt-3 mb-3 bg-white rounded-lg shadow-md'>
                     <div className='mt-2 rounded-lg'>
                       <div className='py-2 pl-3 font-medium'>核桃编程培训机构</div>
-                      <div className='grid grid-cols-12 mx-2 rounded-lg h-28'>
-                          <img className='w-24 h-24 col-span-4 mt-2 ml-1 mr-2 rounded-xl' src="http://placekitten.com/g/200/300"></img>
+                      <div className='grid h-24 grid-cols-12 mx-2 rounded-lg'>
+                          <img className='w-20 h-20 col-span-4 mt-2 ml-1 mr-2 rounded-xl' src="http://placekitten.com/g/200/300"></img>
                         <div className='flex flex-col col-span-8 mt-5 mr-3 justify-items-start'>           
                             <div className='overflow-hidden text-sm font-medium tracking-wide text-ellipsis'>思维逻辑小游戏</div>
                         <div className='h-8 mt-2 overflow-hidden text-xs text-gray-500 text-ellipsis'>锻炼孩子动手能力，提高孩子思维能力，学习完课程可组装不同的形状</div>
@@ -44,10 +44,6 @@ const ConOrder=()=>{
                       </div>
                       {/* 培训信息 */}
                         <div className='mx-3 text-sm leading-6'>
-                          {/* <div className='flex items-center mb-1'>
-                            <div className='mr-2 text-center text-gray-500'>培训机构:</div>
-                            <div className='font-medium text-center text-gray-800'>核桃编程培训机构</div>
-                          </div> */}
                           <div className='flex items-center mb-1'>
                             <div className='mr-2 text-center text-gray-500'>培训课时:</div>
                             <div className='font-medium text-center text-gray-800'>58课时</div>
