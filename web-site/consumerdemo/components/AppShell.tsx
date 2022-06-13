@@ -31,6 +31,7 @@ import CompList from './pages/CompList';
 import CompDetail from './pages/CompDetail';
 import LessonEvalList from './pages/LessonEvalList';
 import EditPwd from './pages/EditPwd';
+import AutoCheckIn from './pages/AutoCheckIn';
 import { AppContextProvider } from '../appState'
 
 // 装载ionic样式，ionic6 必须执行。
@@ -80,6 +81,7 @@ const AppShell = () => {
               <Route path="/compDetail" render={()=><CompDetail />} />
               <Route path="/lessonEvalList" render={()=><LessonEvalList />} />
               <Route path="/editPwd" render={()=><EditPwd />} />
+              <Route path="/autoCheckIn" render={()=><AutoCheckIn />} />
               <Route exact={true} path="/" render={() => <Redirect to="/tabs" />} />
             </IonRouterOutlet>
           </IonSplitPane>
