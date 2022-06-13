@@ -2,8 +2,8 @@ import React from 'react'
 import { IonPage,IonContent,IonHeader } from '@ionic/react'
 import Calendar from '../Calendar'
 
-// 一门课程的签到列表页面
-const CheckInList=()=>{
+// 所有课程的签到列表页面
+const AllCheckInList=()=>{
   return <IonPage>
     <IonHeader>
       <div className='h-10 pt-2 font-medium text-center text-white bg-primary-600 margin-auto'>
@@ -41,8 +41,8 @@ const CheckInList=()=>{
             <span className='pl-1 text-gray-500 '>未签到</span>
           </div>
           <div className='text-sm leading-7'>
-            <span>少儿编程</span>
-            <span>（张大宝）</span>
+            <span>英语口语</span>
+            <span>（张二宝）</span>
             <span>第</span>
             <span>12</span>
             <span className='inline'>课</span>
@@ -58,4 +58,4 @@ const CheckInList=()=>{
   </IonPage>
 }
 
-export default CheckInList
+export default AllCheckInList

@@ -63,15 +63,16 @@ const PersonalCenter=()=>{
               <p className='text-gray-500'>我的评价</p>
             </a>
 
-            <div className='flex flex-col items-center w-24 h-24 mt-4 bg-red-100 rounded-md shadow-md justify-items-center shadow-red-200'>
+            <a className='flex flex-col items-center w-24 h-24 mt-4 bg-red-100 rounded-md shadow-md justify-items-center shadow-red-200'
+              href="./lessonList">
               {/* <motion.div key="2" className={'reactive ' } animate={{ scale: [1, 1.2, 1] }} transition={{ duration: 0.2 }}><span className="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full">2</span></motion.div> */}
-              <div className='mt-4'>
+              <p className='mt-4'>
                 <svg className="w-10 h-10 text-red-400"  fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/>
                 </svg>
-              </div>
-              <div className='text-gray-500'>课程列表</div>
-            </div>
+              </p>
+              <p className='text-gray-500'>课程列表</p>
+            </a>
 
             <a className='flex flex-col items-center w-24 h-24 mt-4 rounded-md shadow-md bg-cyan-100 justify-items-center shadow-cyan-200'
                 href="./editPwd">
@@ -82,13 +83,14 @@ const PersonalCenter=()=>{
               <p className='text-gray-500'>修改密码</p>
             </a>
 
-            <div className='flex flex-col items-center w-24 h-24 mt-4 bg-green-100 rounded-md shadow-md justify-items-center shadow-green-200'>
+            <a className='flex flex-col items-center w-24 h-24 mt-4 bg-green-100 rounded-md shadow-md justify-items-center shadow-green-200'
+              href="./batchCheckIn">
               {/* <motion.div key="2" className={'reactive ' } animate={{ scale: [1, 1.2, 1] }} transition={{ duration: 0.2 }}><span className="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full">2</span></motion.div> */}
-              <div className='mt-4 '>
+              <p className='mt-4 '>
               <svg className="w-10 h-10 text-green-400 "  width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <path d="M9 5H7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2V7a2 2 0 0 0 -2 -2h-2" />  <rect x="9" y="3" width="6" height="4" rx="2" />  <line x1="9" y1="12" x2="9.01" y2="12" />  <line x1="13" y1="12" x2="15" y2="12" />  <line x1="9" y1="16" x2="9.01" y2="16" />  <line x1="13" y1="16" x2="15" y2="16" /></svg>
-              </div>
-              <div className='text-gray-500'>批量签到</div>
-            </div>
+              </p>
+              <p className='text-gray-500'>批量签到</p>
+            </a>
 
             <a className='flex flex-col items-center w-24 h-24 mt-4 bg-purple-100 rounded-md shadow-md justify-items-center shadow-purple-200'
                href="./autoCheckIn">
@@ -99,13 +101,14 @@ const PersonalCenter=()=>{
               <p className='text-gray-500'>自动签到</p>
             </a>
 
-            <div className='flex flex-col items-center w-24 h-24 mt-4 bg-orange-100 rounded-md shadow-md justify-items-center shadow-orange-200'>
+            <a className='flex flex-col items-center w-24 h-24 mt-4 bg-orange-100 rounded-md shadow-md justify-items-center shadow-orange-200'
+              href="./allCheckInList">
               {/* <motion.div key="2" className={'reactive ' } animate={{ scale: [1, 1.2, 1] }} transition={{ duration: 0.2 }}><span className="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full">2</span></motion.div> */}
-              <div className='mt-4'>
+              <p className='mt-4'>
               <svg className="w-10 h-10 text-orange-400"  width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <path d="M9 5H7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2V7a2 2 0 0 0 -2 -2h-2" />  <rect x="9" y="3" width="6" height="4" rx="2" />  <line x1="9" y1="12" x2="9.01" y2="12" />  <line x1="13" y1="12" x2="15" y2="12" />  <line x1="9" y1="16" x2="9.01" y2="16" />  <line x1="13" y1="16" x2="15" y2="16" /></svg>
-              </div>
-              <div className='text-gray-500'>签到记录</div>
-            </div>
+              </p>
+              <p className='text-gray-500'>签到记录</p>
+            </a>
           </div>
         </div>
       </div>
