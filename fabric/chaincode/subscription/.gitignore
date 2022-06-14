@@ -83,3 +83,6 @@ dist
 channel-artifacts
 supervision.tar.gz
 log.txt
+config*
+my*
+*.pb

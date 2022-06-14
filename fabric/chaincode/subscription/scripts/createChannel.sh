@@ -77,6 +77,74 @@ joinChannel() {
 	verifyResult $res "After $MAX_RETRY attempts, peer0.${USING_ORG} has failed to join channel '$CHANNEL_NAME' "
 }
 
+fetchConfig() {
+	infoln "抓取通道最新的配置块"
+	set -x
+	peer channel fetch config config_block.pb \
+		-o localhost:7050 \
+		--ordererTLSHostnameOverride orderer.yadadev.com \
+		-c $CHANNEL_NAME \
+		--tls \
+		--cafile "$ORDERER_CA"
+	{ set +x; } 2>/dev/null
+}
+
+decodeConfigBlock2Json() {
+	local OUTPUT="./myconfig.json"
+	infoln "解析配置到JSON格式的文件 ${OUTPUT}"
+	set -x
+	configtxlator proto_decode --input config_block.pb --type common.Block --output config_block.json
+	jq .data.data[0].payload.data.config config_block.json >"${OUTPUT}"
+	{ set +x; } 2>/dev/null
+}
+
+addAnchorConfig() {
+	local INPUT="./myconfig.json"
+	local OUTPUT="./mynewconfig.json"
+	local HOST="peer0.bank.yadadev.com"
+	local PORT=7051
+	infoln "新配置文件追加anchor配置"
+	set -x
+	# Modify the configuration to append the anchor peer 
+	jq '.channel_group.groups.Application.groups.BankMSP.values += {"AnchorPeers":{"mod_policy": "Admins","value":{"anchor_peers": [{"host": "'$HOST'","port": '$PORT'}]},"version": "0"}}' ${INPUT} > ${OUTPUT}
+	{ set +x; } 2>/dev/null
+}
+
+createConfigUpdate() {
+  local CHANNEL=$CHANNEL_NAME
+  local ORIGINAL="./myconfig.json"
+  local MODIFIED="./mynewconfig.json"
+  local OUTPUT="./myanchor.tx"
+  infoln "生成配置更新文件"
+  set -x
+  configtxlator proto_encode --input "${ORIGINAL}" --type common.Config --output original_config.pb
+  configtxlator proto_encode --input "${MODIFIED}" --type common.Config --output modified_config.pb
+  configtxlator compute_update --channel_id "${CHANNEL}" --original original_config.pb --updated modified_config.pb --output config_update.pb
+  configtxlator proto_decode --input config_update.pb --type common.ConfigUpdate --output config_update.json
+  echo '{"payload":{"header":{"channel_header":{"channel_id":"'$CHANNEL'", "type":2}},"data":{"config_update":'$(cat config_update.json)'}}}' | jq . >config_update_in_envelope.json
+  configtxlator proto_encode --input config_update_in_envelope.json --type common.Envelope --output "${OUTPUT}"
+  { set +x; } 2>/dev/null
+}
+
+updateAnchorPeer() {
+  peer channel update -o localhost:7050 --ordererTLSHostnameOverride orderer.yadadev.com -c $CHANNEL_NAME -f myanchor.tx --tls --cafile "$ORDERER_CA" >&log.txt
+  res=$?
+  cat log.txt
+  verifyResult $res "锚节点更新失败"
+  successln "在通道 '$CHANNEL_NAME' 为机构 'BankMsp' 设置锚节点成功"
+}
+setAnchorPeer() {
+	local USING_ORG=$1
+	local OUTPUT=myconfig.json
+	setGlobals $USING_ORG
+	fetchConfig
+	decodeConfigBlock2Json
+	addAnchorConfig
+	createConfigUpdate
+	updateAnchorPeer
+	
+}
+
 listChannel() {
 	println "尝试列出渠道 ${CHANNEL_NAME}"
 	local LIST_RESULT="$(osnadmin channel list --channelID $CHANNEL_NAME \
@@ -126,9 +194,9 @@ joinChannel edu1
 infoln "Joining edu2 peer to the channel..."
 joinChannel edu2
 
-## Set the anchor peers for each org in the channel
-# infoln "Setting anchor peer for org1..."
-# setAnchorPeer bank
+# # Set the anchor peers for each org in the channel
+infoln "Setting anchor peer for org1..."
+setAnchorPeer bank
 # infoln "Setting anchor peer for org2..."
 # setAnchorPeer 2
 
