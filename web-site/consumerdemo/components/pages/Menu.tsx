@@ -19,15 +19,31 @@ import {AppContext} from '../../appState';
 
 const pages = [
   {
-    title: '测试',
+    title: '首页',
     icon: flash,
-    url: '/',
-    role: '',
+    url: '/tabs/home',
   },
+  {
+    title: '机构',
+    icon: flash,
+    url: '/tabs/orgList',
+  },
+  {
+    title: '课程',
+    icon: flash,
+    url: '/tabs/lessonList',
+  },
+  {
+    title: '购物车',
+    icon: flash,
+    url: '/tabs/shoppingCar',
+  },
+  {
+    title: '我的',
+    icon: flash,
+    url: '/tabs/personalCenter',
+  }
 ];
-
-
-
 
 const Menu = () => {
   const [isDark, setIsDark] = useState(false);

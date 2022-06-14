@@ -1,10 +1,13 @@
 import { IonButton, IonContent, IonHeader, IonIcon, IonInput, IonItem, IonItemDivider, IonLabel, IonList, IonPage, IonTitle, IonToolbar } from "@ionic/react";
-import { phonePortrait, mailOutline } from 'ionicons/icons';
+import React from 'react'
+import {useRouter} from "next/router";
+// import { phonePortrait, mailOutline } from 'ionicons/icons';
 
-import styles from './Login.module.css';
+// import styles from './Login.module.css';
 
 // 登录页面
 const Login = () => {
+   const router=useRouter();
   return <IonPage>
     <IonHeader>
       <div className='h-10 pt-2 font-medium text-center text-white bg-primary-600 margin-auto'>
@@ -38,7 +41,10 @@ const Login = () => {
       </div>
 
       <div className="flex mt-12">
-        <input className="w-full py-2 mx-6 text-sm font-bold tracking-widest text-white shadow-md rounded-3xl bg-primary-600 bg-grimary-600 shadow-primary-600" value="登录" type="button" />
+        <button className="w-full h-10 py-2 mx-6 text-sm font-bold tracking-widest text-white shadow-md rounded-3xl bg-primary-600 bg-grimary-600 shadow-primary-600" 
+              type="button"
+              onClick={()=>{router.push('./home')}} >登录
+      </button>
       </div>
       <p className="pt-8 text-sm text-center text-gray-500">登录即同意资金监管平台
         <span className="text-primary-500">《隐私政策》</span>
