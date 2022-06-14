@@ -23,6 +23,7 @@ module.exports = {
     },
   },
   plugins: [
+    require("@tailwindcss/forms"),
     plugin(function ({ addUtilities, theme, variants }) {
       const keys = ['primary', 'secondary','third']
       const styles = {}
@@ -44,4 +45,4 @@ module.exports = {
     }),
 
   ],
-}
+};

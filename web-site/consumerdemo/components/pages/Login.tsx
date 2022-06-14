@@ -41,7 +41,7 @@ const Login = () => {
       </div>
 
       <div className="flex mt-12 text-base">
-        <button className="w-full h-10 py-2 mx-6 font-bold tracking-widest text-white shadow-md rounded-3xl bg-primary-600 bg-grimary-600 shadow-primary-600" 
+        <button className="w-full h-10 py-2 mx-6 font-bold tracking-widest text-white shadow-md rounded-3xl bg-primary-600 bg-grimary-600 shadow-primary-600 focus:bg-primary-700" 
               type="button"
               onClick={()=>{router.push('./home')}} >登录
       </button>
