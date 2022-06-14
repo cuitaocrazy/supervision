@@ -40,8 +40,8 @@ const Login = () => {
         <input className="px-4 py-1 border justify-self-end rounded-3xl text-primary-500 border-primary-500" type="button" value="获取验证码" />
       </div>
 
-      <div className="flex mt-12">
-        <button className="w-full h-10 py-2 mx-6 text-sm font-bold tracking-widest text-white shadow-md rounded-3xl bg-primary-600 bg-grimary-600 shadow-primary-600" 
+      <div className="flex mt-12 text-base">
+        <button className="w-full h-10 py-2 mx-6 font-bold tracking-widest text-white shadow-md rounded-3xl bg-primary-600 bg-grimary-600 shadow-primary-600" 
               type="button"
               onClick={()=>{router.push('./home')}} >登录
       </button>

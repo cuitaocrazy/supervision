@@ -20,7 +20,7 @@ const AutoCheckIn = () => {
                 <span>学生姓名：</span>
                 <span>张大宝</span>
               </div>
-              <div className='mt-1 text-xs'>
+              <div className='text-xs mt-qaz19861'>
                 <span className='text-gray-400'>总课时/</span>
                 <span className='text-gray-400 '>已上课时：</span>
                 <span className='pr-1 text-gray-800'>32</span>

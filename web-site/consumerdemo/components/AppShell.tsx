@@ -6,6 +6,7 @@ import { Route, Redirect, Router } from 'react-router-dom';
 import Tabs from './pages/Tabs';
 import Menu from './pages/Menu';
 import Login from './pages/Login';
+import Register from './pages/Register';
 import Home from './pages/Home';
 import OrgList from './pages/OrgList'
 import OrgLessonList from './pages/OrgLessonList'
@@ -38,6 +39,7 @@ import PersonalInfo from './pages/PersonalInfo';
 import DiscussDetail from './pages/DiscussDetail';
 import { AppContextProvider } from '../appState'
 
+
 // 装载ionic样式，ionic6 必须执行。
 setupIonicReact();
 window.matchMedia("(prefers-color-scheme: dark)").addListener(async (status) => {
@@ -60,6 +62,7 @@ const AppShell = () => {
             <IonRouterOutlet id="main">
               <Route path="/tabs" render={() => <Tabs />} />
               <Route path="/login" render={() => <Login />} />
+              <Route path="/register" render={() => <Register />} />
               <Route path="/home" render={() => <Home />} />
               <Route path="/orgList" render={()=> <OrgList />} />
               <Route path="/orgLessonList" render={()=> <OrgLessonList />} />
