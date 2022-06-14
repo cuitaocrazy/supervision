@@ -7,46 +7,73 @@ import styles from './Login.module.css';
 const Login = () => {
   return <IonPage>
     <IonHeader>
-      <IonToolbar color="primary">
-        <IonTitle >登录/注册</IonTitle>
-      </IonToolbar>
+      <div className='h-10 pt-2 font-medium text-center text-white bg-primary-600 margin-auto'>
+        <div className='text-center'>用户登录</div>
+      </div>
     </IonHeader>
-    <IonContent fullscreen>
-      <IonList className={styles.list}>
-        <IonItem>
-          <IonIcon icon={phonePortrait}></IonIcon>
-          <IonInput placeholder="请输入手机号" ></IonInput>
-        </IonItem>
-        <IonItem>
-          <IonIcon icon={mailOutline}></IonIcon>
-          <IonInput placeholder="请输入验证码" ></IonInput>
-          <IonButton shape="round" color="primary" fill="outline">获取验证码</IonButton>
-        </IonItem>
-        <IonItem lines="none" >
-          <IonButton color="primary" shape="round" fill="outline" expand="block" size="default">登录/注册</IonButton>
-        </IonItem>
-      </IonList>
+    <IonContent>
+      <div className="flex font-bold text-md ">
+        <div className="grid px-2 pt-2 mx-2 mt-4 font-bold justify-items-center">
+          <p className="text-primary-600">验证码登录</p>
+          <svg className="w-5 h-5 text-primary-600" viewBox="0 7 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round">  <line x1="5" y1="12" x2="19" y2="12" /></svg>
+        </div>
+        <div className="px-2 py-2 mx-2 my-4 justify-items-center">
+          <p className="text-gray-800">账号登录</p>
+        </div>
+      </div>
 
+      <div className="flex px-2 mx-2 my-2 text-sm">
+        <div className="pr-4">
+          <svg className="inline w-7 h-7 text-primary-600" width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">  <path stroke="none" d="M0 0h24v24H0z" />  <rect x="7" y="4" width="10" height="16" rx="1" />  <line x1="11" y1="5" x2="13" y2="5" />  <line x1="12" y1="17" x2="12" y2="17.01" /></svg>
+        </div>
+        <input className="inline w-full border-b" placeholder="请输入手机号" />
+      </div>
+
+      <div className="flex px-2 mx-2 my-5 text-sm">
+        <div className="pr-5">
+          <svg className="inline w-6 h-6 text-primary-600" width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">  <path stroke="none" d="M0 0h24v24H0z" />  <rect x="3" y="5" width="18" height="14" rx="2" />  <polyline points="3 7 12 13 21 7" /></svg>
+        </div>
+        <input className="inline w-full border-b" placeholder="请输入验证码" />
+        <input className="px-4 py-1 border justify-self-end rounded-3xl text-primary-500 border-primary-500" type="button" value="获取验证码" />
+      </div>
+
+      <div className="flex mt-12">
+        <input className="w-full py-2 mx-6 text-sm font-bold tracking-widest text-white shadow-md rounded-3xl bg-primary-600 bg-grimary-600 shadow-primary-600" value="登录" type="button" />
+      </div>
+      <p className="pt-8 text-sm text-center text-gray-500">登录即同意资金监管平台
+        <span className="text-primary-500">《隐私政策》</span>
+      </p>
     </IonContent>
-    {/* <div className="flex h-screen bg-primary-50">
-      <form onSubmit={() => { }} className="p-12 px-6 py-10 pt-4 mx-auto my-auto bg-white rounded-lg shadow-md border-primaryColor-300 w-80">
-        <fieldset>
-          <legend className="mb-4 text-3xl font-semibold text-center text-gray-800">登录</legend>
-          <div>
-            <label className="block mb-2 text-sm font-semibold text-gray-600">用户名</label>
-            <input type="text" className="relative block w-full px-1 py-3 pl-4 text-base bg-white border rounded-md border-primary-200 focus:outline-none focus:glow-secondary-500" />
-          </div>
-          <div className="mt-6">
-            <label className="block mb-2 text-sm font-semibold text-gray-600">密码</label>
-            <input type="password" className="relative block w-full px-1 py-3 pl-4 text-base bg-white border rounded-md border-primary-200 focus:outline-none focus:glow-secondary-500" />
-          </div>
-        </fieldset>
-        <input type="submit" className="w-full py-3 my-10 mb-1 text-base font-medium text-white rounded-md shadow-md bg-secondary-500 focus:outline-none hover:bg-secondary-700 hover:shadow-none"
-          value="登录" />
-      </form>
-    </div> */}
   </IonPage>
 
 }
+
+// const Login = () => {
+//   return <IonPage>
+//     <IonHeader>
+//       <IonToolbar color="primary">
+//         <IonTitle >登录/注册</IonTitle>
+//       </IonToolbar>
+//     </IonHeader>
+//     <IonContent fullscreen>
+//       <IonList className={styles.list}>
+//         <IonItem>
+//           <IonIcon icon={phonePortrait}></IonIcon>
+//           <IonInput placeholder="请输入手机号" ></IonInput>
+//         </IonItem>
+//         <IonItem>
+//           <IonIcon icon={mailOutline}></IonIcon>
+//           <IonInput placeholder="请输入验证码" ></IonInput>
+//           <IonButton shape="round" color="primary" fill="outline">获取验证码</IonButton>
+//         </IonItem>
+//         <IonItem lines="none" >
+//           <IonButton color="primary" shape="round" fill="outline" expand="block" size="default">登录/注册</IonButton>
+//         </IonItem>
+//       </IonList>
+
+//     </IonContent>
+//   </IonPage>
+
+// }
 
 export default Login;
