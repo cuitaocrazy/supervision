@@ -1,13 +1,13 @@
 import React from 'react';
-import { IonPage,IonHeader,IonContent } from '@ionic/react';
+import { IonPage, IonHeader, IonContent } from '@ionic/react';
 
 // 签到和请假页面
-const CheckInAndLeave=()=>{
+const CheckInAndLeave = () => {
   return <IonPage>
     <IonHeader>
       <div className='h-10 pt-2 font-medium text-center text-white bg-primary-600 margin-auto'>
         <div className='text-center'>签到/请假</div>
-      </div>            
+      </div>
     </IonHeader>
     <IonContent>
       <div className='py-3 text-sm text-center shadow-md text-secondary-400'>
@@ -30,9 +30,9 @@ const CheckInAndLeave=()=>{
       <div className='flex mt-4'>
         <input className='w-full py-2 mx-5 font-bold tracking-widest text-white shadow-md shadow-remind-400 bg-remind-400 rounded-3xl' type="button" value="请假" />
       </div>
-       
+
     </IonContent>
   </IonPage>
 }
 
-  export default CheckInAndLeave
+export default CheckInAndLeave

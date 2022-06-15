@@ -18,7 +18,7 @@ const Tabs = () => {
         <Route path="/tabs/home" component={Home} exact={true} />
       </IonRouterOutlet>
       <IonTabBar slot="bottom">
-        <IonTabButton tab="首页" href = "/home">
+        <IonTabButton tab="首页" href="/home">
           <IonIcon icon={home} />
           <IonLabel>首页</IonLabel>
         </IonTabButton>

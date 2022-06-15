@@ -1,13 +1,13 @@
 import React from 'react'
-import {IonPage,IonHeader,IonContent} from '@ionic/react'
+import { IonPage, IonHeader, IonContent } from '@ionic/react'
 
 // 申请投诉
-const FileComp=()=>{
+const FileComp = () => {
   return <IonPage>
     <IonHeader>
       <div className='h-10 pt-2 font-medium text-center text-white bg-primary-600 margin-auto'>
         <div className='text-center'>投诉内容</div>
-      </div> 
+      </div>
     </IonHeader>
     <IonContent>
       <div className='text-sm bg-white'>
@@ -28,7 +28,7 @@ const FileComp=()=>{
           <textarea placeholder='请描述您要投诉的内容......' className='w-full h-40 py-2 pl-2 mt-1 mb-2 rounded-md bg-gray-50' />
         </div>
         <div className='flex justify-center'>
-         <input className='w-full py-3 mx-6 mt-6 font-bold tracking-wider text-center text-white shadow-md bg-primary-600 shadow-primary-500 rounded-3xl focus:border-primary-500' value="提交投诉" />
+          <input className='w-full py-3 mx-6 mt-6 font-bold tracking-wider text-center text-white shadow-md bg-primary-600 shadow-primary-500 rounded-3xl focus:border-primary-500' value="提交投诉" />
         </div>
       </div>
 

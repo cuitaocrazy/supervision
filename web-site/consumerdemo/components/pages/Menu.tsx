@@ -12,10 +12,10 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/react';
-import { useEffect, useState,useContext } from 'react';
-import {  flash } from 'ionicons/icons';
+import { useEffect, useState, useContext } from 'react';
+import { flash } from 'ionicons/icons';
 import Router from 'next/router'
-import {AppContext} from '../../appState';
+import { AppContext } from '../../appState';
 
 const pages = [
   {
@@ -53,14 +53,14 @@ const Menu = () => {
       await StatusBar.setStyle({
         style: isDark ? Style.Dark : Style.Light,
       });
-    } catch {}
+    } catch { }
   };
   const handleClose = async () => {
     try {
       await StatusBar.setStyle({
         style: isDark ? Style.Dark : Style.Light,
       });
-    } catch {}
+    } catch { }
   };
 
 
@@ -83,11 +83,11 @@ const Menu = () => {
             </IonMenuToggle>
           ))}
         </IonList>
-      </IonContent> 
+      </IonContent>
       <IonContent>
-       <IonToolbar className='h-72 mt-36'> 
+        <IonToolbar className='h-72 mt-36'>
           <button className="w-24 p-2 text-white rounded-md mt-60 bg-primary-500 hover:bg-primary-700 focus:outline-none">退出</button>
-       </IonToolbar>
+        </IonToolbar>
       </IonContent>
     </IonMenu>
 

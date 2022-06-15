@@ -56,7 +56,7 @@ const PersonalInfo = () => {
           </a>
         </div>
         <div className='flex mt-10'>
-          <input className= 'w-full py-2 mx-6 font-bold text-white shadow-md bg-primary-600 rounded-3xl shadow-primary-600' type="button" value="确定修改" />
+          <input className='w-full py-2 mx-6 font-bold text-white shadow-md bg-primary-600 rounded-3xl shadow-primary-600' type="button" value="确定修改" />
         </div>
 
 
