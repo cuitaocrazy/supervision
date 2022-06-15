@@ -14,7 +14,7 @@ import SearchLessonList from './pages/SearchLessonList'
 import SearchLessonDetail from './pages/SearchLessonDetail';
 import ShoppingCar from './pages/ShoppingCar';
 import ConOrder from './pages/ConOrder';
-import StuInfoMag from './pages/StuInfoMag';
+import StuInfoList from './pages/StuInfoList';
 import AddStuInfo from './pages/AddStuInfo'
 import EditStuInfo from './pages/EditStuInfo'
 import PayResult from './pages/PayResult';
@@ -72,7 +72,7 @@ const AppShell = () => {
               <Route path="/searchLessonDetail" render={() => <SearchLessonDetail />} />
               <Route path="/shoppingCar" render={() => <ShoppingCar />} />
               <Route path="/conOrder" render={() => <ConOrder />} />
-              <Route path="/stuInfoMag" render={() => <StuInfoMag />} />
+              <Route path="/stuInfoList" render={() => <StuInfoList />} />
               <Route path="/addStuInfo" render={() => <AddStuInfo />} />
               <Route path="/editStuInfo" render={() => <EditStuInfo />} />
               <Route path="/payResult" render={() => <PayResult />} />

@@ -3,7 +3,7 @@ import { IonPage, IonHeader, IonContent } from "@ionic/react"
 import { motion } from 'framer-motion'
 import { useRouter } from 'next/router'
 
-// 订单课程card
+// 订单课程信息card
 const ConOrderLessCard = () => {
   return <div className='pt-1 pb-2 mt-3 mb-3 bg-white rounded-lg shadow-md'>
     <div className='mt-2 rounded-lg'>
@@ -56,7 +56,7 @@ const ConOrder = () => {
           </div>
           <div className='grid items-center grid-cols-2 py-3 pl-2 mt-3 text-base bg-white rounded-lg shadow-md'>
             <div className='items-center justify-center font-medium text-gray-700'>可新增或修改学生信息</div>
-            <a className='mr-2 cursor-pointer justify-self-end' onClick={() => { router.push("") }}>
+            <a className='mr-2 cursor-pointer justify-self-end' onClick={() => { router.push("./stuInfoList") }}>
               <svg className="w-5 h-5 text-gray-500" width="24" height="24" viewBox="0 0 24 24" strokeWidth="3" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">  <path stroke="none" d="M0 0h24v24H0z" />  <polyline points="9 6 15 12 9 18" /></svg>
             </a>
           </div>
@@ -84,7 +84,8 @@ const ConOrder = () => {
       <div className='fixed bottom-0 flex w-full pl-5 mt-6 bg-white border-t h-14 justify-items-stretch'>
         <div className='self-center justify-around text-xs text-gray-500'>合计：</div>
         <div className='self-center mr-4 text-2xl font-black text-red-500 grow justify-self-end'>¥11120.00</div>
-        <button className='self-center h-10 px-6 mt-1 mr-2 text-sm font-medium text-white justify-self-end bg-primary-500 rounded-3xl'>立即支付</button>
+        <button className='self-center h-10 px-6 mt-1 mr-2 text-sm font-medium text-white justify-self-end bg-primary-500 rounded-3xl'
+                onClick={()=>{router.push("./eCNYPay")}}>立即支付</button>
       </div>
     </IonContent>
   </IonPage>

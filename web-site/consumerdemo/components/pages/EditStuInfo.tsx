@@ -24,39 +24,37 @@ const EditStuInfo = () => {
       </div>
     </IonHeader>
     <IonContent>
-      <div className='mt-5 mb-3 ml-4 mr-3 text-base bg-white pb-15 scroll-auto'>
-        <div className='p-2 pt-4 pb-4 border rounded-lg'>
-          <div className='flex justify-between gap-5'>
-            <div className='pr-2 text-gray-400'>与客户关系：</div>
-            <div className='flex gap-6'>
-              <div className='px-4 text-white border border-orange-400 bg-secondary-400 rounded-3xl focus:bg-secondary-500'>子女</div>
-              <div className='px-4 text-gray-500 border rounded-3xl'>其他</div>
+    <form>
+        <div className='mt-2 mb-3 ml-4 mr-3 text-base bg-white pb-15 scroll-auto'>
+          <div className='p-2 px-2 pt-4 pb-4 rounded-lg shadow-md'>
+            <div className='flex items-center justify-center gap-10 '>
+              <div className='px-4 py-1 text-white border border-orange-400 bg-secondary-400 rounded-3xl focus:bg-secondary-500'>本人</div>
+              <div className='px-4 py-1 text-gray-500 border rounded-3xl'>子女</div>
+              <div className='px-4 py-1 text-gray-500 border rounded-3xl'>其他</div>
+            </div>
+            <div className='grid grid-cols-2 mt-3 justify-items-stretch'>
+              <span className='pr-2 text-gray-400 '>学生姓名:</span>
+              <input className='py-2 pl-2 text-gray-800 border rounded-md focus:outline-none' value="张大宝"></input>
+            </div>
+            <div className='grid grid-cols-2 mt-3 justify-items-stretch'>
+              <span className='flex pr-2 text-gray-400 '>出生日期:</span>
+              <input className='flex py-2 pl-2 text-gray-800 border rounded-md focus:outline-none' value="2020.0101"></input>
+            </div>
+            <div className='grid grid-cols-2 mt-3 justify-items-stretch'>
+              <span className='pr-2 text-gray-400'>学生性别:</span>
+              <select className='w-full h-10 pl-2 mr-4 text-gray-800 border border-gray-300 rounded outline-none cursor-pointer focus:ring-0 focus:ring-primary-600 focus:outline-none checked:bg-primary-500'>
+                <option value="" selected >男</option>
+                <option value="">女</option>
+                <option value="">保密</option>
+              </select>
             </div>
           </div>
-          <div className='grid grid-cols-2 gap-4 mt-3 justify-items-stretch'>
-            <div className='pr-2 text-gray-400 '>姓名:</div>
-            <input className='pl-2 text-gray-800 border rounded-md' value="张大宝" ></input>
-          </div>
-
-
-          <div className='grid grid-cols-2 gap-4 mt-3 justify-items-stretch'>
-            <div className='pr-2 text-gray-400'>出生日期:</div>
-            <input className='pl-2 text-gray-800 border rounded-md' value="2020.01.01"></input>
-          </div>
-          <div className='grid grid-cols-2 gap-4 mt-3 justify-items-stretch'>
-            <div className='pr-2 text-gray-400'>学生性别:</div>
-            <select className='w-full pl-2 mr-4 text-gray-800 border rounded-md'>
-              <option value="" selected>男</option>
-              <option value="">女</option>
-              <option value="">保密</option>
-            </select>
-          </div>
         </div>
-      </div>
-      <div className='fixed bottom-0 flex w-full mt-6 bg-white border-t h-14 justify-items-center'>
-        <button className='self-center w-full h-10 mx-6 mt-1 text-sm font-medium text-white bg-gray-400 rounded-3xl' onClick={() => { router.push("addStuInfo") }}>取消</button>
-        <button className='self-center w-full h-10 mx-6 mt-1 text-sm font-medium text-white bg-primary-500 rounded-3xl' onClick={() => { router.push("addStuInfo") }}>确定</button>
-      </div>
+        <div className='fixed bottom-0 flex w-full mt-6 bg-white border-t h-14 justify-items-center'>
+          <button className='self-center w-full h-10 mx-6 mt-1 text-sm font-medium text-white bg-gray-400 rounded-3xl' onClick={() => { router.push("stuInfoList") }}>取消</button>
+          <button className='self-center w-full h-10 mx-6 mt-1 text-sm font-medium text-white bg-primary-500 rounded-3xl' onClick={() => { router.push("stuInfoList") }}>确定</button>
+        </div>
+      </form>
     </IonContent>
   </IonPage>
 }

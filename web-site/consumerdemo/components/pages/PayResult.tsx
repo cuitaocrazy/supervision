@@ -10,11 +10,7 @@ type FormData = {
 
 // 教育机构的支付结果页面
 const PayResult = () => {
-  const { register, handleSubmit, formState: { errors } } = useForm<FormData>()
   const router = useRouter()
-  const onSubmit: SubmitHandler<FormData> = (data: FormData) => {
-    router.push('/searchLessonList')
-  }
   return <IonPage>
     <IonHeader>
       <div className='grid h-10 grid-cols-10 pt-2 font-medium text-center text-white bg-primary-600 margin-auto'>
@@ -33,10 +29,13 @@ const PayResult = () => {
           </div>
           <div className='pt-4 pb-16 text-lg text-center text-gray-700'>恭喜您支付成功！</div>
         </div>
-        <div className='grid grid-cols-3 gap-3 mx-3'>
-          <button className='py-2 text-sm text-white shadow-md shadow-primary-500 bg-primary-500 rounded-3xl'>返回首页</button>
-          <button className='py-2 text-sm text-white shadow-md shadow-secondary-300 bg-secondary-300 rounded-3xl'>继续购买</button>
-          <button className='py-2 text-sm text-white bg-red-400 shadow-md shadow-remind-400 rounded-3xl'>查看详情</button>
+        <div className='grid grid-cols-3 gap-3 mx-3 font-bold'>
+          <button className='py-2 text-sm text-white shadow-md shadow-primary-500 bg-primary-500 rounded-3xl'
+                   onClick={()=>{router.push("./home")}}>返回首页</button>
+          <button className='py-2 text-sm text-white shadow-md shadow-secondary-300 bg-secondary-300 rounded-3xl'
+                  onClick={()=>{router.push("./searchLessonlist")}}>继续购买</button>
+          <button className='py-2 text-sm text-white bg-red-400 shadow-md shadow-remind-400 rounded-3xl'
+                  onClick={()=>{router.push("./lessonDetail")}}>查看详情</button>
         </div>
 
 

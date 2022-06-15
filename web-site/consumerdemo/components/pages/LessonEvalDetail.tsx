@@ -1,8 +1,10 @@
 import React from 'react'
 import { IonPage, IonHeader, IonContent } from '@ionic/react'
+import { useRouter } from 'next/router'
 
-// 课程评价
+// 申请课程评价
 const LessonEvalDetail = () => {
+  const router=useRouter();
   return <IonPage>
     <IonHeader>
       <div className='h-10 pt-2 font-medium text-center text-white bg-primary-600 margin-auto'>
@@ -10,7 +12,7 @@ const LessonEvalDetail = () => {
       </div>
     </IonHeader>
     <IonContent>
-      <div className='text-sm'>
+      <form className='text-sm'>
         <div className='px-4 py-4 mx-2 rounded-md shadow-md '>
           <p className='text-gray-800'>您的评价会让老师做的更好~~</p>
           <div className='flex items-center justify-center gap-3 mt-2'>
@@ -71,12 +73,16 @@ const LessonEvalDetail = () => {
             <span className='text-gray-800'>少儿编程</span>
           </div>
           <p className='mx-2 my-2'>评价内容</p>
-          <textarea className='w-full h-40 p-2 bg-gray-50 ' placeholder='请告诉我们老师的优点或者美中不足吧～' />
+          <div className='text-gray-400'>
+            <textarea className='w-full h-40 p-2 border-0 rounded focus:border-0 bg-gray-50 focus:outline-none' placeholder='请告诉我们老师的优点或者美中不足吧～' />
+          </div>
         </div>
         <div className='flex'>
-          <input value="提交评价" type="button" className='w-full py-2 mx-6 mt-6 font-medium tracking-wider text-white shadow-md bg-primary-600 rounded-3xl shadow-primary-600' />
+          <input value="提交评价" type="button" 
+                 className='w-full py-2 mx-6 mt-6 font-medium tracking-wider text-white shadow-md bg-primary-600 rounded-3xl shadow-primary-600'
+                 onClick={()=>{router.push("./lessonEvalList")}} />
         </div>
-      </div>
+      </form>
     </IonContent>
   </IonPage>
 }
