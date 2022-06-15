@@ -101,12 +101,12 @@ decodeConfigBlock2Json() {
 addAnchorConfig() {
 	local INPUT="./myconfig.json"
 	local OUTPUT="./mynewconfig.json"
-	local HOST="peer0.bank.yadadev.com"
-	local PORT=7051
+	local HOST="peer0.${CORE_PEER_NAME}.yadadev.com"
+	local PORT=$CORE_PEER_PORT
 	infoln "新配置文件追加anchor配置"
 	set -x
 	# Modify the configuration to append the anchor peer 
-	jq '.channel_group.groups.Application.groups.BankMSP.values += {"AnchorPeers":{"mod_policy": "Admins","value":{"anchor_peers": [{"host": "'$HOST'","port": '$PORT'}]},"version": "0"}}' ${INPUT} > ${OUTPUT}
+	jq '.channel_group.groups.Application.groups.'${CORE_PEER_LOCALMSPID}'.values += {"AnchorPeers":{"mod_policy": "Admins","value":{"anchor_peers": [{"host": "'$HOST'","port": '$PORT'}]},"version": "0"}}' ${INPUT} > ${OUTPUT}
 	{ set +x; } 2>/dev/null
 }
 
@@ -131,7 +131,7 @@ updateAnchorPeer() {
   res=$?
   cat log.txt
   verifyResult $res "锚节点更新失败"
-  successln "在通道 '$CHANNEL_NAME' 为机构 'BankMsp' 设置锚节点成功"
+  successln "在通道 '$CHANNEL_NAME' 为机构 '${CORE_PEER_LOCALMSPID}' 设置锚节点成功"
 }
 setAnchorPeer() {
 	local USING_ORG=$1
@@ -195,9 +195,11 @@ infoln "Joining edu2 peer to the channel..."
 joinChannel edu2
 
 # # Set the anchor peers for each org in the channel
-infoln "Setting anchor peer for org1..."
+infoln "Setting anchor peer for bank..."
 setAnchorPeer bank
-# infoln "Setting anchor peer for org2..."
-# setAnchorPeer 2
+# infoln "Setting anchor peer for other..."
+setAnchorPeer edb
+setAnchorPeer edu1
+setAnchorPeer edu2
 
 successln "Channel '$CHANNEL_NAME' joined"

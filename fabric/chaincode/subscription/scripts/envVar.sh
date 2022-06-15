@@ -59,6 +59,8 @@ setGlobals() {
   export CORE_PEER_TLS_ROOTCERT_FILE=${PEER_ROOT_PATH}/$PEER_NAME.yadadev.com/peers/peer0.$PEER_NAME.yadadev.com/tls/ca.crt
   export CORE_PEER_MSPCONFIGPATH=${PEER_ROOT_PATH}/$PEER_NAME.yadadev.com/users/Admin@$PEER_NAME.yadadev.com/msp
   export CORE_PEER_ADDRESS=localhost:$PEER_PORT
+  export CORE_PEER_PORT=$PEER_PORT
+  export CORE_PEER_NAME=$PEER_NAME
 }
 
 verifyResult() {
