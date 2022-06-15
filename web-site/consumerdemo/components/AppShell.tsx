@@ -38,6 +38,7 @@ import AllCheckInList from './pages/AllCheckInList';
 import PersonalInfo from './pages/PersonalInfo';
 import DiscussDetail from './pages/DiscussDetail';
 import ECNYPay from './pages/ECNYPay';
+import ECNYPayResult from './pages/ECNYPayResult';
 import { AppContextProvider } from '../appState'
 
 
@@ -95,6 +96,7 @@ const AppShell = () => {
               <Route path="/personalInfo" render={() => <PersonalInfo />} />
               <Route path="/discussDetail" render={() => <DiscussDetail />} />
               <Route path="/eCNYPay" render={() => <ECNYPay />} />
+              <Route path="/eCNYPayResult" render={() => <ECNYPayResult />} />
               <Route exact={true} path="/" render={() => <Redirect to="/tabs/home" />} />
             </IonRouterOutlet>
           </IonSplitPane>

@@ -1,7 +1,10 @@
 import React from "react";
 import { IonPage,IonHeader,IonContent } from "@ionic/react";
+import { useRouter } from 'next/router'
 
+// 数币支付页面
 const ECNYPay =()=>{
+  const router=useRouter();
   return <IonPage>
     <IonHeader>
       <div className='h-10 pt-2 text-lg font-medium text-center text-white bg-primary-600 margin-auto'>
@@ -40,7 +43,8 @@ const ECNYPay =()=>{
           </p>
         </div>
         <div className="flex pt-10">
-          <input className="w-full py-2 mx-6 font-bold tracking-wider text-white shadow-md rounded-3xl shadow-primary-600 bg-primary-600" value="去支付" type="button"  />
+          <input className="w-full py-2 mx-6 font-bold tracking-wider text-white shadow-md rounded-3xl shadow-primary-600 bg-primary-600"  
+          value="去支付" type="button" onClick={()=>{router.push("./eCNYPayResult")}}  />
         </div>
       </div>
     </IonContent>
