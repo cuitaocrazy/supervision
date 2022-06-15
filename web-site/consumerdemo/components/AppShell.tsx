@@ -37,6 +37,7 @@ import BatchCheckIn from './pages/BatchCheckIn';
 import AllCheckInList from './pages/AllCheckInList';
 import PersonalInfo from './pages/PersonalInfo';
 import DiscussDetail from './pages/DiscussDetail';
+import ECNYPay from './pages/ECNYPay';
 import { AppContextProvider } from '../appState'
 
 
@@ -93,6 +94,7 @@ const AppShell = () => {
               <Route path="/allCheckInList" render={() => <AllCheckInList />} />
               <Route path="/personalInfo" render={() => <PersonalInfo />} />
               <Route path="/discussDetail" render={() => <DiscussDetail />} />
+              <Route path="/eCNYPay" render={() => <ECNYPay />} />
               <Route exact={true} path="/" render={() => <Redirect to="/tabs/home" />} />
             </IonRouterOutlet>
           </IonSplitPane>
