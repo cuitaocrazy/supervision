@@ -18,7 +18,7 @@ const Register = () => {
       </div>
 
       <div className="flex px-2 mx-4 my-5 text-sm">
-        <input className="inline w-full leading-7 border-b" placeholder="请输入验证码" />
+        <input className="inline w-full leading-7 border-b focus:outline-none" placeholder="请输入验证码" />
         <input className="px-4 py-1 border justify-self-end rounded-3xl text-primary-500 border-primary-500 focus:outline-none" type="button" value="获取验证码" />
       </div>
 

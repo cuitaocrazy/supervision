@@ -1,9 +1,11 @@
 import React from 'react';
 import { IonPage, IonHeader, IonContent } from "@ionic/react"
 import { motion } from 'framer-motion'
+import { useRouter } from 'next/router';
 
 // 首页查询课程详情页面
 const SearchLessonDetail = () => {
+  const router=useRouter();
   return <IonPage>
     <IonHeader>
       <div className='grid h-10 grid-cols-10 pt-2 font-medium text-center text-white bg-primary-600 margin-auto'>
@@ -85,20 +87,22 @@ const SearchLessonDetail = () => {
 
       {/* 底部菜单 */}
       <div className='fixed bottom-0 flex w-full pl-5 mt-6 ml-3 mr-5 bg-white h-14'>
-        <div className='mt-2 mr-6'>
+        <a className='mt-2 mr-6'
+          href="./orgLessonList">
           <div>
             <svg className="w-5 h-5 ml-1 text-gray-500" width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">  <path stroke="none" d="M0 0h24v24H0z" />  <path d="M3 21v-13l9-4l9 4v13" />  <path d="M13 13h4v8h-10v-6h6" />  <path d="M13 21v-9a1 1 0 0 0 -1 -1h-2a1 1 0 0 0 -1 1v3" /></svg>
           </div>
           <div className='text-xs text-gray-500'>机构</div>
-        </div>
-        <div className='mt-2 '>
+        </a>
+        <a className='mt-2 '
+          href="./shoppingCar">
           <div>
             <svg className="w-5 h-5 ml-2 text-gray-500" width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">  <path stroke="none" d="M0 0h24v24H0z" />  <circle cx="9" cy="19" r="2" />  <circle cx="17" cy="19" r="2" />  <path d="M3 3h2l2 12a3 3 0 0 0 3 2h7a3 3 0 0 0 3 -2l1 -7h-15.2" /></svg>
           </div>
-          <div className='mr-4 text-xs text-gray-500'>购物车</div>
-        </div>
-        <button className='h-10 mt-2 ml-8 text-sm font-medium text-white bg-orange-400 rounded-l-3xl grow'>加入购物车</button>
-        <button className='h-10 px-3 mt-2 mr-8 text-sm font-medium text-white grow bg-primary-500 rounded-r-3xl'>立即购买</button>
+          <div className='mr-4 text-xs text-gray-500' onClick={()=>{router.push("shoppingCar")}}>购物车</div>
+        </a>
+        <button className='h-10 mt-2 ml-8 text-sm font-medium text-white bg-orange-400 rounded-l-3xl grow' onClick={()=>{router.push("./shoppingCar")}}>加入购物车</button>
+        <button className='h-10 px-3 mt-2 mr-8 text-sm font-medium text-white grow bg-primary-500 rounded-r-3xl' onClick={()=>{router.push("./conOrder")}}>立即购买</button>
       </div>
     </IonContent>
   </IonPage>

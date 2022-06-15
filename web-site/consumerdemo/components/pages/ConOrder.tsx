@@ -3,6 +3,38 @@ import { IonPage, IonHeader, IonContent } from "@ionic/react"
 import { motion } from 'framer-motion'
 import { useRouter } from 'next/router'
 
+// 订单课程card
+const ConOrderLessCard = () => {
+  return <div className='pt-1 pb-2 mt-3 mb-3 bg-white rounded-lg shadow-md'>
+    <div className='mt-2 rounded-lg'>
+      <div className='py-2 pl-3 font-medium'>核桃编程培训机构</div>
+      <div className='grid h-24 grid-cols-12 mx-2 rounded-lg'>
+        <img className='w-20 h-20 col-span-4 mt-2 ml-1 mr-2 rounded-xl' src="http://placekitten.com/g/200/300"></img>
+        <div className='flex flex-col col-span-8 mt-5 mr-3 justify-items-start'>
+          <div className='overflow-hidden text-sm font-medium tracking-wide text-ellipsis'>思维逻辑小游戏</div>
+          <div className='h-8 mt-2 overflow-hidden text-xs text-gray-500 text-ellipsis'>锻炼孩子动手能力，提高孩子思维能力，学习完课程可组装不同的形状</div>
+        </div>
+      </div>
+      {/* 培训信息 */}
+      <div className='mx-3 text-sm leading-6'>
+        <div className='flex items-center mb-1'>
+          <div className='mr-2 text-center text-gray-500'>培训课时:</div>
+          <div className='font-medium text-center text-gray-800'>58课时</div>
+        </div>
+
+        <div className='flex items-center mb-1'>
+          <div className='mr-2 text-center text-gray-500'>培训周期:</div>
+          <div className='font-medium text-center text-gray-800'>2022年5月5日-2023年5月5日</div>
+        </div>
+        <div className='flex items-center mb-1'>
+          <div className='mr-2 text-center text-gray-500'>培训地址:</div>
+          <div className='font-medium text-center text-gray-800'>北京市海淀区大钟寺东路</div>
+        </div>
+      </div>
+    </div>
+  </div>
+}
+
 // 确认订单页面
 const ConOrder = () => {
   const router = useRouter();
@@ -18,9 +50,7 @@ const ConOrder = () => {
     </IonHeader>
     <IonContent>
       <div className='mb-3 bg-white pb-14 scroll-auto'>
-
         <div className='h-full mx-3 bg-white'>
-
           <div className='pt-3 ml-1 text-base font-bold text-gray-800'>
             请选择学生
           </div>
@@ -30,39 +60,8 @@ const ConOrder = () => {
               <svg className="w-5 h-5 text-gray-500" width="24" height="24" viewBox="0 0 24 24" strokeWidth="3" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">  <path stroke="none" d="M0 0h24v24H0z" />  <polyline points="9 6 15 12 9 18" /></svg>
             </a>
           </div>
-
-          {/* 订单信息 */}
-          <div className='pt-1 pb-2 mt-3 mb-3 bg-white rounded-lg shadow-md'>
-            <div className='mt-2 rounded-lg'>
-              <div className='py-2 pl-3 font-medium'>核桃编程培训机构</div>
-              <div className='grid h-24 grid-cols-12 mx-2 rounded-lg'>
-                <img className='w-20 h-20 col-span-4 mt-2 ml-1 mr-2 rounded-xl' src="http://placekitten.com/g/200/300"></img>
-                <div className='flex flex-col col-span-8 mt-5 mr-3 justify-items-start'>
-                  <div className='overflow-hidden text-sm font-medium tracking-wide text-ellipsis'>思维逻辑小游戏</div>
-                  <div className='h-8 mt-2 overflow-hidden text-xs text-gray-500 text-ellipsis'>锻炼孩子动手能力，提高孩子思维能力，学习完课程可组装不同的形状</div>
-                </div>
-              </div>
-              {/* 培训信息 */}
-              <div className='mx-3 text-sm leading-6'>
-                <div className='flex items-center mb-1'>
-                  <div className='mr-2 text-center text-gray-500'>培训课时:</div>
-                  <div className='font-medium text-center text-gray-800'>58课时</div>
-                </div>
-
-                <div className='flex items-center mb-1'>
-                  <div className='mr-2 text-center text-gray-500'>培训周期:</div>
-                  <div className='font-medium text-center text-gray-800'>2022年5月5日-2023年5月5日</div>
-                </div>
-                <div className='flex items-center mb-1'>
-                  <div className='mr-2 text-center text-gray-500'>培训地址:</div>
-                  <div className='font-medium text-center text-gray-800'>北京市海淀区大钟寺东路</div>
-                </div>
-              </div>
-
-
-            </div>
-          </div>
-
+          
+          <ConOrderLessCard />
 
           {/* <div className='flex justify-between gap-4 p-3 mt-2 border rounded-md'>
                     <div  className='w-24 p-5 border border-orange-300 rounded-md glow-secondary-400'>
