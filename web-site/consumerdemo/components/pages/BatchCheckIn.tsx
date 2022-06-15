@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 
 // 批量签到页面
 const BatchCheckIn = () => {
-  const router=useRouter();
+  const router = useRouter();
   return <IonPage>
     <IonHeader>
       <div className='h-10 pt-2 font-medium text-center text-white bg-primary-600 margin-auto'>
@@ -23,7 +23,7 @@ const BatchCheckIn = () => {
             <div className='pt-1'>07:25:26</div>
           </button>
         </div>
-        
+
 
         <div className='mt-8'>
           <div className='flex items-center mx-4 my-2 mb-1'>

@@ -1,14 +1,14 @@
 import React from 'react'
-import { IonPage,IonContent,IonHeader } from '@ionic/react'
+import { IonPage, IonContent, IonHeader } from '@ionic/react'
 import Calendar from '../Calendar'
 
 // 所有课程的签到列表页面
-const AllCheckInList=()=>{
+const AllCheckInList = () => {
   return <IonPage>
     <IonHeader>
       <div className='h-10 pt-2 font-medium text-center text-white bg-primary-600 margin-auto'>
         <div className='text-center'>签到列表</div>
-      </div>   
+      </div>
     </IonHeader>
     <IonContent>
       <div>

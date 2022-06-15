@@ -64,35 +64,35 @@ const AppShell = () => {
               <Route path="/login" render={() => <Login />} />
               <Route path="/register" render={() => <Register />} />
               <Route path="/home" render={() => <Home />} />
-              <Route path="/orgList" render={()=> <OrgList />} />
-              <Route path="/orgLessonList" render={()=> <OrgLessonList />} />
-              <Route path="/searchLessonList" render={()=><SearchLessonList />} />
-              <Route path="/searchLessonDetail" render={()=><SearchLessonDetail />} />
-              <Route path="/shoppingCar" render={()=><ShoppingCar />} />
-              <Route path="/conOrder" render={()=><ConOrder />} />
-              <Route path="/stuInfoMag" render={()=><StuInfoMag />} />
-              <Route path="/addStuInfo" render={()=><AddStuInfo />} />
-              <Route path="/editStuInfo" render={()=><EditStuInfo />} />
-              <Route path="/payResult" render={()=><PayResult />} />
-              <Route path="/lessonList" render={()=><LessonList />} />
-              <Route path="/lessonDetail" render={()=><LessonDetail />} />
-              <Route path="/refoundLesson" render={()=><RefoundLesson />} />
-              <Route path="/checkInAndLeave" render={()=><CheckInAndLeave />} />
-              <Route path="/checkInList" render={()=><CheckInList />} />
-              <Route path="/fileComp" render={()=><FileComp />} />
-              <Route path="/lessonEvalDetail" render={()=><LessonEvalDetail />} />
-              <Route path="/personalCenter" render={()=><PersonalCenter />} />
-              <Route path="/noticeInfoList" render={()=><NoticeInfoList />} />
-              <Route path="/noticeDetail" render={()=><NoticeDetail />} />
-              <Route path="/compList" render={()=><CompList />} />
-              <Route path="/compDetail" render={()=><CompDetail />} />
-              <Route path="/lessonEvalList" render={()=><LessonEvalList />} />
-              <Route path="/editPwd" render={()=><EditPwd />} />
-              <Route path="/autoCheckIn" render={()=><AutoCheckIn />} />
-              <Route path="/batchCheckIn" render={()=><BatchCheckIn />} />
-              <Route path="/allCheckInList" render={()=><AllCheckInList />} />
-              <Route path="/personalInfo" render={()=><PersonalInfo />} />
-              <Route path="/discussDetail" render={()=><DiscussDetail />} />
+              <Route path="/orgList" render={() => <OrgList />} />
+              <Route path="/orgLessonList" render={() => <OrgLessonList />} />
+              <Route path="/searchLessonList" render={() => <SearchLessonList />} />
+              <Route path="/searchLessonDetail" render={() => <SearchLessonDetail />} />
+              <Route path="/shoppingCar" render={() => <ShoppingCar />} />
+              <Route path="/conOrder" render={() => <ConOrder />} />
+              <Route path="/stuInfoMag" render={() => <StuInfoMag />} />
+              <Route path="/addStuInfo" render={() => <AddStuInfo />} />
+              <Route path="/editStuInfo" render={() => <EditStuInfo />} />
+              <Route path="/payResult" render={() => <PayResult />} />
+              <Route path="/lessonList" render={() => <LessonList />} />
+              <Route path="/lessonDetail" render={() => <LessonDetail />} />
+              <Route path="/refoundLesson" render={() => <RefoundLesson />} />
+              <Route path="/checkInAndLeave" render={() => <CheckInAndLeave />} />
+              <Route path="/checkInList" render={() => <CheckInList />} />
+              <Route path="/fileComp" render={() => <FileComp />} />
+              <Route path="/lessonEvalDetail" render={() => <LessonEvalDetail />} />
+              <Route path="/personalCenter" render={() => <PersonalCenter />} />
+              <Route path="/noticeInfoList" render={() => <NoticeInfoList />} />
+              <Route path="/noticeDetail" render={() => <NoticeDetail />} />
+              <Route path="/compList" render={() => <CompList />} />
+              <Route path="/compDetail" render={() => <CompDetail />} />
+              <Route path="/lessonEvalList" render={() => <LessonEvalList />} />
+              <Route path="/editPwd" render={() => <EditPwd />} />
+              <Route path="/autoCheckIn" render={() => <AutoCheckIn />} />
+              <Route path="/batchCheckIn" render={() => <BatchCheckIn />} />
+              <Route path="/allCheckInList" render={() => <AllCheckInList />} />
+              <Route path="/personalInfo" render={() => <PersonalInfo />} />
+              <Route path="/discussDetail" render={() => <DiscussDetail />} />
               <Route exact={true} path="/" render={() => <Redirect to="/tabs/home" />} />
             </IonRouterOutlet>
           </IonSplitPane>

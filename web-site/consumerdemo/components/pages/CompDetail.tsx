@@ -1,13 +1,13 @@
 import React from 'react'
-import { IonPage,IonHeader,IonContent } from '@ionic/react'
+import { IonPage, IonHeader, IonContent } from '@ionic/react'
 
 // 投诉详情
-const CompDetail =()=>{
+const CompDetail = () => {
   return <IonPage>
     <IonHeader>
       <div className='h-10 pt-2 font-medium text-center text-white bg-primary-600 margin-auto'>
         <div className='text-center'>投诉详情</div>
-      </div> 
+      </div>
     </IonHeader>
     <IonContent>
       <div className='px-4 py-2 mx-2 my-2 text-sm rounded-md shadow-md'>

@@ -1,8 +1,8 @@
 import React from 'react'
-import { IonPage,IonHeader,IonContent } from '@ionic/react'
+import { IonPage, IonHeader, IonContent } from '@ionic/react'
 
 // 我的投诉列表
-const CompList=()=>{
+const CompList = () => {
   return <IonPage>
     <IonHeader>
       <div className='h-10 pt-2 font-medium text-center text-white bg-primary-600 margin-auto'>

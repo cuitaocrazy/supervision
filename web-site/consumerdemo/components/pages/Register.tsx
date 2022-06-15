@@ -14,12 +14,12 @@ const Register = () => {
     <IonContent>
       <div className="px-2 mx-4 mt-6 text-sm ">
         <p className="pb-2">联系方式</p>
-        <input className="inline w-full leading-7 border-b" placeholder="请输入手机号" />
+        <input className="inline w-full leading-7 border-b focus:outline-none" placeholder="请输入手机号" />
       </div>
 
       <div className="flex px-2 mx-4 my-5 text-sm">
         <input className="inline w-full leading-7 border-b" placeholder="请输入验证码" />
-        <input className="px-4 py-1 border justify-self-end rounded-3xl text-primary-500 border-primary-500" type="button" value="获取验证码" />
+        <input className="px-4 py-1 border justify-self-end rounded-3xl text-primary-500 border-primary-500 focus:outline-none" type="button" value="获取验证码" />
       </div>
 
       <div className="flex items-center px-2 mx-4 justify-items-center">
