@@ -1,15 +1,17 @@
 import { FC, useState } from 'react'
 import { IonPage, IonHeader, IonContent } from '@ionic/react'
 import { RadioGroup } from '@headlessui/react'
+import {useRouter} from 'next/router'
+import { Router } from 'react-router-dom';
 
-// 与客户关系的单选按钮组件
+// 投诉类型的单选按钮组件
 function MyRadioGroup() {
   let [plan, setPlan] = useState('startup')
 
   return (
     <RadioGroup value={plan} onChange={setPlan} 
-        className="flex items-center justify-between gap-2 px-4 py-2 shadow-md">
-      <RadioGroup.Label>投诉类型</RadioGroup.Label>
+        className="flex items-center justify-between px-4 py-2 mx-2 shadow-md">
+      <RadioGroup.Label className="px-2 py-2">投诉类型</RadioGroup.Label>
       <RadioGroup.Option value="startup">
         {({ checked }) => (
           <span className={checked ? ' px-5 py-1 text-white bg-secondary-300 rounded-3xl' : 'px-5 py-1 text-gray-500 border rounded-3xl'}>
@@ -32,9 +34,9 @@ function MyRadioGroup() {
   )
 }
 
-
 // 申请投诉页面
 const ApplyComp = () => {
+  const router=useRouter();
   return <IonPage>
     <IonHeader>
       <div className='h-10 pt-2 font-medium text-center text-white bg-primary-600 margin-auto'>
@@ -46,12 +48,6 @@ const ApplyComp = () => {
         <p className=''>
           <MyRadioGroup />
         </p>
-        {/* <p className='flex items-center justify-between gap-2 px-4 py-2 shadow-md'>
-          <span className='flex '>投诉类型</span>
-          <span className='px-5 py-1 text-white bg-secondary-300 rounded-3xl'>课程</span>
-          <span className='px-5 py-1 text-gray-500 border rounded-3xl'>老师</span>
-          <span className='px-5 py-1 text-gray-500 border rounded-3xl'>其他</span>
-        </p> */}
         <div className='px-4 pt-2 mx-2 mt-2 rounded-md shadow-md'>
           <p className='px-3 py-2 mt-2 leading-7 rounded-md bg-primary-50'>
             <span className='pr-3'>机构名称</span>
@@ -65,8 +61,10 @@ const ApplyComp = () => {
             className='w-full h-40 py-2 pl-2 mt-1 mb-2 rounded-md bg-gray-50 focus:outline-none' />
         </div>
         <div className='flex justify-center'>
-          <input className='w-full py-3 mx-6 mt-6 font-bold tracking-wider text-center text-white shadow-md bg-primary-600 shadow-primary-500 rounded-3xl focus:border-primary-500'
-            value="提交投诉" />
+          <input className='w-full py-3 mx-6 mt-6 font-bold tracking-wider text-center text-white shadow-md bg-primary-600 shadow-primary-500 rounded-3xl focus:outline-none focus:border-primary-700'
+            value="提交投诉" 
+            type="button"
+            onClick={()=>{router.push("./compList")}}/>
         </div>
       </form>
     </IonContent>
