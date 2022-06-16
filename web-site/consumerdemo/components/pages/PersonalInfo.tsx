@@ -1,7 +1,8 @@
 import React from 'react'
 import { IonPage, IonHeader, IonContent } from '@ionic/react'
-
+import { useRouter } from 'next/router'
 const PersonalInfo = () => {
+  const router=useRouter()
   return <IonPage>
     <IonHeader>
       <div className='h-10 pt-2 font-medium text-center text-white bg-primary-600 margin-auto'>
@@ -41,7 +42,7 @@ const PersonalInfo = () => {
 
       <div className='mx-2 my-2 text-sm'>
         <p>以下为学生列表</p>
-        <div className='flex justify-between gap-4 p-3 mt-2 rounded-md shadow-md'>
+        <div className='flex justify-between p-3 mt-2 rounded-md shadow-md'>
           <div className='w-24 p-5 rounded-md shadow-md shadow-secondary-200 bg-secondary-50'>
             <div className='font-semibold text-center text-orange-400'>张大宝</div>
             <div className='pt-1 text-xs text-center text-gray-500'>12周岁</div>
@@ -56,7 +57,9 @@ const PersonalInfo = () => {
           </a>
         </div>
         <div className='flex mt-10'>
-          <input className='w-full py-2 mx-6 font-bold text-white shadow-md bg-primary-600 rounded-3xl shadow-primary-600' type="button" value="确定修改" />
+          <input className='w-full py-2 mx-6 font-bold text-white shadow-md bg-primary-600 rounded-3xl shadow-primary-600' 
+                 type="button" value="确定修改" 
+                 onClick={()=>{alert("修改成功")}}/>
         </div>
 
 

@@ -8,11 +8,17 @@ const CheckInAndLeave = () => {
 
   // 签到结果提示
   const CheckInFun = () => {
+    router.push("./checkInList")
     alert("签到成功")
   }
 // 请假结果提示
   const LeaveFun = () => {
-    alert("请假成功")
+    const isLeave = confirm('你确定要请假吗？')
+    if (isLeave === true) {
+      router.push("./checkInList")
+    } else if (isLeave === false) {
+      alert("取消请假")
+    }
   }
   return <IonPage>
     <IonHeader>
