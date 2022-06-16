@@ -23,7 +23,7 @@ import LessonDetail from './pages/LessonDetail';
 import RefoundLesson from './pages/RefundLesson';
 import CheckInAndLeave from './pages/CheckInAndLeave';
 import CheckInList from './pages/CheckInList'
-import FileComp from './pages/FileComp';
+import ApplyComp from './pages/ApplyComp';
 import LessonEvalDetail from './pages/LessonEvalDetail';
 import PersonalCenter from './pages/PersonalCenter';
 import NoticeInfoList from './pages/NoticeInfoList';
@@ -82,7 +82,7 @@ const AppShell = () => {
               <Route path="/refoundLesson" render={() => <RefoundLesson />} />
               <Route path="/checkInAndLeave" render={() => <CheckInAndLeave />} />
               <Route path="/checkInList" render={() => <CheckInList />} />
-              <Route path="/fileComp" render={() => <FileComp />} />
+              <Route path="/applyComp" render={() => <ApplyComp />} />
               <Route path="/lessonEvalDetail" render={() => <LessonEvalDetail />} />
               <Route path="/personalCenter" render={() => <PersonalCenter />} />
               <Route path="/noticeInfoList" render={() => <NoticeInfoList />} />
