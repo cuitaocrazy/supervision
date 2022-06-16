@@ -1,8 +1,13 @@
-import React,{useState,useEffect} from 'react'
+import {useState,useEffect,FC} from 'react'
 import { IonPage, IonHeader, IonContent } from '@ionic/react'
 import { useRouter } from 'next/router'
-import ModalFrame from 'components/ModalFrame'
+// import ModalFrame from 'components/ModalFrame'
+import { Dialog } from '@headlessui/react'
 
+interface ModalProps{
+  isOpen:boolean
+  setIsOpen:()=>{}
+}
 
 // 自动签到课程组件card
 const AutoCheckInLessonCard=()=>{
@@ -27,13 +32,12 @@ const AutoCheckInLessonCard=()=>{
 </div>
 }
 
+
+
 // 自动签到页面
 const AutoCheckIn = () => {
   const router=useRouter();
-  const [modalVisible, setModalVisible] = useState(true);
-  const openModal = function() { setModalVisible(true) };
-  const closeModal = function() { setModalVisible(false) };
-
+  const [isOpen, setIsOpen] = useState(true);
   return <IonPage>
     <IonHeader>
       <div className='h-10 pt-2 font-medium text-center text-white bg-primary-600 margin-auto'>
@@ -46,10 +50,14 @@ const AutoCheckIn = () => {
         <div className='flex mt-10'>
           <input className='w-full py-2 mx-3 font-bold text-white shadow-md bg-primary-600 rounded-3xl shadow-primary-600' 
                 type="button" value="开启自动签到"
-                onClick={()=>{openModal()}} />
+                onClick={() => setIsOpen(true)} />
               
         </div>
-        <ModalFrame visible={modalVisible}  />  
+        {/* <ModalFrame visible={modalVisible}  />   */}
+        <Dialog open={isOpen} onClose={()=>setIsOpen(false)}>
+          <Dialog.Overlay className="fixed inset-0 bg-black opacity-30" />
+        </Dialog>
+
       </div>
 
     </IonContent>

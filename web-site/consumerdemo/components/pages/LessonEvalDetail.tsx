@@ -74,7 +74,8 @@ const LessonEvalDetail = () => {
           </div>
           <p className='mx-2 my-2'>评价内容</p>
           <div className='text-gray-400'>
-            <textarea className='w-full h-40 p-2 border-0 rounded focus:border-0 bg-gray-50 focus:outline-none' placeholder='请告诉我们老师的优点或者美中不足吧～' />
+            <textarea className='w-full h-40 p-2 border-0 rounded focus:border-0 bg-gray-50 focus:outline-none' 
+                      placeholder='请告诉我们老师的优点或者美中不足吧～' />
           </div>
         </div>
         <div className='flex'>

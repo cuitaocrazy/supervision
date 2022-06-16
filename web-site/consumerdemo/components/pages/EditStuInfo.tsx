@@ -1,7 +1,6 @@
 import React from 'react';
 import { IonPage, IonHeader, IonContent } from "@ionic/react"
 import { motion } from 'framer-motion'
-import { useForm, SubmitHandler } from 'react-hook-form'
 import { useRouter } from 'next/router'
 
 type FormData = {
@@ -10,7 +9,6 @@ type FormData = {
 
 // 编辑学生信息页面
 const EditStuInfo = () => {
-  const { register, handleSubmit, formState: { errors } } = useForm<FormData>()
   const router = useRouter()
 
   return <IonPage>
