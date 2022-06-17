@@ -36,7 +36,7 @@ import AutoCheckIn from './pages/AutoCheckIn';
 import BatchCheckIn from './pages/BatchCheckIn';
 import AllCheckInList from './pages/AllCheckInList';
 import PersonalInfo from './pages/PersonalInfo';
-import DiscussDetail from './pages/DiscussDetail';
+import ApplyDiscuss from './pages/ApplyDiscuss';
 import ECNYPay from './pages/ECNYPay';
 import ECNYPayResult from './pages/ECNYPayResult';
 import Demo from './pages/Demo'
@@ -95,7 +95,7 @@ const AppShell = () => {
               <Route path="/batchCheckIn" render={() => <BatchCheckIn />} />
               <Route path="/allCheckInList" render={() => <AllCheckInList />} />
               <Route path="/personalInfo" render={() => <PersonalInfo />} />
-              <Route path="/discussDetail" render={() => <DiscussDetail />} />
+              <Route path="/applyDiscuss" render={() => <ApplyDiscuss />} />
               <Route path="/eCNYPay" render={() => <ECNYPay />} />
               <Route path="/eCNYPayResult" render={() => <ECNYPayResult />} />
               <Route path="/demo" render={() => <Demo />} />
