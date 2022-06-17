@@ -2,7 +2,6 @@ import React from 'react';
 import { IonPage, IonHeader, IonContent } from "@ionic/react"
 import LessonEvalCard from "../LessonEvalCard"
 import LessonFrame from "../LessonFrame"
-import Schedule from 'components/Schedule';
 import LessonIntroduce from 'components/LessonIntroduce';
 import TeacherIntroduce from 'components/TeacherIntroduce';
 import { Tab } from '@headlessui/react';
