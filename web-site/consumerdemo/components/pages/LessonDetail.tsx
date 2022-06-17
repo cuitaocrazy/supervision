@@ -2,17 +2,17 @@ import React from 'react';
 import { IonPage, IonHeader, IonContent } from "@ionic/react"
 import LessonEvalCard from "../LessonEvalCard"
 import LessonFrame from "../LessonFrame"
-import Schedule from 'components/Schedule';
 import LessonIntroduce from 'components/LessonIntroduce';
 import TeacherIntroduce from 'components/TeacherIntroduce';
+import OrderInfo from 'components/OrderInfo';
+import Schedule from 'components/Schedule';
 import { Tab } from '@headlessui/react';
-// import Schedule from '../Schedule'
 
 // 标签选项卡
 function MyTabs() {
   return (
     <Tab.Group defaultIndex={0}>
-      <Tab.List className="flex items-center gap-8 pt-2 mx-10 mt-3 text-sm text-gray-500 justify-items-center">
+      <Tab.List className="grid items-center grid-cols-3 gap-10 py-2 mx-10 mt-3 text-sm text-gray-500 justify-items-center">
         <Tab className={({ selected }) =>
           selected ? 'font-medium text-primary-600 flex justify-center focus:outline-none' : 'bg-white text-gray-500'
         }>课程详情</Tab>
@@ -29,6 +29,7 @@ function MyTabs() {
           <Schedule />
           <LessonIntroduce />
           <TeacherIntroduce />
+          <OrderInfo />
         </Tab.Panel>
         <Tab.Panel>
           <LessonFrame />
@@ -41,36 +42,9 @@ function MyTabs() {
   )
 }
 
-// 课程详情页面底部菜单组件
-const BottomMenu = () => {
-  return <div className='fixed bottom-0 grid w-full grid-cols-3 mt-6 bg-white border-t h-14 justify-items-center'>
-    <a className='mt-2 text-primary-500'
-      href="./checkInAndLeave">
-      <div>
-        <svg className="w-5 h-5 ml-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-        </svg>
-      </div>
-      <div className='text-xs'>签到/请假</div>
-    </a>
-    <a className='mt-2 text-green-500 '
-      href="./checkInList">
-      <div className='pl-3'>
-        <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">  <line x1="8" y1="6" x2="21" y2="6" />  <line x1="8" y1="12" x2="21" y2="12" />  <line x1="8" y1="18" x2="21" y2="18" />  <line x1="3" y1="6" x2="3.01" y2="6" />  <line x1="3" y1="12" x2="3.01" y2="12" />  <line x1="3" y1="18" x2="3.01" y2="18" /></svg>
-      </div>
-      <div className='mr-4 text-xs'>签到列表</div>
-    </a>
-    <a className='mt-2 text-secondary-300'
-      href="./lessonEvalDetail">
-      <div>
-        <svg className="w-5 h-5 " width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">  <path d="M12 20h9" />  <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" /></svg>
-      </div>
-      <div className='mr-4 text-xs'>评价</div>
-    </a>
-  </div>
-}
 
-// 培训机构信息组件
+
+// 课程的培训机构信息组件
 const OrgInfo = () => {
   return <div className='px-3 py-1 mx-3 rounded-lg shadow-md'>
     <div className='text-lg font-bold'>小画家美术培训</div>
@@ -112,7 +86,34 @@ const OrgInfo = () => {
   </div>
 }
 
-
+// 课程详情页面底部菜单组件
+const LessonDetailBottomMenu = () => {
+  return <div className='fixed bottom-0 grid w-full grid-cols-3 mt-6 bg-white border-t h-14 justify-items-center'>
+    <a className='mt-2 text-primary-500'
+      href="./checkInAndLeave">
+      <div>
+        <svg className="w-5 h-5 ml-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+        </svg>
+      </div>
+      <div className='text-xs'>签到/请假</div>
+    </a>
+    <a className='mt-2 text-green-500 '
+      href="./checkInList">
+      <div className='pl-3'>
+        <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">  <line x1="8" y1="6" x2="21" y2="6" />  <line x1="8" y1="12" x2="21" y2="12" />  <line x1="8" y1="18" x2="21" y2="18" />  <line x1="3" y1="6" x2="3.01" y2="6" />  <line x1="3" y1="12" x2="3.01" y2="12" />  <line x1="3" y1="18" x2="3.01" y2="18" /></svg>
+      </div>
+      <div className='mr-4 text-xs'>签到列表</div>
+    </a>
+    <a className='mt-2 text-secondary-300'
+      href="./lessonEvalDetail">
+      <div>
+        <svg className="w-5 h-5 " width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">  <path d="M12 20h9" />  <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" /></svg>
+      </div>
+      <div className='mr-4 text-xs'>评价</div>
+    </a>
+  </div>
+}
 
 // 课程详情页面
 const LessonDetail = () => {
@@ -133,7 +134,7 @@ const LessonDetail = () => {
         </div>
         <MyTabs />
       </div>
-      <BottomMenu />
+      <LessonDetailBottomMenu />
     </IonContent>
   </IonPage>
 }

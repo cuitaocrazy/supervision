@@ -49,6 +49,7 @@ const OrgLessonList = () => {
           </div>
         </div>
         {/* 课程列表card */}
+        <a href="./searchLessonDetail">
         <div className='mx-2 mt-3 rounded-lg shadow-md glow-third-200'>
           <div className='grid grid-cols-3 mx-2 h-28 rounde-xl'>
             <img className='w-24 h-24 col-span-1 mt-2 ml-1 rounded-xl' src="http://placekitten.com/g/200/300"></img>
@@ -63,6 +64,7 @@ const OrgLessonList = () => {
             </div>
           </div>
         </div>
+        </a>
 
         <div className='mx-2 mt-3 rounded-lg shadow-md glow-third-200'>
           <div className='grid grid-cols-3 mx-2 h-28 rounde-xl'>
