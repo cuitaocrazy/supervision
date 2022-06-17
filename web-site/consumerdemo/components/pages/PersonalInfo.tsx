@@ -1,6 +1,8 @@
 import React from 'react'
 import { IonPage, IonHeader, IonContent } from '@ionic/react'
 import { useRouter } from 'next/router'
+
+// 个人信息页面
 const PersonalInfo = () => {
   const router=useRouter()
   return <IonPage>

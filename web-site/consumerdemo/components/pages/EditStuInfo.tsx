@@ -1,7 +1,9 @@
-import React from 'react';
+import {FC} from 'react';
 import { IonPage, IonHeader, IonContent } from "@ionic/react"
 import { motion } from 'framer-motion'
 import { useRouter } from 'next/router'
+import SexList from 'components/SexList';
+import Relation from 'components/Relation';
 
 type FormData = {
   name: string;
@@ -25,11 +27,7 @@ const EditStuInfo = () => {
     <form>
         <div className='mt-2 mb-3 ml-4 mr-3 text-base bg-white pb-15 scroll-auto'>
           <div className='p-2 px-2 pt-4 pb-4 rounded-lg shadow-md'>
-            <div className='flex items-center justify-center gap-10 '>
-              <div className='px-4 py-1 text-white border border-orange-400 bg-secondary-400 rounded-3xl focus:bg-secondary-500'>本人</div>
-              <div className='px-4 py-1 text-gray-500 border rounded-3xl'>子女</div>
-              <div className='px-4 py-1 text-gray-500 border rounded-3xl'>其他</div>
-            </div>
+            <Relation />
             <div className='grid grid-cols-2 mt-3 justify-items-stretch'>
               <span className='pr-2 text-gray-400 '>学生姓名:</span>
               <input className='py-2 pl-2 text-gray-800 border rounded-md focus:outline-none' value="张大宝"></input>
@@ -40,11 +38,7 @@ const EditStuInfo = () => {
             </div>
             <div className='grid grid-cols-2 mt-3 justify-items-stretch'>
               <span className='pr-2 text-gray-400'>学生性别:</span>
-              <select className='w-full h-10 pl-2 mr-4 text-gray-800 border border-gray-300 rounded outline-none cursor-pointer focus:ring-0 focus:ring-primary-600 focus:outline-none checked:bg-primary-500'>
-                <option value="" selected >男</option>
-                <option value="">女</option>
-                <option value="">保密</option>
-              </select>
+              <SexList />
             </div>
           </div>
         </div>
