@@ -3,7 +3,7 @@ import { IonPage, IonHeader, IonContent } from '@ionic/react'
 import { useRouter } from 'next/router'
 
 // 申请课程评价
-const LessonEvalDetail = () => {
+const MyLessonEvalDetail = () => {
   const router=useRouter();
   return <IonPage>
     <IonHeader>
@@ -81,11 +81,11 @@ const LessonEvalDetail = () => {
         <div className='flex'>
           <input value="提交评价" type="button" 
                  className='w-full py-2 mx-6 mt-6 font-medium tracking-wider text-white shadow-md bg-primary-600 rounded-3xl shadow-primary-600'
-                 onClick={()=>{router.push("./lessonEvalList")}} />
+                 onClick={()=>{router.push("./myLessonEvalList")}} />
         </div>
       </form>
     </IonContent>
   </IonPage>
 }
 
-export default LessonEvalDetail
+export default MyLessonEvalDetail

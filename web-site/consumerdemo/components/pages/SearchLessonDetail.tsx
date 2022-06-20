@@ -5,6 +5,7 @@ import LessonFrame from "../LessonFrame"
 import LessonIntroduce from 'components/LessonIntroduce';
 import TeacherIntroduce from 'components/TeacherIntroduce';
 import { Tab } from '@headlessui/react';
+import {useRouter} from 'next/router'
 
 // 标签选项卡
 function MyTabs() {
@@ -82,6 +83,7 @@ const OrgInfo = () => {
 
 // 课程详情页面底部菜单组件
 const LessonDetailBottomMenu = () => {
+  const router=useRouter();
   return <div className='fixed bottom-0 flex w-full pl-5 mt-6 ml-3 mr-5 bg-white h-14'>
     <a className='mt-2 mr-6'
       href="./orgLessonList">

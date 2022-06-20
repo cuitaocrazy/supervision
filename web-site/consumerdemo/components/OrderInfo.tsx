@@ -1,5 +1,6 @@
 import React from 'react'
 
+// 订单信息组件
 const OrderInfo = () => {
   return <div className='px-3 pt-3 pb-4 mx-3 mt-2 text-xs rounded-lg shadow-md'>
     <div className='flex leading-6'>
@@ -8,11 +9,11 @@ const OrderInfo = () => {
     </div>
     <div className='flex leading-6'>
       <div className='pr-3 text-gray-500'>下单时间</div>
-      <div className='text-gray-700'>2022-01-21 09：14:30</div>
+      <div className='text-gray-700'>2022-01-21 09:14:30</div>
     </div>
     <div className='flex leading-6'>
       <div className='pr-3 text-gray-500'>付款时间</div>
-      <div className='text-gray-700'>2022-01-21 09：12:30</div>
+      <div className='text-gray-700'>2022-01-21 09:12:30</div>
     </div>
     <div className='flex leading-6'>
       <div className='pr-3 text-gray-500'>支付方式</div>

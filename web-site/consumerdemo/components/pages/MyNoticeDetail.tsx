@@ -2,7 +2,7 @@ import React from 'react'
 import { IonPage, IonHeader, IonContent } from '@ionic/react'
 
 // 公告详情
-const NoticeDetail = () => {
+const MyNoticeDetail = () => {
   return <IonPage>
     <IonHeader>
       <div className='h-10 pt-2 font-medium text-center text-white bg-primary-600 margin-auto'>
@@ -25,4 +25,4 @@ const NoticeDetail = () => {
     </IonContent>
   </IonPage>
 }
-export default NoticeDetail
+export default MyNoticeDetail

@@ -35,7 +35,7 @@ const AutoCheckInLessonCard=()=>{
 
 
 // 自动签到页面
-const AutoCheckIn = () => {
+const MyAutoCheckIn = () => {
   const router=useRouter();
   const [isOpen, setIsOpen] = useState(true);
   return <IonPage>
@@ -65,4 +65,4 @@ const AutoCheckIn = () => {
 
 }
 
-export default AutoCheckIn
+export default MyAutoCheckIn

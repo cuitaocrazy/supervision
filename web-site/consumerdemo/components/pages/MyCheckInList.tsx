@@ -4,7 +4,7 @@ import Calendar from '../Calendar'
 import CheckInResultList from 'components/CheckInResultList'
 
 // 一门课程的签到结果列表页面
-const CheckInList = () => {
+const MyCheckInList = () => {
   return <IonPage>
     <IonHeader>
       <div className='h-10 pt-2 font-medium text-center text-white bg-primary-600 margin-auto'>
@@ -20,4 +20,4 @@ const CheckInList = () => {
   </IonPage>
 }
 
-export default CheckInList
+export default MyCheckInList

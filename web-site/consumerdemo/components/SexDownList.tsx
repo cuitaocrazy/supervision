@@ -9,13 +9,13 @@ const sex = [
 ]
 
 // 学生性别下拉菜单组件
-const SexList = () => {
+const SexDownList = () => {
   const [selected, setSelected] = useState(sex[0])
   return (
     <div className="border rounded-md ">
       <Listbox value={selected} onChange={setSelected} >
-        <div className="relative h-10 mt-1">
-          <Listbox.Button className="relative w-full py-2 pl-3 pr-10 text-left bg-white rounded-lg shadow-md cursor-default focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
+        <div className="relative h-8 mt-1">
+          <Listbox.Button className="relative w-full py-1 pl-3 pr-10 text-left bg-white rounded-lg shadow-md cursor-default focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
             <span className="block truncate">{selected.name}</span>
             <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
               <SelectorIcon
@@ -34,7 +34,7 @@ const SexList = () => {
                 <Listbox.Option
                   key={sexIdx}
                   className={({ active }) =>
-                    `relative cursor-default select-none py-2 pl-10 pr-4 ${active ? 'bg-amber-100 text-amber-900' : 'text-gray-900'
+                    `relative cursor-default select-none py-1 pl-10 pr-4 ${active ? 'bg-amber-100 text-amber-900' : 'text-gray-900'
                     }`
                   }
                   value={sex}
@@ -63,4 +63,4 @@ const SexList = () => {
     </div>
   )
 }
-export default SexList
+export default SexDownList

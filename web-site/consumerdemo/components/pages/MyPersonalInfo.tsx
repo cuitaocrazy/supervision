@@ -3,7 +3,7 @@ import { IonPage, IonHeader, IonContent } from '@ionic/react'
 import { useRouter } from 'next/router'
 
 // 个人信息页面
-const PersonalInfo = () => {
+const MyPersonalInfo = () => {
   const router=useRouter()
   return <IonPage>
     <IonHeader>
@@ -64,11 +64,6 @@ const PersonalInfo = () => {
                  onClick={()=>{alert("修改成功")}}/>
         </div>
 
-
-
-
-
-
         {/* <div className='px-2 py-2 rounded-md shadow-md'>
           <div className='flex items-center justify-between px-2 py-2 my-2 rounded-md text-secondary-400 bg-secondary-50'>
             <div className='px-2 py-2 rounded-md '>
@@ -103,9 +98,8 @@ const PersonalInfo = () => {
         </div> */}
 
       </div>
-
     </IonContent>
   </IonPage>
 }
 
-export default PersonalInfo
+export default MyPersonalInfo

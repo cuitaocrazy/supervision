@@ -2,12 +2,13 @@ import React, { useState } from 'react'
 import { IonPage, IonHeader, IonContent } from '@ionic/react'
 import { useRouter } from 'next/router'
 
-// 修改密码
+
 export interface Pwd {
   oldPwd: string,
   NewPwd: string,
 }
 
+// 修改密码
 const EditPwd = () => {
   const router = useRouter()
   const [pwdState, setpwdState] = useState({} as Pwd);

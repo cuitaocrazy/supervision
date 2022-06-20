@@ -18,24 +18,24 @@ import StuInfoList from './pages/StuInfoList';
 import AddStuInfo from './pages/AddStuInfo'
 import EditStuInfo from './pages/EditStuInfo'
 import PayResult from './pages/PayResult';
-import LessonList from './pages/LessonList';
-import LessonDetail from './pages/LessonDetail';
+import MyLessonList from './pages/MyLessonList';
+import MyLessonDetail from './pages/MyLessonDetail';
 import RefoundLesson from './pages/RefundLesson';
 import CheckInAndLeave from './pages/CheckInAndLeave';
-import CheckInList from './pages/CheckInList'
-import ApplyComp from './pages/ApplyComp';
-import LessonEvalDetail from './pages/LessonEvalDetail';
-import PersonalCenter from './pages/PersonalCenter';
-import NoticeInfoList from './pages/NoticeInfoList';
-import NoticeDetail from './pages/NoticeDetail';
-import CompList from './pages/CompList';
-import CompDetail from './pages/CompDetail';
-import LessonEvalList from './pages/LessonEvalList';
+import MyCheckInList from './pages/MyCheckInList'
+import MyApplyComp from './pages/MyApplyComp';
+import MyLessonEvalDetail from './pages/MyLessonEvalDetail';
+import MyPersonalCenter from './pages/MyPersonalCenter';
+import MyNoticeInfoList from './pages/MyNoticeInfoList';
+import MyNoticeDetail from './pages/MyNoticeDetail';
+import MyCompList from './pages/MyCompList';
+import MyCompDetail from './pages/MyCompDetail';
+import MyLessonEvalList from './pages/MyLessonEvalList';
 import EditPwd from './pages/EditPwd';
-import AutoCheckIn from './pages/AutoCheckIn';
-import BatchCheckIn from './pages/BatchCheckIn';
-import AllCheckInList from './pages/AllCheckInList';
-import PersonalInfo from './pages/PersonalInfo';
+import MyAutoCheckIn from './pages/MyAutoCheckIn';
+import MyBatchCheckIn from './pages/MyBatchCheckIn';
+import MyAllCheckInList from './pages/MyAllCheckInList';
+import MyPersonalInfo from './pages/MyPersonalInfo';
 import ApplyDiscuss from './pages/ApplyDiscuss';
 import ECNYPay from './pages/ECNYPay';
 import ECNYPayResult from './pages/ECNYPayResult';
@@ -77,24 +77,24 @@ const AppShell = () => {
               <Route path="/addStuInfo" render={() => <AddStuInfo />} />
               <Route path="/editStuInfo" render={() => <EditStuInfo />} />
               <Route path="/payResult" render={() => <PayResult />} />
-              <Route path="/lessonList" render={() => <LessonList />} />
-              <Route path="/lessonDetail" render={() => <LessonDetail />} />
+              <Route path="/myLessonList" render={() => <MyLessonList />} />
+              <Route path="/myLessonDetail" render={() => <MyLessonDetail />} />
               <Route path="/refoundLesson" render={() => <RefoundLesson />} />
               <Route path="/checkInAndLeave" render={() => <CheckInAndLeave />} />
-              <Route path="/checkInList" render={() => <CheckInList />} />
-              <Route path="/applyComp" render={() => <ApplyComp />} />
-              <Route path="/lessonEvalDetail" render={() => <LessonEvalDetail />} />
-              <Route path="/personalCenter" render={() => <PersonalCenter />} />
-              <Route path="/noticeInfoList" render={() => <NoticeInfoList />} />
-              <Route path="/noticeDetail" render={() => <NoticeDetail />} />
-              <Route path="/compList" render={() => <CompList />} />
-              <Route path="/compDetail" render={() => <CompDetail />} />
-              <Route path="/lessonEvalList" render={() => <LessonEvalList />} />
+              <Route path="/myCheckInList" render={() => <MyCheckInList />} />
+              <Route path="/myApplyComp" render={() => <MyApplyComp />} />
+              <Route path="/myLessonEvalDetail" render={() => <MyLessonEvalDetail />} />
+              <Route path="/myPersonalCenter" render={() => <MyPersonalCenter />} />
+              <Route path="/myNoticeInfoList" render={() => <MyNoticeInfoList />} />
+              <Route path="/myNoticeDetail" render={() => <MyNoticeDetail />} />
+              <Route path="/mycompList" render={() => <MyCompList />} />
+              <Route path="/myCompDetail" render={() => <MyCompDetail />} />
+              <Route path="/myLessonEvalList" render={() => <MyLessonEvalList />} />
               <Route path="/editPwd" render={() => <EditPwd />} />
-              <Route path="/autoCheckIn" render={() => <AutoCheckIn />} />
-              <Route path="/batchCheckIn" render={() => <BatchCheckIn />} />
-              <Route path="/allCheckInList" render={() => <AllCheckInList />} />
-              <Route path="/personalInfo" render={() => <PersonalInfo />} />
+              <Route path="/myAutoCheckIn" render={() => <MyAutoCheckIn />} />
+              <Route path="/myBatchCheckIn" render={() => <MyBatchCheckIn />} />
+              <Route path="/myAllCheckInList" render={() => <MyAllCheckInList />} />
+              <Route path="/myPersonalInfo" render={() => <MyPersonalInfo />} />
               <Route path="/applyDiscuss" render={() => <ApplyDiscuss />} />
               <Route path="/eCNYPay" render={() => <ECNYPay />} />
               <Route path="/eCNYPayResult" render={() => <ECNYPayResult />} />

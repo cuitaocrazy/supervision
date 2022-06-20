@@ -1,13 +1,91 @@
-import { IonButton, IonContent, IonHeader, IonIcon, IonInput, IonItem, IonItemDivider, IonLabel, IonList, IonPage, IonTitle, IonToolbar } from "@ionic/react";
-import React from 'react'
+import { IonContent, IonHeader, IonPage } from "@ionic/react";
+import {FC,Fragment} from 'react'
 import { useRouter } from "next/router";
-// import { phonePortrait, mailOutline } from 'ionicons/icons';
+import { useForm, SubmitHandler } from 'react-hook-form'
+import { Tab } from '@headlessui/react'
 
-// import styles from './Login.module.css';
+type FormDate = {
+  username: string
+  password: string
+}
+
+// 账号登录和验证码登录Tab
+function MyTabs() {
+  return (
+    <Tab.Group>
+      <Tab.List>
+        <Tab as={Fragment}>
+          {({ selected }) => (
+            <button
+              className={
+                selected ? ' px-2 pt-2 mx-2 mt-4 font-bold  text-primary-600 focus:outline-none ' : 'px-2 py-2 mx-2 my-4  text-gray-800 font-bold '
+              }
+            >
+              验证码登录
+            </button>
+          )}
+        </Tab>
+        <Tab as={Fragment}>
+          {({ selected }) => (
+            <button
+              className={
+                selected ? ' px-2 pt-2 mx-2 mt-4 font-bold  text-primary-600 focus:outline-none' : 'px-2 py-2 mx-2 my-4  text-gray-800 font-bold '
+              }
+            >
+              账号登录
+            </button>
+          )}
+        </Tab>
+      </Tab.List>
+      <Tab.Panels>
+        <Tab.Panel>
+        <div className="flex px-2 mx-2 my-2 text-sm">
+          <div className="pr-4">
+            <svg className="inline w-6 h-6 text-primary-600" width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">  <path stroke="none" d="M0 0h24v24H0z" />  <rect x="7" y="4" width="10" height="16" rx="1" />  <line x1="11" y1="5" x2="13" y2="5" />  <line x1="12" y1="17" x2="12" y2="17.01" /></svg>
+          </div>
+          <input className="inline w-full border-b " placeholder="请输入手机号" />
+        </div>
+
+        <div className="flex px-2 mx-2 my-5 text-sm">
+          <div className="pr-5">
+            <svg className="inline w-6 h-6 text-primary-600" width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">  <path stroke="none" d="M0 0h24v24H0z" />  <rect x="3" y="5" width="18" height="14" rx="2" />  <polyline points="3 7 12 13 21 7" /></svg>
+          </div>
+          <input className="inline w-full border-b" placeholder="请输入验证码" />
+          <input className="px-4 py-1 border justify-self-end rounded-3xl text-primary-500 border-primary-500" type="button" value="获取验证码" />
+        </div>
+        </Tab.Panel>
+        <Tab.Panel>
+        <div className="flex px-2 mx-2 my-2 text-sm">
+          <div className="pr-4">
+          <svg className="inline w-6 h-6 text-primary-600"  width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <circle cx="12" cy="7" r="4" />  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" /></svg>
+          </div>
+          <input className="inline w-full border-b " placeholder="请输入账号" />
+        </div>
+
+        <div className="flex px-2 mx-2 my-5 text-sm">
+          <div className="pr-5">
+          <svg className="inline w-6 h-6 text-primary-600"  width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <rect x="5" y="11" width="14" height="10" rx="2" />  <circle cx="12" cy="16" r="1" />  <path d="M8 11v-4a4 4 0 0 1 8 0v4" /></svg>
+          </div>
+          <input className="inline w-full py-1 border-b" placeholder="请输入密码" />
+        </div>
+        </Tab.Panel>
+      </Tab.Panels>
+    </Tab.Group>
+  )
+}
 
 // 登录页面
 const Login = () => {
   const router = useRouter();
+  const { register, handleSubmit, formState: { errors } } = useForm<FormDate>()
+  const onSubmit: SubmitHandler<FormDate> = (data: FormDate) => {
+    saveLoginDate()
+    router.push('./home')
+  }
+
+  function saveLoginDate(): void {
+
+  }
   return <IonPage>
     <IonHeader>
       <div className='h-10 pt-2 font-medium text-center text-white bg-primary-600 margin-auto'>
@@ -15,40 +93,17 @@ const Login = () => {
       </div>
     </IonHeader>
     <IonContent>
-      <div className="flex font-bold text-md ">
-        <div className="grid px-2 pt-2 mx-2 mt-4 font-bold justify-items-center">
-          <p className="text-primary-600">验证码登录</p>
-          <svg className="w-5 h-5 text-primary-600" viewBox="0 7 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round">  <line x1="5" y1="12" x2="19" y2="12" /></svg>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <MyTabs />
+        <div className="flex mt-12 text-base">
+          <input className="w-full h-10 py-2 mx-6 font-bold tracking-widest text-white shadow-md rounded-3xl bg-primary-600 bg-grimary-600 shadow-primary-600 focus:bg-primary-700"
+            type="button"
+            value="登录" />
         </div>
-        <div className="px-2 py-2 mx-2 my-4 justify-items-center">
-          <p className="text-gray-800">账号登录</p>
-        </div>
-      </div>
-
-      <div className="flex px-2 mx-2 my-2 text-sm">
-        <div className="pr-4">
-          <svg className="inline w-7 h-7 text-primary-600" width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">  <path stroke="none" d="M0 0h24v24H0z" />  <rect x="7" y="4" width="10" height="16" rx="1" />  <line x1="11" y1="5" x2="13" y2="5" />  <line x1="12" y1="17" x2="12" y2="17.01" /></svg>
-        </div>
-        <input className="inline w-full border-b " placeholder="请输入手机号" />
-      </div>
-
-      <div className="flex px-2 mx-2 my-5 text-sm">
-        <div className="pr-5">
-          <svg className="inline w-6 h-6 text-primary-600" width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">  <path stroke="none" d="M0 0h24v24H0z" />  <rect x="3" y="5" width="18" height="14" rx="2" />  <polyline points="3 7 12 13 21 7" /></svg>
-        </div>
-        <input className="inline w-full border-b" placeholder="请输入验证码" />
-        <input className="px-4 py-1 border justify-self-end rounded-3xl text-primary-500 border-primary-500" type="button" value="获取验证码" />
-      </div>
-
-      <div className="flex mt-12 text-base">
-        <button className="w-full h-10 py-2 mx-6 font-bold tracking-widest text-white shadow-md rounded-3xl bg-primary-600 bg-grimary-600 shadow-primary-600 focus:bg-primary-700"
-          type="button"
-          onClick={() => { router.push('./home') }} >登录
-        </button>
-      </div>
-      <p className="pt-8 text-sm text-center text-gray-500">登录即同意资金监管平台
-        <span className="text-primary-500">《隐私政策》</span>
-      </p>
+        <p className="pt-8 text-sm text-center text-gray-500">登录即同意资金监管平台
+          <span className="text-primary-500">《隐私政策》</span>
+        </p>
+      </form>
     </IonContent>
   </IonPage>
 

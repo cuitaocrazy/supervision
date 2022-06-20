@@ -2,8 +2,8 @@ import {FC} from 'react';
 import { IonPage, IonHeader, IonContent } from "@ionic/react"
 import { motion } from 'framer-motion'
 import { useRouter } from 'next/router'
-import SexList from 'components/SexList';
-import Relation from 'components/Relation';
+import SexDownList from 'components/SexDownList';
+import RelationRadio from 'components/RelationRadio';
 
 type FormData = {
   name: string;
@@ -27,7 +27,7 @@ const EditStuInfo = () => {
     <form>
         <div className='mt-2 mb-3 ml-4 mr-3 text-base bg-white pb-15 scroll-auto'>
           <div className='p-2 px-2 pt-4 pb-4 rounded-lg shadow-md'>
-            <Relation />
+            <RelationRadio />
             <div className='grid grid-cols-2 mt-3 justify-items-stretch'>
               <span className='pr-2 text-gray-400 '>学生姓名:</span>
               <input className='py-2 pl-2 text-gray-800 border rounded-md focus:outline-none' value="张大宝"></input>
@@ -38,7 +38,7 @@ const EditStuInfo = () => {
             </div>
             <div className='grid grid-cols-2 mt-3 justify-items-stretch'>
               <span className='pr-2 text-gray-400'>学生性别:</span>
-              <SexList />
+              <SexDownList />
             </div>
           </div>
         </div>

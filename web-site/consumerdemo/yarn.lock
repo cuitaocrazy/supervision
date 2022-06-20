@@ -2089,10 +2089,10 @@
     "loose-envify" "^1.1.0"
     "scheduler" "^0.22.0"
 
-"react-hook-form@^7.31.2":
-  "integrity" "sha512-oPudn3YuyzWg//IsT9z2cMEjWocAgHWX/bmueDT8cmsYQnGY5h7/njjvMDfLVv3mbdhYBjslTRnII2MIT7eNCA=="
-  "resolved" "https://registry.npmjs.org/react-hook-form/-/react-hook-form-7.31.2.tgz"
-  "version" "7.31.2"
+"react-hook-form@^7.32.2":
+  "integrity" "sha512-F1A6n762xaRhvtQH5SkQQhMr19cCkHZYesTcKJJeNmrphiZp/cYFTIzC05FnQry0SspM54oPJ9tXFXlzya8VNQ=="
+  "resolved" "https://registry.npmjs.org/react-hook-form/-/react-hook-form-7.32.2.tgz"
+  "version" "7.32.2"
 
 "react-is@^16.13.1", "react-is@^16.6.0", "react-is@^16.7.0":
   "integrity" "sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ=="

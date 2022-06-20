@@ -3,7 +3,7 @@ import { IonPage, IonHeader, IonContent } from '@ionic/react'
 import LessonEvalCard from 'components/LessonEvalCard'
 
 // 我的评价列表
-const LessonEvalList = () => {
+const MyLessonEvalList = () => {
   return <IonPage>
     <IonHeader>
       <div className='h-10 pt-2 font-medium text-center text-white bg-primary-600 margin-auto'>
@@ -20,4 +20,4 @@ const LessonEvalList = () => {
   </IonPage>
 }
 
-export default LessonEvalList
+export default MyLessonEvalList

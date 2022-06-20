@@ -13,7 +13,7 @@ const CompListCard = () => {
 }
 
 // 我的投诉列表
-const CompList = () => {
+const MyCompList = () => {
   return <IonPage>
     <IonHeader>
       <div className='h-10 pt-2 font-medium text-center text-white bg-primary-600 margin-auto'>
@@ -28,4 +28,4 @@ const CompList = () => {
   </IonPage>
 }
 
-export default CompList
+export default MyCompList

@@ -44,7 +44,7 @@ const CheckInLessonList = () => {
 }
 
 // 批量签到页面
-const BatchCheckIn = () => {
+const MyBatchCheckIn = () => {
   const router = useRouter();
 
   const BatchCheckInFun=()=>{
@@ -77,4 +77,4 @@ const BatchCheckIn = () => {
   </IonPage>
 }
 
-export default BatchCheckIn
+export default MyBatchCheckIn

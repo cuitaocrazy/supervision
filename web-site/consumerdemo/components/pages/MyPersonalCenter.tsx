@@ -3,7 +3,7 @@ import { IonPage, IonHeader, IonContent } from '@ionic/react'
 import { motion } from 'framer-motion'
 
 // 个人中心页面
-const PersonalCenter = () => {
+const MyPersonalCenter = () => {
   return <IonPage>
     <IonHeader>
       <div className='flex h-24 pt-2 text-sm font-medium text-white bg-primary-600'>
@@ -26,7 +26,7 @@ const PersonalCenter = () => {
         <div className='bg-white '>
           <div className='grid grid-cols-3 mx-2 justify-items-center'>
             <a className='flex flex-col items-center w-24 h-24 mt-4 bg-red-100 rounded-md shadow-md justify-items-center shadow-red-200'
-              href="./noticeInfoList">
+              href="./myNoticeInfoList">
               {/* <motion.div key="2" className={'reactive ' } animate={{ scale: [1, 1.2, 1] }} transition={{ duration: 0.2 }}><span className="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full">2</span></motion.div> */}
               <p className='mt-4'>
                 <svg className="w-10 h-10 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -37,7 +37,7 @@ const PersonalCenter = () => {
             </a>
 
             <a className='flex flex-col items-center w-24 h-24 mt-4 bg-green-100 rounded-md shadow-md justify-items-center shadow-green-200'
-              href="./personalInfo">
+              href="./myPersonalInfo">
               {/* <motion.div key="2" className={'reactive ' } animate={{ scale: [1, 1.2, 1] }} transition={{ duration: 0.2 }}><span className="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full">2</span></motion.div> */}
               <p className='mt-4'>
                 <svg className="w-10 h-10 text-green-600" width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">  <path stroke="none" d="M0 0h24v24H0z" />  <circle cx="12" cy="7" r="4" />  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" /></svg>
@@ -46,7 +46,7 @@ const PersonalCenter = () => {
             </a>
 
             <a className='flex flex-col items-center w-24 h-24 mt-4 bg-purple-100 rounded-md shadow-md justify-items-center shadow-purple-200'
-              href="./compList">
+              href="./myCompList">
               {/* <motion.div key="2" className={'reactive ' } animate={{ scale: [1, 1.2, 1] }} transition={{ duration: 0.2 }}><span className="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full">2</span></motion.div> */}
               <p className='mt-4'>
                 <svg className="w-8 h-8 text-purple-400" width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">  <path stroke="none" d="M0 0h24v24H0z" />  <rect x="3" y="5" width="18" height="14" rx="3" />  <line x1="3" y1="10" x2="21" y2="10" />  <line x1="7" y1="15" x2="7.01" y2="15" />  <line x1="11" y1="15" x2="13" y2="15" /></svg>
@@ -55,7 +55,7 @@ const PersonalCenter = () => {
             </a>
 
             <a className='flex flex-col items-center w-24 h-24 mt-4 bg-orange-100 rounded-md shadow-md justify-items-center shadow-orange-200'
-              href="./lessonEvalList">
+              href="./myLessonEvalList">
               {/* <motion.div key="2" className={'reactive ' } animate={{ scale: [1, 1.2, 1] }} transition={{ duration: 0.2 }}><span className="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full">2</span></motion.div> */}
               <p className='mt-4'>
                 <svg className="w-10 h-10 text-orange-400" width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">  <path stroke="none" d="M0 0h24v24H0z" />  <path d="M9 5H7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2V7a2 2 0 0 0 -2 -2h-2" />  <rect x="9" y="3" width="6" height="4" rx="2" />  <line x1="9" y1="12" x2="9.01" y2="12" />  <line x1="13" y1="12" x2="15" y2="12" />  <line x1="9" y1="16" x2="9.01" y2="16" />  <line x1="13" y1="16" x2="15" y2="16" /></svg>
@@ -64,7 +64,7 @@ const PersonalCenter = () => {
             </a>
 
             <a className='flex flex-col items-center w-24 h-24 mt-4 bg-red-100 rounded-md shadow-md justify-items-center shadow-red-200'
-              href="./lessonList">
+              href="./myLessonList">
               {/* <motion.div key="2" className={'reactive ' } animate={{ scale: [1, 1.2, 1] }} transition={{ duration: 0.2 }}><span className="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full">2</span></motion.div> */}
               <p className='mt-4'>
                 <svg className="w-10 h-10 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -84,7 +84,7 @@ const PersonalCenter = () => {
             </a>
 
             <a className='flex flex-col items-center w-24 h-24 mt-4 bg-green-100 rounded-md shadow-md justify-items-center shadow-green-200'
-              href="./batchCheckIn">
+              href="./myBatchCheckIn">
               {/* <motion.div key="2" className={'reactive ' } animate={{ scale: [1, 1.2, 1] }} transition={{ duration: 0.2 }}><span className="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full">2</span></motion.div> */}
               <p className='mt-4 '>
                 <svg className="w-10 h-10 text-green-400 " width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">  <path stroke="none" d="M0 0h24v24H0z" />  <path d="M9 5H7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2V7a2 2 0 0 0 -2 -2h-2" />  <rect x="9" y="3" width="6" height="4" rx="2" />  <line x1="9" y1="12" x2="9.01" y2="12" />  <line x1="13" y1="12" x2="15" y2="12" />  <line x1="9" y1="16" x2="9.01" y2="16" />  <line x1="13" y1="16" x2="15" y2="16" /></svg>
@@ -93,7 +93,7 @@ const PersonalCenter = () => {
             </a>
 
             <a className='flex flex-col items-center w-24 h-24 mt-4 bg-purple-100 rounded-md shadow-md justify-items-center shadow-purple-200'
-              href="./autoCheckIn">
+              href="./myAutoCheckIn">
               {/* <motion.div key="2" className={'reactive ' } animate={{ scale: [1, 1.2, 1] }} transition={{ duration: 0.2 }}><span className="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full">2</span></motion.div> */}
               <p className='mt-4'>
                 <svg className="w-10 h-10 text-purple-400" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">  <path stroke="none" d="M0 0h24v24H0z" />  <path d="M9 7 h-3a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-3" />  <path d="M9 15h3l8.5 -8.5a1.5 1.5 0 0 0 -3 -3l-8.5 8.5v3" />  <line x1="16" y1="5" x2="19" y2="8" /></svg>
@@ -102,7 +102,7 @@ const PersonalCenter = () => {
             </a>
 
             <a className='flex flex-col items-center w-24 h-24 mt-4 bg-orange-100 rounded-md shadow-md justify-items-center shadow-orange-200'
-              href="./allCheckInList">
+              href="./myAllCheckInList">
               {/* <motion.div key="2" className={'reactive ' } animate={{ scale: [1, 1.2, 1] }} transition={{ duration: 0.2 }}><span className="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full">2</span></motion.div> */}
               <p className='mt-4'>
                 <svg className="w-10 h-10 text-orange-400" width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">  <path stroke="none" d="M0 0h24v24H0z" />  <path d="M9 5H7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2V7a2 2 0 0 0 -2 -2h-2" />  <rect x="9" y="3" width="6" height="4" rx="2" />  <line x1="9" y1="12" x2="9.01" y2="12" />  <line x1="13" y1="12" x2="15" y2="12" />  <line x1="9" y1="16" x2="9.01" y2="16" />  <line x1="13" y1="16" x2="15" y2="16" /></svg>
@@ -116,4 +116,4 @@ const PersonalCenter = () => {
   </IonPage>
 }
 
-export default PersonalCenter
+export default MyPersonalCenter

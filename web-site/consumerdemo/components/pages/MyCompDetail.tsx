@@ -2,7 +2,7 @@ import React from 'react'
 import { IonPage, IonHeader, IonContent } from '@ionic/react'
 
 // 投诉详情
-const CompDetail = () => {
+const MyCompDetail = () => {
   return <IonPage>
     <IonHeader>
       <div className='h-10 pt-2 font-medium text-center text-white bg-primary-600 margin-auto'>
@@ -46,4 +46,4 @@ const CompDetail = () => {
   </IonPage>
 }
 
-export default CompDetail
+export default MyCompDetail

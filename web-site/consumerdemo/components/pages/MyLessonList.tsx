@@ -24,17 +24,17 @@ const LessonListCard = () => {
     </div>
     <div className='grid grid-cols-3 gap-2 text-xs text-white justify-items-center'>
       <div className='px-6 py-1 shadow-md rounded-3xl bg-primary-500 shadow-primary-300' 
-           onClick={()=>{router.push("./lessonEvalDetail")}}>去评价</div>
+           onClick={()=>{router.push("./myLessonEvalDetail")}}>去评价</div>
       <div className='px-6 py-1 shadow-md rounded-3xl bg-secondary-300 shadow-secondary-300'
-          onClick={()=>{router.push("./applyComp")}}>去投诉</div>
+          onClick={()=>{router.push("./myApplyComp")}}>去投诉</div>
       <div className='px-4 py-1 shadow-md rounded-3xl bg-remind-400 shadow-remind-400'
-           onClick={()=>{router.push("lessonDetail")}}>查看详情</div>
+           onClick={()=>{router.push("myLessonDetail")}}>查看详情</div>
     </div>
   </div>
 }
 
 // 课程列表页面
-const LessonList = () => {
+const MyLessonList = () => {
   const router = useRouter()
   return <IonPage>
     <IonHeader>
@@ -53,4 +53,4 @@ const LessonList = () => {
   </IonPage>
 }
 
-export default LessonList
+export default MyLessonList

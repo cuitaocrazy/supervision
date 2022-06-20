@@ -1,4 +1,4 @@
-import React from 'react';
+import {FC} from 'react';
 import { IonPage, IonHeader, IonContent } from "@ionic/react"
 import { motion } from 'framer-motion'
 import { useForm, SubmitHandler } from 'react-hook-form'
@@ -35,10 +35,8 @@ const PayResult = () => {
           <button className='py-2 text-sm text-white shadow-md shadow-secondary-300 bg-secondary-300 rounded-3xl'
                   onClick={()=>{router.push("./searchLessonlist")}}>继续购买</button>
           <button className='py-2 text-sm text-white bg-red-400 shadow-md shadow-remind-400 rounded-3xl'
-                  onClick={()=>{router.push("./lessonDetail")}}>查看详情</button>
+                  onClick={()=>{router.push("./myLessonDetail")}}>查看详情</button>
         </div>
-
-
       </div>
     </IonContent>
   </IonPage>
