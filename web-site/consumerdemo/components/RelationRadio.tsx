@@ -2,7 +2,7 @@ import { FC, useState } from 'react'
 import { RadioGroup } from '@headlessui/react'
 
 // 与客户的关系组件
-const Relation = () => {
+const RelationRadio = () => {
   let [plan, setPlan] = useState('startup')
   return (
     <RadioGroup value={plan} onChange={setPlan}
@@ -30,4 +30,4 @@ const Relation = () => {
   )
 }
 
-export default Relation
+export default RelationRadio

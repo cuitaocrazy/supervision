@@ -3,7 +3,6 @@ import { IonPage, IonHeader, IonContent } from "@ionic/react"
 import { motion } from 'framer-motion'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { useRouter } from 'next/router'
-import Search from '../Search'
 
 type FormData = {
   name: string;

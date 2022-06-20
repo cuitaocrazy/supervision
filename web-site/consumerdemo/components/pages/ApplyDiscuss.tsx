@@ -1,9 +1,11 @@
 import React from 'react'
 import { IonPage, IonHeader, IonContent } from '@ionic/react'
 import AttendanceStateDownList from 'components/AttendanceStateDownList'
+import {useRouter} from 'next/router'
 
 // 申请协商页面
 const ApplyDiscuss = () => {
+  const router=useRouter();
   return <IonPage>
     <IonHeader>
       <div className='h-10 pt-2 font-medium text-center text-white bg-primary-600 margin-auto'>
@@ -40,7 +42,8 @@ const ApplyDiscuss = () => {
         </div>
         <div className='flex mt-10 text-sm'>
           <input value="提交协商申请" type="button"
-            className='w-full py-2 mx-10 font-bold text-white shadow-md rounded-3xl bg-primary-600 shadow-primary-600 focus:outline-none' />
+            className='w-full py-2 mx-10 font-bold text-white shadow-md rounded-3xl bg-primary-600 shadow-primary-600 focus:outline-none'
+             onClick={()=>{router.push("")}}/>
         </div>
       </form>
     </IonContent>

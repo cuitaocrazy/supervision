@@ -6,7 +6,7 @@ import CompTypeRadioGroup from '../CompTypeRadioGroup'
 
 
 // 申请投诉页面
-const ApplyComp = () => {
+const MyApplyComp = () => {
   const router=useRouter();
   return <IonPage>
     <IonHeader>
@@ -42,4 +42,4 @@ const ApplyComp = () => {
   </IonPage>
 }
 
-export default ApplyComp
+export default MyApplyComp
