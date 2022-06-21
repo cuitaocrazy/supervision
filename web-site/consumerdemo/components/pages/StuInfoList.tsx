@@ -27,11 +27,12 @@ const stuInfo = [
   },
 ]
 function StudentInfoRadioGroup() {
+  const router=useRouter()
   const [selected, setSelected] = useState(stuInfo[0])
   return (
     <div className="w-full px-4 py-4">
       <div className="w-full max-w-md mx-auto">
-        <RadioGroup value={selected} onChange={setSelected}>
+        <RadioGroup value={selected} onChange={setSelected} onClick={()=>{router.push("./conOrder")}}>
           <RadioGroup.Label className="text-gray-800 sr-only">学生信息</RadioGroup.Label>
           <div className="space-y-2">
             {stuInfo.map((stu) => (
@@ -58,7 +59,7 @@ function StudentInfoRadioGroup() {
                             className={`font-medium  ${checked ? 'text-white' : 'text-gray-900'
                               }`}
                           >
-                            {stu.name}<span aria-hidden="true">&middot;</span>{' '}{stu.age}
+                            {stu.name}{' '}<span aria-hidden="true">&middot;</span>{' '}{stu.age}
                           </RadioGroup.Label>
                           <RadioGroup.Description
                             as="span"
