@@ -11,6 +11,9 @@ import {
   IonRow,
   IonCol,
   IonModal,
+  IonCardHeader,
+  IonCardTitle,
+  IonCard,
   IonCardContent,
   IonInput,
   IonPicker,
@@ -98,9 +101,10 @@ const demoLessonList:Lesson[] = [
 const LessonQuery:React.FC =()=>{
   const [isCreateModalOpen,setCreateModalOpen] = useState(false)
   const [createLesson,setCreateLesson] = useState({} as Lesson)
-  const [isUndercarriageModalOpen,setUndercarriageCreateModalOpen] = useState(false)
+  const [cancelLesson,setCancelLesson] = useState({} as Lesson)
+  const [isCancelModalOpen,setIsCancelModalOpen] = useState(false)
   const [isPickOpen, setPickOpen] = useState(false);
-  const onCancel = (item:Lesson)=>() => {
+  const onCancel = async (e: React.FormEvent)=>{
     //todo fetch
     // fetch(delURL, {
     //   method: 'PUT',
@@ -117,7 +121,7 @@ const LessonQuery:React.FC =()=>{
   }
 
 
-  const onCreate = ()=>() => {
+  const onCreate = () => {
       //todo fetch
   }
 
@@ -217,7 +221,7 @@ const LessonQuery:React.FC =()=>{
       <IonLabel>
          <div className='flex gap-2'>
          <button className='p-1 text-white bg-blue-500 rounded-md'  onClick={onDetail(lesson)}>产看详情</button>
-            {lesson.lessonStatus==='on'?<button className='p-1 text-white bg-blue-500 rounded-md' onClick={onCancel(lesson)}>下架</button>:<></> }
+            {lesson.lessonStatus==='on'?<button className='p-1 text-white bg-blue-500 rounded-md' onClick={()=>{setCancelLesson(lesson); setIsCancelModalOpen(true)}}>下架</button>:<></> }
             {lesson.lessonStatus==='pending'?<button className='p-1 text-white bg-blue-500 rounded-md'  onClick={onEdit(lesson)}>编辑</button>:<></> }
          </div>
       </IonLabel>
@@ -238,7 +242,7 @@ const LessonQuery:React.FC =()=>{
                         <form onSubmit={onCreate}>
                           <IonList>
                           <IonLabel position="stacked" color="primary">教育机构名称:</IonLabel>
-                                  <IonInput name="eduId" type="text" value={createLesson.edu.eduName} spellCheck={false} autocapitalize="off" readonly required>
+                                  <IonInput name="eduId" type="text" value={createLesson.edu?createLesson.edu.eduName:''} spellCheck={false} autocapitalize="off" readonly required>
                           </IonInput>
                           <IonLabel position="stacked" color="primary">课程名称</IonLabel>
                                   <IonInput name="lessonName" type="text" value={createLesson.lessonName} spellCheck={false} autocapitalize="off" onIonChange={e => setCreateLesson({...createLesson,...{lessonName:e.detail.value!}})} required>
@@ -297,7 +301,31 @@ const LessonQuery:React.FC =()=>{
                         </form>
                         </IonCardContent>
                     </IonModal>
+                  <IonModal isOpen={isCancelModalOpen}> 
+                    <IonCard>
+                      <IonCardHeader>
+                        <IonCardTitle>课程下架</IonCardTitle>
+                        </IonCardHeader>
+                        <IonCardContent>
+                          <form onSubmit={onCancel}>
+                            <IonLabel position="stacked" color="primary">课程名称:</IonLabel>
+                                    <IonInput name="eduId" type="text" value={cancelLesson.edu?cancelLesson.edu.eduName:''} spellCheck={false} autocapitalize="off" readonly required>
+                            </IonInput>
+                            <IonLabel position="stacked" color="primary">总价（元）:</IonLabel>
+                                    <IonInput name="eduId" type="text" value={Number(cancelLesson.lessonTotalPrice)/100} spellCheck={false} autocapitalize="off" readonly required>
+                            </IonInput>
+                            <IonLabel position="stacked" color="primary">下架原因:</IonLabel>
+                                    <IonInput name="eduId" type="text" value={cancelLesson.lessonUpdateReason} spellCheck={false} autocapitalize="off" onIonChange={e => setCancelLesson({...cancelLesson,...{lessonUpdateReason:e.detail.value!}})} required>
+                            </IonInput>
+                            <button type='submit'>下架</button>
+                            <button onClick={()=>{}}>取消</button>
+                          </form>
+                        </IonCardContent>
 
+
+                    </IonCard>
+                    
+                  </IonModal>
 
                   <IonRow className='flex justify-between '>
                         <IonCol className='flex ml-8'>
@@ -306,7 +334,7 @@ const LessonQuery:React.FC =()=>{
                         </IonCol>
                         <IonCol className='flex ml-8'>
                           <button onClick={()=>{onQuery()}}>查询</button>
-                          <button onClick={()=>{setCreateModalOpen(true)}}>新增</button>
+                          <button onClick={()=>{setCreateModalOpen(false)}}>新增</button>
                         </IonCol>    
                   </IonRow>
                   </div>

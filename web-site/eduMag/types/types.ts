@@ -23,16 +23,17 @@ export interface Contract {
   lessonEndDate: string,
   lessonEndTime: string,
   lessonAttendanceType:string,
-  lessionTotalQuantity:string,
-  lessionTotalPrice:string,
-  lessionPerPrice:string,
+  lessonTotalQuantity:string,
+  lessonTotalPrice:string,
+  lessonPerPrice:string,
   teacherId:string,
   teacherName:string,
   consumerId:string,
   consumerName:string,
+  consumerPhone:string,
   consumerStuName:string,
   orderNo:string,
-
+  lessonTotalTimes:string,
 }
 // export interface TranSum{
 //   USVOrgID?: string,
@@ -67,13 +68,14 @@ export interface Lesson {
   edu: EduOrg,
   teacherId: string,
   teacher: Teacher,
+  lessonFinishTimes?: string,
 }
 
 export interface Teacher {
   teacherId: string,
   teacherName: string,
   teacherIdentityNo?: string,
-  teacherExperience?: number,
+  teacherExperience?: string,
   teacherIntroduce?: string,
   teacherRating?: number,
   teacherCreatedDate?: string,
@@ -87,6 +89,7 @@ export interface Attendance{
   attendanceID:string,
   attendanceDate:string,
   attendanceTime:string,
+  attendanceLessonTimes?:string,
   attendanceType:string,
   attendanceLessionQuantity:string,
   eduId:string,
@@ -211,6 +214,7 @@ export interface ContractNego{
   negoIntent:string,
   negoCreator:string,
   negoStatus:string,
+  negoFinishTimes:string,
   negoCreateDate:string,
   negoCreateTime:string,
   negoUpdateDate:string,
@@ -223,6 +227,7 @@ export interface ContractNego{
   negoEduAgree:string,
   negoEduAgreeDate:string,
   negoEduAgreeTime:string,
+  contract:Contract,
 }
 
 

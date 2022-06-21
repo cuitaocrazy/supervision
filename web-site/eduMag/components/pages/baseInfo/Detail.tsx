@@ -51,12 +51,15 @@ export const BaseInfoDetail: React.FC = () => {
   };
   useEffect(()=>{
     //todo fetch
+    
     refreshbaseInfo(demoEduOrg)
-  })
+    setBaseInfoState(demoEduOrg)
+  },[])
 
   const [baseInfoState, setBaseInfoState] = useState(state.eduOrg.eduOrgDetail);
   const [isPickOpen, setPickOpen] = useState(false);
   const setBack = useCallback(() => {
+    
     dispatch(setEduOrgDetail(undefined));
   },[]);
   const onBack = ()=>() => {
@@ -76,9 +79,12 @@ export const BaseInfoDetail: React.FC = () => {
     //   alert(json.result)
     // })
   }
+  console.log(baseInfoState)
+  if(baseInfoState == null){
+    return <></>
+  }
 
 
-  
   return (
     <IonPage>
             <IonCard>
@@ -125,12 +131,12 @@ export const BaseInfoDetail: React.FC = () => {
           <IonCol>
           <IonLabel position="floating" >是否公立</IonLabel>
                 <IonRadioGroup onIonChange={e => setBaseInfoState({...baseInfoState, eduIsPublic: e.detail.value!})}>
-                      <IonItem>
-                      <IonLabel>公立</IonLabel>
+                    <IonItem>
+                      <IonLabel hidden={true}>公立</IonLabel>
                       <IonRadio value={true} />
                     </IonItem>
                     <IonItem>
-                      <IonLabel>非公立</IonLabel>
+                      <IonLabel hidden={true}>非公立</IonLabel>
                       <IonRadio value={false} />
                     </IonItem>
                   </IonRadioGroup>  
@@ -139,19 +145,19 @@ export const BaseInfoDetail: React.FC = () => {
           <IonLabel position="floating">许可证状态</IonLabel>
                 <IonRadioGroup onIonChange={e => setBaseInfoState({...baseInfoState, eduStatus: e.detail.value!})}>
                       <IonItem>
-                      <IonLabel>有效</IonLabel>
+                      <IonLabel hidden={true}>有效</IonLabel>
                       <IonRadio value={"valid"} />
                     </IonItem>
                     <IonItem>
-                      <IonLabel>无效</IonLabel>
+                      <IonLabel hidden={true}>无效</IonLabel>
                       <IonRadio value={"invalid"} />
                     </IonItem>
                     <IonItem>
-                      <IonLabel>待审核</IonLabel>
+                      <IonLabel hidden={true}>待审核</IonLabel>
                       <IonRadio value={"pending"} />
                     </IonItem>
                     <IonItem>
-                      <IonLabel>拒绝</IonLabel>
+                      <IonLabel hidden={true}>拒绝</IonLabel>
                       <IonRadio value={"reject"} />
                     </IonItem>
                   </IonRadioGroup>
@@ -166,19 +172,19 @@ export const BaseInfoDetail: React.FC = () => {
           <IonLabel position="floating">年检状态</IonLabel>
           <IonRadioGroup onIonChange={e => setBaseInfoState({...baseInfoState, eduAnnualInspection: e.detail.value!})}>
                       <IonItem>
-                      <IonLabel>合格</IonLabel>
+                      <IonLabel hidden={true}>合格</IonLabel>
                       <IonRadio value={"qualified"} />
                     </IonItem>
                     <IonItem>
-                      <IonLabel>不合格</IonLabel>
+                      <IonLabel hidden={true}>不合格</IonLabel>
                       <IonRadio value={"unqualified"} />
                     </IonItem>
                     <IonItem>
-                      <IonLabel>待审核</IonLabel>
+                      <IonLabel hidden={true}>待审核</IonLabel>
                       <IonRadio value={"pending"} />
                     </IonItem>
                     <IonItem>
-                      <IonLabel>拒绝</IonLabel>
+                      <IonLabel hidden={true}>拒绝</IonLabel>
                       <IonRadio value={"reject"} />
                     </IonItem>
                   </IonRadioGroup>

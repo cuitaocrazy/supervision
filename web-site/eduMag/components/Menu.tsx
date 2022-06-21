@@ -23,12 +23,8 @@ const Menu = () => {
   const [isDark, setIsDark] = useState(false);
   const [lessonVisible, setLessonVisible] = useState(false);
 
-
-  const [baseInfoVisible, setBaseInfoVisible] = useState(false);
-  const [eduOrgMagVisible, setEduOrgMagVisible] = useState(false);
-  const [fundVisible, setFundVisible] = useState(false);
+  const [attendanceVisible,setAttendanceVisible] = useState(false);
   const [statisticVisible, setStatisticVisible] = useState(false);
-  const { state } = useContext(AppContext);
   const handleOpen = async () => {
     try {
       await StatusBar.setStyle({
@@ -47,7 +43,6 @@ const Menu = () => {
   useEffect(() => {
     setIsDark(window.matchMedia('(prefers-color-scheme: dark)').matches);
   }, []);
-
 
   return (
     <IonMenu hidden={false} side="start" contentId="main" onIonDidOpen={handleOpen} onIonDidClose={handleClose}>
@@ -71,142 +66,81 @@ const Menu = () => {
                     <IonIcon icon={flash} slot="start" />
                     <IonLabel className="font-bold">{'课程列表'}</IonLabel>
                   </IonItem>
-                  
-              </IonMenuToggle>
-
-
-------------------------------------
-              <IonItem className="flex flex-row justify-center text-center" button onClick={()=>{
-                  setBaseInfoVisible(!baseInfoVisible)
-              }}>
-                <IonIcon slot="start" icon={'informationCircleOutline'}></IonIcon>
-                <IonLabel>基本信息维护</IonLabel>
+                  <IonItem  className="flex flex-row justify-center text-center" routerLink={'/tabs/refund/query'} routerDirection="none" detail={false} lines="none">
+                    <IonIcon icon={flash} slot="start" />
+                    <IonLabel className="font-bold">{'课程退订审批'}</IonLabel>
+                  </IonItem>
+                  <IonItem  className="flex flex-row justify-center text-center" routerLink={'/tabs/attendance/launch'} routerDirection="none" detail={false} lines="none">
+                    <IonIcon icon={flash} slot="start" />
+                    <IonLabel className="font-bold">{'课程签到发起'}</IonLabel>
+                  </IonItem>
+                </IonMenuToggle>
+                <IonItem className="flex flex-row justify-center text-center" button onClick={()=>{
+                  setStatisticVisible(!lessonVisible)
+                }}>
+                <IonLabel>课程考勤</IonLabel>
                 <IonIcon
                   slot="end"
-                  icon={baseInfoVisible ? arrowDown : arrowUp}
+                  icon={lessonVisible ? arrowDown : arrowUp}
                 ></IonIcon>
-              </IonItem>
-              <IonMenuToggle autoHide={!baseInfoVisible} key={'baseInfo'}>
-                <IonItem  className="flex flex-row justify-center text-center" routerLink={'/tabs'} routerDirection="none" detail={false} lines="none">
-                  <IonIcon icon={flash} slot="start" />
-                  <IonLabel className="font-bold">{'用户管理'}</IonLabel>
-                </IonItem>
-                <IonItem  className="flex flex-row justify-center text-center" routerLink={'/tabs'} routerDirection="none" detail={false} lines="none">
-                  <IonIcon icon={flash} slot="start" />
-                  <IonLabel className="font-bold">{'监管机构管理'}</IonLabel>
-                </IonItem>
-                <IonItem  className="flex flex-row justify-center text-center" routerLink={'/tabs'} routerDirection="none" detail={false} lines="none">
-                  <IonIcon icon={flash} slot="start" />
-                  <IonLabel className="font-bold">{'系统字典维护'}</IonLabel>
-                </IonItem>
-                <IonItem  className="flex flex-row justify-center text-center" routerLink={'/tabs'} routerDirection="none" detail={false} lines="none">
-                  <IonIcon icon={flash} slot="start" />
-                  <IonLabel className="font-bold">{'修改密码'}</IonLabel>
-                </IonItem>
-            </IonMenuToggle>
-            <IonItem className="flex flex-row justify-center text-center" button onClick={()=>{
-                  setEduOrgMagVisible(!eduOrgMagVisible)
-              }}>
-                <IonLabel>教育机构管理</IonLabel>
-                <IonIcon
-                  slot="end"
-                  icon={eduOrgMagVisible ? arrowDown : arrowUp}
-                ></IonIcon>
-            </IonItem>
-            <IonMenuToggle autoHide={!eduOrgMagVisible} key={'eduMag'}>
-                <IonItem  className="flex flex-row justify-center text-center" routerLink={'/tabs/orgMag/query'} routerDirection="none" detail={false} lines="none">
-                  <IonIcon icon={flash} slot="start" />
-                  <IonLabel className="font-bold">{'教育机构管理'}</IonLabel>
                 </IonItem>
                 <IonItem  className="flex flex-row justify-center text-center" routerLink={'/tabs/teacher/query'} routerDirection="none" detail={false} lines="none">
                   <IonIcon icon={flash} slot="start" />
-                  <IonLabel className="font-bold">{'查看教师信息'}</IonLabel>
+                  <IonLabel className="font-bold">{'教师管理'}</IonLabel>
                 </IonItem>
-                <IonItem  className="flex flex-row justify-center text-center" routerLink={'/tabs/lesson/query'} routerDirection="none" detail={false} lines="none">
+                <IonItem  className="flex flex-row justify-center text-center" routerLink={'/tabs/contractNego/query'} routerDirection="none" detail={false} lines="none">
                   <IonIcon icon={flash} slot="start" />
-                  <IonLabel className="font-bold">{'课程管理'}</IonLabel>
+                  <IonLabel className="font-bold">{'协商管理'}</IonLabel>
                 </IonItem>
-                <IonItem  className="flex flex-row justify-center text-center" routerLink={'/tabs/announcement/query'} routerDirection="none" detail={false} lines="none">
+                <IonItem  className="flex flex-row justify-center text-center" routerLink={'/tabs/contractNego/query'} routerDirection="none" detail={false} lines="none">
                   <IonIcon icon={flash} slot="start" />
-                  <IonLabel className="font-bold">{'政策公告'}</IonLabel>
+                  <IonLabel className="font-bold">{'协商管理'}</IonLabel>
                 </IonItem>
-                <IonItem  className="flex flex-row justify-center text-center" routerLink={'/tabs'} routerDirection="none" detail={false} lines="none">
-                  <IonIcon icon={flash} slot="start" />
-                  <IonLabel className="font-bold">{'黑名单管理'}</IonLabel>
-                </IonItem>
-            </IonMenuToggle>
-            <IonItem  className="flex flex-row justify-center text-center" routerLink={'/tabs/contract/query'} routerDirection="none" detail={false} lines="none">
-                  <IonIcon icon={flash} slot="start" />
-                  <IonLabel className="font-bold">{'合同管理'}</IonLabel>
-            </IonItem>
-            <IonItem  className="flex flex-row justify-center text-center" routerLink={'/tabs/attendance/query'} routerDirection="none" detail={false} lines="none">
-                  <IonIcon icon={flash} slot="start" />
-                  <IonLabel className="font-bold">{'考勤管理'}</IonLabel>
-            </IonItem>
-
-            <IonItem className="flex flex-row justify-center text-center" button onClick={()=>{
-                  setFundVisible(!fundVisible)
-              }}>
-                <IonLabel>资金管理</IonLabel>
+                <IonMenuToggle autoHide={!attendanceVisible} key={'attendance'}>
+                  <IonItem  className="flex flex-row justify-center text-center" routerLink={'todo'} routerDirection="none" detail={false} lines="none">
+                    <IonIcon icon={flash} slot="start" />
+                    <IonLabel className="font-bold">{'考勤汇总'}</IonLabel>
+                  </IonItem>
+                  <IonItem  className="flex flex-row justify-center text-center" routerLink={'/tabs/attendance/query'} routerDirection="none" detail={false} lines="none">
+                    <IonIcon icon={flash} slot="start" />
+                    <IonLabel className="font-bold">{'考勤明细'}</IonLabel>
+                  </IonItem>
+                </IonMenuToggle>
+                <IonItem className="flex flex-row justify-center text-center" button onClick={()=>{
+                  setStatisticVisible(!attendanceVisible)
+                }}>
+                <IonLabel>课程考勤</IonLabel>
                 <IonIcon
                   slot="end"
-                  icon={fundVisible ? arrowDown : arrowUp}
+                  icon={attendanceVisible ? arrowDown : arrowUp}
                 ></IonIcon>
-            </IonItem>
-            <IonMenuToggle autoHide={!fundVisible} key={'fund'}>
-              <IonItem  className="flex flex-row justify-center text-center" routerLink={'/tabs/tranferManual/query'} routerDirection="none" detail={false} lines="none">
-                <IonLabel className="font-bold">{'手动划拨'}</IonLabel>
-              </IonItem>
-              <IonItem  className="flex flex-row justify-center text-center" routerLink={'/tabs/contractNego/query'} routerDirection="none" detail={false} lines="none">
-                <IonLabel className="font-bold">{'手动退课'}</IonLabel>
-              </IonItem>
-              <IonItem  className="flex flex-row justify-center text-center" routerLink={'/tabs/contractNego/query'} routerDirection="none" detail={false} lines="none">
-                <IonLabel className="font-bold">{'查看账户余额'}</IonLabel>
-              </IonItem>
-              <IonItem  className="flex flex-row justify-center text-center" routerLink={'/tabs/transfer/query'} routerDirection="none" detail={false} lines="none">
-                <IonLabel className="font-bold">{'划拨清单'}</IonLabel>
-              </IonItem>
-            </IonMenuToggle>         
-            <IonItem  className="flex flex-row justify-center text-center" routerLink={'/tabs/complaint/query'} routerDirection="none" detail={false} lines="none">
+                </IonItem>
+                <IonItem  className="flex flex-row justify-center text-center" routerLink={'/tabs/transfer/query'} routerDirection="none" detail={false} lines="none">
                   <IonIcon icon={flash} slot="start" />
-                  <IonLabel className="font-bold">{'投诉管理'}</IonLabel>
-            </IonItem>
-            <IonItem  className="flex flex-row justify-center text-center" routerLink={'/tabs/statistics/subject'} routerDirection="none" detail={false} lines="none">
+                  <IonLabel className="font-bold">{'课程划拨'}</IonLabel>
+                </IonItem>
+                <IonItem  className="flex flex-row justify-center text-center" routerLink={'/tabs/supervisorAccount'} routerDirection="none" detail={false} lines="none">
                   <IonIcon icon={flash} slot="start" />
-                  <IonLabel className="font-bold">{'测试'}</IonLabel>
-            </IonItem>
-            <IonItem  className="flex flex-row justify-center text-center" routerLink={'/tabs/statistics/student'} routerDirection="none" detail={false} lines="none">
+                  <IonLabel className="font-bold">{'监管账户余额'}</IonLabel>
+                </IonItem>
+                <IonItem  className="flex flex-row justify-center text-center" routerLink={'/tabs/supervisorAccount'} routerDirection="none" detail={false} lines="none">
                   <IonIcon icon={flash} slot="start" />
-                  <IonLabel className="font-bold">{'学生分布'}</IonLabel>
-            </IonItem>
+                  <IonLabel className="font-bold">{'监管机构公告'}</IonLabel>
+                </IonItem>
+                <IonMenuToggle autoHide={!statisticVisible} key={'statistic'}>
+              <IonItem  className="flex flex-row justify-center text-center" routerLink={'/tabs/statistic/income'} routerDirection="none" detail={false} lines="none">
+                <IonLabel className="font-bold">{'月收入报表'}</IonLabel>
+              </IonItem>
+            </IonMenuToggle> 
             <IonItem className="flex flex-row justify-center text-center" button onClick={()=>{
                   setStatisticVisible(!statisticVisible)
               }}>
-                <IonLabel>统计信息</IonLabel>
+                <IonLabel>报表</IonLabel>
                 <IonIcon
                   slot="end"
                   icon={statisticVisible ? arrowDown : arrowUp}
                 ></IonIcon>
-            </IonItem>
-            <IonMenuToggle autoHide={!statisticVisible} key={'statistic'}>
-              <IonItem  className="flex flex-row justify-center text-center" routerLink={'/tabs/statistic/orgSum'} routerDirection="none" detail={false} lines="none">
-                <IonLabel className="font-bold">{'机构数量'}</IonLabel>
-              </IonItem>
-              <IonItem  className="flex flex-row justify-center text-center" routerLink={'/tabs/statistics/subject'} routerDirection="none" detail={false} lines="none">
-                  <IonLabel className="font-bold">{'学科分布'}</IonLabel>
-            </IonItem>
-            <IonItem  className="flex flex-row justify-center text-center" routerLink={'/tabs/statistics/student'} routerDirection="none" detail={false} lines="none">
-                  <IonLabel className="font-bold">{'学生分布'}</IonLabel>
-            </IonItem>
-              <IonItem  className="flex flex-row justify-center text-center" routerLink={'/tabs/transfer/query'} routerDirection="none" detail={false} lines="none">
-                <IonLabel className="font-bold">{'收入统计'}</IonLabel>
-              </IonItem>
-              <IonItem  className="flex flex-row justify-center text-center" routerLink={'/tabs/transfer/query'} routerDirection="none" detail={false} lines="none">
-                <IonLabel className="font-bold">{'投诉统计'}</IonLabel>
-              </IonItem>
-            </IonMenuToggle> 
-
-            
+            </IonItem>          
         </IonList>
       </IonContent> 
       <IonContent>

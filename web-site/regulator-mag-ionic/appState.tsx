@@ -10,7 +10,8 @@ import {
   ConsumerStudent,
   Announcement,
   Complaint,
-  ContractNego
+  ContractNego,
+  SupervisorOrg
 } from './types/types'
 /**
  * This is a simple redux-like state management pattern for React using hooks
@@ -33,6 +34,11 @@ const initialState = {
     username:null,
     phone:null,
     role:null,
+  },
+  supervisorOrg:{//监管机构信息
+    supervisorOrgList:[],
+    supervisorOrgDetail:null,
+    supervisorOrgEdit:null,
   },
   userInfo:{
     userInfoList:[],
@@ -145,7 +151,7 @@ export const setTeacherList = (teacherList:Teacher[]) => {
     teacherList:teacherList
   }
 }
-export const setTeacherDetail = (teacherDetail:Teacher) => {
+export const setTeacherDetail = (teacherDetail?:Teacher) => {
   return {
     type: 'setTeacherDetail',
     teacherDetail:teacherDetail
@@ -238,6 +244,26 @@ export const setContractNegoDetail = (contractNegoDetail:ContractNego) => {
   }
 }
 
+
+export const setSupervisorOrgList = (supervisorOrgList:SupervisorOrg[]) => {
+  return {
+    type: 'setSupervisorOrgList',
+    supervisorOrgList:supervisorOrgList
+  }
+}
+export const setSupervisorOrgDetail = (supervisorOrgDetail?:SupervisorOrg) => {
+  return {
+    type: 'setSupervisorOrgDetail',
+    supervisorOrgDetail:supervisorOrgDetail
+  }
+}
+export const setSupervisorOrgEdit = (supervisorOrgEdit:SupervisorOrg) => {
+  return {
+    type: 'setSupervisorOrgList',
+    supervisorOrgEdit:supervisorOrgEdit
+  }
+}
+
 export const reducer = (state: any, action: any) => {
   switch (action.type) {
     //new
@@ -263,6 +289,33 @@ export const reducer = (state: any, action: any) => {
         eduOrg:{
           ...state.eduOrg,
           eduOrgDetail:action.eduOrgDetail
+        }
+      }
+    }
+    case 'setSupervisorOrgList':{
+      return {
+        ...state,
+        supervisorOrg:{
+          ...state.supervisorOrg,
+          supervisorOrgList:action.supervisorOrgList
+        }
+      }
+    }
+    case 'setSupervisorOrgDetail':{
+      return {
+        ...state,
+        supervisorOrg:{
+          ...state.supervisorOrg,
+          supervisorOrgDetail:action.supervisorOrgDetail
+        }
+      }
+    }
+    case 'setSupervisorOrgEdit':{
+      return {
+        ...state,
+        supervisorOrg:{
+          ...state.supervisorOrg,
+          supervisorOrgEdit:action.supervisorOrgEdit
         }
       }
     }

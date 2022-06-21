@@ -14,6 +14,23 @@ import ChangePwd from './pages/ChangePwd';
 import Lesson from './pages/lesson/Query';
 import LessonDetail from './pages/lesson/Detail'
 import LessonEdit from './pages/lesson/Edit'
+import SupervisorAccount from './pages/SupervisorAccount';
+import Announcement from './pages/Announcement/query';
+import { AnnouncementDetail } from './pages/Announcement/detail';
+
+import TranFer from './pages/TranFer/query'
+import TranFerDetail from './pages/TranFer/detail'
+
+import Attendance from './pages/attendance/query'
+import {AttendanceDetail} from './pages/attendance/detail'
+import AttendanceLaunch from './pages/attendance/launch'
+
+import ContractNego from './pages/contractNego/query'
+import Teacher from './pages/teacher/Query'
+import TeacherDetail from './pages/teacher/Detail'
+import TeacherEdit from './pages/teacher/Edit'
+import Income from './pages/statistic/income'
+import Refund from './pages/refund/query'
 
 
 
@@ -33,15 +50,29 @@ const AppShell = () => {
     <AppContextProvider>
       <IonApp>
         <IonReactRouter>
-          <IonSplitPane contentId="main" className="space-y-16 bg-gray-300 shadow-lg rounded-tl-xl rounded-bl-xl">
+          <IonSplitPane when={true} contentId="main" className="space-y-16 bg-gray-300 shadow-lg rounded-tl-xl rounded-bl-xl">
             <Menu />
             <IonRouterOutlet id="main">
-
             <Route path="/tabs/baseInfo/" component={BaseInfo} exact={true} />
             <Route path="/tabs/changePwd/" component={ChangePwd} exact={true} />
             <Route path="/tabs/lesson/query" component={Lesson} exact={true} />
             <Route path="/tabs/lesson/detail" component={LessonDetail} exact={true} />
             <Route path="/tabs/lesson/edit" component={LessonEdit} exact={true} />
+            <Route path="/tabs/teacher/query" component={Teacher} exact={true} />
+            <Route path="/tabs/teacher/detail" component={TeacherDetail} exact={true} />
+            <Route path="/tabs/teacher/edit" component={TeacherEdit} exact={true} />
+            <Route path="/tabs/refund/query" component={Refund} exact={true} />
+            <Route path="/tabs/contractNego/query" component={ContractNego} exact={true} />
+            <Route path="/tabs/attendance/query" component={Attendance} exact={true} />
+            <Route path="/tabs/attendance/detail" component={AttendanceDetail} exact={true} />
+            <Route path="/tabs/attendance/launch" component={AttendanceLaunch} exact={true} />
+            <Route path="/tabs/transfer/query" component={TranFer} exact={true} />
+            <Route path="/tabs/transfer/detail" component={TranFerDetail} exact={true} />
+            <Route path="/tabs/changePwd" component={ChangePwd} exact={true} />
+            <Route path="/tabs/supervisorAccount" component={SupervisorAccount} exact={true} />
+            <Route path="/tabs/announcement/query" component={Announcement} exact={true} />
+            <Route path="/tabs/announcement/detail" component={AnnouncementDetail} exact={true} />
+            <Route path="/tabs/statistic/income" component={Income} exact={true} />
             <Route path="/login" render={() => <Login />} />
             <Route exact path="/" render={() => <Redirect to="/login" />} />
             </IonRouterOutlet>

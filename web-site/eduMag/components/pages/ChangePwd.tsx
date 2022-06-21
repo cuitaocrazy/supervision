@@ -70,6 +70,12 @@ export const BaseInfoDetail: React.FC = () => {
           </IonCol>
 
         </IonRow>
+        <IonRow>
+          <IonCol>
+            <button type='submit'>确认</button>
+          </IonCol>
+
+        </IonRow>
         </form>
       </IonCardContent>
       </IonCard>

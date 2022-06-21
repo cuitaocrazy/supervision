@@ -18,6 +18,10 @@ import {AttendanceDetail} from './pages/Attendance/detail';
 
 // import Balance from './Balance/query'
 import BaseInfo from './pages/baseInfo/query'
+
+import SuperVisorOrgQuery from './pages/SupervisorOrg/query'
+import SuperVisorOrgDetail from './pages/SupervisorOrg/detail'
+import SuperVisorOrgEdit from './pages/SupervisorOrg/edit'
 import Complaint from './pages/Complaint/query'
 import Contract from './pages/Contract/query'
 import {ContractDetail} from './pages/Contract/detail'
@@ -29,13 +33,13 @@ import OrgMagDetail from './pages/orgMag/Detail'
 import OrgMagEdit from './pages/orgMag/Edit'
 import Teacher from './pages/Teacher/query'
 import Tranfer from './pages/TranFer/query'
-import TranferDetail from './pages/Tranfer/detail'
+import TranferDetail from './pages/TranFer/detail'
 import TranferManul from './pages/TranFerManual/query'
 import TeacherDetail from './pages/Teacher/Detail';
-import ComplaintDetail from './pages/Complaint/Detail';
+import ComplaintDetail from './pages/Complaint/detail';
 import Subject from './pages/statistics/Subject';
 import OrgSum from './pages/statistics/OrgSum';
-import Student from './pages/statistics/student';
+import Student from './pages/statistics/Student';
 
 
 
@@ -62,6 +66,10 @@ const AppShell = () => {
             <Route path="/tabs/announcement/edit" component={AnnouncementEdit} exact={true} />
             <Route path="/tabs/attendance/query" component={Attendance} exact={true} />
             <Route path="/tabs/attendance/detail" component={AttendanceDetail} exact={true} />
+
+            <Route path="/tabs/supervisorOrg/query" component={SuperVisorOrgQuery} exact={true} />
+            <Route path="/tabs/supervisorOrg/detail" component={SuperVisorOrgDetail} exact={true} />
+            <Route path="/tabs/supervisorOrg/edit" component={SuperVisorOrgEdit} exact={true} />
             {/* <Route path="/tabs" render={() => <Redirect to="/tabs/feed" />} exact={true} /> */}
             <Route path="/tabs/baseInfo/query" component={BaseInfo} exact={true} />
             <Route path="/tabs/complaint/query" component={Complaint} exact={true} />

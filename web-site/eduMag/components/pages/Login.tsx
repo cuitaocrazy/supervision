@@ -1,6 +1,6 @@
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { useContext,useCallback } from 'react'
-import {AppContext,setUserInfo} from '../../appState';
+import {AppContext, setloginUser} from '../../appState';
 import { Redirect } from 'react-router-dom';
 
 type FormData = {
@@ -14,7 +14,7 @@ const Login = () => {
   const { state, dispatch } = useContext(AppContext);
   const { register, handleSubmit, formState: { errors } } = useForm<FormData>()
   const refreshUserInfo = useCallback((userInfo:any) => {
-    dispatch(setUserInfo(userInfo));
+    dispatch(setloginUser(userInfo));
   },[]);
   
   const onSubmit: SubmitHandler<FormData> = (data: FormData) => {
@@ -30,7 +30,7 @@ const Login = () => {
     })
   }
 
-  if(state.userInfo.role!==''){
+  if(state.loginUser.role&&state.loginUser.role!==''){
     return <Redirect to="/tabs" /> 
   }
   
@@ -49,16 +49,6 @@ const Login = () => {
             <input type="password" className="relative block w-full px-1 py-3 pl-4 text-base bg-white border rounded-md border-primary-200 focus:outline-none focus:glow-secondary-500"
               {...register('password', { required: true })} placeholder="请输入密码" />
             {errors.password && <p className="pt-2 pl-3 text-base text-error-400">密码不能为空</p>}
-          </div>
-          <div className="mt-6">
-            <label className="block mb-2 text-sm font-semibold text-gray-600">角色</label>
-            <select {...register('role', { required: true })} name="role" id="role" className='w-full p-3 text-base bg-white border rounded-md'>
-              <option value="SV" selected>监管机构</option>
-              <option value="USV">教育机构</option>
-              <option value="Finance">金融机构</option>
-              <option value="Consumer">消费者</option>
-            </select>
-            {errors.role && <p className="pt-2 pl-3 text-base text-error-400">角色不能为空</p>}
           </div>
         </fieldset>
         <input type="submit" className="w-full py-3 my-10 mb-1 text-base font-medium text-white rounded-md shadow-md bg-secondary-500 focus:outline-none hover:bg-secondary-700 hover:shadow-none"

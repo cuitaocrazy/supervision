@@ -79,6 +79,7 @@ export interface Teacher {
   teacherUpdatedDate?: string,
   teacherCreateTime?: string,
   teacherUpdateTime?: string,
+  eduName:string
 }
 
 
@@ -154,6 +155,7 @@ export interface SupervisorOrg{
   supervisorOrgId:string,
   supervisorOrgName:string,
   parentSupervisorOrgId?:string,
+  parentSupervisorOrgName?:string,
 }
 
 export interface SupervisorUser{
@@ -224,6 +226,7 @@ export interface ContractNego{
   negoEduAgreeDate:string,
   negoEduAgreeTime:string,
   contract:Contract,
+  negoFinishTimes:string,
 }
 
 
