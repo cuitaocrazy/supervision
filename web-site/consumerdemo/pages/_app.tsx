@@ -19,24 +19,15 @@ import '@ionic/react/css/text-alignment.css';
 import '@ionic/react/css/text-transformation.css';
 import '@ionic/react/css/flex-utils.css';
 import '@ionic/react/css/display.css';
+import { Provider } from 'react-redux'
+import {store} from '../app/store'
 
 import '../styles/global.css';
 
 console.log('xxxxxxxxxx')
 // function MyApp({ Component, pageProps }) {
 const MyApp = ({ Component, pageProps }: AppProps) => {
-  return (
-    <>
-      <Head>
-        <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1.0, viewport-fit=cover"
-        ></meta>
-      </Head>
-      <Component {...pageProps} />
-      <Script src="https://unpkg.com/ionicons@6.0.1/dist/ionicons.js"></Script>
-    </>
-  );
+  return <Provider store={store}><Component {...pageProps} /></Provider>
 }
 
 export default MyApp;

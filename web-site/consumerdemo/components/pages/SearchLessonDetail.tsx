@@ -6,6 +6,9 @@ import LessonIntroduce from 'components/LessonIntroduce';
 import TeacherIntroduce from 'components/TeacherIntroduce';
 import { Tab } from '@headlessui/react';
 import {useRouter} from 'next/router'
+import {useAppDispatch} from '../../app/hook'
+import {increment} from '../../features/order-cart/counterSlice'
+import {Contract} from '../../types/types'
 
 // 标签选项卡
 function MyTabs() {
@@ -84,6 +87,15 @@ const OrgInfo = () => {
 // 课程详情页面底部菜单组件
 const LessonDetailBottomMenu = () => {
   const router=useRouter();
+  console.log("router"+router)
+  const {item}=router.query
+  console.log("router.query"+router.query)
+  let order:Contract={lessionTotalPrice:"0"}
+  if (typeof item === 'string') {
+    order = JSON.parse(item)
+  }
+  const dispatch=useAppDispatch()
+
   return <div className='fixed bottom-0 flex w-full pl-5 mt-6 ml-3 mr-5 bg-white h-14'>
     <a className='mt-2 mr-6'
       href="./orgLessonList">
@@ -97,10 +109,13 @@ const LessonDetailBottomMenu = () => {
       <div>
         <svg className="w-5 h-5 ml-2 text-gray-500" width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">  <path stroke="none" d="M0 0h24v24H0z" />  <circle cx="9" cy="19" r="2" />  <circle cx="17" cy="19" r="2" />  <path d="M3 3h2l2 12a3 3 0 0 0 3 2h7a3 3 0 0 0 3 -2l1 -7h-15.2" /></svg>
       </div>
-      <div className='mr-4 text-xs text-gray-500' onClick={() => { router.push("shoppingCar") }}>购物车</div>
+      <div className='mr-4 text-xs text-gray-500' 
+           onClick={() => { router.push("shoppingCar") }}>购物车</div>
     </a>
-    <button className='h-10 mt-2 ml-8 text-sm font-medium text-white bg-orange-400 rounded-l-3xl grow' onClick={() => { router.push("./shoppingCar") }}>加入购物车</button>
-    <button className='h-10 px-3 mt-2 mr-8 text-sm font-medium text-white grow bg-primary-500 rounded-r-3xl' onClick={() => { router.push("./conOrder") }}>立即购买</button>
+    <button className='h-10 mt-2 ml-8 text-sm font-medium text-white bg-orange-400 rounded-l-3xl grow focus:bg-orange-600' 
+            onClick={() => { dispatch(increment({payload:order})) }}>加入购物车</button>
+    <button className='h-10 px-3 mt-2 mr-8 text-sm font-medium text-white grow bg-primary-500 rounded-r-3xl' 
+            onClick={() => { router.push("./conOrder") }}>立即购买</button>
   </div>
 }
 
@@ -110,9 +125,6 @@ const SearchLessonDetail = () => {
     <IonHeader>
       <div className='grid h-10 grid-cols-10 pt-2 font-medium text-center text-white bg-primary-600 margin-auto'>
         <div className='col-span-9'>课程详情</div>
-        <div className='text-center'>
-          <svg className="w-5 h-6 text-white" width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">  <path stroke="none" d="M0 0h24v24H0z" />  <circle cx="5" cy="12" r="1" />  <circle cx="12" cy="12" r="1" />  <circle cx="19" cy="12" r="1" /></svg>
-        </div>
       </div>
     </IonHeader>
     <IonContent>

@@ -42,8 +42,6 @@ function MyTabs() {
   )
 }
 
-
-
 // 课程的培训机构信息组件
 const OrgInfo = () => {
   return <div className='px-3 py-1 mx-3 rounded-lg shadow-md'>

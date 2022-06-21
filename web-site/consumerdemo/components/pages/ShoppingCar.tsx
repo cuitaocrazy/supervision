@@ -79,7 +79,6 @@ const ShoppingCar = () => {
         <div className='relative mb-3 bg-white pb-14 scroll-auto'>
           <div className='mx-3 '>
             <ShoppingCarCard />
-            <ShoppingCarCard />
           </div>
         </div>
 

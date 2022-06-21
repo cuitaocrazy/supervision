@@ -96,7 +96,7 @@ const Home = () => {
           <div>
             <div className="grid py-2 sm1:grid-cols-2 sm2:grid-cols-2 sm3:grid-cols-2">
               {lessonListDemo.map((item,index)=>{
-                return <LessonListCard key={index} item = {item} lesson_imgs={item.lesson_imgs} lesson_name={item.lesson_name} lesson_introduce={item.lesson_introduce} edu_address={item.edu_address} />
+                return <LessonListCard key={index} lesson_imgs={item.lesson_imgs} lesson_name={item.lesson_name} lesson_introduce={item.lesson_introduce} edu_address={item.edu_address} />
               })}
             </div>
           </div>
