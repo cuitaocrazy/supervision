@@ -1,4 +1,12 @@
 
+export interface LessonInfo{
+  lesson_imgs:string
+  lesson_id?:string
+  lesson_name:string
+  lesson_introduce:string
+  edu_address:string
+  edu_id?:string
+}
 
 
 
@@ -45,27 +53,28 @@ export interface Contract {
 // }
 
 export interface Lesson {
-  lessonId: string,
-  lessonName: string,
-  lessonPerPrice: number,
-  lessonTotalPrice: number,
-  lessonIntroduce: string,
-  lessonType:string,
-  lessonOutline: string,
-  lessonStartDate: string,
-  lessonStartTime: string,
-  lessonEndDate: string,
-  lessonEndTime: string,
-  lessonStatus: string,
-  lessonCreateDate: string,
-  lessonCreateTime: string,
-  lessonUpdateDate: string,
-  lessonUpdateTime: string,
-  lessonUpdateReason: string,
-  eduId: string,
-  edu: EduOrg,
-  teacherId: string,
-  teacher: Teacher,
+  lessonId?: string,
+  lessonName?: string,
+  lessonPerPrice?: number,
+  lessonTotalPrice?: number,
+  lessonIntroduce?: string,
+  lessonType?:string,
+  lessonOutline?: string,
+  lessonStartDate?: string,
+  lessonStartTime?: string,
+  lessonEndDate?: string,
+  lessonEndTime?: string,
+  lessonStatus?: string,
+  lessonCreateDate?: string,
+  lessonCreateTime?: string,
+  lessonUpdateDate?: string,
+  lessonUpdateTime?: string,
+  lessonUpdateReason?: string,
+  eduId?: string,
+  edu?: EduOrg,
+  teacherId?: string,
+  teacher?: Teacher,
+  lessonTotalQuantity?:number
 }
 
 export interface Teacher {
