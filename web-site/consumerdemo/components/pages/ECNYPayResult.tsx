@@ -3,6 +3,7 @@ import { IonPage, IonHeader, IonContent } from "@ionic/react"
 import { motion } from 'framer-motion'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { useRouter } from 'next/router'
+import Navbar from '../Navbar'
 
 type FormData = {
   name: string;
@@ -17,9 +18,7 @@ const ECNYPayResult = () => {
   }
   return <IonPage>
     <IonHeader>
-      <div className='h-10 pt-2 text-lg font-medium text-center text-white bg-primary-600 margin-auto'>
-        <div className='text-center'>支付结果</div>
-      </div>
+      <Navbar title='支付结果' />
     </IonHeader>
     <IonContent>
       <div className='relative '>

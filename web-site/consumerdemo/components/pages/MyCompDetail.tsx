@@ -1,13 +1,12 @@
 import React from 'react'
 import { IonPage, IonHeader, IonContent } from '@ionic/react'
+import Navbar from 'components/Navbar'
 
 // 投诉详情
 const MyCompDetail = () => {
   return <IonPage>
     <IonHeader>
-      <div className='h-10 pt-2 font-medium text-center text-white bg-primary-600 margin-auto'>
-        <div className='text-center'>投诉详情</div>
-      </div>
+      <Navbar title="投诉详情" />
     </IonHeader>
     <IonContent>
       <div className='px-4 py-2 mx-2 my-2 text-sm rounded-md shadow-md'>

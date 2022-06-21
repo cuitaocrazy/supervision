@@ -3,16 +3,14 @@ import { IonPage, IonHeader, IonContent } from '@ionic/react'
 import { RadioGroup } from '@headlessui/react'
 import {useRouter} from 'next/router'
 import CompTypeRadioGroup from '../CompTypeRadioGroup'
-
+import Navbar from 'components/Navbar'
 
 // 申请投诉页面
 const MyApplyComp = () => {
   const router=useRouter();
   return <IonPage>
     <IonHeader>
-      <div className='h-10 pt-2 font-medium text-center text-white bg-primary-600 margin-auto'>
-        <div className='text-center'>投诉内容</div>
-      </div>
+      <Navbar title="投诉内容" />
     </IonHeader>
     <IonContent>
       <form className='text-sm bg-white'>

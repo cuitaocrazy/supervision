@@ -1,15 +1,14 @@
 import React from 'react'
 import { IonPage, IonHeader, IonContent } from '@ionic/react'
 import { useRouter } from 'next/router'
+import Navbar from 'components/Navbar'
 
 // 个人信息页面
 const MyPersonalInfo = () => {
-  const router=useRouter()
+  const router = useRouter()
   return <IonPage>
     <IonHeader>
-      <div className='h-10 pt-2 font-medium text-center text-white bg-primary-600 margin-auto'>
-        <div className='text-center'>个人信息</div>
-      </div>
+      <Navbar title="个人信息" />
     </IonHeader>
     <IonContent>
       <div className='px-4 py-4 mx-2 my-2 text-sm rounded-md shadow-md'>
@@ -59,9 +58,9 @@ const MyPersonalInfo = () => {
           </a>
         </div>
         <div className='flex mt-10'>
-          <input className='w-full py-2 mx-6 font-bold text-white shadow-md bg-primary-600 rounded-3xl shadow-primary-600' 
-                 type="button" value="确定修改" 
-                 onClick={()=>{alert("修改成功")}}/>
+          <input className='w-full py-2 mx-6 font-bold text-white shadow-md bg-primary-600 rounded-3xl shadow-primary-600'
+            type="button" value="确定修改"
+            onClick={() => { alert("修改成功") }} />
         </div>
 
         {/* <div className='px-2 py-2 rounded-md shadow-md'>

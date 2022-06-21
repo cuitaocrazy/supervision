@@ -1,6 +1,7 @@
 import React from 'react'
 import { IonPage, IonHeader, IonContent } from '@ionic/react'
 import { useRouter } from 'next/router'
+import Navbar from 'components/Navbar'
 
 // 批量签到课程组件card
 const CheckInLessonList = () => {
@@ -47,14 +48,12 @@ const CheckInLessonList = () => {
 const MyBatchCheckIn = () => {
   const router = useRouter();
 
-  const BatchCheckInFun=()=>{
+  const BatchCheckInFun = () => {
     alert("批量签到成功")
   }
   return <IonPage>
     <IonHeader>
-      <div className='h-10 pt-2 font-medium text-center text-white bg-primary-600 margin-auto'>
-        <div className='text-center'>批量签到</div>
-      </div>
+      <Navbar title="批量签到" />
     </IonHeader>
     <IonContent>
       <div className='py-3 text-sm text-center shadow-md text-secondary-400'>
@@ -64,7 +63,7 @@ const MyBatchCheckIn = () => {
       <div className='pt-6 pb-6 mx-2 mt-2 mb-4 text-center rounded-lg shadow-md'>
         <div className='grid grid-cols-1 justify-items-center'>
           <button className='text-base font-bold text-white rounded-full w-28 h-28 bg-primary-600'
-                   onClick={()=>{BatchCheckInFun()}}>
+            onClick={() => { BatchCheckInFun() }}>
             <div className='pt-4'>批量签到</div>
             <div className='pt-1'>07:25:26</div>
           </button>

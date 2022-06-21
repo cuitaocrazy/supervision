@@ -1,15 +1,14 @@
 import { IonContent, IonHeader, IonPage } from "@ionic/react";
 import React from 'react'
 import { useRouter } from "next/router";
+import Navbar from 'components/Navbar'
 
 // 登录页面
 const Register = () => {
   const router = useRouter();
   return <IonPage>
     <IonHeader>
-      <div className='h-10 pt-2 font-medium text-center text-white bg-primary-600 margin-auto'>
-        <div className='text-center'>用户注册</div>
-      </div>
+      <Navbar title="用户注册" />
     </IonHeader>
     <IonContent>
       <div className="px-2 mx-4 mt-6 text-sm ">

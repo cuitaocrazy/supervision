@@ -7,6 +7,7 @@ import TeacherIntroduce from 'components/TeacherIntroduce';
 import OrderInfo from 'components/OrderInfo';
 import Schedule from 'components/Schedule';
 import { Tab } from '@headlessui/react';
+import Navbar from 'components/Navbar'
 
 // 标签选项卡
 function MyTabs() {
@@ -117,12 +118,7 @@ const LessonDetailBottomMenu = () => {
 const MyLessonDetail = () => {
   return <IonPage>
     <IonHeader>
-      <div className='grid h-10 grid-cols-10 pt-2 font-medium text-center text-white bg-primary-600 margin-auto'>
-        <div className='col-span-9'>课程详情</div>
-        <div className='text-center'>
-          <svg className="w-5 h-6 text-white" width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">  <path stroke="none" d="M0 0h24v24H0z" />  <circle cx="5" cy="12" r="1" />  <circle cx="12" cy="12" r="1" />  <circle cx="19" cy="12" r="1" /></svg>
-        </div>
-      </div>
+      <Navbar title="课程详情"/>
     </IonHeader>
     <IonContent>
       <div className='relative mb-3 bg-white pb-14 scroll-auto'>

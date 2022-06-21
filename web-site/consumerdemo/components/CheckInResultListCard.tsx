@@ -2,7 +2,7 @@ import { FC } from 'react'
 import {useRouter} from 'next/router'
 
 // 签到结果列表
-const CheckInResultList = () => {
+const CheckInResultListCard = () => {
   const router=useRouter();
   return <div className='pl-2 mx-3 mt-3'>
     <div className='text-sm leading-7'>
@@ -27,4 +27,4 @@ const CheckInResultList = () => {
   </div>
 }
 
-export default CheckInResultList
+export default CheckInResultListCard

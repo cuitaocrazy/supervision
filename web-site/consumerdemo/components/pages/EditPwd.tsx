@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { IonPage, IonHeader, IonContent } from '@ionic/react'
 import { useRouter } from 'next/router'
-
+import Navbar from '../Navbar'
 
 export interface Pwd {
   oldPwd: string,
@@ -28,9 +28,7 @@ const EditPwd = () => {
 
   return <IonPage>
     <IonHeader>
-      <div className='h-10 pt-2 font-medium text-center text-white bg-primary-600 margin-auto'>
-        <div className='text-center'>修改密码</div>
-      </div>
+      <Navbar title='修改密码'/>
     </IonHeader>
     <IonContent>
       <form onSubmit={onEdit}>

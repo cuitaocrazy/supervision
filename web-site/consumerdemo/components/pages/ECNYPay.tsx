@@ -1,15 +1,14 @@
 import React from "react";
 import { IonPage,IonHeader,IonContent } from "@ionic/react";
 import { useRouter } from 'next/router'
+import Navbar from '../Navbar'
 
 // 数币支付页面
 const ECNYPay =()=>{
   const router=useRouter();
   return <IonPage>
     <IonHeader>
-      <div className='h-10 pt-2 text-lg font-medium text-center text-white bg-primary-600 margin-auto'>
-        <div className='text-center'>数币支付页面</div>
-      </div>
+      <Navbar title="数币支付页面" />
     </IonHeader>
     <IonContent>
       <div>

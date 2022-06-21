@@ -1,6 +1,6 @@
 import React from 'react'
 import { IonPage, IonHeader, IonContent } from '@ionic/react'
-import { motion } from 'framer-motion'
+import Navbar from 'components/Navbar'
 
 // 个人中心页面
 const MyPersonalCenter = () => {
@@ -14,9 +14,6 @@ const MyPersonalCenter = () => {
           <p>江山多姿</p>
           <p className='pt-1'>18610626133</p>
         </div>
-        {/* <div className='fixed left-0 right-0 h-5 bg-red-600 top-24'>
-          <div className='fixed left-0 right-0 h-4 rounded-t-3xl top-24'></div>
-        </div> */}
       </div>
     </IonHeader>
     <IonContent>
@@ -112,7 +109,7 @@ const MyPersonalCenter = () => {
           </div>
         </div>
       </div>
-    </IonContent>
+    </IonContent>s
   </IonPage>
 }
 

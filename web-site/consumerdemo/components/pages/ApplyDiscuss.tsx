@@ -2,15 +2,14 @@ import React from 'react'
 import { IonPage, IonHeader, IonContent } from '@ionic/react'
 import AttendanceStateDownList from 'components/AttendanceStateDownList'
 import {useRouter} from 'next/router'
+import Navbar from '../Navbar'
 
 // 申请协商页面
 const ApplyDiscuss = () => {
   const router=useRouter();
   return <IonPage>
     <IonHeader>
-      <div className='h-10 pt-2 font-medium text-center text-white bg-primary-600 margin-auto'>
-        <div className='text-center'>协商详情</div>
-      </div>
+      <Navbar title='协商详情' />
     </IonHeader>
     <IonContent>
       <form>

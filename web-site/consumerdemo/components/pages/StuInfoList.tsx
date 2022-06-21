@@ -3,6 +3,7 @@ import { IonPage, IonHeader, IonContent } from "@ionic/react"
 import { motion } from 'framer-motion'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { useRouter } from 'next/router'
+import Navbar from 'components/Navbar'
 
 type FormData = {
   name: string;
@@ -42,9 +43,7 @@ const StuInfoList = () => {
 
   return <IonPage>
     <IonHeader>
-      <div className='h-10 pt-2 font-medium text-center text-white bg-primary-600 margin-auto'>
-        <div className='text-center'>学生信息管理</div>
-      </div>
+      <Navbar title="学生信息管理"/>
     </IonHeader>
     <IonContent>
       <div className='mb-3 bg-white pb-14 scroll-auto'>

@@ -1,5 +1,6 @@
 import React from 'react'
 import { IonPage, IonHeader, IonContent } from '@ionic/react'
+import Navbar from 'components/Navbar'
 
 // 公告信息组件
 const NoticeInfoListCard = () => {
@@ -18,9 +19,7 @@ const NoticeInfoListCard = () => {
 const MyNoticeInfoList = () => {
   return <IonPage>
     <IonHeader>
-      <div className='h-10 pt-2 font-medium text-center text-white bg-primary-600 margin-auto'>
-        <div className='text-center'>公告信息</div>
-      </div>
+      <Navbar title="公告信息" />
     </IonHeader>
     <IonContent>
         <NoticeInfoListCard />

@@ -1,15 +1,14 @@
 import React from 'react'
 import { IonPage, IonHeader, IonContent } from '@ionic/react'
 import { useRouter } from 'next/router'
+import Navbar from 'components/Navbar'
 
 // 申请课程评价
 const MyLessonEvalDetail = () => {
   const router=useRouter();
   return <IonPage>
     <IonHeader>
-      <div className='h-10 pt-2 font-medium text-center text-white bg-primary-600 margin-auto'>
-        <div className='text-center'>课程评价</div>
-      </div>
+      <Navbar title="课程评价" />
     </IonHeader>
     <IonContent>
       <form className='text-sm'>

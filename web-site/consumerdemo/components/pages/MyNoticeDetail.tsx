@@ -1,13 +1,12 @@
 import React from 'react'
 import { IonPage, IonHeader, IonContent } from '@ionic/react'
+import Navbar from 'components/Navbar'
 
 // 公告详情
 const MyNoticeDetail = () => {
   return <IonPage>
     <IonHeader>
-      <div className='h-10 pt-2 font-medium text-center text-white bg-primary-600 margin-auto'>
-        <div className='text-center'>公告详情</div>
-      </div>
+      <Navbar title="公告详情"/>
     </IonHeader>
     <IonContent>
       <div className='py-2 pb-6 mx-2 mt-2 rounded-md shadow-md'>
@@ -21,7 +20,6 @@ const MyNoticeDetail = () => {
           请各地各高校充分发挥入选作品的示范作用，引导和推动广大师生积极参与网络文化作品创作，进一步丰富网络文化内容供给，传播正能量，弘扬主旋律，争做校园好网民，切实提升高校网络文化建设的质量和水平。
         </div>
       </div>
-
     </IonContent>
   </IonPage>
 }

@@ -2,6 +2,7 @@ import React from 'react';
 import { IonPage, IonHeader, IonContent } from "@ionic/react"
 import { motion } from 'framer-motion'
 import { useRouter } from 'next/router'
+import Navbar from 'components/Navbar'
 
 // 课程列表card 
 const LessonListCard = () => {
@@ -23,12 +24,12 @@ const LessonListCard = () => {
       </div>
     </div>
     <div className='grid grid-cols-3 gap-2 text-xs text-white justify-items-center'>
-      <div className='px-6 py-1 shadow-md rounded-3xl bg-primary-500 shadow-primary-300' 
-           onClick={()=>{router.push("./myLessonEvalDetail")}}>去评价</div>
+      <div className='px-6 py-1 shadow-md rounded-3xl bg-primary-500 shadow-primary-300'
+        onClick={() => { router.push("./myLessonEvalDetail") }}>去评价</div>
       <div className='px-6 py-1 shadow-md rounded-3xl bg-secondary-300 shadow-secondary-300'
-          onClick={()=>{router.push("./myApplyComp")}}>去投诉</div>
+        onClick={() => { router.push("./myApplyComp") }}>去投诉</div>
       <div className='px-4 py-1 shadow-md rounded-3xl bg-remind-400 shadow-remind-400'
-           onClick={()=>{router.push("myLessonDetail")}}>查看详情</div>
+        onClick={() => { router.push("myLessonDetail") }}>查看详情</div>
     </div>
   </div>
 }
@@ -38,17 +39,10 @@ const MyLessonList = () => {
   const router = useRouter()
   return <IonPage>
     <IonHeader>
-      <div className='grid h-10 grid-cols-10 pt-2 font-medium text-center text-white bg-primary-600 margin-auto'>
-        <div className='col-span-9'>课程列表</div>
-        <div className='text-center'>
-          <svg className="w-5 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">  <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />  <path d="M13.73 21a2 2 0 0 1-3.46 0" /></svg>
-        </div>
-      </div>
+      <Navbar title="课程列表" />
     </IonHeader>
     <IonContent>
-      <div className='relative bg-white'>
-        <LessonListCard />
-      </div>
+      <LessonListCard />
     </IonContent>
   </IonPage>
 }

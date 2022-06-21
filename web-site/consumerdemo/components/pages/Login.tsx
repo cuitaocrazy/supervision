@@ -3,6 +3,7 @@ import { FC, Fragment } from 'react'
 import { useRouter } from "next/router";
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { Tab } from '@headlessui/react'
+import Navbar from '../Navbar'
 
 type FormDate = {
   username: string
@@ -93,9 +94,7 @@ const Login = () => {
   }
   return <IonPage>
     <IonHeader>
-      <div className='h-10 pt-2 font-medium text-center text-white bg-primary-600 margin-auto'>
-        <div className='text-center'>用户登录</div>
-      </div>
+      <Navbar title="用户登录" />
     </IonHeader>
     <IonContent>
       <form onSubmit={handleSubmit(onSubmit)}>

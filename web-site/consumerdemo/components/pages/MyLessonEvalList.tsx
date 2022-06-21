@@ -1,11 +1,13 @@
 import React from 'react'
 import { IonPage, IonHeader, IonContent } from '@ionic/react'
 import LessonEvalCard from 'components/LessonEvalCard'
+import Navbar from 'components/Navbar'
 
 // 我的评价列表
 const MyLessonEvalList = () => {
   return <IonPage>
     <IonHeader>
+      <Navbar title="我的评价" />
       <div className='h-10 pt-2 font-medium text-center text-white bg-primary-600 margin-auto'>
         <div className='text-center'>我的评价</div>
       </div>

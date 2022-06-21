@@ -1,13 +1,12 @@
 import React from 'react'
 import { IonPage, IonHeader, IonContent } from "@ionic/react"
+import Navbar from 'components/Navbar'
 
 // 退订课程页面
 const RefoundLesson = () => {
   return <IonPage>
     <IonHeader>
-      <div className='h-10 pt-2 font-medium text-center text-white bg-primary-600 margin-auto'>
-        <div className='text-center'>退订课程</div>
-      </div>
+      <Navbar title="退订课程" />
     </IonHeader>
     <IonContent>
       <div className='px-3 py-4 mx-2 mt-3 mb-6 rounded-lg shadow-md'>

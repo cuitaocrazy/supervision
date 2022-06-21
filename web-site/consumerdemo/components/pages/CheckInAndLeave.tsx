@@ -1,6 +1,7 @@
 import React from 'react';
 import { IonPage, IonHeader, IonContent } from '@ionic/react';
 import { useRouter } from 'next/router';
+import Navbar from '../Navbar'
 
 // 签到和请假页面
 const CheckInAndLeave = () => {
@@ -22,9 +23,7 @@ const CheckInAndLeave = () => {
   }
   return <IonPage>
     <IonHeader>
-      <div className='h-10 pt-2 font-medium text-center text-white bg-primary-600 margin-auto'>
-        <div className='text-center'>签到/请假</div>
-      </div>
+      <Navbar title='签到/请假' />
     </IonHeader>
     <IonContent>
       <div className='py-3 text-sm text-center shadow-md text-secondary-400'>
