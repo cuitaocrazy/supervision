@@ -2,13 +2,6 @@ import React, { useState } from 'react';
 import { IonPage, IonHeader, IonToolbar, IonContent, IonTitle, IonSearchbar, IonImg, IonList, IonItem, IonThumbnail, IonLabel, IonAvatar, IonChip, IonCard, IonCardHeader, IonCardSubtitle, IonCardTitle, IonCardContent } from "@ionic/react"
 import Navbar from 'components/Navbar'
 
-type Item = {
-  src: string;
-  text: string;
-};
-const items: Item[] = [{ src: 'http://placekitten.com/g/200/300', text: 'a picture of a cat' },
-];
-
 // 教育机构信息组件
 const OrgInfo = () => {
   return (
