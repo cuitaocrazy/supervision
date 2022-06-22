@@ -4,7 +4,8 @@ import { motion } from 'framer-motion'
 import Router from 'next/router'
 import Search from '../Search'
 import Navbar from '../Navbar'
-import { LessonInfo,Lesson } from '../../types/types'
+import { LessonInfo } from '../../types/types'
+import { Lesson, Teacher, EduOrg } from '../../types/types'
 
 interface LessonListCardProps {
   lesson_imgs: string
@@ -35,16 +36,31 @@ const LessonListCard: FC<LessonListCardProps> = (props) => {
 
 // 首页
 const Home = () => {
-  const lessonListDemo: LessonInfo[] = [
-    { lesson_imgs: 'http://placekitten.com/g/200/300', lesson_id: 'Lesson1', lesson_name: '幼小衔接', lesson_introduce: '简介：让孩子提前适应小学生让孩子提前适应小学生让孩子提前适应小学生让孩子提前适应小学生', edu_id: 'Edu01', edu_address: '地址：廊坊市安次区和平路荣益广场3层206' },
-    { lesson_imgs: 'http://placekitten.com/g/200/300', lesson_id: 'Lesson2', lesson_name: '幼小衔接', lesson_introduce: '简介：让孩子提前适应小学生让孩子提前适应小学生让孩子提前适应小学生让孩子提前适应小学生', edu_id: 'Edu01', edu_address: '地址：廊坊市安次区和平路荣益广场3层206' },
-    { lesson_imgs: 'http://placekitten.com/g/200/300', lesson_id: 'Lesson3', lesson_name: '幼小衔接', lesson_introduce: '简介：让孩子提前适应小学生让孩子提前适应小学生让孩子提前适应小学生让孩子提前适应小学生', edu_id: 'Edu01', edu_address: '地址：廊坊市安次区和平路荣益广场3层206' },
-    { lesson_imgs: 'http://placekitten.com/g/200/300', lesson_id: 'Lesson3', lesson_name: '幼小衔接', lesson_introduce: '简介：让孩子提前适应小学生让孩子提前适应小学生让孩子提前适应小学生让孩子提前适应小学生', edu_id: 'Edu01', edu_address: '地址：廊坊市安次区和平路荣益广场3层206' },
-    { lesson_imgs: 'http://placekitten.com/g/200/300', lesson_id: 'Lesson3', lesson_name: '幼小衔接', lesson_introduce: '简介：让孩子提前适应小学生让孩子提前适应小学生让孩子提前适应小学生让孩子提前适应小学生', edu_id: 'Edu01', edu_address: '地址：廊坊市安次区和平路荣益广场3层206' },
-    { lesson_imgs: 'http://placekitten.com/g/200/300', lesson_id: 'Lesson3', lesson_name: '幼小衔接', lesson_introduce: '简介：让孩子提前适应小学生让孩子提前适应小学生让孩子提前适应小学生让孩子提前适应小学生', edu_id: 'Edu01', edu_address: '地址：廊坊市安次区和平路荣益广场3层206' },
-    { lesson_imgs: 'http://placekitten.com/g/200/300', lesson_id: 'Lesson3', lesson_name: '幼小衔接', lesson_introduce: '简介：让孩子提前适应小学生让孩子提前适应小学生让孩子提前适应小学生让孩子提前适应小学生', edu_id: 'Edu01', edu_address: '地址：廊坊市安次区和平路荣益广场3层206' },
-    { lesson_imgs: 'http://placekitten.com/g/200/300', lesson_id: 'Lesson3', lesson_name: '幼小衔接', lesson_introduce: '简介：让孩子提前适应小学生让孩子提前适应小学生让孩子提前适应小学生让孩子提前适应小学生', edu_id: 'Edu01', edu_address: '地址：廊坊市安次区和平路荣益广场3层206' }
+  let lessonListDemo: Lesson[] = [
+    { lessonImgs:"http://placekitten.com/g/200/300" ,lessonName: "小熊美术课程3-5岁", lessonTotalPrice: 880.00, lessonTotalQuantity: 58, lessonIntroduce: "让孩子提前适应小学生让孩子提前适应小学生让孩子提前适应小学生让孩子提前适应小学生",eduAddress: '地址：廊坊市安次区和平路荣益广场3层206',lessonId:"lesson-001",eduId:"edu-001",teacherId:"teacher-001" },
+    { lessonImgs:"http://placekitten.com/g/200/300" ,lessonName: "小熊美术课程3-5岁", lessonTotalPrice: 880.00, lessonTotalQuantity: 58, lessonIntroduce: "让孩子提前适应小学生让孩子提前适应小学生让孩子提前适应小学生让孩子提前适应小学生",eduAddress: '地址：廊坊市安次区和平路荣益广场3层206',lessonId:"lesson-001",eduId:"edu-001",teacherId:"teacher-001" },
+    { lessonImgs:"http://placekitten.com/g/200/300" ,lessonName: "小熊美术课程3-5岁", lessonTotalPrice: 880.00, lessonTotalQuantity: 58, lessonIntroduce: "让孩子提前适应小学生让孩子提前适应小学生让孩子提前适应小学生让孩子提前适应小学生",eduAddress: '地址：廊坊市安次区和平路荣益广场3层206',lessonId:"lesson-001",eduId:"edu-001",teacherId:"teacher-001" },
+    { lessonImgs:"http://placekitten.com/g/200/300" ,lessonName: "小熊美术课程3-5岁", lessonTotalPrice: 880.00, lessonTotalQuantity: 58, lessonIntroduce: "让孩子提前适应小学生让孩子提前适应小学生让孩子提前适应小学生让孩子提前适应小学生",eduAddress: '地址：廊坊市安次区和平路荣益广场3层206',lessonId:"lesson-001",eduId:"edu-001",teacherId:"teacher-001" },
+    { lessonImgs:"http://placekitten.com/g/200/300" ,lessonName: "小熊美术课程3-5岁", lessonTotalPrice: 880.00, lessonTotalQuantity: 58, lessonIntroduce: "让孩子提前适应小学生让孩子提前适应小学生让孩子提前适应小学生让孩子提前适应小学生",eduAddress: '地址：廊坊市安次区和平路荣益广场3层206',lessonId:"lesson-001",eduId:"edu-001",teacherId:"teacher-001" },
+    { lessonImgs:"http://placekitten.com/g/200/300" ,lessonName: "小熊美术课程3-5岁", lessonTotalPrice: 880.00, lessonTotalQuantity: 58, lessonIntroduce: "让孩子提前适应小学生让孩子提前适应小学生让孩子提前适应小学生让孩子提前适应小学生",eduAddress: '地址：廊坊市安次区和平路荣益广场3层206',lessonId:"lesson-001",eduId:"edu-001",teacherId:"teacher-001" },
+    { lessonImgs:"http://placekitten.com/g/200/300" ,lessonName: "小熊美术课程3-5岁", lessonTotalPrice: 880.00, lessonTotalQuantity: 58, lessonIntroduce: "让孩子提前适应小学生让孩子提前适应小学生让孩子提前适应小学生让孩子提前适应小学生",eduAddress: '地址：廊坊市安次区和平路荣益广场3层206',lessonId:"lesson-001",eduId:"edu-001",teacherId:"teacher-001" },
+    { lessonImgs:"http://placekitten.com/g/200/300" ,lessonName: "小熊美术课程3-5岁", lessonTotalPrice: 880.00, lessonTotalQuantity: 58, lessonIntroduce: "让孩子提前适应小学生让孩子提前适应小学生让孩子提前适应小学生让孩子提前适应小学生",eduAddress: '地址：廊坊市安次区和平路荣益广场3层206',lessonId:"lesson-001",eduId:"edu-001",teacherId:"teacher-001" }
   ]
+  // const lessonListDemo: LessonInfo[] = [
+  //   { lesson_imgs: 'http://placekitten.com/g/200/300', lesson_id: 'Lesson1', lesson_name: '幼小衔接', lesson_introduce: '简介：让孩子提前适应小学生让孩子提前适应小学生让孩子提前适应小学生让孩子提前适应小学生', edu_id: 'Edu01', edu_address: '地址：廊坊市安次区和平路荣益广场3层206' },
+  //   { lesson_imgs: 'http://placekitten.com/g/200/300', lesson_id: 'Lesson2', lesson_name: '幼小衔接', lesson_introduce: '简介：让孩子提前适应小学生让孩子提前适应小学生让孩子提前适应小学生让孩子提前适应小学生', edu_id: 'Edu01', edu_address: '地址：廊坊市安次区和平路荣益广场3层206' },
+  //   { lesson_imgs: 'http://placekitten.com/g/200/300', lesson_id: 'Lesson3', lesson_name: '幼小衔接', lesson_introduce: '简介：让孩子提前适应小学生让孩子提前适应小学生让孩子提前适应小学生让孩子提前适应小学生', edu_id: 'Edu01', edu_address: '地址：廊坊市安次区和平路荣益广场3层206' },
+  //   { lesson_imgs: 'http://placekitten.com/g/200/300', lesson_id: 'Lesson3', lesson_name: '幼小衔接', lesson_introduce: '简介：让孩子提前适应小学生让孩子提前适应小学生让孩子提前适应小学生让孩子提前适应小学生', edu_id: 'Edu01', edu_address: '地址：廊坊市安次区和平路荣益广场3层206' },
+  //   { lesson_imgs: 'http://placekitten.com/g/200/300', lesson_id: 'Lesson3', lesson_name: '幼小衔接', lesson_introduce: '简介：让孩子提前适应小学生让孩子提前适应小学生让孩子提前适应小学生让孩子提前适应小学生', edu_id: 'Edu01', edu_address: '地址：廊坊市安次区和平路荣益广场3层206' },
+  //   { lesson_imgs: 'http://placekitten.com/g/200/300', lesson_id: 'Lesson3', lesson_name: '幼小衔接', lesson_introduce: '简介：让孩子提前适应小学生让孩子提前适应小学生让孩子提前适应小学生让孩子提前适应小学生', edu_id: 'Edu01', edu_address: '地址：廊坊市安次区和平路荣益广场3层206' },
+  //   { lesson_imgs: 'http://placekitten.com/g/200/300', lesson_id: 'Lesson3', lesson_name: '幼小衔接', lesson_introduce: '简介：让孩子提前适应小学生让孩子提前适应小学生让孩子提前适应小学生让孩子提前适应小学生', edu_id: 'Edu01', edu_address: '地址：廊坊市安次区和平路荣益广场3层206' },
+  //   { lesson_imgs: 'http://placekitten.com/g/200/300', lesson_id: 'Lesson3', lesson_name: '幼小衔接', lesson_introduce: '简介：让孩子提前适应小学生让孩子提前适应小学生让孩子提前适应小学生让孩子提前适应小学生', edu_id: 'Edu01', edu_address: '地址：廊坊市安次区和平路荣益广场3层206' }
+  // ]
+
+  // let lesson: Lesson = { lessonName: "小熊美术课程3-5岁", lessonTotalPrice: 880.00, lessonTotalQuantity: 58, lessonIntroduce: "艺术教育是未来教育",lessonId:"lesson-001",eduId:"edu-001",teacherId:"teacher-001" }
+
+  // let teacher: Teacher = { teacherName: "李梅", teacherIntroduce: "3333333", teacherId: "teacher-001" }
+  // let eduOrg: EduOrg = { eduAddress: "河北省廊坊市", eduContactPhone: "0316-78909090", eduId: "edu-001", eduLoginName: "kl", supervisorOrgId: "sup-org-001" }
 
   return <IonPage>
     <IonHeader>
@@ -69,7 +85,7 @@ const Home = () => {
               <div className='inline'>精选推荐</div>
             </div>
             <div className='flex mb-1 mr-3 text-xs text-gray-400 justify-self-end'>
-              <a href="http://www.w3school.com.cn">
+              <a href="">
                 <div>
                   更多
                   <svg className="inline w-3 h-3 mb-1 text-gray-400" width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">  <path stroke="none" d="M0 0h24v24H0z" />  <polyline points="9 6 15 12 9 18" /></svg>
@@ -79,7 +95,7 @@ const Home = () => {
           </div>
           <div className="grid py-2 sm1:grid-cols-2 sm2:grid-cols-2 sm3:grid-cols-2">
             {lessonListDemo.map((item, index) => {
-              return <LessonListCard key={index} lesson_imgs={item.lesson_imgs} lesson_name={item.lesson_name} lesson_introduce={item.lesson_introduce} item={item} edu_address={item.edu_address} />
+              return <LessonListCard key={index} lesson_imgs={item.lessonImgs} lesson_name={item.lessonName} lesson_introduce={item.lessonIntroduce} item={item} edu_address={item.edu_address} />
             })}
           </div>
         </div>

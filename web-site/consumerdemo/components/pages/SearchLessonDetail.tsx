@@ -47,9 +47,9 @@ function MyTabs() {
 const OrgInfo = () => {
   const router = useRouter();
   const { item } = router.query
-  let lesson: Lesson = { lessonName: "小熊美术课程3-5岁", lessonTotalPrice: 880.00, lessonTotalQuantity: 58, lessonIntroduce: "艺术教育是未来教育" }
-  console.log("lesson.lessonTotalPrice"+lesson.lessonTotalPrice)
-  console.log("lessonTotalQuantity"+lesson.lessonTotalQuantity)
+  let lesson: Lesson = { lessonName: "小熊美术课程3-5岁", lessonTotalPrice: 880.00, lessonTotalQuantity: 58, lessonIntroduce: "艺术教育是未来教育",lessonId:"lesson-001",eduId:"edu-001",teacherId:"teacher-001" }
+  console.log("lesson.lessonTotalPrice" + lesson.lessonTotalPrice)
+  console.log("lessonTotalQuantity" + lesson.lessonTotalQuantity)
   let teacher: Teacher = { teacherName: "李梅", teacherIntroduce: "3333333", teacherId: "teacher-001" }
   let eduOrg: EduOrg = { eduAddress: "河北省廊坊市", eduContactPhone: "0316-78909090", eduId: "edu-001", eduLoginName: "kl", supervisorOrgId: "sup-org-001" }
   if (typeof item === 'string') {
@@ -99,7 +99,7 @@ const OrgInfo = () => {
 // 课程详情页面底部菜单组件
 const LessonDetailBottomMenu = () => {
   const router = useRouter();
-  let lesson: Lesson = { lessonName: "小熊美术课程3-5岁", lessonTotalPrice: 880.00, lessonTotalQuantity: 58, lessonIntroduce: "艺术教育是未来教育" }
+  let lesson: Lesson = { lessonName: "小熊美术课程3-5岁", lessonTotalPrice: 880, lessonTotalQuantity: 58, lessonIntroduce: "艺术教育是未来教育",lessonId:"lesson-001",eduId:"edu-001",teacherId:"teacher-001" }
   console.log("lesson" + lesson.lessonName)
   const { item } = router.query
   if (typeof item === 'string') {

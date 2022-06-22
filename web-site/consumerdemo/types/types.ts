@@ -53,7 +53,7 @@ export interface Contract {
 // }
 
 export interface Lesson {
-  lessonId?: string,
+  lessonId: string,
   lessonName?: string,
   lessonPerPrice?: number,
   lessonTotalPrice?: number,
@@ -70,11 +70,13 @@ export interface Lesson {
   lessonUpdateDate?: string,
   lessonUpdateTime?: string,
   lessonUpdateReason?: string,
-  eduId?: string,
+  eduId: string,
   edu?: EduOrg,
-  teacherId?: string,
+  teacherId: string,
   teacher?: Teacher,
   lessonTotalQuantity?:number
+  lessonImgs?:string
+  eduAddress?:string
 }
 
 export interface Teacher {
