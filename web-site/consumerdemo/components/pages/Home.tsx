@@ -12,7 +12,7 @@ interface LessonListCardProps {
   lesson_name: string
   lesson_introduce: string
   edu_address: string
-  item: LessonInfo
+  item: Lesson
 }
 // 首页课程列表card组件
 const LessonListCard: FC<LessonListCardProps> = (props) => {

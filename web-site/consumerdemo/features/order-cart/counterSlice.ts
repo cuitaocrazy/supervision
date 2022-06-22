@@ -1,7 +1,7 @@
 import {createSlice,ReducersMapObject,Action,AnyAction} from '@reduxjs/toolkit'
-import {Contract} from '../../types/types'
+import {Lesson} from '../../types/types'
 
-const carListInit:Contract[]=[]
+const carListInit:Lesson[]=[]
 export const counterSlice=createSlice({
   name:'contractCartItemCounter',
   initialState:{
@@ -12,6 +12,8 @@ export const counterSlice=createSlice({
     increment:(state,{payload})=>{
       state.value+=1
       state.carList.push(payload.payload)
+      console.log("state.carList"+state.carList)
+      console.log("payload.payload"+payload.payload)
     },
     decrement:(state,{payload})=>{
       state.carList.splice(payload,1)

@@ -6,11 +6,12 @@ import LessonIntroduce from 'components/LessonIntroduce';
 import TeacherIntroduce from 'components/TeacherIntroduce';
 import { Tab } from '@headlessui/react';
 import { useRouter } from 'next/router'
-import { useAppDispatch } from '../../app/hook'
-import { increment } from '../../features/order-cart/counterSlice'
+import { useAppDispatch, useAppSelector } from '../../app/hook'
+import { increment, selectCount, selectCarList } from '../../features/order-cart/counterSlice'
 import { Lesson, Teacher, EduOrg } from '../../types/types'
 import Navbar from 'components/Navbar'
-
+import Router from 'next/router'
+import { motion } from 'framer-motion'
 // 标签选项卡
 function MyTabs() {
   return (
@@ -47,7 +48,7 @@ function MyTabs() {
 const OrgInfo = () => {
   const router = useRouter();
   const { item } = router.query
-  let lesson: Lesson = { lessonName: "小熊美术课程3-5岁", lessonTotalPrice: 880.00, lessonTotalQuantity: 58, lessonIntroduce: "艺术教育是未来教育",lessonId:"lesson-001",eduId:"edu-001",teacherId:"teacher-001" }
+  let lesson: Lesson = { lessonName: "小熊美术课程3-5岁", lessonTotalPrice: 880.00, lessonTotalQuantity: 58, lessonIntroduce: "艺术教育是未来教育", lessonId: "lesson-001", eduId: "edu-001", teacherId: "teacher-001" }
   console.log("lesson.lessonTotalPrice" + lesson.lessonTotalPrice)
   console.log("lessonTotalQuantity" + lesson.lessonTotalQuantity)
   let teacher: Teacher = { teacherName: "李梅", teacherIntroduce: "3333333", teacherId: "teacher-001" }
@@ -99,12 +100,16 @@ const OrgInfo = () => {
 // 课程详情页面底部菜单组件
 const LessonDetailBottomMenu = () => {
   const router = useRouter();
-  let lesson: Lesson = { lessonName: "小熊美术课程3-5岁", lessonTotalPrice: 880, lessonTotalQuantity: 58, lessonIntroduce: "艺术教育是未来教育",lessonId:"lesson-001",eduId:"edu-001",teacherId:"teacher-001" }
-  console.log("lesson" + lesson.lessonName)
+  let lesson: Lesson = { lessonName: "小熊美术课程3-5岁", lessonTotalPrice: 880, lessonTotalQuantity: 58, lessonIntroduce: "艺术教育是未来教育", lessonId: "lesson-001", eduId: "edu-001", teacherId: "teacher-001" }
   const { item } = router.query
   if (typeof item === 'string') {
     lesson = JSON.parse(item)
   }
+  const count =useAppSelector(selectCount)
+  const carList=useAppSelector(selectCarList)
+  const carListStr=carList.map((item)=>{
+    return JSON.stringify(item)
+  })
   const dispatch = useAppDispatch()
 
   return <div className='fixed bottom-0 flex w-full pl-5 mt-6 ml-3 mr-5 bg-white h-14'>
@@ -119,9 +124,11 @@ const LessonDetailBottomMenu = () => {
       href="./shoppingCar">
       <div>
         <svg className="w-5 h-5 ml-2 text-gray-500" width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">  <path stroke="none" d="M0 0h24v24H0z" />  <circle cx="9" cy="19" r="2" />  <circle cx="17" cy="19" r="2" />  <path d="M3 3h2l2 12a3 3 0 0 0 3 2h7a3 3 0 0 0 3 -2l1 -7h-15.2" /></svg>
+        <motion.div key={count} className={'absolute bottom-6 left-20 ' + (count === 0 && 'hidden')} animate={{ scale: [1, 1.2, 1] }} transition={{ duration: 0.2 }}><span className="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full">{count}</span></motion.div>
       </div>
+
       <div className='mr-4 text-xs text-gray-500'
-        onClick={() => { router.push("shoppingCar") }}>购物车</div>
+        onClick={() => { Router.push({ pathname: './shoppingCar', query: {carList:carListStr} }) }}>购物车</div>
     </a>
     <button className='h-10 mt-2 ml-8 text-sm font-medium text-white bg-orange-400 rounded-l-3xl grow focus:bg-orange-600'
       onClick={() => { dispatch(increment({ payload: lesson })) }}>加入购物车</button>
