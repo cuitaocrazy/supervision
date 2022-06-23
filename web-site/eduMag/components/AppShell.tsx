@@ -1,14 +1,12 @@
 
-import { IonApp, IonRouterOutlet, IonSplitPane } from '@ionic/react';
+import { IonApp, IonRouterOutlet, IonSplitPane,setupIonicReact } from '@ionic/react';
 import { StatusBar, Style } from '@capacitor/status-bar';
-
 import { IonReactRouter } from '@ionic/react-router';
 import { Redirect, Route } from 'react-router-dom';
 import Menu from './Menu';
 
 import Login from './pages/Login';
 import {AppContextProvider} from '../appState'
-
 import BaseInfo from './pages/baseInfo/Detail';
 import ChangePwd from './pages/ChangePwd';
 import Lesson from './pages/lesson/Query';
@@ -17,14 +15,11 @@ import LessonEdit from './pages/lesson/Edit'
 import SupervisorAccount from './pages/SupervisorAccount';
 import Announcement from './pages/Announcement/query';
 import { AnnouncementDetail } from './pages/Announcement/detail';
-
 import TranFer from './pages/TranFer/query'
 import TranFerDetail from './pages/TranFer/detail'
-
 import Attendance from './pages/attendance/query'
 import {AttendanceDetail} from './pages/attendance/detail'
 import AttendanceLaunch from './pages/attendance/launch'
-
 import ContractNego from './pages/contractNego/query'
 import Teacher from './pages/teacher/Query'
 import TeacherDetail from './pages/teacher/Detail'
@@ -36,7 +31,8 @@ import Refund from './pages/refund/query'
 
 
 
-
+// 装载ionic样式，ionic6 必须执行。
+setupIonicReact();
 window.matchMedia("(prefers-color-scheme: dark)").addListener(async (status) => {
   try {
     await StatusBar.setStyle({

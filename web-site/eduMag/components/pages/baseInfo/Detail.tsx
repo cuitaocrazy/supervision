@@ -1,7 +1,7 @@
 
 //BaseInfo的详细页面
 import React, { useState } from 'react';
-import { IonPage,IonModal,IonCard,IonRadioGroup,IonRadio, IonCardHeader, IonCardSubtitle,IonLabel,IonInput, IonCardContent,IonItem,IonButton,IonList,IonDatetime,IonPicker,IonCol,IonRow } from '@ionic/react';
+import { IonPage,IonModal,IonCard,IonRadioGroup,IonRadio, IonCardHeader, IonInput,IonCardSubtitle, IonCardContent,IonItem,IonButton,IonList,IonDatetime,IonPicker } from '@ionic/react';
 import { Redirect } from 'react-router-dom';
 import { useCallback,useContext,useEffect } from 'react'
 import {AppContext,setEduOrgDetail} from '../../../appState';
@@ -19,9 +19,12 @@ export const BaseInfoDetail: React.FC = () => {
     dispatch(setEduOrgDetail(eduOrg));
   },[dispatch]);
 
-  const onCreate =()=>{
-
+  const onCreate =(item:any)=>{
+    console.log(baseInfoState)
+    console.log(baseInfoState)
   }
+
+  //onIonChange={(e) =>{console.log(document.getElementById('eduName')?.getAttribute('value')); setBaseInfoState({...baseInfoState, eduName: e.detail.value})}}
 
 
   const demoEduOrg=  {   
@@ -57,6 +60,7 @@ export const BaseInfoDetail: React.FC = () => {
   },[])
 
   const [baseInfoState, setBaseInfoState] = useState(state.eduOrg.eduOrgDetail);
+
   const [isPickOpen, setPickOpen] = useState(false);
   const setBack = useCallback(() => {
     
@@ -79,7 +83,7 @@ export const BaseInfoDetail: React.FC = () => {
     //   alert(json.result)
     // })
   }
-  console.log(baseInfoState)
+
   if(baseInfoState == null){
     return <></>
   }
@@ -93,167 +97,189 @@ export const BaseInfoDetail: React.FC = () => {
       </IonCardHeader>
       <IonCardContent>
       <form onSubmit={onCreate}>
-        <IonRow>
-          <IonCol>
-          <IonLabel position="floating">教育机构名称</IonLabel>
-                <IonInput name="eduName" value={baseInfoState.eduName} onIonChange={e => setBaseInfoState({...baseInfoState, eduName: e.detail.value!})}></IonInput>
-          </IonCol>
-          <IonCol>
-          <IonLabel position="floating">教育机构地址</IonLabel>
-                <IonInput name="eduName" value={baseInfoState.eduAddress} onIonChange={e => setBaseInfoState({...baseInfoState, eduAddress: e.detail.value!})} ></IonInput>
-          </IonCol>
-        </IonRow>
+        <tbody >
+        <tr >
+          <td>
+          <label  className='myLabel'>教育机构名称:</label></td><td>
+          <IonInput className="normalInput" id="eduName" name="eduName" value={baseInfoState.eduName} onIonChange={(e) =>{console.log(e.detail.value); setBaseInfoState({...baseInfoState, eduName: e.detail.value})}}></IonInput>
+                {/* <input  className="readOnlyInput" name="eduName" value={baseInfoState.eduName} onIonChange={e => setBaseInfoState({...baseInfoState, eduName: e})}></IonInput> */}
+          </td>
+          <td >
+          <label  className='myLabel'>教育机构地址:</label></td><td>
+                {/* <input  name="eduName" value={baseInfoState.eduAddress} onIonChange={e => setBaseInfoState({...baseInfoState, eduAddress: e.detail.value})} ></IonInput> */}
+                <IonInput className="normalInput" name="eduName" value={baseInfoState.eduAddress} onIonChange={e => setBaseInfoState({...baseInfoState, eduAddress: e.detail.value})} ></IonInput>
+          </td>
+        </tr>
 
 
-        <IonRow>
-          <IonCol>
-                <IonLabel position="floating">法人</IonLabel>
-                <IonInput name="eduLegalPerson" value={baseInfoState.eduLegalPerson} onIonChange={e => setBaseInfoState({...baseInfoState, eduLegalPerson: e.detail.value!})} ></IonInput>
-          </IonCol>
-          <IonCol>
-          <IonLabel position="floating">法人联系方式</IonLabel>
-                <IonInput name="eduLegalPhone" value={baseInfoState.eduLegalPhone}  onIonChange={e => setBaseInfoState({...baseInfoState, eduLegalPhone: e.detail.value!})} > </IonInput>
-        </IonCol>
-        </IonRow>
-        <IonRow>
-          <IonCol>
-                <IonLabel position="floating">联系人</IonLabel>
-                <IonInput name="eduContact" value={baseInfoState.eduContact} onIonChange={e => setBaseInfoState({...baseInfoState, eduContact: e.detail.value!})} ></IonInput>
-          </IonCol>
-          <IonCol>
-          <IonLabel position="floating">联系人电话</IonLabel>
-                <IonInput name="eduContactPhone" value={baseInfoState.eduContactPhone}  onIonChange={e => setBaseInfoState({...baseInfoState, eduContactPhone: e.detail.value!})} > </IonInput>
-        </IonCol>
-        </IonRow>
+         <tr>
+          <td>
+                <label className='myLabel'  >法人：</label></td><td>
+                <IonInput className="normalInput" name="eduLegalPerson" value={baseInfoState.eduLegalPerson} onIonChange={e => setBaseInfoState({...baseInfoState, eduLegalPerson: e.detail.value})} ></IonInput>
+         
+          </td>
+          <td>
+           <label className='myLabel'  >法人联系方式：</label></td><td>
+                <IonInput className="normalInput" name="eduLegalPhone" value={baseInfoState.eduLegalPhone}  onIonChange={e => setBaseInfoState({...baseInfoState, eduLegalPhone: e.detail.value})} ></IonInput>
+                {/* <IonInput className="normalInput" name="eduLegalPhone" value={baseInfoState.eduLegalPhone}  onIonChange={e => setBaseInfoState({...baseInfoState, eduLegalPhone: e.detail.value})} ></IonInput> */}
+        </td>
+        </tr>
 
-        <IonRow>
+        <tr>
+          <td>
+                <label className='myLabel'  >联系人:</label></td><td>
+                <IonInput name="eduContact"  className="normalInput" value={baseInfoState.eduContact} onIonChange={e => setBaseInfoState({...baseInfoState, eduContact: e.detail.value})} ></IonInput>
+          </td>
+          <td>
+          <label className='myLabel'  >联系人电话:</label></td><td>
+                <IonInput name="eduContactPhone"  className="normalInput" value={baseInfoState.eduContactPhone}  onIonChange={e => setBaseInfoState({...baseInfoState, eduContactPhone: e.detail.value})} ></IonInput>
+        </td>
+        </tr>
+
+        <tr>
           
-          <IonCol>
-          <IonLabel position="floating" >是否公立</IonLabel>
-                <IonRadioGroup onIonChange={e => setBaseInfoState({...baseInfoState, eduIsPublic: e.detail.value!})}>
+          <td>
+          <label className='myLabel'   >是否公立:</label></td><td>
+          <input type="radio" name='eduStatus' onSelect={()=>{setBaseInfoState({...baseInfoState,eduIsPublic:true})}}></input>
+          <label className='radioLabel'  >公立</label>
+          <input type="radio" name='eduStatus' onSelect={()=>{setBaseInfoState({...baseInfoState,eduIsPublic:false})}} ></input>
+          <label className='radioLabel'  >非公立</label>
+                {/* <IonRadioGroup onIonChange={e => setBaseInfoState({...baseInfoState, eduIsPublic: e.detail.value})}>
                     <IonItem>
-                      <IonLabel hidden={true}>公立</IonLabel>
+                      <label >公立</label>
                       <IonRadio value={true} />
                     </IonItem>
                     <IonItem>
-                      <IonLabel hidden={true}>非公立</IonLabel>
+                      <label >非公立</label>
                       <IonRadio value={false} />
                     </IonItem>
-                  </IonRadioGroup>  
-          </IonCol>
-          <IonCol>
-          <IonLabel position="floating">许可证状态</IonLabel>
-                <IonRadioGroup onIonChange={e => setBaseInfoState({...baseInfoState, eduStatus: e.detail.value!})}>
+                  </IonRadioGroup>   */}
+          </td>
+          <td>
+          <label className='myLabel'  >许可证状态:</label></td><td>
+          <input type="radio" name='eduStatus' onSelect={()=>{setBaseInfoState({...baseInfoState,eduStatus:'valid'})}}></input>
+          <label className='radioLabel'  >有效</label>
+          <input type="radio" name='eduStatus' onSelect={()=>{setBaseInfoState({...baseInfoState,eduStatus:'invalid'})}} ></input>
+          <label className='radioLabel'  >不合格</label>
+          <input type="radio" name='eduStatus' onSelect={()=>{setBaseInfoState({...baseInfoState,eduStatus:'pending'})}} ></input>
+          <label className='radioLabel'  >待审核</label>
+          <input type="radio" name='eduStatus' onSelect={()=>{setBaseInfoState({...baseInfoState,eduStatus:'reject'})}} ></input>
+          <label className='radioLabel'  >拒绝</label>
+
+                {/* <IonRadioGroup onIonChange={e => setBaseInfoState({...baseInfoState, eduStatus: e.detail.value})}>
                       <IonItem>
-                      <IonLabel hidden={true}>有效</IonLabel>
+                      <label >有效</label>
                       <IonRadio value={"valid"} />
                     </IonItem>
                     <IonItem>
-                      <IonLabel hidden={true}>无效</IonLabel>
+                      <label >无效</label>
                       <IonRadio value={"invalid"} />
                     </IonItem>
                     <IonItem>
-                      <IonLabel hidden={true}>待审核</IonLabel>
+                      <label >待审核</label>
                       <IonRadio value={"pending"} />
                     </IonItem>
                     <IonItem>
-                      <IonLabel hidden={true}>拒绝</IonLabel>
+                      <label >拒绝</label>
                       <IonRadio value={"reject"} />
                     </IonItem>
-                  </IonRadioGroup>
-        </IonCol>
-        </IonRow>
-        <IonRow>
-          <IonCol>
-                <IonLabel position="floating">许可证文件</IonLabel>
-                <IonInput name="Public" readonly ></IonInput>   
-          </IonCol>
-          <IonCol>
-          <IonLabel position="floating">年检状态</IonLabel>
-          <IonRadioGroup onIonChange={e => setBaseInfoState({...baseInfoState, eduAnnualInspection: e.detail.value!})}>
+                  </IonRadioGroup> */}
+        </td>
+        </tr>
+        <tr>
+          <td>
+                <label className='myLabel'  >许可证文件:</label></td><td>
+                <input name="Public" type='file' ></input>   
+          </td>
+          <td>
+          <label className='myLabel'  >年检状态:</label></td><td>
+          <input type="radio" name='eduAnnualInspection' onSelect={()=>{setBaseInfoState({...baseInfoState,eduAnnualInspection:'qualified'})}}></input>
+          <label className='radioLabel'  >合格</label>
+          <input type="radio" name='eduAnnualInspection' onSelect={()=>{setBaseInfoState({...baseInfoState,eduAnnualInspection:'unqualified'})}} ></input>
+          <label className='radioLabel'  >不合格</label>
+          <input type="radio" name='eduAnnualInspection' onSelect={()=>{setBaseInfoState({...baseInfoState,eduAnnualInspection:'pending'})}} ></input>
+          <label className='radioLabel'  >待审核</label>
+          <input type="radio" name='eduAnnualInspection' onSelect={()=>{setBaseInfoState({...baseInfoState,eduAnnualInspection:'reject'})}} ></input>
+          <label className='radioLabel'  >拒绝</label>
+          {/* <IonRadioGroup onIonChange={e => setBaseInfoState({...baseInfoState, eduAnnualInspection: e.detail.value})}>
                       <IonItem>
-                      <IonLabel hidden={true}>合格</IonLabel>
+                      <label hidden={true}>合格</label>
                       <IonRadio value={"qualified"} />
                     </IonItem>
                     <IonItem>
-                      <IonLabel hidden={true}>不合格</IonLabel>
+                      <label hidden={true}>不合格</label>
                       <IonRadio value={"unqualified"} />
                     </IonItem>
                     <IonItem>
-                      <IonLabel hidden={true}>待审核</IonLabel>
+                      <label hidden={true}>待审核</label>
                       <IonRadio value={"pending"} />
                     </IonItem>
                     <IonItem>
-                      <IonLabel hidden={true}>拒绝</IonLabel>
+                      <label hidden={true}>拒绝</label>
                       <IonRadio value={"reject"} />
                     </IonItem>
-                  </IonRadioGroup>
-        </IonCol>
-        </IonRow>
-        <IonRow>
-          <IonCol>
-                <IonLabel position="floating">年检日期</IonLabel>
-                <IonInput name="eduAnnualInspectionDate" value={baseInfoState.eduAnnualInspectionDate} readonly></IonInput>
-         </IonCol>
-          <IonCol>
-          <IonLabel position="floating">年检时间</IonLabel>
-          <IonInput name="eduAnnualInspectionTime" value={baseInfoState.eduAnnualInspectionTime} readonly></IonInput>
-        </IonCol>
-        </IonRow>
-        <IonRow>
-          <IonCol>
-                <IonLabel position="floating">监管账户</IonLabel>
-                <IonInput name="eduSupervisedAccount" value={baseInfoState.eduSupervisedAccount} onIonChange={e => setBaseInfoState({...baseInfoState, eduSupervisedAccount: e.detail.value!})}></IonInput>
-          </IonCol>
-          <IonCol>
-          <IonLabel position="floating">普通账户</IonLabel>
-          <IonInput name="normalAccount" value={baseInfoState.normalAccount} onIonChange={e => setBaseInfoState({...baseInfoState, normalAccount: e.detail.value!})}></IonInput>
-        </IonCol>
-        </IonRow>
-        <IonRow>
-          <IonCol>
-                <IonLabel position="floating">监管商户号</IonLabel>
-                <IonInput name="Public" value={baseInfoState.eduSupervisedMerNo} onIonChange={e => setBaseInfoState({...baseInfoState, eduSupervisedMerNo: e.detail.value!})}                    ></IonInput>   
-          </IonCol>
-          <IonCol>
-                <IonLabel position="floating">监管机构名</IonLabel>
-                <IonInput name="Public" value={baseInfoState.supervisorOrgId} readonly ></IonInput>   
-          </IonCol>
-          
-          <IonCol>
-          <IonLabel position="floating">登录名</IonLabel>
-                <IonInput name="eduAnnualInspectionTime" value={baseInfoState.eduLoginName} readonly > </IonInput>
-        </IonCol>
-        </IonRow>
-        <IonRow>
+                  </IonRadioGroup> */}
+        </td>
+        </tr>
+        <tr>
+          <td>
+                <label className='myLabel'  >年检日期:</label></td><td>
+                <input  className="readonlyInput" name="eduAnnualInspectionDate" value={baseInfoState.eduAnnualInspectionDate} readOnly></input>
+         </td>
+          <td>
+          <label className='myLabel' >年检时间:</label></td><td>
+          <input  className="readonlyInput" name="eduAnnualInspectionTime" value={baseInfoState.eduAnnualInspectionTime} readOnly></input>
+        </td>
+        </tr>
+        <tr>
+          <td>
+                <label className='myLabel'  >监管账户:</label></td><td>
+                <IonInput  className="normalInput" name="eduSupervisedAccount" value={baseInfoState.eduSupervisedAccount} onIonChange={e => setBaseInfoState({...baseInfoState, eduSupervisedAccount: e.detail.value})}></IonInput>
+          </td>
+          <td>
+          <label className='myLabel'  >普通账户:</label></td><td>
+          <IonInput  className="normalInput" name="normalAccount" value={baseInfoState.normalAccount} onIonChange={e => setBaseInfoState({...baseInfoState, normalAccount: e.detail.value})}></IonInput>
+        </td>
+        </tr>
+        <tr>
+          <td>
+                <label className='myLabel'  >监管商户号:</label></td><td>
+                <IonInput  className="normalInput " name="Public" value={baseInfoState.eduSupervisedMerNo} onIonChange={e => setBaseInfoState({...baseInfoState, eduSupervisedMerNo: e.detail.value})}                    ></IonInput>   
+          </td>
+          <td>
+                <label className='myLabel'  >监管机构名:</label></td><td>
+                <input className="readonlyInput" name="Public" value={baseInfoState.supervisorOrgId} readOnly ></input>   
+          </td>
+        </tr>
+        <tr>
 
-          <IonCol>
-          <IonLabel position="floating">创建日期</IonLabel>
-                <IonInput name="eduAnnualInspectionTime" value={baseInfoState.eduCreateDate} readonly > </IonInput>
-          </IonCol>
-          <IonCol>
-          <IonLabel position="floating">创建时间</IonLabel>
-                <IonInput name="eduAnnualInspectionTime" value={baseInfoState.eduCreateTime} readonly > </IonInput>
-          </IonCol>
-        </IonRow>  
-        <IonRow>
+          <td>
+          <label className='myLabel'  >创建日期:</label></td><td>
+                <input  className="readonlyInput" name="eduAnnualInspectionTime" value={baseInfoState.eduCreateDate} readOnly ></input>
+          </td>
+          <td>
+          <label className='myLabel'  >创建时间:</label></td><td>
+                <input  className="readonlyInput" name="eduAnnualInspectionTime" value={baseInfoState.eduCreateTime} readOnly ></input>
+          </td>
+        </tr>  
+        <tr>
 
-          <IonCol>
-          <IonLabel position="floating">修改日期</IonLabel>
-                <IonInput name="eduAnnualInspectionTime" value={baseInfoState.eduUpdateDate} readonly > </IonInput>
-          </IonCol>
-          <IonCol>
-          <IonLabel position="floating">修改时间</IonLabel>
-                <IonInput name="eduAnnualInspectionTime" value={baseInfoState.eduUpdateTime} readonly > </IonInput>
-          </IonCol>
-        </IonRow>  
-        <IonRow>          
-          <IonCol>
-          <IonLabel position="floating">登录名</IonLabel>
-                <IonInput name="eduAnnualInspectionTime" value={baseInfoState.eduLoginName} readonly > </IonInput>
-          </IonCol>
-        </IonRow>
-            
+          <td>
+          <label className='myLabel'  >修改日期:</label></td><td>
+                <input  className="readonlyInput" name="eduAnnualInspectionTime" value={baseInfoState.eduUpdateDate} readOnly ></input>
+          </td>
+          <td>
+          <label className='myLabel'  >修改时间:</label></td><td>
+                <input  className="readonlyInput" name="eduAnnualInspectionTime" value={baseInfoState.eduUpdateTime} readOnly ></input>
+          </td>
+        </tr>  
+        <tr>          
+          <td>
+          <label className='myLabel'  >登录名:</label></td><td>
+                <input  className="readonlyInput" name="eduAnnualInspectionTime" value={baseInfoState.eduLoginName} readOnly ></input>
+          </td>
+        </tr>
+            </tbody>
           <IonItem className="">
           <IonButton className="m-5 text-base " type='submit' fill="solid">提交</IonButton>
             <IonButton className="m-5 text-base " onClick={onBack()} fill="solid">返回</IonButton>

@@ -442,7 +442,7 @@ export const reducer = (state: any, action: any) => {
         ...state,
         teacher:{
           ...state.teacher,
-          TeacherEdit:action.TeacherEdit
+          teacherEdit:action.teacherEdit
         },
         backPage:action.backPage||state.backPage
       }

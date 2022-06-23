@@ -11,6 +11,7 @@ import {
   IonMenuToggle,
   IonTitle,
   IonToolbar,
+  IonCard
 } from '@ionic/react';
 import { useEffect, useState,useContext } from 'react';
 import {  flash,arrowDown,arrowUp } from 'ionicons/icons';
@@ -45,21 +46,30 @@ const Menu = () => {
   }, []);
 
   return (
-    <IonMenu hidden={false} side="start" contentId="main" onIonDidOpen={handleOpen} onIonDidClose={handleClose}>
+    <IonMenu hidden={false}  side="start" menuId="first" contentId="main" onIonDidOpen={handleOpen} onIonDidClose={handleClose}>
       <IonHeader >
-        <IonToolbar>
-          <IonTitle className="text-center">教育机构管理系统</IonTitle>
+        <IonToolbar> 
+          <IonTitle className="text-center text-red-300">教育机构管理系统</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent>
+      <IonContent >
         <IonList >
-                <IonItem  className="flex flex-row justify-center text-center" routerLink={'/tabs/baseInfo'} routerDirection="none" detail={false} lines="none">
-                  <IonIcon icon={flash} slot="start" />
-                  <IonLabel className="font-bold">{'基本信息维护'}</IonLabel>
+                <IonItem  className="flex flex-row justify-center text-center " routerLink={'/tabs/baseInfo'} routerDirection="none" detail={false} lines="none">
+                  <IonIcon icon={flash} slot="start"  />
+                  <IonLabel className="font-bold bg-white">{'基本信息维护'}</IonLabel>
                 </IonItem>
                 <IonItem  className="flex flex-row justify-center text-center" routerLink={'/tabs/changePwd'} routerDirection="none" detail={false} lines="none">
                   <IonIcon icon={flash} slot="start" />
                   <IonLabel className="font-bold">{'更改密码'}</IonLabel>
+                </IonItem>
+                <IonItem className="flex flex-row justify-center text-center" button onClick={()=>{
+                  setLessonVisible(!lessonVisible)
+                }}>
+                <IonLabel>课程管理</IonLabel>
+                <IonIcon
+                  slot="end"
+                  icon={lessonVisible ? arrowDown : arrowUp}
+                ></IonIcon>
                 </IonItem>
                 <IonMenuToggle autoHide={!lessonVisible} key={'lesson'}>
                   <IonItem  className="flex flex-row justify-center text-center" routerLink={'/tabs/lesson/query'} routerDirection="none" detail={false} lines="none">
@@ -75,15 +85,7 @@ const Menu = () => {
                     <IonLabel className="font-bold">{'课程签到发起'}</IonLabel>
                   </IonItem>
                 </IonMenuToggle>
-                <IonItem className="flex flex-row justify-center text-center" button onClick={()=>{
-                  setStatisticVisible(!lessonVisible)
-                }}>
-                <IonLabel>课程考勤</IonLabel>
-                <IonIcon
-                  slot="end"
-                  icon={lessonVisible ? arrowDown : arrowUp}
-                ></IonIcon>
-                </IonItem>
+
                 <IonItem  className="flex flex-row justify-center text-center" routerLink={'/tabs/teacher/query'} routerDirection="none" detail={false} lines="none">
                   <IonIcon icon={flash} slot="start" />
                   <IonLabel className="font-bold">{'教师管理'}</IonLabel>
@@ -142,12 +144,13 @@ const Menu = () => {
                 ></IonIcon>
             </IonItem>          
         </IonList>
-      </IonContent> 
-      <IonContent>
+        </IonContent>
+      {/* <IonContent>
        <IonToolbar className='h-72 mt-36'> 
           <button className="w-24 p-2 text-white rounded-md mt-60 bg-primary-500 hover:bg-primary-700 focus:outline-none">退出</button>
        </IonToolbar>
-      </IonContent>
+      </IonContent> */}
+
     </IonMenu>
 
   );

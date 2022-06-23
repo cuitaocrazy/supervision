@@ -1,6 +1,6 @@
 //Teacher管理的详细页面
 import React, { useState } from 'react';
-import { IonPage, IonCard,IonRow,IonCol,IonRadioGroup,IonRadio, IonCardHeader, IonCardSubtitle,IonLabel,IonInput, IonCardContent,IonItem,IonButton,IonList,IonDatetime,IonPicker } from '@ionic/react';
+import { IonPage, IonCard, IonCardHeader, IonCardSubtitle, IonCardContent,IonItem,IonButton,IonList,IonDatetime,IonPicker } from '@ionic/react';
 import { Redirect } from 'react-router-dom';
 import { useCallback,useContext } from 'react'
 import {AppContext,setTeacherDetail} from '../../../appState';
@@ -46,97 +46,67 @@ export const TeacherDetail: React.FC = () => {
       </IonCardHeader>
       <IonCardContent>
         <form onSubmit={onModify}>
-        <IonRow>
-            <IonCol>
-              <IonItem>
-                  <IonLabel position="floating">教师姓名</IonLabel>
-              </IonItem>
-            </IonCol>
-            <IonCol>
-              <IonItem>
-                  <IonInput name="teacherName" value={teacherState.teacherName} readonly required></IonInput>
-              </IonItem>
-            </IonCol>
-            <IonCol>
-              <IonItem>
-                  <IonLabel position="floating">身份证号</IonLabel>
-              </IonItem>
-            </IonCol>
-            <IonCol>
-              <IonItem>
-                  <IonInput name="teacherName" value={teacherState.teacherIdentityNo} readonly required></IonInput>
-              </IonItem>
-            </IonCol>
-        </IonRow>
-        <IonRow>
-            <IonCol>
-              <IonItem>
-                  <IonLabel position="floating">专业领域：</IonLabel>
-              </IonItem>
-            </IonCol>
-            <IonCol>
-              <IonItem>
-                  <IonInput name="teacherName" value={teacherState.teacherIntroduce} readonly required></IonInput>
-              </IonItem>
-            </IonCol>
-            <IonCol>
-              <IonItem>
-                  <IonLabel position="floating">从业经历：</IonLabel>
-              </IonItem>
-            </IonCol>
-            <IonCol>
-              <IonItem>
-                  <IonInput name="teacherName" value={teacherState.teacherExperience} readonly required>年</IonInput>
-              </IonItem>
-            </IonCol>
-        </IonRow>
-        <IonRow>
-            <IonCol>
-              <IonItem>
-                  <IonLabel position="floating">创建日期:</IonLabel>
-              </IonItem>
-            </IonCol>
-            <IonCol>
-              <IonItem>
-                  <IonInput name="teacherName" value={teacherState.teacherCreatedDate} readonly required></IonInput>
-              </IonItem>
-            </IonCol>
-            <IonCol>
-              <IonItem>
-                  <IonLabel position="floating">创建时间:</IonLabel>
-              </IonItem>
-            </IonCol>
-            <IonCol>
-              <IonItem>
-                  <IonInput name="teacherName" value={teacherState.teacherCreateTime} readonly required></IonInput>
-              </IonItem>
-            </IonCol>
-        </IonRow>
-        <IonRow>
-            <IonCol>
-              <IonItem>
-                  <IonLabel position="floating">更新日期:</IonLabel>
-              </IonItem>
-            </IonCol>
-            <IonCol>
-              <IonItem>
-                  <IonInput name="teacherName" value={teacherState.teacherUpdatedDate} readonly required></IonInput>
-              </IonItem>
-            </IonCol>
-            <IonCol>
-              <IonItem>
-                  <IonLabel position="floating">更新时间:</IonLabel>
-              </IonItem>
-            </IonCol>
-            <IonCol>
-              <IonItem>
-                  <IonInput name="teacherName" value={teacherState.teacherUpdateTime} readonly required></IonInput>
-              </IonItem>
-            </IonCol>
-        </IonRow> 
-          <IonItem className="">
-            <IonButton className="m-5 text-base " onClick={onBack()} fill="solid">返回</IonButton>
-          </IonItem>
+        <tr>
+            <td>
+                  <label className='myLabel' >教师姓名</label>          
+            </td>
+            <td>
+                  <input className='readonlyInput'name="teacherName" value={teacherState.teacherName} readOnly required></input>
+            </td>
+            <td>
+                  <label className='myLabel' >身份证号</label>
+            </td>
+            <td>
+                  <input className='readonlyInput'name="teacherName" value={teacherState.teacherIdentityNo} readOnly required></input>            
+            </td>
+        </tr>
+        <tr>
+            <td>
+                  <label className='myLabel' >专业领域：</label>
+            </td>
+            <td>
+                  <input className='readonlyInput'name="teacherName" value={teacherState.teacherIntroduce} readOnly required></input>
+            </td>
+            <td>
+                  <label className='myLabel' >从业经历：</label>
+            </td>
+            <td>
+                  <input className='readonlyInput'name="teacherName" value={teacherState.teacherExperience+'年'} readOnly required></input>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                  <label className='myLabel' >创建日期:</label>
+            </td>
+            <td>
+                  <input className='readonlyInput'name="teacherName" value={teacherState.teacherCreatedDate} readOnly required></input>
+            </td>
+            <td>
+                  <label className='myLabel' >创建时间:</label>
+            </td>
+            <td>
+                  <input className='readonlyInput'name="teacherName" value={teacherState.teacherCreateTime} readOnly required></input>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                  <label className='myLabel' >更新日期:</label>
+            </td>
+            <td>
+                  <input className='readonlyInput'name="teacherName" value={teacherState.teacherUpdatedDate} readOnly required></input>
+            </td>
+            <td>
+                  <label className='myLabel' >更新时间:</label>
+            </td>
+            <td>
+                  <input className='readonlyInput'name="teacherName" value={teacherState.teacherUpdateTime} readOnly required></input>
+            </td>
+        </tr> 
+          <tr>
+            <td>
+            <button className="m-5 text-base " onClick={onBack()} >返回</button>
+            </td>
+          </tr>
         </form>
       </IonCardContent>
       </IonCard>

@@ -1,7 +1,7 @@
 //教师的查询页面
-import { useEffect,useCallback,useContext,useState } from 'react'
+import { useEffect,useCallback,useContext,useState,useRef } from 'react'
 import { Redirect } from 'react-router-dom';
-import {AppContext, setTeacherList, setTeacherDetail} from '../../../appState';
+import {AppContext, setTeacherList, setTeacherDetail,setTeacherEdit} from '../../../appState';
 import {Teacher} from '../../../types/types'
 import {
   IonPage,
@@ -11,6 +11,7 @@ import {
   IonRow,
   IonCol,
   IonModal,
+  IonButton,
   IonCardHeader,
   IonCardTitle,
   IonCard,
@@ -51,8 +52,13 @@ const demoTeacherList:Teacher[] = [
   }
 ]
 const TeacherQuery:React.FC = () => {
-  
-const [isCreateModalOpen,setCreateModalOpen] = useState(false)
+ 
+  const createModal = useRef<HTMLIonModalElement>(null);
+ 
+  const cancelModal = useRef<HTMLIonModalElement>(null);
+
+
+
 const [createTeacher,setCreateTeacher] = useState({} as Teacher )
 const [cancelTeacher,setCancelTeacher] = useState({} as Teacher )
 const [isCancelModalOpen,setIsCancelModalOpen] = useState(false)
@@ -73,7 +79,15 @@ const onDetail = (item:Teacher)=>() => {
   doSetDetail(item)
 }
 
-const onCancel = (item:Teacher)=>() => {
+const onEdit = (item:Teacher)=>() => {
+  doSetEdit(item)
+}
+const doSetEdit = useCallback((teacher: Teacher) => {
+  dispatch({...setTeacherEdit(teacher),...{backPage:'/tabs/teacher/query'}});
+},[dispatch]);
+
+const onCancel = () => {
+
   //todo
 }
 
@@ -114,6 +128,11 @@ const onQuery = ()=>{
     return 
   }
 
+  const onCreate = ()=>{
+    console.log(createTeacher)
+    // setCreateModalOpen(false)
+  }
+
 
 const ListEntry = ({ teacher,key, ...props } : {teacher:Teacher,key:any}) => (
   <IonItem key={key} >
@@ -135,23 +154,30 @@ const ListEntry = ({ teacher,key, ...props } : {teacher:Teacher,key:any}) => (
     <IonLabel>
        <div className='flex gap-2'>
           <button className='p-1 text-white bg-blue-500 rounded-md'  onClick={onDetail(teacher)}>详情</button>
-          <button className='p-1 text-white bg-blue-500 rounded-md'  onClick={()=>{setCreateTeacher({} as Teacher); setCreateModalOpen(true)}}>编辑</button>
-          <button className='p-1 text-white bg-blue-500 rounded-md'  onClick={onCancel(teacher)}>删除</button>
+          <button className='p-1 text-white bg-blue-500 rounded-md'  onClick={onEdit(teacher)}>编辑</button>
+          <button className='p-1 text-white bg-blue-500 rounded-md'  onClick={()=>{setCancelTeacher(teacher);setIsCancelModalOpen(true)}}>删除</button>
        </div>
     </IonLabel>
   </IonItem>
   );
-  if(state.teacher.teacherDetail==null||state.teacher.teacherDetail==undefined){
+
+  if(state.teacher.teacherEdit){
+    return <Redirect to="/tabs/teacher/edit" />
+  }
+  if(state.teacher.teacherDetail){
+    return <Redirect to="/tabs/teacher/detail" />
+  }
     return   <IonPage >
                 <div className='relative'>
                 <div className='flex'>
-
-                <IonModal isOpen={isCreateModalOpen}>
+                {/* <IonModal isOpen={isCreateModalOpen} > */}
+                <IonModal ref={createModal} trigger="open-create-modal"  >
                   <IonCard>
                     <IonCardHeader>
                         教师新增
                     </IonCardHeader>
                     <IonCardContent>
+                      <form onSubmit={onCreate}>
                       <IonItem>
                         <IonLabel position="floating">教师姓名：</IonLabel>
                         <IonInput onIonChange={e => setCreateTeacher({...createTeacher,...{teacherName:e.detail.value!}})}> </IonInput>
@@ -168,33 +194,48 @@ const ListEntry = ({ teacher,key, ...props } : {teacher:Teacher,key:any}) => (
                         <IonLabel position="floating">从业经验：</IonLabel>
                         <IonInput onIonChange={e => setCreateTeacher({...createTeacher,...{teacherExperience:e.detail.value!}})}> </IonInput>
                       </IonItem>
+                      <div className='mt-2 mb-2 flex space-x-2 '>
+                        <span  className="flex-1 ">
+                                  <button className='submutButton flex items-center justify-center flex-none  focus:outline-none hover:bg-primary-700 ' type='submit' >确认</button>
+
+                        </span >
+                        <span className="flex-1 ">
+                          <button  className='cancelButton' onClick={ ()=>createModal.current?.dismiss()}>取消</button>
+                        </span>
+                      </div>
+                      </form>
                     </IonCardContent>
                   </IonCard>
                 </IonModal>
-
-                
                 <IonModal isOpen={isCancelModalOpen}>
                   <IonCard>
                     <IonCardHeader>
                         教师删除确认
                     </IonCardHeader>
                     <IonCardContent>
+                      <form  onSubmit={onCancel}>
                       <IonItem>
-                        <IonLabel position="floating">教师姓名：</IonLabel>
-                        <IonInput readonly>{cancelTeacher.teacherName} </IonInput>
+                        <IonLabel >教师姓名：{cancelTeacher.teacherName}</IonLabel>
                       </IonItem>
                       <IonItem>
-                        <IonLabel position="floating">教师身份证：</IonLabel>
-                        <IonInput readonly> </IonInput>
+                        <IonLabel >教师身份证：{cancelTeacher.teacherIdentityNo}</IonLabel>
                       </IonItem>
                       <IonItem>
-                        <IonLabel position="floating">专业领域：</IonLabel>
-                        <IonInput readonly>{cancelTeacher.teacherIntroduce} </IonInput>
+                        <IonLabel >专业领域：{cancelTeacher.teacherIntroduce}</IonLabel>
                       </IonItem>
                       <IonItem>
-                        <IonLabel position="floating">从业经验：</IonLabel>
-                        <IonInput readonly> {cancelTeacher.teacherExperience}</IonInput>
+                        <IonLabel >从业经验：{cancelTeacher.teacherExperience}年</IonLabel>
                       </IonItem>
+                      <div className='mt-2 mb-2 flex space-x-2 '>
+                        <span  className="flex-1 ">
+                                  <button className='submutButton flex items-center justify-center flex-none  focus:outline-none hover:bg-primary-700 ' type='submit' >确认</button>
+
+                        </span >
+                        <span className="flex-1 ">
+                          <button  className='cancelButton' onClick={ ()=>cancelModal.current?.dismiss()}>取消</button>
+                        </span>
+                      </div>
+                      </form>
                     </IonCardContent>
                   </IonCard>
                 </IonModal>
@@ -202,11 +243,16 @@ const ListEntry = ({ teacher,key, ...props } : {teacher:Teacher,key:any}) => (
 
                 <IonRow className='flex justify-between '>
                       <IonCol className='flex ml-8'>
-                        <IonLabel className='flex h-12 p-2 font-bold text-center text-primary-600 w-28'>教育机构名称查询：</IonLabel>
-                        <input type='text' className="flex w-56 h-12 pt-2.5 font-bold text-center text-primary-600 bg-white rounded-md focus:outline-none focus:glow-secondary-500" onChange={e=>setQueryInfo({...queryInfo,...{eduName:e.target.value}})} />
+                        <IonLabel className='flex h-12 p-2 font-bold text-center text-primary-600 w-28'>教师姓名：</IonLabel>
+                        <input type='text' className="flex w-56 h-12 pt-2.5 font-bold text-center text-primary-600 bg-white rounded-md focus:outline-none focus:glow-secondary-500" onChange={e=>setQueryInfo({...queryInfo,...{teacherName:e.target.value}})} />
                       </IonCol>
                       <IonCol className='flex ml-8'> 
                         <button onClick={()=>onQuery()} >查询</button>
+                      </IonCol>
+                      <IonCol className='flex ml-8'> 
+                        <IonButton id="open-create-modal" expand="block"
+                        //  onClick={()=>setCreateModalOpen(true)} 
+                         >新增</IonButton>
                       </IonCol>
                 </IonRow>
                 </div>
@@ -214,10 +260,10 @@ const ListEntry = ({ teacher,key, ...props } : {teacher:Teacher,key:any}) => (
                 <IonList>
                   <IonItem key='title'>
                     <IonLabel> 
-                      <div className='font-black text-center'>所属机构</div>
+                      <div className='font-black text-center'>教师姓名</div>
                     </IonLabel>
                     <IonLabel> 
-                      <div className='font-black text-center'>教师姓名</div>
+                      <div className='font-black text-center'>教师身份证号码</div>
                     </IonLabel>
                     <IonLabel>
                       <div className='font-black text-center'>专业领域</div>
@@ -241,10 +287,6 @@ const ListEntry = ({ teacher,key, ...props } : {teacher:Teacher,key:any}) => (
             </div> 
             </div>            
       </IonPage>
-   }
-   else{
-     return <Redirect to="/tabs/teacher/detail" />
-   }  
 }
 export default TeacherQuery;
 
