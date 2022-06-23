@@ -1,4 +1,4 @@
-import React from 'react';
+import { FC } from 'react';
 import { IonPage, IonHeader, IonContent } from "@ionic/react"
 import LessonEvalCard from "../LessonEvalCard"
 import LessonFrame from "../LessonFrame"
@@ -12,8 +12,19 @@ import { Lesson, Teacher, EduOrg } from '../../types/types'
 import Navbar from 'components/Navbar'
 import Router from 'next/router'
 import { motion } from 'framer-motion'
+import TeacherName from 'components/TeacherName';
+import OrgAddressAndPhone from 'components/OrgAddressAndPhone'
+
 // 标签选项卡
-function MyTabs() {
+const MyTabs = () => {
+  const router = useRouter();
+  const { item } = router.query
+  let lesson: Lesson = { lessonName: "小熊美术课程3-5岁", lessonTotalPrice: 880.00, lessonTotalQuantity: 58, lessonIntroduce: "艺术教育是未来教育", lessonId: "lesson-001", eduId: "edu-001", teacherId: "teacher-001" }
+  let teacher: Teacher = { teacherName: "李梅", teacherIntroduce: "李雷，清华大学美术学院，学士、硕士，7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖,7年资深美育教研从业经验，20年媒体从业经历。清华大学美术学院，学士、硕士，7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖,7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖......", teacherId: "teacher-001" }
+  let eduOrg: EduOrg = { eduAddress: "河北省廊坊市", eduContactPhone: "0316-78909090", eduId: "edu-001", eduLoginName: "kl", supervisorOrgId: "sup-org-001" }
+  if (typeof item === 'string') {
+    lesson = JSON.parse(item)
+  }
   return (
     <Tab.Group defaultIndex={0}>
       <Tab.List className="grid items-center grid-cols-3 gap-10 py-2 mx-10 mt-3 text-sm text-gray-500 justify-items-center">
@@ -29,9 +40,8 @@ function MyTabs() {
       </Tab.List>
       <Tab.Panels>
         <Tab.Panel>
-          <OrgInfo />
-          <LessonIntroduce />
-          <TeacherIntroduce />
+          <OrgInfo lessonName={lesson.lessonName} teacherName={teacher.teacherName} lessonTotalPrice={lesson.lessonTotalPrice} lessonTotalQuantity={lesson.lessonTotalQuantity} eduAddress={eduOrg.eduAddress} eduContactPhone={eduOrg.eduContactPhone} />
+          <TeacherIntroduce teacherIntroduce={teacher.teacherIntroduce} />
         </Tab.Panel>
         <Tab.Panel>
           <LessonFrame />
@@ -44,57 +54,37 @@ function MyTabs() {
   )
 }
 
+interface lessonProps {
+  lessonName?: string
+  teacherName?: string
+  lessonTotalPrice?: number
+  lessonTotalQuantity?: number
+  eduAddress?: string
+  eduContactPhone?: string
+  lessonIntroduce?:string
+}
+
 // 课程的培训机构信息组件
-const OrgInfo = () => {
-  const router = useRouter();
-  const { item } = router.query
-  let lesson: Lesson = { lessonName: "小熊美术课程3-5岁", lessonTotalPrice: 880.00, lessonTotalQuantity: 58, lessonIntroduce: "艺术教育是未来教育", lessonId: "lesson-001", eduId: "edu-001", teacherId: "teacher-001" }
-  console.log("lesson.lessonTotalPrice" + lesson.lessonTotalPrice)
-  console.log("lessonTotalQuantity" + lesson.lessonTotalQuantity)
-  let teacher: Teacher = { teacherName: "李梅", teacherIntroduce: "3333333", teacherId: "teacher-001" }
-  let eduOrg: EduOrg = { eduAddress: "河北省廊坊市", eduContactPhone: "0316-78909090", eduId: "edu-001", eduLoginName: "kl", supervisorOrgId: "sup-org-001" }
-  if (typeof item === 'string') {
-    lesson = JSON.parse(item)
-  }
+const OrgInfo: FC<lessonProps> = (props) => {
+
   const dispatch = useAppDispatch()
-  return <div className='px-3 py-1 mx-3 rounded-lg shadow-md'>
-    <div className='text-lg font-bold'>{lesson.lessonName}</div>
-
-    <div className='flex pt-1'>
-      <div className='text-sm text-gray-500'>讲师:</div>
-      <div className='text-sm'>&nbsp;&nbsp;{teacher.teacherName}</div>
-      <div className='flex flex-auto justify-self-end'>
-        <svg className="w-3 h-3 m-1 text-yellow-500 " fill="orange" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
-        </svg>
-        <svg className="w-3 h-3 mt-1 mr-1 text-yellow-500 " fill="orange" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
-        </svg>
-        <svg className="w-3 h-3 mt-1 mr-1 text-yellow-500 " fill="orange" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
-        </svg>
-        <svg className="w-3 h-3 mt-1 mr-1 text-yellow-500 " fill="orange" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
-        </svg>
-        <svg className="w-3 h-3 mt-1 text-yellow-500 " fill="orange" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
-        </svg>
+  return (<>
+    <div className='px-3 py-1 mx-3 rounded-lg shadow-md'>
+      <div className='text-lg font-bold'>{props.lessonName}</div>
+      <TeacherName teacherName={props.teacherName} />
+      <div className='flex pt-1 text-xs'>
+        <div className="text-red-500 "><span>¥</span>{props.lessonTotalPrice}</div>
+        <div className='pl-3 text-gray-500'>{props.lessonTotalQuantity}<span>课时</span></div>
       </div>
+      <OrgAddressAndPhone eduContactPhone={props.eduContactPhone} eduAddress={props.eduAddress}  />
     </div>
+    <div className='p-3 mx-3 mt-2 text-xs rounded-lg shadow-md'>
+      <div className='text-sm font-bold text-gray-600'>课程介绍</div>
+      <div className='pt-1 text-gray-500'>{props.lessonIntroduce}</div>
+    </div>
+  </>
+  )
 
-    <div className='flex pt-1 text-xs'>
-      <div className="text-red-500 "><span>¥</span>{lesson.lessonTotalPrice}</div>
-      <div className='pl-3 text-gray-500'>{lesson.lessonTotalQuantity}<span>课时</span></div>
-    </div>
-    <div className='flex pt-1 text-xs'>
-      <div className='text-gray-500'>地址：</div>
-      <div>{eduOrg.eduAddress}</div>
-    </div>
-    <div className='flex pt-1 text-xs'>
-      <div className='text-gray-500'>电话：</div>
-      <div>{eduOrg.eduContactPhone}</div>
-    </div>
-  </div>
 }
 
 // 课程详情页面底部菜单组件
@@ -105,9 +95,9 @@ const LessonDetailBottomMenu = () => {
   if (typeof item === 'string') {
     lesson = JSON.parse(item)
   }
-  const count =useAppSelector(selectCount)
-  const carList=useAppSelector(selectCarList)
-  const carListStr=carList.map((item)=>{
+  const count = useAppSelector(selectCount)
+  const carList = useAppSelector(selectCarList)
+  const carListStr = carList.map((item) => {
     return JSON.stringify(item)
   })
   const dispatch = useAppDispatch()
@@ -128,7 +118,7 @@ const LessonDetailBottomMenu = () => {
       </div>
 
       <div className='mr-4 text-xs text-gray-500'
-        onClick={() => { Router.push({ pathname: './shoppingCar', query: {carList:carListStr} }) }}>购物车</div>
+        onClick={() => { Router.push({ pathname: './shoppingCar', query: { carList: carListStr } }) }}>购物车</div>
     </a>
     <button className='h-10 mt-2 ml-8 text-sm font-medium text-white bg-orange-400 rounded-l-3xl grow focus:bg-orange-600'
       onClick={() => { dispatch(increment({ payload: lesson })) }}>加入购物车</button>
