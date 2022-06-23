@@ -5,12 +5,11 @@ import LessonFrame from "../LessonFrame"
 import LessonIntroduce from 'components/LessonIntroduce';
 import TeacherIntroduce from 'components/TeacherIntroduce';
 import { Tab } from '@headlessui/react';
-import { useRouter } from 'next/router'
+import Router,{ useRouter } from 'next/router'
 import { useAppDispatch, useAppSelector } from '../../app/hook'
 import { increment, selectCount, selectCarList } from '../../features/order-cart/counterSlice'
 import { Lesson, Teacher, EduOrg } from '../../types/types'
 import Navbar from 'components/Navbar'
-import Router from 'next/router'
 import { motion } from 'framer-motion'
 import TeacherName from 'components/TeacherName';
 import OrgAddressAndPhone from 'components/OrgAddressAndPhone'
@@ -87,19 +86,27 @@ const OrgInfo: FC<lessonProps> = (props) => {
 
 }
 
+interface LessonDetailBottomMenuProps{
+  item:Lesson
+}
 // 课程详情页面底部菜单组件
-const LessonDetailBottomMenu = () => {
+const LessonDetailBottomMenu:FC<LessonDetailBottomMenuProps> = (props) => {
+  console.log("进入LessonDetailBottomMenu")
   const router = useRouter();
   let lesson: Lesson = { lessonName: "小熊美术课程3-5岁", lessonTotalPrice: 880, lessonTotalQuantity: 58, lessonIntroduce: "艺术教育是未来教育", lessonId: "lesson-001", eduId: "edu-001", teacherId: "teacher-001" }
   const { item } = router.query
   if (typeof item === 'string') {
     lesson = JSON.parse(item)
+    console.log("lesson"+lesson)
   }
   const count = useAppSelector(selectCount)
+  //console.log("count"+count)
   const carList = useAppSelector(selectCarList)
+  //console.log("carList"+carList)
   const carListStr = carList.map((item) => {
     return JSON.stringify(item)
   })
+  //console.log("carListStr"+carListStr)
   const dispatch = useAppDispatch()
 
   return <div className='fixed bottom-0 flex w-full pl-5 mt-6 ml-3 mr-5 bg-white h-14'>
@@ -123,7 +130,9 @@ const LessonDetailBottomMenu = () => {
     <button className='h-10 mt-2 ml-8 text-sm font-medium text-white bg-orange-400 rounded-l-3xl grow focus:bg-orange-600'
       onClick={() => { dispatch(increment({ payload: lesson })) }}>加入购物车</button>
     <button className='h-10 px-3 mt-2 mr-8 text-sm font-medium text-white grow bg-primary-500 rounded-r-3xl'
-      onClick={() => { router.push("./conOrder") }}>立即购买</button>
+      onClick={() => {
+        Router.push("./conOrder")
+      }}>立即购买</button>
   </div>
 }
 

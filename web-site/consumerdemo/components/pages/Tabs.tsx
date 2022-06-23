@@ -26,7 +26,7 @@ const Tabs = () => {
           <IonIcon icon={school} />
           <IonLabel>机构</IonLabel>
         </IonTabButton>
-        <IonTabButton tab="课程" href="/lessonList">
+        <IonTabButton tab="课程" href="/myLessonList">
           <IonIcon icon={list} />
           <IonLabel>课程</IonLabel>
         </IonTabButton>
@@ -34,7 +34,7 @@ const Tabs = () => {
           <IonIcon icon={cart} />
           <IonLabel>购物车</IonLabel>
         </IonTabButton>
-        <IonTabButton tab="我的" href="/personalCenter">
+        <IonTabButton tab="我的" href="/myPersonalCenter">
           <IonIcon icon={person} />
           <IonLabel>我的</IonLabel>
         </IonTabButton>

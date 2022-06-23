@@ -5,10 +5,7 @@ import Router, { useRouter } from 'next/router'
 import Navbar from 'components/Navbar'
 import { Lesson } from '../../types/types'
 import { useAppDispatch } from '../../app/hook'
-import { produceWithPatches } from 'immer';
 import { decrement } from 'features/order-cart/counterSlice';
-import { Item } from 'framer-motion/types/components/Reorder/Item';
-
 
 type State = {
   chooseLesson?: Lesson,
@@ -19,7 +16,7 @@ interface CarProps {
   edu_name?: string
   image?: string
   lesson_name?: string
-  lesson_introduce?: any
+  lesson_introduce?: string
   lesson_total_price?: number
   lesson_total_quantity?: number
   onDelete: any

@@ -8,10 +8,10 @@ import { LessonInfo } from '../../types/types'
 import { Lesson, Teacher, EduOrg } from '../../types/types'
 
 interface LessonListCardProps {
-  lesson_imgs: string
-  lesson_name: string
-  lesson_introduce: string
-  edu_address: string
+  lesson_imgs?: string
+  lesson_name?: string
+  lesson_introduce?: string
+  edu_address?: string
   item: Lesson
 }
 // 首页课程列表card组件
