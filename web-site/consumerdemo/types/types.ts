@@ -31,7 +31,7 @@ export interface Contract {
   lessonEndDate?: string,
   lessonEndTime?: string,
   lessonAttendanceType?:string,
-  lessionTotalQuantity?:string,
+  lessionTotalQuantity?:number,
   lessionTotalPrice?:string,
   lessionPerPrice?:string,
   teacherId?:string,
@@ -40,6 +40,8 @@ export interface Contract {
   consumerName?:string,
   consumerStuName?:string,
   orderNo?:string,
+  lessionCompletedQuantity?:number,
+  lessonImages?:string
 
 }
 // export interface TranSum{
@@ -76,7 +78,6 @@ export interface Lesson {
   teacher?: Teacher,
   lessonTotalQuantity?:number
   lessonImgs?:string
-  eduAddress?:string
 }
 
 export interface Teacher {

@@ -1,4 +1,10 @@
-import React from 'react'
+import {FC} from 'react'
+import {Lesson} from '../types/types'
+
+interface lessonProps{
+
+
+}
 
 // 课程介绍组件
 const LessonIntroduce = () => {
