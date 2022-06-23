@@ -43,5 +43,9 @@
     "postcss": "^8.3.8",
     "tailwindcss": "^2.2.15",
     "typescript": "4.4.3"
-  }
+  },
+  "description": "This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).",
+  "main": ".eslintrc.js",
+  "author": "",
+  "license": "ISC"
 }
