@@ -1,6 +1,6 @@
 //Teacher管理的详细页面
 import React, { useState } from 'react';
-import { IonPage, IonCard,IonRow,IonCol,IonRadioGroup,IonRadio, IonCardHeader, IonCardSubtitle,IonLabel,IonInput, IonCardContent,IonItem,IonButton,IonList,IonDatetime,IonPicker } from '@ionic/react';
+import { IonPage, IonCard,IonRadioGroup,IonRadio, IonCardHeader, IonCardSubtitle,IonInput, IonCardContent,IonItem,IonButton,IonList,IonDatetime,IonPicker } from '@ionic/react';
 import { Redirect } from 'react-router-dom';
 import { useCallback,useContext } from 'react'
 import {AppContext,setTeacherEdit} from '../../../appState';
@@ -15,11 +15,11 @@ export const TeacherDetail: React.FC = () => {
   const [isPickOpen, setPickOpen] = useState(false);
   const setBack = useCallback(() => {
     dispatch(setTeacherEdit(undefined));
-  },[]);`                                                       `
+  },[]);
   const onBack = ()=>() => {
     setBack()
   }
-  if(state.teacher.teacherDetail===undefined){
+  if(state.teacher.teacherEdit===undefined){
     return <Redirect to={state.backPage} />
   }
 
@@ -46,149 +46,57 @@ export const TeacherDetail: React.FC = () => {
       </IonCardHeader>
         <IonCardContent>
         <form onSubmit={onModify}>
-        <IonRow>
-            <IonCol>
-              <IonItem>
-                  <IonLabel position="floating">教师姓名</IonLabel>
-              </IonItem>
-            </IonCol>
-            <IonCol>
-              <IonItem>
-                  <IonInput name="teacherName" value={teacherState.teacherName} onIonChange={e => setTeacherEdit({...teacherState,...{teacherName:e.detail.value!}})} required></IonInput>
-              </IonItem>
-            </IonCol>
-            <IonCol>
-              <IonItem>
-                  <IonLabel position="floating">身份证号</IonLabel>
-              </IonItem>
-            </IonCol>
-            <IonCol>
-              <IonItem>
-                  <IonInput name="teacherName" value={teacherState.teacherIdentityNo} onIonChange={e => setTeacherEdit({...teacherState,...{teacherIdentityNo:e.detail.value!}})} required></IonInput>
-              </IonItem>
-            </IonCol>
-        </IonRow>
-        <IonRow>
-            <IonCol>
-              <IonItem>
-                  <IonLabel position="floating">专业领域：</IonLabel>
-              </IonItem>
-            </IonCol>
-            <IonCol>
-              <IonItem>
-                  <IonInput name="teacherName" value={teacherState.teacherIntroduce} onIonChange={e => setTeacherEdit({...teacherState,...{teacherIntroduce:e.detail.value!}})} required></IonInput>
-              </IonItem>
-            </IonCol>
-            <IonCol>
-              <IonItem>
-                  <IonLabel position="floating">从业经历：</IonLabel>
-              </IonItem>
-            </IonCol>
-            <IonCol>
-              <IonItem>
-                  <IonInput name="teacherName" value={teacherState.teacherExperience} onIonChange={e => setTeacherEdit({...teacherState,...{teacherExperience:e.detail.value!}})} required>年</IonInput>
-              </IonItem>
-            </IonCol>
-        </IonRow>
-        <IonRow>
-            <IonCol>
-              <IonItem>
-                  <IonLabel position="floating">创建日期:</IonLabel>
-              </IonItem>
-            </IonCol>
-            <IonCol>
-              <IonItem>
-                  <IonInput name="teacherName" value={teacherState.teacherCreatedDate} readonly required></IonInput>
-              </IonItem>
-            </IonCol>
-            <IonCol>
-              <IonItem>
-                  <IonLabel position="floating">创建时间:</IonLabel>
-              </IonItem>
-            </IonCol>
-            <IonCol>
-              <IonItem>
-                  <IonInput name="teacherName" value={teacherState.teacherCreateTime} readonly required></IonInput>
-              </IonItem>
-            </IonCol>
-        </IonRow>
-        <IonRow>
-            <IonCol>
-              <IonItem>
-                  <IonLabel position="floating">更新日期:</IonLabel>
-              </IonItem>
-            </IonCol>
-            <IonCol>
-              <IonItem>
-                  <IonInput name="teacherName" value={teacherState.teacherUpdatedDate} readonly required></IonInput>
-              </IonItem>
-            </IonCol>
-            <IonCol>
-              <IonItem>
-                  <IonLabel position="floating">更新时间:</IonLabel>
-              </IonItem>
-            </IonCol>
-            <IonCol>
-              <IonItem>
-                  <IonInput name="teacherName" value={teacherState.teacherUpdateTime} readonly required></IonInput>
-              </IonItem>
-            </IonCol>
-        </IonRow> 
-          <IonItem className="">
-            <IonButton className="m-5 text-base " onClick={onBack()} fill="solid">返回</IonButton>
-          </IonItem>
+        <tbody>
+        <tr>
+            <td>
+                  <label  className='myLabel'>教师姓名:</label>
+            </td>
+            <td>        
+                  <IonInput className='normalInput' name="teacherName" value={teacherState.teacherName} onIonChange={e => setTeacherEdit({...teacherState,...{teacherName:e.detail.value!}})} required></IonInput>
+            </td>
+        </tr>
+        <tr>
+          <td>
+                <label  className='myLabel'>身份证号:</label>
+          </td>
+          <td>
+                <IonInput className='normalInput' name="teacherName" value={teacherState.teacherIdentityNo} onIonChange={e => setTeacherEdit({...teacherState,...{teacherIdentityNo:e.detail.value!}})} required></IonInput>
+          </td>
+        </tr>
+        <tr>
+            <td>
+                  <label className='myLabel'>专业领域：</label>
+            </td>
+            <td>
+                <IonInput className='normalInput' name="teacherName" value={teacherState.teacherIntroduce} onIonChange={e => setTeacherEdit({...teacherState,...{teacherIntroduce:e.detail.value!}})} required></IonInput>
+            </td>
+        </tr>
+        <tr>
+        <td>
+            <label  className='myLabel'>从业经历(年)：</label>              
+            </td>
+            <td>
+                  <IonInput className='normalInput' name="teacherName" value={teacherState.teacherExperience} onIonChange={e => setTeacherEdit({...teacherState,...{teacherExperience:e.detail.value!}})} required></IonInput>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                  <label className='myLabel'>教师简介:</label>
+            </td>
+            <td>
+              <IonInput className='normalInput' name="teacherName" value={teacherState.teacherIntroduce} onIonChange={e => setTeacherEdit({...teacherState,...{teacherExperience:e.detail.value!}})} required></IonInput>
+            </td>
+        </tr> 
 
-          --
-        <IonRow>
-            <IonCol>
-              <IonItem>
-                  <IonLabel position="floating">教师姓名</IonLabel>
-              </IonItem>
-            </IonCol>
-            <IonCol>
-              <IonItem>
-                  <IonInput name="teacherName" value={teacherState.teacherName}  onIonChange={e => setTeacherEdit({...teacherState,...{teacherName:e.detail.value!}})} required></IonInput>
-              </IonItem>
-            </IonCol>
-            <IonCol>
-              <IonItem>
-                  <IonLabel position="floating">身份证号</IonLabel>
-              </IonItem>
-            </IonCol>
-            <IonCol>
-            <IonItem>
-                  <IonInput name="teacherIdentityNo" value={teacherState.teacherIdentityNo}  onIonChange={e => setTeacherEdit({...teacherState,...{teacherIdentityNo:e.detail.value!}})} required></IonInput>
-              </IonItem>
-            </IonCol>
-        </IonRow>
-        <IonRow>
-            <IonCol>
-              <IonItem>
-                  <IonLabel position="floating">专业领域：</IonLabel>
-              </IonItem>
-            </IonCol>
-            <IonCol>
-              <IonItem>
-                  <IonInput name="teacherName" value={teacherState.teacherIntroduce}  onIonChange={e => setTeacherEdit({...teacherState,...{teacherIdentityNo:e.detail.value!}})}  required></IonInput>
-              </IonItem>
-            </IonCol>
-            <IonCol>
-              <IonItem>
-                  <IonLabel position="floating">从业经历：</IonLabel>
-              </IonItem>
-            </IonCol>
-            <IonCol>
-              <IonItem>
-                  <IonInput name="teacherName" value={teacherState.teacherExperience}  onIonChange={e => setTeacherEdit({...teacherState,...{teacherExperience:e.detail.value!}})}  required>年</IonInput>
-              </IonItem>
-            </IonCol>
-        </IonRow>
-          <IonItem className="">
-            <IonButton className="m-5 text-base " type='submit' fill="solid">提交</IonButton>
-          </IonItem>
-          <IonItem className="">
-            <IonButton className="m-5 text-base " onClick={onBack()} fill="solid">返回</IonButton>
-          </IonItem>
+        <tr>
+            <td>
+              <button className="submutButton" type='submit'>提交</button>
+            </td>
+            <td>
+              <button className="cancelButton m-5 text-base " onClick={onBack()} >返回 </button>
+            </td>
+        </tr> 
+          </tbody>
         </form>
       </IonCardContent>
       </IonCard>

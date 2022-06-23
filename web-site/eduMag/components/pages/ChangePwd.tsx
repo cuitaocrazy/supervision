@@ -1,7 +1,7 @@
 
 //BaseInfo的详细页面
 import React, { useState } from 'react';
-import { IonPage, IonCard,IonRadioGroup,IonRadio, IonCardHeader, IonCardSubtitle,IonLabel,IonInput, IonCardContent,IonItem,IonButton,IonList,IonDatetime,IonPicker,IonCol,IonRow } from '@ionic/react';
+import { IonPage, IonCard,IonRadioGroup,IonRadio, IonCardHeader, IonCardSubtitle, IonCardContent,IonItem,IonButton,IonList,IonDatetime,IonPicker,td,tr } from '@ionic/react';
 import { Redirect } from 'react-router-dom';
 import { useCallback,useContext,useEffect } from 'react'
 import {AppContext,setEduOrgDetail} from '../../appState';
@@ -49,33 +49,32 @@ export const BaseInfoDetail: React.FC = () => {
       </IonCardHeader>
       <IonCardContent>
         <form onSubmit={onModify}>
-        <IonRow>
-          <IonCol>
-          <IonLabel position="floating">原密码</IonLabel>
-                <IonInput name="eduName" value={pwd.pwd} type='password' onIonChange={e => setPwd({...pwd, pwd: e.detail.value!})}></IonInput>
-          </IonCol>
+        <tr>
+          <td>
+          <label className='myLabel'>原密码</label></td><td>
+                <input  className='normalInput' name="eduName" value={pwd.pwd} type='password' onChange={e => setPwd({...pwd, pwd: e.nativeEvent.target?.value})}></input>
+          </td>
 
-        </IonRow>
-        <IonRow>
-          <IonCol>
-          <IonLabel position="floating">修改密码</IonLabel>
-                <IonInput name="eduName" value={pwd.newPwd} type='password' onIonChange={e => setPwd({...pwd, newPwd: e.detail.value!})}></IonInput>
-          </IonCol>
+        </tr>
+        <tr>
+          <td>
+          <label className='myLabel'>修改密码</label></td><td>
+                <input  className='normalInput' name="eduName" value={pwd.newPwd} type='password' onChange={e => setPwd({...pwd, newPwd: e.nativeEvent.target?.value})}></input>
+          </td>
 
-        </IonRow>
-        <IonRow>
-          <IonCol>
-          <IonLabel position="floating">确认密码</IonLabel>
-                <IonInput name="eduName" value={pwd.newPwd2} type='password' onIonChange={e => setPwd({...pwd, newPwd2: e.detail.value!})}></IonInput>
-          </IonCol>
+        </tr>
+        <tr>
+          <td>
+          <label className='myLabel'>确认密码</label></td><td>
+                <input className='normalInput' name="eduName" value={pwd.newPwd2} type='password' onChange={e => setPwd({...pwd, newPwd2: e.nativeEvent.target?.value})}></input>
+          </td>
 
-        </IonRow>
-        <IonRow>
-          <IonCol>
-            <button type='submit'>确认</button>
-          </IonCol>
-
-        </IonRow>
+        </tr>
+        <tr>
+          <td colSpan={4}>
+            <button className='normalButton' type='submit'>确认</button>
+          </td>
+        </tr>
         </form>
       </IonCardContent>
       </IonCard>

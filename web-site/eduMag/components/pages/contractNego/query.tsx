@@ -162,7 +162,7 @@ const ListEntry = ({ contractNego,key, ...props } : {contractNego:ContractNego,k
     </IonLabel>
     <IonLabel>
        <div className='flex gap-2'>
-          <button className='p-1 text-white bg-blue-500 rounded-md'  onClick={()=>{setDetail(contractNego);setIsModalOpen(true)}}>手工退课</button>
+          <button className='p-1 text-white bg-blue-500 rounded-md'  onClick={()=>{setDetail(contractNego);setIsModalOpen(true)}}>去审批</button>
        </div>
     </IonLabel>
   </IonItem>
@@ -171,97 +171,55 @@ const ListEntry = ({ contractNego,key, ...props } : {contractNego:ContractNego,k
     return   <IonPage >
                 <div className='relative'>
                 <div className='flex'>
-                <IonRow className='flex justify-between '>
-                      <IonCol className='flex ml-8'>
-                        <IonLabel className='flex h-12 p-2 font-bold text-center text-primary-600 w-28'>合同ID</IonLabel>
-                        <input type='text' className="flex w-56 h-12 pt-2.5 font-bold text-center text-primary-600 bg-white rounded-md focus:outline-none focus:glow-secondary-500" onChange={e=>setQueryInfo({...queryInfo,...{contractId:e.target.value}})} />
-                      </IonCol>     
-                      <IonCol className='flex ml-8'>
-                          <button onClick={()=>{onQuery()}}>查询</button>
-                        </IonCol>  
-                </IonRow>
+                  <IonRow className='flex justify-between '>
+                        <IonCol className='flex ml-8'>
+                          <IonLabel className='flex h-12 p-2 font-bold text-center w-28'>合同ID:</IonLabel>
+                          <input type='text' className="flex w-56 h-12 pt-2.5 font-bold text-center bg-white rounded-md focus:outline-none focus:glow-secondary-500" onChange={e=>setQueryInfo({...queryInfo,...{contractId:e.target.value}})} />
+                        </IonCol>     
+                        <IonCol className='flex ml-8'>
+                            <button onClick={()=>{onQuery()}}>查询</button>
+                          </IonCol>  
+                  </IonRow>
                 </div>
                 <IonModal isOpen={isModalOpen}>
                         < IonCardContent>
                           <form onSubmit={onManual}>
-                              <IonList>
-                                  <IonRow>
+                          <IonItem>
+                              <IonLabel >课程名称：{detail.contract?.lessonName}</IonLabel>
+                          </IonItem>
+                          <IonItem>
+                              <IonLabel >总课时：{detail.contract?.lessonTotalTimes}</IonLabel>
+                          </IonItem>
+                          <IonItem>
+                              <IonLabel >已签到课时:{detail.negoFinishTimes}</IonLabel>
+                          </IonItem>
+                          <IonItem>
+                              <IonLabel >客户姓名:{detail.contract?.consumerName}</IonLabel>
+                          </IonItem>
+                          <IonItem>
+                              <IonLabel >联系电话:{detail.contract?.consumerPhone}</IonLabel>
+                          </IonItem>
+                          <IonItem>
+                              <IonLabel >学生姓名:{detail.contract?.consumerStuName}</IonLabel>
+                          </IonItem>
+                          <IonItem>
+                              <IonLabel >退款金额：</IonLabel><IonInput name="lessonIntroduce" type="text" value={Number(detail.negoRefundAmt)/100} spellCheck={false} autocapitalize="off" onIonChange={e => setContractNegoDetail({...detail,...{negoRefundAmt:String(100*Number(e.detail.value!))}})} required></IonInput>
+                          </IonItem>
+                          <IonItem>
+                              <IonLabel >退款金额：</IonLabel><IonInput name="lessonIntroduce" type="text" value={Number(detail.negoRefundAmt)/100} spellCheck={false} autocapitalize="off" onIonChange={e => setContractNegoDetail({...detail,...{negoRefundAmt:String(100*Number(e.detail.value!))}})} required></IonInput>
+                          </IonItem>
+                            <div className='mt-2 mb-2 flex space-x-2 '>
+                            <span  className="flex-1 ">
+                              <button className='submutButton flex items-center justify-center flex-none  focus:outline-none hover:bg-primary-700 ' type='submit' >确认</button>
+                            </span >
+                            <span className="flex-1 ">
+                              <button  className='cancelButton' onClick={ ()=>setIsModalOpen(false)}>取消</button>
+                            </span>
+                            </div>
+                          </form>    
+                                  {/* <IonRow>
                                     <IonCol>
-                                      <IonLabel>
-                                        <p  className='text-center'>课程名称：</p>
-                                      </IonLabel> 
-                                    </IonCol>
-                                    <IonCol>
-                                      <IonLabel>
-                                        <p  className='text-center'>{detail.contract?.lessonName}</p>
-                                      </IonLabel> 
-                                    </IonCol>
-                                  </IonRow>
-                                  <IonRow>
-                                    <IonCol>
-                                      <IonLabel>
-                                        <p  className='text-center'>总课时：</p>
-                                      </IonLabel> 
-                                    </IonCol>
-                                    <IonCol>
-                                      <IonLabel>
-                                        <p  className='text-center'>{detail.contract?.lessonTotalTimes}</p>
-                                      </IonLabel> 
-                                    </IonCol>
-                                  </IonRow>
-                                  <IonRow>
-                                    <IonCol>
-                                      <IonLabel>
-                                        <p  className='text-center'>已签到课时:</p>
-                                      </IonLabel> 
-                                    </IonCol>
-                                    <IonCol>
-                                      <IonLabel>
-                                        <p  className='text-center'>{detail.negoFinishTimes}</p>
-                                      </IonLabel> 
-                                    </IonCol>
-                                  </IonRow>
-                                  <IonRow>
-                                    <IonCol>
-                                      <IonLabel>
-                                        <p  className='text-center'>客户姓名:</p>
-                                      </IonLabel> 
-                                    </IonCol>
-                                    <IonCol>
-                                      <IonLabel>
-                                        <p  className='text-center'>{detail.contract?.consumerName}</p>
-                                      </IonLabel> 
-                                    </IonCol>
-                                  </IonRow>
-                                  <IonRow>
-                                    <IonCol>
-                                      <IonLabel>
-                                        <p  className='text-center'>联系电话:</p>
-                                      </IonLabel> 
-                                    </IonCol>
-                                    <IonCol>
-                                      <IonLabel>
-                                        <p  className='text-center'>{detail.contract?.consumerPhone}</p>
-                                      </IonLabel> 
-                                    </IonCol>
-                                  </IonRow>
-                                  <IonRow>
-                                    <IonCol>
-                                      <IonLabel>
-                                        <p  className='text-center'>学生姓名:</p>
-                                      </IonLabel> 
-                                    </IonCol>
-                                    <IonCol>
-                                      <IonLabel>
-                                        <p  className='text-center'>{detail.contract?.consumerStuName}</p>
-                                      </IonLabel> 
-                                    </IonCol>
-                                  </IonRow>
-                                  <IonRow>
-                                    <IonCol>
-                                      <IonLabel>
-                                        <p  className='text-center'>退款金额:</p>
-                                      </IonLabel> 
+                                        <label>退款金额：</label>
                                     </IonCol>
                                     <IonCol>
                                         <IonInput name="lessonIntroduce" type="text" value={Number(detail.negoRefundAmt)/100} spellCheck={false} autocapitalize="off" onIonChange={e => setContractNegoDetail({...detail,...{negoRefundAmt:String(100*Number(e.detail.value!))}})} required></IonInput>
@@ -269,30 +227,16 @@ const ListEntry = ({ contractNego,key, ...props } : {contractNego:ContractNego,k
                                   </IonRow>
                                   <IonRow>
                                     <IonCol>
-                                      <IonLabel>
-                                        <p  className='text-center'>补偿金额：</p>
-                                      </IonLabel> 
+                                      <label>补偿金额：</label>
                                     </IonCol>
                                     <IonCol>
                                         <IonInput name="lessonIntroduce" type="text" value={Number(detail.negoRefundAmt)/100} spellCheck={false} autocapitalize="off" onIonChange={e => setContractNegoDetail({...detail,...{negoRefundAmt:String(100*Number(e.detail.value!))}})} required></IonInput>
                                     </IonCol>
-                                  </IonRow>
-                                  <IonRow>
+                                  </IonRow> */}
+                                  {/* <IonRow>
                                     <IonCol>
                                       <IonLabel>
-                                        <p  className='text-center'>退款金额：</p>
-                                      </IonLabel> 
-                                    </IonCol>
-                                    <IonCol>
-                                      <IonLabel>
-                                        <p  className='text-center'></p>
-                                      </IonLabel> 
-                                    </IonCol>
-                                  </IonRow>
-                                  <IonRow>
-                                    <IonCol>
-                                      <IonLabel>
-                                       <button type='submit'>确认</button>
+                                        <button type='submit'>确认</button>
                                       </IonLabel> 
                                     </IonCol>
                                     <IonCol>
@@ -300,9 +244,8 @@ const ListEntry = ({ contractNego,key, ...props } : {contractNego:ContractNego,k
                                         <button onClick={()=>{setIsModalOpen(false)}}>取消</button>
                                       </IonLabel> 
                                     </IonCol>
-                                  </IonRow>                               
-                              </IonList>
-                          </form>
+                                  </IonRow>
+                          </form> */}
                         </IonCardContent>
                     </IonModal> 
               <div className='absolute w-full mt-10'>

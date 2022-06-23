@@ -1,0 +1,41 @@
+.myLabel{
+    background: #ffffff;
+    font-weight: 600;
+    float:right;
+}
+
+.readonlyInput{
+    background: #484d98;
+    border-style: solid;
+    border-width: 2px;
+}
+
+.normalInput{
+    background: #cdc7e8;
+    border-style: solid;
+    border-width: 2px;
+}
+.radioLabel{
+    background: #ffffff;
+}
+.normalButton{
+    background: #ffffff;
+    border-style: solid;
+    border-width: 2px;
+}
+.cancelButton{
+    background: #ffffff;
+    border-style: solid;
+    border-width: 2px;
+    height : 8;
+    width: 150px;
+}
+.submutButton{
+    background: #933aa9;
+    border-style: solid;
+    border-width: 2px;
+    height : 8;
+    width:  150px;
+}
+
+

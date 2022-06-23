@@ -1,7 +1,6 @@
-
-const nextConfig = {
+module.exports = {
   basePath: '',
-}
-
-module.exports = nextConfig
-
+  images: {
+    domains: ['images.unsplash.com'],
+  },
+};
