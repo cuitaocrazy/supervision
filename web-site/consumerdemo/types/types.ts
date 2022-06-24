@@ -74,7 +74,7 @@ export interface Lesson {
   lessonUpdateReason?: string,
   eduId?: string,
   edu?: EduOrg,
-  teacherId: string,
+  teacherId?: string,
   teacher?: Teacher,
   lessonTotalQuantity?:number
   lessonImgs?:string

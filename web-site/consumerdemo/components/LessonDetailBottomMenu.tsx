@@ -9,7 +9,7 @@ import { Lesson, Teacher, EduOrg } from '../types/types'
 const LessonDetailBottomMenu = () => {
   console.log("进入LessonDetailBottomMenu")
   const router = useRouter();
-  let lesson: Lesson = {  lessonId:"lesson-001",teacherId:"teacher-001"}
+  let lesson: Lesson = {}
   const { item } = router.query
   if (typeof item === 'string') {
     lesson = JSON.parse(item)

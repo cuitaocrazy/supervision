@@ -50,12 +50,9 @@ const SearchLessonList = () => {
           <div className='fixed left-0 right-0 h-4 bg-white rounded-t-3xl top-15'></div>
         </div>
         <div className='bg-white'>
-
-          {/* 搜索框 */}
           <Search />
           {/* 课程列表card */}
           <div className='mx-3 pt-14 '>
-            <SearchlessonlistCard />
             <SearchlessonlistCard />
           </div>
         </div>
