@@ -12,7 +12,7 @@ interface LessonListCardProps {
   lesson_name?: string
   lesson_introduce?: string
   edu_address?: string
-  item: Lesson
+  item?: Lesson
 }
 // 首页课程列表card组件
 const LessonListCard: FC<LessonListCardProps> = (props) => {
@@ -37,14 +37,14 @@ const LessonListCard: FC<LessonListCardProps> = (props) => {
 // 首页
 const Home = () => {
   let lessonListDemo: Lesson[] = [
-    { lessonImgs:"http://placekitten.com/g/200/300" ,lessonName: "小熊美术课程3-5岁", lessonTotalPrice: 880.00, lessonTotalQuantity: 58, lessonIntroduce: "让孩子提前适应小学生让孩子提前适应小学生让孩子提前适应小学生让孩子提前适应小学生",eduAddress: '地址：廊坊市安次区和平路荣益广场3层206',lessonId:"lesson-001",eduId:"edu-001",teacherId:"teacher-001" },
-    { lessonImgs:"http://placekitten.com/g/200/300" ,lessonName: "小熊美术课程3-5岁", lessonTotalPrice: 880.00, lessonTotalQuantity: 58, lessonIntroduce: "让孩子提前适应小学生让孩子提前适应小学生让孩子提前适应小学生让孩子提前适应小学生",eduAddress: '地址：廊坊市安次区和平路荣益广场3层206',lessonId:"lesson-001",eduId:"edu-001",teacherId:"teacher-001" },
-    { lessonImgs:"http://placekitten.com/g/200/300" ,lessonName: "小熊美术课程3-5岁", lessonTotalPrice: 880.00, lessonTotalQuantity: 58, lessonIntroduce: "让孩子提前适应小学生让孩子提前适应小学生让孩子提前适应小学生让孩子提前适应小学生",eduAddress: '地址：廊坊市安次区和平路荣益广场3层206',lessonId:"lesson-001",eduId:"edu-001",teacherId:"teacher-001" },
-    { lessonImgs:"http://placekitten.com/g/200/300" ,lessonName: "小熊美术课程3-5岁", lessonTotalPrice: 880.00, lessonTotalQuantity: 58, lessonIntroduce: "让孩子提前适应小学生让孩子提前适应小学生让孩子提前适应小学生让孩子提前适应小学生",eduAddress: '地址：廊坊市安次区和平路荣益广场3层206',lessonId:"lesson-001",eduId:"edu-001",teacherId:"teacher-001" },
-    { lessonImgs:"http://placekitten.com/g/200/300" ,lessonName: "小熊美术课程3-5岁", lessonTotalPrice: 880.00, lessonTotalQuantity: 58, lessonIntroduce: "让孩子提前适应小学生让孩子提前适应小学生让孩子提前适应小学生让孩子提前适应小学生",eduAddress: '地址：廊坊市安次区和平路荣益广场3层206',lessonId:"lesson-001",eduId:"edu-001",teacherId:"teacher-001" },
-    { lessonImgs:"http://placekitten.com/g/200/300" ,lessonName: "小熊美术课程3-5岁", lessonTotalPrice: 880.00, lessonTotalQuantity: 58, lessonIntroduce: "让孩子提前适应小学生让孩子提前适应小学生让孩子提前适应小学生让孩子提前适应小学生",eduAddress: '地址：廊坊市安次区和平路荣益广场3层206',lessonId:"lesson-001",eduId:"edu-001",teacherId:"teacher-001" },
-    { lessonImgs:"http://placekitten.com/g/200/300" ,lessonName: "小熊美术课程3-5岁", lessonTotalPrice: 880.00, lessonTotalQuantity: 58, lessonIntroduce: "让孩子提前适应小学生让孩子提前适应小学生让孩子提前适应小学生让孩子提前适应小学生",eduAddress: '地址：廊坊市安次区和平路荣益广场3层206',lessonId:"lesson-001",eduId:"edu-001",teacherId:"teacher-001" },
-    { lessonImgs:"http://placekitten.com/g/200/300" ,lessonName: "小熊美术课程3-5岁", lessonTotalPrice: 880.00, lessonTotalQuantity: 58, lessonIntroduce: "让孩子提前适应小学生让孩子提前适应小学生让孩子提前适应小学生让孩子提前适应小学生",eduAddress: '地址：廊坊市安次区和平路荣益广场3层206',lessonId:"lesson-001",eduId:"edu-001",teacherId:"teacher-001" }
+    { lessonImgs:"http://placekitten.com/g/200/300" ,lessonName: "小熊美术课程3-5岁", lessonTotalPrice: 880.00, lessonTotalQuantity: 58, lessonIntroduce: "艺术教育是未来教育",eduAddress: '地址：廊坊市安次区和平路荣益广场3层206',lessonId:"lesson-001",eduId:"edu-001",teacherId:"teacher-001" },
+    { lessonImgs:"http://placekitten.com/g/200/300" ,lessonName: "小熊美术课程3-5岁", lessonTotalPrice: 880.00, lessonTotalQuantity: 58, lessonIntroduce: "艺术教育是未来教育",eduAddress: '地址：廊坊市安次区和平路荣益广场3层206',lessonId:"lesson-001",eduId:"edu-001",teacherId:"teacher-001" },
+    { lessonImgs:"http://placekitten.com/g/200/300" ,lessonName: "小熊美术课程3-5岁", lessonTotalPrice: 880.00, lessonTotalQuantity: 58, lessonIntroduce: "艺术教育是未来教育",eduAddress: '地址：廊坊市安次区和平路荣益广场3层206',lessonId:"lesson-001",eduId:"edu-001",teacherId:"teacher-001" },
+    { lessonImgs:"http://placekitten.com/g/200/300" ,lessonName: "小熊美术课程3-5岁", lessonTotalPrice: 880.00, lessonTotalQuantity: 58, lessonIntroduce: "艺术教育是未来教育",eduAddress: '地址：廊坊市安次区和平路荣益广场3层206',lessonId:"lesson-001",eduId:"edu-001",teacherId:"teacher-001" },
+    { lessonImgs:"http://placekitten.com/g/200/300" ,lessonName: "小熊美术课程3-5岁", lessonTotalPrice: 880.00, lessonTotalQuantity: 58, lessonIntroduce: "艺术教育是未来教育",eduAddress: '地址：廊坊市安次区和平路荣益广场3层206',lessonId:"lesson-001",eduId:"edu-001",teacherId:"teacher-001" },
+    { lessonImgs:"http://placekitten.com/g/200/300" ,lessonName: "小熊美术课程3-5岁", lessonTotalPrice: 880.00, lessonTotalQuantity: 58, lessonIntroduce: "艺术教育是未来教育",eduAddress: '地址：廊坊市安次区和平路荣益广场3层206',lessonId:"lesson-001",eduId:"edu-001",teacherId:"teacher-001" },
+    { lessonImgs:"http://placekitten.com/g/200/300" ,lessonName: "小熊美术课程3-5岁", lessonTotalPrice: 880.00, lessonTotalQuantity: 58, lessonIntroduce: "艺术教育是未来教育",eduAddress: '地址：廊坊市安次区和平路荣益广场3层206',lessonId:"lesson-001",eduId:"edu-001",teacherId:"teacher-001" },
+    { lessonImgs:"http://placekitten.com/g/200/300" ,lessonName: "小熊美术课程3-5岁", lessonTotalPrice: 880.00, lessonTotalQuantity: 58, lessonIntroduce: "艺术教育是未来教育",eduAddress: '地址：廊坊市安次区和平路荣益广场3层206',lessonId:"lesson-001",eduId:"edu-001",teacherId:"teacher-001" }
   ]
   return <IonPage>
     <IonHeader>

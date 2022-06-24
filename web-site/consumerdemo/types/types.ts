@@ -1,12 +1,12 @@
 
-export interface LessonInfo{
-  lesson_imgs:string
-  lesson_id?:string
-  lesson_name:string
-  lesson_introduce:string
-  edu_address:string
-  edu_id?:string
-}
+// export interface LessonInfo{
+//   lesson_imgs:string
+//   lesson_id?:string
+//   lesson_name:string
+//   lesson_introduce:string
+//   edu_address:string
+//   edu_id?:string
+// }
 
 
 
@@ -55,7 +55,7 @@ export interface Contract {
 // }
 
 export interface Lesson {
-  lessonId: string,
+  lessonId?: string,
   lessonName?: string,
   lessonPerPrice?: number,
   lessonTotalPrice?: number,
@@ -72,7 +72,7 @@ export interface Lesson {
   lessonUpdateDate?: string,
   lessonUpdateTime?: string,
   lessonUpdateReason?: string,
-  eduId: string,
+  eduId?: string,
   edu?: EduOrg,
   teacherId: string,
   teacher?: Teacher,
@@ -81,8 +81,8 @@ export interface Lesson {
 }
 
 export interface Teacher {
-  teacherId: string,
-  teacherName: string,
+  teacherId?: string,
+  teacherName?: string,
   teacherIdentityNo?: string,
   teacherExperience?: number,
   teacherIntroduce?: string,
