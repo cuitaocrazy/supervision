@@ -1,19 +1,20 @@
-import {FC} from 'react';
+import { FC } from 'react';
 import { IonPage, IonHeader, IonContent } from "@ionic/react"
-import { useRouter } from 'next/router'
+import Router, { useRouter } from 'next/router'
 import Navbar from 'components/Navbar'
-import {Contract} from '../../types/types'
+import { Contract } from '../../types/types'
 
-interface OrderProps{
-  lessonImages?:string
-  lessonName?:string
-  consumerStuName?:string
-  lessonTotalQuantity?:number
-  lessonCompletedQuantity?:number
+interface OrderListProps {
+  lessonImages?: string
+  lessonName?: string
+  consumerStuName?: string
+  lessonTotalQuantity?: number
+  lessonCompletedQuantity?: number
+  item?: Contract
 }
 
 // 课程列表card 
-const LessonListCard:FC<OrderProps> = (props) => {
+const LessonListCard: FC<OrderListProps> = (props) => {
   const router = useRouter()
   return <div className='pb-3 mx-3 mt-2 bg-white rounded-lg shadow-md'>
     <div className='flex pb-1 mx-2 mb-2 rounde-xl'>
@@ -33,23 +34,23 @@ const LessonListCard:FC<OrderProps> = (props) => {
     </div>
     <div className='grid grid-cols-3 gap-2 text-xs text-white justify-items-center'>
       <div className='px-6 py-1 shadow-md rounded-3xl bg-primary-500 shadow-primary-300'
-        onClick={() => { router.push("./myLessonEvalDetail") }}>去评价</div>
+        onClick={() => { Router.push({ pathname: ("./myLessonEvalDetail"), query: { item: JSON.stringify(props.item) } }) }}>去评价</div>
       <div className='px-6 py-1 shadow-md rounded-3xl bg-secondary-300 shadow-secondary-300'
-        onClick={() => { router.push("./myApplyComp") }}>去投诉</div>
+        onClick={() => { Router.push({ pathname: ("./myApplyComp"), query: { item: JSON.stringify(props.item) } }) }}>去投诉</div>
       <div className='px-4 py-1 shadow-md rounded-3xl bg-remind-400 shadow-remind-400'
-        onClick={() => { router.push("myLessonDetail") }}>查看详情</div>
+        onClick={() => { Router.push({ pathname: ("./myLessonDetail"), query: { item: JSON.stringify(props.item) } }) }}>查看详情</div>
     </div>
   </div>
 }
 
-let orderList:Contract[]=[
-  {lessonImages:"http://placekitten.com/g/200/300",lessonName:"小熊美术",consumerStuName:"张大宝",lessionTotalQuantity:58,lessionCompletedQuantity:10},
-  {lessonImages:"http://placekitten.com/g/200/300",lessonName:"小熊美术",consumerStuName:"张大宝",lessionTotalQuantity:58,lessionCompletedQuantity:10},
-  {lessonImages:"http://placekitten.com/g/200/300",lessonName:"小熊美术",consumerStuName:"张大宝",lessionTotalQuantity:58,lessionCompletedQuantity:10},
-  {lessonImages:"http://placekitten.com/g/200/300",lessonName:"小熊美术",consumerStuName:"张大宝",lessionTotalQuantity:58,lessionCompletedQuantity:10},
-  {lessonImages:"http://placekitten.com/g/200/300",lessonName:"小熊美术",consumerStuName:"张大宝",lessionTotalQuantity:58,lessionCompletedQuantity:10},
-  {lessonImages:"http://placekitten.com/g/200/300",lessonName:"小熊美术",consumerStuName:"张大宝",lessionTotalQuantity:58,lessionCompletedQuantity:10},
-  {lessonImages:"http://placekitten.com/g/200/300",lessonName:"小熊美术",consumerStuName:"张大宝",lessionTotalQuantity:58,lessionCompletedQuantity:10},
+let orderList: Contract[] = [
+  { lessonImages: "http://placekitten.com/g/200/300", lessonName: "小熊美术", consumerStuName: "张大宝", lessionTotalQuantity: 58, lessionCompletedQuantity: 10 },
+  { lessonImages: "http://placekitten.com/g/200/300", lessonName: "小熊美术", consumerStuName: "张二宝", lessionTotalQuantity: 58, lessionCompletedQuantity: 10 },
+  { lessonImages: "http://placekitten.com/g/200/300", lessonName: "小熊美术", consumerStuName: "张小宝", lessionTotalQuantity: 58, lessionCompletedQuantity: 10 },
+  { lessonImages: "http://placekitten.com/g/200/300", lessonName: "小熊美术", consumerStuName: "张大宝", lessionTotalQuantity: 58, lessionCompletedQuantity: 10 },
+  { lessonImages: "http://placekitten.com/g/200/300", lessonName: "小熊美术", consumerStuName: "张大宝", lessionTotalQuantity: 58, lessionCompletedQuantity: 10 },
+  { lessonImages: "http://placekitten.com/g/200/300", lessonName: "小熊美术", consumerStuName: "张大宝", lessionTotalQuantity: 58, lessionCompletedQuantity: 10 },
+  { lessonImages: "http://placekitten.com/g/200/300", lessonName: "小熊美术", consumerStuName: "张大宝", lessionTotalQuantity: 58, lessionCompletedQuantity: 10 },
 ]
 // 课程列表页面
 const MyLessonList = () => {
@@ -59,8 +60,8 @@ const MyLessonList = () => {
       <Navbar title="课程列表" />
     </IonHeader>
     <IonContent>
-      {orderList.map((item,index)=>{
-        return <LessonListCard key={index} lessonImages={item.lessonImages} lessonName={item.lessonName} consumerStuName={item.consumerStuName} lessonTotalQuantity={item.lessionTotalQuantity} lessonCompletedQuantity={item.lessionCompletedQuantity} />
+      {orderList.map((item, index) => {
+        return <LessonListCard key={index} lessonImages={item.lessonImages} lessonName={item.lessonName} consumerStuName={item.consumerStuName} lessonTotalQuantity={item.lessionTotalQuantity} lessonCompletedQuantity={item.lessionCompletedQuantity} item={item} />
       })}
     </IonContent>
   </IonPage>
