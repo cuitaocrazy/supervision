@@ -1,7 +1,7 @@
 import { IonPage, IonHeader, IonContent } from "@ionic/react"
 import Search from '../Search'
 import Navbar from '../Navbar'
-import { Lesson, EduOrg } from '../../types/types'
+import { Lesson } from '../../types/types'
 import LessonListCard from '../LessonListCard'
 import LessonImages from "components/LessonImages"
 import FeaturedRecommendAndMore from '../FeaturedRecommendAndMore'

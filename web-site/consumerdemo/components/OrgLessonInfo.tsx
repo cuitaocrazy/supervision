@@ -1,19 +1,20 @@
-import {FC}from 'react'
+import { FC} from 'react'
 import TeacherName from './TeacherName'
 import OrgAddressAndPhone from './OrgAddressAndPhone'
 
-interface lessonProps {
+interface lessonDetailProps {
   lessonName?: string
   teacherName?: string
   lessonTotalPrice?: number
   lessonTotalQuantity?: number
   eduAddress?: string
   eduContactPhone?: string
-  lessonIntroduce?:string
+  lessonIntroduce?: string
 }
 
 // 课程的培训机构课程信息组件
-const OrgLessonInfo: FC<lessonProps> = (props) => {
+
+const OrgLessonInfo: FC<lessonDetailProps> = (props) => {
   return (<>
     <div className='px-3 py-1 mx-3 rounded-lg shadow-md'>
       <div className='text-lg font-bold'>{props.lessonName}</div>
@@ -22,7 +23,7 @@ const OrgLessonInfo: FC<lessonProps> = (props) => {
         <div className="text-red-500 "><span>¥</span>{props.lessonTotalPrice}</div>
         <div className='pl-3 text-gray-500'>{props.lessonTotalQuantity}<span>课时</span></div>
       </div>
-      <OrgAddressAndPhone eduContactPhone={props.eduContactPhone} eduAddress={props.eduAddress}  />
+      <OrgAddressAndPhone eduContactPhone={props.eduContactPhone} eduAddress={props.eduAddress} />
     </div>
   </>
   )

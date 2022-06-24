@@ -1,16 +1,3 @@
-
-// export interface LessonInfo{
-//   lesson_imgs:string
-//   lesson_id?:string
-//   lesson_name:string
-//   lesson_introduce:string
-//   edu_address:string
-//   edu_id?:string
-// }
-
-
-
-
 export interface Contract {
   contractId?:string,
   contractDate?:string,
@@ -21,6 +8,8 @@ export interface Contract {
   contractUpdateReason?:string,
   eduId?:string,
   eduName?:string,
+  eduAddress?:string,
+  eduContactPhone?:string,
   lessonId?:string,
   lessonName?:string,
   lessonType?:string,
@@ -32,16 +21,17 @@ export interface Contract {
   lessonEndTime?: string,
   lessonAttendanceType?:string,
   lessionTotalQuantity?:number,
-  lessionTotalPrice?:string,
+  lessionTotalPrice?:number,
   lessionPerPrice?:string,
   teacherId?:string,
   teacherName?:string,
+  teacherIntroduce?:string,
   consumerId?:string,
   consumerName?:string,
   consumerStuName?:string,
   orderNo?:string,
   lessionCompletedQuantity?:number,
-  lessonImages?:string
+  lessonImages?:string,
 
 }
 // export interface TranSum{
@@ -134,7 +124,7 @@ export interface Transfer{
 }
 
 export interface EduOrg{
-  eduId:string,
+  eduId?:string,
   eduName?:string,
   eduAddress?:string,
   eduLegalPerson?:string,
@@ -156,8 +146,8 @@ export interface EduOrg{
   eduUpdateTime?:string,
   eduRating?:number,
   eduPassword?:string,
-  eduLoginName:string,
-  supervisorOrgId:string,
+  eduLoginName?:string,
+  supervisorOrgId?:string,
 }
 
 

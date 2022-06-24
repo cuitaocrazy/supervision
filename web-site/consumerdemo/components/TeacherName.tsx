@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC,useContext } from 'react'
 
 interface teacherProps {
   teacherName?: string

@@ -7,8 +7,8 @@ import { Tab } from '@headlessui/react';
 import { Lesson, Teacher, EduOrg } from '../types/types'
 import {useRouter} from 'next/router'
 
-// 标签选项卡
-const MyLessonDetailTabs = () => {
+// 课程详情标签选项卡
+const LessonDetailTabs = () => {
   const router = useRouter();
   const { item } = router.query
   let lesson: Lesson = { lessonName: "小熊美术课程3-5岁", lessonTotalPrice: 880.00, lessonTotalQuantity: 58, lessonIntroduce: "艺术教育是未来教育", lessonId: "lesson-001", eduId: "edu-001", teacherId: "teacher-001" }
@@ -47,4 +47,4 @@ const MyLessonDetailTabs = () => {
   )
 }
 
-export default MyLessonDetailTabs
+export default LessonDetailTabs

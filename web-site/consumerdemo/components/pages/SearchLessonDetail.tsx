@@ -1,12 +1,11 @@
-import {FC}from  'react'
 import { IonPage, IonHeader, IonContent } from "@ionic/react"
 import Navbar from 'components/Navbar'
-import MyLessonDetailTabs from '../MylessonDetailTabs'
+import LessonDetailTabs from '../LessonDetailTabs'
 import LessonImage from '../LessonImage'
 import LessonDetailBottomMenu from '../LessonDetailBottomMenu'
 import {Lesson} from '../../types/types'
 
-let lesson:Lesson={lessonImgs:"http://placekitten.com/g/200/300",teacherId:"teacher-001"}
+let lesson:Lesson={lessonImgs:"http://placekitten.com/g/200/300"}
 
 // 课程详情页面
 const SearchLessonDetail= () => {
@@ -18,7 +17,7 @@ const SearchLessonDetail= () => {
       <div className='relative mb-3 bg-white pb-14 scroll-auto'>
         {/* 课程图片 */}
         <LessonImage lessonImage={lesson.lessonImgs} />
-        <MyLessonDetailTabs />
+        <LessonDetailTabs />
       </div>
       <LessonDetailBottomMenu />
     </IonContent>
