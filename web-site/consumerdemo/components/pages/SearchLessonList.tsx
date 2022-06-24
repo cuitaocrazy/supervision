@@ -1,9 +1,9 @@
 import React from 'react';
 import { IonPage, IonHeader, IonContent } from "@ionic/react"
-import { motion } from 'framer-motion'
 import { useRouter } from 'next/router'
 import Search from '../Search'
 import Navbar from 'components/Navbar'
+import RoundedCornersStyles from '../RoundedCornersStyles'
 
 const SearchlessonlistCard = () => {
   const router = useRouter()
@@ -39,16 +39,13 @@ const SearchlessonlistCard = () => {
 
 // 首页查询课程列表页面
 const SearchLessonList = () => {
-
   return <IonPage>
     <IonHeader>
       <Navbar title="教育资金监管平台" />
     </IonHeader>
     <IonContent>
       <div className='relative bg-primary-600'>
-        <div className='fixed left-0 right-0 h-5 bg-primary-600 top-15'>
-          <div className='fixed left-0 right-0 h-4 bg-white rounded-t-3xl top-15'></div>
-        </div>
+        <RoundedCornersStyles />
         <div className='bg-white'>
           <Search />
           {/* 课程列表card */}
