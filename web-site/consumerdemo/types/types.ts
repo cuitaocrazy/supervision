@@ -148,6 +148,7 @@ export interface EduOrg{
   eduPassword?:string,
   eduLoginName?:string,
   supervisorOrgId?:string,
+  eduImage?:string
 }
 
 

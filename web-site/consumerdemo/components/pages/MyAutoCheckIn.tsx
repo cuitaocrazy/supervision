@@ -36,7 +36,7 @@ const AutoCheckInLessonCard = () => {
 // 自动签到页面
 const MyAutoCheckIn = () => {
   const router = useRouter();
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
   return <IonPage>
     <IonHeader>
       <Navbar title="自动签到" />

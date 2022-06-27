@@ -1,9 +1,8 @@
-import { FC,useContext } from 'react'
+import { FC} from 'react'
 
 interface teacherProps {
   teacherName?: string
 }
-
 // 老师名字组件
 const TeacherName: FC<teacherProps> = (props) => {
   return (
