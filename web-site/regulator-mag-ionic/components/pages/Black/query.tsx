@@ -1,8 +1,8 @@
 
 import { useEffect,useCallback,useContext,useState,useRef } from 'react'
 import { Redirect } from 'react-router-dom';
-import {AppContext,setUserInfoList,setUserInfoDetail} from '../../../appState';
-import {SupervisorUser} from '../../../types/types'
+import {AppContext,setBlackList,setBlackDetail} from '../../../appState';
+import {Black} from '../../../types/types'
 import {
   IonPage,
   IonList,
@@ -20,19 +20,21 @@ const queryURL = 'http://localhost:3003/lesson/query'
 const delURL = 'http://localhost:3003/lesson/del'
 const modifyURL = 'http://localhost:3003/lesson/modifyURL'
 const attendURL = 'http://localhost:3003/lesson/attend'
-const demoLessonList:SupervisorUser[] = [
+const demoBlackList:Black[] = [
     { 
-      supervisorLoginName: '监管机构登录名',
-      supervisorUsername: '监管机构用户名',
-      supervisorPhone: '监管机构电话',
-      supervisorOrgId: '监管机构id'
+      orgId:'1',
+      orgName: '机构',
+      reason: '1111',
+      blackDate: '2020-01-01',
+      blackTime: '00:00:00'
     },
-    {  
-      supervisorLoginName: '监管机构登录名1',
-      supervisorUsername: '监管机构用户名1',
-      supervisorPhone: '监管机构电话',
-      supervisorOrgId: '监管机构id'
-    }
+    { 
+      orgId:'2',
+      orgName: '机构3',
+      reason: '1111',
+      blackDate: '2020-01-01',
+      blackTime: '00:00:00'
+    },
     ]
 
       
@@ -43,11 +45,11 @@ const demoLessonList:SupervisorUser[] = [
 // 课程查询页面
 const BaseInfoQuery:React.FC =()=>{
 
-  const onCancel = (item:SupervisorUser)=>() => {
+  const onCancel = (item:Black)=>() => {
     fetch(delURL, {
       method: 'PUT',
       body: JSON.stringify({
-        "supervisorLoginName":item.supervisorLoginName,
+        "orgId":item.orgId,
       }),
       headers: {
         'Content-type': 'application/json;charset=UTF-8',
@@ -59,28 +61,29 @@ const BaseInfoQuery:React.FC =()=>{
   }
   const createModal = useRef<HTMLIonModalElement>(null);
   const [isCreateModalOpen,setIsCreateModalOpen] = useState(false)
-  const [createState,setCreateState] = useState({} as SupervisorUser )
+  const [createState,setCreateState] = useState({} as Black )
   const { state, dispatch } = useContext(AppContext);
-  const [queryInfo, setQueryInfo] = useState({supervisorLoginName:'',supervisorUsername:''})
+  const [queryInfo, setQueryInfo] = useState({orgName:''})
   const getParamStr = (params:any,url:string) =>{
     let result = '?'
     Object.keys(params).forEach(key => result = result+key+'='+params[key]+'&')
     return url+result
   }
   const paramStr = getParamStr({
-    supervisorLoginName: queryInfo.supervisorLoginName
+    orgName: queryInfo.orgName
   },queryURL)
 
-  const refreshLessonList = useCallback((loginUser:SupervisorUser[]) => {
-    dispatch(setUserInfoList(loginUser));
+  console.log(state)
+  const refreshLessonList = useCallback((items:Black[]) => {
+    dispatch(setBlackList(items));
   },[dispatch]);
 
-  const onDetail = (item:SupervisorUser)=>() => {
+  const onDetail = (item:Black)=>() => {
     doSetDetail(item)
   }
 
-  const doSetDetail = useCallback(userInfo => {
-    dispatch({...setUserInfoDetail(userInfo),...{backPage:'/tabs/baseInfo/query'}});
+  const doSetDetail = useCallback(item => {
+    dispatch({...setBlackDetail(item),...{backPage:'/tabs/black/query'}});
   },[dispatch]);
   useEffect(() => { 
     // fetch(paramStr, {
@@ -92,37 +95,37 @@ const BaseInfoQuery:React.FC =()=>{
     // .then((json) => {
     // const {userInfoList} = json //todo
     // refreshLessonList(demoLessonList.filter((userInfo:SupervisorUser)=>userInfo.supervisorUsername&&userInfo.supervisorUsername.indexOf(queryInfo.supervisorUsername)>-1).filter((userInfo:SupervisorUser)=>userInfo.supervisorLoginName.indexOf(queryInfo.supervisorLoginName)>-1))
-    refreshLessonList(demoLessonList)},[]);
+    refreshLessonList(demoBlackList)},[]);
 
     const onQuery = ()=>{
-       refreshLessonList(demoLessonList.filter((userInfo:SupervisorUser)=>userInfo.supervisorLoginName.indexOf(queryInfo.supervisorLoginName)>-1))
+       refreshLessonList(demoBlackList.filter((item:Black)=>item.orgName.indexOf(queryInfo.orgName)>-1))
     
     }
 
-  const ListEntry = ({ userInfo,key, ...props } : {userInfo:SupervisorUser,key:any}) => (
+  const ListEntry = ({ item,key, ...props } : {item:Black,key:any}) => (
     <IonItem key={key} >
       <IonLabel>
-        <p className='text-center'>{userInfo.supervisorLoginName}</p>
+        <p className='text-center'>{item.orgName}</p>
       </IonLabel>
       <IonLabel>
-        <p  className='text-center'>{userInfo.supervisorOrgName}</p>
+        <p  className='text-center'>{item.reason}</p>
       </IonLabel>
       <IonLabel>
-        <p  className='text-center'>{userInfo.supervisorUsername}</p>
+        <p  className='text-center'>{item.blackDate}</p>
       </IonLabel>
       <IonLabel>
-        <p  className='text-center'>{userInfo.supervisorPhone}</p>
+        <p  className='text-center'>{item.blackTime}</p>
       </IonLabel>
       <IonLabel>
          <div className='flex gap-2'>
-            <button className='p-1 text-white bg-blue-500 rounded-md' onClick={onCancel(userInfo)}>删除</button> 
-            <button className='p-1 text-white bg-blue-500 rounded-md'  onClick={onDetail(userInfo)}>详情</button>
+            <button className='p-1 text-white bg-blue-500 rounded-md' onClick={onCancel(item)}>删除</button> 
+            {/* <button className='p-1 text-white bg-blue-500 rounded-md'  onClick={onDetail(item)}>详情</button> */}
          </div>
       </IonLabel>
     </IonItem>
     );
-    if(state.userInfo.baseInfoDetail){
-      return <Redirect to="/tabs/baseInfo/detail" />
+    if(state.black.blackDetail){
+      return <Redirect to="/tabs/black/detail" />
     }
 
         return   <IonPage >
@@ -144,22 +147,19 @@ const BaseInfoQuery:React.FC =()=>{
                   <IonModal isOpen={isCreateModalOpen}  onDidDismiss={async ()=>{setIsCreateModalOpen(false)}}> 
                   <IonCard>
                     <IonCardHeader>
-                        新增用户
+                        黑名单新增
                     </IonCardHeader>
                     <IonCardContent>
                       <form  onSubmit={()=>{}}>
                       <IonItem>
-                        <IonLabel >登录名称：{createState.supervisorLoginName}</IonLabel>
+                        <IonLabel >机构名称：</IonLabel>
+                        <input></input>
                       </IonItem>
                       <IonItem>
-                        <IonLabel >用户名：{createState.supervisorUsername}</IonLabel>
+                        <IonLabel >黑名单原因：</IonLabel>
+                        <input></input>
                       </IonItem>
-                      <IonItem>
-                        <IonLabel >联系方式：{createState.supervisorPhone}</IonLabel>
-                      </IonItem>
-                      <IonItem>
-                        <IonLabel >用户密码：{createState.supervisorPassword}</IonLabel>
-                      </IonItem>
+
                       <div className='flex mt-2 mb-2 space-x-2 '>
                         <span  className="flex-1 ">
                                   <button className='flex items-center justify-center flex-none submutButton focus:outline-none hover:bg-primary-700 ' type='submit' >确认</button>
@@ -194,8 +194,8 @@ const BaseInfoQuery:React.FC =()=>{
                       </IonLabel>
                   </IonItem>
                       <div className=''>
-                      {state.userInfo.userInfoList.map((list:SupervisorUser, i: any) => (
-                      <ListEntry userInfo={list} key={i} />
+                      {state.black.blackList.map((list:Black, i: any) => (
+                      <ListEntry item={list} key={i} />
                     ))}
                       </div>
                   </IonList>

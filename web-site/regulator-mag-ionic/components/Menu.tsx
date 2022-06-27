@@ -80,23 +80,23 @@ const Menu = () => {
                 <IonLabel>基本信息维护</IonLabel>
                 <IonIcon
                   slot="end"
-                  icon={baseInfoVisible ? arrowDown : arrowUp}
+                  icon={baseInfoVisible ? arrowUp : arrowDown }
                 ></IonIcon>
               </IonItem>
               <IonMenuToggle autoHide={!baseInfoVisible} key={'baseInfo'}>
-                <IonItem  className="flex flex-row justify-center text-center" routerLink={'/tabs'} routerDirection="none" detail={false} lines="none">
+                <IonItem  className="flex flex-row justify-center text-center" routerLink={'/tabs/baseInfo/query'} routerDirection="none" detail={false} lines="none">
                   <IonIcon icon={flash} slot="start" />
                   <IonLabel className="font-bold">{'用户管理'}</IonLabel>
                 </IonItem>
-                <IonItem  className="flex flex-row justify-center text-center" routerLink={'/tabs'} routerDirection="none" detail={false} lines="none">
+                <IonItem  className="flex flex-row justify-center text-center" routerLink={'/tabs/orgMag/query'} routerDirection="none" detail={false} lines="none">
                   <IonIcon icon={flash} slot="start" />
                   <IonLabel className="font-bold">{'监管机构管理'}</IonLabel>
                 </IonItem>
-                <IonItem  className="flex flex-row justify-center text-center" routerLink={'/tabs'} routerDirection="none" detail={false} lines="none">
+                {/* <IonItem  className="flex flex-row justify-center text-center" routerLink={'/tabs'} routerDirection="none" detail={false} lines="none">
                   <IonIcon icon={flash} slot="start" />
                   <IonLabel className="font-bold">{'系统字典维护'}</IonLabel>
-                </IonItem>
-                <IonItem  className="flex flex-row justify-center text-center" routerLink={'/tabs'} routerDirection="none" detail={false} lines="none">
+                </IonItem> */}
+                <IonItem  className="flex flex-row justify-center text-center" routerLink={'/tabs/changePwd'} routerDirection="none" detail={false} lines="none">
                   <IonIcon icon={flash} slot="start" />
                   <IonLabel className="font-bold">{'修改密码'}</IonLabel>
                 </IonItem>
@@ -107,7 +107,7 @@ const Menu = () => {
                 <IonLabel>教育机构管理</IonLabel>
                 <IonIcon
                   slot="end"
-                  icon={eduOrgMagVisible ? arrowDown : arrowUp}
+                  icon={eduOrgMagVisible ? arrowUp :arrowDown  }
                 ></IonIcon>
             </IonItem>
             <IonMenuToggle autoHide={!eduOrgMagVisible} key={'eduMag'}>
@@ -127,7 +127,7 @@ const Menu = () => {
                   <IonIcon icon={flash} slot="start" />
                   <IonLabel className="font-bold">{'政策公告'}</IonLabel>
                 </IonItem>
-                <IonItem  className="flex flex-row justify-center text-center" routerLink={'/tabs'} routerDirection="none" detail={false} lines="none">
+                <IonItem  className="flex flex-row justify-center text-center" routerLink={'/tabs/black/query'} routerDirection="none" detail={false} lines="none">
                   <IonIcon icon={flash} slot="start" />
                   <IonLabel className="font-bold">{'黑名单管理'}</IonLabel>
                 </IonItem>
@@ -147,7 +147,7 @@ const Menu = () => {
                 <IonLabel>资金管理</IonLabel>
                 <IonIcon
                   slot="end"
-                  icon={fundVisible ? arrowDown : arrowUp}
+                  icon={fundVisible ? arrowUp : arrowDown }
                 ></IonIcon>
             </IonItem>
             <IonMenuToggle autoHide={!fundVisible} key={'fund'}>
@@ -172,17 +172,13 @@ const Menu = () => {
                   <IonIcon icon={flash} slot="start" />
                   <IonLabel className="font-bold">{'测试'}</IonLabel>
             </IonItem>
-            <IonItem  className="flex flex-row justify-center text-center" routerLink={'/tabs/statistics/student'} routerDirection="none" detail={false} lines="none">
-                  <IonIcon icon={flash} slot="start" />
-                  <IonLabel className="font-bold">{'学生分布'}</IonLabel>
-            </IonItem>
             <IonItem className="flex flex-row justify-center text-center" button onClick={()=>{
                   setStatisticVisible(!statisticVisible)
               }}>
                 <IonLabel>统计信息</IonLabel>
                 <IonIcon
                   slot="end"
-                  icon={statisticVisible ? arrowDown : arrowUp}
+                  icon={statisticVisible ? arrowUp : arrowDown }
                 ></IonIcon>
             </IonItem>
             <IonMenuToggle autoHide={!statisticVisible} key={'statistic'}>
@@ -195,10 +191,10 @@ const Menu = () => {
             <IonItem  className="flex flex-row justify-center text-center" routerLink={'/tabs/statistics/student'} routerDirection="none" detail={false} lines="none">
                   <IonLabel className="font-bold">{'学生分布'}</IonLabel>
             </IonItem>
-              <IonItem  className="flex flex-row justify-center text-center" routerLink={'/tabs/transfer/query'} routerDirection="none" detail={false} lines="none">
+              <IonItem  className="flex flex-row justify-center text-center" routerLink={'/tabs/statistics/income'} routerDirection="none" detail={false} lines="none">
                 <IonLabel className="font-bold">{'收入统计'}</IonLabel>
               </IonItem>
-              <IonItem  className="flex flex-row justify-center text-center" routerLink={'/tabs/transfer/query'} routerDirection="none" detail={false} lines="none">
+              <IonItem  className="flex flex-row justify-center text-center" routerLink={'/tabs/statistics/complaint'} routerDirection="none" detail={false} lines="none">
                 <IonLabel className="font-bold">{'投诉统计'}</IonLabel>
               </IonItem>
             </IonMenuToggle> 

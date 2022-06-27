@@ -11,7 +11,8 @@ import {
   Announcement,
   Complaint,
   ContractNego,
-  SupervisorOrg
+  SupervisorOrg,
+  Black
 } from './types/types'
 /**
  * This is a simple redux-like state management pattern for React using hooks
@@ -56,6 +57,10 @@ const initialState = {
     teacherDetail:null,
     teacherList:[]
   },
+  black:{
+    blackList:[],
+    blackDetail:null,
+  },
   attendance:{//考勤
     attendanceList:[],
     attendanceDetail:null
@@ -71,7 +76,8 @@ const initialState = {
   },
   announcement:{//公告
     announcementList:[],
-    announcementDetail:null
+    announcementDetail:null,
+    announcementEdit:null,
   },
   complaint:{//投诉
     complaintList:[],
@@ -213,6 +219,30 @@ export const setAnnouncementDetail = (announcementDetail:Announcement) => {
     announcementDetail:announcementDetail
   }
 }
+
+export const setAnnouncementEdit = (announcementEdit:Announcement) => {
+  return {
+    type: 'setAnnouncementEdit',
+    announcementEdit:announcementEdit
+  }
+}
+
+export const setBlackList = (blackList:Black[]) => {
+  return {
+    type: 'setBlackList',
+    blackList:blackList
+  }
+}
+export const setBlackDetail = (blackDetail:Black) => {
+  return {
+    type: 'setBlackDetail',
+    blackDetail:blackDetail
+  }
+}
+
+
+
+
 export const setComplaintList = (complaintList:Complaint[]) => {
   return {
     type: 'setComplaintList',
@@ -476,5 +506,79 @@ export const reducer = (state: any, action: any) => {
         backPage:action.backPage||state.backPage
       }
     }
+    case 'setTransferDetail':{
+      return {
+        ...state,
+        transfer:{
+          transferList:state.transfer.transferList,
+          transferDetail:action.transferDetail
+        },
+        backPage:action.backPage||state.backPage
+      }
+    }
+    case 'setTransferList':{
+      return {
+        ...state,
+        transfer:{
+          transferDetail:state.transfer.transferDetail,
+          transferList:action.transferList
+        },
+        backPage:action.backPage||state.backPage
+      }
+    }
+
+    case 'setAnnouncementEdit':{
+      return {
+        ...state,
+        announcement:{
+          ...state.announcement,
+          announcementEdit:action.announcementEdit
+        },
+        backPage:action.backPage||state.backPage
+      }
+    }
+    case 'setAnnouncementDetail':{
+      return {
+        ...state,
+        announcement:{
+          ...state.announcement,
+          announcementDetail:action.announcementDetail
+        },
+        backPage:action.backPage||state.backPage
+      }
+    }
+    case 'setAnnouncementList':{
+      return {
+        ...state,
+        announcement:{
+          ...state.announcement,
+          announcementList:action.announcementList
+        },
+        backPage:action.backPage||state.backPage
+      }
+    }
+
+    case 'setBlackDetail':{
+      return {
+        ...state,
+        black:{
+          ...state.black,
+          blackDetail:action.blackDetail,
+        },
+        backPage:action.backPage||state.backPage
+      }
+    }
+
+    case 'setBlackList':{
+      return {
+        ...state,
+        black:{
+          ...state.black,
+          blackList:action.blackList,
+        },
+        backPage:action.backPage||state.backPage
+      }
+    }
+
   }
 }

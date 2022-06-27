@@ -75,7 +75,7 @@ const TransferQuery:React.FC = () => {
   
   
   const doSetDetail = useCallback(item => {
-    dispatch({...setTransferDetail(item),...{backPage:'/tabs/tranfer/query'}});
+    dispatch({...setTransferDetail(item),...{backPage:'/tabs/transfer/query'}});
   },[dispatch]);
   const getParamStr = (params:any,url:string) =>{
     let result = '?'

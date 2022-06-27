@@ -12,7 +12,7 @@ import Tabs from './pages/Tabs';
 import Announcement from './pages/Announcement/query';
 import {AnnouncementDetail} from './pages/Announcement/detail';
 import {AnnouncementEdit} from './pages/Announcement/edit';
-
+import Black from './pages/black/query';
 import Attendance from './pages/Attendance/query';
 import {AttendanceDetail} from './pages/Attendance/detail';
 
@@ -40,6 +40,9 @@ import ComplaintDetail from './pages/Complaint/detail';
 import Subject from './pages/statistics/Subject';
 import OrgSum from './pages/statistics/OrgSum';
 import Student from './pages/statistics/Student';
+import Income from './pages/statistics/income';
+import ChangePwd from './pages/ChangePwd';
+import ComplaintStatistic from './pages/statistics/complaint'
 
 
 
@@ -66,10 +69,11 @@ const AppShell = () => {
             <Route path="/tabs/announcement/edit" component={AnnouncementEdit} exact={true} />
             <Route path="/tabs/attendance/query" component={Attendance} exact={true} />
             <Route path="/tabs/attendance/detail" component={AttendanceDetail} exact={true} />
-
+            <Route path="/tabs/changePwd" component={ChangePwd} exact={true}></Route>
             <Route path="/tabs/supervisorOrg/query" component={SuperVisorOrgQuery} exact={true} />
             <Route path="/tabs/supervisorOrg/detail" component={SuperVisorOrgDetail} exact={true} />
             <Route path="/tabs/supervisorOrg/edit" component={SuperVisorOrgEdit} exact={true} />
+            <Route path="/tabs/black/query" component={Black} exact={true} />
             {/* <Route path="/tabs" render={() => <Redirect to="/tabs/feed" />} exact={true} /> */}
             <Route path="/tabs/baseInfo/query" component={BaseInfo} exact={true} />
             <Route path="/tabs/complaint/query" component={Complaint} exact={true} />
@@ -91,6 +95,8 @@ const AppShell = () => {
             <Route path="/tabs/statistics/orgSum" component={OrgSum} exact={true} />
             <Route path="/tabs/statistics/subject" component={Subject} exact={true} />
             <Route path="/tabs/statistics/student" component={Student} exact={true} />
+            <Route path="/tabs/statistics/income" component={Income} exact={true} />
+            <Route path="/tabs/statistics/complaint" component={ComplaintStatistic} exact={true} />
             <Route path="/login" render={() => <Login />} />
             <Route exact path="/" render={() => <Redirect to="/login" />} />
             </IonRouterOutlet>

@@ -30,21 +30,20 @@ import { Line } from 'react-chartjs-2';
 
 const Income:React.FC =()=>{
 
-  const [incomes,setIncomes] = useState([] as any[]);
+  const [complaint,setComplaint] = useState([] as any[]);
   useEffect(()=>{
-    const returnResult = [{moon:'1月',income:2},{moon:'2月',income:4.1},{moon:'3月',income:4},{moon:'4月',income:3}]
-    setIncomes(returnResult)
+    const returnResult = [{orgName:'机构1',count:2},{orgName:'机构2',count:2},{orgName:'机构3',count:4}]
+    setComplaint(returnResult)
   }
   ,[])
 
-  const labels = incomes.map(income=>income.moon)
-  console.log(labels)
+  const labels = complaint.map(item=>item.orgName)
   const data = {
     labels,
     datasets: [
       {
         label: '收入',
-        data: incomes.map(income=>income.income),
+        data: complaint.map(item=>item.count),
         borderColor: 'rgb(255, 99, 132)',
         backgroundColor: 'rgba(255, 99, 132, 0.5)',
       },
@@ -69,7 +68,7 @@ const Income:React.FC =()=>{
       },
       title: {
         display: true,
-        text: '收入统计',
+        text: '投诉统计',
       },
     },
   };
