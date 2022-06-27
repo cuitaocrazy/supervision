@@ -1,5 +1,5 @@
 //Lesson的查询页面
-import { useEffect,useCallback,useContext,useState } from 'react'
+import { useEffect,useCallback,useContext,useState,useRef } from 'react'
 import { Redirect } from 'react-router-dom';
 import {AppContext,setLessonList,setLessonDetail,setLessonEdit} from '../../../appState';
 import {Lesson} from '../../../types/types'
@@ -15,11 +15,15 @@ import {
   IonCardTitle,
   IonCard,
   IonCardContent,
-  IonInput,
+  input,
   IonPicker,
   IonDatetime,
   PickerColumn
 } from '@ionic/react';
+import moment from 'moment';
+
+import RichText from 'components/components/RichText';
+import { EditorState } from 'draft-js';
 
 
 
@@ -96,7 +100,6 @@ const demoLessonList:Lesson[] = [
 
 
 
-
 // 课程查询页面
 const LessonQuery:React.FC =()=>{
   const [isCreateModalOpen,setCreateModalOpen] = useState(false)
@@ -104,6 +107,18 @@ const LessonQuery:React.FC =()=>{
   const [cancelLesson,setCancelLesson] = useState({} as Lesson)
   const [isCancelModalOpen,setIsCancelModalOpen] = useState(false)
   const [isPickOpen, setPickOpen] = useState(false);
+
+  const [editorState, setEditorState] = useState(
+    EditorState.createEmpty()
+  );
+
+  const editor = useRef(null);
+ 
+  // function focusEditor() {
+  //   editor.current.focus();
+   
+  // }
+  
   const onCancel = async (e: React.FormEvent)=>{
     //todo fetch
     // fetch(delURL, {
@@ -237,86 +252,98 @@ const LessonQuery:React.FC =()=>{
     return   <IonPage >
                   <div className='relative'>
                   <div className='flex'>
-                  <IonModal isOpen={isCreateModalOpen}>
-                        < IonCardContent>
-                        <form onSubmit={onCreate}>
-                          <IonList>
-                          <IonLabel position="stacked" color="primary">教育机构名称:</IonLabel>
-                                  <IonInput name="eduId" type="text" value={createLesson.edu?createLesson.edu.eduName:''} spellCheck={false} autocapitalize="off" readonly required>
-                          </IonInput>
-                          <IonLabel position="stacked" color="primary">课程名称</IonLabel>
-                                  <IonInput name="lessonName" type="text" value={createLesson.lessonName} spellCheck={false} autocapitalize="off" onIonChange={e => setCreateLesson({...createLesson,...{lessonName:e.detail.value!}})} required>
-                          </IonInput>
-                          <IonLabel position="stacked" color="primary">总课时</IonLabel>
-                                  <IonInput name="lessonTotalTimes" type="number" value={createLesson.lessonTotalTimes} spellCheck={false} autocapitalize="off" onIonChange={e => setCreateLesson({...createLesson,...{lessonTotalTimes:e.detail.value!}})} required>
-                          </IonInput>
+                  <IonModal style={{"--max-height":10000,"height":1000}} isOpen={isCreateModalOpen}  onDidDismiss={async ()=>{setCreateModalOpen(false)}}>
+                    <IonCard>
+                        <IonCardContent>
+                          <form onSubmit={onCreate}>
+                              <IonLabel position="stacked" >教育机构名称:</IonLabel>
+                                      <input className="readonlyInput" name="eduId" type="text" value={state.loginUser.orgName} spellCheck={false} readOnly required>
+                              </input><br/>
 
-                          <IonLabel position="stacked" color="primary">总价格(元)</IonLabel>
-                                  <IonInput name="lessonTotalPrice" type="number" value={createLesson.lessonTotalPrice} spellCheck={false} autocapitalize="off" onIonChange={e => setCreateLesson({...createLesson,...{lessonTotalPrice:e.detail.value!}})} required>
-                          </IonInput>
+                            <IonLabel position="stacked" >课程名称</IonLabel>
+                                    <input className="normalInput" name="lessonName" type="text" value={createLesson.lessonName} spellCheck={false}  onChange={e => setCreateLesson({...createLesson,...{lessonName:e.nativeEvent.target?.value}})} required>
+                            </input><br/>
+                            <IonLabel position="stacked" >总课时</IonLabel>
+                                    <input className="normalInput"name="lessonTotalTimes" type="number" value={createLesson.lessonTotalTimes} spellCheck={false}  onChange={e => setCreateLesson({...createLesson,...{lessonTotalTimes:e.nativeEvent.target?.value}})} required>
+                            </input><br/>
+                            <IonLabel position="stacked" >总价格(元)</IonLabel>
+                                    <input className="normalInput"name="lessonTotalPrice" type="number" value={createLesson.lessonTotalPrice} spellCheck={false}  onChange={e => setCreateLesson({...createLesson,...{lessonTotalPrice:e.nativeEvent.target?.value}})} required>
+                            </input><br/>
 
-                          <IonLabel position="stacked" color="primary">课程单价</IonLabel>
-                                  <IonInput name="lessonPerPrice" type="number" value={createLesson.lessonPerPrice} spellCheck={false} autocapitalize="off" onIonChange={e => setCreateLesson({...createLesson,...{lessonPerPrice:e.detail.value!}})} required>
-                          </IonInput>
-
-                          {/* <IonLabel position="stacked" color="primary">课程描述</IonLabel>
-                                  <IonInput name="lessonIntroduce" type="text" value={createLesson.lessonIntroduce} spellCheck={false} autocapitalize="off" onIonChange={e => setCreateLesson({...createLesson,...{lessonIntroduce:e.detail.value!}})} required>
-                          </IonInput> */}
-                          <IonLabel position="stacked" color="primary">课程类型</IonLabel>
-                          <IonPicker
-                                                  isOpen={isPickOpen}
-                                                  columns={[lessonTypePickerColumn]}
-                                                  buttons={[
-                                                    {
-                                                      text: "取消",
-                                                      role: "cancel",
-                                                      handler: value => {
-                                                        setPickOpen(false);
+                            <IonLabel position="stacked" >课程单价</IonLabel>
+                                    <input className="normalInput"name="lessonPerPrice" type="number" value={createLesson.lessonPerPrice} spellCheck={false}  onChange={e => setCreateLesson({...createLesson,...{lessonPerPrice:e.nativeEvent.target?.value}})} required>
+                            </input><br/>
+                            
+                            <IonLabel position="stacked" >课程类型</IonLabel>
+                            <IonPicker
+                                                    isOpen={isPickOpen}
+                                                    columns={[lessonTypePickerColumn]}
+                                                    buttons={[
+                                                      {
+                                                        text: "取消",
+                                                        role: "cancel",
+                                                        handler: value => {
+                                                          setPickOpen(false);
+                                                        }
+                                                      },
+                                                      {
+                                                        text: "确认",
+                                                        handler: value => { 
+                                                          setPickOpen(false);
+                                                          setCreateLesson({...createLesson,...{lessonType:value.lessonTypePickerColumn.value}})
+                                                        }
                                                       }
-                                                    },
-                                                    {
-                                                      text: "确认",
-                                                      handler: value => { 
-                                                        setPickOpen(false);
-                                                        setCreateLesson({...createLesson,...{lessonType:value.lessonTypePickerColumn.value}})
-                                                      }
-                                                    }
-                                                  ]}
-                                                ></IonPicker>
+                                                    ]}
+                                                  ></IonPicker>
 
-                          <IonLabel position="stacked" color="primary">课程开始日期</IonLabel>
-                              <IonDatetime className="flex w-56 h-6 pt-2.5 font-bold text-center text-primary-600 bg-white rounded-md" value={createLesson.lessonStartDate} name='lessonStartDate'  onIonChange={e=>{setCreateLesson({...createLesson,...{lessonStartDate:e.detail.value!}})}}></IonDatetime>
-                          <IonLabel position="stacked" color="primary">课程结束日期</IonLabel>
-                              <IonDatetime className="flex w-56 h-6 pt-2.5 font-bold text-center text-primary-600 bg-white rounded-md" value={createLesson.lessonEndDate} name='lessonStartDate'  onIonChange={e=>{setCreateLesson({...createLesson,...{lessonEndDate:e.detail.value!}})}}></IonDatetime>      
-                          <IonLabel position="stacked" color="primary">课程描述</IonLabel>
-                                  <IonInput name="lessonIntroduce" type="text" value={createLesson.lessonIntroduce} spellCheck={false} autocapitalize="off" onIonChange={e => setCreateLesson({...createLesson,...{lessonIntroduce:e.detail.value!}})} required>
-                          </IonInput> 
-                          <IonLabel position="stacked" color="primary">课程大纲</IonLabel>
-                                  <IonInput name="lessonOutline" type="text" value={createLesson.lessonOutline} spellCheck={false} autocapitalize="off" onIonChange={e => setCreateLesson({...createLesson,...{lessonOutline:e.detail.value!}})} required>
-                          </IonInput>
-                          <IonLabel position="stacked" color="primary">教师ID</IonLabel>
-                                  <IonInput name="teacherId" type="text" value={createLesson.teacherId} spellCheck={false} autocapitalize="off" onIonChange={e => setCreateLesson({...createLesson,...{teacherId:e.detail.value!}})} required>
-                          </IonInput>
-                          </IonList>
-                        </form>
-                        </IonCardContent>
+                            <IonLabel position="stacked" >课程开始日期</IonLabel>
+                              <input type="date" defaultValue={moment().format('YYYY-MM-DD')} onChange={e=>setCreateLesson({...createLesson,lessonStartDate:e.target.value})}></input><br/>
+                                {/* <IonDatetime className="flex w-56 h-6 pt-2.5 font-bold text-center text-primary-600 bg-white rounded-md" value={createLesson.lessonStartDate} name='lessonStartDate'  onIonChange={e=>{setCreateLesson({...createLesson,...{lessonStartDate:e.detail.value!}})}}></IonDatetime> */}
+                            <IonLabel position="stacked" >课程结束日期</IonLabel>
+                              <input type="date" defaultValue={moment().format('YYYY-MM-DD')} onChange={e=>setCreateLesson({...createLesson,lessonEndDate:e.target.value})}></input><br/>      
+                            <IonLabel position="stacked" >课程描述</IonLabel>
+                                    <input className="normalInput" name="lessonIntroduce" type="text" value={createLesson.lessonIntroduce} spellCheck={false}  onChange={e => setCreateLesson({...createLesson,...{lessonIntroduce:e.nativeEvent.target?.value}})} required>
+                            </input><br/> 
+                            <IonLabel position="stacked" >课程大纲:</IonLabel>
+                            <RichText
+                              ref={editor}
+                              editorState={editorState}
+                              onChange={(editorState: any) => {console.log(editorState);setEditorState(editorState)}}
+                            />
+                            <IonLabel position="stacked" >教师ID</IonLabel>
+                                    <input name="teacherId" type="text" value={createLesson.teacherId} spellCheck={false}  onChange={e => setCreateLesson({...createLesson,...{teacherId:e.nativeEvent.target?.value}})} required>
+                            </input><br/>
+                            <div className='mt-2 mb-2 flex space-x-2 '>
+                              <span  className="flex-1 ">
+                                        <button className='submutButton flex items-center justify-center flex-none  focus:outline-none hover:bg-primary-700 ' type='submit' >确认</button>
+
+                              </span >
+                              <span className="flex-1 ">
+                                <button  className='cancelButton' onClick={ ()=>setCreateModalOpen(false)}>取消</button>
+                              </span>
+                            </div>
+                          </form>
+                          
+                          </IonCardContent>
+                          
+                        </IonCard>
                     </IonModal>
-                  <IonModal isOpen={isCancelModalOpen}> 
+                  <IonModal isOpen={isCancelModalOpen}   onDidDismiss={async ()=>{setIsCancelModalOpen(false)}}> 
                     <IonCard>
                       <IonCardHeader>
                         <IonCardTitle>课程下架</IonCardTitle>
                         </IonCardHeader>
                         <IonCardContent>
                           <form onSubmit={onCancel}>
-                            <IonLabel position="stacked" color="primary">课程名称:</IonLabel>
-                                    <IonInput name="eduId" type="text" value={cancelLesson.edu?cancelLesson.edu.eduName:''} spellCheck={false} autocapitalize="off" readonly required>
-                            </IonInput>
-                            <IonLabel position="stacked" color="primary">总价（元）:</IonLabel>
-                                    <IonInput name="eduId" type="text" value={Number(cancelLesson.lessonTotalPrice)/100} spellCheck={false} autocapitalize="off" readonly required>
-                            </IonInput>
-                            <IonLabel position="stacked" color="primary">下架原因:</IonLabel>
-                                    <IonInput name="eduId" type="text" value={cancelLesson.lessonUpdateReason} spellCheck={false} autocapitalize="off" onIonChange={e => setCancelLesson({...cancelLesson,...{lessonUpdateReason:e.detail.value!}})} required>
-                            </IonInput>
+                            <IonLabel position="stacked" >课程名称:</IonLabel>
+                                    <input name="eduId" type="text" value={cancelLesson.edu?cancelLesson.edu.eduName:''} spellCheck={false}  readonly required>
+                            </input><br/>
+                            <IonLabel position="stacked" >总价（元）:</IonLabel>
+                                    <input name="eduId" type="text" value={Number(cancelLesson.lessonTotalPrice)/100} spellCheck={false}  readonly required>
+                            </input><br/>
+                            <IonLabel position="stacked" >下架原因:</IonLabel>
+                                    <input name="eduId" type="text" value={cancelLesson.lessonUpdateReason} spellCheck={false}  onIonChange={e => setCancelLesson({...cancelLesson,...{lessonUpdateReason:e.detail.value!}})} required>
+                            </input><br/>
                             <button type='submit'>下架</button>
                             <button onClick={()=>{}}>取消</button>
                           </form>
@@ -333,8 +360,8 @@ const LessonQuery:React.FC =()=>{
                           <input type='text' className="flex w-56 h-12 pt-2.5 font-bold text-center text-primary-600 bg-white rounded-md focus:outline-none focus:glow-secondary-500" onChange={e=>setQueryInfo({...queryInfo,...{lessonName:e.target.value}})} />
                         </IonCol>
                         <IonCol className='flex ml-8'>
-                          <button onClick={()=>{onQuery()}}>查询</button>
-                          <button onClick={()=>{setCreateModalOpen(false)}}>新增</button>
+                          <button className='queryButton rounded-md' onClick={()=>{onQuery()}}>查询</button>
+                          <button className='addButton rounded-md' onClick={()=>{setCreateModalOpen(true)}}>新增</button>
                         </IonCol>    
                   </IonRow>
                   </div>

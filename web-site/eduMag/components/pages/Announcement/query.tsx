@@ -1,5 +1,5 @@
 
-import { useEffect,useCallback,useContext,useState } from 'react'
+import { useEffect,useCallback,useContext } from 'react'
 import { Redirect } from 'react-router-dom';
 import {AppContext, setAnnouncementDetail, setAnnouncementList} from '../../../appState';
 import {Announcement} from '../../../types/types'
@@ -8,8 +8,8 @@ import {
   IonList,
   IonLabel,
   IonItem,
-  IonRow,
-  IonCol,
+  IonContent,
+  IonCard,
 } from '@ionic/react';
 
 
@@ -42,7 +42,7 @@ const AnnouncementQuery:React.FC = () => {
   }
    
   const doSetDetail = useCallback((item: Announcement) => {
-    dispatch({...setAnnouncementDetail(item),...{backPage:'/tabs/tranfer/query'}});
+    dispatch({...setAnnouncementDetail(item),...{backPage:'/tabs/announcement/query'}});
   },[dispatch]);
   const getParamStr = (params:any,url:string) =>{
     let result = '?'
@@ -88,13 +88,17 @@ const ListEntry = ({ announcement,key, ...props } : {announcement:Announcement,k
     </IonLabel>
   </IonItem>
   );
-
   if(state.announcement?.announcementDetail){
     return <Redirect to="/tabs/announcement/detail" />
   }
   return   <IonPage >
                 <div className='relative'>
                 <div className='flex'>
+                  <IonCard>
+                    <IonContent>
+                        <label className='myLabel'>监管机构公告</label>
+                    </IonContent>
+                  </IonCard>
                 </div>
               <div className='absolute w-full mt-10'>
                 <IonList>

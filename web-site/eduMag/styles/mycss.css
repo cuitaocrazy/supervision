@@ -23,6 +23,18 @@
     border-style: solid;
     border-width: 2px;
 }
+.queryButton{
+    background: #223389;
+    border-style: solid;
+    border-width: 2px;
+    width: 100px;
+}
+.addButton{
+    background: #ffffff;
+    border-style: solid;
+    border-width: 2px;
+    width: 100px;
+}
 .cancelButton{
     background: #ffffff;
     border-style: solid;
