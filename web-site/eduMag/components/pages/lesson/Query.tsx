@@ -260,7 +260,7 @@ const LessonQuery: React.FC = () => {
     <IonContent>
       <div className='relative w-screen h-screen px-4 bg-gray-100'>
         <div className='flex my-2 text-gray-800'>
-          <div className='pr-2'>
+          <div className=''>
             <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
               <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
             </svg>
@@ -379,8 +379,8 @@ const LessonQuery: React.FC = () => {
                 placeholder='请输入课程名称'
                 onChange={e => setQueryInfo({ ...queryInfo, ...{ lessonName: e.target.value } })} />
             </IonCol>
-            <IonCol className='flex justify-end ml-8'>
-              <button className='w-24 h-12 mr-6 text-white rounded-md shadow-md bg-primary-600 focus:bg-primary-700' onClick={() => { onQuery() }}>查询</button>
+            <IonCol className='flex ml-8'>
+              <button className='w-24 h-12 mr-6 text-white border-2 rounded-md shadow-md bg-primary-600 focus:bg-primary-700' onClick={() => { onQuery() }}>查询</button>
               <button className='w-24 h-12 rounded-md shadow-md bg-gray-50 text-primary-600 focus:bg-gray-200' onClick={() => { setCreateModalOpen(true) }}>新增</button>
             </IonCol>
           </IonRow>
