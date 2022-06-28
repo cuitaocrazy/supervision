@@ -3,7 +3,7 @@ import Router,{useRouter} from 'next/router';
 import { IonPage, IonHeader,  IonContent } from "@ionic/react"
 import Search from '../Search'
 import Navbar from 'components/Navbar'
-import {EduOrg} from "../../types/types"
+import {EduOrg,Lesson} from "../../types/types"
 
 interface OrgListProps{
   eduImage?:string,
@@ -13,6 +13,8 @@ interface OrgListProps{
   item?:EduOrg
   
 }
+
+
 
 // 机构列表card组件
 const OrgListCard:FC<OrgListProps> = (props) => {
