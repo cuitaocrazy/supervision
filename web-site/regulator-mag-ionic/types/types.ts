@@ -228,6 +228,13 @@ export interface ContractNego{
   contract:Contract,
   negoFinishTimes:string,
 }
+export interface Black{
+  orgId:string,
+  orgName:string,
+  reason:string,
+  blackDate:string,
+  blackTime:string,
+}
 
 
 

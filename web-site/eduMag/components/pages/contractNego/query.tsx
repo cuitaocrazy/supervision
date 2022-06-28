@@ -1,5 +1,5 @@
 //手工退课
-import React, { useState } from 'react';
+import React, { useState,useRef } from 'react';
 import { useEffect,useCallback,useContext
  } from 'react'
 import { IonPage, IonModal,IonRow,IonCol,IonCard,IonRadioGroup,IonRadio, IonCardHeader, IonCardSubtitle,IonLabel,IonInput, IonCardContent,IonItem,IonButton,IonList,IonDatetime,IonPicker } from '@ionic/react';
@@ -7,6 +7,10 @@ import { Redirect } from 'react-router-dom';
 import {AppContext,setContractNegoList,setContractNegoDetail} from '../../../appState';
 import {ContractNego} from '../../../types/types'
 import { PickerColumn } from "@ionic/core";
+
+
+import {Editor, EditorState,} from 'draft-js';
+import RichText from 'components/components/RichText';
 
 const queryURL = 'http://localhost:3003/contractNego/query'
 
@@ -68,6 +72,12 @@ const democontractNegoList:ContractNego[] = [
 ]
 
 const ContractNegoQuery:React.FC = () => {
+  const editor = useRef(null);
+  const [editorState, setEditorState] = useState(
+    EditorState.createEmpty()
+  );
+
+
   const { state, dispatch } = useContext(AppContext);
   const [queryInfo, setQueryInfo] = useState({contractId:'',orderId:''})
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -181,26 +191,32 @@ const ListEntry = ({ contractNego,key, ...props } : {contractNego:ContractNego,k
                           </IonCol>  
                   </IonRow>
                 </div>
-                <IonModal isOpen={isModalOpen}>
-                        < IonCardContent>
+                <IonModal isOpen={isModalOpen} keyboardClose={false} onDidDismiss={async ()=>{setIsModalOpen(false)}}>
+                        <IonCardContent>
                           <form onSubmit={onManual}>
                           <IonItem>
-                              <IonLabel >课程名称：{detail.contract?.lessonName}</IonLabel>
+                              <label>课程名称：</label>
+                              <label className='readonlyInput'>{detail.contract?.lessonName}</label>
                           </IonItem>
                           <IonItem>
-                              <IonLabel >总课时：{detail.contract?.lessonTotalTimes}</IonLabel>
+                              <label>总课时：</label>
+                              <label className='readonlyInput'>{detail.contract?.lessonTotalTimes}</label>
                           </IonItem>
                           <IonItem>
-                              <IonLabel >已签到课时:{detail.negoFinishTimes}</IonLabel>
+                              <label>已签到课时:</label>
+                              <label className='readonlyInput'>{detail.negoFinishTimes}</label>
                           </IonItem>
                           <IonItem>
-                              <IonLabel >客户姓名:{detail.contract?.consumerName}</IonLabel>
+                              <label>客户姓名:</label>
+                              <label className='readonlyInput'>{detail.contract?.consumerName}</label>
                           </IonItem>
                           <IonItem>
-                              <IonLabel >联系电话:{detail.contract?.consumerPhone}</IonLabel>
+                              <label>联系电话:</label>
+                              <label className='readonlyInput'>{detail.contract?.consumerPhone}</label>
                           </IonItem>
                           <IonItem>
-                              <IonLabel >学生姓名:{detail.contract?.consumerStuName}</IonLabel>
+                              <label>学生姓名:</label>
+                              <label className='readonlyInput'>{detail.contract?.consumerStuName}</label>
                           </IonItem>
                           <IonItem>
                               <IonLabel >退款金额：</IonLabel><IonInput name="lessonIntroduce" type="text" value={Number(detail.negoRefundAmt)/100} spellCheck={false} autocapitalize="off" onIonChange={e => setContractNegoDetail({...detail,...{negoRefundAmt:String(100*Number(e.detail.value!))}})} required></IonInput>
@@ -209,12 +225,12 @@ const ListEntry = ({ contractNego,key, ...props } : {contractNego:ContractNego,k
                               <IonLabel >退款金额：</IonLabel><IonInput name="lessonIntroduce" type="text" value={Number(detail.negoRefundAmt)/100} spellCheck={false} autocapitalize="off" onIonChange={e => setContractNegoDetail({...detail,...{negoRefundAmt:String(100*Number(e.detail.value!))}})} required></IonInput>
                           </IonItem>
                             <div className='mt-2 mb-2 flex space-x-2 '>
-                            <span  className="flex-1 ">
-                              <button className='submutButton flex items-center justify-center flex-none  focus:outline-none hover:bg-primary-700 ' type='submit' >确认</button>
-                            </span >
-                            <span className="flex-1 ">
-                              <button  className='cancelButton' onClick={ ()=>setIsModalOpen(false)}>取消</button>
-                            </span>
+                              <span  className="flex-1 ">
+                                <button className='submutButton flex items-center justify-center flex-none  focus:outline-none hover:bg-primary-700 ' type='submit' >确认</button>
+                              </span >
+                              <span className="flex-1 ">
+                                <button  className='cancelButton' onClick={ ()=>setIsModalOpen(false)}>取消</button>
+                              </span>
                             </div>
                           </form>    
                                   {/* <IonRow>

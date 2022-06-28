@@ -17,9 +17,10 @@ export const AnnouncementDetail: React.FC = () => {
   const setBack = useCallback(() => {
     dispatch(setAnnouncementDetail(undefined));
   },[]);
-  const onBack = ()=>() => {
+  const onBack = () => {
     setBack()
   }
+  console.log(state.announcement)
   if(state.announcement.announcementDetail===undefined){
     return <Redirect to={state.backPage} />
   }
@@ -46,6 +47,7 @@ export const AnnouncementDetail: React.FC = () => {
       <IonCardContent>
         {announcementState.announcementContent}
       </IonCardContent>
+      <button onClick={onBack}> 返回</button>
     </IonCard>
     </IonPage>
   );

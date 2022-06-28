@@ -182,7 +182,7 @@ const ListEntry = ({ transfer,key, ...props } : {transfer:Transfer,key:any}) => 
                         <input type='text' className="flex w-56 h-12 pt-2.5 font-bold text-center text-primary-600 bg-white rounded-md focus:outline-none focus:glow-secondary-500" onChange={e=>setQueryInfo({...queryInfo,...{eduName:e.target.value}})} />
                       </IonCol> 
                       <IonCol className='flex ml-8'>
-                        <IonLabel className='flex h-12 p-2 font-bold text-center text-primary-600 w-28'>课程名称查询：</IonLabel>
+                        <IonLabel className='flex h-12 p-2 font-bold text-center text-primary-600 w-28'>课程名称：</IonLabel>
                         <input type='text' className="flex w-56 h-12 pt-2.5 font-bold text-center text-primary-600 bg-white rounded-md focus:outline-none focus:glow-secondary-500" onChange={e=>setQueryInfo({...queryInfo,...{lessonName:e.target.value}})} />
                       </IonCol>  
                 </IonRow>

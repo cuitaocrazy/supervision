@@ -7,6 +7,7 @@ import { Redirect } from 'react-router-dom';
 import {AppContext,setAttendenceLanuchList,setAttendenceLanuchDetail} from '../../../appState';
 import {Lesson} from '../../../types/types'
 import { PickerColumn } from "@ionic/core";
+import moment from 'moment'
 
 const queryURL = 'http://localhost:3003/contractNego/query'
 
@@ -30,6 +31,7 @@ const demoLessonList:Lesson[] = [
       lessonUpdateDate: '2020-01-01',
       lessonUpdateTime:   '00:00:00',
       lessonUpdateReason: '第二课程更新原因',
+      lessonFinishTimes:'0',
       eduId: '1',
       edu: {
         eduId: '1',
@@ -45,6 +47,7 @@ const demoLessonList:Lesson[] = [
           {  
             lessonId: '2',
             lessonName: '第3课',
+            lessonFinishTimes:'4',
             lessonTotalTimes:'10',
             lessonPerPrice: '12',
             lessonTotalPrice: '120',
@@ -165,65 +168,60 @@ const ListEntry = ({ lesson,key, ...props } : {lesson:Lesson,key:any}) => (
                 <div className='flex'>
                 <IonRow className='flex justify-between '>
                       <IonCol className='flex ml-8'>
-                        <IonLabel className='flex h-12 p-2 font-bold text-center text-primary-600 w-28'>合同ID</IonLabel>
-                        <input type='text' className="flex w-56 h-12 pt-2.5 font-bold text-center text-primary-600 bg-white rounded-md focus:outline-none focus:glow-secondary-500" onChange={e=>setQueryInfo({...queryInfo,...{contractId:e.target.value}})} />
+                        <IonLabel className='flex h-12 p-2 font-bold text-center text-primary-600 w-28'>课程名称</IonLabel>
+                        <input type='text' className="flex w-56 h-12 pt-2.5 font-bold text-center text-primary-600 bg-white rounded-md focus:outline-none focus:glow-secondary-500" onChange={e=>setQueryInfo({...queryInfo,...{lessonName:e.target.value}})} />
                       </IonCol>     
                       <IonCol className='flex ml-8'>
                           <button onClick={()=>{onQuery()}}>查询</button>
                         </IonCol>  
                 </IonRow>
                 </div>
-                <IonModal isOpen={isModalOpen}>
+                <IonModal isOpen={isModalOpen} onDidDismiss={async ()=>{setIsModalOpen(false)}}> 
                         < IonCardContent>
                           <form onSubmit={onManual}>
-                              <IonList>
-                                  <IonRow>
-                                    <IonCol>
-                                      <IonLabel>
+                                  <IonItem>
+                                  <label>
                                         <p  className='text-center'>课程ID:</p>
-                                      </IonLabel> 
-                                    </IonCol>
-                                    <IonCol>
-                                      <IonLabel>
+                                      </label> 
+                                      <label>
                                         <p  className='text-center'>{detail.lessonId}</p>
-                                      </IonLabel> 
-                                    </IonCol>
-                                  </IonRow>
-                                  <IonRow>
-                                    <IonCol>
-                                      <IonLabel>
+                                      </label> 
+                                  </IonItem>
+                                  <IonItem>
+                                      <label>
                                         <p  className='text-center'>课程名称:</p>
-                                      </IonLabel> 
-                                    </IonCol>
-                                    <IonCol>
-                                      <IonLabel>
+                                      </label> 
+                                      <label>
                                         <p  className='text-center'>{detail.lessonName}</p>
-                                      </IonLabel> 
-                                    </IonCol>
-                                  </IonRow>   
-                                  <IonRow>
-                                    <IonCol>
-                                      <IonLabel>
-                                        <p  className='text-center'>上课日期时间 </p>
-                                      </IonLabel> 
-                                    </IonCol>
-                                    <IonCol>
-                                      <IonDatetime  onIonChange={e => setDetail({...detail,...{dateitme:e.detail.value!}})}></IonDatetime>
-                                    </IonCol>
-                                  </IonRow> 
-                                  <IonRow>
-                                    <IonCol>
-                                      <IonLabel>
-                                        <p  className='text-center'>上课日期时间 </p>
-                                      </IonLabel> 
-                                    </IonCol>
-                                    <IonCol>
-                                      <IonInput  onIonChange={e => setDetail({...detail,...{times:e.detail.value!}})}></IonInput>
-                                    </IonCol>
-                                  </IonRow>                                  
-                              </IonList>
-                              
-                              
+                                      </label> 
+                                  </IonItem>  
+                                  <IonItem>
+                                      <label>
+                                        <p className='text-center'>上课日期:</p>
+                                      </label> 
+                                      <input type="date" defaultValue={moment().format('YYYY-MM-DD')} onChange={e=>setDetail({...detail,date:e.target.value})}></input>
+                                      {/* <IonDatetime presentation='date' onIonChange={e => setDetail({...detail,...{dateitme:e.detail.value!}})}></IonDatetime> */}
+                                  </IonItem> 
+                                  <IonItem>
+                                      <label>
+                                        <p className='text-center'>上课日期:</p>
+                                      </label> 
+                                      <input type="time" defaultValue={moment().format('HH:mm')} onChange={e=>{console.log(e.target.value);setDetail({...detail,time:e.target.value})}}></input>
+                                  </IonItem>
+                                  <IonItem>
+                                      <label>
+                                        <p  className='text-center'>本次课时:</p>
+                                      </label> 
+                                      <IonInput name="eduContactPhone" type='number'  className="normalInput" value={detail.times}  onIonChange={e => setDetail({...detail, times: e.detail.value})} ></IonInput>
+                                  </IonItem>  
+                                  <div className='mt-2 mb-2 flex space-x-2 '>
+                                      <span  className="flex-1 ">
+                                        <button className='submutButton flex items-center justify-center flex-none  focus:outline-none hover:bg-primary-700 ' type='submit' >确认</button>
+                                      </span >
+                                      <span className="flex-1 ">
+                                        <button  className='cancelButton' onClick={ ()=>setIsModalOpen(false)}>取消</button>
+                                      </span>
+                                    </div>
                           </form>
                         </IonCardContent>
                     </IonModal> 
@@ -244,7 +242,7 @@ const ListEntry = ({ lesson,key, ...props } : {lesson:Lesson,key:any}) => (
                     </IonLabel>
                 </IonItem>
                     <div className=''>
-                    {state.attendenceLanuch.attendenceLanuchDetail.map((list:Lesson, i: any) => (
+                    {state.attendenceLanuch?.attendenceLanuchList?.map((list:Lesson, i: any) => (
                     <ListEntry lesson={list} key={i} />
                   ))}
                     </div>

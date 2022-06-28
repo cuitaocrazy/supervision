@@ -29,7 +29,7 @@ const initialState = {
   backPage:undefined,
   loginUser:{//登录用户信息
     orgId:null,
-    orgName:null,
+    orgName:'教育机构1',
     loginName:null,
     username:null,
     phone:null,

@@ -60,51 +60,51 @@ export const LessonDetail: React.FC = () => {
         <IonCardSubtitle className="mx-8 text-3xl text-gray-600">详细信息</IonCardSubtitle>
       </IonCardHeader>
       <IonCardContent>
-      <form onSubmit={onModify}>
-      <IonList>
-      <IonLabel position="stacked" color="primary">机构ID</IonLabel>
-              <IonInput name="eduId" type="text" value={lessonState.eduId} spellCheck={false} autocapitalize="off" readonly required>
-      </IonInput>
-      <IonLabel position="stacked" color="primary">课程ID</IonLabel>
-              <IonInput name="lessonId" type="text" value={lessonState.lessonId} spellCheck={false} autocapitalize="off" readonly required>
-      </IonInput>
-      <IonLabel position="stacked" color="primary">课程名称</IonLabel>
-              <IonInput name="lessonName" type="text" value={lessonState.lessonName} spellCheck={false} autocapitalize="off" readonly required>
-      </IonInput>
-      <IonLabel position="stacked" color="primary">课程描述</IonLabel>
-              <IonInput name="lessonIntroduce" type="text" value={lessonState.lessonIntroduce} spellCheck={false} autocapitalize="off" readonly required>
-      </IonInput>
-      <IonLabel position="stacked" color="primary">课程类型</IonLabel>
-      <IonInput name="lessonIntroduce" type="text" value={lessonState.lessonType} spellCheck={false} autocapitalize="off" readonly required>
-      </IonInput>
-      <IonLabel position="stacked" color="primary">课程大纲</IonLabel>
-              <IonInput name="lessonOutline" type="text" value={lessonState.lessonOutline} spellCheck={false} autocapitalize="off" readonly required>
-      </IonInput>
-      <IonLabel position="stacked" color="primary">课程开始日期</IonLabel>
-          <IonDatetime className="flex w-56 h-6 pt-2.5 font-bold text-center text-primary-600 bg-white rounded-md" value={lessonState.lessonStartDate} name='lessonStartDate'  readonly></IonDatetime>
-      <IonLabel position="stacked" color="primary">课程结束日期</IonLabel>
-          <IonDatetime className="flex w-56 h-6 pt-2.5 font-bold text-center text-primary-600 bg-white rounded-md" value={lessonState.lessonEndDate} name='lessonStartDate'  readonly></IonDatetime>      
-      <IonLabel position="stacked" color="primary">课程状态</IonLabel>
-              <IonInput name="lessonStatus" type="text" value={lessonState.lessonStatus} spellCheck={false} autocapitalize="off" readonly required>
-      </IonInput>
-      <IonLabel position="stacked" color="primary">课程创建时间</IonLabel>
-              <IonInput name="lessonCreateDate" type="text" value={lessonState.lessonCreateDate} spellCheck={false} autocapitalize="off" readonly required>
-      </IonInput>
-      <IonLabel position="stacked" color="primary">课程修改时间</IonLabel>
-              <IonInput name="lessonCreateDate" type="text" value={lessonState.lessonUpdateDate} spellCheck={false} autocapitalize="off" readonly required>
-      </IonInput>
-      <IonLabel position="stacked" color="primary">修改原因</IonLabel>
-              <IonInput name="lessonUpdateReason" type="text" value={lessonState.lessonUpdateReason} spellCheck={false} autocapitalize="off" readonly required>
-      </IonInput>
-      <IonLabel position="stacked" color="primary">教育机构ID</IonLabel>
-              <IonInput name="eduId" type="text" value={lessonState.eduId} spellCheck={false} autocapitalize="off" readonly required>
-      </IonInput>
-      <IonLabel position="stacked" color="primary">教师ID</IonLabel>
-              <IonInput name="teacherId" type="text" value={lessonState.teacherId} spellCheck={false} autocapitalize="off" readonly required>
-      </IonInput>
-      
+        <form onSubmit={onModify}>
+        <IonList>
+        <IonLabel position="stacked" color="primary">机构ID</IonLabel>
+                <IonInput name="eduId" type="text" value={lessonState.eduId} spellCheck={false} autocapitalize="off" readonly required>
+        </IonInput>
+        <IonLabel position="stacked" color="primary">课程ID</IonLabel>
+                <IonInput name="lessonId" type="text" value={lessonState.lessonId} spellCheck={false} autocapitalize="off" readonly required>
+        </IonInput>
+        <IonLabel position="stacked" color="primary">课程名称</IonLabel>
+                <IonInput name="lessonName" type="text" value={lessonState.lessonName} spellCheck={false} autocapitalize="off" readonly required>
+        </IonInput>
+        <IonLabel position="stacked" color="primary">课程描述</IonLabel>
+                <IonInput name="lessonIntroduce" type="text" value={lessonState.lessonIntroduce} spellCheck={false} autocapitalize="off" readonly required>
+        </IonInput>
+        <IonLabel position="stacked" color="primary">课程类型</IonLabel>
+        <IonInput name="lessonIntroduce" type="text" value={lessonState.lessonType} spellCheck={false} autocapitalize="off" readonly required>
+        </IonInput>
+        <IonLabel position="stacked" color="primary">课程大纲</IonLabel>
+                <IonInput name="lessonOutline" type="text" value={lessonState.lessonOutline} spellCheck={false} autocapitalize="off" readonly required>
+        </IonInput>
+        <IonLabel position="stacked" color="primary">课程开始日期</IonLabel>
+            <IonDatetime className="flex w-56 h-6 pt-2.5 font-bold text-center text-primary-600 bg-white rounded-md" value={lessonState.lessonStartDate} name='lessonStartDate'  readonly></IonDatetime>
+        <IonLabel position="stacked" color="primary">课程结束日期</IonLabel>
+            <IonDatetime className="flex w-56 h-6 pt-2.5 font-bold text-center text-primary-600 bg-white rounded-md" value={lessonState.lessonEndDate} name='lessonStartDate'  readonly></IonDatetime>      
+        <IonLabel position="stacked" color="primary">课程状态</IonLabel>
+                <IonInput name="lessonStatus" type="text" value={lessonState.lessonStatus} spellCheck={false} autocapitalize="off" readonly required>
+        </IonInput>
+        <IonLabel position="stacked" color="primary">课程创建时间</IonLabel>
+                <IonInput name="lessonCreateDate" type="text" value={lessonState.lessonCreateDate} spellCheck={false} autocapitalize="off" readonly required>
+        </IonInput>
+        <IonLabel position="stacked" color="primary">课程修改时间</IonLabel>
+                <IonInput name="lessonCreateDate" type="text" value={lessonState.lessonUpdateDate} spellCheck={false} autocapitalize="off" readonly required>
+        </IonInput>
+        <IonLabel position="stacked" color="primary">修改原因</IonLabel>
+                <IonInput name="lessonUpdateReason" type="text" value={lessonState.lessonUpdateReason} spellCheck={false} autocapitalize="off" readonly required>
+        </IonInput>
+        <IonLabel position="stacked" color="primary">教育机构ID</IonLabel>
+                <IonInput name="eduId" type="text" value={lessonState.eduId} spellCheck={false} autocapitalize="off" readonly required>
+        </IonInput>
+        <IonLabel position="stacked" color="primary">教师ID</IonLabel>
+                <IonInput name="teacherId" type="text" value={lessonState.teacherId} spellCheck={false} autocapitalize="off" readonly required>
+        </IonInput>
+        
 
-      </IonList>
+        </IonList>
 
      </form>
         <IonItem className="">

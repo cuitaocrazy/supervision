@@ -10,9 +10,13 @@ import '@ionic/react/css/text-alignment.css';
 import '@ionic/react/css/text-transformation.css';
 import '@ionic/react/css/flex-utils.css';
 import '@ionic/react/css/display.css';
+import "draft-js/dist/Draft.css";
 
 import '../styles/global.css';
 import '../styles/mycss.css';
+import '../styles/draft.css';
+import '../styles/example.css';
+import '../styles/rich-editor.css';
 interface Props {
   Component:any,
   pageProps:any

@@ -54,14 +54,11 @@ const demoTeacherList:Teacher[] = [
 const TeacherQuery:React.FC = () => {
  
   const createModal = useRef<HTMLIonModalElement>(null);
- 
   const cancelModal = useRef<HTMLIonModalElement>(null);
 
-
-
-const [createTeacher,setCreateTeacher] = useState({} as Teacher )
-const [cancelTeacher,setCancelTeacher] = useState({} as Teacher )
-const [isCancelModalOpen,setIsCancelModalOpen] = useState(false)
+  const [createTeacher,setCreateTeacher] = useState({} as Teacher )
+  const [cancelTeacher,setCancelTeacher] = useState({} as Teacher )
+  const [isCancelModalOpen,setIsCancelModalOpen] = useState(false)
   const { state, dispatch } = useContext(AppContext);
   const [queryInfo, setQueryInfo] = useState({teacherName:''})
   const getParamStr = (params:any,url:string) =>{
@@ -207,7 +204,7 @@ const ListEntry = ({ teacher,key, ...props } : {teacher:Teacher,key:any}) => (
                     </IonCardContent>
                   </IonCard>
                 </IonModal>
-                <IonModal isOpen={isCancelModalOpen}>
+                <IonModal isOpen={isCancelModalOpen}  onDidDismiss={async ()=>{setIsCancelModalOpen(false)}}> 
                   <IonCard>
                     <IonCardHeader>
                         教师删除确认
