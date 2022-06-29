@@ -7,8 +7,17 @@ import {Lesson} from '../../types/types'
 
 let lesson:Lesson={lessonImgs:"http://placekitten.com/g/200/300"}
 
+interface LessonProps {
+  lesson_imgs?: string
+  lesson_name?: string
+  lesson_introduce?: string
+  edu_address?: string
+  item?: Lesson
+}
 // 课程详情页面
-const SearchLessonDetail= () => {
+
+const SearchLessonDetail= (props:LessonProps) => {
+
   return <IonPage>
     <IonHeader>
       <Navbar title="课程详情" />

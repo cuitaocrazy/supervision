@@ -1,7 +1,7 @@
 import { IonApp, IonRouterOutlet, IonSplitPane, setupIonicReact } from '@ionic/react';
 import { StatusBar, Style } from '@capacitor/status-bar';
 import { IonReactRouter, } from '@ionic/react-router';
-import { Route, Redirect, Router } from 'react-router-dom';
+import { Route, Redirect } from 'react-router-dom';
 
 import Tabs from './pages/Tabs';
 import Menu from './pages/Menu';

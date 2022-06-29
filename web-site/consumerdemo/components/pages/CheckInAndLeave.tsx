@@ -1,22 +1,36 @@
-import React from 'react';
+import React,{useContext,useEffect,useState} from 'react';
 import { IonPage, IonHeader, IonContent } from '@ionic/react';
-import { useRouter } from 'next/router';
+import {Link, Redirect} from 'react-router-dom'
 import Navbar from '../Navbar'
+import {AppContext,setContractDetail} from '../../appState';
+import moment from 'moment'
 
 // 签到和请假页面
 const CheckInAndLeave = () => {
-  const router=useRouter();
-
+  const { state } = useContext(AppContext); 
+  const [date,setDate] = useState(moment().format('YYYY年MM月DD日'))
+  const [time,setTime] = useState(moment().format('HH:mm:ss'))
+  const [back,setBack] = useState(null as unknown)
   // 签到结果提示
   const CheckInFun = () => {
-    router.push("./checkInList")
-    alert("签到成功")
+    setBack('/MyCheckInList')  
   }
+  if(back){
+    return <Redirect to={back as string}></Redirect>
+  }
+
+  setTimeout(()=>{
+     setDate(moment().format('YYYY年MM月DD日'))
+     setTime(moment().format('HH:mm:ss'))
+  },1000)
+
+
+  
 // 请假结果提示
   const LeaveFun = () => {
     const isLeave = confirm('你确定要请假吗？')
     if (isLeave === true) {
-      router.push("./checkInList")
+      setBack('/MyCheckInList')  
     } else if (isLeave === false) {
       alert("取消请假")
     }
@@ -27,20 +41,20 @@ const CheckInAndLeave = () => {
     </IonHeader>
     <IonContent>
       <div className='py-3 text-sm text-center shadow-md text-secondary-400'>
-        <div className='inline'>2022年5月18日</div>
-        <div className='inline pl-2'>07:25:56</div>
+        <div className='inline'>{date}</div>
+        <div className='inline pl-2'>{time}</div>
       </div>
       <div className='pt-6 pb-6 mx-2 mt-2 mb-4 text-center rounded-lg shadow-md'>
         <div className='grid grid-cols-1 justify-items-center'>
           <button className='text-base font-bold text-white rounded-full w-28 h-28 bg-primary-600'
                   onClick={()=>{CheckInFun()}}>
             <div className='pt-4'>课程签到</div>
-            <div className='pt-1'>07:25:26</div>
+            <div className='pt-1'>{time}</div>
           </button>
         </div>
         <div className='mt-6 text-sm text-gray-500'>
-          <div className='inline'>【少儿编程】第</div>
-          <div className='inline'>3</div>
+          <div className='inline'>【{state.contractDetail.lessonName}】第</div>
+          <div className='inline'>{state.contractDetail.lessonCompletedQuantity+1}</div>
           <div className='inline'>课即将开课，请您尽快签到！</div>
         </div>
       </div>

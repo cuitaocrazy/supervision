@@ -5,6 +5,7 @@ import { useForm, SubmitHandler } from 'react-hook-form'
 import { useRouter } from 'next/router'
 import Navbar from 'components/Navbar'
 import { RadioGroup } from '@headlessui/react'
+import { Redirect,Link} from 'react-router-dom';
 
 const stuInfo = [
   {
@@ -29,10 +30,12 @@ const stuInfo = [
 function StudentInfoRadioGroup() {
   const router=useRouter()
   const [selected, setSelected] = useState(stuInfo[0])
+
+  // 
   return (
     <div className="w-full px-4 py-4">
       <div className="w-full max-w-md mx-auto">
-        <RadioGroup value={selected} onChange={setSelected} onClick={()=>{router.push("./conOrder")}}>
+        <RadioGroup value={selected} onChange={setSelected} onClick={()=>{console.log('aaa');<Redirect to='/conOrder'></Redirect>}}>
           <RadioGroup.Label className="text-gray-800 sr-only">学生信息</RadioGroup.Label>
           <div className="space-y-2">
             {stuInfo.map((stu) => (
