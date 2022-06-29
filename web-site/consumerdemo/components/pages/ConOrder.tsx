@@ -1,35 +1,40 @@
 import React from 'react';
 import { IonPage, IonHeader, IonContent } from "@ionic/react"
 import { motion } from 'framer-motion'
-import { useRouter } from 'next/router'
+// import { useRouter } from 'next/router'
+import { Link } from 'react-router-dom';
 import Navbar from '../Navbar'
+import {AppContext} from '../../appState';
+import { useContext } from 'react'
+import { State } from 'ionicons/dist/types/stencil-public-runtime';
 
 // 订单课程信息card
 const ConOrderLessCard = () => {
+  const { state } = useContext(AppContext);
   return <div className='pt-1 pb-2 mt-3 mb-3 bg-white rounded-lg shadow-md'>
     <div className='mt-2 rounded-lg'>
-      <div className='py-2 pl-3 font-medium'>核桃编程培训机构</div>
+      <div className='py-2 pl-3 font-medium'>{state.lessonDetail.edu.eduName}</div>
       <div className='grid h-24 grid-cols-12 mx-2 rounded-lg'>
         <img className='w-20 h-20 col-span-4 mt-2 ml-1 mr-2 rounded-xl' src="http://placekitten.com/g/200/300"></img>
         <div className='flex flex-col col-span-8 mt-5 mr-3 justify-items-start'>
-          <div className='overflow-hidden text-sm font-medium tracking-wide text-ellipsis'>思维逻辑小游戏</div>
-          <div className='h-8 mt-2 overflow-hidden text-xs text-gray-500 text-ellipsis'>锻炼孩子动手能力，提高孩子思维能力，学习完课程可组装不同的形状</div>
+          <div className='overflow-hidden text-sm font-medium tracking-wide text-ellipsis'>{state.lessonDetail.lessonName}</div>
+          <div className='h-8 mt-2 overflow-hidden text-xs text-gray-500 text-ellipsis'>{state.lessonDetail.lessonIntroduce}</div>
         </div>
       </div>
       {/* 培训信息 */}
       <div className='mx-3 text-sm leading-6'>
         <div className='flex items-center mb-1'>
           <div className='mr-2 text-center text-gray-500'>培训课时:</div>
-          <div className='font-medium text-center text-gray-800'>58课时</div>
+          <div className='font-medium text-center text-gray-800'>{state.lessonDetail.lessonTotalQuantity}课时</div>
         </div>
 
         <div className='flex items-center mb-1'>
-          <div className='mr-2 text-center text-gray-500'>培训周期:</div>
-          <div className='font-medium text-center text-gray-800'>2022年5月5日-2023年5月5日</div>
+          <div className='mr-2 text-center text-gray-500'>开始日期:</div>
+          <div className='font-medium text-center text-gray-800'>{state.lessonDetail.lessonStartDate}</div>
         </div>
         <div className='flex items-center mb-1'>
           <div className='mr-2 text-center text-gray-500'>培训地址:</div>
-          <div className='font-medium text-center text-gray-800'>北京市海淀区大钟寺东路</div>
+          <div className='font-medium text-center text-gray-800'>{state.lessonDetail.edu.eduAddress}</div>
         </div>
       </div>
     </div>
@@ -38,7 +43,7 @@ const ConOrderLessCard = () => {
 
 // 确认订单页面
 const ConOrder = () => {
-  const router = useRouter();
+  const { state } = useContext(AppContext);
   return <IonPage>
     <IonHeader>
       <Navbar title='确认订单' />
@@ -50,10 +55,13 @@ const ConOrder = () => {
             请选择学生
           </div>
           <div className='grid items-center grid-cols-2 py-3 pl-2 mt-3 text-base bg-white rounded-lg shadow-md'>
-            <div className='items-center justify-center font-medium text-gray-700'>可新增或修改学生信息</div>
-            <a className='mr-2 cursor-pointer justify-self-end' onClick={() => { router.push("./stuInfoList") }}>
+            <div className='items-center justify-center font-medium text-gray-700'> {state.studentName?state.studentName:'可新增或修改学生信息'}</div>
+            <Link to='/stuInfoList'>
+            <a className='mr-2 cursor-pointer justify-self-end' >
               <svg className="w-5 h-5 text-gray-500" width="24" height="24" viewBox="0 0 24 24" strokeWidth="3" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">  <path stroke="none" d="M0 0h24v24H0z" />  <polyline points="9 6 15 12 9 18" /></svg>
             </a>
+            </Link>
+
           </div>
 
           <ConOrderLessCard />
@@ -79,8 +87,11 @@ const ConOrder = () => {
       <div className='fixed bottom-0 flex w-full pl-5 mt-6 bg-white border-t h-14 justify-items-stretch'>
         <div className='self-center justify-around text-xs text-gray-500'>合计：</div>
         <div className='self-center mr-4 text-2xl font-black text-red-500 grow justify-self-end'>¥11120.00</div>
+        <Link to='/eCNYPay'>
         <button className='self-center h-10 px-6 mt-1 mr-2 text-sm font-medium text-white justify-self-end bg-primary-500 rounded-3xl'
-          onClick={() => { router.push("./eCNYPay") }}>立即支付</button>
+         >立即支付</button>
+        </Link>
+
       </div>
     </IonContent>
   </IonPage>

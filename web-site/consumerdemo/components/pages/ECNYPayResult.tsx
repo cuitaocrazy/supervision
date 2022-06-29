@@ -2,7 +2,7 @@ import React from 'react';
 import { IonPage, IonHeader, IonContent } from "@ionic/react"
 import { motion } from 'framer-motion'
 import { useForm, SubmitHandler } from 'react-hook-form'
-import { useRouter } from 'next/router'
+import {Link} from 'react-router-dom'
 import Navbar from '../Navbar'
 
 type FormData = {
@@ -12,9 +12,8 @@ type FormData = {
 // 数币系统的支付结果页面
 const ECNYPayResult = () => {
   const { register, handleSubmit, formState: { errors } } = useForm<FormData>()
-  const router = useRouter()
   const onSubmit: SubmitHandler<FormData> = (data: FormData) => {
-    router.push('/searchLessonList')
+    // router.push('/searchLessonList')
   }
   return <IonPage>
     <IonHeader>
@@ -29,8 +28,11 @@ const ECNYPayResult = () => {
           <div className='pt-4 pb-16 text-lg text-center text-gray-700'>支付成功！</div>
         </div>
         <div className='flex mx-3'>
+          <Link to='payResult'>
           <button className='w-full py-2 mx-6 text-base font-bold text-white shadow-md shadow-primary-500 bg-primary-500 rounded-3xl'
-                  onClick={()=>{router.push("./payResult")}}>返回教育机构</button>
+                 >返回教育机构</button>
+          </Link>
+
         </div>
       </div>
     </IonContent>

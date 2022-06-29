@@ -1,12 +1,11 @@
 import React from 'react'
 import { IonPage, IonHeader, IonContent } from '@ionic/react'
 import AttendanceStateDownList from 'components/AttendanceStateDownList'
-import {useRouter} from 'next/router'
+import { Link } from 'react-router-dom';
 import Navbar from '../Navbar'
 
 // 申请协商页面
 const ApplyDiscuss = () => {
-  const router=useRouter();
   return <IonPage>
     <IonHeader>
       <Navbar title='协商详情' />
@@ -39,11 +38,13 @@ const ApplyDiscuss = () => {
             <textarea className='w-full p-2 rounded-md bg-gray-50 h-28 focus:outline-none' placeholder='请输入您要修改的原因~' />
           </div>
         </div>
+        <Link to=''>
         <div className='flex mt-10 text-sm'>
           <input value="提交协商申请" type="button"
             className='w-full py-2 mx-10 font-bold text-white shadow-md rounded-3xl bg-primary-600 shadow-primary-600 focus:outline-none'
-             onClick={()=>{router.push("")}}/>
+             onClick={()=>{ }}/>
         </div>
+        </Link>
       </form>
     </IonContent>
   </IonPage>

@@ -2,8 +2,8 @@ import { FC } from 'react';
 import { IonPage, IonHeader, IonContent } from "@ionic/react"
 import { motion } from 'framer-motion'
 import { useForm, SubmitHandler } from 'react-hook-form'
-import { useRouter } from 'next/router'
 import Navbar from 'components/Navbar'
+import {Link} from 'react-router-dom'
 
 type FormData = {
   name: string;
@@ -11,7 +11,7 @@ type FormData = {
 
 // 教育机构的支付结果页面
 const PayResult = () => {
-  const router = useRouter()
+
   return <IonPage>
     <IonHeader>
       <Navbar title="支付结果" />
@@ -25,12 +25,15 @@ const PayResult = () => {
           <div className='pt-4 pb-16 text-lg text-center text-gray-700'>恭喜您支付成功！</div>
         </div>
         <div className='grid grid-cols-3 gap-3 mx-3 font-bold'>
-          <button className='py-2 text-sm text-white shadow-md shadow-primary-500 bg-primary-500 rounded-3xl'
-            onClick={() => { router.push("./home") }}>返回首页</button>
-          <button className='py-2 text-sm text-white shadow-md shadow-secondary-300 bg-secondary-300 rounded-3xl'
-            onClick={() => { router.push("./searchLessonlist") }}>继续购买</button>
-          <button className='py-2 text-sm text-white bg-red-400 shadow-md shadow-remind-400 rounded-3xl'
-            onClick={() => { router.push("./myLessonDetail") }}>查看详情</button>
+          <Link to='home' className='py-2 text-sm text-white shadow-md shadow-primary-500 bg-primary-500 rounded-3xl text-center'>
+          返回首页
+            </Link>
+          <Link to='searchLessonlist' className='py-2 text-sm text-white shadow-md shadow-secondary-300 bg-secondary-300 rounded-3xl text-center'>
+          继续购买
+            </Link>
+            <Link to='myLessonDetail' className='py-2 text-sm text-white bg-red-400 shadow-md shadow-remind-400 rounded-3xl text-center'>
+          查看详情
+            </Link>
         </div>
       </div>
     </IonContent>

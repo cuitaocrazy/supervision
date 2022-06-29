@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { IonPage, IonHeader, IonContent } from '@ionic/react'
-import { useRouter } from 'next/router'
+import {Link} from 'react-router-dom'
 import Navbar from '../Navbar'
 
 export interface Pwd {
@@ -10,7 +10,6 @@ export interface Pwd {
 
 // 修改密码
 const EditPwd = () => {
-  const router = useRouter()
   const [pwdState, setpwdState] = useState({} as Pwd);
   const onEdit = async (e: React.FormEvent) => () => {
     e.preventDefault();
@@ -41,8 +40,10 @@ const EditPwd = () => {
           <input className='w-full mb-2 border-b' placeholder='请再次输入新密码' />
         </div>
         <div className='flex mt-10'>
+          <Link to='personalCenter'>
           <input className='w-full py-2 mx-5 text-sm font-bold text-center text-white shadow-md focus:outline-none shadow-primary-600 rounded-3xl bg-primary-600'
-            value="确定修改" type="button" onClick={() => router.push('./personalCenter')} />
+            value="确定修改" type="button"  />
+            </Link>
         </div>
       </form>
     </IonContent>

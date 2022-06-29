@@ -1,7 +1,7 @@
 import {FC} from 'react';
 import { IonPage, IonHeader, IonContent } from "@ionic/react"
 import { motion } from 'framer-motion'
-import { useRouter } from 'next/router'
+import {Link} from 'react-router-dom'
 import SexDownList from 'components/SexDownList';
 import RelationRadio from 'components/RelationRadio';
 import Navbar from '../Navbar'
@@ -12,7 +12,6 @@ type FormData = {
 
 // 编辑学生信息页面
 const EditStuInfo = () => {
-  const router = useRouter()
 
   return <IonPage>
     <IonHeader>
@@ -38,12 +37,16 @@ const EditStuInfo = () => {
           </div>
         </div>
         <div className='fixed bottom-0 flex w-full mt-6 bg-white border-t h-14 justify-items-center'>
-          <button className='self-center w-full h-10 mx-6 mt-1 text-sm font-medium text-white bg-gray-400 rounded-3xl' onClick={() => { router.push("stuInfoList") }}>取消</button>
-          <button className='self-center w-full h-10 mx-6 mt-1 text-sm font-medium text-white bg-primary-500 rounded-3xl' onClick={() => { router.push("stuInfoList") }}>确定</button>
+          <Link to='stuInfoList'>
+            <button className='self-center w-full h-10 mx-6 mt-1 text-sm font-medium text-white bg-gray-400 rounded-3xl' onClick={() => {  }}>取消</button>
+          </Link>
+          <Link to='stuInfoList'>
+            <button className='self-center w-full h-10 mx-6 mt-1 text-sm font-medium text-white bg-primary-500 rounded-3xl' onClick={() => { }}>确定</button>
+          </Link>
         </div>
       </form>
     </IonContent>
   </IonPage>
 }
 
-export default EditStuInfo
+export default EditStuInfo 
