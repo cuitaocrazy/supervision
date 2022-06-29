@@ -30,4 +30,5 @@ const datasource = new DataSource({
     migrations: [],
     namingStrategy: new SnakeNamingStrategy(),
 })
+datasource.initialize()
 export default datasource;

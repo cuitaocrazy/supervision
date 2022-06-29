@@ -3,7 +3,6 @@ import * as bodyParser from 'body-parser'
 import * as http from 'http'
 import { SubscribeWithSign } from './API';
 import { sign } from 'jws'
-import * as axios from 'axios'
 import * as cors from 'cors'
 import { EventEmitter } from 'events'
 
@@ -12,13 +11,11 @@ import { v4 } from 'uuid'
 const app = express()
 app.use(cors());
 app.use(express.static('out'));
-var server = http.createServer(app);
 import * as cc from './ccClientService/USVClient'
 
-const port = 3004
-var jsonParser = bodyParser.json()
+const port = 3003
+const jsonParser = bodyParser.json()
 
-const preOrder = "http://localhost:3001/preOrder"
 const appID = "12345"
 const key = "abcdef"
 
@@ -123,16 +120,8 @@ const yuanToFen = (tranAmtYuan: string | number) => {
   }
 }
 
-import datasource from './src/mysql';
-import { EduOrg } from './src/entity/EduOrg';
-// const eduOrg = new EduOrg()
-// eduOrg.eduId = "2"
-// eduOrg.eduName = "myname2"
-datasource.initialize()
-  .then(async ds => {
-    // await ds.manager.save(eduOrg)
-    console.log('-----------------------eeee')
-    const r = await ds.getRepository(EduOrg).find()
-    console.log(r)
-    console.log('--------------------------------')
-  })
+import eduLogin from './src/edu/login'
+app.post('/edu/login', jsonParser, async (req, res) => {
+  const r = await eduLogin(req.body)
+  res.send(r)
+})
