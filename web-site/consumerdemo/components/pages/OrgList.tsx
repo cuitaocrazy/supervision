@@ -3,7 +3,7 @@ import Router,{useRouter} from 'next/router';
 import { IonPage, IonHeader,  IonContent } from "@ionic/react"
 import Search from '../Search'
 import Navbar from 'components/Navbar'
-import EduOrg from "../../types/types"
+import {EduOrg,Lesson} from "../../types/types"
 
 interface OrgListProps{
   eduImage?:string,
@@ -11,14 +11,17 @@ interface OrgListProps{
   eduAddress?:string,
   eduContactPhone?:string
   item?:EduOrg
+  
 }
-<a ></a>
+
+
+
 // 机构列表card组件
 const OrgListCard:FC<OrgListProps> = (props) => {
   return (
     <div className="flex flex-col max-w-sm mb-3 ml-2 mr-2 bg-white rounded-lg shadow-md h-36" onClick={
       () => {
-        Router.push({pathname:'/searchLessonDetail', query: { item: JSON.stringify(props.item) }})
+        Router.push({pathname:'/searchLessonList', query: { item: JSON.stringify(props.item) }})
       }
     }>
       <img className="h-20 rounded-t-lg cursor-pointer" src={props.eduImage} alt="" />
@@ -98,14 +101,10 @@ const OrgList = () => {
             </div>
           </div>
           {/* 机构列表card */}
-          {/* {lessonListDemo.map((item, index) => {
-              return <LessonListCard key={index} lesson_imgs={item.lessonImgs} lesson_name={item.lessonName} lesson_introduce={item.lessonIntroduce} item={item} edu_address={item.edu?.eduAddress} />
-            })} */}
           <div className="grid py-2 sm1:grid-cols-2 sm2:grid-cols-2 sm3:grid-cols-2">
            {orgListDemo.map((item,index)=>{
             return <OrgListCard  key={index} eduImage={item.eduImage} eduName={item.eduName} eduAddress={item.eduAddress} eduContactPhone={item.eduContactPhone}   />
            })}
-            {/* <OrgListCard /> */}
           </div>
         </div>
       </div>
