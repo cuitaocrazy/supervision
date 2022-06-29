@@ -32,7 +32,7 @@ CREATE TABLE yadadb.t_b_edu_org (
 )
 ENGINE=InnoDB
 DEFAULT CHARSET=utf8mb4
-COLLATE=utf8mb4_0900_ai_ci;
+COLLATE=utf8mb4_unicode_ci;
 
 -- 教育机构教师表
 CREATE TABLE yadadb.t_b_edu_teacher (
@@ -51,7 +51,7 @@ CREATE TABLE yadadb.t_b_edu_teacher (
 )
 ENGINE=InnoDB
 DEFAULT CHARSET=utf8mb4
-COLLATE=utf8mb4_0900_ai_ci;
+COLLATE=utf8mb4_unicode_ci;
 
 -- 教育机构课程表
 CREATE TABLE yadadb.t_b_edu_lesson (
@@ -84,7 +84,7 @@ CREATE TABLE yadadb.t_b_edu_lesson (
 )
 ENGINE=InnoDB
 DEFAULT CHARSET=utf8mb4
-COLLATE=utf8mb4_0900_ai_ci;
+COLLATE=utf8mb4_unicode_ci;
 
 -- 监管机构表
 CREATE TABLE yadadb.t_b_supervisor_org (
@@ -95,7 +95,7 @@ CREATE TABLE yadadb.t_b_supervisor_org (
 )
 ENGINE=InnoDB
 DEFAULT CHARSET=utf8mb4
-COLLATE=utf8mb4_0900_ai_ci;
+COLLATE=utf8mb4_unicode_ci;
 
 -- 监管机构用户表
 CREATE TABLE yadadb.t_b_supervisor_user (
@@ -108,7 +108,7 @@ CREATE TABLE yadadb.t_b_supervisor_user (
 )
 ENGINE=InnoDB
 DEFAULT CHARSET=utf8mb4
-COLLATE=utf8mb4_0900_ai_ci;
+COLLATE=utf8mb4_unicode_ci;
 
 -- 教育机构黑名单
 CREATE TABLE yadadb.t_b_supervisor_black_edu (
@@ -120,7 +120,7 @@ CREATE TABLE yadadb.t_b_supervisor_black_edu (
 )
 ENGINE=InnoDB
 DEFAULT CHARSET=utf8mb4
-COLLATE=utf8mb4_0900_ai_ci;
+COLLATE=utf8mb4_unicode_ci;
 
 -- 公告表
 CREATE TABLE yadadb.t_b_announcement (
@@ -135,7 +135,7 @@ CREATE TABLE yadadb.t_b_announcement (
 )
 ENGINE=InnoDB
 DEFAULT CHARSET=utf8mb4
-COLLATE=utf8mb4_0900_ai_ci;
+COLLATE=utf8mb4_unicode_ci;
 
 -- 合同表
 CREATE TABLE yadadb.t_l_contract (
@@ -172,7 +172,7 @@ CREATE TABLE yadadb.t_l_contract (
 )
 ENGINE=InnoDB
 DEFAULT CHARSET=utf8mb4
-COLLATE=utf8mb4_0900_ai_ci;
+COLLATE=utf8mb4_unicode_ci;
 
 -- 合同协商表
 CREATE TABLE yadadb.t_b_contract_nego (
@@ -198,7 +198,7 @@ CREATE TABLE yadadb.t_b_contract_nego (
 )
 ENGINE=InnoDB
 DEFAULT CHARSET=utf8mb4
-COLLATE=utf8mb4_0900_ai_ci;
+COLLATE=utf8mb4_unicode_ci;
 
 -- 考勤表
 CREATE TABLE yadadb.t_l_attendance (
@@ -224,7 +224,7 @@ CREATE TABLE yadadb.t_l_attendance (
 )
 ENGINE=InnoDB
 DEFAULT CHARSET=utf8mb4
-COLLATE=utf8mb4_0900_ai_ci;
+COLLATE=utf8mb4_unicode_ci;
 
 -- 划拨表
 CREATE TABLE yadadb.t_l_transfer (
@@ -254,7 +254,7 @@ CREATE TABLE yadadb.t_l_transfer (
 )
 ENGINE=InnoDB
 DEFAULT CHARSET=utf8mb4
-COLLATE=utf8mb4_0900_ai_ci;
+COLLATE=utf8mb4_unicode_ci;
 
 
 -- 投诉表
@@ -277,7 +277,7 @@ CREATE TABLE yadadb.t_b_complaint (
 )
 ENGINE=InnoDB
 DEFAULT CHARSET=utf8mb4
-COLLATE=utf8mb4_0900_ai_ci;
+COLLATE=utf8mb4_unicode_ci;
 
 -- 消费者表
 CREATE TABLE yadadb.t_b_consumer (
@@ -292,7 +292,7 @@ CREATE TABLE yadadb.t_b_consumer (
 )
 ENGINE=InnoDB
 DEFAULT CHARSET=utf8mb4
-COLLATE=utf8mb4_0900_ai_ci;
+COLLATE=utf8mb4_unicode_ci;
 
 -- 消费者学生表
 CREATE TABLE yadadb.t_b_consumer_student (
@@ -305,4 +305,4 @@ CREATE TABLE yadadb.t_b_consumer_student (
 )
 ENGINE=InnoDB
 DEFAULT CHARSET=utf8mb4
-COLLATE=utf8mb4_0900_ai_ci;
+COLLATE=utf8mb4_unicode_ci;
