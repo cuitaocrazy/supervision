@@ -39,8 +39,8 @@ app.post('/preorder', jsonParser, async (req, res) => {
   const subscribeID = getSubscribeIDByUSVOrderNo(newBody.USVOrderNo)
   cc.listenPreOrderResult(subscribeID, "Edu1MSP", emitter)
   await cc.preOrder(newBody)
-  emitter.once(subscribeID + '_preorder', function (subscribe:SubscribeWithSign) {
-    res.send({"SubscribeID":subscribeID,PayUrl:subscribe.PayUrl});
+  emitter.once(subscribeID + '_preorder', function (subscribe: SubscribeWithSign) {
+    res.send({ "SubscribeID": subscribeID, PayUrl: subscribe.PayUrl });
     // socket.emit(USVOrderNo + '_create', 'Success')
   });
   // res.send(result.data);
@@ -84,7 +84,7 @@ export const getSubscribeIDByUSVOrderNo = (USVOrderNo) => {
   return "Edu1MSP-BankMSP-EdbMSP-" + USVOrderNo
 }
 
-app.put('/cancel', jsonParser, async (req, res) => { 
+app.put('/cancel', jsonParser, async (req, res) => {
   const result = await cc.cleanSubscribe("EdbMSP", req.body.SubscribeID)
   if (result === "FAIL") {
     res.send(500)
@@ -110,7 +110,7 @@ io.on('connection', function (socket) { // socket相关
       console.log('do pay emit')
       socket.emit(subscribeID + '_pay', 'Success')
     });
-    
+
   })
 });
 
@@ -122,3 +122,17 @@ const yuanToFen = (tranAmtYuan: string | number) => {
     return parseFloat(tranAmtYuan) * 100
   }
 }
+
+import datasource from './src/mysql';
+import { EduOrg } from './src/entity/EduOrg';
+// const eduOrg = new EduOrg()
+// eduOrg.eduId = "2"
+// eduOrg.eduName = "myname2"
+datasource.initialize()
+  .then(async ds => {
+    // await ds.manager.save(eduOrg)
+    console.log('-----------------------eeee')
+    const r = await ds.getRepository(EduOrg).find()
+    console.log(r)
+    console.log('--------------------------------')
+  })
