@@ -151,35 +151,6 @@ const TransferQuery: React.FC = () => {
         </div>
       </li>
     </ul>
-    // <IonItem key={key} >
-    //   <IonLabel>
-    //     <p className='text-center'>{transfer.eduName}</p>
-    //   </IonLabel>
-    //   <IonLabel>
-    //     <p className='text-center'>{transfer.lessonName}</p>
-    //   </IonLabel>
-    //   <IonLabel>
-    //     <p className='text-center'>{transfer.consumerName}</p>
-    //   </IonLabel>
-    //   <IonLabel>
-    //     <p className='text-center'>{transfer.attendanceDate}</p>
-    //   </IonLabel>
-    //   <IonLabel>
-    //     <p className='text-center'>{transfer.attendanceTime}</p>
-    //   </IonLabel>
-    //   <IonLabel>
-    //     <p className='text-center'>{Number(transfer.transferAmt) / 100}</p>
-    //   </IonLabel>
-    //   <IonLabel>
-    //     <p className='text-center'>{transfer.transferResult}</p>
-    //   </IonLabel>
-
-    //   <IonLabel>
-    //     <div className='flex gap-2'>
-    //       <button className='p-1 text-white bg-blue-500 rounded-md' onClick={onDetail(transfer)}>查看详情</button>
-    //     </div>
-    //   </IonLabel>
-    // </IonItem>
   );
 
   console.log('state')
@@ -241,40 +212,6 @@ const TransferQuery: React.FC = () => {
             ))}
           </tbody>
         </table>
-        {/* <IonList>
-          <IonItem key='title'>
-            <IonLabel>
-              <div className='font-black text-center'>教育机构名称</div>
-            </IonLabel>
-            <IonLabel>
-              <div className='font-black text-center'>课程名称</div>
-            </IonLabel>
-            <IonLabel>
-              <div className='font-black text-center'>客户姓名</div>
-            </IonLabel>
-            <IonLabel>
-              <div className='font-black text-center'>考勤日期</div>
-            </IonLabel>
-            <IonLabel>
-              <div className='font-black text-center'>考勤时间</div>
-            </IonLabel>
-            <IonLabel>
-              <div className='font-black text-center'>划拨金额</div>
-            </IonLabel>
-            <IonLabel>
-              <div className='font-black text-center'>划拨结果</div>
-            </IonLabel>
-            <IonLabel>
-              <div className='font-black text-center'>操作</div>
-            </IonLabel>
-          </IonItem>
-          <div className=''>
-            {state.transfer.transferList.map((list: Transfer, i: any) => (
-              <ListEntry transfer={list}
-                key={i} />
-            ))}
-          </div>
-        </IonList> */}
       </div>
     </div>
   </IonPage>
