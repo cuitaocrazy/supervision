@@ -125,3 +125,32 @@ app.post('/edu/login', jsonParser, async (req, res) => {
   const r = await eduLogin(req.body)
   res.send(r)
 })
+import eduLessonService from './src/edu/LessonService'
+app.get('/edu/lesson/findAll', async (req, res) => {
+  console.log('教育机构: 查询所有课程')
+  const r = await eduLessonService.findAll()
+  res.send(r)
+})
+app.get('/edu/lesson/find', async (req, res) => {
+  console.log(`教育机构: 搜索课程: 条件[${req.query}]`)
+  const r = await eduLessonService.find(req.query)
+  res.send(r)
+})
+import eduAttendanceService from './src/edu/AttendanceService';
+app.post('/edu/attendance/apply', jsonParser, async (req, res) => {
+  console.log(`教育机构: 发起签到`)
+  const r = await eduAttendanceService.apply(req.body)
+  res.send(r)
+})
+import eduTransferService from './src/edu/TransferService';
+app.get('/edu/attendance/find', async (req, res) => {
+  console.log(`教育机构: 查询划拨: 条件[${req.query}]`)
+  const r = await eduTransferService.find(req.query)
+  res.send(r)
+})
+import eduContractService from './src/edu/ContractService';
+app.get('/edu/contract/find', async (req, res) => {
+  console.log(`教育机构: 合约查询: 条件[${req.query}]`)
+  const r = await eduContractService.find(req.query)
+  res.send(r)
+})

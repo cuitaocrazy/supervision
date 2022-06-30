@@ -47,7 +47,7 @@ const Menu = () => {
   }, []);
 
   return (
-    <IonMenu hidden={false} side="start" menuId="first" contentId="main" onIonDidOpen={handleOpen} onIonDidClose={handleClose}>
+    <IonMenu hidden={false} side="start" menuId="first" contentId="main" onIonDidOpen={handleOpen} onIonDidClose={handleClose} className="w-1/6 ">
       <IonHeader >
         <IonToolbar >
           <IonTitle className="py-4 text-center text-white bg-primary-500">教育机构管理系统</IonTitle>
@@ -55,7 +55,7 @@ const Menu = () => {
       </IonHeader>
       <IonContent >
         <div className='fixed flex flex-col items-center justify-start w-full h-screen px-6 text-white bg-primary-600'>
-          <a className='flex items-center justify-start w-full px-3 py-2 mt-2 space-x-6 rounded-lg hover:text-white focus:bg-primary-700 focus:text-white hover:bg-primary-700 focus:rounded-lg md:w-52'
+          <a className='flex items-center justify-start w-full px-3 py-2 mt-2 space-x-6 rounded-lg hover:text-white focus:bg-primary-500 focus:text-white hover:bg-primary-500 focus:rounded-lg md:w-52'
            onClick={
             () => {
               Router.push({pathname:'/tabs/lesson/query'})
@@ -68,7 +68,7 @@ const Menu = () => {
             </div>
             <span>课程列表</span>
           </a>
-          <a className='flex items-center justify-start w-full px-3 py-2 mt-2 space-x-6 rounded-lg hover:text-white focus:bg-primary-700 focus:text-white hover:bg-primary-700 focus:rounded-lg md:w-52'
+          <a className='flex items-center justify-start w-full px-3 py-2 mt-2 space-x-6 rounded-lg hover:text-white focus:bg-primary-500 focus:text-white hover:bg-primary-500 focus:rounded-lg md:w-52'
           onClick={
             () => {
               Router.push({pathname:'/tabs/attendance/launch'})
@@ -81,7 +81,7 @@ const Menu = () => {
             </div>
             <span>课程签到发起</span>
           </a>
-          <a className='flex items-center justify-start w-full px-3 py-2 mt-2 space-x-6 rounded-lg hover:text-white focus:bg-primary-700 focus:text-white hover:bg-primary-700 focus:rounded-lg md:w-52' 
+          <a className='flex items-center justify-start w-full px-3 py-2 mt-2 space-x-6 rounded-lg hover:text-white focus:bg-primary-500 focus:text-white hover:bg-primary-500 focus:rounded-lg md:w-52' 
           onClick={
             () => {
               Router.push({pathname:'/tabs/transfer/query'})
@@ -92,7 +92,7 @@ const Menu = () => {
             </svg>
             <span>课程划拨</span>
           </a>
-          <a className='flex items-center justify-start w-full px-3 py-2 mt-2 space-x-6 rounded-lg hover:text-white focus:bg-primary-700 focus:text-white hover:bg-primary-700 focus:rounded-lg md:w-52' 
+          <a className='flex items-center justify-start w-full px-3 py-2 mt-2 space-x-6 rounded-lg hover:text-white focus:bg-primary-500 focus:text-white hover:bg-primary-500 focus:rounded-lg md:w-52' 
           onClick={
             () => {
               Router.push({pathname:''})
