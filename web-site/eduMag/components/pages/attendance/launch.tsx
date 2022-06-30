@@ -152,27 +152,20 @@ const ContractNegoQuery: React.FC = () => {
         const { result, records } = json;
         if (result) refreshList(records);
       });
-    // refreshList(demoLessonList);
   }, []);
 
   const onQuery = () => {
-    // fetch(paramStr, {
-    //   method: 'GET',
-    //   headers: {
-    //     'Content-type': 'application/json;charset=UTF-8',
-    //   },
-    // }).then(res => res.json())
-    // .then((json) => {
-    // const {contractNegoList} = json
-
-    // refreshList(democontractNegoList.filter((contractNego:ContractNego)=>contractNego.contractId.indexOf(queryInfo.contractId)>-1))
-    // return
-    // })
-    refreshList(
-      demoLessonList.filter(
-        (lesson: Lesson) => lesson.lessonName.indexOf(queryInfo.lessonName) > -1
-      )
-    );
+    fetch(paramStr, {
+      method: "GET",
+      headers: {
+        "Content-type": "application/json;charset=UTF-8",
+      },
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        const { result, records } = json;
+        if (result) refreshList(records);
+      });
   };
 
   const ListEntry = ({
