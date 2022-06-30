@@ -726,11 +726,44 @@ const LessonQuery: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="flex items-center mb-4 justify-items-center">
-                  <div className="flex justify-items-center">
-                    <span className="flex justify-end p-1 mr-1 w-36">
-                      总价（元）:
-                    </span>
+                  <div className="flex items-center mb-4 justify-items-center">
+                    <div className="flex justify-items-center">
+                      <span className="flex justify-end p-1 mr-1 w-36">
+                        总价（元）:
+                      </span>
+                      <input
+                        className="px-2 py-1 text-gray-600 bg-gray-100 rounded-md w-80 justify-self-start focus:outline focus:border-0"
+                        name="eduId"
+                        type="text"
+                        value={Number(cancelLesson.lessonTotalPrice) / 100}
+                        spellCheck={false}
+                        readOnly
+                        required
+                      ></input>
+                    </div>
+                  </div>
+                  <div className="flex items-center mb-4 justify-items-center">
+                    <div className="flex justify-items-center">
+                      <span className="flex justify-end p-1 mr-1 w-36">
+                        下架原因:
+                      </span>
+                      <input
+                        className="px-2 py-1 text-gray-600 bg-gray-100 rounded-md h-60 w-80 justify-self-start focus:outline focus:border-0"
+                        name="eduId"
+                        type="text"
+                        value={cancelLesson.lessonUpdateReason}
+                        spellCheck={false}
+                        onChange={(e) =>
+                          setCancelLesson({
+                            ...cancelLesson,
+                            ...{ lessonUpdateReason: e.nativeEvent.target?.value },
+                          })
+                        }
+                        required
+                      ></input>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-4 mt-20 justify-items-center">
                     <input
                       className="px-2 py-1 text-gray-600 bg-gray-100 rounded-md w-80 justify-self-start focus:outline focus:border-0"
                       name="eduId"

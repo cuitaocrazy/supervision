@@ -179,11 +179,15 @@ const TransferQuery: React.FC = () => {
           <IonRow className='flex justify-between '>
             <IonCol className='flex ml-8'>
               <IonLabel className='flex items-center justify-center font-bold text-center text-gray-600 w-28'>课程名称</IonLabel>
-              <input type='text' className="flex w-56 h-12 font-bold text-center text-gray-600 bg-white border rounded-md focus:outline-none focus:glow-primary-600" onChange={e => setQueryInfo({ ...queryInfo, ...{ lessonName: e.target.value } })} />
+              <input type='text' className="flex w-56 h-12 font-bold text-center text-gray-600 bg-white border rounded-md focus:outline-none focus:glow-primary-600" 
+              onChange={e => setQueryInfo({ ...queryInfo, ...{ lessonName: e.target.value } })}
+              placeholder="请输入课程名称" />
             </IonCol>
             <IonCol className='flex ml-8'>
               <IonLabel className='flex items-center justify-center font-bold text-center text-gray-600 w-28'>客户姓名</IonLabel>
-              <input type='text' className="flex w-56 h-12 font-bold text-center text-gray-600 bg-white border rounded-md focus:outline-none focus:glow-primary-600" onChange={e => setQueryInfo({ ...queryInfo, ...{ eduName: e.target.value } })} />
+              <input type='text' className="flex w-56 h-12 font-bold text-center text-gray-600 bg-white border rounded-md focus:outline-none focus:glow-primary-600" 
+              onChange={e => setQueryInfo({ ...queryInfo, ...{ eduName: e.target.value } })} 
+              placeholder="请输入客户姓名" />
             </IonCol>
             <IonCol className='flex ml-8'>
               <button className='w-24 h-12 mr-6 text-white border-2 rounded-md shadow-md bg-primary-600 focus:bg-primary-700' onClick={() => onQuery()}>查询</button>
