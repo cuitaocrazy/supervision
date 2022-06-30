@@ -44,4 +44,6 @@ export class EduLesson {
     eduId: string
     @Column()
     teacherId: string
+    @Column()
+    lessonAccumulationQuantity: string
 }

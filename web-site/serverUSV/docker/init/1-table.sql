@@ -76,6 +76,7 @@ CREATE TABLE yadadb.t_b_edu_lesson (
 	lesson_update_reason varchar(64) NULL,
 	edu_id varchar(32) NULL,
 	teacher_id varchar(32) NULL,
+	lesson_accumulation_quantity int NULL,
 	CONSTRAINT t_b_edu_lesson_PK PRIMARY KEY (lesson_id),
 	KEY `t_b_edu_lesson_FK` (`edu_id`),
 	KEY `t_b_edu_lesson_FK_1` (`teacher_id`),
