@@ -754,10 +754,10 @@ const LessonQuery: React.FC = () => {
                         type="text"
                         value={cancelLesson.lessonUpdateReason}
                         spellCheck={false}
-                        onIonChange={(e) =>
+                        onChange={(e) =>
                           setCancelLesson({
                             ...cancelLesson,
-                            ...{ lessonUpdateReason: e.detail.value! },
+                            ...{ lessonUpdateReason: e.nativeEvent.target?.value },
                           })
                         }
                         required
