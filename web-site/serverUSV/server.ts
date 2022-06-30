@@ -125,3 +125,14 @@ app.post('/edu/login', jsonParser, async (req, res) => {
   const r = await eduLogin(req.body)
   res.send(r)
 })
+import lessonService from './src/edu/LessonService'
+app.get('/edu/lesson/findAll', async (req, res) => {
+  console.log('教育机构: 查询所有课程')
+  const r = await lessonService.findAll()
+  res.send(r)
+})
+app.get('/edu/lesson/find', async (req, res) => {
+  console.log(`教育机构: 搜索课程: 条件[${req.query}]`)
+  const r = await lessonService.find(req.query)
+  res.send(r)
+})
