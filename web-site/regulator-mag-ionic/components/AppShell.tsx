@@ -1,5 +1,5 @@
 
-import { IonApp, IonRouterOutlet, IonSplitPane } from '@ionic/react';
+import { IonApp, IonRouterOutlet, IonSplitPane,setupIonicReact } from '@ionic/react';
 import { StatusBar, Style } from '@capacitor/status-bar';
 
 import { IonReactRouter } from '@ionic/react-router';
@@ -12,7 +12,7 @@ import Tabs from './pages/Tabs';
 import Announcement from './pages/Announcement/query';
 import {AnnouncementDetail} from './pages/Announcement/detail';
 import {AnnouncementEdit} from './pages/Announcement/edit';
-import Black from './pages/black/query';
+import Black from './pages/Black/query';
 import Attendance from './pages/Attendance/query';
 import {AttendanceDetail} from './pages/Attendance/detail';
 
@@ -46,7 +46,8 @@ import ComplaintStatistic from './pages/statistics/complaint'
 
 
 
-
+// 装载ionic样式，ionic6 必须执行。
+setupIonicReact();
 window.matchMedia("(prefers-color-scheme: dark)").addListener(async (status) => {
   try {
     await StatusBar.setStyle({
