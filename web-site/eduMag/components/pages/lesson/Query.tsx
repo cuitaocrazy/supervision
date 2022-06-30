@@ -326,10 +326,9 @@ const LessonQuery: React.FC = () => {
 
   return (
     <IonPage>
-      <IonContent>
-        <div className="relative w-screen px-4 bg-gray-100">
-          <div className="flex pt-2 my-2 text-gray-800">
-            <div className="mr-2 text-gray-600">
+        <div className='relative w-full mx-6'>
+          <div className='flex pt-2 my-2 text-gray-800'>
+            <div className='mr-2 text-gray-600'>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="w-6 h-6"
@@ -350,9 +349,11 @@ const LessonQuery: React.FC = () => {
               <span className="pl-1 text-primary-500">课程列表</span>
             </div>
           </div>
-          <div className="px-4 py-2 mt-4 bg-white rounded-lg">
-            <div className="text-base font-bold">快速查询</div>
-            <hr className="mt-2 mb-4" />
+          <div className='w-11/12 px-4 py-2 mt-4 bg-white rounded-lg '>
+            <div className='text-base font-bold'>
+              快速查询
+            </div>
+            <hr className='mt-2 mb-4' />
             <div className="flex">
               {/* 课程新增 */}
               <IonModal
@@ -835,8 +836,8 @@ const LessonQuery: React.FC = () => {
               </IonRow>
             </div>
           </div>
-          <div className="absolute mt-10">
-            <table className="">
+          <div className="absolute w-full mt-10">
+            <table className="w-11/12">
               <thead>
                 <ul className="grid items-center h-10 grid-cols-8 gap-10 font-bold text-gray-700 bg-white rounded-lg justify-items-center">
                   <li className="flex items-center justify-center">课程名称</li>
@@ -861,7 +862,6 @@ const LessonQuery: React.FC = () => {
             </table>
           </div>
         </div>
-      </IonContent>
     </IonPage>
   );
 };
