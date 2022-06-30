@@ -8,3 +8,16 @@ INSERT INTO yadadb.t_b_edu_teacher (teacher_id,teacher_name,teacher_identity_no,
 INSERT INTO yadadb.t_b_edu_lesson (lesson_id,lesson_name,lesson_total_quantity,lesson_per_price,lesson_total_price,lesson_type,lesson_introduce,lesson_imgs,lesson_outline,lesson_start_date,lesson_start_time,lesson_end_date,lesson_end_time,lesson_status,lesson_create_date,lesson_create_time,lesson_update_date,lesson_update_time,lesson_update_reason,edu_id,teacher_id) VALUES
 	 ('lesson00001','数学课',100,120,12000,'math','课程介绍测试内容',NULL,'课程大纲测试内容','20220630','000000','20230630','235959','pending','20220630','000000',NULL,NULL,NULL,'edu0001','teacher00001'),
 	 ('lesson00002','英语入门兴趣班',10,50,500,'english','英语培训班介绍',NULL,'英语兴趣班大纲','20220630','000000','20220830','000000','on','20220630','000000',NULL,NULL,NULL,'edu0001','teacher00001');
+
+-- 插入消费者
+INSERT INTO yadadb.t_b_consumer (consumer_login_name,consumer_password,consumer_name,consumer_phone,consumer_identity_no,consumer_birthday,consumer_gender) VALUES
+	 ('testuser','testuser','测试用户','00000000000','11111111111111111','20100521','secret');
+INSERT INTO yadadb.t_b_consumer_student (consumer_login_name,consumer_stu_name,consumer_stu_birthday,consumer_stu_type,consumer_stu_gender) VALUES
+	 ('testuser','测试用户','20100521','self','secret');
+
+-- 监管机构插入
+INSERT INTO yadadb.t_b_supervisor_org (supervisor_org_id,supervisor_org_name,parent_supervisor_org_id) VALUES
+	 ('supervisor0001','测试用教育部',NULL);
+-- 监管用户插入
+INSERT INTO yadadb.t_b_supervisor_user (supervisor_login_name,supervisor_password,supervisor_username,supervisor_phone,supervisor_org_id) VALUES
+	 ('suptest','suptest','教育部测试用户',NULL,'supervisor0001');
