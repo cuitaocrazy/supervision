@@ -172,7 +172,7 @@ const ContractNegoQuery: React.FC = () => {
           <span className='pr-1 text-gray-600'>课程管理</span>/<span className='pl-1 text-primary-500'>课程签到发起</span>
         </div>
       </div>
-      <div className='w-11/12 px-4 py-2 mt-4 bg-white rounded-lg w-'>
+      <div className='w-11/12 px-4 py-2 mt-4 bg-white rounded-lg '>
         <div className='text-base font-bold'>
           快速查询
         </div>
