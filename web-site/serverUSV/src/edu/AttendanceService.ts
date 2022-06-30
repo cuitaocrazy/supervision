@@ -29,4 +29,4 @@ class AttendanceService {
 
 }
 
-export default new Attendance()
+export default new AttendanceService()
