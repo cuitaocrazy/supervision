@@ -325,7 +325,7 @@ const LessonQuery: React.FC = () => {
   }
 
   return (
-    <IonPage>
+    <IonPage className="bg-gray-100">
         <div className='relative w-full mx-6'>
           <div className='flex pt-2 my-2 text-gray-800'>
             <div className='mr-2 text-gray-600'>
