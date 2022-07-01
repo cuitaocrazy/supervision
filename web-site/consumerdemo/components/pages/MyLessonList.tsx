@@ -1,10 +1,11 @@
-import { FC,useContext,useCallback } from 'react';
+import { FC,useContext,useCallback,useState,useEffect } from 'react';
 import { IonPage, IonHeader, IonContent } from "@ionic/react"
 import Router, { useRouter } from 'next/router'
 import Navbar from 'components/Navbar'
 import { Contract } from '../../types/types'
 import { Link } from 'react-router-dom';
 import {AppContext,setContractDetail} from '../../appState';
+import {searchContractURL} from'../../const/const';
 
 interface OrderListProps {
   lessonImages?: string
@@ -50,18 +51,35 @@ const LessonListCard: FC<OrderListProps> = (props) => {
   </div>
 }
 
-let orderList: Contract[] = [
-  { lessonImages: "http://placekitten.com/g/200/300", lessonName: "小熊美术1", teacherName: "张雷", lessonTotalPrice: 999, lessonTotalQuantity: 58, eduAddress: "北京市海淀区大钟寺东路", eduContactPhone: "010-980990090", consumerStuName: "张大宝", lessonCompletedQuantity: 10, teacherIntroduce: "李雷，清华大学美术学院，学士、硕士，7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖,7年资深美育教研从业经验，20年媒体从业经历。清华大学美术学院，学士、硕士，7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖,7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖......", lessonIntroduce: "艺术教育是未来教育，是快乐教育" },
-  { lessonImages: "http://placekitten.com/g/200/300", lessonName: "小熊美术2", teacherName: "张雷", lessonTotalPrice: 999, lessonTotalQuantity: 58, eduAddress: "北京市海淀区大钟寺东路", eduContactPhone: "010-980990090", consumerStuName: "张大宝", lessonCompletedQuantity: 10, teacherIntroduce: "李雷，清华大学美术学院，学士、硕士，7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖,7年资深美育教研从业经验，20年媒体从业经历。清华大学美术学院，学士、硕士，7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖,7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖......", lessonIntroduce: "艺术教育是未来教育，是快乐教育" },
-  { lessonImages: "http://placekitten.com/g/200/300", lessonName: "小熊美术3", teacherName: "张雷", lessonTotalPrice: 999, lessonTotalQuantity: 58, eduAddress: "北京市海淀区大钟寺东路", eduContactPhone: "010-980990090", consumerStuName: "张大宝", lessonCompletedQuantity: 10, teacherIntroduce: "李雷，清华大学美术学院，学士、硕士，7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖,7年资深美育教研从业经验，20年媒体从业经历。清华大学美术学院，学士、硕士，7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖,7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖......", lessonIntroduce: "艺术教育是未来教育，是快乐教育" },
-  { lessonImages: "http://placekitten.com/g/200/300", lessonName: "小熊美术4", teacherName: "张雷", lessonTotalPrice: 999, lessonTotalQuantity: 58, eduAddress: "北京市海淀区大钟寺东路", eduContactPhone: "010-980990090", consumerStuName: "张大宝", lessonCompletedQuantity: 10, teacherIntroduce: "李雷，清华大学美术学院，学士、硕士，7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖,7年资深美育教研从业经验，20年媒体从业经历。清华大学美术学院，学士、硕士，7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖,7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖......", lessonIntroduce: "艺术教育是未来教育，是快乐教育" },
-  { lessonImages: "http://placekitten.com/g/200/300", lessonName: "小熊美术5", teacherName: "张雷", lessonTotalPrice: 999, lessonTotalQuantity: 58, eduAddress: "北京市海淀区大钟寺东路", eduContactPhone: "010-980990090", consumerStuName: "张大宝", lessonCompletedQuantity: 10, teacherIntroduce: "李雷，清华大学美术学院，学士、硕士，7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖,7年资深美育教研从业经验，20年媒体从业经历。清华大学美术学院，学士、硕士，7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖,7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖......", lessonIntroduce: "艺术教育是未来教育，是快乐教育" },
-  { lessonImages: "http://placekitten.com/g/200/300", lessonName: "小熊美术6", teacherName: "张雷", lessonTotalPrice: 999, lessonTotalQuantity: 58, eduAddress: "北京市海淀区大钟寺东路", eduContactPhone: "010-980990090", consumerStuName: "张大宝", lessonCompletedQuantity: 10, teacherIntroduce: "李雷，清华大学美术学院，学士、硕士，7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖,7年资深美育教研从业经验，20年媒体从业经历。清华大学美术学院，学士、硕士，7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖,7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖......", lessonIntroduce: "艺术教育是未来教育，是快乐教育" },
-  { lessonImages: "http://placekitten.com/g/200/300", lessonName: "小熊美术7", teacherName: "张雷", lessonTotalPrice: 999, lessonTotalQuantity: 58, eduAddress: "北京市海淀区大钟寺东路", eduContactPhone: "010-980990090", consumerStuName: "张大宝", lessonCompletedQuantity: 10, teacherIntroduce: "李雷，清华大学美术学院，学士、硕士，7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖,7年资深美育教研从业经验，20年媒体从业经历。清华大学美术学院，学士、硕士，7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖,7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖......", lessonIntroduce: "艺术教育是未来教育，是快乐教育" },
-]
+// let orderList: Contract[] = [
+//   { lessonImages: "http://placekitten.com/g/200/300", lessonName: "小熊美术1", teacherName: "张雷", lessonTotalPrice: 999, lessonTotalQuantity: 58, eduAddress: "北京市海淀区大钟寺东路", eduContactPhone: "010-980990090", consumerStuName: "张大宝", lessonCompletedQuantity: 10, teacherIntroduce: "李雷，清华大学美术学院，学士、硕士，7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖,7年资深美育教研从业经验，20年媒体从业经历。清华大学美术学院，学士、硕士，7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖,7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖......", lessonIntroduce: "艺术教育是未来教育，是快乐教育" },
+//   { lessonImages: "http://placekitten.com/g/200/300", lessonName: "小熊美术2", teacherName: "张雷", lessonTotalPrice: 999, lessonTotalQuantity: 58, eduAddress: "北京市海淀区大钟寺东路", eduContactPhone: "010-980990090", consumerStuName: "张大宝", lessonCompletedQuantity: 10, teacherIntroduce: "李雷，清华大学美术学院，学士、硕士，7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖,7年资深美育教研从业经验，20年媒体从业经历。清华大学美术学院，学士、硕士，7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖,7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖......", lessonIntroduce: "艺术教育是未来教育，是快乐教育" },
+//   { lessonImages: "http://placekitten.com/g/200/300", lessonName: "小熊美术3", teacherName: "张雷", lessonTotalPrice: 999, lessonTotalQuantity: 58, eduAddress: "北京市海淀区大钟寺东路", eduContactPhone: "010-980990090", consumerStuName: "张大宝", lessonCompletedQuantity: 10, teacherIntroduce: "李雷，清华大学美术学院，学士、硕士，7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖,7年资深美育教研从业经验，20年媒体从业经历。清华大学美术学院，学士、硕士，7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖,7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖......", lessonIntroduce: "艺术教育是未来教育，是快乐教育" },
+//   { lessonImages: "http://placekitten.com/g/200/300", lessonName: "小熊美术4", teacherName: "张雷", lessonTotalPrice: 999, lessonTotalQuantity: 58, eduAddress: "北京市海淀区大钟寺东路", eduContactPhone: "010-980990090", consumerStuName: "张大宝", lessonCompletedQuantity: 10, teacherIntroduce: "李雷，清华大学美术学院，学士、硕士，7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖,7年资深美育教研从业经验，20年媒体从业经历。清华大学美术学院，学士、硕士，7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖,7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖......", lessonIntroduce: "艺术教育是未来教育，是快乐教育" },
+//   { lessonImages: "http://placekitten.com/g/200/300", lessonName: "小熊美术5", teacherName: "张雷", lessonTotalPrice: 999, lessonTotalQuantity: 58, eduAddress: "北京市海淀区大钟寺东路", eduContactPhone: "010-980990090", consumerStuName: "张大宝", lessonCompletedQuantity: 10, teacherIntroduce: "李雷，清华大学美术学院，学士、硕士，7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖,7年资深美育教研从业经验，20年媒体从业经历。清华大学美术学院，学士、硕士，7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖,7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖......", lessonIntroduce: "艺术教育是未来教育，是快乐教育" },
+//   { lessonImages: "http://placekitten.com/g/200/300", lessonName: "小熊美术6", teacherName: "张雷", lessonTotalPrice: 999, lessonTotalQuantity: 58, eduAddress: "北京市海淀区大钟寺东路", eduContactPhone: "010-980990090", consumerStuName: "张大宝", lessonCompletedQuantity: 10, teacherIntroduce: "李雷，清华大学美术学院，学士、硕士，7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖,7年资深美育教研从业经验，20年媒体从业经历。清华大学美术学院，学士、硕士，7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖,7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖......", lessonIntroduce: "艺术教育是未来教育，是快乐教育" },
+//   { lessonImages: "http://placekitten.com/g/200/300", lessonName: "小熊美术7", teacherName: "张雷", lessonTotalPrice: 999, lessonTotalQuantity: 58, eduAddress: "北京市海淀区大钟寺东路", eduContactPhone: "010-980990090", consumerStuName: "张大宝", lessonCompletedQuantity: 10, teacherIntroduce: "李雷，清华大学美术学院，学士、硕士，7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖,7年资深美育教研从业经验，20年媒体从业经历。清华大学美术学院，学士、硕士，7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖,7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖......", lessonIntroduce: "艺术教育是未来教育，是快乐教育" },
+// ]
+
+
+
 // 课程列表页面
 const MyLessonList = () => {
-  const router = useRouter()
+  const [orderList,setOrderList] = useState([] as Contract[])
+useEffect(()=>{
+  fetch(searchContractURL, {
+    method: 'GET',
+    // body: JSON.stringify({
+      
+    // }),
+    headers: {
+      'Content-type': 'application/json;charset=UTF-8',
+    },
+  }).then(res => res.json())
+  .then((json) => {
+    setOrderList(json.result)
+  })
+})
   return <IonPage>
     <IonHeader>
       <Navbar title="课程列表" />

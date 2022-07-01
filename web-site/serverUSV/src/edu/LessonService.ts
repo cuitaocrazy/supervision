@@ -3,10 +3,10 @@ import mysql from '../mysql'
 class LessonService {
 
     async find(reqParams) {
-        const record = await mysql.getRepository(EduLesson).findOneBy(reqParams)
+        const record = await mysql.getRepository(EduLesson).findBy(reqParams)
         if (record == null)
             return { result: true, records: [] }
-        return { result: true, records: [record] }
+        return { result: true, records: [...record] }
     }
 
     async findAll() {

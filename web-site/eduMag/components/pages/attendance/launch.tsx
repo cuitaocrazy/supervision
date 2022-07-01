@@ -30,7 +30,7 @@ import { Lesson } from "../../../types/types";
 import { PickerColumn } from "@ionic/core";
 import moment from "moment";
 
-const queryURL = "http://localhost:3003/contractNego/query";
+const findURL = "http://localhost:3003/edu/lesson/find";
 
 const demoLessonList: Lesson[] = [
   {
@@ -108,16 +108,16 @@ const ContractNegoQuery: React.FC = () => {
   const [detail, setDetail] = useState({} as any);
   const getParamStr = (params: any, url: string) => {
     let result = "?";
-    Object.keys(params).forEach(
-      (key) => (result = result + key + "=" + params[key] + "&")
-    );
+    Object.keys(params).forEach((key) => {
+      if (params[key] !== "") result = result + key + "=" + params[key] + "&";
+    });
     return url + result;
   };
   const paramStr = getParamStr(
     {
       lessonName: queryInfo.lessonName,
     },
-    queryURL
+    findURL
   );
   const refreshList = useCallback(
     (lessons: Lesson[]) => {
@@ -141,19 +141,18 @@ const ContractNegoQuery: React.FC = () => {
   //   dispatch({...setAttendenceLanuchDetail(lesson),...{backPage:'/tabs/contractNego/query'}});
   // },[dispatch]);
   useEffect(() => {
-    // fetch(paramStr, {
-    //   method: 'GET',
-    //   headers: {
-    //     'Content-type': 'application/json;charset=UTF-8',
-    //   },
-    // }).then(res => res.json())
-    // .then((json) => {
-    // const {contractNegoList} = json
-
-    // refreshList(democontractNegoList.filter((contractNego:ContractNego)=>contractNego.contractId.indexOf(queryInfo.contractId)>-1))
-    // return
-    // })
-    refreshList(demoLessonList);
+    fetch(paramStr, {
+      method: "GET",
+      headers: {
+        "Content-type": "application/json;charset=UTF-8",
+      },
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        const { result, records } = json;
+        if (result) refreshList(records);
+      });
+    // refreshList(demoLessonList);
   }, []);
 
   const onQuery = () => {
@@ -195,7 +194,7 @@ const ContractNegoQuery: React.FC = () => {
         {lesson.lessonName}
       </li>
       <li className="flex items-center justify-center leading-10">
-        {lesson.lessonFinishTimes}
+        {lesson.lessonAccumulationQuantity}
       </li>
       <li className="flex items-center justify-center leading-10">
         <div className="flex gap-2 ">

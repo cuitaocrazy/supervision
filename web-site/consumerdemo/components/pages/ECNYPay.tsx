@@ -1,30 +1,32 @@
-import React,{useContext, useEffect,useState} from "react";
+import React,{ useEffect,useState,useContext} from "react";
 import { IonPage,IonHeader,IonContent } from "@ionic/react";
 import {Link} from 'react-router-dom'
 import Navbar from '../Navbar'
 import {Contract} from '../../types/types'
-import {AppContext,setLessonDetail} from '../../appState';
-import { Item } from "framer-motion/types/components/Reorder/Item";
-
+import {preOrderURL} from '../../const/const'
+import {AppContext} from '../../appState';
 // 数币支付页面
 const ECNYPay =()=>{
 
-  const { state, dispatch } = useContext(AppContext);
   const [contract, setContract ] = useState({} as Contract);
-  console.log(state)
-  const demoContract  = {
-      contractId:'123',
-      orderNo:'SASDSD',
-      lessonId:state.lessonDetail.lessonId,
-      lessonName:state.lessonDetail.lessonName,
-      eduName:state.lessonDetail.edu.eduName,
-      lessonTotalPrice:state.lessonDetail.lessonTotalPrice,
-      lessonTotalQuantity:state.lessonDetail.lessonTotalQuantity
-  }
-  useEffect(() => { 
-    //todo 与下单fetch
-    setContract(demoContract as Contract)
-  },[])
+  const { state } = useContext(AppContext);
+  useEffect(()=>{
+    fetch(preOrderURL, {
+      method: 'POST',
+      body: JSON.stringify({
+          lessonId:state.lessonDetail.lessonId,
+          username:state.loginUser?.username,
+          studentName:state.studentName,
+      }),
+      headers: {
+        'Content-type': 'application/json;charset=UTF-8',
+      },
+    }).then(res => res.json())
+    .then((json) => {
+      setContract(json.result)
+    })
+  })
+
 
   return <IonPage>
     <IonHeader>

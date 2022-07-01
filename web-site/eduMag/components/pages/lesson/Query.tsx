@@ -326,178 +326,174 @@ const LessonQuery: React.FC = () => {
 
   return (
     <IonPage className="bg-gray-100">
-        <div className='relative w-full mx-6'>
-          <div className='flex pt-2 my-2 text-gray-800'>
-            <div className='mr-2 text-gray-600'>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="w-6 h-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth="2"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
-                />
-              </svg>
-            </div>
-            <div>
-              <span className="pr-1 text-gray-600">课程管理</span>/
-              <span className="pl-1 text-primary-500">课程列表</span>
-            </div>
+      <div className="relative w-full mx-6">
+        <div className="flex pt-2 my-2 text-gray-800">
+          <div className="mr-2 text-gray-600">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="w-6 h-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
+              />
+            </svg>
           </div>
-          <div className='w-11/12 px-4 py-2 mt-4 bg-white rounded-lg '>
-            <div className='text-base font-bold'>
-              快速查询
-            </div>
-            <hr className='mt-2 mb-4' />
-            <div className="flex">
-              {/* 课程新增 */}
-              <IonModal
-                style={{ "--max-height": 10000, height: 1000 }}
-                isOpen={isCreateModalOpen}
-                onDidDismiss={async () => {
-                  setCreateModalOpen(false);
-                }}
-                className="h-screen"
-              >
-                {/* <IonCard>
+          <div>
+            <span className="pr-1 text-gray-600">课程管理</span>/
+            <span className="pl-1 text-primary-500">课程列表</span>
+          </div>
+        </div>
+        <div className="w-11/12 px-4 py-2 mt-4 bg-white rounded-lg ">
+          <div className="text-base font-bold">快速查询</div>
+          <hr className="mt-2 mb-4" />
+          <div className="flex">
+            {/* 课程新增 */}
+            <IonModal
+              style={{ "--max-height": 10000, height: 1000 }}
+              isOpen={isCreateModalOpen}
+              onDidDismiss={async () => {
+                setCreateModalOpen(false);
+              }}
+              className="h-screen"
+            >
+              {/* <IonCard>
                 <IonCardContent > */}
-                <form
-                  onSubmit={onCreate}
-                  className="flex flex-col items-center rounded-lg justify-items-center"
-                >
-                  <legend className="mt-2 font-bold text-center">
-                    课程新增
-                  </legend>
-                  <hr className="mt-2 mb-2" />
-                  <div className="flex items-center mb-1 justify-items-center">
-                    <div className="flex leading-7 justify-items-center">
-                      <div className="flex justify-end p-1 w-36">
-                        教育机构名称:
-                      </div>
-                      <input
-                        className="w-64 p-1 text-gray-600 bg-gray-100 rounded-md justify-self-start focus:outline focus:border-0"
-                        name="eduId"
-                        type="text"
-                        value={state.loginUser.orgName}
-                        spellCheck={false}
-                        readOnly
-                      ></input>
+              <form
+                onSubmit={onCreate}
+                className="flex flex-col items-center rounded-lg justify-items-center"
+              >
+                <legend className="mt-2 font-bold text-center">课程新增</legend>
+                <hr className="mt-2 mb-2" />
+                <div className="flex items-center mb-1 justify-items-center">
+                  <div className="flex leading-7 justify-items-center">
+                    <div className="flex justify-end p-1 w-36">
+                      教育机构名称:
                     </div>
+                    <input
+                      className="w-64 p-1 text-gray-600 bg-gray-100 rounded-md justify-self-start focus:outline focus:border-0"
+                      name="eduId"
+                      type="text"
+                      value={state.loginUser.orgName}
+                      spellCheck={false}
+                      readOnly
+                    ></input>
                   </div>
+                </div>
 
-                  <div className="flex items-center mb-1 justify-items-center">
-                    <div className="flex justify-items-center">
-                      <span className="flex justify-end p-1 mr-1 w-36">
-                        课程名称:
-                      </span>
-                      <input
-                        className="w-64 p-1 text-gray-600 bg-gray-100 rounded-md justify-self-start focus:outline focus:border-0"
-                        name="lessonName"
-                        type="text"
-                        value={createLesson.lessonName}
-                        spellCheck={false}
-                        onChange={(e) =>
-                          setCreateLesson({
-                            ...createLesson,
-                            ...{ lessonName: e.nativeEvent.target?.value },
-                          })
-                        }
-                        required
-                      ></input>
-                    </div>
+                <div className="flex items-center mb-1 justify-items-center">
+                  <div className="flex justify-items-center">
+                    <span className="flex justify-end p-1 mr-1 w-36">
+                      课程名称:
+                    </span>
+                    <input
+                      className="w-64 p-1 text-gray-600 bg-gray-100 rounded-md justify-self-start focus:outline focus:border-0"
+                      name="lessonName"
+                      type="text"
+                      value={createLesson.lessonName}
+                      spellCheck={false}
+                      onChange={(e) =>
+                        setCreateLesson({
+                          ...createLesson,
+                          ...{ lessonName: e.nativeEvent.target?.value },
+                        })
+                      }
+                      required
+                    ></input>
                   </div>
-                  <div className="flex items-center mb-1 justify-items-center">
-                    <div className="flex justify-items-center">
-                      <span className="flex justify-end p-1 mr-1 w-36">
-                        总课时:
-                      </span>
-                      <input
-                        className="w-64 p-1 text-gray-600 bg-gray-100 rounded-md justify-self-start focus:outline focus:border-0"
-                        name="lessonTotalTimes"
-                        type="number"
-                        value={createLesson.lessonTotalTimes}
-                        spellCheck={false}
-                        onChange={(e) =>
-                          setCreateLesson({
-                            ...createLesson,
-                            ...{
-                              lessonTotalTimes: e.nativeEvent.target?.value,
-                            },
-                          })
-                        }
-                        required
-                      ></input>
-                    </div>
+                </div>
+                <div className="flex items-center mb-1 justify-items-center">
+                  <div className="flex justify-items-center">
+                    <span className="flex justify-end p-1 mr-1 w-36">
+                      总课时:
+                    </span>
+                    <input
+                      className="w-64 p-1 text-gray-600 bg-gray-100 rounded-md justify-self-start focus:outline focus:border-0"
+                      name="lessonTotalTimes"
+                      type="number"
+                      value={createLesson.lessonTotalTimes}
+                      spellCheck={false}
+                      onChange={(e) =>
+                        setCreateLesson({
+                          ...createLesson,
+                          ...{
+                            lessonTotalTimes: e.nativeEvent.target?.value,
+                          },
+                        })
+                      }
+                      required
+                    ></input>
                   </div>
-                  <div className="flex items-center mb-1 justify-items-center">
-                    <div className="flex justify-items-center">
-                      <span className="flex justify-end p-1 mr-1 w-36">
-                        总价格(元):
-                      </span>
-                      <input
-                        className="w-64 p-1 text-gray-600 bg-gray-100 rounded-md justify-self-start focus:outline focus:border-0"
-                        name="lessonTotalPrice"
-                        type="number"
-                        value={createLesson.lessonTotalPrice}
-                        spellCheck={false}
-                        onChange={(e) =>
-                          setCreateLesson({
-                            ...createLesson,
-                            ...{
-                              lessonTotalPrice: e.nativeEvent.target?.value,
-                            },
-                          })
-                        }
-                        required
-                      ></input>
-                    </div>
+                </div>
+                <div className="flex items-center mb-1 justify-items-center">
+                  <div className="flex justify-items-center">
+                    <span className="flex justify-end p-1 mr-1 w-36">
+                      总价格(元):
+                    </span>
+                    <input
+                      className="w-64 p-1 text-gray-600 bg-gray-100 rounded-md justify-self-start focus:outline focus:border-0"
+                      name="lessonTotalPrice"
+                      type="number"
+                      value={createLesson.lessonTotalPrice}
+                      spellCheck={false}
+                      onChange={(e) =>
+                        setCreateLesson({
+                          ...createLesson,
+                          ...{
+                            lessonTotalPrice: e.nativeEvent.target?.value,
+                          },
+                        })
+                      }
+                      required
+                    ></input>
                   </div>
-                  <div className="flex items-center mb-1 justify-items-center">
-                    <div className="flex justify-items-center">
-                      <span className="flex justify-end p-1 mr-1 w-36">
-                        课程单价:
-                      </span>
-                      <input
-                        className="w-64 p-1 text-gray-600 bg-gray-100 rounded-md justify-self-start focus:outline focus:border-0"
-                        name="lessonPerPrice"
-                        type="number"
-                        value={createLesson.lessonPerPrice}
-                        spellCheck={false}
-                        onChange={(e) =>
-                          setCreateLesson({
-                            ...createLesson,
-                            ...{ lessonPerPrice: e.nativeEvent.target?.value },
-                          })
-                        }
-                        required
-                      ></input>
-                    </div>
+                </div>
+                <div className="flex items-center mb-1 justify-items-center">
+                  <div className="flex justify-items-center">
+                    <span className="flex justify-end p-1 mr-1 w-36">
+                      课程单价:
+                    </span>
+                    <input
+                      className="w-64 p-1 text-gray-600 bg-gray-100 rounded-md justify-self-start focus:outline focus:border-0"
+                      name="lessonPerPrice"
+                      type="number"
+                      value={createLesson.lessonPerPrice}
+                      spellCheck={false}
+                      onChange={(e) =>
+                        setCreateLesson({
+                          ...createLesson,
+                          ...{ lessonPerPrice: e.nativeEvent.target?.value },
+                        })
+                      }
+                      required
+                    ></input>
                   </div>
-                  <div className="flex items-center mb-1 justify-items-center">
-                    <div className="flex justify-items-center">
-                      <span className="flex justify-end p-1 mr-1 w-36">
-                        课程类型:
-                      </span>
-                      <input
-                        className="w-64 p-1 text-gray-600 bg-gray-100 rounded-md justify-self-start focus:outline focus:border-0"
-                        name="teacherId"
-                        type="text"
-                        value={createLesson.teacherId}
-                        spellCheck={false}
-                        onChange={(e) =>
-                          setCreateLesson({
-                            ...createLesson,
-                            ...{ teacherId: e.nativeEvent.target?.value },
-                          })
-                        }
-                        required
-                      ></input>
-                      {/* <IonPicker
+                </div>
+                <div className="flex items-center mb-1 justify-items-center">
+                  <div className="flex justify-items-center">
+                    <span className="flex justify-end p-1 mr-1 w-36">
+                      课程类型:
+                    </span>
+                    <input
+                      className="w-64 p-1 text-gray-600 bg-gray-100 rounded-md justify-self-start focus:outline focus:border-0"
+                      name="teacherId"
+                      type="text"
+                      value={createLesson.teacherId}
+                      spellCheck={false}
+                      onChange={(e) =>
+                        setCreateLesson({
+                          ...createLesson,
+                          ...{ teacherId: e.nativeEvent.target?.value },
+                        })
+                      }
+                      required
+                    ></input>
+                    {/* <IonPicker
                       isOpen={isPickOpen}
                       columns={[lessonTypePickerColumn]}
                       buttons={[
@@ -517,116 +513,116 @@ const LessonQuery: React.FC = () => {
                         }
                       ]}
                     ></IonPicker> */}
-                    </div>
                   </div>
-                  <div className="flex items-center mb-1 justify-items-center">
-                    <div className="flex justify-items-center">
-                      <span className="flex justify-end p-1 mr-1 w-36">
-                        课程开始日期:
-                      </span>
-                      <input
-                        className="w-64"
-                        type="date"
-                        defaultValue={moment().format("YYYY-MM-DD")}
-                        onChange={(e) =>
-                          setCreateLesson({
-                            ...createLesson,
-                            lessonStartDate: e.target.value,
-                          })
-                        }
-                      ></input>
-                    </div>
-                  </div>
-                  <div className="flex items-center mb-1 justify-items-center">
-                    <div className="flex justify-items-center">
-                      <span className="flex justify-end p-1 mr-1 w-36">
-                        课程结束日期:
-                      </span>
-                      <input
-                        className="w-64"
-                        type="date"
-                        defaultValue={moment().format("YYYY-MM-DD")}
-                        onChange={(e) =>
-                          setCreateLesson({
-                            ...createLesson,
-                            lessonEndDate: e.target.value,
-                          })
-                        }
-                      ></input>
-                    </div>
-                  </div>
-                  <div className="flex items-center mb-1 justify-items-center">
-                    <div className="flex justify-items-center">
-                      <span className="flex justify-end p-1 mr-1 w-36">
-                        课程描述:
-                      </span>
-                      <input
-                        className="w-64 p-1 text-gray-600 bg-gray-100 rounded-md justify-self-start focus:outline focus:border-0"
-                        name="lessonIntroduce"
-                        type="text"
-                        value={createLesson.lessonIntroduce}
-                        spellCheck={false}
-                        onChange={(e) =>
-                          setCreateLesson({
-                            ...createLesson,
-                            ...{ lessonIntroduce: e.nativeEvent.target?.value },
-                          })
-                        }
-                        required
-                      ></input>
-                    </div>
-                  </div>
-                  <div className="flex items-center mb-1 justify-items-center">
-                    <div className="flex justify-items-center">
-                      <span className="flex justify-end p-1 mr-1 w-36">
-                        教师:
-                      </span>
-                      <input
-                        className="w-64 p-1 text-gray-600 bg-gray-100 rounded-md justify-self-start focus:outline focus:border-0"
-                        name="teacherId"
-                        type="text"
-                        value={createLesson.teacherId}
-                        spellCheck={false}
-                        onChange={(e) =>
-                          setCreateLesson({
-                            ...createLesson,
-                            ...{ teacherId: e.nativeEvent.target?.value },
-                          })
-                        }
-                        required
-                      ></input>
-                    </div>
-                  </div>
-                  <div className="flex items-center mb-1 justify-items-center">
-                    <div className="flex justify-items-center">
-                      <span className="flex justify-end p-1 mr-1 w-36">
-                        课程大纲:
-                      </span>
-                      <RichText
-                        ref={editor}
-                        editorState={editorState}
-                        onChange={(editorState: any) => {
-                          console.log(editorState);
-                          setEditorState(editorState);
-                        }}
-                        className=""
-                      />
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-4 justify-items-center">
+                </div>
+                <div className="flex items-center mb-1 justify-items-center">
+                  <div className="flex justify-items-center">
+                    <span className="flex justify-end p-1 mr-1 w-36">
+                      课程开始日期:
+                    </span>
                     <input
-                      value="取消"
-                      type="button"
-                      className="px-6 py-2 border rounded-md "
-                    />
+                      className="w-64"
+                      type="date"
+                      defaultValue={moment().format("YYYY-MM-DD")}
+                      onChange={(e) =>
+                        setCreateLesson({
+                          ...createLesson,
+                          lessonStartDate: e.target.value,
+                        })
+                      }
+                    ></input>
+                  </div>
+                </div>
+                <div className="flex items-center mb-1 justify-items-center">
+                  <div className="flex justify-items-center">
+                    <span className="flex justify-end p-1 mr-1 w-36">
+                      课程结束日期:
+                    </span>
                     <input
-                      value="确定"
-                      type="button"
-                      className="px-4 py-2 text-white border rounded-md bg-primary-600"
+                      className="w-64"
+                      type="date"
+                      defaultValue={moment().format("YYYY-MM-DD")}
+                      onChange={(e) =>
+                        setCreateLesson({
+                          ...createLesson,
+                          lessonEndDate: e.target.value,
+                        })
+                      }
+                    ></input>
+                  </div>
+                </div>
+                <div className="flex items-center mb-1 justify-items-center">
+                  <div className="flex justify-items-center">
+                    <span className="flex justify-end p-1 mr-1 w-36">
+                      课程描述:
+                    </span>
+                    <input
+                      className="w-64 p-1 text-gray-600 bg-gray-100 rounded-md justify-self-start focus:outline focus:border-0"
+                      name="lessonIntroduce"
+                      type="text"
+                      value={createLesson.lessonIntroduce}
+                      spellCheck={false}
+                      onChange={(e) =>
+                        setCreateLesson({
+                          ...createLesson,
+                          ...{ lessonIntroduce: e.nativeEvent.target?.value },
+                        })
+                      }
+                      required
+                    ></input>
+                  </div>
+                </div>
+                <div className="flex items-center mb-1 justify-items-center">
+                  <div className="flex justify-items-center">
+                    <span className="flex justify-end p-1 mr-1 w-36">
+                      教师:
+                    </span>
+                    <input
+                      className="w-64 p-1 text-gray-600 bg-gray-100 rounded-md justify-self-start focus:outline focus:border-0"
+                      name="teacherId"
+                      type="text"
+                      value={createLesson.teacherId}
+                      spellCheck={false}
+                      onChange={(e) =>
+                        setCreateLesson({
+                          ...createLesson,
+                          ...{ teacherId: e.nativeEvent.target?.value },
+                        })
+                      }
+                      required
+                    ></input>
+                  </div>
+                </div>
+                <div className="flex items-center mb-1 justify-items-center">
+                  <div className="flex justify-items-center">
+                    <span className="flex justify-end p-1 mr-1 w-36">
+                      课程大纲:
+                    </span>
+                    <RichText
+                      ref={editor}
+                      editorState={editorState}
+                      onChange={(editorState: any) => {
+                        console.log(editorState);
+                        setEditorState(editorState);
+                      }}
+                      className=""
                     />
                   </div>
+                </div>
+                <div className="flex items-center gap-4 justify-items-center">
+                  <input
+                    value="取消"
+                    type="button"
+                    className="px-6 py-2 border rounded-md "
+                  />
+                  <input
+                    value="确定"
+                    type="button"
+                    className="px-4 py-2 text-white border rounded-md bg-primary-600"
+                  />
+                </div>
 
-                  {/* <IonLabel position="stacked" >教育机构名称:</IonLabel>
+                {/* <IonLabel position="stacked" >教育机构名称:</IonLabel>
                     <input className="readonlyInput" name="eduId" type="text" value={state.loginUser.orgName} spellCheck={false} readOnly required>
                     </input><br />
 
@@ -690,94 +686,94 @@ const LessonQuery: React.FC = () => {
                         <button className='cancelButton' onClick={() => setCreateModalOpen(false)}>取消</button>
                       </span>
                     </div> */}
-                </form>
+              </form>
 
-                {/* </IonCardContent>
+              {/* </IonCardContent>
 
               </IonCard> */}
 
-                {/* 课程下架 */}
-              </IonModal>
-              <IonModal
-                isOpen={isCancelModalOpen}
-                onDidDismiss={async () => {
-                  setIsCancelModalOpen(false);
-                }}
+              {/* 课程下架 */}
+            </IonModal>
+            <IonModal
+              isOpen={isCancelModalOpen}
+              onDidDismiss={async () => {
+                setIsCancelModalOpen(false);
+              }}
+            >
+              <form
+                onSubmit={onCreate}
+                className="flex flex-col items-center rounded-lg justify-items-center"
               >
-                <form
-                  onSubmit={onCreate}
-                  className="flex flex-col items-center rounded-lg justify-items-center"
-                >
-                  <legend className="mt-2 font-bold text-center">
-                    课程下架
-                  </legend>
-                  <hr className="mt-2 mb-2" />
-                  <div className="flex items-center mb-4 justify-items-center">
-                    <div className="flex leading-7 justify-items-center">
-                      <div className="flex justify-end p-1 w-36">课程名称:</div>
-                      <input
-                        className="px-2 py-1 text-gray-600 bg-gray-100 rounded-md w-80 justify-self-start focus:outline focus:border-0"
-                        name="eduId"
-                        type="text"
-                        value={cancelLesson.edu ? cancelLesson.edu.eduName : ""}
-                        spellCheck={false}
-                        readOnly
-                        required
-                      ></input>
-                    </div>
+                <legend className="mt-2 font-bold text-center">课程下架</legend>
+                <hr className="mt-2 mb-2" />
+                <div className="flex items-center mb-4 justify-items-center">
+                  <div className="flex leading-7 justify-items-center">
+                    <div className="flex justify-end p-1 w-36">课程名称:</div>
+                    <input
+                      className="px-2 py-1 text-gray-600 bg-gray-100 rounded-md w-80 justify-self-start focus:outline focus:border-0"
+                      name="eduId"
+                      type="text"
+                      value={cancelLesson.edu ? cancelLesson.edu.eduName : ""}
+                      spellCheck={false}
+                      readOnly
+                      required
+                    ></input>
                   </div>
+                </div>
 
-                  <div className="flex items-center mb-4 justify-items-center">
-                    <div className="flex justify-items-center">
-                      <span className="flex justify-end p-1 mr-1 w-36">
-                        总价（元）:
-                      </span>
-                      <input
-                        className="px-2 py-1 text-gray-600 bg-gray-100 rounded-md w-80 justify-self-start focus:outline focus:border-0"
-                        name="eduId"
-                        type="text"
-                        value={Number(cancelLesson.lessonTotalPrice) / 100}
-                        spellCheck={false}
-                        readOnly
-                        required
-                      ></input>
-                    </div>
-                  </div>
-                  <div className="flex items-center mb-4 justify-items-center">
-                    <div className="flex justify-items-center">
-                      <span className="flex justify-end p-1 mr-1 w-36">
-                        下架原因:
-                      </span>
-                      <input
-                        className="px-2 py-1 text-gray-600 bg-gray-100 rounded-md h-60 w-80 justify-self-start focus:outline focus:border-0"
-                        name="eduId"
-                        type="text"
-                        value={cancelLesson.lessonUpdateReason}
-                        spellCheck={false}
-                        onChange={(e) =>
-                          setCancelLesson({
-                            ...cancelLesson,
-                            ...{ lessonUpdateReason: e.nativeEvent.target?.value },
-                          })
-                        }
-                        required
-                      ></input>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-4 mt-20 justify-items-center">
+                <div className="flex items-center mb-4 justify-items-center">
+                  <div className="flex justify-items-center">
+                    <span className="flex justify-end p-1 mr-1 w-36">
+                      总价（元）:
+                    </span>
                     <input
-                      value="取消"
-                      type="button"
-                      className="px-6 py-2 border rounded-md "
-                    />
-                    <input
-                      value="下架"
-                      type="button"
-                      className="px-6 py-2 text-white border rounded-md bg-primary-600"
-                    />
+                      className="px-2 py-1 text-gray-600 bg-gray-100 rounded-md w-80 justify-self-start focus:outline focus:border-0"
+                      name="eduId"
+                      type="text"
+                      value={Number(cancelLesson.lessonTotalPrice) / 100}
+                      spellCheck={false}
+                      readOnly
+                      required
+                    ></input>
                   </div>
-                </form>
-                {/* <IonCard>
+                </div>
+                <div className="flex items-center mb-4 justify-items-center">
+                  <div className="flex justify-items-center">
+                    <span className="flex justify-end p-1 mr-1 w-36">
+                      下架原因:
+                    </span>
+                    <input
+                      className="px-2 py-1 text-gray-600 bg-gray-100 rounded-md h-60 w-80 justify-self-start focus:outline focus:border-0"
+                      name="eduId"
+                      type="text"
+                      value={cancelLesson.lessonUpdateReason}
+                      spellCheck={false}
+                      onChange={(e) =>
+                        setCancelLesson({
+                          ...cancelLesson,
+                          ...{
+                            lessonUpdateReason: e.nativeEvent.target?.value,
+                          },
+                        })
+                      }
+                      required
+                    ></input>
+                  </div>
+                </div>
+                <div className="flex items-center gap-4 mt-20 justify-items-center">
+                  <input
+                    value="取消"
+                    type="button"
+                    className="px-6 py-2 border rounded-md "
+                  />
+                  <input
+                    value="下架"
+                    type="button"
+                    className="px-6 py-2 text-white border rounded-md bg-primary-600"
+                  />
+                </div>
+              </form>
+              {/* <IonCard>
                 <IonCardHeader>
                   <IonCardTitle>课程下架</IonCardTitle>
                 </IonCardHeader>
@@ -797,71 +793,69 @@ const LessonQuery: React.FC = () => {
                   </form>
                 </IonCardContent>
               </IonCard> */}
-              </IonModal>
-              <IonRow className="flex items-center w-full mx-4 text-center bg-white rounded-md justify-items-center">
-                <IonCol className="flex ml-8 text-gray-800">
-                  <div className="flex items-center justify-center font-bold text-center text-gray-600 w-28">
-                    课程名称：
-                  </div>
-                  <input
-                    type="text"
-                    className="flex w-56 h-12 font-bold text-center text-gray-600 bg-white border rounded-md focus:outline-none focus:glow-primary-600"
-                    placeholder="请输入课程名称"
-                    onChange={(e) =>
-                      setQueryInfo({
-                        ...queryInfo,
-                        ...{ lessonName: e.target.value },
-                      })
-                    }
-                  />
-                </IonCol>
-                <IonCol className="flex ml-8">
-                  <button
-                    className="w-24 h-12 mr-6 text-white border-2 rounded-md shadow-md bg-primary-600 focus:bg-primary-700"
-                    onClick={() => {
-                      onQuery();
-                    }}
-                  >
-                    查询
-                  </button>
-                  <button
-                    className="w-24 h-12 rounded-md shadow-md bg-gray-50 text-primary-600 focus:bg-gray-200"
-                    onClick={() => {
-                      setCreateModalOpen(true);
-                    }}
-                  >
-                    新增
-                  </button>
-                </IonCol>
-              </IonRow>
-            </div>
-          </div>
-          <div className="absolute w-full mt-10">
-            <table className="w-11/12">
-              <thead>
-                <ul className="grid items-center h-10 grid-cols-8 gap-10 font-bold text-gray-700 bg-white rounded-lg justify-items-center">
-                  <li className="flex items-center justify-center">课程名称</li>
-                  <li className="flex items-center justify-center">
-                    总课时（个）
-                  </li>
-                  <li className="flex items-center justify-center">
-                    总价格(元)
-                  </li>
-                  <li className="flex items-center justify-center">课程类型</li>
-                  <li className="flex items-center justify-center">开课日期</li>
-                  <li className="flex items-center justify-center">结束日期</li>
-                  <li className="flex items-center justify-center">课程状态</li>
-                  <li className="flex items-center justify-center">操作</li>
-                </ul>
-              </thead>
-              <tbody>
-                {state.lesson.lessonList.map((list: Lesson, i: any) => (
-                  <ListEntry lesson={list} key={i} />
-                ))}
-              </tbody>
-            </table>
+            </IonModal>
+            <IonRow className="flex items-center w-full mx-4 text-center bg-white rounded-md justify-items-center">
+              <IonCol className="flex ml-8 text-gray-800">
+                <div className="flex items-center justify-center font-bold text-center text-gray-600 w-28">
+                  课程名称：
+                </div>
+                <input
+                  type="text"
+                  className="flex w-56 h-12 font-bold text-center text-gray-600 bg-white border rounded-md focus:outline-none focus:glow-primary-600"
+                  placeholder="请输入课程名称"
+                  onChange={(e) =>
+                    setQueryInfo({
+                      ...queryInfo,
+                      ...{ lessonName: e.target.value },
+                    })
+                  }
+                />
+              </IonCol>
+              <IonCol className="flex ml-8">
+                <button
+                  className="w-24 h-12 mr-6 text-white border-2 rounded-md shadow-md bg-primary-600 focus:bg-primary-700"
+                  onClick={() => {
+                    onQuery();
+                  }}
+                >
+                  查询
+                </button>
+                <button
+                  className="w-24 h-12 rounded-md shadow-md bg-gray-50 text-primary-600 focus:bg-gray-200"
+                  onClick={() => {
+                    setCreateModalOpen(true);
+                  }}
+                >
+                  新增
+                </button>
+              </IonCol>
+            </IonRow>
           </div>
         </div>
+        <div className="absolute w-full mt-10">
+          <table className="w-11/12">
+            <thead>
+              <ul className="grid items-center h-10 grid-cols-8 gap-10 font-bold text-gray-700 bg-white rounded-lg justify-items-center">
+                <li className="flex items-center justify-center">课程名称</li>
+                <li className="flex items-center justify-center">
+                  总课时（个）
+                </li>
+                <li className="flex items-center justify-center">总价格(元)</li>
+                <li className="flex items-center justify-center">课程类型</li>
+                <li className="flex items-center justify-center">开课日期</li>
+                <li className="flex items-center justify-center">结束日期</li>
+                <li className="flex items-center justify-center">课程状态</li>
+                <li className="flex items-center justify-center">操作</li>
+              </ul>
+            </thead>
+            <tbody>
+              {state.lesson.lessonList.map((list: Lesson, i: any) => (
+                <ListEntry lesson={list} key={i} />
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
     </IonPage>
   );
 };

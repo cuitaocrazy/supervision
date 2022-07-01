@@ -1,9 +1,10 @@
 import React,{useContext,useEffect,useState} from 'react';
-import { IonPage, IonHeader, IonContent } from '@ionic/react';
+import { IonPage, IonHeader, IonContent, IonToast } from '@ionic/react';
 import {Link, Redirect} from 'react-router-dom'
 import Navbar from '../Navbar'
 import {AppContext,setContractDetail} from '../../appState';
 import moment from 'moment'
+import {checkInURL,leaveURL} from '../../const/const'
 
 // 签到和请假页面
 const CheckInAndLeave = () => {
@@ -11,13 +12,28 @@ const CheckInAndLeave = () => {
   const [date,setDate] = useState(moment().format('YYYY年MM月DD日'))
   const [time,setTime] = useState(moment().format('HH:mm:ss'))
   const [back,setBack] = useState(null as unknown)
-  // 签到结果提示
-  const CheckInFun = () => {
-    setBack('/MyCheckInList')  
-  }
+  console.log(back)
   if(back){
     return <Redirect to={back as string}></Redirect>
   }
+  // 签到结果提示
+  const CheckInFun = () => {
+    fetch(checkInURL, {
+      method: 'POST',
+      body: JSON.stringify({
+         date:date,
+         time:time,
+         contractId:state.contractDetail.contractId
+      }),
+      headers: {
+        'Content-type': 'application/json;charset=UTF-8',
+      },
+    }).then(res => res.json())
+    .then((json) => {
+      setBack('/MyCheckInList')  
+    })
+  }
+
 
   setTimeout(()=>{
      setDate(moment().format('YYYY年MM月DD日'))
@@ -30,7 +46,21 @@ const CheckInAndLeave = () => {
   const LeaveFun = () => {
     const isLeave = confirm('你确定要请假吗？')
     if (isLeave === true) {
-      setBack('/MyCheckInList')  
+      fetch(leaveURL, {
+        method: 'POST',
+        body: JSON.stringify({
+           date:date,
+           time:time,
+           contractId:state.contractDetail.contractId
+        }),
+        headers: {
+          'Content-type': 'application/json;charset=UTF-8',
+        },
+      }).then(res => res.json())
+      .then((json) => {
+        setBack('/myLessonList')  
+      })
+      // setBack('/MyCheckInList')  
     } else if (isLeave === false) {
       alert("取消请假")
     }

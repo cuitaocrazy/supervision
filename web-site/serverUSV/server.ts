@@ -154,3 +154,119 @@ app.get('/edu/contract/find', async (req, res) => {
   const r = await eduContractService.find(req.query)
   res.send(r)
 })
+
+
+
+import { randomUUID } from 'crypto';
+import * as moment from 'moment';
+import {findOneLesson,findOneTeacher,findOneEdu,searchLesson} from './src/consumer/consumer'
+
+const fenToYuan = (tranAmtYuan: string | number) => {
+  if (typeof tranAmtYuan === 'number') {
+    return tranAmtYuan / 100
+  } else {
+    return parseFloat(tranAmtYuan) / 100
+  }
+}
+
+
+// import eduLogin from './src/edu/login'
+
+//todo
+const get3rdOrder = async ()=>{
+  return {
+    orderNo:'aaaaa'
+  }
+}
+//todo
+const getUserInfoByToken = async() =>{
+  return {
+    userId:'1',
+    username:'testUserName'
+  }
+}
+
+app.get('/consumer/lesson',jsonParser,async(req,res)=>{
+  // const lessonListDemo = [
+  //   { lessonImgs: "http://placekitten.com/g/200/300", lessonName: "小熊美术课程3-5岁", lessonTotalPrice: 88000, lessonTotalQuantity: 58, lessonIntroduce: "艺术教育是未来教育", edu: { eduAddress: '地址：廊坊市安次区和平路荣益广场3层206',eduName:'教育机构1', eduContactPhone: "0316-78909090", eduId: "edu-001", eduLoginName: "kl", supervisorOrgId: "sup-org-001" }, lessonId: "lesson-001", eduId: "edu-001", teacherId: "teacher-001",lessonOutline:"01. 太阳（圆型 暖色调）1",teacher:{ teacherName: "李梅1", teacherIntroduce: "李雷，清华大学美术学院，学士、硕士，7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖,7年资深美育教研从业经验，20年媒体从业经历。清华大学美术学院，学士、硕士，7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖,7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖......", teacherId: "teacher-001" },lessonStartDate:'20200101' },
+  //   { lessonImgs: "http://placekitten.com/g/200/300", lessonName: "小熊美术课程5-7岁", lessonTotalPrice: 88000, lessonTotalQuantity: 58, lessonIntroduce: "艺术教育是未来教育", edu: { eduAddress: '地址：廊坊市安次区和平路荣益广场3层206',eduName:'教育机构1', eduContactPhone: "0316-78909090", eduId: "edu-001", eduLoginName: "kl", supervisorOrgId: "sup-org-001" }, lessonId: "lesson-001", eduId: "edu-001", teacherId: "teacher-001" ,lessonOutline:"01. 太阳（圆型 暖色调）1",teacher:{ teacherName: "李梅2", teacherIntroduce: "李雷，清华大学美术学院，学士、硕士，7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖,7年资深美育教研从业经验，20年媒体从业经历。清华大学美术学院，学士、硕士，7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖,7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖......", teacherId: "teacher-001" } ,lessonStartDate:'20200101'},
+  //   { lessonImgs: "http://placekitten.com/g/200/300", lessonName: "小熊美术课程7-9岁", lessonTotalPrice: 88000, lessonTotalQuantity: 58, lessonIntroduce: "艺术教育是未来教育", edu: { eduAddress: '地址：廊坊市安次区和平路荣益广场3层206',eduName:'教育机构1', eduContactPhone: "0316-78909090", eduId: "edu-001", eduLoginName: "kl", supervisorOrgId: "sup-org-001" }, lessonId: "lesson-001", eduId: "edu-001", teacherId: "teacher-001" ,lessonOutline:"01. 太阳（圆型 暖色调）1" ,teacher:{ teacherName: "李梅3", teacherIntroduce: "李雷，清华大学美术学院，学士、硕士，7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖,7年资深美育教研从业经验，20年媒体从业经历。清华大学美术学院，学士、硕士，7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖,7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖......", teacherId: "teacher-001" },lessonStartDate:'20200101'},
+  //   { lessonImgs: "http://placekitten.com/g/200/300", lessonName: "小熊美术课程9-11岁", lessonTotalPrice: 88000, lessonTotalQuantity: 58, lessonIntroduce: "艺术教育是未来教育", edu: { eduAddress: '地址：廊坊市安次区和平路荣益广场3层206',eduName:'教育机构1', eduContactPhone: "0316-78909090", eduId: "edu-001", eduLoginName: "kl", supervisorOrgId: "sup-org-001" }, lessonId: "lesson-001", eduId: "edu-001", teacherId: "teacher-001",lessonOutline:"01. 太阳（圆型 暖色调）1" ,teacher:{ teacherName: "李梅4", teacherIntroduce: "李雷，清华大学美术学院，学士、硕士，7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖,7年资深美育教研从业经验，20年媒体从业经历。清华大学美术学院，学士、硕士，7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖,7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖......", teacherId: "teacher-001" },lessonStartDate:'20200101'},
+  //   { lessonImgs: "http://placekitten.com/g/200/300", lessonName: "小熊美术课程11-13岁", lessonTotalPrice: 88000, lessonTotalQuantity: 58, lessonIntroduce: "艺术教育是未来教育", edu: { eduAddress: '地址：廊坊市安次区和平路荣益广场3层206',eduName:'教育机构1', eduContactPhone: "0316-78909090", eduId: "edu-001", eduLoginName: "kl", supervisorOrgId: "sup-org-001" }, lessonId: "lesson-001", eduId: "edu-001", teacherId: "teacher-001" ,lessonOutline:"01. 太阳（圆型 暖色调）1" ,teacher:{ teacherName: "李梅5", teacherIntroduce: "李雷，清华大学美术学院，学士、硕士，7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖,7年资深美育教研从业经验，20年媒体从业经历。清华大学美术学院，学士、硕士，7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖,7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖......", teacherId: "teacher-001" },lessonStartDate:'20200101'},
+  //   { lessonImgs: "http://placekitten.com/g/200/300", lessonName: "小熊美术课程13-15岁", lessonTotalPrice: 88000, lessonTotalQuantity: 58, lessonIntroduce: "艺术教育是未来教育", edu: { eduAddress: '地址：廊坊市安次区和平路荣益广场3层206',eduName:'教育机构1', eduContactPhone: "0316-78909090", eduId: "edu-001", eduLoginName: "kl", supervisorOrgId: "sup-org-001" }, lessonId: "lesson-001", eduId: "edu-001", teacherId: "teacher-001" ,lessonOutline:"01. 太阳（圆型 暖色调）1" ,teacher:{ teacherName: "李梅6", teacherIntroduce: "李雷，清华大学美术学院，学士、硕士，7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖,7年资深美育教研从业经验，20年媒体从业经历。清华大学美术学院，学士、硕士，7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖,7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖......", teacherId: "teacher-001" },lessonStartDate:'20200101'},
+  // ]
+  const lessonList = await searchLesson({page:1,size:10,searchValue:''})
+  lessonList.map(lesson=>{lesson.lessonTotalPrice=fenToYuan(lesson.lessonTotalPrice)})
+  res.send({status:'success',result:lessonList})
+})
+
+app.post('/consumer/preOrder', jsonParser, async (req, res) => {
+
+  //todo 
+  const {userId,username} = await getUserInfoByToken();
+  const {lessonId,studentName} = req.body
+  const otherSystemInfo = await get3rdOrder();
+  //todo 根据lessonID获取Lesson
+  // const lesson : EduLesson=     { lessonType:'其他',lessonImgs: "http://placekitten.com/g/200/300", lessonName: "小熊美术课程5-7岁", lessonTotalPrice: 88000, lessonTotalQuantity: 58, lessonIntroduce: "艺术教育是未来教育", edu: { eduAddress: '地址：廊坊市安次区和平路荣益广场3层206',eduName:'教育机构1', eduContactPhone: "0316-78909090", eduId: "edu-001", eduLoginName: "kl", supervisorOrgId: "sup-org-001" }, lessonId: "lesson-001", eduId: "edu-001", teacherId: "teacher-001" ,lessonOutline:"01. 太阳（圆型 暖色调）1",teacher:{ teacherName: "李梅2", teacherIntroduce: "李雷，清华大学美术学院，学士、硕士，7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖,7年资深美育教研从业经验，20年媒体从业经历。清华大学美术学院，学士、硕士，7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖,7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖......", teacherId: "teacher-001" } ,lessonStartDate:'20200101'} 
+  try{
+    const lesson = await findOneLesson({lessonId:lessonId})
+    const edu = await findOneEdu({eduId:lesson.eduId})
+    const teacher =  await findOneTeacher({teacherId:lesson.teacherId})
+  //todo 合同状态
+    const newContract  = {
+    contractId:randomUUID(),
+    contractDate:moment().format('YYYYMMDD'),
+    contractTime:moment().format('HHmmss'),
+    contractStatus:'valid',
+    eduId:lesson.eduId,
+    eduName:edu.eduName,
+    lessonId:lessonId,
+    lessonName:lesson.lessonName,
+    lessonType:lesson.lessonType,
+    lessonIntroduce:lesson.lessonIntroduce,
+    lessonOutline:lesson.lessonOutline,
+    lessonStartDate:lesson.lessonStartDate,
+    lessonStartTime:lesson.lessonStartTime,
+    lessonEndDate:lesson.lessonEndDate,
+    lessonEndTime:lesson.lessonEndTime,
+    // lessonAttendanceType:lesson.lessonAttendanceType,
+    lessonTotalQuantity:lesson.lessonTotalQuantity,
+    lessonTotalPrice:lesson.lessonTotalPrice,
+    lessonPerPrice:lesson.lessonPerPrice,
+    teacherId:lesson.teacherId,
+    teacherName:teacher.teacherName,
+    consumerId:userId,
+    consumerName:username,
+    consumerStuName:studentName,
+    orderNo:otherSystemInfo.orderNo,
+  }
+  newContract.lessonTotalPrice=fenToYuan(newContract.lessonTotalPrice)
+  res.send({status:'success',result:newContract})
+  }catch(e){
+    res.send({status:'fail',result:'未知异常'})
+  }
+})
+
+app.get('/consumer/contractList',jsonParser,async(req,res)=>{
+  let orderList = [
+    { lessonImages: "http://placekitten.com/g/200/300", lessonName: "小熊美术1", teacherName: "张雷", lessonTotalPrice: 99900, lessonTotalQuantity: 58, eduAddress: "北京市海淀区大钟寺东路", eduContactPhone: "010-980990090", consumerStuName: "张大宝", lessonCompletedQuantity: 10, teacherIntroduce: "李雷，清华大学美术学院，学士、硕士，7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖,7年资深美育教研从业经验，20年媒体从业经历。清华大学美术学院，学士、硕士，7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖,7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖......", lessonIntroduce: "艺术教育是未来教育，是快乐教育" },
+    { lessonImages: "http://placekitten.com/g/200/300", lessonName: "小熊美术2", teacherName: "张雷", lessonTotalPrice: 99999, lessonTotalQuantity: 58, eduAddress: "北京市海淀区大钟寺东路", eduContactPhone: "010-980990090", consumerStuName: "张大宝", lessonCompletedQuantity: 10, teacherIntroduce: "李雷，清华大学美术学院，学士、硕士，7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖,7年资深美育教研从业经验，20年媒体从业经历。清华大学美术学院，学士、硕士，7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖,7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖......", lessonIntroduce: "艺术教育是未来教育，是快乐教育" },
+    { lessonImages: "http://placekitten.com/g/200/300", lessonName: "小熊美术3", teacherName: "张雷", lessonTotalPrice: 99900, lessonTotalQuantity: 58, eduAddress: "北京市海淀区大钟寺东路", eduContactPhone: "010-980990090", consumerStuName: "张大宝", lessonCompletedQuantity: 10, teacherIntroduce: "李雷，清华大学美术学院，学士、硕士，7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖,7年资深美育教研从业经验，20年媒体从业经历。清华大学美术学院，学士、硕士，7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖,7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖......", lessonIntroduce: "艺术教育是未来教育，是快乐教育" },
+    { lessonImages: "http://placekitten.com/g/200/300", lessonName: "小熊美术4", teacherName: "张雷", lessonTotalPrice: 99999, lessonTotalQuantity: 58, eduAddress: "北京市海淀区大钟寺东路", eduContactPhone: "010-980990090", consumerStuName: "张大宝", lessonCompletedQuantity: 10, teacherIntroduce: "李雷，清华大学美术学院，学士、硕士，7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖,7年资深美育教研从业经验，20年媒体从业经历。清华大学美术学院，学士、硕士，7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖,7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖......", lessonIntroduce: "艺术教育是未来教育，是快乐教育" },
+    { lessonImages: "http://placekitten.com/g/200/300", lessonName: "小熊美术5", teacherName: "张雷", lessonTotalPrice: 99999, lessonTotalQuantity: 58, eduAddress: "北京市海淀区大钟寺东路", eduContactPhone: "010-980990090", consumerStuName: "张大宝", lessonCompletedQuantity: 10, teacherIntroduce: "李雷，清华大学美术学院，学士、硕士，7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖,7年资深美育教研从业经验，20年媒体从业经历。清华大学美术学院，学士、硕士，7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖,7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖......", lessonIntroduce: "艺术教育是未来教育，是快乐教育" },
+    { lessonImages: "http://placekitten.com/g/200/300", lessonName: "小熊美术6", teacherName: "张雷", lessonTotalPrice: 99999, lessonTotalQuantity: 58, eduAddress: "北京市海淀区大钟寺东路", eduContactPhone: "010-980990090", consumerStuName: "张大宝", lessonCompletedQuantity: 10, teacherIntroduce: "李雷，清华大学美术学院，学士、硕士，7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖,7年资深美育教研从业经验，20年媒体从业经历。清华大学美术学院，学士、硕士，7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖,7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖......", lessonIntroduce: "艺术教育是未来教育，是快乐教育" },
+    { lessonImages: "http://placekitten.com/g/200/300", lessonName: "小熊美术7", teacherName: "张雷", lessonTotalPrice: 99999, lessonTotalQuantity: 58, eduAddress: "北京市海淀区大钟寺东路", eduContactPhone: "010-980990090", consumerStuName: "张大宝", lessonCompletedQuantity: 10, teacherIntroduce: "李雷，清华大学美术学院，学士、硕士，7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖,7年资深美育教研从业经验，20年媒体从业经历。清华大学美术学院，学士、硕士，7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖,7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖......", lessonIntroduce: "艺术教育是未来教育，是快乐教育" },
+  ]
+  orderList.map(contract=>{contract.lessonTotalPrice=fenToYuan(contract.lessonTotalPrice)})
+  res.send({status:'success',result:orderList})
+})
+
+
+app.post('/consumer/checkIn',jsonParser,async(req,res)=>{
+  
+  res.send({status:'success'})
+})
+app.post('/consumer/leave',jsonParser,async(req,res)=>{
+  
+  res.send({status:'success'})
+})
