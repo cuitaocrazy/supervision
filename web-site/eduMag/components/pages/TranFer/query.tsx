@@ -159,39 +159,39 @@ const TransferQuery: React.FC = () => {
     transfer: Transfer;
     key: any;
   }) => (
-    <ul
+    <tr
       key={key}
       className="grid items-center grid-cols-9 gap-2 text-gray-600 border justify-items-center even:bg-primary-100 odd:bg-white "
     >
-      <li className="flex items-center justify-center leading-10">
+      <td className="flex items-center justify-center leading-10">
         {transfer.eduName}
-      </li>
-      <li className="flex items-center justify-center leading-10">
+      </td>
+      <td className="flex items-center justify-center leading-10">
         {transfer.lessonName}
-      </li>
-      <li className="flex items-center justify-center leading-10">
+      </td>
+      <td className="flex items-center justify-center leading-10">
         {transfer.consumerName}
-      </li>
-      <li className="flex items-center justify-center leading-10">
+      </td>
+      <td className="flex items-center justify-center leading-10">
         {transfer.attendanceDate}
-      </li>
-      <li className="flex items-center justify-center leading-10">
+      </td>
+      <td className="flex items-center justify-center leading-10">
         {transfer.attendanceTime}
-      </li>
-      <li className="flex items-center justify-center leading-10">
+      </td>
+      <td className="flex items-center justify-center leading-10">
         {Number(transfer.transferAmt) / 100}
-      </li>
-      <li className="flex items-center justify-center leading-10">
+      </td>
+      <td className="flex items-center justify-center leading-10">
         {transfer.transferResult}
-      </li>
-      <li className="flex items-center justify-center leading-10">
+      </td>
+      <td className="flex items-center justify-center leading-10">
         <div className="flex gap-2 ">
           <button className="p-1 text-primary-600" onClick={onDetail(transfer)}>
             查看详情
           </button>
         </div>
-      </li>
-    </ul>
+      </td>
+    </tr>
   );
 
   console.log("state");
@@ -275,18 +275,17 @@ const TransferQuery: React.FC = () => {
         <div className="absolute w-full mt-10">
           <table className="w-11/12 ">
             <thead>
-              <ul className="grid items-center h-10 grid-cols-9 gap-2 font-bold text-gray-700 bg-white rounded-lg w-fulls justify-items-center">
-                <li className="flex items-center justify-center">
+              <tr className="grid items-center h-10 grid-cols-9 gap-2 font-bold text-gray-700 bg-white rounded-lg w-fulls justify-items-center">
+                <th className="flex items-center justify-center">
                   教育机构名称
-                </li>
-                <li className="flex items-center justify-center">课程名称</li>
-                <li className="flex items-center justify-center">客户姓名</li>
-                <li className="flex items-center justify-center">考勤日期</li>
-                <li className="flex items-center justify-center">考勤时间</li>
-                <li className="flex items-center justify-center">划拨金额</li>
-                <li className="flex items-center justify-center">划拨结果</li>
-                <li className="flex items-center justify-center">操作</li>
-              </ul>
+                </th>
+                <th className="flex items-center justify-center">课程名称</th>
+                <th className="flex items-center justify-center">客户姓名</th>
+                <th className="flex items-center justify-center">考勤日期</th>
+th                <th className="flex items-center justify-center">划拨金额</th>
+                <th className="flex items-center justify-center">划拨结果</th>
+                <th className="flex items-center justify-center">操作</th>
+              </tr>
             </thead>
             <tbody>
               {state.transfer.transferList.map((list: Transfer, i: any) => (
