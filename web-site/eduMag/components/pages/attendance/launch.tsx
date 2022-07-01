@@ -142,6 +142,8 @@ const ContractNegoQuery: React.FC = () => {
       });
   }
 
+
+  
   const ListEntry = ({ lesson, key, ...props }: { lesson: Lesson, key: any }) => (
     <tr key={key} className="grid items-center grid-cols-4 gap-10 text-gray-600 border justify-items-center even:bg-primary-100 odd:bg-white ">
       <td className='flex items-center justify-center leading-10'>{lesson.lessonId}</td>
