@@ -107,14 +107,21 @@ const demoLessonList: Lesson[] = [
 // 课程查询页面
 const LessonQuery: React.FC = () => {
   let [isOpen, setIsOpen] = useState(false)
-
   function closeModal() {
     setIsOpen(false)
   }
-
   function openModal() {
     setIsOpen(true)
   }
+
+  let [isOffOpen, setIsOffOpen] = useState(false)
+  function closeOffModal() {
+    setIsOffOpen(false)
+  }
+  function openOffModal() {
+    setIsOffOpen(true)
+  }
+
   const [isCreateModalOpen, setCreateModalOpen] = useState(false);
   const [createLesson, setCreateLesson] = useState({} as Lesson);
   const [cancelLesson, setCancelLesson] = useState({} as Lesson);
@@ -304,7 +311,8 @@ const LessonQuery: React.FC = () => {
               className="p-1 text-red-500 rounded-md"
               onClick={() => {
                 setCancelLesson(lesson);
-                setIsCancelModalOpen(true);
+                // setIsCancelModalOpen(true);
+                openOffModal()
               }}
             >
               下架
@@ -618,7 +626,7 @@ const LessonQuery: React.FC = () => {
        
             </IonModal> */}
             {/* 课程下架 */}
-            <IonModal
+            {/* <IonModal
               isOpen={isCancelModalOpen}
               onDidDismiss={async () => {
                 setIsCancelModalOpen(false);
@@ -697,7 +705,7 @@ const LessonQuery: React.FC = () => {
                   />
                 </div>
               </form>
-            </IonModal>
+            </IonModal> */}
             <IonRow className="flex items-center w-full mx-4 text-center bg-white rounded-md justify-items-center">
               <IonCol className="flex ml-8 text-gray-800">
                 <div className="flex items-center justify-center font-bold text-center text-gray-600 w-28">
@@ -737,7 +745,7 @@ const LessonQuery: React.FC = () => {
             </IonRow>
           </div>
         </div>
-
+        {/* 新增课程模态框 */}
         <Transition appear show={isOpen} as={Fragment}>
           <Dialog as="div" className="relative z-10" onClose={closeModal}>
             <Transition.Child
@@ -1000,10 +1008,127 @@ const LessonQuery: React.FC = () => {
                           value="取消"
                           type="button"
                           className="px-6 py-2 border rounded-md "
-                          onClick={closeModal}
+                          onClick={closeOffModal}
                         />
                         <input
                           value="确定"
+                          type="button"
+                          className="px-6 py-2 text-white border rounded-md bg-primary-600"
+                        />
+                      </div>
+                    </form>
+                  </Dialog.Panel>
+                </Transition.Child>
+              </div>
+            </div>
+          </Dialog>
+        </Transition>
+        {/* 下架课程模态框 */}
+        <Transition appear show={isOffOpen} as={Fragment}>
+          <Dialog as="div" className="relative z-10" onClose={closeOffModal}>
+            <Transition.Child
+              as={Fragment}
+              enter="ease-out duration-300"
+              enterFrom="opacity-0"
+              enterTo="opacity-100"
+              leave="ease-in duration-200"
+              leaveFrom="opacity-100"
+              leaveTo="opacity-0"
+            >
+              <div className="fixed inset-0 bg-black bg-opacity-25" />
+            </Transition.Child>
+
+            <div className="fixed inset-0 overflow-y-auto">
+              <div className="flex items-center justify-center min-h-full p-4 text-center">
+                <Transition.Child
+                  as={Fragment}
+                  enter="ease-out duration-300"
+                  enterFrom="opacity-0 scale-95"
+                  enterTo="opacity-100 scale-100"
+                  leave="ease-in duration-200"
+                  leaveFrom="opacity-100 scale-100"
+                  leaveTo="opacity-0 scale-95"
+                >
+                  <Dialog.Panel className="w-full max-w-md p-4 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
+                    <Dialog.Title
+                      as="h3"
+                      className="text-lg font-medium leading-6 text-center text-gray-900"
+                    >
+                      课程下架
+                      <hr className="mt-2 mb-4" />
+                    </Dialog.Title>
+                    <form
+                      onSubmit={onCreate}
+                      className="flex flex-col items-center rounded-lg justify-items-center"
+                    >
+                      <div className="flex items-center mb-4 justify-items-center">
+                        <div className="flex leading-7 justify-items-center">
+                          <div className="flex justify-end p-1 w-36">
+                            课程名称:
+                          </div>
+                          <input
+                            className="w-64 p-1 text-gray-600 bg-gray-100 border rounded-md justify-self-start focus:outline-none"
+                            name="eduId"
+                            type="text"
+                            value={state.loginUser.orgName}
+                            spellCheck={false}
+                            readOnly
+                          ></input>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center mb-4 justify-items-center">
+                        <div className="flex justify-items-center">
+                          <span className="flex justify-end p-1 mr-1 w-36">
+                            总价（元）:
+                          </span>
+                          <input
+                            className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
+                            name="lessonName"
+                            type="text"
+                            value={createLesson.lessonName}
+                            spellCheck={false}
+                            onChange={(e) =>
+                              setCreateLesson({
+                                ...createLesson,
+                                ...{ lessonName: e.nativeEvent.target?.value },
+                              })
+                            }
+                            required
+                          ></input>
+                        </div>
+                      </div>
+                      <div className="flex items-center mb-4 justify-items-center">
+                        <div className="flex justify-items-center">
+                          <span className="flex justify-end p-1 mr-1 w-36">
+                            下架原因:
+                          </span>
+                          <textarea
+                            className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
+                            name="lessonTotalTimes"
+                            value={createLesson.lessonTotalTimes}
+                            spellCheck={false}
+                            onChange={(e) =>
+                              setCreateLesson({
+                                ...createLesson,
+                                ...{
+                                  lessonTotalTimes: e.nativeEvent.target?.value,
+                                },
+                              })
+                            }
+                            required
+                          ></textarea>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-4 mt-2 justify-items-center">
+                        <input
+                          value="取消"
+                          type="button"
+                          className="px-6 py-2 border rounded-md "
+                          onClick={closeOffModal}
+                        />
+                        <input
+                          value="下架"
                           type="button"
                           className="px-6 py-2 text-white border rounded-md bg-primary-600"
                         />
