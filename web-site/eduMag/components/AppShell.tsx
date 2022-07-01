@@ -26,6 +26,7 @@ import TeacherDetail from './pages/teacher/Detail'
 import TeacherEdit from './pages/teacher/Edit'
 import Income from './pages/statistic/income'
 import Refund from './pages/refund/query'
+import OrderQuery from './pages/OrderQuery'
 
 
 
@@ -69,6 +70,7 @@ const AppShell = () => {
             <Route path="/tabs/announcement/query" component={Announcement} exact={true} />
             <Route path="/tabs/announcement/detail" component={AnnouncementDetail} exact={true} />
             <Route path="/tabs/statistic/income" component={Income} exact={true} />
+            <Route path="/tabs/orderQuery" component={OrderQuery} exact={true} />
             <Route path="/login" render={() => <Login />} />
             <Route exact path="/" render={() => <Redirect to="/login" />} />
             </IonRouterOutlet>

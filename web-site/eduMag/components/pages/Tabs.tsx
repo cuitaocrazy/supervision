@@ -15,6 +15,7 @@ import Teacher from './Teacher/query'
 import Tranfer from './TranFer/query'
 import TranferManul from './TranFerManual/query'
 import Login from './Login'
+import OrderQuery from './OrderQuery';
 
 const Tabs = () => {
   return (
