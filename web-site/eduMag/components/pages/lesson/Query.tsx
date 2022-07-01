@@ -580,7 +580,7 @@ const LessonQuery: React.FC = () => {
                             课程开始日期:
                           </span>
                           <input
-                            className="w-64"
+                            className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
                             type="date"
                             defaultValue={moment().format("YYYY-MM-DD")}
                             onChange={(e) =>
@@ -598,7 +598,7 @@ const LessonQuery: React.FC = () => {
                             课程结束日期:
                           </span>
                           <input
-                            className="w-64"
+                            className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
                             type="date"
                             defaultValue={moment().format("YYYY-MM-DD")}
                             onChange={(e) =>
@@ -616,7 +616,7 @@ const LessonQuery: React.FC = () => {
                             课程描述:
                           </span>
                           <textarea
-                            className="w-64 h-24 p-1 text-gray-600 border rounded-md justify-self-start focus:outline focus:border-0"
+                            className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
                             name="lessonIntroduce"
                             value={createLesson.lessonIntroduce}
                             spellCheck={false}
