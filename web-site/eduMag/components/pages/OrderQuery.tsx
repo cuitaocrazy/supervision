@@ -1,39 +1,35 @@
 import { FC } from 'react'
 import { IonPage,IonRow,IonCol,IonLabel } from '@ionic/react'
 
-
-{/* <li className='flex items-center justify-center'>订单号</li>
-                <li className='flex items-center justify-center'>客户姓名</li>
-                <li className='flex items-center justify-center'>学生姓名</li>
-                <li className='flex items-center justify-center'>课程名称</li>
-                <li className='flex items-center justify-center'>课程类型</li>
-                <li className='flex items-center justify-center'>课程开始日期</li>
-                <li className='flex items-center justify-center'>课程结束日期</li>
-                <li className='flex items-center justify-center'>课程签到类型</li>
-                <li className='flex items-center justify-center'>总课时</li>
-                <li className='flex items-center justify-center'>总价格</li>
-                <li className='flex items-center justify-center'>教师姓名</li> */}
 interface OrderInfoProps{
   order_no:string
   consumer_name:string
   consumer_stu_name:string
   lesson_name:string
-
-
-
+  lesson_type:string
+  lesson_start_date:string
+  lesson_end_date:string
+  lesson_attendance_type:string
+  lession_total_quantity:number
+  lession_total_price:string
+  lession_per_price:string
+  teacher_name:string
 }
 
-const ListEntry = ({ lesson, key, ...props }: { lesson: Lesson, key: any }) => (
-  <ul key={key} className="grid items-center grid-cols-4 gap-10 text-gray-600 border justify-items-center even:bg-primary-100 odd:bg-white ">
-    <li className='flex items-center justify-center leading-10'>{lesson.lessonId}</li>
-    <li className='flex items-center justify-center leading-10'>{lesson.lessonName}</li>
-    <li className='flex items-center justify-center leading-10'>{lesson.lessonFinishTimes}</li>
-    <li className='flex items-center justify-center leading-10'>
-      <div className='flex gap-2 '>
-        {lesson.lessonStatus === 'on' ? <button className='p-1 text-primary-600' onClick={() => { setDetail(lesson); setIsModalOpen(true) }}>发起签到</button> : <></>}
-
-      </div>
-    </li>
+const ListEntry:FC<OrderInfoProps> = (props) => (
+  <ul  className="grid items-center grid-cols-4 gap-10 text-gray-600 border justify-items-center even:bg-primary-100 odd:bg-white ">
+    <li className='flex items-center justify-center leading-10'>{props.order_no}</li>
+    <li className='flex items-center justify-center leading-10'>{props.consumer_name}</li>
+    <li className='flex items-center justify-center leading-10'>{props.consumer_stu_name}</li>
+    <li className='flex items-center justify-center leading-10'>{props.lesson_name}</li>
+    <li className='flex items-center justify-center leading-10'>{props.lesson_type}</li>
+    <li className='flex items-center justify-center leading-10'>{props.lesson_start_date}</li>
+    <li className='flex items-center justify-center leading-10'>{props.lesson_end_date}</li>
+    <li className='flex items-center justify-center leading-10'>{props.lesson_attendance_type}</li>
+    <li className='flex items-center justify-center leading-10'>{props.lession_total_quantity}</li>
+    <li className='flex items-center justify-center leading-10'>{props.lession_total_price}</li>
+    <li className='flex items-center justify-center leading-10'>{props.lession_per_price}</li>
+    <li className='flex items-center justify-center leading-10'>{props.teacher_name}</li>
   </ul>
 );
 
