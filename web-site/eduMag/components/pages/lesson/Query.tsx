@@ -257,32 +257,32 @@ const LessonQuery: React.FC = () => {
     lesson: Lesson;
     key: any;
   }) => (
-    <ul
+    <tr
       key={key}
       className="grid items-center grid-cols-8 gap-10 text-gray-600 border justify-items-center even:bg-primary-100 odd:bg-white "
     >
-      <li className="flex items-center justify-center leading-10">
+      <td className="flex items-center justify-center leading-10">
         {lesson.lessonName}
-      </li>
-      <li className="flex items-center justify-center leading-10">
+      </td>
+      <td className="flex items-center justify-center leading-10">
         {lesson.lessonTotalPrice}
-      </li>
-      <li className="flex items-center justify-center leading-10">
+      </td>
+      <td className="flex items-center justify-center leading-10">
         {Number(lesson.lessonTotalPrice) / 100}
-      </li>
-      <li className="flex items-center justify-center leading-10">
+      </td>
+      <td className="flex items-center justify-center leading-10">
         {lesson.lessonType}
-      </li>
-      <li className="flex items-center justify-center leading-10">
+      </td>
+      <td className="flex items-center justify-center leading-10">
         {lesson.lessonStartDate}
-      </li>
-      <li className="flex items-center justify-center leading-10">
+      </td>
+      <td className="flex items-center justify-center leading-10">
         {lesson.lessonEndDate}
-      </li>
-      <li className="flex items-center justify-center leading-10">
+      </td>
+      <td className="flex items-center justify-center leading-10">
         {getStatus(lesson.lessonStatus)}
-      </li>
-      <li className="flex items-center justify-center leading-10">
+      </td>
+      <td className="flex items-center justify-center leading-10">
         <div className="flex gap-2 ">
           <button
             className="p-1 rounded-md text-primary-600"
@@ -314,8 +314,8 @@ const LessonQuery: React.FC = () => {
             <></>
           )}
         </div>
-      </li>
-    </ul>
+      </td>
+    </tr>
   );
   if (state.lesson.lessonDetail) {
     return <Redirect to="/tabs/lesson/detail" />;
@@ -835,18 +835,18 @@ const LessonQuery: React.FC = () => {
         <div className="absolute w-full mt-10">
           <table className="w-11/12">
             <thead>
-              <ul className="grid items-center h-10 grid-cols-8 gap-10 font-bold text-gray-700 bg-white rounded-lg justify-items-center">
-                <li className="flex items-center justify-center">课程名称</li>
-                <li className="flex items-center justify-center">
+              <tr className="grid items-center h-10 grid-cols-8 gap-10 font-bold text-gray-700 bg-white rounded-lg justify-items-center">
+                <th className="flex items-center justify-center">课程名称</th>
+                <th className="flex items-center justify-center">
                   总课时（个）
-                </li>
-                <li className="flex items-center justify-center">总价格(元)</li>
-                <li className="flex items-center justify-center">课程类型</li>
-                <li className="flex items-center justify-center">开课日期</li>
-                <li className="flex items-center justify-center">结束日期</li>
-                <li className="flex items-center justify-center">课程状态</li>
-                <li className="flex items-center justify-center">操作</li>
-              </ul>
+                </th>
+                <th className="flex items-center justify-center">总价格(元)</th>
+                <th className="flex items-center justify-center">课程类型</th>
+                <th className="flex items-center justify-center">开课日期</th>
+                <th className="flex items-center justify-center">结束日期</th>
+                <th className="flex items-center justify-center">课程状态</th>
+                <th className="flex items-center justify-center">操作</th>
+              </tr>
             </thead>
             <tbody>
               {state.lesson.lessonList.map((list: Lesson, i: any) => (
