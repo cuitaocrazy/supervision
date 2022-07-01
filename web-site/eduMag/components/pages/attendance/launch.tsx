@@ -147,17 +147,17 @@ const ContractNegoQuery: React.FC = () => {
   }
 
   const ListEntry = ({ lesson, key, ...props }: { lesson: Lesson, key: any }) => (
-    <ul key={key} className="grid items-center grid-cols-4 gap-10 text-gray-600 border justify-items-center even:bg-primary-100 odd:bg-white ">
-      <li className='flex items-center justify-center leading-10'>{lesson.lessonId}</li>
-      <li className='flex items-center justify-center leading-10'>{lesson.lessonName}</li>
-      <li className='flex items-center justify-center leading-10'>{lesson.lessonFinishTimes}</li>
-      <li className='flex items-center justify-center leading-10'>
+    <tr key={key} className="grid items-center grid-cols-4 gap-10 text-gray-600 border justify-items-center even:bg-primary-100 odd:bg-white ">
+      <td className='flex items-center justify-center leading-10'>{lesson.lessonId}</td>
+      <td className='flex items-center justify-center leading-10'>{lesson.lessonName}</td>
+      <td className='flex items-center justify-center leading-10'>{lesson.lessonFinishTimes}</td>
+      <td className='flex items-center justify-center leading-10'>
         <div className='flex gap-2 '>
           {lesson.lessonStatus === 'on' ? <button className='p-1 text-primary-600' onClick={() => { setDetail(lesson); setIsModalOpen(true) }}>发起签到</button> : <></>}
 
         </div>
-      </li>
-    </ul>
+      </td>
+    </tr>
   );
 
   return <IonPage className='bg-gray-100'>
@@ -181,9 +181,9 @@ const ContractNegoQuery: React.FC = () => {
           <IonRow className='flex justify-between '>
             <IonCol className='flex ml-8'>
               <IonLabel className='flex items-center justify-center font-bold text-center text-gray-600 w-28'>课程名称</IonLabel>
-              <input type='text' className="flex w-56 h-12 font-bold text-center text-gray-600 bg-white border rounded-md focus:outline-none focus:glow-primary-600" 
-              onChange={e => setQueryInfo({ ...queryInfo, ...{ lessonName: e.target.value } })}
-              placeholder="请输入课程名称" />
+              <input type='text' className="flex w-56 h-12 font-bold text-center text-gray-600 bg-white border rounded-md focus:outline-none focus:glow-primary-600"
+                onChange={e => setQueryInfo({ ...queryInfo, ...{ lessonName: e.target.value } })}
+                placeholder="请输入课程名称" />
             </IonCol>
             <IonCol className='flex ml-8'>
               <button className='w-24 h-12 mr-6 text-white border-2 rounded-md shadow-md bg-primary-600 focus:bg-primary-700' onClick={() => { onQuery() }}>查询</button>
@@ -246,12 +246,12 @@ const ContractNegoQuery: React.FC = () => {
       <div className='absolute w-full mt-10'>
         <table className='w-11/12 '>
           <thead>
-            <ul className='grid items-center h-10 grid-cols-4 gap-10 font-bold text-gray-700 bg-white rounded-lg w-fulls justify-items-center'>
-              <li className='flex items-center justify-center'>课程ID</li>
-              <li className='flex items-center justify-center'>课程名称</li>
-              <li className='flex items-center justify-center'>已上课时</li>
-              <li className='flex items-center justify-center'>操作</li>
-            </ul>
+            <tr className='grid items-center h-10 grid-cols-4 gap-10 font-bold text-gray-700 bg-white rounded-lg w-fulls justify-items-center'>
+              <th className='flex items-center justify-center'>课程ID</th>
+              <th className='flex items-center justify-center'>课程名称</th>
+              <th className='flex items-center justify-center'>已上课时</th>
+              <th className='flex items-center justify-center'>操作</th>
+            </tr>
           </thead>
           <tbody>
             {state.attendenceLanuch?.attendenceLanuchList?.map((list: Lesson, i: any) => (
