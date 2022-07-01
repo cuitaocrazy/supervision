@@ -115,35 +115,31 @@ const ContractNegoQuery: React.FC = () => {
   //   dispatch({...setAttendenceLanuchDetail(lesson),...{backPage:'/tabs/contractNego/query'}});
   // },[dispatch]);
   useEffect(() => {
-    // fetch(paramStr, {
-    //   method: 'GET',
-    //   headers: {
-    //     'Content-type': 'application/json;charset=UTF-8',
-    //   },
-    // }).then(res => res.json())
-    // .then((json) => {
-    // const {contractNegoList} = json 
-
-    // refreshList(democontractNegoList.filter((contractNego:ContractNego)=>contractNego.contractId.indexOf(queryInfo.contractId)>-1))
-    // return 
-    // })
-    refreshList(demoLessonList)
+    fetch(paramStr, {
+      method: "GET",
+      headers: {
+        "Content-type": "application/json;charset=UTF-8",
+      },
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        const { result, records } = json;
+        if (result) refreshList(records);
+      });
   }, []);
 
   const onQuery = () => {
-    // fetch(paramStr, {
-    //   method: 'GET',
-    //   headers: {
-    //     'Content-type': 'application/json;charset=UTF-8',
-    //   },
-    // }).then(res => res.json())
-    // .then((json) => {
-    // const {contractNegoList} = json 
-
-    // refreshList(democontractNegoList.filter((contractNego:ContractNego)=>contractNego.contractId.indexOf(queryInfo.contractId)>-1))
-    // return 
-    // })
-    refreshList(demoLessonList.filter((lesson: Lesson) => lesson.lessonName.indexOf(queryInfo.lessonName) > -1))
+    fetch(paramStr, {
+      method: "GET",
+      headers: {
+        "Content-type": "application/json;charset=UTF-8",
+      },
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        const { result, records } = json;
+        if (result) refreshList(records);
+      });
   }
 
   const ListEntry = ({ lesson, key, ...props }: { lesson: Lesson, key: any }) => (
@@ -154,7 +150,6 @@ const ContractNegoQuery: React.FC = () => {
       <td className='flex items-center justify-center leading-10'>
         <div className='flex gap-2 '>
           {lesson.lessonStatus === 'on' ? <button className='p-1 text-primary-600' onClick={() => { setDetail(lesson); setIsModalOpen(true) }}>发起签到</button> : <></>}
-
         </div>
       </td>
     </tr>

@@ -1,6 +1,42 @@
 import { FC } from 'react'
 import { IonPage,IonRow,IonCol,IonLabel } from '@ionic/react'
 
+
+{/* <li className='flex items-center justify-center'>订单号</li>
+                <li className='flex items-center justify-center'>客户姓名</li>
+                <li className='flex items-center justify-center'>学生姓名</li>
+                <li className='flex items-center justify-center'>课程名称</li>
+                <li className='flex items-center justify-center'>课程类型</li>
+                <li className='flex items-center justify-center'>课程开始日期</li>
+                <li className='flex items-center justify-center'>课程结束日期</li>
+                <li className='flex items-center justify-center'>课程签到类型</li>
+                <li className='flex items-center justify-center'>总课时</li>
+                <li className='flex items-center justify-center'>总价格</li>
+                <li className='flex items-center justify-center'>教师姓名</li> */}
+interface OrderInfoProps{
+  order_no:string
+  consumer_name:string
+  consumer_stu_name:string
+  lesson_name:string
+
+
+
+}
+
+const ListEntry = ({ lesson, key, ...props }: { lesson: Lesson, key: any }) => (
+  <ul key={key} className="grid items-center grid-cols-4 gap-10 text-gray-600 border justify-items-center even:bg-primary-100 odd:bg-white ">
+    <li className='flex items-center justify-center leading-10'>{lesson.lessonId}</li>
+    <li className='flex items-center justify-center leading-10'>{lesson.lessonName}</li>
+    <li className='flex items-center justify-center leading-10'>{lesson.lessonFinishTimes}</li>
+    <li className='flex items-center justify-center leading-10'>
+      <div className='flex gap-2 '>
+        {lesson.lessonStatus === 'on' ? <button className='p-1 text-primary-600' onClick={() => { setDetail(lesson); setIsModalOpen(true) }}>发起签到</button> : <></>}
+
+      </div>
+    </li>
+  </ul>
+);
+
 const OrderQuery = () => {
   return (
     <IonPage className='bg-gray-100'>
