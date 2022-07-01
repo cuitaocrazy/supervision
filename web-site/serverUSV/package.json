@@ -20,6 +20,7 @@
     "fabric-ca-client": "^2.2.9",
     "fabric-network": "^2.2.9",
     "jws": "^4.0.0",
+    "moment": "^2.29.3",
     "mysql": "^2.18.1",
     "reflect-metadata": "^0.1.13",
     "socket.io": "^4.2.0",
