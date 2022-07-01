@@ -90,9 +90,6 @@ const OrderQuery = () => {
               </ul>
             </thead>
             <tbody>
-              {/* {state.attendenceLanuch?.attendenceLanuchList?.map((list: Lesson, i: any) => (
-                <ListEntry lesson={list} key={i} />
-              ))} */}
               {OrderInfo.map((item,index)=>{
                 return  <ListEntry key={index} order_no={item.order_no} consumer_name={item.consumer_name} consumer_stu_name={item.consumer_stu_name} lesson_name={item.lesson_name} lesson_type={item.lesson_type} 
                 lesson_start_date={item.lesson_start_date} lesson_end_date={item.lesson_end_date}  lesson_attendance_type={item.lesson_attendance_type} 
@@ -105,18 +102,4 @@ const OrderQuery = () => {
     </IonPage>
   )
 }
-{/* <ul  className="grid items-center grid-cols-4 gap-10 text-gray-600 border justify-items-center even:bg-primary-100 odd:bg-white ">
-<li className='flex items-center justify-center leading-10'>{props.order_no}</li>
-<li className='flex items-center justify-center leading-10'>{props.consumer_stu_name}</li>
-<li className='flex items-center justify-center leading-10'>{props.lesson_name}</li>
-<li className='flex items-center justify-center leading-10'>{props.lesson_type}</li>
-<li className='flex items-center justify-center leading-10'>{props.lesson_start_date}</li>
-<li className='flex items-center justify-center leading-10'>{props.lesson_end_date}</li>
-<li className='flex items-center justify-center leading-10'>{props.lesson_attendance_type}</li>
-<li className='flex items-center justify-center leading-10'>{props.lession_total_quantity}</li>
-<li className='flex items-center justify-center leading-10'>{props.lession_total_price}</li>
-<li className='flex items-center justify-center leading-10'>{props.lession_per_price}</li>
-<li className='flex items-center justify-center leading-10'>{props.teacher_name}</li>
-</ul> */}
-
 export default OrderQuery
