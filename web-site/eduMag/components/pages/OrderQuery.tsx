@@ -17,19 +17,20 @@ interface OrderInfoProps{
 }
 
 const ListEntry:FC<OrderInfoProps> = (props) => (
-  <ul  className="grid items-center grid-cols-11 gap-2 text-gray-600 border justify-items-center even:bg-primary-100 odd:bg-white ">
-    <li className='flex items-center justify-center leading-10'>{props.order_no}</li>
-    <li className='flex items-center justify-center leading-10'>{props.consumer_stu_name}</li>
-    <li className='flex items-center justify-center leading-10'>{props.lesson_name}</li>
-    <li className='flex items-center justify-center leading-10'>{props.lesson_type}</li>
-    <li className='flex items-center justify-center leading-10'>{props.lesson_start_date}</li>
-    <li className='flex items-center justify-center leading-10'>{props.lesson_end_date}</li>
-    <li className='flex items-center justify-center leading-10'>{props.lesson_attendance_type}</li>
-    <li className='flex items-center justify-center leading-10'>{props.lession_total_quantity}</li>
-    <li className='flex items-center justify-center leading-10'>{props.lession_total_price}</li>
-    <li className='flex items-center justify-center leading-10'>{props.lession_per_price}</li>
-    <li className='flex items-center justify-center leading-10'>{props.teacher_name}</li>
-  </ul>
+  <tr  className="grid items-center grid-cols-12 gap-2 text-gray-600 border justify-items-center even:bg-white odd:bg-primary-100 ">
+    <td className='flex items-center justify-center leading-10'>{props.order_no}</td>
+    <td className='flex items-center justify-center leading-10'>{props.consumer_name}</td>
+    <td className='flex items-center justify-center leading-10'>{props.consumer_stu_name}</td>
+    <td className='flex items-center justify-center leading-10'>{props.lesson_name}</td>
+    <td className='flex items-center justify-center leading-10'>{props.lesson_type}</td>
+    <td className='flex items-center justify-center leading-10'>{props.lesson_start_date}</td>
+    <td className='flex items-center justify-center leading-10'>{props.lesson_end_date}</td>
+    <td className='flex items-center justify-center leading-10'>{props.lesson_attendance_type}</td>
+    <td className='flex items-center justify-center leading-10'>{props.lession_total_quantity}</td>
+    <td className='flex items-center justify-center leading-10'>{props.lession_total_price}</td>
+    <td className='flex items-center justify-center leading-10'>{props.lession_per_price}</td>
+    <td className='flex items-center justify-center leading-10'>{props.teacher_name}</td>
+  </tr>
 );
 
 let OrderInfo=[
@@ -75,19 +76,20 @@ const OrderQuery = () => {
         <div className='absolute w-full mt-10'>
           <table className='w-11/12 '>
             <thead>
-              <ul className='grid items-center h-10 grid-cols-11 gap-2 font-bold text-gray-700 bg-white rounded-lg w-fulls justify-items-center'>
-                <li className='flex items-center justify-center'>订单号</li>
-                <li className='flex items-center justify-center'>客户姓名</li>
-                <li className='flex items-center justify-center'>学生姓名</li>
-                <li className='flex items-center justify-center'>课程名称</li>
-                <li className='flex items-center justify-center'>课程类型</li>
-                <li className='flex items-center justify-center'>课程开始日期</li>
-                <li className='flex items-center justify-center'>课程结束日期</li>
-                <li className='flex items-center justify-center'>课程签到类型</li>
-                <li className='flex items-center justify-center'>总课时</li>
-                <li className='flex items-center justify-center'>总价格</li>
-                <li className='flex items-center justify-center'>教师姓名</li>
-              </ul>
+              <tr className='grid items-center h-10 grid-cols-12 gap-2 font-bold text-gray-700 bg-white rounded-lg w-fulls justify-items-center'>
+                <th className='flex items-center justify-center'>订单号</th>
+                <th className='flex items-center justify-center'>客户姓名</th>
+                <th className='flex items-center justify-center'>学生姓名</th>
+                <th className='flex items-center justify-center'>课程名称</th>
+                <th className='flex items-center justify-center'>课程类型</th>
+                <th className='flex items-center justify-center'>课程开始日期</th>
+                <th className='flex items-center justify-center'>课程结束日期</th>
+                <th className='flex items-center justify-center'>课程签到类型</th>
+                <th className='flex items-center justify-center'>总课时</th>
+                <th className='flex items-center justify-center'>总价格</th>
+                <th className='flex items-center justify-center'>课时单价</th>
+                <th className='flex items-center justify-center'>教师姓名</th>
+              </tr>
             </thead>
             <tbody>
               {OrderInfo.map((item,index)=>{
