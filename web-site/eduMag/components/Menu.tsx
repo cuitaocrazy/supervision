@@ -95,7 +95,7 @@ const Menu = () => {
           <a className='flex items-center justify-start w-full px-3 py-2 mt-2 space-x-6 rounded-lg hover:text-white focus:bg-primary-500 focus:text-white hover:bg-primary-500 focus:rounded-lg md:w-52' 
           onClick={
             () => {
-              Router.push({pathname:''})
+              Router.push({pathname:'/tabs/orderQuery'})
             }
           }>
             <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" viewBox="0 0 20 20" fill="currentColor">
