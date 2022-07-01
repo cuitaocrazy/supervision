@@ -21,3 +21,7 @@ INSERT INTO yadadb.t_b_supervisor_org (supervisor_org_id,supervisor_org_name,par
 -- 监管用户插入
 INSERT INTO yadadb.t_b_supervisor_user (supervisor_login_name,supervisor_password,supervisor_username,supervisor_phone,supervisor_org_id) VALUES
 	 ('suptest','suptest','教育部测试用户',NULL,'supervisor0001');
+
+-- 合约插入
+INSERT INTO yadadb.t_l_contract (contract_id,fabric_contract_id,contract_date,contract_time,contract_status,contract_update_date,contract_update_time,contract_update_reason,edu_id,edu_name,lesson_id,lesson_name,lesson_type,lesson_introduce,lesson_outline,lesson_start_date,lesson_start_time,lesson_end_date,lesson_end_time,lesson_attendance_type,lession_total_quantity,lession_total_price,lession_per_price,teacher_id,teacher_name,consumer_id,consumer_name,consumer_stu_name,order_no) VALUES
+	 ('contract00001','fabric00001','20220630','120000','valid',NULL,NULL,NULL,'edu0001','测试机构','lesson00002','英语入门兴趣班','english','英语培训班介绍','英语兴趣班大纲','20220630','000000','20220830','000000','manual',10,50,500,'teacher00001','马老师','testuser','测试用户','测试用户','orderno00001');
