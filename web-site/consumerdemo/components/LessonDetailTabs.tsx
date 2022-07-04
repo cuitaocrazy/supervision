@@ -14,6 +14,7 @@ import { useContext } from 'react'
 // 课程详情标签选项卡
 const LessonDetailTabs = () => {
   const { state } = useContext(AppContext);
+  console.log(state)
   const router = useRouter();
   const { item } = router.query
 

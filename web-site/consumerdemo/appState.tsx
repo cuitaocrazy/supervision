@@ -27,66 +27,17 @@ const initialState = {
 
   backPage:undefined,
   loginUser:{//登录用户信息
-    orgId:null,
-    orgName:null,
+    userId:null,
     loginName:null,
     username:null,
     phone:null,
     role:null,
   },
+
   lessonDetail:null,
   CarList:[],
-  studentName:null,
+  stuName:null,
   contractDetail:null,
-  
-
-
-  userInfo:{
-    userInfoList:[],
-    userInfoDetail:null,
-  },
-  contract:{//合同
-    contractList:[],
-    contractDetail:null
-  },
-  lesson:{//课程
-    lessonList:[],
-    lessonDetail:null
-  },
-  teacher:{//教师
-    teacherDetail:null,
-    teacherList:[]
-  },
-  attendance:{//考勤
-    attendanceList:[],
-    attendanceDetail:null
-  },
-  transfer:{//转让
-    transferList:[],
-    transferDetail:null
-  },
-  eduOrg:{//教育机构
-    eduOrgList:[],
-    eduOrgDetail:null
-  },
-  announcement:{//公告
-    announcementList:[],
-    announcementDetail:null
-  },
-  complaint:{//投诉
-    complaintList:[],
-    complaintDetail:null
-  },
-  consumerStundent:{//消费者学员
-    consumerLoginName:null,
-    consumerName:null,
-    consumerPhone:null,
-    consumerIdentityNo:null,
-  },
-  contractNego:{//合同谈判
-    contractNegoList:[],
-    contractNegoDetail:null
-  },
 };
 export const AppContext = React.createContext<{state:any,dispatch:React.Dispatch<any>}>({state:initialState,dispatch:()=>{}});
 
@@ -120,6 +71,13 @@ export const setContractDetail =(contractDetail:any)=>{
   }
 }
 
+export const setStuName = (stuName:any)=>{
+  return {
+    type: 'setStuName',
+    stuName:stuName
+  }
+}
+
 export const reducer = (state: any, action: any) => {
   switch (action.type) {
     case 'setloginUser': {
@@ -138,6 +96,12 @@ export const reducer = (state: any, action: any) => {
       return {
         ...state,
         contractDetail:action.contractDetail
+      }
+    }
+    case 'setStuName':{
+      return {
+        ...state,
+        stuName:action.stuName
       }
     }
   }

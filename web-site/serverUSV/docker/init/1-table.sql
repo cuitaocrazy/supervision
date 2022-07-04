@@ -160,15 +160,16 @@ CREATE TABLE yadadb.t_l_contract (
 	lesson_end_date char(8) NULL,
 	lesson_end_time char(6) NULL,
 	lesson_attendance_type varchar(16) NULL,
-	lession_total_quantity int NULL,
-	lession_total_price decimal(12,0) NULL,
-	lession_per_price decimal(12,0) NULL,
+	lesson_total_quantity int NULL,
+	lesson_total_price decimal(12,0) NULL,
+	lesson_per_price decimal(12,0) NULL,
 	teacher_id varchar(32) NULL,
 	teacher_name varchar(32) NULL,
 	consumer_id varchar(32) NULL,
 	consumer_name varchar(32) NULL,
 	consumer_stu_name varchar(32) NULL,
 	order_no varchar(40) NULL,
+	lesson_accumulation_quantity int NULL,
 	CONSTRAINT t_l_contract_PK PRIMARY KEY (contract_id)
 )
 ENGINE=InnoDB
@@ -209,7 +210,7 @@ CREATE TABLE yadadb.t_l_attendance (
 	attendance_date char(8) NULL,
 	attendance_time char(6) NULL,
 	attendance_type varchar(16) NULL,
-	attendance_lession_quantity int NULL,
+	attendance_lesson_quantity int NULL,
 	edu_id varchar(32) NULL,
 	edu_name varchar(64) NULL,
 	lesson_id varchar(32) NULL,

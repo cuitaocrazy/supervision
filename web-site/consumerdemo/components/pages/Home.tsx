@@ -29,7 +29,7 @@ const Home = () => {
     .then((json) => {
       setLessonList(json.result)
     })
-  })
+  },[])
 
 
   return <IonPage>

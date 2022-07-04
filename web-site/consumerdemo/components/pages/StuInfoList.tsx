@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useState,useContext,useCallback } from 'react';
 import { IonPage, IonHeader, IonContent } from "@ionic/react"
 import { motion } from 'framer-motion'
 import { useForm, SubmitHandler } from 'react-hook-form'
@@ -6,6 +6,7 @@ import { useRouter } from 'next/router'
 import Navbar from 'components/Navbar'
 import { RadioGroup } from '@headlessui/react'
 import { Redirect,Link} from 'react-router-dom';
+import {AppContext,setStuName} from '../../appState';
 
 const stuInfo = [
   {
@@ -30,12 +31,15 @@ const stuInfo = [
 function StudentInfoRadioGroup() {
   const router=useRouter()
   const [selected, setSelected] = useState(stuInfo[0])
-
+  const { state, dispatch } = useContext(AppContext);
+  const refreshstuName = useCallback((constuName:String) => {
+    dispatch(setStuName(constuName));
+  },[dispatch]);
   // 
   return (
     <div className="w-full px-4 py-4">
       <div className="w-full max-w-md mx-auto">
-        <RadioGroup value={selected} onChange={setSelected} onClick={()=>{console.log('aaa');<Redirect to='/conOrder'></Redirect>}}>
+        <RadioGroup value={selected} onChange={setSelected} onClick={()=>{refreshstuName(selected.name);}}>
           <RadioGroup.Label className="text-gray-800 sr-only">学生信息</RadioGroup.Label>
           <div className="space-y-2">
             {stuInfo.map((stu) => (
@@ -107,7 +111,13 @@ const StuInfoList = () => {
       <div className='fixed bottom-0 flex w-full mt-6 bg-white border-t h-14 justify-items-center'>
         <button className='self-center w-full h-10 mx-6 mt-1 text-sm font-medium text-white bg-primary-600 rounded-3xl'
           onClick={() => { router.push("addStuInfo") }}>新增学生</button>
+          <Link to='/conOrder'>
+        <button className='self-center w-full h-10 mx-6 mt-1 text-sm font-medium text-white bg-primary-600 rounded-3xl'
+          >返回</button>
+          </Link>
+      
       </div>
+
     </IonContent>
   </IonPage>
 }
