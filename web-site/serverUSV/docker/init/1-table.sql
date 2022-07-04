@@ -242,6 +242,7 @@ CREATE TABLE yadadb.t_l_transfer (
 	edu_name varchar(64) NULL,
 	lesson_id varchar(32) NULL,
 	lesson_name varchar(64) NULL,
+	lesson_type varchar(16) NULL,
 	consumer_id varchar(32) NULL,
 	consumer_name varchar(32) NULL,
 	consumer_stu_name varchar(32) NULL,
