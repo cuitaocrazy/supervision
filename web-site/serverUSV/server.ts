@@ -159,7 +159,8 @@ app.get('/edu/contract/find', async (req, res) => {
 
 import { randomUUID } from 'crypto';
 import * as moment from 'moment';
-import {findOneLesson,findOneTeacher,findOneEdu,searchLesson,saveContract,searchContract, findOneContract, saveAttendance} from './src/consumer/consumer'
+import {findOneLesson,findOneTeacher,findOneAttendance,saveTransfer,findOneEdu,searchLesson,saveContract,searchContract, findOneContract, saveAttendance} from './src/consumer/consumer'
+import LessonService from './src/edu/LessonService';
 
 const fenToYuan = (tranAmtYuan: string | number) => {
   if (typeof tranAmtYuan === 'number') {
@@ -245,7 +246,7 @@ app.post('/consumer/preOrder', jsonParser, async (req, res) => {
     lessonEndTime:lesson.lessonEndTime,
     // lessonAttendanceType:lesson.lessonAttendanceType,
     lessonTotalQuantity:lesson.lessonTotalQuantity,
-    lessonTotalPrice:lesson.lessonTotalPrice,
+    lessonTotalPrice:fenToYuan(lesson.lessonTotalPrice),
     lessonPerPrice:lesson.lessonPerPrice,
     teacherId:lesson.teacherId,
     teacherName:teacher.teacherName,
@@ -286,13 +287,17 @@ app.get('/consumer/contractList',jsonParser,async(req,res)=>{
 
 
 app.post('/consumer/checkIn',jsonParser,async(req,res)=>{
+  try{
   const contractId = req.body.contractId;
   const contract = await findOneContract({contractId:contractId})
   // const lesson = await findOneLesson({lessonId:contract.l})
   // const edu = await findOneEdu({eduId:lesson.eduId})
   // const teacher =  await findOneTeacher({teacherId:lesson.teacherId})
+
+  // const attendance = findOneAttendance({lessonId:contract.lessonId,consumerId:contract.consumerId,lessonQuantity:contract.lessonAccumulationQuantity+1,})
+  
   const attendance = {
-    attendanceID:randomUUID().replaceAll('-',''),
+    attendanceId:randomUUID().replaceAll('-',''),
     attendanceDate:moment().format('YYYYMMDD'),
     attendanceTime:moment().format('HHmmss'),
     attendanceType:'manual',
@@ -306,19 +311,41 @@ app.post('/consumer/checkIn',jsonParser,async(req,res)=>{
     consumerStuName:contract.consumerStuName,
     attendanceStatus:'manual'
   } 
-  const result = await saveAttendance(attendance);
+
+  await saveAttendance(attendance);
   contract.lessonAccumulationQuantity=contract.lessonAccumulationQuantity+1;
   await saveContract(contract)
+  const edu = await findOneEdu({eduId:contract.eduId})
+  const transfer = {
+    transferId:randomUUID().replaceAll('-',''),
+    attendanceId:attendance.attendanceId,
+    attendanceDate:attendance.attendanceDate,
+    attendanceTime:attendance.attendanceTime,
+    eduId:contract.eduId,
+    eduName:contract.eduName,
+    lessonId:contract.lessonId,
+    lessonName:contract.lessonName,
+    consumerName:contract.consumerName,
+    consumerId:contract.consumerId,
+    consumerStuName:contract.consumerStuName,
+    supversingAccount:edu.eduSupervisedAccount,
+    normalAccount:edu.eduNormalAccount,
+    transferAmt:contract.lessonPerPrice*attendance.attendancelessonQuantity,
+    transferResult:'todo',//todo
+    reason:'签到后划拨'
+  }
+  await saveTransfer(transfer)
+}catch (e){
+  res.send({status:'fail',msg:'未知异常'})
+}
   res.send({status:'success'})
 })
 app.post('/consumer/leave',jsonParser,async(req,res)=>{
+  try{
   const contractId = req.body.contractId;
   const contract = await findOneContract({contractId:contractId})
-  // const lesson = await findOneLesson({lessonId:contract.l})
-  // const edu = await findOneEdu({eduId:lesson.eduId})
-  // const teacher =  await findOneTeacher({teacherId:lesson.teacherId})
   const attendance = {
-    attendanceID:randomUUID().replaceAll('-',''),
+    attendanceId:randomUUID().replaceAll('-',''),
     attendanceDate:moment().format('YYYYMMDD'),
     attendanceTime:moment().format('HHmmss'),
     attendanceType:'manual',
@@ -335,5 +362,8 @@ app.post('/consumer/leave',jsonParser,async(req,res)=>{
   const result = await saveAttendance(attendance);
   contract.lessonAccumulationQuantity=contract.lessonAccumulationQuantity+1;
   await saveContract(contract)
+}catch (e){
+  res.send({status:'fail',msg:'未知异常'})
+}
   res.send({status:'success'})
 })
