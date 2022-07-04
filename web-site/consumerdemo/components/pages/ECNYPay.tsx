@@ -25,7 +25,7 @@ const ECNYPay =()=>{
     .then((json) => {
       setContract(json.result)
     })
-  })
+  },[])
 
 
   return <IonPage>

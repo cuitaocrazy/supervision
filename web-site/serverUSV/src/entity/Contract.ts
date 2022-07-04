@@ -43,17 +43,17 @@ export class Contract {
     @Column()
     lessonAttendanceType: string
     @Column()
-    lessionTotalQuantity: number
+    lessonTotalQuantity: number
     @Column({
         precision: 12,
         scale: 0
     })
-    lessionTotalPrice: number
+    lessonTotalPrice: number
     @Column({
         precision: 12,
         scale: 0
     })
-    lessionPerPrice: number
+    lessonPerPrice: number
     @Column()
     teacherId: string
     @Column()
@@ -66,5 +66,8 @@ export class Contract {
     consumerStuName: string
     @Column()
     orderNo: string
+    @Column()
+    lessonAccumulationQuantity: string
+    
 
 }

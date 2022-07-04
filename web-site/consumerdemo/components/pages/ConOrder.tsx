@@ -55,7 +55,7 @@ const ConOrder = () => {
             请选择学生
           </div>
           <div className='grid items-center grid-cols-2 py-3 pl-2 mt-3 text-base bg-white rounded-lg shadow-md'>
-            <div className='items-center justify-center font-medium text-gray-700'> {state.studentName?state.studentName:'可新增或修改学生信息'}</div>
+            <div className='items-center justify-center font-medium text-gray-700'> {state.stuName?state.stuName:'可新增或修改学生信息'}</div>
             <Link to='/stuInfoList'>
             <a className='mr-2 cursor-pointer justify-self-end' >
               <svg className="w-5 h-5 text-gray-500" width="24" height="24" viewBox="0 0 24 24" strokeWidth="3" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">  <path stroke="none" d="M0 0h24v24H0z" />  <polyline points="9 6 15 12 9 18" /></svg>

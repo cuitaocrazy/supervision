@@ -2,6 +2,8 @@ import { EduLesson } from '../entity/EduLesson'
 import { Contract } from '../entity/Contract'
 import { EduOrg } from '../entity/EduOrg'
 import { EduTeacher } from '../entity/EduTeacher'
+import { Attendance } from '../entity/Attendance'
+
 import mysql from '../mysql'
 import e = require('express')
 
@@ -12,8 +14,23 @@ export const searchLesson =  async ({ page, size,searchValue }) => {
     return result
 }
 
-export const createContract =  async (contract) => {
+export const searchContract =  async ({ page, size,searchValue }) => {
+    const result = await mysql.getRepository(Contract).findBy(searchValue)
+    return result
+}
+
+export const saveContract =  async (contract) => {
     const result = await mysql.getRepository(Contract).save(contract)
+    return result
+}
+
+export const findOneContract = async ({ contractId }) => {
+    const result = await mysql.getRepository(Contract).findOneBy({
+        contractId: contractId
+    })
+
+    if (result === null)
+    throw e;
     return result
 }
 
@@ -46,5 +63,11 @@ export const findOneTeacher = async ({ teacherId }) => {
     throw e;
     return result
 }
+
+export const saveAttendance =  async (attendance) => {
+    const result = await mysql.getRepository(Attendance).save(attendance)
+    return result
+}
+
 
 

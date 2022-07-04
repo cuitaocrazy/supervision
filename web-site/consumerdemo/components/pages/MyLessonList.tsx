@@ -79,14 +79,14 @@ useEffect(()=>{
   .then((json) => {
     setOrderList(json.result)
   })
-})
+},[])
   return <IonPage>
     <IonHeader>
       <Navbar title="课程列表" />
     </IonHeader>
     <IonContent>
       {orderList.map((item, index) => {
-        return <LessonListCard key={index} lessonImages={item.lessonImages} lessonName={item.lessonName} consumerStuName={item.consumerStuName} lessonTotalQuantity={item.lessonTotalQuantity} lessonCompletedQuantity={item.lessonCompletedQuantity} item={item} />
+        return <LessonListCard key={index} lessonImages={item.lessonImages} lessonName={item.lessonName} consumerStuName={item.consumerStuName} lessonTotalQuantity={item.lessonTotalQuantity} lessonCompletedQuantity={item.lessonAccumulationQuantity} item={item} />
       })}
     </IonContent>
   </IonPage>

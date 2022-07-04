@@ -30,7 +30,7 @@ export interface Contract {
   consumerName?:string,
   consumerStuName?:string,
   orderNo?:string,
-  lessonCompletedQuantity?:number,
+  lessonAccumulationQuantity?:number,
   lessonImages?:string,
 
 }
