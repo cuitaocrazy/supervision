@@ -98,7 +98,7 @@ const ContractNegoQuery: React.FC = () => {
   }) => (
     <tr
       key={myKey}
-      className="grid items-center grid-cols-4 gap-10 text-gray-600 border justify-items-center even:bg-primary-100 odd:bg-white "
+      className="grid items-center grid-cols-4 gap-10 text-gray-600 border justify-items-center even:bg-white odd:bg-primary-100 "
     >
       <td className="flex items-center justify-center leading-10">
         {lesson.lessonId}

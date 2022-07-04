@@ -161,7 +161,7 @@ const TransferQuery: React.FC = () => {
   }) => (
     <tr
       key={key}
-      className="grid items-center grid-cols-9 gap-2 text-gray-600 border justify-items-center even:bg-primary-100 odd:bg-white "
+      className="grid items-center grid-cols-9 gap-2 text-gray-600 border justify-items-center even:bg-white odd:bg-primary-100"
     >
       <td className="flex items-center justify-center leading-10">
         {transfer.eduName}
@@ -282,7 +282,8 @@ const TransferQuery: React.FC = () => {
                 <th className="flex items-center justify-center">课程名称</th>
                 <th className="flex items-center justify-center">客户姓名</th>
                 <th className="flex items-center justify-center">考勤日期</th>
-th                <th className="flex items-center justify-center">划拨金额</th>
+                <th className="flex items-center justify-center">考勤时间</th>
+                <th className="flex items-center justify-center">划拨金额</th>
                 <th className="flex items-center justify-center">划拨结果</th>
                 <th className="flex items-center justify-center">操作</th>
               </tr>
