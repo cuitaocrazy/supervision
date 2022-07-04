@@ -1,14 +1,23 @@
 //手工退课
-import React, { useState } from "react";
+import React, { useState, Fragment } from "react";
 import { useEffect, useCallback, useContext } from "react";
 import { IonPage, IonModal, IonRow, IonCol, IonLabel } from "@ionic/react";
 import { AppContext, setAttendenceLanuchList } from "../../../appState";
 import { Lesson } from "../../../types/types";
 import moment from "moment";
+import { Dialog, Transition } from "@headlessui/react";
 
 const queryURL = "http://localhost:3003/edu/lesson/find";
 
 const ContractNegoQuery: React.FC = () => {
+  let [isAttendanceOpen, setIsAttendanceOpen] = useState(false)
+  function closeAttendanceModal() {
+    setIsAttendanceOpen(false)
+  }
+  function openAttendanceModal() {
+    setIsAttendanceOpen(true)
+  }
+
   const { state, dispatch } = useContext(AppContext);
   const [queryInfo, setQueryInfo] = useState({ lessonName: "" });
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -103,7 +112,8 @@ const ContractNegoQuery: React.FC = () => {
               className="p-1 text-primary-600"
               onClick={() => {
                 setDetail(lesson);
-                setIsModalOpen(true);
+                // setIsModalOpen(true);
+                openAttendanceModal()
               }}
             >
               发起签到
@@ -175,7 +185,140 @@ const ContractNegoQuery: React.FC = () => {
             </IonRow>
           </div>
         </div>
-        <IonModal
+        <Transition appear show={isAttendanceOpen} as={Fragment}>
+          <Dialog as="div" className="relative z-10" onClose={closeAttendanceModal}>
+            <Transition.Child
+              as={Fragment}
+              enter="ease-out duration-300"
+              enterFrom="opacity-0"
+              enterTo="opacity-100"
+              leave="ease-in duration-200"
+              leaveFrom="opacity-100"
+              leaveTo="opacity-0"
+            >
+              <div className="fixed inset-0 bg-black bg-opacity-25" />
+            </Transition.Child>
+
+            <div className="fixed inset-0 overflow-y-auto">
+              <div className="flex items-center justify-center min-h-full p-4 text-center">
+                <Transition.Child
+                  as={Fragment}
+                  enter="ease-out duration-300"
+                  enterFrom="opacity-0 scale-95"
+                  enterTo="opacity-100 scale-100"
+                  leave="ease-in duration-200"
+                  leaveFrom="opacity-100 scale-100"
+                  leaveTo="opacity-0 scale-95"
+                >
+                  <Dialog.Panel className="w-full max-w-md p-4 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
+                    <Dialog.Title
+                      as="h3"
+                      className="text-lg font-medium leading-6 text-center text-gray-900"
+                    >
+                      课程签到发起
+                      <hr className="mt-2 mb-4" />
+                    </Dialog.Title>
+                    <form
+                      onSubmit={onManual}
+                      className="flex flex-col items-center rounded-lg justify-items-center"
+                    >
+                      <div className="flex items-center mb-4 justify-items-center">
+                        <div className="flex leading-7 justify-items-center">
+                          <div className="flex justify-end p-1 w-36">
+                            课程ID:
+                          </div>
+                          <input
+                            className="w-64 p-1 text-gray-600 bg-gray-100 border rounded-md justify-self-start focus:outline-none"
+                            name="eduId"
+                            type="text"
+                            value={detail.lessonId}
+                            readOnly
+                          ></input>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center mb-4 justify-items-center">
+                        <div className="flex justify-items-center">
+                          <span className="flex justify-end p-1 mr-1 w-36">
+                            课程名称:
+                          </span>
+                          <input
+                            className="w-64 p-1 text-gray-600 bg-gray-100 border rounded-md justify-self-start focus:outline-none"
+                            name="lessonName"
+                            type="text"
+                            value={detail.lessonName}
+                            readOnly
+                          ></input>
+                        </div>
+                      </div>
+                      <div className="flex items-center mb-4 justify-items-center">
+                        <div className="flex justify-items-center">
+                          <span className="flex justify-end p-1 mr-1 w-36">
+                            上课日期:
+                          </span>
+                          <input
+                            type="date"
+                            defaultValue={moment().format("YYYY-MM-DD")}
+                            onChange={(e) => setDetail({ ...detail, date: e.target.value })}
+                            className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none"
+                            readOnly
+                          ></input>
+                        </div>
+                      </div>
+                      <div className="flex items-center mb-4 justify-items-center">
+                        <div className="flex justify-items-center">
+                          <span className="flex justify-end p-1 mr-1 w-36">
+                            上课时间:
+                          </span>
+                          <input
+                            type="time"
+                            defaultValue={moment().format("HH:mm")}
+                            onChange={(e) => {
+                              console.log(e.target.value);
+                              setDetail({ ...detail, time: e.target.value });
+                            }}
+                            className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none"
+                            readOnly
+                          ></input>
+                        </div>
+                      </div>
+                      <div className="flex items-center mb-4 justify-items-center">
+                        <div className="flex justify-items-center">
+                          <span className="flex justify-end p-1 mr-1 w-36">
+                            本次课时:
+                          </span>
+                          <input
+                            type="number"
+                            className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
+                            value={detail.times}
+                            onChange={(e) =>
+                              setDetail({ ...detail, times: e.nativeEvent.target?.value })
+                            }
+                            placeholder="请输入本次课时"
+                          />
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-4 mt-2 justify-items-center">
+                        <input
+                          value="取消"
+                          type="button"
+                          className="px-6 py-2 border rounded-md "
+                          onClick={() => setIsModalOpen(false)}
+                        />
+                        <input
+                          value="确定"
+                          type="button"
+                          className="px-6 py-2 text-white border rounded-md bg-primary-600"
+                        />
+                      </div>
+                    </form>
+                  </Dialog.Panel>
+                </Transition.Child>
+              </div>
+            </div>
+          </Dialog>
+        </Transition>
+        {/* <IonModal
           isOpen={isModalOpen}
           onDidDismiss={async () => {
             setIsModalOpen(false);
@@ -255,7 +398,7 @@ const ContractNegoQuery: React.FC = () => {
               />
             </div>
           </form>
-        </IonModal>
+        </IonModal> */}
         <div className="absolute w-full mt-10">
           <table className="w-11/12 ">
             <thead>
