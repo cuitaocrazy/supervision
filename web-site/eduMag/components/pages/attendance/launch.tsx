@@ -7,6 +7,7 @@ import { Lesson } from "../../../types/types";
 import moment from "moment";
 
 const queryURL = "http://localhost:3003/edu/lesson/find";
+const attendanceApplyURL = "http://localhost:3003/edu/attendance/apply";
 
 const ContractNegoQuery: React.FC = () => {
   const { state, dispatch } = useContext(AppContext);
@@ -41,6 +42,18 @@ const ContractNegoQuery: React.FC = () => {
 
   const onManual = () => {
     //todo fetch
+    fetch(attendanceApplyURL, {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json;charset=UTF-8",
+      },
+      body: JSON.stringify({ lessionId: "" }),
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        const { result, records } = json;
+        if (result) refreshList(records);
+      });
     console.log("提交");
   };
 
@@ -77,14 +90,14 @@ const ContractNegoQuery: React.FC = () => {
 
   const ListEntry = ({
     lesson,
-    key,
+    myKey,
     ...props
   }: {
     lesson: Lesson;
-    key: any;
+    myKey: any;
   }) => (
     <tr
-      key={key}
+      key={myKey}
       className="grid items-center grid-cols-4 gap-10 text-gray-600 border justify-items-center even:bg-primary-100 odd:bg-white "
     >
       <td className="flex items-center justify-center leading-10">
@@ -181,7 +194,7 @@ const ContractNegoQuery: React.FC = () => {
             setIsModalOpen(false);
           }}
         >
-          <form onSubmit={onManual}>
+          <form>
             <legend className="mt-2 font-bold text-center">
               课程签到发起确认
             </legend>
@@ -249,6 +262,7 @@ const ContractNegoQuery: React.FC = () => {
                 className="flex px-6 py-2 border rounded-md"
               />
               <input
+                onClick={onManual}
                 value="确定"
                 type="button"
                 className="px-4 py-2 text-white border rounded-md bg-primary-600"
@@ -269,7 +283,7 @@ const ContractNegoQuery: React.FC = () => {
             <tbody>
               {state.attendenceLanuch?.attendenceLanuchList?.map(
                 (list: Lesson, i: any) => (
-                  <ListEntry lesson={list} key={i} />
+                  <ListEntry lesson={list} key={i} myKey={i} />
                 )
               )}
             </tbody>
