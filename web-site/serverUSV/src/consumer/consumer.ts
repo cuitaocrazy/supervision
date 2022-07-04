@@ -3,6 +3,7 @@ import { Contract } from '../entity/Contract'
 import { EduOrg } from '../entity/EduOrg'
 import { EduTeacher } from '../entity/EduTeacher'
 import { Attendance } from '../entity/Attendance'
+import {Transfer} from '../entity/Transfer'
 
 import mysql from '../mysql'
 import e = require('express')
@@ -24,9 +25,26 @@ export const saveContract =  async (contract) => {
     return result
 }
 
+export const saveTransfer = async (transfer) => {
+    const result = await mysql.getRepository(Transfer).save(transfer)
+    return result
+}
+
+
 export const findOneContract = async ({ contractId }) => {
     const result = await mysql.getRepository(Contract).findOneBy({
         contractId: contractId
+    })
+    if (result === null)
+    throw e;
+    return result
+}
+
+export const findOneAttendance = async ({ lessonId,consumerId,lessonQuantity }) => {
+    const result = await mysql.getRepository(Attendance).findOneBy({
+        lessonId: lessonId,
+        consumerId:consumerId,
+        attendanceLessonQuantity:lessonQuantity
     })
 
     if (result === null)

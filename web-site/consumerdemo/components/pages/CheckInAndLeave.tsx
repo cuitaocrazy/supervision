@@ -12,7 +12,7 @@ const CheckInAndLeave = () => {
   const [date,setDate] = useState(moment().format('YYYY年MM月DD日'))
   const [time,setTime] = useState(moment().format('HH:mm:ss'))
   const [back,setBack] = useState(null as unknown)
-  console.log(back)
+  console.log(state.contractDetail.lessonAccumulationQuantity)
   if(back){
     return <Redirect to={back as string}></Redirect>
   }
@@ -84,7 +84,7 @@ const CheckInAndLeave = () => {
         </div>
         <div className='mt-6 text-sm text-gray-500'>
           <div className='inline'>【{state.contractDetail.lessonName}】第</div>
-          <div className='inline'>{state.contractDetail.lessonCompletedQuantity+1}</div>
+          <div className='inline'>{state.contractDetail.lessonAccumulationQuantity+1}</div>
           <div className='inline'>课即将开课，请您尽快签到！</div>
         </div>
       </div>

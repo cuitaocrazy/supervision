@@ -15,7 +15,7 @@ export class Attendance {
     @Column()
     attendanceType: string
     @Column()
-    attendanceLessionQuantity: number
+    attendanceLessonQuantity: number
     @Column()
     eduId: string
     @Column()
