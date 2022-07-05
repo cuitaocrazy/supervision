@@ -86,7 +86,7 @@ const OrderQuery = () => {
   useEffect(onQuery, []);
   return (
     <IonPage className="bg-gray-100">
-      <div className="relative w-full mx-6 overflow-y-auto">
+      <div className="relative w-full h-screen mx-6 overflow-auto">
         <div className="flex pt-2 my-2 text-gray-800">
           <div className="mr-2 text-gray-600">
             <svg
