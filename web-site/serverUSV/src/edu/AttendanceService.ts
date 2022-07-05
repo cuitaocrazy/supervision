@@ -15,16 +15,18 @@ class AttendanceService {
             lessonId: req.lessionId
         })
         // TODO 未测试
-        await mysql.transaction(async (manager) => {
-            contracts.forEach(async contract => {
-                const uuid = await manager.query('SELECT REPLACE(UUID(),\'-\',\'\')')
-                const attendance = {
-                    ...new Attendance(), ...req, ...contract, ...{ attendanceId: uuid }
+        const records = await mysql.transaction(async (manager) => {
+            return contracts.map(async contract => {
+                const rs = await manager.query(`SELECT REPLACE(UUID(),'-','') as uuid`)
+                console.log(rs[0].uuid)
+                const attendance: Attendance = {
+                    ...new Attendance(), ...req, ...contract, attendanceId: rs[0].uuid
                 }
-                await manager.save(attendance)
+                const attendanceRepo = manager.getRepository(Attendance)
+                return await attendanceRepo.insert(attendance)
             })
         })
-        return { result: true, msg: '发起打卡' }
+        return { result: true, msg: '发起打卡', applyCount: records.length }
     }
 
 }
