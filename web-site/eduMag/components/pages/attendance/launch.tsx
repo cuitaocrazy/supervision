@@ -260,7 +260,6 @@ const ContractNegoQuery: React.FC = () => {
                               })
                             }
                             className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none"
-                            readOnly
                           ></input>
                         </div>
                       </div>
@@ -279,7 +278,6 @@ const ContractNegoQuery: React.FC = () => {
                               });
                             }}
                             className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none"
-                            readOnly
                           ></input>
                         </div>
                       </div>
@@ -295,7 +293,9 @@ const ContractNegoQuery: React.FC = () => {
                             onChange={(e) =>
                               setAttendance({
                                 ...attendance,
-                                attendanceLessionQuantity: e.target.value,
+                                attendanceLessionQuantity: parseInt(
+                                  e.target.value
+                                ),
                               })
                             }
                             placeholder="请输入本次课时"
