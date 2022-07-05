@@ -88,6 +88,7 @@ const demoList: EduOrg[] = [
 
 // 课程查询页面
 const OrgMagQuery: React.FC = () => {
+  // 课程新增dialog页面状态
   let [isCreateOpen, setIsCreateOpen] = useState(false)
   function closeCreateModal() {
     setIsCreateOpen(false)
@@ -95,7 +96,7 @@ const OrgMagQuery: React.FC = () => {
   function openCreateModal() {
     setIsCreateOpen(true)
   }
-
+// 加入黑名单dialog页面状态
   let [isBlackeOpen, setIsBlackOpen] = useState(false)
   function closeBlackModal() {
     setIsBlackOpen(false)
@@ -160,7 +161,6 @@ const OrgMagQuery: React.FC = () => {
 
   const { state, dispatch } = useContext(AppContext);
   const [queryInfo, setQueryInfo] = useState({ eduName: '' })
-  const [isModalOpen, setIsModalOpen] = useState(false)
   const [eduOrgState, setEduOrgState] = useState({} as EduOrg);
   const onCreate = async (e: React.FormEvent) => () => {
     e.preventDefault();
@@ -243,32 +243,11 @@ const OrgMagQuery: React.FC = () => {
           <button className='p-1 text-cyan-600' onClick={onCancel(eduOrg)}>删除</button>
           <button className='p-1 text-red-600' onClick={onEdit(eduOrg)}>编辑</button>
           <button className='p-1 text-fuchsia-600' 
-          // onClick={onCancel(eduOrg)}
           onClick={openBlackModal}
           >加入黑名单</button>
         </div>
       </td>
     </tr>
-    // <IonItem key={key} >
-    //   <IonLabel>
-    //     <p className='text-center'>{eduOrg.eduId}</p>
-    //   </IonLabel>
-    //   <IonLabel>
-    //     <p  className='text-center'>{eduOrg.eduName}</p>
-    //   </IonLabel>
-    //   <IonLabel>
-    //     <p  className='text-center'>{eduOrg.eduStatus}</p>
-    //   </IonLabel>
-    //   <IonLabel>
-    //      <div className='flex gap-2'>
-
-    //         <button className='p-1 text-white bg-blue-500 rounded-md'  onClick={onDetail(eduOrg)}>详情</button>
-    //         <button className='p-1 text-white bg-blue-500 rounded-md' onClick={onCancel(eduOrg)}>删除</button>
-    //         <button className='p-1 text-white bg-blue-500 rounded-md' onClick={onEdit(eduOrg)}>编辑</button>
-    //         <button className='p-1 text-white bg-blue-500 rounded-md' onClick={onCancel(eduOrg)}>加入黑名单</button>  
-    //      </div>
-    //   </IonLabel>
-    // </IonItem>
   );
   if (state.eduOrg.eduOrgDetail) {
     return <Redirect to="/tabs/orgMag/detail" />
@@ -327,12 +306,6 @@ const OrgMagQuery: React.FC = () => {
               </button>
               <button
                 className="w-24 h-12 rounded-md shadow-md bg-gray-50 text-primary-600 focus:bg-gray-200"
-                // onClick={() => {
-                //   setCreateModalOpen(true);
-                // }}
-                // onClick={() => {
-                //   setIsModalOpen
-                // }}
                 onClick={openCreateModal}
               >
                 新增
@@ -341,101 +314,6 @@ const OrgMagQuery: React.FC = () => {
           </IonRow>
         </div>
       </div>
-      {/* <IonCard>
-                    <IonCardHeader>
-                        <IonCardTitle>快速查询</IonCardTitle>
-                    </IonCardHeader>
-                    <IonCardContent>
-                    <IonModal isOpen={isModalOpen}>
-                        < IonCardContent>
-                          <form onSubmit={onCreate}>
-                              <IonList>
-                                <IonItem>
-                                  <IonLabel position="floating">教育机构名称</IonLabel>
-                                  <IonInput name="eduName" value={eduOrgState.eduName} onIonChange={e => setEduOrgState({...eduOrgState, eduName: e.detail.value!})}></IonInput>
-                                </IonItem>
-                                <IonItem>
-                                  <IonLabel position="floating">教育机构地址</IonLabel>
-                                  <IonInput name="eduAddress" value={eduOrgState.eduAddress} onIonChange={e => setEduOrgState({...eduOrgState, eduAddress: e.detail.value!})}></IonInput>
-                                </IonItem>
-                                <IonItem>
-                                  <IonLabel position="floating">教育机构法人</IonLabel>
-                                  <IonInput name="eduLegalPerson" value={eduOrgState.eduLegalPerson} onIonChange={e => setEduOrgState({...eduOrgState, eduLegalPerson: e.detail.value!})}></IonInput>
-                                </IonItem>
-                                <IonItem>
-                                  <IonLabel position="floating">教育机构法人联系方式</IonLabel>
-                                  <IonInput name="eduLegalPhone" value={eduOrgState.eduLegalPhone} onIonChange={e => setEduOrgState({...eduOrgState, eduLegalPhone: e.detail.value!})}></IonInput>
-                                </IonItem>
-                                <IonItem>
-                                  <IonLabel position="floating">教育机构联系人</IonLabel>
-                                  <IonInput name="eduContact" value={eduOrgState.eduContact} onIonChange={e => setEduOrgState({...eduOrgState, eduContact: e.detail.value!})}></IonInput>
-                                </IonItem>
-                                <IonItem>
-                                  <IonLabel position="floating">教育机构法人联系方式</IonLabel>
-                                  <IonInput name="eduContactPhone" value={eduOrgState.eduContactPhone} onIonChange={e => setEduOrgState({...eduOrgState, eduContactPhone: e.detail.value!})}></IonInput>
-                                </IonItem>
-                                <IonItem>
-                                  <IonLabel position="floating" >是否公立</IonLabel>
-                                  <IonRadioGroup onIonChange={e => setEduOrgState({...eduOrgState, eduIsPublic: e.detail.value!})}>
-                                        <IonItem>
-                                        <IonLabel>公立</IonLabel>
-                                        <IonRadio value={true} />
-                                      </IonItem>
-                                      <IonItem>
-                                        <IonLabel>非公立</IonLabel>
-                                        <IonRadio value={false} />
-                                      </IonItem>
-                                    </IonRadioGroup>
-                                  </IonItem>
-                                <IonItem>
-                                  <IonLabel position="floating">教育机构</IonLabel>
-                                  <IonInput name="eduLicense" value={eduOrgState.eduLicense} onIonChange={e => setEduOrgState({...eduOrgState, eduLicense: e.detail.value!})}></IonInput>
-                                </IonItem>
-                                <IonItem>
-                                  <IonLabel position="floating">监管账户</IonLabel>
-                                  <IonInput name="eduSupervisedAccount" value={eduOrgState.eduSupervisedAccount} onIonChange={e => setEduOrgState({...eduOrgState, eduSupervisedAccount: e.detail.value!})}></IonInput>
-                                </IonItem>
-                                <IonItem>
-                                  <IonLabel position="floating">普通账户</IonLabel>
-                                  <IonInput name="eduSupervisedAccount" value={eduOrgState.eduSupervisedAccount} onIonChange={e => setEduOrgState({...eduOrgState, eduSupervisedAccount: e.detail.value!})}></IonInput>
-                                </IonItem>
-                                <IonItem>
-                                  <IonLabel position="floating">普通账户</IonLabel>
-                                  <IonInput name="eduSupervisedAccount" value={eduOrgState.eduSupervisedAccount} onIonChange={e => setEduOrgState({...eduOrgState, eduSupervisedAccount: e.detail.value!})}></IonInput>
-                                </IonItem>
-                                <IonItem>
-                                  <IonLabel position="floating">支付商户号</IonLabel>
-                                  <IonInput name="eduSupervisedMerNo" value={eduOrgState.eduSupervisedMerNo} onIonChange={e => setEduOrgState({...eduOrgState, eduSupervisedMerNo: e.detail.value!})}></IonInput>
-                                </IonItem>
-                                <IonItem>
-                                  <IonLabel position="floating">登录名称</IonLabel>
-                                  <IonInput name="eduLoginName" value={eduOrgState.eduLoginName} onIonChange={e => setEduOrgState({...eduOrgState, eduLoginName: e.detail.value!})}></IonInput>
-                                </IonItem>
-                                </IonList>
-
-                            <IonItem className="">
-                            <IonButton className="m-5 text-base " type='submit' fill="solid">提交</IonButton>
-                              <IonButton className="m-5 text-base " onClick={()=>setIsModalOpen(false)} fill="solid">返回</IonButton>
-                            </IonItem>
-                          </form>
-                        </IonCardContent>
-                    </IonModal>
-                    <IonRow className='flex justify-between '>
-                        <IonCol className='flex ml-8'>
-                          <IonLabel className='flex h-12 p-2 font-bold text-center text-primary-600 w-28'>教育机构名称：</IonLabel>
-                          <input type='text' className="flex w-56 h-12 pt-2.5 font-bold text-center text-primary-600 bg-white rounded-md focus:outline-none focus:glow-secondary-500" onChange={e=>setQueryInfo({...queryInfo,...{eduName:e.target.value}})} />
-                        </IonCol>
-                        <IonCol className='flex ml-8'> 
-                          <button onClick={()=>onQuery()} >查询</button>
-                        </IonCol>
-                        <IonCol className='flex ml-8'> 
-                            <IonButton onClick={()=>setIsModalOpen(true)}>
-                              新增
-                            </IonButton>
-                        </IonCol>
-                    </IonRow>
-                    </IonCardContent>
-                  </IonCard> */}
 
       {/* 新增教育机构模态框 */} 
       <Transition appear show={isCreateOpen} as={Fragment}>
@@ -468,7 +346,7 @@ const OrgMagQuery: React.FC = () => {
                     as="h3"
                     className="text-lg font-medium leading-6 text-center text-gray-900"
                   >
-                    加入黑名单
+                    新增教育机构
                     <hr className="mt-2 mb-4" />
                   </Dialog.Title>
                   <form
@@ -647,12 +525,13 @@ const OrgMagQuery: React.FC = () => {
                         value="返回"
                         type="button"
                         className="px-6 py-2 border rounded-md "
-                        onClick={()=>setIsModalOpen(false)}
+                        onClick={closeCreateModal}
                       />
                       <input
                         value="提交"
                         type="button"
                         className="px-6 py-2 text-white border rounded-md bg-primary-600"
+                        onClick={closeCreateModal}
                       />
                     </div>
                   </form>
@@ -694,7 +573,7 @@ const OrgMagQuery: React.FC = () => {
                     as="h3"
                     className="text-lg font-medium leading-6 text-center text-gray-900"
                   >
-                    教育机构新增
+                    加入黑名单
                     <hr className="mt-2 mb-4" />
                   </Dialog.Title>
                   <form
@@ -750,12 +629,13 @@ const OrgMagQuery: React.FC = () => {
                         value="返回"
                         type="button"
                         className="px-6 py-2 border rounded-md "
-                        onClick={()=>setIsModalOpen(false)}
+                        onClick={closeBlackModal}
                       />
                       <input
                         value="提交"
                         type="button"
                         className="px-6 py-2 text-white border rounded-md bg-primary-600"
+                        onClick={closeBlackModal}
                       />
                     </div>
                   </form>
@@ -766,7 +646,7 @@ const OrgMagQuery: React.FC = () => {
         </Dialog>
       </Transition>
       
-
+      {/* 列表 */}
       <div className='absolute w-full mt-10'>
         <table className="w-11/12">
           <thead>
