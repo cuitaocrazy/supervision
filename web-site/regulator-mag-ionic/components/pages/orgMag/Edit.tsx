@@ -93,16 +93,17 @@ export const EduOrgEdit: React.FC = () => {
                   name="eduName"
                   value={eduOrgState.eduName} 
                   onChange={e => setEduOrgState({...eduOrgState, eduName: e.nativeEvent.target?.value})}
+                  required
                 />
               </div>
               <div className="flex mb-4 leading-10">
-                <div className="flex justify-end w-32 mr-2">教育机构城市:</div>
+                {/* <div className="flex justify-end w-32 mr-2">教育机构城市:</div>
                 <input
                   className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
                   name="eduAddress"
                   value={eduOrgState.eduAddress}
-                  readOnly
-                />
+                  required
+                /> */}
               </div>
               <div className="flex mb-4 leading-10">
                 <div className="flex justify-end w-32 mr-2">
@@ -113,7 +114,7 @@ export const EduOrgEdit: React.FC = () => {
                   name="eduAddress"
                   value={eduOrgState.eduAddress} 
                   onChange={e => setEduOrgState({...eduOrgState, eduAddress: e.nativeEvent.target?.value})}
-                  readOnly
+                  required
                 />
               </div>
               <div className="flex mb-4 leading-10">
@@ -123,7 +124,7 @@ export const EduOrgEdit: React.FC = () => {
                   name="eduLegalPerson"
                   value={eduOrgState.eduLegalPerson} 
                   onChange={e => setEduOrgState({...eduOrgState, eduLegalPerson: e.nativeEvent.target?.value})}
-                  readOnly
+                  required
                 />
               </div>
 
@@ -133,7 +134,7 @@ export const EduOrgEdit: React.FC = () => {
                   name="eduLegalPhone"
                   value={eduOrgState.eduLegalPhone}  
                   onChange={e => setEduOrgState({...eduOrgState, eduLegalPhone: e.nativeEvent.target?.value})}
-                  readOnly
+                  required
                 />
               </div>
               <div className="flex mb-4 leading-10">
@@ -142,7 +143,7 @@ export const EduOrgEdit: React.FC = () => {
                   className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
                   name="Public" 
                   onChange={e => setEduOrgState({...eduOrgState, eduIsPublic: e.nativeEvent.target?.value})}
-                  readOnly
+                  required
                 />
               </div>
               <div className="flex mb-4 leading-10">
@@ -150,7 +151,7 @@ export const EduOrgEdit: React.FC = () => {
                 <input
                   className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
                   name="Public"
-                  readOnly
+                  required
                 />
               </div>
               <div className="flex mb-4 leading-10">
@@ -160,7 +161,7 @@ export const EduOrgEdit: React.FC = () => {
                   name="eduAnnualInspection" 
                   value={eduOrgState.eduAnnualInspection}
                   onChange={e => setEduOrgState({...eduOrgState, eduAnnualInspection: e.nativeEvent.target?.value})}
-                  readOnly
+                  required
                 />
               </div>
               <div className="flex mb-4 leading-10">
@@ -170,7 +171,7 @@ export const EduOrgEdit: React.FC = () => {
                   name="Public" 
                   value={eduOrgState.eduAnnualInspectionDate} 
                   onChange={e => setEduOrgState({...eduOrgState, eduAnnualInspectionDate: e.nativeEvent.target?.value})}
-                  readOnly
+                  required
                 />
               </div>
               <div className="flex mb-4 leading-10">
@@ -180,7 +181,7 @@ export const EduOrgEdit: React.FC = () => {
                   name="eduAnnualInspectionTime" 
                   value={eduOrgState.eduAnnualInspectionTime}
                   onChange={e => setEduOrgState({...eduOrgState, eduAnnualInspectionTime: e.nativeEvent.target?.value})}
-                  readOnly
+                  required
                 />
               </div>
               <div className="flex mb-4 leading-10">
@@ -190,7 +191,7 @@ export const EduOrgEdit: React.FC = () => {
                   name="eduSupervisedAccount" 
                   value={eduOrgState.eduSupervisedAccount}
                   onChange={e => setEduOrgState({...eduOrgState, eduSupervisedAccount: e.nativeEvent.target?.value})}
-                  readOnly
+                  required
                 />
               </div>
               <div className="flex mb-4 leading-10">
@@ -200,7 +201,7 @@ export const EduOrgEdit: React.FC = () => {
                   name="normalAccount" 
                   value={eduOrgState.normalAccount}
                   onChange={e => setEduOrgState({...eduOrgState, normalAccount: e.nativeEvent.target?.value})}
-                  readOnly
+                  required
                 />
               </div>
               <div className="flex mb-4 leading-10">
@@ -210,7 +211,7 @@ export const EduOrgEdit: React.FC = () => {
                   name="eduAnnualInspectionTime" 
                   value={eduOrgState.eduLoginName}
                   onChange={e => setEduOrgState({...eduOrgState, eduLoginName: e.nativeEvent.target?.value})}
-                  readOnly
+                  required
                 />
               </div>
               <div className="flex mb-4 leading-10">
@@ -220,7 +221,7 @@ export const EduOrgEdit: React.FC = () => {
                   name="eduSupervisedMerNo" 
                   value={eduOrgState.eduSupervisedMerNo}
                   onChange={e => setEduOrgState({...eduOrgState, eduSupervisedMerNo: e.nativeEvent.target?.value})}
-                  readOnly
+                  required
                 />
               </div>
               <div className="flex mb-4 leading-10">
@@ -230,7 +231,7 @@ export const EduOrgEdit: React.FC = () => {
                   name="Public" 
                   value={eduOrgState.supervisorOrgId}
                   onChange={e => setEduOrgState({...eduOrgState, supervisorOrgId: e.nativeEvent.target?.value})}
-                  readOnly
+                  required
                 />
               </div>
               <div className="flex mb-4 leading-10">
@@ -239,7 +240,7 @@ export const EduOrgEdit: React.FC = () => {
                   className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
                   name="eduAnnualInspectionTime" 
                   value={'否'} 
-                  readOnly
+                  required
                 />
               </div>
             </div>

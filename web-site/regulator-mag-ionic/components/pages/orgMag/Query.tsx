@@ -270,7 +270,6 @@ const OrgMagQuery: React.FC = () => {
     //   </IonLabel>
     // </IonItem>
   );
-  console.log(state.eduOrg)
   if (state.eduOrg.eduOrgDetail) {
     return <Redirect to="/tabs/orgMag/detail" />
   }

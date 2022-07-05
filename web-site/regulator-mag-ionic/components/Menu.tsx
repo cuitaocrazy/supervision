@@ -68,7 +68,7 @@ const Menu = () => {
     <IonMenu hidden={false} side="start" contentId="main" onIonDidOpen={handleOpen} onIonDidClose={handleClose}>
       <IonHeader >
         <IonToolbar>
-          <IonTitle className="text-center">教育资金监管管理端</IonTitle>
+          <IonTitle className="py-4 text-center text-white bg-primary-500">教育资金监管管理端</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>
