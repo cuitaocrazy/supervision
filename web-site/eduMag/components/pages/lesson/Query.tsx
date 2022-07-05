@@ -1,5 +1,12 @@
 //Lesson的查询页面
-import { useEffect, useCallback, useContext, useState, useRef, Fragment } from "react";
+import {
+  useEffect,
+  useCallback,
+  useContext,
+  useState,
+  useRef,
+  Fragment,
+} from "react";
 import { Redirect } from "react-router-dom";
 import {
   AppContext,
@@ -31,95 +38,25 @@ import RichText from "components/components/RichText";
 import { EditorState } from "draft-js";
 import { Dialog, Transition } from "@headlessui/react";
 
-const queryURL = "http://localhost:3003/lesson/query";
-const delURL = "http://localhost:3003/lesson/del";
-const modifyURL = "http://localhost:3003/lesson/modifyURL";
-const attendURL = "http://localhost:3003/lesson/attend";
 const findAll = "http://localhost:3003/edu/lesson/findAll";
 const find = "http://localhost:3003/edu/lesson/find";
-const demoLessonList: Lesson[] = [
-  {
-    lessonId: "2",
-    lessonName: "第二课",
-    lessonPerPrice: "12",
-    lessonTotalTimes: "10",
-    lessonTotalPrice: "120",
-    lessonIntroduce: "第二课程介绍",
-    lessonType: "第二课程类型",
-    lessonOutline: "第二课程大纲",
-    lessonStartDate: "2020-01-01",
-    lessonStartTime: "00:00:00",
-    lessonEndDate: "2021-01-01",
-    lessonEndTime: "00:00:00",
-    lessonStatus: "pending",
-    lessonCreateDate: "2020-01-01",
-    lessonCreateTime: "00:00:00",
-    lessonUpdateDate: "2020-01-01",
-    lessonUpdateTime: "00:00:00",
-    lessonUpdateReason: "第二课程更新原因",
-    eduId: "1",
-    edu: {
-      eduId: "1",
-      eduName: "第一学院",
-      eduLoginName: "第一学院登录名",
-      supervisorOrgId: "1",
-    },
-    teacherId: "1",
-    teacher: {
-      teacherId: "1",
-      teacherName: "第一老师",
-    },
-  },
-  {
-    lessonId: "2",
-    lessonName: "第3课",
-    lessonTotalTimes: "10",
-    lessonPerPrice: "12",
-    lessonTotalPrice: "120",
-    lessonIntroduce: "第3课程介绍",
-    lessonType: "第3课程类型",
-    lessonOutline: "第3课程大纲",
-    lessonStartDate: "2020-01-01",
-    lessonStartTime: "00:00:00",
-    lessonEndDate: "2021-01-01",
-    lessonEndTime: "00:00:00",
-    lessonStatus: "on",
-    lessonCreateDate: "2020-01-01",
-    lessonCreateTime: "00:00:00",
-    lessonUpdateDate: "2020-01-01",
-    lessonUpdateTime: "00:00:00",
-    lessonUpdateReason: "第3课程更新原因",
-    eduId: "1",
-    edu: {
-      eduId: "1",
-      eduName: "第一学院",
-      eduLoginName: "第一学院登录名",
-      supervisorOrgId: "1",
-    },
-    teacherId: "2",
-    teacher: {
-      teacherId: "2",
-      teacherName: "第2老师",
-    },
-  },
-];
 
 // 课程查询页面
 const LessonQuery: React.FC = () => {
-  let [isOpen, setIsOpen] = useState(false)
+  let [isOpen, setIsOpen] = useState(false);
   function closeModal() {
-    setIsOpen(false)
+    setIsOpen(false);
   }
   function openModal() {
-    setIsOpen(true)
+    setIsOpen(true);
   }
 
-  let [isOffOpen, setIsOffOpen] = useState(false)
+  let [isOffOpen, setIsOffOpen] = useState(false);
   function closeOffModal() {
-    setIsOffOpen(false)
+    setIsOffOpen(false);
   }
   function openOffModal() {
-    setIsOffOpen(true)
+    setIsOffOpen(true);
   }
 
   const [isCreateModalOpen, setCreateModalOpen] = useState(false);
@@ -164,9 +101,9 @@ const LessonQuery: React.FC = () => {
   });
   const getParamStr = (params: any, url: string) => {
     let result = "?";
-    Object.keys(params).forEach(
-      (key) => (result = result + key + "=" + params[key] + "&")
-    );
+    Object.keys(params).forEach((key) => {
+      if (params[key]) result = result + key + "=" + params[key] + "&";
+    });
     return url + result;
   };
   const paramStr = getParamStr(
@@ -312,7 +249,7 @@ const LessonQuery: React.FC = () => {
               onClick={() => {
                 setCancelLesson(lesson);
                 // setIsCancelModalOpen(true);
-                openOffModal()
+                openOffModal();
               }}
             >
               下架
@@ -545,7 +482,9 @@ const LessonQuery: React.FC = () => {
                             onChange={(e) =>
                               setCreateLesson({
                                 ...createLesson,
-                                ...{ lessonPerPrice: e.nativeEvent.target?.value },
+                                ...{
+                                  lessonPerPrice: e.nativeEvent.target?.value,
+                                },
                               })
                             }
                             required
@@ -571,7 +510,6 @@ const LessonQuery: React.FC = () => {
                             }
                             required
                           ></input>
-
                         </div>
                       </div>
                       <div className="flex items-center mb-4 justify-items-center">
@@ -623,7 +561,9 @@ const LessonQuery: React.FC = () => {
                             onChange={(e) =>
                               setCreateLesson({
                                 ...createLesson,
-                                ...{ lessonIntroduce: e.nativeEvent.target?.value },
+                                ...{
+                                  lessonIntroduce: e.nativeEvent.target?.value,
+                                },
                               })
                             }
                             required
