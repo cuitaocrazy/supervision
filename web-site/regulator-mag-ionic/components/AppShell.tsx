@@ -106,8 +106,10 @@ const AppShell = () => {
                 component={ComplaintStatistic}
                 exact={true}
               />
-              <Route path="/login" render={() => <Login />} />
+              <Route path="/login" component={Login}  />
               <Route exact path="/" render={() => <Redirect to="/login" />} />
+              {/* <Route path="/login" render={() => <Login />} />
+              <Route exact path="/" render={() => <Redirect to="/login" />} /> */}
             </IonRouterOutlet>
           </IonSplitPane>
         </IonReactRouter>

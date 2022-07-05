@@ -199,10 +199,10 @@ export const setEduOrgDetail = (eduOrgDetail?:EduOrg) => {
     eduOrgDetail:eduOrgDetail
   }
 }
-export const setEduOrgEdit = (eduOrgDetail?:EduOrg) => {
+export const setEduOrgEdit = (eduOrgEdit?:EduOrg) => {
   return {
     type: 'setEduOrgEdit',
-    eduOrgDetail:eduOrgDetail
+    eduOrgEdit:eduOrgEdit
   }
 }
 
