@@ -3,7 +3,7 @@ import React, { useState, Fragment } from "react";
 import { useEffect, useCallback, useContext } from "react";
 import { IonPage, IonModal, IonRow, IonCol, IonLabel } from "@ionic/react";
 import { AppContext, setAttendenceLanuchList } from "../../../appState";
-import { Attendance, Lesson } from "../../../types/types";
+import { Lesson } from "../../../types/types";
 import moment from "moment";
 import { Dialog, Transition } from "@headlessui/react";
 
@@ -11,16 +11,18 @@ const queryURL = "http://localhost:3003/edu/lesson/find";
 const attendanceApplyURL = "http://localhost:3003/edu/attendance/apply";
 
 const ContractNegoQuery: React.FC = () => {
-  let [isAttendanceOpen, setIsAttendanceOpen] = useState(false);
+  let [isAttendanceOpen, setIsAttendanceOpen] = useState(false)
+  function closeAttendanceModal() {
+    setIsAttendanceOpen(false)
+  }
+  function openAttendanceModal() {
+    setIsAttendanceOpen(true)
+  }
 
   const { state, dispatch } = useContext(AppContext);
   const [queryInfo, setQueryInfo] = useState({ lessonName: "" });
-  const [detail, setDetail] = useState({} as Lesson);
-  const [attendance, setAttendance] = useState({
-    attendanceLessionQuantity: 1,
-    attendanceDate: "",
-    attendanceTime: "",
-  } as Attendance);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [detail, setDetail] = useState({} as any);
   const getParamStr = (params: any, url: string) => {
     let result = "?";
     Object.keys(params).forEach((key) => {
@@ -42,16 +44,19 @@ const ContractNegoQuery: React.FC = () => {
   );
   const onDetail = (item: Lesson) => () => {
     setDetail(item);
-    setIsAttendanceOpen(true);
+    setIsModalOpen(true);
+
+    // doSetDetail(item)
   };
 
   const onManual = () => {
+    //todo fetch
     fetch(attendanceApplyURL, {
       method: "POST",
       headers: {
         "Content-type": "application/json;charset=UTF-8",
       },
-      body: JSON.stringify({ lessionId: detail.lessonId }),
+      body: JSON.stringify({ lessionId: "" }),
     })
       .then((res) => res.json())
       .then((json) => {
@@ -60,6 +65,23 @@ const ContractNegoQuery: React.FC = () => {
       });
     console.log("提交");
   };
+
+  // const doSetDetail = useCallback((lesson: Lesson) => {
+  //   dispatch({...setAttendenceLanuchDetail(lesson),...{backPage:'/tabs/contractNego/query'}});
+  // },[dispatch]);
+  useEffect(() => {
+    fetch(paramStr, {
+      method: "GET",
+      headers: {
+        "Content-type": "application/json;charset=UTF-8",
+      },
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        const { result, records } = json;
+        if (result) refreshList(records);
+      });
+  }, []);
 
   const onQuery = () => {
     fetch(paramStr, {
@@ -74,7 +96,7 @@ const ContractNegoQuery: React.FC = () => {
         if (result) refreshList(records);
       });
   };
-  useEffect(onQuery, []);
+
   const ListEntry = ({
     lesson,
     myKey,
@@ -103,7 +125,8 @@ const ContractNegoQuery: React.FC = () => {
               className="p-1 text-primary-600"
               onClick={() => {
                 setDetail(lesson);
-                setIsAttendanceOpen(true);
+                // setIsModalOpen(true);
+                openAttendanceModal()
               }}
             >
               发起签到
@@ -176,11 +199,7 @@ const ContractNegoQuery: React.FC = () => {
           </div>
         </div>
         <Transition appear show={isAttendanceOpen} as={Fragment}>
-          <Dialog
-            as="div"
-            className="relative z-10"
-            onClose={() => setIsAttendanceOpen(false)}
-          >
+          <Dialog as="div" className="relative z-10" onClose={closeAttendanceModal}>
             <Transition.Child
               as={Fragment}
               enter="ease-out duration-300"
@@ -253,13 +272,9 @@ const ContractNegoQuery: React.FC = () => {
                           <input
                             type="date"
                             defaultValue={moment().format("YYYY-MM-DD")}
-                            onChange={(e) =>
-                              setAttendance({
-                                ...attendance,
-                                attendanceDate: e.target.value,
-                              })
-                            }
+                            onChange={(e) => setDetail({ ...detail, date: e.target.value })}
                             className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none"
+                            readOnly
                           ></input>
                         </div>
                       </div>
@@ -272,12 +287,11 @@ const ContractNegoQuery: React.FC = () => {
                             type="time"
                             defaultValue={moment().format("HH:mm")}
                             onChange={(e) => {
-                              setAttendance({
-                                ...attendance,
-                                attendanceTime: e.target.value,
-                              });
+                              console.log(e.target.value);
+                              setDetail({ ...detail, time: e.target.value });
                             }}
                             className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none"
+                            readOnly
                           ></input>
                         </div>
                       </div>
@@ -289,14 +303,9 @@ const ContractNegoQuery: React.FC = () => {
                           <input
                             type="number"
                             className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
-                            value={attendance.attendanceLessionQuantity}
+                            value={detail.times}
                             onChange={(e) =>
-                              setAttendance({
-                                ...attendance,
-                                attendanceLessionQuantity: parseInt(
-                                  e.target.value
-                                ),
-                              })
+                              setDetail({ ...detail, times: e.nativeEvent.target?.value })
                             }
                             placeholder="请输入本次课时"
                           />
@@ -307,13 +316,12 @@ const ContractNegoQuery: React.FC = () => {
                           value="取消"
                           type="button"
                           className="px-6 py-2 border rounded-md "
-                          onClick={() => setIsAttendanceOpen(false)}
+                          onClick={() => setIsModalOpen(false)}
                         />
                         <input
                           value="确定"
                           type="button"
                           className="px-6 py-2 text-white border rounded-md bg-primary-600"
-                          onClick={onManual}
                         />
                       </div>
                     </form>
@@ -323,7 +331,88 @@ const ContractNegoQuery: React.FC = () => {
             </div>
           </Dialog>
         </Transition>
-
+        {/* <IonModal
+          isOpen={isModalOpen}
+          onDidDismiss={async () => {
+            setIsModalOpen(false);
+          }}
+        >
+          <form>
+            <legend className="mt-2 font-bold text-center">
+              课程签到发起确认
+            </legend>
+            <hr className="mt-2 mb-2" />
+            <div className="flex justify-center mt-6 mb-4 leading-7">
+              <label className="flex justify-end p-1 w-36">
+                <p className="text-center">课程ID:</p>
+              </label>
+              <label className="w-64 p-1 text-gray-600 bg-gray-100 rounded-md justify-self-start focus:outline focus:border-0">
+                <p className="text-center">{detail.lessonId}</p>
+              </label>
+            </div>
+            <div className="flex justify-center mb-4 leading-7">
+              <label className="flex justify-end p-1 w-36">
+                <p className="text-center">课程名称:</p>
+              </label>
+              <label className="w-64 p-1 text-gray-600 bg-gray-100 rounded-md justify-self-start focus:outline focus:border-0">
+                <p className="text-center">{detail.lessonName}</p>
+              </label>
+            </div>
+            <div className="flex justify-center mb-4 leading-7">
+              <label className="flex justify-end p-1 w-36">
+                <p className="text-center">上课日期:</p>
+              </label>
+              <input
+                type="date"
+                defaultValue={moment().format("YYYY-MM-DD")}
+                onChange={(e) => setDetail({ ...detail, date: e.target.value })}
+                className="w-64 p-1 text-gray-600 bg-gray-100 rounded-md justify-self-start focus:outline focus:border-0"
+              ></input>
+            </div>
+            <div className="flex justify-center mb-4 leading-7">
+              <label className="flex justify-end p-1 w-36">
+                <p className="text-center">上课时间:</p>
+              </label>
+              <input
+                type="time"
+                defaultValue={moment().format("HH:mm")}
+                onChange={(e) => {
+                  console.log(e.target.value);
+                  setDetail({ ...detail, time: e.target.value });
+                }}
+                className="w-64 p-1 text-gray-600 bg-gray-100 rounded-md justify-self-start focus:outline focus:border-0"
+              ></input>
+            </div>
+            <div className="flex justify-center mb-4 leading-7">
+              <label className="flex justify-end p-1 w-36">
+                <p className="text-center">本次课时:</p>
+              </label>
+              <input
+                type="number"
+                className="w-64 p-1 text-gray-600 bg-gray-100 rounded-md justify-self-start focus:outline focus:border-0"
+                value={detail.times}
+                onChange={(e) =>
+                  setDetail({ ...detail, times: e.nativeEvent.target?.value })
+                }
+                placeholder="请输入本次课时"
+              />
+            </div>
+            <div className="flex items-center justify-center gap-4 mt-20">
+              <input
+                onClick={() => setIsModalOpen(false)}
+                value="取消"
+                type="button"
+                className="flex px-6 py-2 border rounded-md"
+              />
+              <input
+                onClick={onManual}
+                value="确定"
+                type="button"
+                className="px-4 py-2 text-white border rounded-md bg-primary-600"
+              />
+            </div>
+          </form>
+        </IonModal> */}
         <div className="absolute w-full mt-10">
           <table className="w-11/12 ">
             <thead>
