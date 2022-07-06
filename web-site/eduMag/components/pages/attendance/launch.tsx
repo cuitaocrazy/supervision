@@ -17,6 +17,7 @@ const ContractNegoQuery: React.FC = () => {
   const [queryInfo, setQueryInfo] = useState({ lessonName: "" });
   const [detail, setDetail] = useState({} as Lesson);
   const [attendance, setAttendance] = useState({
+    lessonId: "",
     attendanceLessionQuantity: 1,
     attendanceDate: "",
     attendanceTime: "",
@@ -46,17 +47,23 @@ const ContractNegoQuery: React.FC = () => {
   };
 
   const onManual = () => {
+    const reqBody = JSON.stringify({
+      ...attendance,
+      attendanceDate: attendance.attendanceDate.replaceAll("-", ""),
+      attendanceTime: attendance.attendanceTime.replaceAll(":", "") + "00",
+    });
     fetch(attendanceApplyURL, {
       method: "POST",
       headers: {
         "Content-type": "application/json;charset=UTF-8",
       },
-      body: JSON.stringify({ lessionId: detail.lessonId }),
+      body: reqBody,
     })
       .then((res) => res.json())
       .then((json) => {
-        const { result, records } = json;
-        if (result) refreshList(records);
+        const { result, msg } = json;
+        if (result) alert("发起签到成功");
+        else alert("发起签到失败, 原因: " + msg);
       });
     console.log("提交");
   };
@@ -103,6 +110,12 @@ const ContractNegoQuery: React.FC = () => {
               className="p-1 text-primary-600"
               onClick={() => {
                 setDetail(lesson);
+                setAttendance({
+                  ...attendance,
+                  ...lesson,
+                  attendanceDate: moment().format("YYYY-MM-DD"),
+                  attendanceTime: moment().format("HH:mm"),
+                });
                 setIsAttendanceOpen(true);
               }}
             >
@@ -225,7 +238,7 @@ const ContractNegoQuery: React.FC = () => {
                             className="w-64 p-1 text-gray-600 bg-gray-100 border rounded-md justify-self-start focus:outline-none"
                             name="eduId"
                             type="text"
-                            value={detail.lessonId}
+                            value={attendance.lessonId}
                             readOnly
                           ></input>
                         </div>
@@ -240,7 +253,7 @@ const ContractNegoQuery: React.FC = () => {
                             className="w-64 p-1 text-gray-600 bg-gray-100 border rounded-md justify-self-start focus:outline-none"
                             name="lessonName"
                             type="text"
-                            value={detail.lessonName}
+                            value={attendance.lessonName}
                             readOnly
                           ></input>
                         </div>
@@ -252,7 +265,7 @@ const ContractNegoQuery: React.FC = () => {
                           </span>
                           <input
                             type="date"
-                            defaultValue={moment().format("YYYY-MM-DD")}
+                            value={attendance.attendanceDate}
                             onChange={(e) =>
                               setAttendance({
                                 ...attendance,
@@ -270,7 +283,7 @@ const ContractNegoQuery: React.FC = () => {
                           </span>
                           <input
                             type="time"
-                            defaultValue={moment().format("HH:mm")}
+                            value={attendance.attendanceTime}
                             onChange={(e) => {
                               setAttendance({
                                 ...attendance,

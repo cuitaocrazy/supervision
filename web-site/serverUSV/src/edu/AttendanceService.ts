@@ -10,23 +10,30 @@ class AttendanceService {
      * @param req 
      * @returns 
      */
-    async apply(req: { lessionId: string }) {
-        const contracts = await mysql.getRepository(Contract).findBy({
-            lessonId: req.lessionId
-        })
-        // TODO 未测试
-        const records = await mysql.transaction(async (manager) => {
-            return contracts.map(async contract => {
-                const rs = await manager.query(`SELECT REPLACE(UUID(),'-','') as uuid`)
-                console.log(rs[0].uuid)
-                const attendance: Attendance = {
-                    ...new Attendance(), ...req, ...contract, attendanceId: rs[0].uuid
-                }
-                const attendanceRepo = manager.getRepository(Attendance)
-                return await attendanceRepo.insert(attendance)
+    async apply(req: Attendance) {
+        try {
+            const contracts = await mysql.getRepository(Contract).findBy({
+                lessonId: req.lessonId
             })
-        })
-        return { result: true, msg: '发起打卡', applyCount: records.length }
+            // TODO 未测试
+            const records = await mysql.transaction(async (transactionalEntityManager) => {
+                return contracts.map(async contract => {
+                    const rs = await transactionalEntityManager.query(`SELECT REPLACE(UUID(),'-','') as uuid`)
+                    console.log(rs[0].uuid)
+                    const attendance: Attendance = {
+                        ...new Attendance(), ...req, ...contract, attendanceId: rs[0].uuid,
+                        attendanceType: 'manual', attendanceStatus: 'conforming'
+                    }
+                    const attendanceRepo = transactionalEntityManager.getRepository(Attendance)
+
+                    return await attendanceRepo.insert(attendance)
+                })
+            })
+            return { result: true, msg: '发起打卡', applyCount: records.length }
+        } catch (e: any) {
+            return { result: false, msg: '未知错误' }
+        }
+
     }
 
 }
