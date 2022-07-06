@@ -25,3 +25,14 @@ INSERT INTO yadadb.t_b_supervisor_user (supervisor_login_name,supervisor_passwor
 -- 合约插入
 INSERT INTO yadadb.t_l_contract (contract_id,fabric_contract_id,contract_date,contract_time,contract_status,contract_update_date,contract_update_time,contract_update_reason,edu_id,edu_name,lesson_id,lesson_name,lesson_type,lesson_introduce,lesson_outline,lesson_start_date,lesson_start_time,lesson_end_date,lesson_end_time,lesson_attendance_type,lesson_total_quantity,lesson_total_price,lesson_per_price,teacher_id,teacher_name,consumer_id,consumer_name,consumer_stu_name,order_no) VALUES
 	 ('contract00001','fabric00001','20220630','120000','valid',NULL,NULL,NULL,'edu0001','测试机构','lesson00002','英语入门兴趣班','english','英语培训班介绍','英语兴趣班大纲','20220630','000000','20220830','000000','manual',10,50,500,'teacher00001','马老师','testuser','测试用户','测试用户','orderno00001');
+
+-- 考勤插入
+INSERT INTO yadadb.t_l_attendance (attendance_id,contract_id,fabric_contract_id,attendance_date,attendance_time,attendance_type,attendance_lesson_quantity,edu_id,edu_name,lesson_id,lesson_name,consumer_id,consumer_name,consumer_stu_name,attendance_status,attendance_update_date,attendance_update_time,attendance_update_reason) VALUES
+	 ('19b2f639fc2811ecbd3c0242ac140002','contract00001','fabric00001',NULL,NULL,NULL,NULL,'edu0001','测试机构','lesson00002','英语入门兴趣班','testuser','测试用户','测试用户',NULL,NULL,NULL,NULL),
+	 ('attendance00001','contract00001','fabric00001',NULL,NULL,NULL,NULL,'edu0001','测试机构','lesson00002','英语入门兴趣班','testuser','测试用户','测试用户','conforming',NULL,NULL,NULL),
+	 ('attendance00002','contract00001','fabric00001',NULL,NULL,NULL,NULL,'edu0001','测试机构','lesson00002','英语入门兴趣班','testuser','测试用户','测试用户','conforming',NULL,NULL,NULL);
+
+-- 划拨插入
+INSERT INTO yadadb.t_l_transfer (transfer_id,attendance_id,contract_id,fabric_contract_id,attendance_date,attendance_time,attendance_type,edu_id,edu_name,lesson_id,lesson_name,consumer_id,consumer_name,consumer_stu_name,tran_ls_id,supversing_account,normal_account,transfer_amt,transfer_result,reason,transfer_update_date,transfer_update_time) VALUES
+	 ('transfer00001','attendance00001','contract00001','fabric00001',NULL,NULL,NULL,'edu0001','测试机构','lesson00002','英语入门兴趣班','testuser','测试用户','测试用户','tranlsid00001','supaccount001','normalaccount001',10,'success',NULL,NULL,NULL),
+	 ('transfer00002','attendance00002','contract00001','fabric00001',NULL,NULL,NULL,'edu0001','测试机构','lesson00002','英语入门兴趣班','testuser','测试用户','测试用户','tranls00002','supaccount001','normalaccount001',10,'success',NULL,NULL,NULL);

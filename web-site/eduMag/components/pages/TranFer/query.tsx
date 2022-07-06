@@ -15,49 +15,8 @@ import {
   IonCol,
 } from "@ionic/react";
 
-const queryURL = "http://localhost:3003/attendannce/query";
+const queryURL = "http://localhost:3003/edu/transfer/find";
 const handleTransfer = "http://localhost:3003/attendannce/handleTransfer";
-
-const demotransferList: Transfer[] = [
-  {
-    transferId: "1",
-    attendanceId: "1",
-    attendanceDate: "2020-01-01",
-    attendanceTime: "00:00:00",
-    eduId: "1",
-    eduName: "教育机构1",
-    lessonId: "1",
-    lessonName: "课程1",
-    consumerId: "1",
-    consumerName: "消费者1",
-    consumerStuName: "学生1",
-    tranLsId: "1",
-    supversingAccount: "1111111111",
-    normalAccount: "22222222222",
-    transferAmt: 100,
-    transferResult: "success",
-    reason: "",
-  },
-  {
-    transferId: "2",
-    attendanceId: "1",
-    attendanceDate: "2020-01-01",
-    attendanceTime: "00:00:00",
-    eduId: "1",
-    eduName: "教育机构1",
-    lessonId: "1",
-    lessonName: "课程1",
-    consumerId: "1",
-    consumerName: "消费者1",
-    consumerStuName: "学生1",
-    tranLsId: "2",
-    supversingAccount: "1111111111",
-    normalAccount: "22222222222",
-    transferAmt: 100,
-    transferResult: "success",
-    reason: "",
-  },
-];
 
 const TransferQuery: React.FC = () => {
   const { state, dispatch } = useContext(AppContext);
@@ -81,9 +40,9 @@ const TransferQuery: React.FC = () => {
   );
   const getParamStr = (params: any, url: string) => {
     let result = "?";
-    Object.keys(params).forEach(
-      (key) => (result = result + key + "=" + params[key] + "&")
-    );
+    Object.keys(params).forEach((key) => {
+      if (params[key]) result = result + key + "=" + params[key] + "&";
+    });
     return url + result;
   };
   const paramStr = getParamStr(
@@ -118,49 +77,31 @@ const TransferQuery: React.FC = () => {
         alert(json.result);
       });
   };
-  useEffect(() => {
-    // fetch(paramStr, {
-    //   method: 'GET',
-    //   headers: {
-    //     'Content-type': 'application/json;charset=UTF-8',
-    //   },
-    // }).then(res => res.json())
-    // .then((json) => {
-    // const {transferList} = json
-
-    // return })
-    refreshList(demotransferList);
-  }, []);
-  console.log(state);
-
   const onQuery = () => {
-    // fetch(paramStr, {
-    //   method: 'GET',
-    //   headers: {
-    //     'Content-type': 'application/json;charset=UTF-8',
-    //   },
-    // }).then(res => res.json())
-    // .then((json) => {
-    // const {transferList} = json
-
-    // return })
-    refreshList(
-      demotransferList
-        .filter((item) => item.consumerName === queryInfo.consumerName)
-        .filter((item) => item.lessonName === queryInfo.lessonName)
-    );
+    fetch(paramStr, {
+      method: "GET",
+      headers: {
+        "Content-type": "application/json;charset=UTF-8",
+      },
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        const { result, records } = json;
+        if (result) refreshList(records);
+      });
   };
+  useEffect(onQuery, []);
 
   const ListEntry = ({
     transfer,
-    key,
+    myKey,
     ...props
   }: {
     transfer: Transfer;
-    key: any;
+    myKey: any;
   }) => (
     <tr
-      key={key}
+      key={myKey}
       className="grid items-center grid-cols-9 gap-2 text-gray-600 border justify-items-center even:bg-white odd:bg-primary-100"
     >
       <td className="flex items-center justify-center leading-10">
@@ -290,7 +231,7 @@ const TransferQuery: React.FC = () => {
             </thead>
             <tbody>
               {state.transfer.transferList.map((list: Transfer, i: any) => (
-                <ListEntry transfer={list} key={i} />
+                <ListEntry transfer={list} key={i} myKey={i} />
               ))}
             </tbody>
           </table>
