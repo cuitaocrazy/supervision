@@ -44,7 +44,7 @@ export const EduOrgDetail: React.FC = () => {
   return (
 
     <IonPage>
-      <IonCard>
+      <IonCard className='h-screen mx-6 overflow-auto'>
 
         {/* <IonCardHeader>
         <IonCardSubtitle className="mx-8 text-3xl text-gray-600">详细信息</IonCardSubtitle>
