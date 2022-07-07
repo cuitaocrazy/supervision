@@ -1,26 +1,44 @@
 //eduOrg管理的详细页面
 import React, { useState } from 'react';
-import { IonPage, IonCard, IonRadioGroup, IonRadio, IonRow, IonCol, IonCardHeader, IonCardSubtitle, IonLabel, IonInput, IonCardContent, IonItem, IonButton, IonList, IonDatetime, IonPicker } from '@ionic/react';
+import {
+  IonPage,
+  IonCard,
+  IonRadioGroup,
+  IonRadio,
+  IonRow,
+  IonCol,
+  IonCardHeader,
+  IonCardSubtitle,
+  IonLabel,
+  IonInput,
+  IonCardContent,
+  IonItem,
+  IonButton,
+  IonList,
+  IonDatetime,
+  IonPicker,
+} from '@ionic/react';
 import { Redirect } from 'react-router-dom';
-import { useCallback, useContext } from 'react'
+import { useCallback, useContext } from 'react';
 import { AppContext, setEduOrgDetail } from '../../../appState';
-import { EduOrg } from '../../../types/types'
-import { PickerColumn } from "@ionic/core";
+import { EduOrg } from '../../../types/types';
+import { PickerColumn } from '@ionic/core';
 
 export const EduOrgDetail: React.FC = () => {
-  const modifyURL = 'http://localhost:3003/eduOrg/modifyURL'
+  const modifyURL = 'http://localhost:3003/eduOrg/modifyURL';
   const { state, dispatch } = useContext(AppContext);
 
   const [eduOrgState, setEduOrgState] = useState(state.eduOrg.eduOrgDetail);
   const [isPickOpen, setPickOpen] = useState(false);
   const setBack = useCallback(() => {
     dispatch(setEduOrgDetail(undefined));
-  }, []); `                                                       `
+  }, []);
+  `                                                       `;
   const onBack = () => () => {
-    setBack()
-  }
+    setBack();
+  };
   if (state.eduOrg.eduOrgDetail === undefined) {
-    return <Redirect to={state.backPage} />
+    return <Redirect to={state.backPage} />;
   }
 
   const onModify = async (e: React.FormEvent) => () => {
@@ -31,21 +49,20 @@ export const EduOrgDetail: React.FC = () => {
       headers: {
         'Content-type': 'application/json;charset=UTF-8',
       },
-    }).then(res => res.json())
-      .then((json) => {
-        alert(json.result)
-      })
-  }
+    })
+      .then(res => res.json())
+      .then(json => {
+        alert(json.result);
+      });
+  };
   // const eduOrgTypePickerColumn = {
   //   name: "eduOrgTypePickerColumn",
   //   options: [{'text':'','value':'0'},{'text':'数学','value':'1'}],
   // } as PickerColumn;
   /**todo 教育机构所在城市*/
   return (
-
-    <IonPage>
-      <IonCard className='h-screen mx-6 overflow-auto'>
-
+    <IonPage className="bg-gray-100">
+      <IonCard className="h-screen mx-6 overflow-auto">
         {/* <IonCardHeader>
         <IonCardSubtitle className="mx-8 text-3xl text-gray-600">详细信息</IonCardSubtitle>
       </IonCardHeader>
@@ -205,9 +222,7 @@ export const EduOrgDetail: React.FC = () => {
                 />
               </div>
               <div className="flex mb-4 leading-10">
-                <div className="flex justify-end w-32 mr-2">
-                  教育机构地址:
-                </div>
+                <div className="flex justify-end w-32 mr-2">教育机构地址:</div>
                 <input
                   className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
                   name="eduAddress"
@@ -227,7 +242,8 @@ export const EduOrgDetail: React.FC = () => {
 
               <div className="flex mb-4 leading-10">
                 <div className="flex justify-end w-32 mr-2">法人联系方式:</div>
-                <input className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
+                <input
+                  className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
                   name="eduLegalPhone"
                   value={eduOrgState.eduLegalPhone}
                   readOnly
@@ -237,8 +253,8 @@ export const EduOrgDetail: React.FC = () => {
                 <div className="flex justify-end w-32 mr-2">是否公办:</div>
                 <input
                   className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
-                  name="Public" 
-                  value={eduOrgState.eduIsPublic} 
+                  name="Public"
+                  value={eduOrgState.eduIsPublic}
                   readOnly
                 />
               </div>
@@ -254,7 +270,7 @@ export const EduOrgDetail: React.FC = () => {
                 <div className="flex justify-end w-32 mr-2">年检状态:</div>
                 <input
                   className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
-                  name="eduAnnualInspection" 
+                  name="eduAnnualInspection"
                   value={eduOrgState.eduAnnualInspection}
                   readOnly
                 />
@@ -263,7 +279,7 @@ export const EduOrgDetail: React.FC = () => {
                 <div className="flex justify-end w-32 mr-2">年检日期:</div>
                 <input
                   className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
-                  name="Public" 
+                  name="Public"
                   value={eduOrgState.eduAnnualInspectionDate}
                   readOnly
                 />
@@ -272,7 +288,7 @@ export const EduOrgDetail: React.FC = () => {
                 <div className="flex justify-end w-32 mr-2">年检时间:</div>
                 <input
                   className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
-                  name="eduAnnualInspectionTime" 
+                  name="eduAnnualInspectionTime"
                   value={eduOrgState.eduAnnualInspectionTime}
                   readOnly
                 />
@@ -281,7 +297,7 @@ export const EduOrgDetail: React.FC = () => {
                 <div className="flex justify-end w-32 mr-2"> 监管账户:</div>
                 <input
                   className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
-                  name="eduSupervisedAccount" 
+                  name="eduSupervisedAccount"
                   value={eduOrgState.eduSupervisedAccount}
                   readOnly
                 />
@@ -290,7 +306,7 @@ export const EduOrgDetail: React.FC = () => {
                 <div className="flex justify-end w-32 mr-2">普通账户:</div>
                 <input
                   className="w-64 h-10 px-2 rounded-md bg-primary-100 focus:outline-none"
-                  name="normalAccount" 
+                  name="normalAccount"
                   value={eduOrgState.normalAccount}
                   readOnly
                 />
@@ -299,7 +315,7 @@ export const EduOrgDetail: React.FC = () => {
                 <div className="flex justify-end w-32 mr-2">登录名:</div>
                 <input
                   className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
-                  name="eduAnnualInspectionTime" 
+                  name="eduAnnualInspectionTime"
                   value={eduOrgState.eduLoginName}
                   readOnly
                 />
@@ -308,7 +324,7 @@ export const EduOrgDetail: React.FC = () => {
                 <div className="flex justify-end w-32 mr-2">监管商户号:</div>
                 <input
                   className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
-                  name="eduSupervisedMerNo" 
+                  name="eduSupervisedMerNo"
                   value={eduOrgState.eduSupervisedMerNo}
                   readOnly
                 />
@@ -317,7 +333,7 @@ export const EduOrgDetail: React.FC = () => {
                 <div className="flex justify-end w-32 mr-2">监管机构名:</div>
                 <input
                   className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
-                  name="Public" 
+                  name="Public"
                   value={eduOrgState.supervisorOrgId}
                   readOnly
                 />
@@ -326,8 +342,8 @@ export const EduOrgDetail: React.FC = () => {
                 <div className="flex justify-end w-32 mr-2">是否为黑名单:</div>
                 <input
                   className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
-                  name="eduAnnualInspectionTime" 
-                  value={'否'} 
+                  name="eduAnnualInspectionTime"
+                  value={'否'}
                   readOnly
                 />
               </div>
@@ -337,14 +353,14 @@ export const EduOrgDetail: React.FC = () => {
             <input
               value="返回"
               type="button"
-              onClick={onBack()} 
+              onClick={onBack()}
               className="flex w-20 px-6 py-2 font-bold text-white rounded-md bg-primary-600 focus:bg-primary-700"
             />
           </div>
         </IonCardContent>
       </IonCard>
     </IonPage>
-  )
+  );
 };
 
-export default EduOrgDetail
+export default EduOrgDetail;
