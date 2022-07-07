@@ -106,7 +106,7 @@ export const LessonDetail: React.FC = () => {
               <div className="flex justify-end w-32 mr-2">教育机构名称:</div>
               <input
                 className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
-                name="attendanceId"
+                name="eduName"
                 type="text"
                 value={lessonState.eduName}
                 readOnly
@@ -116,7 +116,7 @@ export const LessonDetail: React.FC = () => {
               <div className="flex justify-end w-32 mr-2">课程名称:</div>
               <input
                 className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
-                name="attendanceDate"
+                name="lessonName"
                 type="text"
                 value={lessonState.lessonName}
                 readOnly
@@ -126,7 +126,7 @@ export const LessonDetail: React.FC = () => {
               <div className="flex justify-end w-32 mr-2">总课时:</div>
               <input
                 className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
-                name="attendanceTime"
+                name="lessonTotalQuantity"
                 type="text"
                 value={lessonState.lessonTotalQuantity}
                 readOnly
@@ -136,7 +136,7 @@ export const LessonDetail: React.FC = () => {
               <div className="flex justify-end w-32 mr-2">总价格（元）:</div>
               <input
                 className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
-                name="attendanceUpdateReason"
+                name="lessonTotalPrice"
                 type="text"
                 value={lessonState.lessonTotalPrice}
                 readOnly
@@ -146,7 +146,7 @@ export const LessonDetail: React.FC = () => {
               <div className="flex justify-end w-32 mr-2">课程类型:</div>
               <input
                 className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
-                name="eduId"
+                name="lessonType"
                 type="text"
                 value={lessonState.lessonType}
                 readOnly
@@ -157,7 +157,7 @@ export const LessonDetail: React.FC = () => {
               <div className="flex justify-end w-32 mr-2">教师姓名:</div>
               <input
                 className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
-                name="eduName"
+                name="teacherName"
                 type="text"
                 value={lessonState.teacher.teacherName}
                 readOnly
@@ -167,7 +167,7 @@ export const LessonDetail: React.FC = () => {
               <div className="flex justify-end w-32 mr-2">开课日期:</div>
               <input
                 className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
-                name="lessonType"
+                name="lessonStartDate"
                 type="text"
                 value={lessonState.lessonStartDate}
                 readOnly
@@ -177,7 +177,7 @@ export const LessonDetail: React.FC = () => {
               <div className="flex justify-end w-32 mr-2">开课时间:</div>
               <input
                 className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
-                name="lessonType"
+                name="lessonStartTime"
                 type="text"
                 value={lessonState.lessonStartTime}
                 readOnly
@@ -187,7 +187,7 @@ export const LessonDetail: React.FC = () => {
               <div className="flex justify-end w-32 mr-2">结束日期:</div>
               <input
                 className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
-                name="lessonType"
+                name="lessonEndDate"
                 type="text"
                 value={lessonState.lessonEndDate}
                 readOnly
@@ -197,7 +197,7 @@ export const LessonDetail: React.FC = () => {
               <div className="flex justify-end w-32 mr-2">结束时间:</div>
               <input
                 className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
-                name="lessonType"
+                name="lessonEndTime"
                 type="text"
                 value={lessonState.lessonEndTime}
                 readOnly
@@ -207,7 +207,7 @@ export const LessonDetail: React.FC = () => {
               <div className="flex justify-end w-32 mr-2">创建日期:</div>
               <input
                 className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
-                name="lessonType"
+                name="lessonCreateDate"
                 type="text"
                 value={lessonState.lessonCreateDate}
                 readOnly
@@ -217,7 +217,7 @@ export const LessonDetail: React.FC = () => {
               <div className="flex justify-end w-32 mr-2">创建时间:</div>
               <input
                 className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
-                name="lessonType"
+                name="lessonCreateTime"
                 type="text"
                 value={lessonState.lessonCreateTime}
                 readOnly
@@ -227,7 +227,7 @@ export const LessonDetail: React.FC = () => {
               <div className="flex justify-end w-32 mr-2">课程状态:</div>
               <input
                 className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
-                name="lessonType"
+                name="lessonState"
                 type="text"
                 value={lessonState.lessonState}
                 readOnly
@@ -237,7 +237,7 @@ export const LessonDetail: React.FC = () => {
               <div className="flex justify-end w-32 mr-2">更新日期:</div>
               <input
                 className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
-                name="lessonType"
+                name="lessonUpdateDate"
                 type="text"
                 value={lessonState.lessonUpdateDate}
                 readOnly
