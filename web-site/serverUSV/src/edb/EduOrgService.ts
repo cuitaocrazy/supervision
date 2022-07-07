@@ -12,7 +12,7 @@ class EduOrgService {
 
     async save(req: EduOrg) {
         const uuid = await getUUIDWithEM(mysql.manager)
-        await mysql.getRepository(EduOrg).save(req)
+        await mysql.getRepository(EduOrg).save({ ...req, eduId: uuid })
         return { result: true, msg: '插入成功' }
     }
 }

@@ -382,3 +382,8 @@ app.get('/edb/eduLesson/find', async (req, res) => {
   const r = await edbEduLessonService.find(req.query)
   res.send(r)
 })
+app.get('/edb/contract/find', async (req, res) => {
+  console.log(`教育局: 合同查询: 条件[${{ ...req.query }}]`)
+  const r = await eduContractService.find(req.query)
+  res.send(r)
+})
