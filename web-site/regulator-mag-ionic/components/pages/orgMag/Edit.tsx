@@ -1,31 +1,49 @@
 //eduOrg管理的详细页面
 import React, { useState } from 'react';
-import { IonPage, IonCard,IonRadioGroup,IonRadio, IonCardHeader, IonCardSubtitle,IonLabel,IonInput, IonCardContent,IonItem,IonButton,IonList,IonDatetime,IonPicker,IonCol,IonRow } from '@ionic/react';
+import {
+  IonPage,
+  IonCard,
+  IonRadioGroup,
+  IonRadio,
+  IonCardHeader,
+  IonCardSubtitle,
+  IonLabel,
+  IonInput,
+  IonCardContent,
+  IonItem,
+  IonButton,
+  IonList,
+  IonDatetime,
+  IonPicker,
+  IonCol,
+  IonRow,
+} from '@ionic/react';
 import { Redirect } from 'react-router-dom';
-import { useCallback,useContext } from 'react'
-import {AppContext,setEduOrgEdit} from '../../../appState';
-import {EduOrg} from '../../../types/types'
-import { PickerColumn } from "@ionic/core";
+import { useCallback, useContext } from 'react';
+import { AppContext, setEduOrgEdit } from '../../../appState';
+import { EduOrg } from '../../../types/types';
+import { PickerColumn } from '@ionic/core';
 
 export const EduOrgEdit: React.FC = () => {
-  const modifyURL = 'http://localhost:3003/eduOrg/modifyURL'
+  const modifyURL = 'http://localhost:3003/eduOrg/modifyURL';
   const { state, dispatch } = useContext(AppContext);
 
   const [eduOrgState, setEduOrgState] = useState(state.eduOrg.eduOrgEdit);
   const [isPickOpen, setPickOpen] = useState(false);
   const setBack = useCallback(() => {
     dispatch(setEduOrgEdit(undefined));
-  },[]);`                                                       `
-  const onBack = ()=>() => {
-    setBack()
-  }
-  console.log('state')
-  console.log(state)
-  if(state.eduOrg.eduOrgEdit===undefined){
-    return <Redirect to={state.backPage} />
+  }, []);
+  `                                                       `;
+  const onBack = () => () => {
+    setBack();
+  };
+  console.log('state');
+  console.log(state);
+  if (state.eduOrg.eduOrgEdit === undefined) {
+    return <Redirect to={state.backPage} />;
   }
 
-  const onModify = async (e: React.FormEvent)=>() => {
+  const onModify = async (e: React.FormEvent) => () => {
     e.preventDefault();
     fetch(modifyURL, {
       method: 'POST',
@@ -33,20 +51,20 @@ export const EduOrgEdit: React.FC = () => {
       headers: {
         'Content-type': 'application/json;charset=UTF-8',
       },
-    }).then(res => res.json())
-    .then((json) => {
-      alert(json.result)
     })
-  }
+      .then(res => res.json())
+      .then(json => {
+        alert(json.result);
+      });
+  };
   // const eduOrgTypePickerColumn = {
   //   name: "eduOrgTypePickerColumn",
   //   options: [{'text':'','value':'0'},{'text':'数学','value':'1'}],
   // } as PickerColumn;
-  
+
   return (
-    
     <IonPage>
-      <IonCard className='h-screen mx-6 overflow-auto'>
+      <IonCard className="h-screen mx-6 overflow-auto">
         {/* 导航 */}
         <div className="flex px-2 pt-2 mx-2 my-2 text-gray-800">
           <div className="mr-2 text-gray-600">
@@ -72,7 +90,7 @@ export const EduOrgEdit: React.FC = () => {
           </div>
         </div>
         <IonCardContent>
-        <form onSubmit={onModify}>
+          <form onSubmit={onModify}>
             {/* 编辑内容 */}
             <div className="font-bold text-gray-800">机构编辑</div>
             <hr className="mt-2 mb-4" />
@@ -91,8 +109,10 @@ export const EduOrgEdit: React.FC = () => {
                 <input
                   className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
                   name="eduName"
-                  value={eduOrgState.eduName} 
-                  onChange={e => setEduOrgState({...eduOrgState, eduName: e.nativeEvent.target?.value})}
+                  value={eduOrgState.eduName}
+                  onChange={e =>
+                    setEduOrgState({ ...eduOrgState, eduName: e.nativeEvent.target?.value })
+                  }
                   required
                 />
               </div>
@@ -106,14 +126,14 @@ export const EduOrgEdit: React.FC = () => {
                 /> */}
               </div>
               <div className="flex mb-4 leading-10">
-                <div className="flex justify-end w-32 mr-2">
-                  教育机构地址:
-                </div>
+                <div className="flex justify-end w-32 mr-2">教育机构地址:</div>
                 <input
                   className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
                   name="eduAddress"
-                  value={eduOrgState.eduAddress} 
-                  onChange={e => setEduOrgState({...eduOrgState, eduAddress: e.nativeEvent.target?.value})}
+                  value={eduOrgState.eduAddress}
+                  onChange={e =>
+                    setEduOrgState({ ...eduOrgState, eduAddress: e.nativeEvent.target?.value })
+                  }
                   required
                 />
               </div>
@@ -122,18 +142,23 @@ export const EduOrgEdit: React.FC = () => {
                 <input
                   className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
                   name="eduLegalPerson"
-                  value={eduOrgState.eduLegalPerson} 
-                  onChange={e => setEduOrgState({...eduOrgState, eduLegalPerson: e.nativeEvent.target?.value})}
+                  value={eduOrgState.eduLegalPerson}
+                  onChange={e =>
+                    setEduOrgState({ ...eduOrgState, eduLegalPerson: e.nativeEvent.target?.value })
+                  }
                   required
                 />
               </div>
 
               <div className="flex mb-4 leading-10">
                 <div className="flex justify-end w-32 mr-2">法人联系方式:</div>
-                <input className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
+                <input
+                  className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
                   name="eduLegalPhone"
-                  value={eduOrgState.eduLegalPhone}  
-                  onChange={e => setEduOrgState({...eduOrgState, eduLegalPhone: e.nativeEvent.target?.value})}
+                  value={eduOrgState.eduLegalPhone}
+                  onChange={e =>
+                    setEduOrgState({ ...eduOrgState, eduLegalPhone: e.nativeEvent.target?.value })
+                  }
                   required
                 />
               </div>
@@ -141,8 +166,10 @@ export const EduOrgEdit: React.FC = () => {
                 <div className="flex justify-end w-32 mr-2">是否公办:</div>
                 <input
                   className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
-                  name="Public" 
-                  onChange={e => setEduOrgState({...eduOrgState, eduIsPublic: e.nativeEvent.target?.value})}
+                  name="Public"
+                  onChange={e =>
+                    setEduOrgState({ ...eduOrgState, eduIsPublic: e.nativeEvent.target?.value })
+                  }
                   required
                 />
               </div>
@@ -158,9 +185,14 @@ export const EduOrgEdit: React.FC = () => {
                 <div className="flex justify-end w-32 mr-2">年检状态:</div>
                 <input
                   className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
-                  name="eduAnnualInspection" 
+                  name="eduAnnualInspection"
                   value={eduOrgState.eduAnnualInspection}
-                  onChange={e => setEduOrgState({...eduOrgState, eduAnnualInspection: e.nativeEvent.target?.value})}
+                  onChange={e =>
+                    setEduOrgState({
+                      ...eduOrgState,
+                      eduAnnualInspection: e.nativeEvent.target?.value,
+                    })
+                  }
                   required
                 />
               </div>
@@ -168,9 +200,14 @@ export const EduOrgEdit: React.FC = () => {
                 <div className="flex justify-end w-32 mr-2">年检日期:</div>
                 <input
                   className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
-                  name="Public" 
-                  value={eduOrgState.eduAnnualInspectionDate} 
-                  onChange={e => setEduOrgState({...eduOrgState, eduAnnualInspectionDate: e.nativeEvent.target?.value})}
+                  name="Public"
+                  value={eduOrgState.eduAnnualInspectionDate}
+                  onChange={e =>
+                    setEduOrgState({
+                      ...eduOrgState,
+                      eduAnnualInspectionDate: e.nativeEvent.target?.value,
+                    })
+                  }
                   required
                 />
               </div>
@@ -178,9 +215,14 @@ export const EduOrgEdit: React.FC = () => {
                 <div className="flex justify-end w-32 mr-2">年检时间:</div>
                 <input
                   className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
-                  name="eduAnnualInspectionTime" 
+                  name="eduAnnualInspectionTime"
                   value={eduOrgState.eduAnnualInspectionTime}
-                  onChange={e => setEduOrgState({...eduOrgState, eduAnnualInspectionTime: e.nativeEvent.target?.value})}
+                  onChange={e =>
+                    setEduOrgState({
+                      ...eduOrgState,
+                      eduAnnualInspectionTime: e.nativeEvent.target?.value,
+                    })
+                  }
                   required
                 />
               </div>
@@ -188,9 +230,14 @@ export const EduOrgEdit: React.FC = () => {
                 <div className="flex justify-end w-32 mr-2"> 监管账户:</div>
                 <input
                   className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
-                  name="eduSupervisedAccount" 
+                  name="eduSupervisedAccount"
                   value={eduOrgState.eduSupervisedAccount}
-                  onChange={e => setEduOrgState({...eduOrgState, eduSupervisedAccount: e.nativeEvent.target?.value})}
+                  onChange={e =>
+                    setEduOrgState({
+                      ...eduOrgState,
+                      eduSupervisedAccount: e.nativeEvent.target?.value,
+                    })
+                  }
                   required
                 />
               </div>
@@ -198,9 +245,11 @@ export const EduOrgEdit: React.FC = () => {
                 <div className="flex justify-end w-32 mr-2">普通账户:</div>
                 <input
                   className="w-64 h-10 px-2 rounded-md bg-primary-100 focus:outline-none"
-                  name="normalAccount" 
+                  name="normalAccount"
                   value={eduOrgState.normalAccount}
-                  onChange={e => setEduOrgState({...eduOrgState, normalAccount: e.nativeEvent.target?.value})}
+                  onChange={e =>
+                    setEduOrgState({ ...eduOrgState, normalAccount: e.nativeEvent.target?.value })
+                  }
                   required
                 />
               </div>
@@ -208,9 +257,11 @@ export const EduOrgEdit: React.FC = () => {
                 <div className="flex justify-end w-32 mr-2">登录名:</div>
                 <input
                   className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
-                  name="eduAnnualInspectionTime" 
+                  name="eduAnnualInspectionTime"
                   value={eduOrgState.eduLoginName}
-                  onChange={e => setEduOrgState({...eduOrgState, eduLoginName: e.nativeEvent.target?.value})}
+                  onChange={e =>
+                    setEduOrgState({ ...eduOrgState, eduLoginName: e.nativeEvent.target?.value })
+                  }
                   required
                 />
               </div>
@@ -218,9 +269,14 @@ export const EduOrgEdit: React.FC = () => {
                 <div className="flex justify-end w-32 mr-2">监管商户号:</div>
                 <input
                   className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
-                  name="eduSupervisedMerNo" 
+                  name="eduSupervisedMerNo"
                   value={eduOrgState.eduSupervisedMerNo}
-                  onChange={e => setEduOrgState({...eduOrgState, eduSupervisedMerNo: e.nativeEvent.target?.value})}
+                  onChange={e =>
+                    setEduOrgState({
+                      ...eduOrgState,
+                      eduSupervisedMerNo: e.nativeEvent.target?.value,
+                    })
+                  }
                   required
                 />
               </div>
@@ -228,9 +284,11 @@ export const EduOrgEdit: React.FC = () => {
                 <div className="flex justify-end w-32 mr-2">监管机构名:</div>
                 <input
                   className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
-                  name="Public" 
+                  name="Public"
                   value={eduOrgState.supervisorOrgId}
-                  onChange={e => setEduOrgState({...eduOrgState, supervisorOrgId: e.nativeEvent.target?.value})}
+                  onChange={e =>
+                    setEduOrgState({ ...eduOrgState, supervisorOrgId: e.nativeEvent.target?.value })
+                  }
                   required
                 />
               </div>
@@ -238,8 +296,8 @@ export const EduOrgEdit: React.FC = () => {
                 <div className="flex justify-end w-32 mr-2">是否为黑名单:</div>
                 <input
                   className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
-                  name="eduAnnualInspectionTime" 
-                  value={'否'} 
+                  name="eduAnnualInspectionTime"
+                  value={'否'}
                   required
                 />
               </div>
@@ -254,7 +312,7 @@ export const EduOrgEdit: React.FC = () => {
             />
           </div>
         </IonCardContent>
-      {/* <IonCardHeader>
+        {/* <IonCardHeader>
         <IonCardSubtitle className="mx-8 text-3xl text-gray-600">详细信息</IonCardSubtitle>
       </IonCardHeader>
       <IonCardContent>
@@ -402,8 +460,8 @@ export const EduOrgEdit: React.FC = () => {
         </form>
       </IonCardContent> */}
       </IonCard>
-      </IonPage>
-      )
-    };
+    </IonPage>
+  );
+};
 
-    export default EduOrgEdit
+export default EduOrgEdit;
