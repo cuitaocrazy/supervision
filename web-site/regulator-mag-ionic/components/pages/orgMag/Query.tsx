@@ -26,64 +26,11 @@ import {
 import { Dialog, Transition } from '@headlessui/react';
 import EduIsPublic from '../../EduIsPublic';
 
-const queryURL = 'http://localhost:3003/eduOrg/query';
+const findURL = 'http://localhost:3003/edb/eduOrg/find';
 const delURL = 'http://localhost:3003/eduOrg/del';
 const modifyURL = 'http://localhost:3003/eduOrg/modifyURL';
 const applyURL = 'http://localhost:3003/eduOrg/apply';
 const createURL = 'http://localhost:3003/eduOrg/create';
-
-const demoList: EduOrg[] = [
-  {
-    eduId: '1',
-    eduName: '第一学院',
-    eduAddress: '第一学院地址',
-    eduLegalPerson: '第一学院法人',
-    eduLegalPhone: '第一学院法人电话',
-    eduContact: '第一学院联系人',
-    eduContactPhone: '第一学院联系人电话',
-    eduIsPublic: true,
-    eduLicense: '111',
-    eduStatus: '正常',
-    eduAnnualInspection: '年审文件',
-    eduAnnualInspectionDate: '2020-01-01',
-    eduAnnualInspectionTime: '00:00:00',
-    eduSupervisedAccount: '监管账户',
-    eduNormalAccount: '普通账户',
-    eduSupervisedMerNo: '商户号',
-    eduCreateDate: '2020-01-01',
-    eduCreateTime: '00:00:00',
-    eduUpdateDate: '2020-01-01',
-    eduUpdateTime: '00:00:00',
-    eduRating: 5,
-    eduLoginName: 'edu1',
-    supervisorOrgId: '1',
-  },
-  {
-    eduId: '2',
-    eduName: '第2学院',
-    eduAddress: '第2学院地址',
-    eduLegalPerson: '第2学院法人',
-    eduLegalPhone: '第2学院法人电话',
-    eduContact: '第2学院联系人',
-    eduContactPhone: '第2学院联系人电话',
-    eduIsPublic: true,
-    eduLicense: '111',
-    eduStatus: '正常',
-    eduAnnualInspection: '年审文件',
-    eduAnnualInspectionDate: '2020-01-01',
-    eduAnnualInspectionTime: '00:00:00',
-    eduSupervisedAccount: '监管账户',
-    eduNormalAccount: '普通账户',
-    eduSupervisedMerNo: '商户号',
-    eduCreateDate: '2020-01-01',
-    eduCreateTime: '00:00:00',
-    eduUpdateDate: '2020-01-01',
-    eduUpdateTime: '00:00:00',
-    eduRating: 5,
-    eduLoginName: 'edu2',
-    supervisorOrgId: '1',
-  },
-];
 
 // 课程查询页面
 const OrgMagQuery: React.FC = () => {
@@ -121,26 +68,17 @@ const OrgMagQuery: React.FC = () => {
   };
 
   const onQuery = () => {
-    //  const paramStr = getParamStr({
-    //     eduName:queryInfo.eduName,
-    //  },queryURL)
-    //   fetch(paramStr, {
-    //     method: 'GET',
-    //     headers: {
-    //       'Content-type': 'application/json;charset=UTF-8',
-    //     },
-    //   }).then(res => res.json())
-    //   .then((json) => {
-    //   const {LessonList} = json //todo
-    //   refreshList(demoLessonList.filter((eduOrg:EduOrg)=>eduOrg.eduName&&eduOrg.eduName.indexOf(queryInfo.eduName)>-1))
-    //   return
-    //   })
-    refreshList(
-      demoList.filter(
-        (eduOrg: EduOrg) => eduOrg.eduName && eduOrg.eduName.indexOf(queryInfo.eduName) > -1
-      )
-    );
-    return;
+    fetch(paramStr, {
+      method: 'GET',
+      headers: {
+        'Content-type': 'application/json;charset=UTF-8',
+      },
+    })
+      .then(res => res.json())
+      .then(json => {
+        const { result, records } = json; //todo
+        refreshList(records);
+      });
   };
 
   const onApply = (item: EduOrg) => () => {
@@ -178,14 +116,16 @@ const OrgMagQuery: React.FC = () => {
   };
   const getParamStr = (params: any, url: string) => {
     let result = '?';
-    Object.keys(params).forEach(key => (result = result + key + '=' + params[key] + '&'));
+    Object.keys(params).forEach(key => {
+      if (params[key]) result = result + key + '=' + params[key] + '&';
+    });
     return url + result;
   };
   const paramStr = getParamStr(
     {
       eduName: queryInfo.eduName,
     },
-    queryURL
+    findURL
   );
 
   const refreshList = useCallback(
@@ -200,7 +140,7 @@ const OrgMagQuery: React.FC = () => {
   };
 
   const doSetDetail = useCallback(
-    eduOrg => {
+    (eduOrg: EduOrg) => {
       dispatch({ ...setEduOrgDetail(eduOrg), ...{ backPage: '/tabs/orgMag/query' } });
     },
     [dispatch]
@@ -211,27 +151,12 @@ const OrgMagQuery: React.FC = () => {
   };
 
   const doSetEdit = useCallback(
-    eduOrg => {
+    (eduOrg: EduOrg) => {
       dispatch({ ...setEduOrgEdit(eduOrg), ...{ backPage: '/tabs/orgMag/query' } });
     },
     [dispatch]
   );
-  useEffect(() => {
-    // fetch(paramStr, {
-    //   method: 'GET',
-    //   headers: {
-    //     'Content-type': 'application/json;charset=UTF-8',
-    //   },
-    // }).then(res => res.json())
-    // .then((json) => {
-    // const {LessonList} = json //todo
-
-    // refreshList(demoLessonList.filter((eduOrg:EduOrg)=>eduOrg.eduName&&eduOrg.eduName.indexOf(queryInfo.eduName)>-1))
-    // return
-    // })
-    refreshList(demoList);
-    return;
-  }, [refreshList]);
+  useEffect(onQuery, []);
 
   const ListEntry = ({ eduOrg, key, ...props }: { eduOrg: EduOrg; key: any }) => (
     <tr

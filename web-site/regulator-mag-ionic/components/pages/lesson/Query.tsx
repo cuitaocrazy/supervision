@@ -1,80 +1,15 @@
 //Lesson的查询页面
-import { useEffect, useCallback, useContext, useState, Fragment } from 'react';
+import { useEffect, useCallback, useContext, useState,Fragment } from 'react';
 import { Redirect } from 'react-router-dom';
 import { AppContext, setLessonList, setLessonDetail } from '../../../appState';
 import { Lesson } from '../../../types/types';
 import { IonPage, IonList, IonLabel, IonItem, IonRow, IonCol } from '@ionic/react';
 import { Dialog, Transition } from '@headlessui/react';
-
-const queryURL = 'http://localhost:3003/lesson/query';
+const findURL = 'http://localhost:3003/edb/eduLesson/find';
 const delURL = 'http://localhost:3003/lesson/del';
 const modifyURL = 'http://localhost:3003/lesson/modifyURL';
 const attendURL = 'http://localhost:3003/lesson/attend';
 const createURL = 'http://localhost:3003/lesson/create';
-const demoLessonList: Lesson[] = [
-  {
-    lessonId: '2',
-    lessonName: '第二课',
-    lessonPerPrice: 12,
-    lessonTotalPrice: 120,
-    lessonIntroduce: '第二课程介绍',
-    lessonType: '第二课程类型',
-    lessonOutline: '第二课程大纲',
-    lessonStartDate: '2020-01-01',
-    lessonStartTime: '00:00:00',
-    lessonEndDate: '2021-01-01',
-    lessonEndTime: '00:00:00',
-    lessonStatus: 'pending',
-    lessonCreateDate: '2020-01-01',
-    lessonCreateTime: '00:00:00',
-    lessonUpdateDate: '2020-01-01',
-    lessonUpdateTime: '00:00:00',
-    lessonUpdateReason: '第二课程更新原因',
-    eduId: '1',
-    edu: {
-      eduId: '1',
-      eduName: '第一学院',
-      eduLoginName: '第一学院登录名',
-      supervisorOrgId: '1',
-    },
-    teacherId: '1',
-    teacher: {
-      teacherId: '1',
-      teacherName: '第一老师',
-    },
-  },
-  {
-    lessonId: '2',
-    lessonName: '第3课',
-    lessonPerPrice: 12,
-    lessonTotalPrice: 120,
-    lessonIntroduce: '第3课程介绍',
-    lessonType: '第3课程类型',
-    lessonOutline: '第3课程大纲',
-    lessonStartDate: '2020-01-01',
-    lessonStartTime: '00:00:00',
-    lessonEndDate: '2021-01-01',
-    lessonEndTime: '00:00:00',
-    lessonStatus: 'on',
-    lessonCreateDate: '2020-01-01',
-    lessonCreateTime: '00:00:00',
-    lessonUpdateDate: '2020-01-01',
-    lessonUpdateTime: '00:00:00',
-    lessonUpdateReason: '第3课程更新原因',
-    eduId: '1',
-    edu: {
-      eduId: '1',
-      eduName: '第一学院',
-      eduLoginName: '第一学院登录名',
-      supervisorOrgId: '1',
-    },
-    teacherId: '2',
-    teacher: {
-      teacherId: '2',
-      teacherName: '第2老师',
-    },
-  },
-];
 
 // 课程查询页面
 const LessonQuery: React.FC = () => {
@@ -87,8 +22,6 @@ const LessonQuery: React.FC = () => {
     setIsOffOpen(true);
   }
   const { state, dispatch } = useContext(AppContext);
-  const [queryInfo, setQueryInfo] = useState({ lessonName: '', lessonStatus: null });
-  console.log(state)
   const [lessonState, setLessonState] = useState(state.lesson.lessonList);
   const onCreate = async (e: React.FormEvent) => () => {
     e.preventDefault();
@@ -104,7 +37,6 @@ const LessonQuery: React.FC = () => {
         alert(json.result);
       });
   };
-
   const onCancel = (item: Lesson) => () => {
     fetch(delURL, {
       method: 'PUT',
@@ -137,17 +69,21 @@ const LessonQuery: React.FC = () => {
       });
   };
 
+ 
+  const [queryInfo, setQueryInfo] = useState({ eduName: '', lessonStatus: null });
   const getParamStr = (params: any, url: string) => {
     let result = '?';
-    Object.keys(params).forEach(key => (result = result + key + '=' + params[key] + '&'));
+    Object.keys(params).forEach(key => {
+      if (params[key]) result = result + key + '=' + params[key] + '&';
+    });
     return url + result;
   };
   const paramStr = getParamStr(
     {
-      lessonName: queryInfo.lessonName,
+      eduName: queryInfo.eduName,
       lessonStatus: queryInfo.lessonStatus,
     },
-    queryURL
+    findURL
   );
 
   const refreshLessonList = useCallback(
@@ -162,38 +98,26 @@ const LessonQuery: React.FC = () => {
   };
 
   const doSetDetail = useCallback(
-    lessons => {
-      dispatch({ ...setLessonDetail(lessons), ...{ backPage: '/tabs/lesson/query' } });
+    (lesson: Lesson) => {
+      dispatch({ ...setLessonDetail(lesson), ...{ backPage: '/tabs/lesson/query' } });
     },
     [dispatch]
   );
-  useEffect(() => {
-    // fetch(paramStr, {
-    //   method: 'GET',
-    //   headers: {
-    //     'Content-type': 'application/json;charset=UTF-8',
-    //   },
-    // }).then(res => res.json())
-    // .then((json) => {
-    // const {LessonList} = json
-    // refreshLessonList(demoLessonList.filter((lesson:Lesson)=>lesson.eduId===queryInfo.eduId||(lesson.eduId===state.loginUser.orgId&&state.loginUser.role==='Edu')).filter((lesson:Lesson)=>lesson.lessonName.indexOf(queryInfo.lessonName)>-1))
-    // return
-    // })
-
-    refreshLessonList(demoLessonList);
-    return;
-  }, []);
 
   const onQuery = () => {
-    refreshLessonList(
-      demoLessonList
-        .filter((lesson: Lesson) => lesson.lessonName.indexOf(queryInfo.lessonName) > -1)
-        .filter(
-          (lesson: Lesson) =>
-            queryInfo.lessonStatus == null || lesson.lessonStatus === queryInfo.lessonStatus
-        )
-    );
+    fetch(paramStr, {
+      method: 'GET',
+      headers: {
+        'Content-type': 'application/json;charset=UTF-8',
+      },
+    })
+      .then(res => res.json())
+      .then(json => {
+        const { result, records } = json;
+        if (result) refreshLessonList(records);
+      });
   };
+  useEffect(onQuery, []);
 
   const getStatus = (statusEnglish: any) => {
     if (statusEnglish === 'pending') {
@@ -211,42 +135,11 @@ const LessonQuery: React.FC = () => {
     return statusEnglish;
   };
 
-  const ListEntry = ({ lesson, myKey, ...props }: { lesson: Lesson; myKey: any }) => (
-    // <IonItem key={key} >
-    //   <IonLabel>
-    //     <p className='text-center'>{lesson.edu.eduName}</p>
-    //   </IonLabel>
-    //   <IonLabel>
-    //     <p className='text-center'>{lesson.lessonName}</p>
-    //   </IonLabel>
-    //   <IonLabel>
-    //     <p className='text-center'>{lesson.lessonTotalPrice / lesson.lessonPerPrice}{'课时'}</p>
-    //   </IonLabel>
-    //   <IonLabel>
-    //     <p className='text-center'>{lesson.lessonTotalPrice / 100}</p>
-    //   </IonLabel>
-    //   <IonLabel>
-    //     <p className='text-center'>{lesson.lessonStartDate}</p>
-    //   </IonLabel>
-    //   <IonLabel>
-    //     <p className='text-center'>{lesson.lessonStartTime}</p>
-    //   </IonLabel>
-    //   <IonLabel>
-    //     <p className='text-center'>{getStatus(lesson.lessonStatus)}</p>
-    //   </IonLabel>
-    //   <IonLabel>
-    //     <div className='flex gap-2'>
-    //       <button className='p-1 text-white bg-blue-500 rounded-md' onClick={onDetail(lesson)}>详情</button>
-    //       {lesson.lessonStatus === 'on' ? <button className='p-1 text-white bg-blue-500 rounded-md' onClick={onCancel(lesson)}>下架</button> : <></>}
-    //       {lesson.lessonStatus === 'pending' ? <button className='p-1 text-white bg-blue-500 rounded-md' onClick={onAttendance(lesson)}>审核</button> : <></>}
-    //     </div>
-    //   </IonLabel>
-    // </IonItem>
+  const ListEntry = ({ lesson, ...props }: { lesson: Lesson; }) => (
     <tr
-      key={myKey}
       className="grid items-center grid-cols-8 gap-2 text-gray-600 border justify-items-center even:bg-white odd:bg-primary-100 "
     >
-      <td className="flex items-center justify-center leading-10">{lesson.edu.eduName}</td>
+      <td className="flex items-center justify-center leading-10">{lesson.eduName}</td>
       <td className="flex items-center justify-center leading-10">{lesson.lessonName}</td>
       <td className="flex items-center justify-center leading-10">
         {lesson.lessonTotalPrice / lesson.lessonPerPrice}
@@ -323,7 +216,7 @@ const LessonQuery: React.FC = () => {
                 <input
                   type="text"
                   className="flex w-56 h-12 font-bold text-center text-gray-600 bg-white border rounded-md focus:outline-none focus:glow-primary-600"
-                  placeholder="请输入课程状态"
+                  placeholder="请输入教育机构名称"
                   onChange={e => setQueryInfo({ ...queryInfo, ...{ eduName: e.target.value } })}
                 />
               </IonCol>
@@ -345,11 +238,17 @@ const LessonQuery: React.FC = () => {
                 >
                   查询
                 </button>
+                <button
+                  className="w-24 h-12 rounded-md shadow-md bg-gray-50 text-primary-600 focus:bg-gray-200"
+                  // onClick={openCreateModal}
+                >
+                  新增
+                </button>
               </IonCol>
             </IonRow>
           </div>
         </div>
-        {/* 下架课程模态框 */}
+      {/* 下架课程模态框  */}
         <Transition appear show={isOffOpen} as={Fragment}>
           <Dialog as="div" className="relative z-10" onClose={closeOffModal}>
             <Transition.Child
@@ -461,77 +360,6 @@ const LessonQuery: React.FC = () => {
             </div>
           </Dialog>
         </Transition>
-        {/* <Transition appear show={isOffOpen} as={Fragment}>
-          <Dialog as="div" className="relative z-10" onClose={closeOffModal}>
-            <Transition.Child
-              as={Fragment}
-              enter="ease-out duration-300"
-              enterFrom="opacity-0"
-              enterTo="opacity-100"
-              leave="ease-in duration-200"
-              leaveFrom="opacity-100"
-              leaveTo="opacity-0"
-            >
-              <div className="fixed inset-0 bg-black bg-opacity-25" />
-            </Transition.Child>
-
-            <div className="fixed inset-0 overflow-y-auto">
-              <div className="flex items-center justify-center min-h-full p-4 text-center">
-                <Transition.Child
-                  as={Fragment}
-                  enter="ease-out duration-300"
-                  enterFrom="opacity-0 scale-95"
-                  enterTo="opacity-100 scale-100"
-                  leave="ease-in duration-200"
-                  leaveFrom="opacity-100 scale-100"
-                  leaveTo="opacity-0 scale-95"
-                >
-                  <Dialog.Panel className="w-full max-w-md p-4 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
-                    <Dialog.Title
-                      as="h3"
-                      className="text-lg font-medium leading-6 text-center text-gray-900"
-                    >
-                      下架课程
-                      <hr className="mt-2 mb-4" />
-                    </Dialog.Title>
-                    <form
-                      onSubmit={onCreate}
-                      className="flex flex-col items-center rounded-lg justify-items-center"
-                    >
-                      <div className="flex items-center mb-4 justify-items-center">
-                        <div className="flex leading-7 justify-items-center">
-                          <div className="flex justify-end p-1 w-36">教育机构名称:</div>
-                          <input
-                            className="w-64 p-1 text-gray-600 bg-gray-100 border rounded-md justify-self-start focus:outline-none"
-                            name="eduName"
-                            value={lessonState?.edu?.eduName}
-                            readOnly
-                          ></input>
-                        </div>
-                      </div>
-                     
-                      <div className="flex items-center gap-4 mt-2 justify-items-center">
-                        <input
-                          value="返回"
-                          type="button"
-                          className="px-6 py-2 border rounded-md "
-                          onClick={closeOffModal}
-                        />
-                        <input
-                          value="提交"
-                          type="button"
-                          className="px-6 py-2 text-white border rounded-md bg-primary-600"
-                          onClick={closeOffModal}
-                        />
-                      </div>
-                    </form>
-                  </Dialog.Panel>
-                </Transition.Child>
-              </div>
-            </div>
-          </Dialog>
-        </Transition> */}
-
         {/* 列表 */}
         <div className="absolute w-full mt-10">
           <table className="w-11/12">
@@ -549,7 +377,7 @@ const LessonQuery: React.FC = () => {
             </thead>
             <tbody>
               {state.lesson.lessonList.map((list: Lesson, i: any) => (
-                <ListEntry lesson={list} key={i}  myKey={i}/>
+                <ListEntry lesson={list} key={i} />
               ))}
             </tbody>
           </table>

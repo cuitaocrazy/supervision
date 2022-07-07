@@ -367,3 +367,23 @@ app.post('/consumer/leave', jsonParser, async (req, res) => {
   }
   res.send({ status: 'success' })
 })
+
+
+import edbEduOrgService from './src/edb/EduOrgService';
+import { EduOrg } from './src/entity/EduOrg';
+app.get('/edb/eduOrg/find', async (req, res) => {
+  console.log(`教育局: 查询教育机构: 条件[${req.query}]`)
+  const r = await edbEduOrgService.find({ ...new EduOrg(), ...req.query })
+  res.send(r)
+})
+import edbEduLessonService from './src/edb/EduLessonService'
+app.get('/edb/eduLesson/find', async (req, res) => {
+  console.log(`教育局: 查询课程: 条件[${req.query}]`)
+  const r = await edbEduLessonService.find(req.query)
+  res.send(r)
+})
+app.get('/edb/contract/find', async (req, res) => {
+  console.log(`教育局: 合同查询: 条件[${{ ...req.query }}]`)
+  const r = await eduContractService.find(req.query)
+  res.send(r)
+})
