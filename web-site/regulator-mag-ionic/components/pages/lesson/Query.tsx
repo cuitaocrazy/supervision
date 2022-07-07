@@ -241,11 +241,6 @@ const LessonQuery: React.FC = () => {
           <button className='p-1 text-primary-600' onClick={onDetail(lesson)}>详情</button>
           {lesson.lessonStatus === 'on' ? <button className='p-1 text-fuchsia-600' onClick={onCancel(lesson)}>下架</button> : <></>}
           {lesson.lessonStatus === 'pending' ? <button className='p-1 text-cyan-600' onClick={onAttendance(lesson)}>审核</button> : <></>}
-          {/* <button className='p-1 text-cyan-600' onClick={onCancel(eduOrg)}>删除</button>
-          <button className='p-1 text-red-600' onClick={onEdit(eduOrg)}>编辑</button>
-          <button className='p-1 text-fuchsia-600'
-            onClick={openBlackModal}
-          >加入黑名单</button> */}
         </div>
       </td>
     </tr>

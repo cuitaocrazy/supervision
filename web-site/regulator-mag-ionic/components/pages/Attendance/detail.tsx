@@ -25,7 +25,7 @@ export const AttendanceDetail: React.FC = () => {
   }
   
   return (
-    <IonPage>
+    <IonPage className='bg-gray-100'>
     <IonCard className='h-screen mx-6 overflow-auto'>
      {/* 导航 */}
      <div className="flex px-2 pt-2 mx-2 my-2 text-gray-800">
