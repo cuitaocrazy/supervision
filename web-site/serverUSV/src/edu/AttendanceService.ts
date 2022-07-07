@@ -1,5 +1,6 @@
 import { Attendance } from '../entity/Attendance'
 import { Contract } from '../entity/Contract'
+import { EduLesson } from '../entity/EduLesson'
 
 import mysql from '../mysql'
 
@@ -15,9 +16,12 @@ class AttendanceService {
             const contracts = await mysql.getRepository(Contract).findBy({
                 lessonId: req.lessonId
             })
-            // TODO 未测试
             const records = await mysql.transaction(async (transactionalEntityManager) => {
-                return contracts.map(async contract => {
+                const eduLessonRepo = await transactionalEntityManager.getRepository(EduLesson)
+                const eduLesson = await eduLessonRepo.findOneBy({ lessonId: req.lessonId })
+                eduLesson.lessonAccumulationQuantity = eduLesson.lessonAccumulationQuantity + req.attendanceLessonQuantity
+                await eduLessonRepo.save(eduLesson)
+                return await Promise.all(contracts.map(async contract => {
                     const rs = await transactionalEntityManager.query(`SELECT REPLACE(UUID(),'-','') as uuid`)
                     console.log(rs[0].uuid)
                     const attendance: Attendance = {
@@ -27,7 +31,7 @@ class AttendanceService {
                     const attendanceRepo = transactionalEntityManager.getRepository(Attendance)
 
                     return await attendanceRepo.insert(attendance)
-                })
+                }))
             })
             return { result: true, msg: '发起打卡', applyCount: records.length }
         } catch (e: any) {

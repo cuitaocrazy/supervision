@@ -90,7 +90,7 @@ export interface Attendance {
   attendanceDate: string,
   attendanceTime: string,
   attendanceType: string,
-  attendanceLessionQuantity: number,
+  attendanceLessonQuantity: number,
   eduId: string,
   eduName: string,
   lessonId: string,

@@ -45,5 +45,5 @@ export class EduLesson {
     @Column()
     teacherId: string
     @Column()
-    lessonAccumulationQuantity: string
+    lessonAccumulationQuantity: number
 }

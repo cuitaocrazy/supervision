@@ -23,7 +23,7 @@ const demoattendanceList: Attendance[] = [
     attendanceDate: "2020-01-01",
     attendanceTime: "00:00:00",
     attendanceType: "vaild",
-    attendanceLessionQuantity: "111",
+    attendanceLessonQuantity: "111",
     eduId: "1",
     eduName: "教育机构1",
     lessonId: "1",
@@ -35,14 +35,14 @@ const demoattendanceList: Attendance[] = [
     updateDate: "2020-01-01",
     updateTime: "2020-01-01",
     updateReason: "aaaa",
-    attendanceLessionQuantity: "1",
+    attendanceLessonQuantity: "1",
   },
   {
     attendanceID: "2",
     attendanceDate: "2020-01-01",
     attendanceTime: "00:00:00",
     attendanceType: "vaild",
-    attendanceLessionQuantity: "111",
+    attendanceLessonQuantity: "111",
     eduId: "1",
     eduName: "教育机构1",
     lessonId: "1",
@@ -54,7 +54,7 @@ const demoattendanceList: Attendance[] = [
     updateDate: "2020-01-01",
     updateTime: "2020-01-01",
     updateReason: "aaaa",
-    attendanceLessionQuantity: "1",
+    attendanceLessonQuantity: "1",
   },
 ];
 
@@ -159,7 +159,7 @@ const AttendanceQuery: React.FC = () => {
         <p className="text-center">{attendance.attendanceTime}</p>
       </IonLabel>
       <IonLabel>
-        <p className="text-center">{attendance.attendanceLessionQuantity}</p>
+        <p className="text-center">{attendance.attendanceLessonQuantity}</p>
       </IonLabel>
       <IonLabel>
         <p className="text-center">{attendance.attendanceDate}</p>

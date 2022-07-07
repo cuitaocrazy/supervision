@@ -18,7 +18,7 @@ const ContractNegoQuery: React.FC = () => {
   const [detail, setDetail] = useState({} as Lesson);
   const [attendance, setAttendance] = useState({
     lessonId: "",
-    attendanceLessionQuantity: 1,
+    attendanceLessonQuantity: 1,
     attendanceDate: "",
     attendanceTime: "",
   } as Attendance);
@@ -62,8 +62,11 @@ const ContractNegoQuery: React.FC = () => {
       .then((res) => res.json())
       .then((json) => {
         const { result, msg } = json;
-        if (result) alert("发起签到成功");
-        else alert("发起签到失败, 原因: " + msg);
+        if (result) {
+          alert("发起签到成功");
+          setIsAttendanceOpen(false);
+          onQuery();
+        } else alert("发起签到失败, 原因: " + msg);
       });
     console.log("提交");
   };
@@ -302,11 +305,11 @@ const ContractNegoQuery: React.FC = () => {
                           <input
                             type="number"
                             className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
-                            value={attendance.attendanceLessionQuantity}
+                            value={attendance.attendanceLessonQuantity}
                             onChange={(e) =>
                               setAttendance({
                                 ...attendance,
-                                attendanceLessionQuantity: parseInt(
+                                attendanceLessonQuantity: parseInt(
                                   e.target.value
                                 ),
                               })

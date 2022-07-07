@@ -132,13 +132,13 @@ app.get('/edu/lesson/findAll', async (req, res) => {
   res.send(r)
 })
 app.get('/edu/lesson/find', async (req, res) => {
-  console.log(`教育机构: 搜索课程: 条件[${req.query}]`)
+  console.log(`教育机构: 搜索课程: 条件[${JSON.stringify(req.query)}]`)
   const r = await eduLessonService.find(req.query)
   res.send(r)
 })
 import eduAttendanceService from './src/edu/AttendanceService';
 app.post('/edu/attendance/apply', jsonParser, async (req, res) => {
-  console.log(`教育机构: 发起签到`)
+  console.log(`教育机构: 发起签到：内容[${req.body}]`)
   const r = await eduAttendanceService.apply(req.body)
   res.send(r)
 })
