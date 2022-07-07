@@ -51,7 +51,8 @@ const initialState = {
   },
   lesson:{//课程
     lessonList:[],
-    lessonDetail:null
+    lessonDetail:null,
+    lessonEdit:null
   },
   teacher:{//教师
     teacherDetail:null,
@@ -295,6 +296,8 @@ export const setSupervisorOrgEdit = (supervisorOrgEdit:SupervisorOrg) => {
 }
 
 export const reducer = (state: any, action: any) => {
+  console.log('action')
+  console.log(action)
   switch (action.type) {
     //new
     

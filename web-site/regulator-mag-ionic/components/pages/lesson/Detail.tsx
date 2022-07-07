@@ -243,6 +243,7 @@ export const LessonDetail: React.FC = () => {
                 readOnly
               />
             </div>
+            {/* TODO：课程表缺少课程人数 */}
             {/* <div className="flex mb-4 leading-10">
               <div className="flex justify-end w-32 mr-2">人数:</div>
               <input

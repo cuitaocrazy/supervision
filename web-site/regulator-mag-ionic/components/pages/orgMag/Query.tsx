@@ -398,7 +398,7 @@ const OrgMagQuery: React.FC = () => {
                           ></input>
                         </div>
                       </div>
-                      <div className="flex items-center mb-4 justify-items-center">
+                      {/* <div className="flex items-center mb-4 justify-items-center">
                         <div className="flex justify-items-center">
                           <span className="flex justify-end p-1 mr-1 w-36">教育机构法人:</span>
                           <input
@@ -561,7 +561,7 @@ const OrgMagQuery: React.FC = () => {
                             }
                           />
                         </div>
-                      </div>
+                      </div> */}
                       <div className="flex items-center gap-4 mt-2 justify-items-center">
                         <input
                           value="返回"
