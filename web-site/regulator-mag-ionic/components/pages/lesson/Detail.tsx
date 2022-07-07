@@ -159,7 +159,7 @@ export const LessonDetail: React.FC = () => {
                 className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
                 name="teacherName"
                 type="text"
-                value={lessonState.teacher.teacherName}
+                value={lessonState.teacherName}
                 readOnly
               />
             </div>
