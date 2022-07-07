@@ -45,7 +45,7 @@ const LessonQuery: React.FC = () => {
   };
 
   const { state, dispatch } = useContext(AppContext);
-  const [queryInfo, setQueryInfo] = useState({ lessonName: '', lessonStatus: null });
+  const [queryInfo, setQueryInfo] = useState({ eduName: '', lessonStatus: null });
   const getParamStr = (params: any, url: string) => {
     let result = '?';
     Object.keys(params).forEach(key => {
@@ -55,7 +55,7 @@ const LessonQuery: React.FC = () => {
   };
   const paramStr = getParamStr(
     {
-      lessonName: queryInfo.lessonName,
+      eduName: queryInfo.eduName,
       lessonStatus: queryInfo.lessonStatus,
     },
     findURL
@@ -115,7 +115,7 @@ const LessonQuery: React.FC = () => {
       key={key}
       className="grid items-center grid-cols-8 gap-2 text-gray-600 border justify-items-center even:bg-white odd:bg-primary-100 "
     >
-      <td className="flex items-center justify-center leading-10">{lesson.eduOrg.eduName}</td>
+      <td className="flex items-center justify-center leading-10">{lesson.eduName}</td>
       <td className="flex items-center justify-center leading-10">{lesson.lessonName}</td>
       <td className="flex items-center justify-center leading-10">
         {lesson.lessonTotalPrice / lesson.lessonPerPrice}

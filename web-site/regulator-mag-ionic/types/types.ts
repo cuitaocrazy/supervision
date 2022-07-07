@@ -63,9 +63,9 @@ export interface Lesson {
   lessonUpdateTime: string,
   lessonUpdateReason: string,
   eduId: string,
-  eduOrg: EduOrg,
+  eduName: string,
   teacherId: string,
-  teacher: Teacher,
+  teacherName: Teacher,
 }
 
 export interface Teacher {

@@ -43,7 +43,11 @@ export class EduLesson {
     @Column()
     eduId: string
     @Column()
+    eduName: string
+    @Column()
     teacherId: string
+    @Column()
+    teacherName: string
     @Column()
     lessonAccumulationQuantity: number
 }
