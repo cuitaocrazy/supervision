@@ -238,12 +238,6 @@ const LessonQuery: React.FC = () => {
                 >
                   查询
                 </button>
-                <button
-                  className="w-24 h-12 rounded-md shadow-md bg-gray-50 text-primary-600 focus:bg-gray-200"
-                  // onClick={openCreateModal}
-                >
-                  新增
-                </button>
               </IonCol>
             </IonRow>
           </div>
