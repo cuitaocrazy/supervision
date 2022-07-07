@@ -23,7 +23,6 @@ class AttendanceService {
                 await eduLessonRepo.save(eduLesson)
                 return await Promise.all(contracts.map(async contract => {
                     const rs = await transactionalEntityManager.query(`SELECT REPLACE(UUID(),'-','') as uuid`)
-                    console.log(rs[0].uuid)
                     const attendance: Attendance = {
                         ...new Attendance(), ...req, ...contract, attendanceId: rs[0].uuid,
                         attendanceType: 'manual', attendanceStatus: 'conforming'

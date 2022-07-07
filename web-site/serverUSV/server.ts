@@ -367,3 +367,12 @@ app.post('/consumer/leave', jsonParser, async (req, res) => {
   }
   res.send({ status: 'success' })
 })
+
+
+import edbEduOrgService from './src/edb/EduOrgService';
+import { EduOrg } from './src/entity/EduOrg';
+app.get('/edb/eduOrg/find', async (req, res) => {
+  console.log(`教育机构: 查询划拨: 条件[${req.query}]`)
+  const r = await edbEduOrgService.find({ ...new EduOrg(), ...req.query })
+  res.send(r)
+})
