@@ -16,26 +16,26 @@ import {
 } from '@ionic/react';
 import { Redirect } from 'react-router-dom';
 import { useCallback, useContext } from 'react';
-import { AppContext, setLessonDetail } from '../../../appState';
+import { AppContext, setLessonAudit } from '../../../appState';
 import { Lesson } from '../../../types/types';
 import { PickerColumn } from '@ionic/core';
 
-export const LessonDetail: React.FC = () => {
-  console.log('LessonDetail');
+export const LessonAudit: React.FC = () => {
+  console.log('LessonAudit');
   const modifyURL = 'http://localhost:3003/lesson/modifyURL';
   const { state, dispatch } = useContext(AppContext);
   // const {SubscribeDurationDays,TranAmt,USVOrgID,USVItemName,USVItemID,USVItemDesc,SubscribeStartDate,LessonType} = state.lessonDetail
 
-  const [lessonState, setLessonState] = useState(state.lesson.lessonDetail);
+  const [lessonState, setLessonState] = useState(state.lesson.lessonAudit);
   const [isPickOpen, setPickOpen] = useState(false);
   const setBack = useCallback(() => {
-    dispatch(setLessonDetail(undefined));
+    dispatch(setLessonAudit(undefined));
   }, []);
   `                                                       `;
   const onBack = () => () => {
     setBack();
   };
-  if (state.lesson.lessonDetail === undefined) {
+  if (state.lesson.lessonAudit === undefined) {
     return <Redirect to={state.backPage} />;
   }
 
@@ -94,7 +94,7 @@ export const LessonDetail: React.FC = () => {
           <div>
           <span className="pr-1 text-gray-600">教育机构管理</span>/
           <span className="pl-1 pr-1 text-primary-500">课程管理</span>/
-            <span className="pl-1 text-primary-500">课程详情</span>
+            <span className="pl-1 text-primary-500">课程审核</span>
           </div>
         </div>
         <IonCardContent>
@@ -255,13 +255,10 @@ export const LessonDetail: React.FC = () => {
             </div>
             <div className="flex mb-4 leading-10">
               <div className="flex justify-end w-32 mr-2">课程大纲:</div>
-              <input
-                className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
-                name="lessonUpdateDate"
-                type="text"
-                value={lessonState.lessonOutline}
-                readOnly
-              />
+              <a className="w-64 px-2" href="/contract/outline">
+                请查看课程大纲
+              </a>
+            </div>
             </div>
             {/* TODO：课程表缺少课程人数 */}
             {/* <div className="flex mb-4 leading-10">
@@ -274,7 +271,6 @@ export const LessonDetail: React.FC = () => {
                 readOnly
               />
             </div> */}
-          </div>
           <div className="flex justify-center">
             <input
               value="返回"
@@ -286,217 +282,7 @@ export const LessonDetail: React.FC = () => {
         </IonCardContent>
       </IonCard>
     </IonPage>
-    // <IonPage>
-    //   <IonCard>
-    //     <IonCardHeader>
-    //       <IonCardSubtitle className="mx-8 text-3xl text-gray-600">详细信息</IonCardSubtitle>
-    //     </IonCardHeader>
-    //     <IonCardContent>
-    //       <form onSubmit={onModify}>
-    //         <IonList>
-    //           <IonLabel position="stacked" color="primary">
-    //             机构ID
-    //           </IonLabel>
-    //           <IonInput
-    //             name="eduId"
-    //             type="text"
-    //             value={lessonState.eduId}
-    //             spellCheck={false}
-    //             autocapitalize="off"
-    //             readonly
-    //             required
-    //           ></IonInput>
-    //           <IonLabel position="stacked" color="primary">
-    //             课程ID
-    //           </IonLabel>
-    //           <IonInput
-    //             name="lessonId"
-    //             type="text"
-    //             value={lessonState.lessonId}
-    //             spellCheck={false}
-    //             autocapitalize="off"
-    //             readonly
-    //             required
-    //           ></IonInput>
-    //           <IonLabel position="stacked" color="primary">
-    //             课程名称
-    //           </IonLabel>
-    //           <IonInput
-    //             name="lessonName"
-    //             type="text"
-    //             value={lessonState.lessonName}
-    //             spellCheck={false}
-    //             autocapitalize="off"
-    //             onIonChange={e =>
-    //               setLessonState({ ...lessonState, ...{ lessonName: e.detail.value! } })
-    //             }
-    //             required
-    //           ></IonInput>
-    //           <IonLabel position="stacked" color="primary">
-    //             课程描述
-    //           </IonLabel>
-    //           <IonInput
-    //             name="lessonIntroduce"
-    //             type="text"
-    //             value={lessonState.lessonIntroduce}
-    //             spellCheck={false}
-    //             autocapitalize="off"
-    //             onIonChange={e =>
-    //               setLessonState({ ...lessonState, ...{ lessonIntroduce: e.detail.value! } })
-    //             }
-    //             required
-    //           ></IonInput>
-    //           <IonLabel position="stacked" color="primary">
-    //             课程类型
-    //           </IonLabel>
-    //           <IonPicker
-    //             isOpen={isPickOpen}
-    //             columns={[lessonTypePickerColumn]}
-    //             buttons={[
-    //               {
-    //                 text: '取消',
-    //                 role: 'cancel',
-    //                 handler: value => {
-    //                   setPickOpen(false);
-    //                 },
-    //               },
-    //               {
-    //                 text: '确认',
-    //                 handler: value => {
-    //                   setPickOpen(false);
-    //                   setLessonState({
-    //                     ...lessonState,
-    //                     ...{ lessonType: value.lessonTypePickerColumn.value },
-    //                   });
-    //                 },
-    //               },
-    //             ]}
-    //           ></IonPicker>
-    //           <IonLabel position="stacked" color="primary">
-    //             课程大纲
-    //           </IonLabel>
-    //           <IonInput
-    //             name="lessonOutline"
-    //             type="text"
-    //             value={lessonState.lessonOutline}
-    //             spellCheck={false}
-    //             autocapitalize="off"
-    //             onIonChange={e =>
-    //               setLessonState({ ...lessonState, ...{ lessonOutline: e.detail.value! } })
-    //             }
-    //             required
-    //           ></IonInput>
-    //           <IonLabel position="stacked" color="primary">
-    //             课程开始日期
-    //           </IonLabel>
-    //           <IonDatetime
-    //             className="flex w-56 h-6 pt-2.5 font-bold text-center text-primary-600 bg-white rounded-md"
-    //             value={lessonState.lessonStartDate}
-    //             name="lessonStartDate"
-    //             displayFormat="YYYYMMDD"
-    //             onIonChange={e => {
-    //               setLessonState({ ...lessonState, ...{ lessonStartDate: e.detail.value! } });
-    //             }}
-    //           ></IonDatetime>
-    //           <IonLabel position="stacked" color="primary">
-    //             课程结束日期
-    //           </IonLabel>
-    //           <IonDatetime
-    //             className="flex w-56 h-6 pt-2.5 font-bold text-center text-primary-600 bg-white rounded-md"
-    //             value={lessonState.lessonEndDate}
-    //             name="lessonStartDate"
-    //             displayFormat="YYYYMMDD"
-    //             onIonChange={e => {
-    //               setLessonState({ ...lessonState, ...{ lessonEndDate: e.detail.value! } });
-    //             }}
-    //           ></IonDatetime>
-    //           <IonLabel position="stacked" color="primary">
-    //             课程状态
-    //           </IonLabel>
-    //           <IonInput
-    //             name="lessonStatus"
-    //             type="text"
-    //             value={lessonState.lessonStatus}
-    //             spellCheck={false}
-    //             autocapitalize="off"
-    //             readonly
-    //             required
-    //           ></IonInput>
-    //           <IonLabel position="stacked" color="primary">
-    //             课程创建时间
-    //           </IonLabel>
-    //           <IonInput
-    //             name="lessonCreateDate"
-    //             type="text"
-    //             value={lessonState.lessonCreateDate}
-    //             spellCheck={false}
-    //             autocapitalize="off"
-    //             readonly
-    //             required
-    //           ></IonInput>
-    //           <IonLabel position="stacked" color="primary">
-    //             课程修改时间
-    //           </IonLabel>
-    //           <IonInput
-    //             name="lessonCreateDate"
-    //             type="text"
-    //             value={lessonState.lessonUpdateDate}
-    //             spellCheck={false}
-    //             autocapitalize="off"
-    //             readonly
-    //             required
-    //           ></IonInput>
-    //           <IonLabel position="stacked" color="primary">
-    //             修改原因
-    //           </IonLabel>
-    //           <IonInput
-    //             name="lessonUpdateReason"
-    //             type="text"
-    //             value={lessonState.lessonUpdateReason}
-    //             spellCheck={false}
-    //             autocapitalize="off"
-    //             onIonChange={e =>
-    //               setLessonState({ ...lessonState, ...{ lessonUpdateReason: e.detail.value! } })
-    //             }
-    //             required
-    //           ></IonInput>
-    //           <IonLabel position="stacked" color="primary">
-    //             教育机构ID
-    //           </IonLabel>
-    //           <IonInput
-    //             name="eduId"
-    //             type="text"
-    //             value={lessonState.eduId}
-    //             spellCheck={false}
-    //             autocapitalize="off"
-    //             readonly
-    //             required
-    //           ></IonInput>
-    //           <IonLabel position="stacked" color="primary">
-    //             教师ID
-    //           </IonLabel>
-    //           <IonInput
-    //             name="teacherId"
-    //             type="text"
-    //             value={lessonState.teacherId}
-    //             spellCheck={false}
-    //             autocapitalize="off"
-    //             onIonChange={e =>
-    //               setLessonState({ ...lessonState, ...{ teacherId: e.detail.value! } })
-    //             }
-    //             required
-    //           ></IonInput>
-    //         </IonList>
-    //       </form>
-    //       <IonItem className="">
-    //         <IonButton className="m-5 text-base " onClick={onBack()} fill="solid">
-    //           返回
-    //         </IonButton>
-    //       </IonItem>
-    //     </IonCardContent>
-    //   </IonCard>
-    // </IonPage>
   );
 };
 
-export default LessonDetail;
+export default LessonAudit;

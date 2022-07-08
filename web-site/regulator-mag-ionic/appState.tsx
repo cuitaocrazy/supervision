@@ -52,7 +52,7 @@ const initialState = {
   lesson:{//课程
     lessonList:[],
     lessonDetail:null,
-    lessonEdit:null
+    lessonAduit:null
   },
   teacher:{//教师
     teacherDetail:null,
@@ -150,6 +150,12 @@ export const setLessonDetail = (lessonDetail?:Lesson) => {
   return {
     type: 'setLessonDetail',
     lessonDetail:lessonDetail
+  }
+}
+export const setLessonAudit = (lessonAudit?:Lesson) => {
+  return {
+    type: 'setLessonAudit',
+    lessonAudit:lessonAudit
   }
 }
 export const setTeacherList = (teacherList:Teacher[]) => {
@@ -419,6 +425,16 @@ export const reducer = (state: any, action: any) => {
         lesson:{
           lessonList:state.lesson.lessonList,
           lessonDetail:action.lessonDetail
+        },
+        backPage:action.backPage||state.backPage
+      }
+    }
+    case 'setLessonAudit':{
+      return {   
+        ...state,
+        lesson:{
+          lessonList:state.lesson.lessonList,
+          lessonAudit:action.lessonAudit
         },
         backPage:action.backPage||state.backPage
       }

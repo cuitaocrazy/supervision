@@ -27,6 +27,7 @@ import { ContractDetail } from './pages/Contract/detail';
 import ContractNego from './pages/contractNego/query';
 import Lesson from './pages/lesson/Query';
 import LessonDetail from './pages/lesson/Detail';
+import LessonAudit from './pages/lesson/Audit'
 import OrgMag from './pages/orgMag/Query';
 import OrgMagDetail from './pages/orgMag/Detail';
 import OrgMagEdit from './pages/orgMag/Edit';
@@ -88,6 +89,7 @@ const AppShell = () => {
               <Route path="/tabs/contractNego/query" component={ContractNego} exact={true} />
               <Route path="/tabs/lesson/query" component={Lesson} exact={true} />
               <Route path="/tabs/lesson/detail" component={LessonDetail} exact={true} />
+              <Route path="/tabs/lesson/audit" component={LessonAudit} exact={true} />
               <Route path="/tabs/orgMag/query" component={OrgMag} exact={true} />
               <Route path="/tabs/orgMag/detail" component={OrgMagDetail} exact={true} />
               <Route path="/tabs/orgMag/edit" component={OrgMagEdit} exact={true} />

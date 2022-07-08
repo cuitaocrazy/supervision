@@ -1,7 +1,7 @@
 //Lesson的查询页面
 import { useEffect, useCallback, useContext, useState, Fragment } from 'react';
 import { Redirect } from 'react-router-dom';
-import { AppContext, setLessonList, setLessonDetail } from '../../../appState';
+import { AppContext, setLessonList, setLessonDetail,setLessonAudit } from '../../../appState';
 import { Lesson } from '../../../types/types';
 import { IonPage, IonList, IonLabel, IonItem, IonRow, IonCol } from '@ionic/react';
 import { Dialog, Transition } from '@headlessui/react';
@@ -103,6 +103,17 @@ const LessonQuery: React.FC = () => {
     [dispatch]
   );
 
+  const onAudit = (item: Lesson) => () => {
+    doSetAudit(item);
+  };
+
+  const doSetAudit = useCallback(
+    (lesson: Lesson) => {
+      dispatch({ ...setLessonAudit(lesson), ...{ backPage: '/tabs/lesson/query' } });
+    },
+    [dispatch]
+  );
+
   const onQuery = () => {
     fetch(paramStr, {
       method: 'GET',
@@ -162,7 +173,7 @@ const LessonQuery: React.FC = () => {
             <></>
           )}
           {lesson.lessonStatus === 'pending' ? (
-            <button className="p-1 text-cyan-600" onClick={onAttendance(lesson)}>
+            <button className="p-1 text-cyan-600" onClick={onAudit(lesson)}>
               审核
             </button>
           ) : (
@@ -174,6 +185,10 @@ const LessonQuery: React.FC = () => {
   );
   if (state.lesson.lessonDetail) {
     return <Redirect to="/tabs/lesson/detail" />;
+  }
+
+  if (state.lesson.lessonAudit) {
+    return <Redirect to="/tabs/lesson/audit" />;
   }
 
   return (
