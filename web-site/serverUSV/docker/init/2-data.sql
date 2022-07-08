@@ -28,9 +28,9 @@ INSERT INTO yadadb.t_l_contract (contract_id,fabric_contract_id,contract_date,co
 
 -- 考勤插入
 INSERT INTO yadadb.t_l_attendance (attendance_id,contract_id,fabric_contract_id,attendance_date,attendance_time,attendance_type,attendance_lesson_quantity,edu_id,edu_name,lesson_id,lesson_name,consumer_id,consumer_name,consumer_stu_name,attendance_status,attendance_update_date,attendance_update_time,attendance_update_reason) VALUES
-	 ('19b2f639fc2811ecbd3c0242ac140002','contract00001','fabric00001',NULL,NULL,NULL,NULL,'edu0001','测试机构','lesson00002','英语入门兴趣班','testuser','测试用户','测试用户',NULL,NULL,NULL,NULL),
-	 ('attendance00001','contract00001','fabric00001',NULL,NULL,NULL,NULL,'edu0001','测试机构','lesson00002','英语入门兴趣班','testuser','测试用户','测试用户','conforming',NULL,NULL,NULL),
-	 ('attendance00002','contract00001','fabric00001',NULL,NULL,NULL,NULL,'edu0001','测试机构','lesson00002','英语入门兴趣班','testuser','测试用户','测试用户','conforming',NULL,NULL,NULL);
+	 ('19b2f639fc2811ecbd3c0242ac140002','contract00001','fabric00001','20220706','130000','manual',1,'edu0001','测试机构','lesson00002','英语入门兴趣班','testuser','测试用户','测试用户',NULL,NULL,NULL,NULL),
+	 ('attendance00001','contract00001','fabric00001','20220707','130000','manual',1,'edu0001','测试机构','lesson00002','英语入门兴趣班','testuser','测试用户','测试用户','conforming',NULL,NULL,NULL),
+	 ('attendance00002','contract00001','fabric00001','20220708','130000','manual',1,'edu0001','测试机构','lesson00002','英语入门兴趣班','testuser','测试用户','测试用户','conforming',NULL,NULL,NULL);
 
 -- 划拨插入
 INSERT INTO yadadb.t_l_transfer (transfer_id,attendance_id,contract_id,fabric_contract_id,attendance_date,attendance_time,attendance_type,edu_id,edu_name,lesson_id,lesson_name,consumer_id,consumer_name,consumer_stu_name,tran_ls_id,supversing_account,normal_account,transfer_amt,transfer_result,reason,transfer_update_date,transfer_update_time) VALUES

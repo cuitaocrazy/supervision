@@ -1,5 +1,5 @@
 //Lesson的查询页面
-import { useEffect, useCallback, useContext, useState,Fragment } from 'react';
+import { useEffect, useCallback, useContext, useState, Fragment } from 'react';
 import { Redirect } from 'react-router-dom';
 import { AppContext, setLessonList, setLessonDetail } from '../../../appState';
 import { Lesson } from '../../../types/types';
@@ -69,7 +69,6 @@ const LessonQuery: React.FC = () => {
       });
   };
 
- 
   const [queryInfo, setQueryInfo] = useState({ eduName: '', lessonStatus: null });
   const getParamStr = (params: any, url: string) => {
     let result = '?';
@@ -135,10 +134,8 @@ const LessonQuery: React.FC = () => {
     return statusEnglish;
   };
 
-  const ListEntry = ({ lesson, ...props }: { lesson: Lesson; }) => (
-    <tr
-      className="grid items-center grid-cols-8 gap-2 text-gray-600 border justify-items-center even:bg-white odd:bg-primary-100 "
-    >
+  const ListEntry = ({ lesson, ...props }: { lesson: Lesson }) => (
+    <tr className="grid items-center grid-cols-8 gap-2 text-gray-600 border justify-items-center even:bg-white odd:bg-primary-100 ">
       <td className="flex items-center justify-center leading-10">{lesson.eduName}</td>
       <td className="flex items-center justify-center leading-10">{lesson.lessonName}</td>
       <td className="flex items-center justify-center leading-10">
@@ -242,7 +239,7 @@ const LessonQuery: React.FC = () => {
             </IonRow>
           </div>
         </div>
-      {/* 下架课程模态框  */}
+        {/* 下架课程模态框  */}
         <Transition appear show={isOffOpen} as={Fragment}>
           <Dialog as="div" className="relative z-10" onClose={closeOffModal}>
             <Transition.Child
@@ -282,9 +279,7 @@ const LessonQuery: React.FC = () => {
                     >
                       <div className="flex items-center mb-4 justify-items-center">
                         <div className="flex leading-7 justify-items-center">
-                          <div className="flex justify-end p-1 w-36">
-                            教育机构名称:
-                          </div>
+                          <div className="flex justify-end p-1 w-36">教育机构名称:</div>
                           <input
                             className="w-64 p-1 text-gray-600 bg-gray-100 border rounded-md justify-self-start focus:outline-none"
                             name="eduId"
@@ -298,35 +293,30 @@ const LessonQuery: React.FC = () => {
 
                       <div className="flex items-center mb-4 justify-items-center">
                         <div className="flex justify-items-center">
-                          <span className="flex justify-end p-1 mr-1 w-36">
-                            课程名称:
-                          </span>
+                          <span className="flex justify-end p-1 mr-1 w-36">课程名称:</span>
                           <input
                             className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
                             name="lessonName"
                             type="text"
                             value={lessonState.lessonName}
                             spellCheck={false}
-                            
                             readOnly
                           ></input>
                         </div>
                       </div>
                       <div className="flex items-center mb-4 justify-items-center">
                         <div className="flex justify-items-center">
-                          <span className="flex justify-end p-1 mr-1 w-36">
-                            下架原因:
-                          </span>
+                          <span className="flex justify-end p-1 mr-1 w-36">下架原因:</span>
                           <textarea
                             className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
                             name="lessonTotalTimes"
                             value={lessonState.lessonTotalTimes}
                             spellCheck={false}
-                            onChange={(e) =>
+                            onChange={e =>
                               setLessonState({
                                 ...lessonState,
                                 ...{
-                                  lessonTotalTimes: e.nativeEvent.target?.value
+                                  lessonTotalTimes: e.nativeEvent.target?.value,
                                 },
                               })
                             }

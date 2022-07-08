@@ -22,7 +22,7 @@ const datasource = new DataSource({
     password: "yadadb",
     database: "yadadb",
     synchronize: false,
-    logging: true,
+    logging: false,
     entities: [Announcement, Attendance, Complaint, Consumer, ConsumerStudent,
         Contract, ContractNego, EduLesson, EduOrg, EduTeacher, SupervisorBlackEdu,
         SupervisorOrg, SupervisorUser, Transfer],
