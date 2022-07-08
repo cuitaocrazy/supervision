@@ -52,7 +52,7 @@ const initialState = {
   lesson:{//课程
     lessonList:[],
     lessonDetail:null,
-    lessonEdit:null
+    lessonAduit:null
   },
   teacher:{//教师
     teacherDetail:null,
@@ -150,6 +150,12 @@ export const setLessonDetail = (lessonDetail?:Lesson) => {
   return {
     type: 'setLessonDetail',
     lessonDetail:lessonDetail
+  }
+}
+export const setLessonAduit = (lessonAduit?:Lesson) => {
+  return {
+    type: 'setLessonAduit',
+    lessonAduit:lessonAduit
   }
 }
 export const setTeacherList = (teacherList:Teacher[]) => {
