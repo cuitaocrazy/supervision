@@ -1,20 +1,20 @@
 import { Redirect, Route } from 'react-router-dom';
 import { IonRouterOutlet, IonTabs, IonTabBar, IonTabButton, IonIcon, IonLabel } from '@ionic/react';
-import {  flash } from 'ionicons/icons';
+import { flash } from 'ionicons/icons';
 
 import Announcement from './Announcement/query';
 import Attendance from './Attendance/query';
 // import Balance from './Balance/query'
-import BaseInfo from './baseInfo/query'
-import Complaint from './Complaint/query'
-import Contract from './Contract/query'
-import ContractNego from './contractNego/query'
-import Lesson from './lesson/Query'
-import OrgMag from './orgMag/Query'
-import Teacher from './Teacher/query'
-import Tranfer from './TranFer/query'
-import TranferManul from './TranFerManual/query'
-import Login from './Login'
+import BaseInfo from './baseInfo/query';
+import Complaint from './Complaint/query';
+import Contract from './Contract/query';
+import ContractNego from './contractNego/query';
+import Lesson from './lesson/Query';
+import OrgMag from './orgMag/Query';
+import Teacher from './Teacher/Query';
+import Tranfer from './transfer/query';
+import TranferManul from './TranFerManual/query';
+import Login from './Login';
 
 const Tabs = () => {
   return (

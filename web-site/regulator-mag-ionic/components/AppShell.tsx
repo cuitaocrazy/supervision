@@ -27,13 +27,13 @@ import { ContractDetail } from './pages/Contract/detail';
 import ContractNego from './pages/contractNego/query';
 import Lesson from './pages/lesson/Query';
 import LessonDetail from './pages/lesson/Detail';
-import LessonAudit from './pages/lesson/Audit'
+import LessonAudit from './pages/lesson/Audit';
 import OrgMag from './pages/orgMag/Query';
 import OrgMagDetail from './pages/orgMag/Detail';
 import OrgMagEdit from './pages/orgMag/Edit';
 import Teacher from './pages/Teacher/Query';
-import Tranfer from './pages/TranFer/query';
-import TranferDetail from './pages/TranFer/detail';
+import Tranfer from './pages/transfer/query';
+import TranferDetail from './pages/transfer/detail';
 import TranferManul from './pages/TranFerManual/query';
 import TeacherDetail from './pages/Teacher/Detail';
 import ComplaintDetail from './pages/Complaint/detail';
@@ -108,7 +108,7 @@ const AppShell = () => {
                 component={ComplaintStatistic}
                 exact={true}
               />
-              <Route path="/login" component={Login}  />
+              <Route path="/login" component={Login} />
               <Route exact path="/" render={() => <Redirect to="/login" />} />
               {/* <Route path="/login" render={() => <Login />} />
               <Route exact path="/" render={() => <Redirect to="/login" />} /> */}

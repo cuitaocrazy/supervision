@@ -404,8 +404,14 @@ app.get('/edb/contract/find', async (req, res) => {
   res.send(r)
 })
 import edbAttendanceService from './src/edb/AttendanceService'
+import { Transfer } from './src/entity/Transfer';
 app.get('/edb/attendance/find', async (req, res) => {
   console.log(`教育局: 考勤查询: 条件[${JSON.stringify(req.query)}]`)
   const r = await edbAttendanceService.find({ ...new Attendance(), ...req.query })
+  res.send(r)
+})
+app.get('/edb/transfer/find', async (req, res) => {
+  console.log(`教育局: 划拨查询: 条件[${JSON.stringify(req.query)}]`)
+  const r = await eduTransferService.find({ ...new Transfer(), ...req.query })
   res.send(r)
 })

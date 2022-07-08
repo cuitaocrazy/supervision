@@ -68,7 +68,7 @@ export const TransferDetail: React.FC = () => {
                 className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
                 name="transferId"
                 type="text"
-                value={state.contractId}
+                value={state.transfer.transferDetail.contractId}
                 readOnly
               />
             </div>
@@ -135,45 +135,6 @@ export const TransferDetail: React.FC = () => {
         </IonCardContent>
       </IonCard>
     </IonPage>
-
-    // <IonPage>
-    //   <IonCard>
-    //   <IonCardHeader>
-    //     <IonCardSubtitle className="mx-8 text-3xl text-gray-600">详细信息</IonCardSubtitle>
-    //   </IonCardHeader>
-    //   <IonCardContent>
-    //     <IonList>
-    //           <IonItem>
-    //             <IonLabel position="floating">合同ID：</IonLabel>
-    //             <IonInput name="transferId" value={state.contractId} readonly required ></IonInput>
-    //           </IonItem>
-    //           <IonItem>
-    //             <IonLabel position="floating">教育机构名称：</IonLabel>
-    //             <IonInput name="transferName" value={state.transfer.transferDetail.eduName} readonly required></IonInput>
-    //           </IonItem>
-    //           <IonItem>
-    //             <IonLabel position="floating">课程名称：</IonLabel>
-    //             <IonInput name="transferIdentityNo" value={state.transfer.transferDetail.lessonName} readonly required></IonInput>
-    //           </IonItem>
-    //           <IonItem>
-    //             <IonLabel position="floating">客户姓名：</IonLabel>
-    //             <IonInput name="transferExperience" value={state.transfer.transferDetail.consumerName} readonly required></IonInput>
-    //           </IonItem>
-    //           <IonItem>
-    //             <IonLabel position="floating">划拨结果：</IonLabel>
-    //             <IonInput name="transferIntroduce" value={state.transfer.transferDetail.transferResult} readonly required></IonInput>
-    //           </IonItem>
-    //           <IonItem>
-    //             <IonLabel position="floating">划拨金额：</IonLabel>
-    //             <IonInput name="transferRating" value={state.transfer.transferDetail.transferAmt} readonly required ></IonInput>
-    //           </IonItem>
-    //           </IonList>
-    //       <IonItem className="">
-    //         <IonButton className="m-5 text-base " onClick={onBack()} fill="solid">返回</IonButton>
-    //       </IonItem>
-    //   </IonCardContent>
-    //   </IonCard>
-    //   </IonPage>
   );
 };
 
