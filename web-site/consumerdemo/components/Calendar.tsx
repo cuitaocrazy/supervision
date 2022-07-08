@@ -1,7 +1,11 @@
 import React from 'react'
 
+
 // 日历组件
 const Calendar = () => {
+
+  const date = new Date()
+
   return <div className='flex items-start justify-start mx-2 mt-1'>
     <div className='flex flex-col w-full max-w-lg p-6 mx-auto bg-white shadow-xl rounded-2xl'>
       <div className="flex justify-center pb-2">
@@ -10,7 +14,7 @@ const Calendar = () => {
             <path d="M11.001 6L6.00098 1L1.00098 6" stroke="black" strokeOpacity="0.4" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </div>
-        <span className="px-3 py-2 text-sm font-semibold text-white rounded-md bg-secondary-300">2022/06</span>
+        <span className="px-3 py-2 text-sm font-semibold text-white rounded-md bg-secondary-300">{date.getFullYear()}/{1+date.getMonth()}</span>
         <div className="rotate-90 cursor-pointer">
           <svg width="12" height="7" viewBox="0 0 12 7" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M11.001 6L6.00098 1L1.00098 6" stroke="black" strokeOpacity="0.4" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />

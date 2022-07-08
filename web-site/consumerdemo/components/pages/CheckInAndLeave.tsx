@@ -58,7 +58,7 @@ const CheckInAndLeave = () => {
         },
       }).then(res => res.json())
       .then((json) => {
-        setBack('/myLessonList')  
+        setBack('/tabs/myLessonList')  
       })
       // setBack('/MyCheckInList')  
     } else if (isLeave === false) {

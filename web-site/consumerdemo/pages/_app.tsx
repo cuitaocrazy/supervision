@@ -20,6 +20,7 @@ import '@ionic/react/css/text-alignment.css';
 import '@ionic/react/css/text-transformation.css';
 import '@ionic/react/css/flex-utils.css';
 import '@ionic/react/css/display.css';
+import 'react-calendar/dist/Calendar.css';
 import { Provider } from 'react-redux'
 import {store} from '../app/store'
 

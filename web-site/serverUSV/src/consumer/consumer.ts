@@ -40,13 +40,23 @@ export const findOneContract = async ({ contractId }) => {
     return result
 }
 
-export const findOneAttendance = async ({ lessonId,consumerId,lessonQuantity }) => {
-    const result = await mysql.getRepository(Attendance).findOneBy({
-        lessonId: lessonId,
-        consumerId:consumerId,
-        attendanceLessonQuantity:lessonQuantity
-    })
+// export const findAttendance = async ({ lessonId,consumerId,lessonQuantity }) => {
+//     const result = await mysql.getRepository(Attendance).findOneBy({
+//         lessonId: lessonId,
+//         consumerId:consumerId,
+//         attendanceLessonQuantity:lessonQuantity
+//     })
 
+//     if (result === null)
+//     throw e;
+//     return result
+// }
+
+export const findAttendance = async ({ lessonId,consumerId }) => {
+    const result = await mysql.getRepository(Attendance).findBy({
+        lessonId: lessonId,
+        consumerId:consumerId
+    })
     if (result === null)
     throw e;
     return result

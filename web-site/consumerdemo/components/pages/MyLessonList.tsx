@@ -43,7 +43,7 @@ const LessonListCard: FC<OrderListProps> = (props) => {
         onClick={() => { Router.push({ pathname: ("./myLessonEvalDetail"), query: { item: JSON.stringify(props.item) } }) }}>去评价</div>
       <div className='px-6 py-1 shadow-md rounded-3xl bg-secondary-300 shadow-secondary-300'
         onClick={() => { Router.push({ pathname: ("./myApplyComp"), query: { item: JSON.stringify(props.item) } }) }}>去投诉</div>
-      <Link to='myLessonDetail'>
+      <Link to='/myLessonDetail'>
         <div className='px-4 py-1 shadow-md rounded-3xl bg-remind-400 shadow-remind-400'
           onClick={() => {refreshContractDetail(props.item as Contract)  }}>查看详情</div>
       </Link>  

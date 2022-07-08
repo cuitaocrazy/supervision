@@ -24,10 +24,9 @@ import {
  * https://ionicframework.com/blog/a-state-management-pattern-for-ionic-react-with-react-hooks/
  */
 const initialState = {
-
   backPage:undefined,
   loginUser:{//登录用户信息
-    userId:null,
+    userId:'test',
     loginName:null,
     username:null,
     phone:null,

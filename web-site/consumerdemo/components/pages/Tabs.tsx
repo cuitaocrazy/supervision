@@ -8,17 +8,18 @@ import {
   list
 } from 'ionicons/icons';
 import Home from './Home'
+import MyLessonList from './MyLessonList'
 import Login from './Login'
 
 const Tabs = () => {
-
   return (
     <IonTabs>
       <IonRouterOutlet>
         <Route path="/tabs/home" component={Home} exact={true} />
+        <Route path="/tabs/myLessonList" component={MyLessonList} exact={true} />
       </IonRouterOutlet>
       <IonTabBar slot="bottom">
-        <IonTabButton tab="首页" href="/home">
+        <IonTabButton tab="首页" href="/tabs/home">
           <IonIcon icon={home} />
           <IonLabel>首页</IonLabel>
         </IonTabButton>
@@ -26,7 +27,7 @@ const Tabs = () => {
           <IonIcon icon={school} />
           <IonLabel>机构</IonLabel>
         </IonTabButton>
-        <IonTabButton tab="课程" href="/myLessonList">
+        <IonTabButton tab="课程" href="/tabs/myLessonList">
           <IonIcon icon={list} />
           <IonLabel>课程</IonLabel>
         </IonTabButton>

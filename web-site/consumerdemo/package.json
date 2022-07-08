@@ -26,6 +26,7 @@
     "next": "12.1.6",
     "postcss": "^8.4.14",
     "react": "^18.1.0",
+    "react-calendar": "^3.7.0",
     "react-dom": "^18.1.0",
     "react-hook-form": "^7.32.2",
     "react-redux": "^8.0.2",
@@ -35,6 +36,7 @@
   "devDependencies": {
     "@types/node": "17.0.35",
     "@types/react": "18.0.9",
+    "@types/react-calendar": "^3.5.1",
     "@types/react-dom": "18.0.4",
     "@use-gesture/react": "^10.2.14",
     "autoprefixer": "^10.4.7",

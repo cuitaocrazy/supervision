@@ -8,6 +8,7 @@ import FeaturedRecommendAndMore from '../FeaturedRecommendAndMore'
 import RoundedCornersStyles from '../RoundedCornersStyles'
 import { useEffect,useState } from "react"
 import {searchLessonURL} from '../../const/const'
+import Menu from '../pages/Menu';
 
 // 首页
 const Home = () => {
