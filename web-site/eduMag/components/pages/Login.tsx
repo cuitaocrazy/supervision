@@ -32,8 +32,15 @@ const Login = () => {
       },
     })
       .then((res) => res.json())
-      .then((json) => {
-        refreshUserInfo(json);
+      .then(async (json) => {
+        const { result, msg, loginUser } = json;
+        if (result) {
+          refreshUserInfo(loginUser);
+          await router.push("./tabs/lesson/query");
+          router.reload();
+        } else {
+          alert(msg);
+        }
       });
   };
 
@@ -82,9 +89,6 @@ const Login = () => {
         <input
           type="submit"
           className="w-full py-3 my-10 mb-1 text-base font-medium text-white rounded-lg shadow-md bg-primary-600 focus:outline-none hover:bg-primary-700 hover:shadow-none"
-          onClick={() => {
-            router.push("./login");
-          }}
           value="登录"
         />
       </form>
