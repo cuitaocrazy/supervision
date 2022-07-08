@@ -243,6 +243,26 @@ export const LessonDetail: React.FC = () => {
                 readOnly
               />
             </div>
+            <div className="flex mb-4 leading-10">
+              <div className="flex justify-end w-32 mr-2">课程介绍:</div>
+              <input
+                className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
+                name="lessonUpdateDate"
+                type="text"
+                value={lessonState.lessonIntroduce}
+                readOnly
+              />
+            </div>
+            <div className="flex mb-4 leading-10">
+              <div className="flex justify-end w-32 mr-2">课程大纲:</div>
+              <input
+                className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
+                name="lessonUpdateDate"
+                type="text"
+                value={lessonState.lessonOutline}
+                readOnly
+              />
+            </div>
             {/* TODO：课程表缺少课程人数 */}
             {/* <div className="flex mb-4 leading-10">
               <div className="flex justify-end w-32 mr-2">人数:</div>

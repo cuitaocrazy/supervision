@@ -152,10 +152,10 @@ export const setLessonDetail = (lessonDetail?:Lesson) => {
     lessonDetail:lessonDetail
   }
 }
-export const setLessonAduit = (lessonAduit?:Lesson) => {
+export const setLessonAudit = (lessonAudit?:Lesson) => {
   return {
-    type: 'setLessonAduit',
-    lessonAduit:lessonAduit
+    type: 'setLessonAudit',
+    lessonAudit:lessonAudit
   }
 }
 export const setTeacherList = (teacherList:Teacher[]) => {
@@ -425,6 +425,16 @@ export const reducer = (state: any, action: any) => {
         lesson:{
           lessonList:state.lesson.lessonList,
           lessonDetail:action.lessonDetail
+        },
+        backPage:action.backPage||state.backPage
+      }
+    }
+    case 'setLessonAudit':{
+      return {   
+        ...state,
+        lesson:{
+          lessonList:state.lesson.lessonList,
+          lessonAudit:action.lessonAudit
         },
         backPage:action.backPage||state.backPage
       }

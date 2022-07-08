@@ -16,26 +16,26 @@ import {
 } from '@ionic/react';
 import { Redirect } from 'react-router-dom';
 import { useCallback, useContext } from 'react';
-import { AppContext, setLessonDetail } from '../../../appState';
+import { AppContext, setLessonAudit } from '../../../appState';
 import { Lesson } from '../../../types/types';
 import { PickerColumn } from '@ionic/core';
 
 export const LessonAudit: React.FC = () => {
-  console.log('LessonDetail');
+  console.log('LessonAudit');
   const modifyURL = 'http://localhost:3003/lesson/modifyURL';
   const { state, dispatch } = useContext(AppContext);
   // const {SubscribeDurationDays,TranAmt,USVOrgID,USVItemName,USVItemID,USVItemDesc,SubscribeStartDate,LessonType} = state.lessonDetail
 
-  const [lessonState, setLessonState] = useState(state.lesson.lessonDetail);
+  const [lessonState, setLessonState] = useState(state.lesson.lessonAudit);
   const [isPickOpen, setPickOpen] = useState(false);
   const setBack = useCallback(() => {
-    dispatch(setLessonDetail(undefined));
+    dispatch(setLessonAudit(undefined));
   }, []);
   `                                                       `;
   const onBack = () => () => {
     setBack();
   };
-  if (state.lesson.lessonDetail === undefined) {
+  if (state.lesson.lessonAudit === undefined) {
     return <Redirect to={state.backPage} />;
   }
 
@@ -94,7 +94,7 @@ export const LessonAudit: React.FC = () => {
           <div>
           <span className="pr-1 text-gray-600">教育机构管理</span>/
           <span className="pl-1 pr-1 text-primary-500">课程管理</span>/
-            <span className="pl-1 text-primary-500">课程详情</span>
+            <span className="pl-1 text-primary-500">课程审核</span>
           </div>
         </div>
         <IonCardContent>
@@ -243,6 +243,23 @@ export const LessonAudit: React.FC = () => {
                 readOnly
               />
             </div>
+            <div className="flex mb-4 leading-10">
+              <div className="flex justify-end w-32 mr-2">课程介绍:</div>
+              <input
+                className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
+                name="lessonUpdateDate"
+                type="text"
+                value={lessonState.lessonIntroduce}
+                readOnly
+              />
+            </div>
+            <div className="flex mb-4 leading-10">
+              <div className="flex justify-end w-32 mr-2">课程大纲:</div>
+              <a className="w-64 px-2" href="/contract/outline">
+                请查看课程大纲
+              </a>
+            </div>
+            </div>
             {/* TODO：课程表缺少课程人数 */}
             {/* <div className="flex mb-4 leading-10">
               <div className="flex justify-end w-32 mr-2">人数:</div>
@@ -254,7 +271,6 @@ export const LessonAudit: React.FC = () => {
                 readOnly
               />
             </div> */}
-          </div>
           <div className="flex justify-center">
             <input
               value="返回"
