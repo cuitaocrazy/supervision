@@ -1,5 +1,5 @@
 //Lesson的详细页面
-import React, { useState } from 'react';
+import React, { useState,Fragment } from 'react';
 import {
   IonPage,
   IonCard,
@@ -19,8 +19,17 @@ import { useCallback, useContext } from 'react';
 import { AppContext, setLessonAudit } from '../../../appState';
 import { Lesson } from '../../../types/types';
 import { PickerColumn } from '@ionic/core';
+import { Dialog, Transition } from '@headlessui/react';
 
 export const LessonAudit: React.FC = () => {
+  // 课程审核dialog页面状态
+  let [isAuditOpen, setIsAuditOpen] = useState(false);
+  function closeAuditModal() {
+    setIsAuditOpen(false);
+  }
+  function openCreateModal() {
+    setIsAuditOpen(true);
+  }
   console.log('LessonAudit');
   const modifyURL = 'http://localhost:3003/lesson/modifyURL';
   const { state, dispatch } = useContext(AppContext);
@@ -69,6 +78,21 @@ export const LessonAudit: React.FC = () => {
       { text: '数学', value: '1' },
     ],
   } as PickerColumn;
+
+  const onCreate = async (e: React.FormEvent) => () => {
+    e.preventDefault();
+    fetch(createURL, {
+      method: 'PUT',
+      body: JSON.stringify(eduOrgState),
+      headers: {
+        'Content-type': 'application/json;charset=UTF-8',
+      },
+    })
+      .then(res => res.json())
+      .then(json => {
+        alert(json.result);
+      });
+  };
 
   return (
     <IonPage className="bg-gray-100">
@@ -271,14 +295,97 @@ export const LessonAudit: React.FC = () => {
                 readOnly
               />
             </div> */}
-          <div className="flex justify-center">
+          <div className="flex justify-center gap-10 mt-8">
             <input
-              value="返回"
+              value="通过"
               type="button"
               onClick={onBack()}
               className="flex w-20 px-6 py-2 font-bold text-white rounded-md bg-primary-600 focus:bg-primary-700"
             />
+            <input
+              value="不通过"
+              type="button"
+              onClick={openCreateModal}
+              className="flex w-20 px-6 py-2 font-bold bg-gray-100 rounded-md text-primary-600 focus:bg-gray-200"
+            />
           </div>
+          {/* 课程审核通过dialog */}
+          <Transition appear show={isAuditOpen} as={Fragment}>
+          <Dialog as="div" className="relative z-10" onClose={closeAuditModal}>
+            <Transition.Child
+              as={Fragment}
+              enter="ease-out duration-300"
+              enterFrom="opacity-0"
+              enterTo="opacity-100"
+              leave="ease-in duration-200"
+              leaveFrom="opacity-100"
+              leaveTo="opacity-0"
+            >
+              <div className="fixed inset-0 bg-black bg-opacity-25" />
+            </Transition.Child>
+
+            <div className="fixed inset-0 overflow-y-auto">
+              <div className="flex items-center justify-center min-h-full p-4 text-center">
+                <Transition.Child
+                  as={Fragment}
+                  enter="ease-out duration-300"
+                  enterFrom="opacity-0 scale-95"
+                  enterTo="opacity-100 scale-100"
+                  leave="ease-in duration-200"
+                  leaveFrom="opacity-100 scale-100"
+                  leaveTo="opacity-0 scale-95"
+                >
+                  <Dialog.Panel className="w-full max-w-md p-4 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
+                    <Dialog.Title
+                      as="h3"
+                      className="text-lg font-medium leading-6 text-center text-gray-900"
+                    >
+                      审核结果
+                      <hr className="mt-2 mb-4" />
+                    </Dialog.Title>
+                    <form
+                      onSubmit={onCreate}
+                      className="flex flex-col items-center mt-8 rounded-lg justify-items-center"
+                    >
+                      <div className="flex items-center mb-4 justify-items-center">
+                        <div className="flex leading-7 justify-items-center">
+                          <div className="flex justify-end w-24 p-1">不合格原因:</div>
+                          <textarea
+                            className="h-32 p-1 text-gray-600 bg-gray-100 border rounded-md w-72 justify-self-start focus:outline-none"
+                            name="eduName"
+                            placeholder='请输入审核不通过原因'
+                            value={lessonState.lesson_update_reason}
+                            onChange={e =>
+                              setLessonAudit({
+                                ...lessonState,
+                                lesson_update_reason: e.nativeEvent.target?.value,
+                              })
+                            }
+                          ></textarea>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-4 mt-2 justify-items-center">
+                        <input
+                          value="返回"
+                          type="button"
+                          className="px-6 py-2 border rounded-md "
+                          onClick={closeAuditModal}
+                        />
+                        <input
+                          value="提交"
+                          type="button"
+                          className="px-6 py-2 text-white border rounded-md bg-primary-600"
+                          onClick={closeAuditModal}
+                        />
+                      </div>
+                    </form>
+                  </Dialog.Panel>
+                </Transition.Child>
+              </div>
+            </div>
+          </Dialog>
+        </Transition>
+
         </IonCardContent>
       </IonCard>
     </IonPage>
