@@ -14,7 +14,7 @@ import OrgMag from './orgMag/Query';
 import Teacher from './Teacher/Query';
 import Tranfer from './transfer/query';
 import TranferManul from './TranFerManual/query';
-import Login from './Login';
+// import Login from './Login';
 
 const Tabs = () => {
   return (
@@ -32,7 +32,7 @@ const Tabs = () => {
         <Route path="/tabs/teacher/query" component={Teacher} exact={true} />
         <Route path="/tabs/tranfer/query" component={Tranfer} exact={true} />
         <Route path="/tabs/tranferManual/query" component={TranferManul} exact={true} />
-        <Route path="/login" component={Login} exact={true} />
+        {/* <Route path="/login" component={Login} exact={true} /> */}
         <Route path="/" render={() => <Redirect to="/login" />} exact={true} />
       </IonRouterOutlet>
       {/* <IonTabBar slot="bottom">

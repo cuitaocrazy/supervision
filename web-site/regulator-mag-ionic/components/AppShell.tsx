@@ -5,7 +5,7 @@ import { IonReactRouter } from '@ionic/react-router';
 import { Redirect, Route } from 'react-router-dom';
 import Menu from './Menu';
 
-import Login from './pages/Login';
+// import Login from './pages/Login';
 import { AppContextProvider } from '../appState';
 import Tabs from './pages/Tabs';
 import Announcement from './pages/Announcement/query';
@@ -108,7 +108,7 @@ const AppShell = () => {
                 component={ComplaintStatistic}
                 exact={true}
               />
-              <Route path="/login" component={Login} />
+              {/* <Route path="/login" component={Login} /> */}
               <Route exact path="/" render={() => <Redirect to="/login" />} />
               {/* <Route path="/login" render={() => <Login />} />
               <Route exact path="/" render={() => <Redirect to="/login" />} /> */}
