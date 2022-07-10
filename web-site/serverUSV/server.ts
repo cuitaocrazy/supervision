@@ -415,3 +415,7 @@ app.get('/edb/transfer/find', async (req, res) => {
   const r = await eduTransferService.find({ ...new Transfer(), ...req.query })
   res.send(r)
 })
+
+app.post('/edb/login', async (req, res) => {
+  res.send({ status: 'success', result: { userId:'0',username: '用户1', loginName: '登录名1' } })
+})
