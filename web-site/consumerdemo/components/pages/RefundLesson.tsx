@@ -32,7 +32,7 @@ const RefoundLesson = () => {
       </div>
       <div className='flex items-center justify-items-center'>
         {/* <button className='py-2 font-bold text-center text-white shadow-md shadow-primary-600 px-28 rounded-3xl bg-primary-600'>提交申请</button> */}
-        <input type="submit" className="w-full py-2 mx-5 mt-8 mb-1 text-sm font-bold text-white shadow-lg rounded-3xl bg-primary-500 focus:outline-none hover:bg-primary-700 hover:shadow-none"
+        <input type="submit" className="w-full py-3 mx-5 mt-8 mb-1 text-sm font-bold text-white shadow-lg rounded-3xl bg-primary-500 focus:outline-none hover:bg-primary-700 hover:shadow-none"
           value="提交申请" />
       </div>
 
