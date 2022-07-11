@@ -69,7 +69,7 @@ const Login = () => {
               placeholder="请输入登录名"
             />
             {errors.username && (
-              <p className="pt-2 pl-3 text-base text-error-400">
+              <p className="pt-2 pl-3 text-base text-remind-500">
                 用户名不能为空
               </p>
             )}
@@ -82,7 +82,7 @@ const Login = () => {
               placeholder="请输入密码"
             />
             {errors.password && (
-              <p className="pt-2 pl-3 text-base text-error-400">密码不能为空</p>
+              <p className="pt-2 pl-3 text-base text-remind-500">密码不能为空</p>
             )}
           </div>
         </fieldset>
