@@ -130,7 +130,7 @@ export const TeacherDetail: React.FC = () => {
           </form>
           <div className="flex justify-center">
             <input
-              value="返回"
+              value="确定修改"
               type="button"
               onClick={() => {
                 onBack();
