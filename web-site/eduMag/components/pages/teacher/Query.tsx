@@ -1,8 +1,13 @@
 //教师的查询页面
-import { useEffect,useCallback,useContext,useState,useRef } from 'react'
-import { Redirect } from 'react-router-dom';
-import {AppContext, setTeacherList, setTeacherDetail,setTeacherEdit} from '../../../appState';
-import {Teacher} from '../../../types/types'
+import { useEffect, useCallback, useContext, useState, useRef,Fragment } from "react";
+import { Redirect } from "react-router-dom";
+import {
+  AppContext,
+  setTeacherList,
+  setTeacherDetail,
+  setTeacherEdit,
+} from "../../../appState";
+import { Teacher } from "../../../types/types";
 import {
   IonPage,
   IonList,
@@ -17,273 +22,585 @@ import {
   IonCard,
   IonCardContent,
   IonInput,
-} from '@ionic/react';
-const queryURL = 'http://localhost:3003/teacher/query'
-const delURL = 'http://localhost:3003/teacher/del'
-const modifyURL = 'http://localhost:3003/teacher/modifyURL'
-const applyURL = 'http://localhost:3003/teacher/apply'
+} from "@ionic/react";
+import { Dialog, Transition } from "@headlessui/react";
 
+const queryURL = "http://localhost:3003/teacher/query";
+const delURL = "http://localhost:3003/teacher/del";
+const modifyURL = "http://localhost:3003/teacher/modifyURL";
+const applyURL = "http://localhost:3003/teacher/apply";
 
-
-const demoTeacherList:Teacher[] = [
+const demoTeacherList: Teacher[] = [
   {
-    teacherId:'1',
-    teacherName:'张三',
-    teacherIdentityNo:'123456789012345678',
-    teacherExperience:'3',
-    teacherIntroduce:'专业领域',
-    teacherRating:5,
-    teacherCreatedDate:'2020-01-01',
-    teacherCreateTime:'00:00:00',
-    teacherUpdatedDate:'2020-01-01',
-    teacherUpdateTime:'00:00:00',
+    teacherId: "1",
+    teacherName: "张三",
+    teacherIdentityNo: "123456789012345678",
+    teacherExperience: "3",
+    teacherIntroduce: "教师简介",
+    teacherRating: 5,
+    teacherCreatedDate: "2020-01-01",
+    teacherCreateTime: "00:00:00",
+    teacherUpdatedDate: "2020-01-01",
+    teacherUpdateTime: "00:00:00",
+    teacherField:"专业领域"
   },
   {
-    teacherId:'2',
-    teacherName:'张4',
-    teacherIdentityNo:'123456789012345678',
-    teacherExperience:'6',
-    teacherIntroduce:'专业领域',
-    teacherRating:5,
-    teacherCreatedDate:'2020-01-01',
-    teacherCreateTime:'00:00:00',
-    teacherUpdatedDate:'2020-01-01',
-    teacherUpdateTime:'00:00:00',
+    teacherId: "2",
+    teacherName: "张4",
+    teacherIdentityNo: "123456789012345678",
+    teacherExperience: "6",
+    teacherIntroduce: "教师介绍",
+    teacherRating: 5,
+    teacherCreatedDate: "2020-01-01",
+    teacherCreateTime: "00:00:00",
+    teacherUpdatedDate: "2020-01-01",
+    teacherUpdateTime: "00:00:00",
+    teacherField:"专业领域"
+  },
+];
+const TeacherQuery: React.FC = () => {
+
+  let [isCreateOpen, setIsCreateOpen] = useState(false);
+  function closeCreateModal() {
+    setIsCreateOpen(false);
   }
-]
-const TeacherQuery:React.FC = () => {
- 
+  function openCreateModal() {
+    setIsCreateOpen(true);
+  }
+
+  let [isDeleteOpen, setIsDeleteOpen] = useState(false);
+  function closeDeleteModal() {
+    setIsDeleteOpen(false);
+  }
+  function openDelateModal() {
+    setIsDeleteOpen(true);
+  }
   const createModal = useRef<HTMLIonModalElement>(null);
   const cancelModal = useRef<HTMLIonModalElement>(null);
 
-  const [createTeacher,setCreateTeacher] = useState({} as Teacher )
-  const [cancelTeacher,setCancelTeacher] = useState({} as Teacher )
-  const [isCancelModalOpen,setIsCancelModalOpen] = useState(false)
+  const [createTeacher, setCreateTeacher] = useState({} as Teacher);
+  const [cancelTeacher, setCancelTeacher] = useState({} as Teacher);
+  const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
   const { state, dispatch } = useContext(AppContext);
-  const [queryInfo, setQueryInfo] = useState({teacherName:''})
-  const getParamStr = (params:any,url:string) =>{
-    let result = '?'
-    Object.keys(params).forEach(key => result = result+key+'='+params[key]+'&')
-    return url+result
-  }
-  const paramStr = getParamStr({
-    teacherName:queryInfo.teacherName,
- },queryURL)
- const refreshList = useCallback((eduOrgs:Teacher[]) => {
-  dispatch(setTeacherList(eduOrgs));
-},[dispatch]);
-const onDetail = (item:Teacher)=>() => {
-  doSetDetail(item)
-}
+  const [queryInfo, setQueryInfo] = useState({ teacherName: "" });
+  const getParamStr = (params: any, url: string) => {
+    let result = "?";
+    Object.keys(params).forEach(
+      (key) => (result = result + key + "=" + params[key] + "&")
+    );
+    return url + result;
+  };
+  const paramStr = getParamStr(
+    {
+      teacherName: queryInfo.teacherName,
+    },
+    queryURL
+  );
+  const refreshList = useCallback(
+    (eduOrgs: Teacher[]) => {
+      dispatch(setTeacherList(eduOrgs));
+    },
+    [dispatch]
+  );
+  const onDetail = (item: Teacher) => () => {
+    doSetDetail(item);
+  };
 
-const onEdit = (item:Teacher)=>() => {
-  doSetEdit(item)
-}
-const doSetEdit = useCallback((teacher: Teacher) => {
-  dispatch({...setTeacherEdit(teacher),...{backPage:'/tabs/teacher/query'}});
-},[dispatch]);
-
-const onCancel = () => {
-
-  //todo
-}
-
-const doSetDetail = useCallback((teacher: Teacher) => {
-  dispatch({...setTeacherDetail(teacher),...{backPage:'/tabs/teacher/query'}});
-},[dispatch]);
-useEffect(() => { 
-  // fetch(paramStr, {
-  //   method: 'GET',
-  //   headers: {
-  //     'Content-type': 'application/json;charset=UTF-8',
-  //   },
-  // }).then(res => res.json())
-  // .then((json) => {
-  // const {TeacherList} = json 
-  
-  // refreshList(demoTeacherList.filter((teacher:Teacher)=>teacher.teacherName.indexOf(queryInfo.teacherName)>-1))
-  // return 
-  // })
-
-  refreshList(demoTeacherList)
-},[refreshList]);
-
-const onQuery = ()=>{
-  // fetch(paramStr, {
-  //   method: 'GET',
-  //   headers: {
-  //     'Content-type': 'application/json;charset=UTF-8',
-  //   },
-  // }).then(res => res.json())
-  // .then((json) => {
-  // const {TeacherList} = json 
-  
-  // refreshList(demoTeacherList.filter((teacher:Teacher)=>teacher.teacherName.indexOf(queryInfo.teacherName)>-1))
-  // return 
-  // })
-    refreshList(demoTeacherList.filter((teacher:Teacher)=>teacher.teacherName.indexOf(queryInfo.teacherName)>-1))
-    return 
-  }
-
-  const onCreate = ()=>{
-    console.log(createTeacher)
-    // setCreateModalOpen(false)
-  }
-
-
-const ListEntry = ({ teacher,key, ...props } : {teacher:Teacher,key:any}) => (
-  <IonItem key={key} >
-    <IonLabel>
-      <p  className='text-center'>{teacher.teacherName}</p>
-    </IonLabel>
-    <IonLabel>
-      <p  className='text-center'>{teacher.teacherIdentityNo}</p>
-    </IonLabel>
-    <IonLabel>
-      <p  className='text-center'>{teacher.teacherIntroduce}</p>
-    </IonLabel>
-    <IonLabel>
-      <p  className='text-center'>{teacher.teacherCreatedDate}</p>
-    </IonLabel>
-    <IonLabel>
-      <p  className='text-center'>{teacher.teacherCreateTime}</p>
-    </IonLabel>
-    <IonLabel>
-       <div className='flex gap-2'>
-          <button className='p-1 text-white bg-blue-500 rounded-md'  onClick={onDetail(teacher)}>详情</button>
-          <button className='p-1 text-white bg-blue-500 rounded-md'  onClick={onEdit(teacher)}>编辑</button>
-          <button className='p-1 text-white bg-blue-500 rounded-md'  onClick={()=>{setCancelTeacher(teacher);setIsCancelModalOpen(true)}}>删除</button>
-       </div>
-    </IonLabel>
-  </IonItem>
+  const onEdit = (item: Teacher) => () => {
+    doSetEdit(item);
+  };
+  const doSetEdit = useCallback(
+    (teacher: Teacher) => {
+      dispatch({
+        ...setTeacherEdit(teacher),
+        ...{ backPage: "/tabs/teacher/query" },
+      });
+    },
+    [dispatch]
   );
 
-  if(state.teacher.teacherEdit){
-    return <Redirect to="/tabs/teacher/edit" />
+  const onCancel = () => {
+    //todo
+  };
+
+  const doSetDetail = useCallback(
+    (teacher: Teacher) => {
+      dispatch({
+        ...setTeacherDetail(teacher),
+        ...{ backPage: "/tabs/teacher/query" },
+      });
+    },
+    [dispatch]
+  );
+  useEffect(() => {
+    // fetch(paramStr, {
+    //   method: 'GET',
+    //   headers: {
+    //     'Content-type': 'application/json;charset=UTF-8',
+    //   },
+    // }).then(res => res.json())
+    // .then((json) => {
+    // const {TeacherList} = json
+
+    // refreshList(demoTeacherList.filter((teacher:Teacher)=>teacher.teacherName.indexOf(queryInfo.teacherName)>-1))
+    // return
+    // })
+
+    refreshList(demoTeacherList);
+  }, [refreshList]);
+
+  const onQuery = () => {
+    // fetch(paramStr, {
+    //   method: 'GET',
+    //   headers: {
+    //     'Content-type': 'application/json;charset=UTF-8',
+    //   },
+    // }).then(res => res.json())
+    // .then((json) => {
+    // const {TeacherList} = json
+
+    // refreshList(demoTeacherList.filter((teacher:Teacher)=>teacher.teacherName.indexOf(queryInfo.teacherName)>-1))
+    // return
+    // })
+    refreshList(
+      demoTeacherList.filter(
+        (teacher: Teacher) =>
+          teacher.teacherName.indexOf(queryInfo.teacherName) > -1
+      )
+    );
+    return;
+  };
+
+  const onCreate = () => {
+    console.log(createTeacher);
+    // setCreateModalOpen(false)
+  };
+
+  const ListEntry = ({
+    teacher,
+    key,
+    ...props
+  }: {
+    teacher: Teacher;
+    key: any;
+  }) => (
+    <tr
+      key={key}
+      className="grid items-center grid-cols-6 gap-10 text-gray-600 border justify-items-center even:bg-white odd:bg-primary-100"
+    >
+      <td className="flex items-center justify-center leading-10">
+      {teacher.teacherName}
+      </td>
+      <td className="flex items-center justify-center leading-10">
+      {teacher.teacherIdentityNo}
+      </td>
+      <td className="flex items-center justify-center leading-10">
+      {teacher.teacherField}
+      </td>
+      <td className="flex items-center justify-center leading-10">
+      {teacher.teacherIntroduce}
+      </td>
+      <td className="flex items-center justify-center leading-10">
+      {teacher.teacherCreatedDate}
+      </td>
+      <td className="flex items-center justify-center leading-10">
+        <div className="flex gap-2 ">
+          <button
+            className="p-1 rounded-md text-primary-600"
+            onClick={onDetail(teacher)}
+          >
+            详情
+          </button>
+          <button
+            className="p-1 rounded-md text-cyan-600"
+            onClick={onEdit(teacher)}
+          >
+            编辑
+          </button>
+          <button
+            className="p-1 text-red-600 rounded-md"
+            // onClick={() => {
+            //              setCancelTeacher(teacher);
+            //              openDelateModal;
+            //           }}
+            onClick={openDelateModal}
+          >
+            删除
+          </button>
+        </div>
+      </td>
+    </tr>
+  );
+
+  if (state.teacher.teacherEdit) {
+    return <Redirect to="/tabs/teacher/edit" />;
   }
-  if(state.teacher.teacherDetail){
-    return <Redirect to="/tabs/teacher/detail" />
+  if (state.teacher.teacherDetail) {
+    return <Redirect to="/tabs/teacher/detail" />;
   }
-    return   <IonPage >
-                <div className='relative'>
-                <div className='flex'>
-                {/* <IonModal isOpen={isCreateModalOpen} > */}
-                <IonModal ref={createModal} trigger="open-create-modal"  >
-                  <IonCard>
-                    <IonCardHeader>
-                        教师新增
-                    </IonCardHeader>
-                    <IonCardContent>
-                      <form onSubmit={onCreate}>
-                      <IonItem>
-                        <IonLabel position="floating">教师姓名：</IonLabel>
-                        <IonInput onIonChange={e => setCreateTeacher({...createTeacher,...{teacherName:e.detail.value!}})}> </IonInput>
-                      </IonItem>
-                      <IonItem>
-                        <IonLabel position="floating">教师身份证：</IonLabel>
-                        <IonInput onIonChange={e => setCreateTeacher({...createTeacher,...{teacherIdentityNo:e.detail.value!}})}> </IonInput>
-                      </IonItem>
-                      <IonItem>
-                        <IonLabel position="floating">专业领域：</IonLabel>
-                        <IonInput onIonChange={e => setCreateTeacher({...createTeacher,...{teacherIntroduce:e.detail.value!}})}> </IonInput>
-                      </IonItem>
-                      <IonItem>
-                        <IonLabel position="floating">从业经验：</IonLabel>
-                        <IonInput onIonChange={e => setCreateTeacher({...createTeacher,...{teacherExperience:e.detail.value!}})}> </IonInput>
-                      </IonItem>
-                      <div className='mt-2 mb-2 flex space-x-2 '>
-                        <span  className="flex-1 ">
-                                  <button className='submutButton flex items-center justify-center flex-none  focus:outline-none hover:bg-primary-700 ' type='submit' >确认</button>
+  return (
+    <IonPage className="bg-gray-100">
+      <div className="relative w-full h-screen mx-6 overflow-auto">
+          {/* 导航 */}
+          <div className="flex pt-2 my-2 text-gray-800">
+            <div className="mr-2 text-gray-600">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="w-6 h-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth="2"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
+                />
+              </svg>
+            </div>
+            <div>
+              <span className="pr-1 text-gray-600">教师管理</span>/
+              <span className="pl-1 text-primary-500">教师列表</span>
+            </div>
+          </div>
+          {/* 查询条件 */}
+          <div className="w-11/12 px-4 py-2 mt-4 bg-white rounded-lg ">
+            <div className="text-base font-bold">快速查询</div>
+            <hr className="mt-2 mb-4" />
+            <div className="flex">
+              <IonRow className="flex items-center w-full mx-4 text-center bg-white rounded-md justify-items-center">
+                <IonCol className="flex ml-8 text-gray-800">
+                  <div className="flex items-center justify-center font-bold text-center text-gray-600 w-28">
+                    教师姓名：
+                  </div>
+                  <input
+                    type="text"
+                    className="flex w-56 h-12 font-bold text-center text-gray-600 bg-white border rounded-md focus:outline-none focus:glow-primary-600"
+                    placeholder="请输入教师姓名"
+                    onChange={(e) =>
+                      setQueryInfo({
+                        ...queryInfo,
+                        ...{ lessonName: e.target.value },
+                      })
+                    }
+                  />
+                </IonCol>
+                <IonCol className="flex ml-8">
+                  <button
+                    className="w-24 h-12 mr-6 text-white border-2 rounded-md shadow-md bg-primary-600 focus:bg-primary-700"
+                    onClick={() => {
+                      onQuery();
+                    }}
+                  >
+                    查询
+                  </button>
+                  <button className="w-24 h-12 rounded-md shadow-md bg-gray-50 text-primary-600 focus:bg-gray-200"
+                  onClick={openCreateModal}>
+                    新增
+                  </button>
+                </IonCol>
+              </IonRow>
+            </div>
+          </div>
 
-                        </span >
-                        <span className="flex-1 ">
-                          <button  className='cancelButton' onClick={ ()=>createModal.current?.dismiss()}>取消</button>
-                        </span>
+           {/* 新增课程模态框 */}
+        <Transition appear show={isCreateOpen} as={Fragment}>
+          <Dialog as="div" className="relative z-10" onClose={closeCreateModal}>
+            <Transition.Child
+              as={Fragment}
+              enter="ease-out duration-300"
+              enterFrom="opacity-0"
+              enterTo="opacity-100"
+              leave="ease-in duration-200"
+              leaveFrom="opacity-100"
+              leaveTo="opacity-0"
+            >
+              <div className="fixed inset-0 bg-black bg-opacity-25" />
+            </Transition.Child>
+
+            <div className="fixed inset-0 overflow-y-auto">
+              <div className="flex items-center justify-center min-h-full p-4 text-center">
+                <Transition.Child
+                  as={Fragment}
+                  enter="ease-out duration-300"
+                  enterFrom="opacity-0 scale-95"
+                  enterTo="opacity-100 scale-100"
+                  leave="ease-in duration-200"
+                  leaveFrom="opacity-100 scale-100"
+                  leaveTo="opacity-0 scale-95"
+                >
+                  <Dialog.Panel className="w-full max-w-md p-4 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
+                    <Dialog.Title
+                      as="h3"
+                      className="text-lg font-medium leading-6 text-center text-gray-900"
+                    >
+                      教师新增
+                      <hr className="mt-2 mb-4" />
+                    </Dialog.Title>
+                    <form
+                      onSubmit={onCreate}
+                      className="flex flex-col items-center rounded-lg justify-items-center"
+                    >
+                      <div className="flex items-center mb-4 justify-items-center">
+                        <div className="flex leading-7 justify-items-center">
+                          <div className="flex justify-end p-1 w-36">
+                            教师姓名:
+                          </div>
+                          <input
+                            className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
+                            name="createTeacher"
+                            type="text"
+                            onChange={e => setCreateTeacher({...createTeacher,...{teacherName:e.nativeEvent.target?.value}})}
+                            spellCheck={false}
+                            required
+                          ></input>
+                        </div>
                       </div>
-                      </form>
-                    </IonCardContent>
-                  </IonCard>
-                </IonModal>
-                <IonModal isOpen={isCancelModalOpen}  onDidDismiss={async ()=>{setIsCancelModalOpen(false)}}> 
-                  <IonCard>
-                    <IonCardHeader>
-                        教师删除确认
-                    </IonCardHeader>
-                    <IonCardContent>
-                      <form  onSubmit={onCancel}>
-                      <IonItem>
-                        <IonLabel >教师姓名：{cancelTeacher.teacherName}</IonLabel>
-                      </IonItem>
-                      <IonItem>
-                        <IonLabel >教师身份证：{cancelTeacher.teacherIdentityNo}</IonLabel>
-                      </IonItem>
-                      <IonItem>
-                        <IonLabel >专业领域：{cancelTeacher.teacherIntroduce}</IonLabel>
-                      </IonItem>
-                      <IonItem>
-                        <IonLabel >从业经验：{cancelTeacher.teacherExperience}年</IonLabel>
-                      </IonItem>
-                      <div className='mt-2 mb-2 flex space-x-2 '>
-                        <span  className="flex-1 ">
-                                  <button className='submutButton flex items-center justify-center flex-none  focus:outline-none hover:bg-primary-700 ' type='submit' >确认</button>
 
-                        </span >
-                        <span className="flex-1 ">
-                          <button  className='cancelButton' onClick={ ()=>cancelModal.current?.dismiss()}>取消</button>
-                        </span>
+                      <div className="flex items-center mb-4 justify-items-center">
+                        <div className="flex justify-items-center">
+                          <span className="flex justify-end p-1 mr-1 w-36">
+                            教师身份证:
+                          </span>
+                          <input
+                            className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
+                            name="teacherIdentityNo"
+                            type="text"
+                            spellCheck={false}
+                            onChange={e => setCreateTeacher({...createTeacher,...{teacherIdentityNo:e.nativeEvent.target?.value}})}
+                            required
+                          ></input>
+                        </div>
                       </div>
-                      </form>
-                    </IonCardContent>
-                  </IonCard>
-                </IonModal>
+                      <div className="flex items-center mb-4 justify-items-center">
+                        <div className="flex justify-items-center">
+                          <span className="flex justify-end p-1 mr-1 w-36">
+                            专业领域:
+                          </span>
+                          <textarea
+                            className="w-64 h-32 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
+                            name="teacherIntroduce"
+                            spellCheck={false}
+                            onChange={e => setCreateTeacher({...createTeacher,...{teacherIntroduce:e.nativeEvent.target?.value}})}
+                            required
+                          ></textarea>
+                        </div>
+                      </div>
+                      <div className="flex items-center mb-4 justify-items-center">
+                        <div className="flex justify-items-center">
+                          <span className="flex justify-end p-1 mr-1 w-36">
+                            从业经验:
+                          </span>
+                          <textarea
+                            className="w-64 h-32 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
+                            name="teacherExperience"
+                            spellCheck={false}
+                            onChange={e => setCreateTeacher({...createTeacher,...{teacherExperience:e.nativeEvent.target?.value}})}
+                            required
+                          ></textarea>
+                        </div>
+                      </div>
+                      <div className="flex items-center mb-4 justify-items-center">
+                        <div className="flex justify-items-center">
+                          <span className="flex justify-end p-1 mr-1 w-36">
+                            教师简介:
+                          </span>
+                          <textarea
+                            className="w-64 h-32 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
+                            name="teacherIntroduce"
+                            spellCheck={false}
+                            onChange={(e) =>
+                              setCreateTeacher({
+                                ...createTeacher,
+                                ...{
+                                  teacherIntroduce: e.nativeEvent.target?.value,
+                                },
+                              })
+                            }
+                            required
+                          ></textarea>
+                        </div>
+                      </div>
+                      
+                      <div className="flex items-center gap-4 mt-2 justify-items-center">
+                        <input
+                          value="取消"
+                          type="button"
+                          className="px-6 py-2 border rounded-md "
+                          onClick={closeCreateModal}
+                        />
+                        <input
+                          value="确定"
+                          type="button"
+                          className="px-6 py-2 text-white border rounded-md bg-primary-600"
+                          onClick={closeCreateModal}
+                        />
+                      </div>
+                    </form>
+                  </Dialog.Panel>
+                </Transition.Child>
+              </div>
+            </div>
+          </Dialog>
+        </Transition>
 
+        {/* 删除课程模态框 */}
+        <Transition appear show={isDeleteOpen} as={Fragment}>
+          <Dialog as="div" className="relative z-10" onClose={closeDeleteModal}>
+            <Transition.Child
+              as={Fragment}
+              enter="ease-out duration-300"
+              enterFrom="opacity-0"
+              enterTo="opacity-100"
+              leave="ease-in duration-200"
+              leaveFrom="opacity-100"
+              leaveTo="opacity-0"
+            >
+              <div className="fixed inset-0 bg-black bg-opacity-25" />
+            </Transition.Child>
 
-                <IonRow className='flex justify-between '>
-                      <IonCol className='flex ml-8'>
-                        <IonLabel className='flex h-12 p-2 font-bold text-center text-primary-600 w-28'>教师姓名：</IonLabel>
-                        <input type='text' className="flex w-56 h-12 pt-2.5 font-bold text-center text-primary-600 bg-white rounded-md focus:outline-none focus:glow-secondary-500" onChange={e=>setQueryInfo({...queryInfo,...{teacherName:e.target.value}})} />
-                      </IonCol>
-                      <IonCol className='flex ml-8'> 
-                        <button onClick={()=>onQuery()} >查询</button>
-                      </IonCol>
-                      <IonCol className='flex ml-8'> 
-                        <IonButton id="open-create-modal" expand="block"
-                        //  onClick={()=>setCreateModalOpen(true)} 
-                         >新增</IonButton>
-                      </IonCol>
-                </IonRow>
-                </div>
-              <div className='absolute w-full mt-10'>
-                <IonList>
-                  <IonItem key='title'>
-                    <IonLabel> 
-                      <div className='font-black text-center'>教师姓名</div>
-                    </IonLabel>
-                    <IonLabel> 
-                      <div className='font-black text-center'>教师身份证号码</div>
-                    </IonLabel>
-                    <IonLabel>
-                      <div className='font-black text-center'>专业领域</div>
-                    </IonLabel>
-                    <IonLabel>
-                      <div className='font-black text-center'>从业经历</div>
-                    </IonLabel>
-                    <IonLabel>
-                      <div className='font-black text-center'>日期</div>
-                    </IonLabel>
-                    <IonLabel>
-                      <div className='font-black text-center'>操作</div>
-                    </IonLabel>
-                </IonItem>
-                    <div className=''>
-                    {state.teacher.teacherList.map((list:Teacher, i: any) => (
-                    <ListEntry teacher={list} key={i} />
-                  ))}
-                    </div>
-                </IonList>
-            </div> 
-            </div>            
-      </IonPage>
-}
+            <div className="fixed inset-0 overflow-y-auto">
+              <div className="flex items-center justify-center min-h-full p-4 text-center">
+                <Transition.Child
+                  as={Fragment}
+                  enter="ease-out duration-300"
+                  enterFrom="opacity-0 scale-95"
+                  enterTo="opacity-100 scale-100"
+                  leave="ease-in duration-200"
+                  leaveFrom="opacity-100 scale-100"
+                  leaveTo="opacity-0 scale-95"
+                >
+                  <Dialog.Panel className="w-full max-w-md p-4 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
+                    <Dialog.Title
+                      as="h3"
+                      className="text-lg font-medium leading-6 text-center text-gray-900"
+                    >
+                      教师删除确认
+                      <hr className="mt-2 mb-4" />
+                    </Dialog.Title>
+                    <form
+                      onSubmit={onCreate}
+                      className="flex flex-col items-center rounded-lg justify-items-center"
+                    >
+                      <div className="flex items-center mb-4 justify-items-center">
+                        <div className="flex leading-7 justify-items-center">
+                          <div className="flex justify-end p-1 w-36">
+                            教师姓名:
+                          </div>
+                          <input
+                            className="w-64 p-1 text-gray-600 bg-gray-100 border rounded-md justify-self-start focus:outline-none"
+                            name="eduId"
+                            type="text"
+                            value={cancelTeacher.teacherName}
+                            spellCheck={false}
+                            readOnly
+                          ></input>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center mb-4 justify-items-center">
+                        <div className="flex justify-items-center">
+                          <span className="flex justify-end p-1 mr-1 w-36">
+                            教师身份证:
+                          </span>
+                          <input
+                            className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none"
+                            name="lessonName"
+                            type="text"
+                            value={cancelTeacher.teacherIdentityNo}
+                            spellCheck={false}
+                            readOnly
+                          ></input>
+                        </div>
+                      </div>
+                      <div className="flex items-center mb-4 justify-items-center">
+                        <div className="flex justify-items-center">
+                          <span className="flex justify-end p-1 mr-1 w-36">
+                            专业领域:
+                          </span>
+                          <textarea
+                            className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none"
+                            name="lessonTotalTimes"
+                            spellCheck={false}
+                            value={cancelTeacher}
+                            readOnly
+                          ></textarea>
+                        </div>
+                      </div>
+                      <div className="flex items-center mb-4 justify-items-center">
+                        <div className="flex justify-items-center">
+                          <span className="flex justify-end p-1 mr-1 w-36">
+                            从业经验:
+                          </span>
+                          <textarea
+                            className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none"
+                            name="teacherExperience"
+                            value={cancelTeacher.teacherExperience}
+                            spellCheck={false}
+                            readOnly
+                          ></textarea>
+                        </div>
+                      </div>
+                      <div className="flex items-center mb-4 justify-items-center">
+                        <div className="flex justify-items-center">
+                          <span className="flex justify-end p-1 mr-1 w-36">
+                            教师简介:
+                          </span>
+                          <textarea
+                            className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none"
+                            name="teacherIntroduce"
+                            value={cancelTeacher.teacherIntroduce}
+                            spellCheck={false}
+                            readOnly
+                          ></textarea>
+                        </div>
+                      </div>
+                      
+                      <div className="flex items-center gap-4 mt-2 justify-items-center">
+                        <input
+                          value="取消"
+                          type="button"
+                          className="px-6 py-2 border rounded-md "
+                          onClick={closeDeleteModal}
+                        />
+                        <input
+                          value="确定"
+                          type="button"
+                          className="px-6 py-2 text-white border rounded-md bg-primary-600"
+                          onClick={closeDeleteModal}
+                        />
+                      </div>
+                    </form>
+                  </Dialog.Panel>
+                </Transition.Child>
+              </div>
+            </div>
+          </Dialog>
+        </Transition>
+
+        {/* 教师管理列表 */}
+        <div className="absolute w-full mt-10">
+          <table className="w-11/12">
+            <thead>
+              <tr className="grid items-center h-10 grid-cols-6 gap-10 font-bold text-gray-700 bg-white rounded-lg justify-items-center">
+                <th className="flex items-center justify-center">教师姓名</th>
+                <th className="flex items-center justify-center">教师身份证号码</th>
+                <th className="flex items-center justify-center">专业领域</th>
+                <th className="flex items-center justify-center">从业经历</th>
+                <th className="flex items-center justify-center">日期</th>
+                <th className="flex items-center justify-center">操作</th>
+              </tr>
+            </thead>
+            <tbody>
+              {state.teacher.teacherList.map((list: Teacher, i: any) => (
+                <ListEntry teacher={list} key={i} />
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </IonPage>
+  );
+};
 export default TeacherQuery;
-
