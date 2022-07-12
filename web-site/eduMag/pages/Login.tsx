@@ -1,6 +1,6 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useContext, useCallback } from "react";
-import { AppContext, setloginUser } from "../../appState";
+import { AppContext, setloginUser } from "../appState";
 import { Redirect } from "react-router-dom";
 import { useRouter } from "next/router";
 

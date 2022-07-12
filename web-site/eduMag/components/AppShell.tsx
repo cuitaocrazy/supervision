@@ -9,7 +9,7 @@ import { IonReactRouter } from "@ionic/react-router";
 import { Redirect, Route } from "react-router-dom";
 import Menu from "./Menu";
 
-import Login from "./pages/Login";
+import Login from "../pages/Login";
 import { AppContext, AppContextProvider } from "../appState";
 import BaseInfo from "./pages/baseInfo/Detail";
 import ChangePwd from "./pages/ChangePwd";
@@ -158,12 +158,13 @@ const AppShell = () => {
                 component={OrderQuery}
                 exact={true}
               />
+              <Route exact path="/" render={() => <Redirect to="/login" />} />
             </IonRouterOutlet>
           </IonSplitPane>
-          <IonRouterOutlet>
+          {/* <IonRouterOutlet>
             <Route path="/login" render={() => <Login />} />
             <Route exact path="/" render={() => <Redirect to="/login" />} />
-          </IonRouterOutlet>
+          </IonRouterOutlet> */}
         </IonReactRouter>
       </IonApp>
     </AppContextProvider>
