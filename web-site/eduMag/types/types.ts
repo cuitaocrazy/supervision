@@ -103,6 +103,9 @@ export interface Attendance {
   updateDate: string,
   updateTime: string,
   updateReason: string,
+  attendanceUpdateDate: string,
+  attendanceUpdateTime: string,
+  attendanceUpdateReason: string,
 }
 
 export interface Transfer {

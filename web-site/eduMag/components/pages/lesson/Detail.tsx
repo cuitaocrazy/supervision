@@ -98,7 +98,6 @@ export const LessonDetail: React.FC = () => {
           </div>
         </div>
         <IonCardContent>
-          <form onSubmit={onModify}>
             {/* 详情 */}
             <div className="font-bold text-gray-800">课程详情</div>
             <hr className="mt-2 mb-4" />
@@ -217,7 +216,6 @@ export const LessonDetail: React.FC = () => {
                 />
               </div>
             </div>
-          </form>
           <div className="flex justify-center">
             <input
               value="返回"
