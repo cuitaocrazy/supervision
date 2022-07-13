@@ -23,7 +23,7 @@ const demoattendanceList: Attendance[] = [
     attendanceDate: "2020-01-01",
     attendanceTime: "00:00:00",
     attendanceType: "vaild",
-    attendanceLessonQuantity: "111",
+    attendanceLessonQuantity: 111,
     eduId: "1",
     eduName: "教育机构1",
     lessonId: "1",
@@ -35,14 +35,13 @@ const demoattendanceList: Attendance[] = [
     updateDate: "2020-01-01",
     updateTime: "2020-01-01",
     updateReason: "aaaa",
-    attendanceLessonQuantity: "1",
   },
   {
     attendanceID: "2",
     attendanceDate: "2020-01-01",
     attendanceTime: "00:00:00",
     attendanceType: "vaild",
-    attendanceLessonQuantity: "111",
+    attendanceLessonQuantity: 111,
     eduId: "1",
     eduName: "教育机构1",
     lessonId: "1",
@@ -54,7 +53,6 @@ const demoattendanceList: Attendance[] = [
     updateDate: "2020-01-01",
     updateTime: "2020-01-01",
     updateReason: "aaaa",
-    attendanceLessonQuantity: "1",
   },
 ];
 
@@ -133,54 +131,91 @@ const AttendanceQuery: React.FC = () => {
   };
   const ListEntry = ({
     attendance,
-    key,
     ...props
   }: {
     attendance: Attendance;
     key: any;
   }) => (
-    <IonItem key={key}>
-      <IonLabel>
-        <p className="text-center">{attendance.lessonName}</p>
-      </IonLabel>
-      <IonLabel>
-        <p className="text-center">{attendance.consumerName}</p>
-      </IonLabel>
-      <IonLabel>
-        <p className="text-center">{attendance.consumerStuName}</p>
-      </IonLabel>
-      <IonLabel>
-        <p className="text-center">{attendance.attendanceType}</p>
-      </IonLabel>
-      <IonLabel>
-        <p className="text-center">{attendance.attendanceTime}</p>
-      </IonLabel>
-      <IonLabel>
-        <p className="text-center">{attendance.attendanceTime}</p>
-      </IonLabel>
-      <IonLabel>
-        <p className="text-center">{attendance.attendanceLessonQuantity}</p>
-      </IonLabel>
-      <IonLabel>
-        <p className="text-center">{attendance.attendanceDate}</p>
-      </IonLabel>
-      <IonLabel>
-        <p className="text-center">{attendance.attendanceTime}</p>
-      </IonLabel>
-      <IonLabel>
-        <p className="text-center">{attendance.attendanceStatus}</p>
-      </IonLabel>
-      <IonLabel>
-        <div className="flex gap-2">
+    <tr
+      className="grid items-center grid-cols-9 gap-10 text-gray-600 border justify-items-center even:bg-white odd:bg-primary-100"
+    >
+      <td className="flex items-center justify-center leading-10">
+      {attendance.lessonName}
+      </td>
+      <td className="flex items-center justify-center leading-10">
+      {attendance.consumerName}
+      </td>
+      <td className="flex items-center justify-center leading-10">
+      {attendance.consumerStuName}
+      </td>
+      <td className="flex items-center justify-center leading-10">
+      {attendance.attendanceType}
+      </td>
+      <td className="flex items-center justify-center leading-10">
+      {attendance.attendanceLessonQuantity}
+      </td>
+      <td className="flex items-center justify-center leading-10">
+      {attendance.attendanceDate}
+      </td>
+      <td className="flex items-center justify-center leading-10">
+      {attendance.attendanceTime}
+      </td>      
+      <td className="flex items-center justify-center leading-10">
+      {attendance.attendanceStatus}
+      </td>
+      <td className="flex items-center justify-center leading-10">
+        <div className="flex gap-2 ">
           <button
-            className="p-1 text-white bg-blue-500 rounded-md"
+            className="p-1 rounded-md text-primary-600"
             onClick={onDetail(attendance)}
           >
             查看详情
           </button>
         </div>
-      </IonLabel>
-    </IonItem>
+      </td>
+    </tr>
+    // <IonItem key={key}>
+    //   <IonLabel>
+    //     <p className="text-center">{attendance.lessonName}</p>
+    //   </IonLabel>
+    //   <IonLabel>
+    //     <p className="text-center">{attendance.consumerName}</p>
+    //   </IonLabel>
+    //   <IonLabel>
+    //     <p className="text-center">{attendance.consumerStuName}</p>
+    //   </IonLabel>
+    //   <IonLabel>
+    //     <p className="text-center">{attendance.attendanceType}</p>
+    //   </IonLabel>
+    //   <IonLabel>
+    //     <p className="text-center">{attendance.attendanceTime}</p>
+    //   </IonLabel>
+    //   <IonLabel>
+    //     <p className="text-center">{attendance.attendanceTime}</p>
+    //   </IonLabel>
+    //   <IonLabel>
+    //     <p className="text-center">{attendance.attendanceLessonQuantity}</p>
+    //   </IonLabel>
+    //   <IonLabel>
+    //     <p className="text-center">{attendance.attendanceDate}</p>
+    //   </IonLabel>
+    //   <IonLabel>
+    //     <p className="text-center">{attendance.attendanceTime}</p>
+    //   </IonLabel>
+    //   <IonLabel>
+    //     <p className="text-center">{attendance.attendanceStatus}</p>
+    //   </IonLabel>
+    //   <IonLabel>
+    //     <div className="flex gap-2">
+    //       <button
+    //         className="p-1 text-white bg-blue-500 rounded-md"
+    //         onClick={onDetail(attendance)}
+    //       >
+    //         查看详情
+    //       </button>
+    //     </div>
+    //   </IonLabel>
+    // </IonItem>
   );
 
   if (state.attendance.attendanceDetail) {
@@ -189,7 +224,7 @@ const AttendanceQuery: React.FC = () => {
   return (
     <IonPage className="bg-gray-100">
       <div className="relative w-full h-screen mx-6 overflow-auto">
-      <div className="flex pt-2 my-2 text-gray-800">
+        <div className="flex pt-2 my-2 text-gray-800">
           <div className="mr-2 text-gray-600">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -266,7 +301,7 @@ const AttendanceQuery: React.FC = () => {
               </IonCol>
               <IonCol className="flex ml-8 text-gray-800">
                 <div className="flex items-center justify-center font-bold text-center text-gray-600 w-28">
-                 考勤类型：
+                  考勤类型：
                 </div>
                 <input
                   type="text"
@@ -397,7 +432,35 @@ const AttendanceQuery: React.FC = () => {
             </IonCol>
           </IonRow>
         </div> */}
+
+        {/* 考勤明细列表 */}
         <div className="absolute w-full mt-10">
+          <table className="w-11/12">
+            <thead>
+              <tr className="grid items-center h-10 grid-cols-9 gap-10 font-bold text-gray-700 bg-white rounded-lg justify-items-center">
+                <th className="flex items-center justify-center">课程名称</th>
+                <th className="flex items-center justify-center">
+                客户姓名
+                </th>
+                <th className="flex items-center justify-center">学生姓名</th>
+                <th className="flex items-center justify-center">考勤类型</th>
+                <th className="flex items-center justify-center">考勤课时</th>
+                <th className="flex items-center justify-center">签到日期</th>
+                <th className="flex items-center justify-center">签到时间</th>
+                <th className="flex items-center justify-center">考勤状态</th>
+                <th className="flex items-center justify-center">操作</th>
+              </tr>
+            </thead>
+            <tbody>
+              {state.attendance?.attendanceList.map(
+                (list: Attendance, i: any) => (
+                  <ListEntry attendance={list} key={i} />
+                )
+              )}
+            </tbody>
+          </table>
+        </div>
+        {/* <div className="absolute w-full mt-10">
           <IonList>
             <IonItem key="title">
               <IonLabel>
@@ -433,7 +496,7 @@ const AttendanceQuery: React.FC = () => {
               )}
             </div>
           </IonList>
-        </div>
+        </div> */}
       </div>
     </IonPage>
   );
