@@ -189,7 +189,7 @@ const ContractNegoQuery: React.FC = () => {
   }) => (
     <tr
       key={key}
-      className="grid items-center grid-cols-10 gap-10 text-gray-600 border justify-items-center even:bg-white odd:bg-primary-100"
+      className="grid items-center grid-cols-10 gap-2 text-gray-600 border justify-items-center even:bg-white odd:bg-primary-100"
     >
       <td className="flex items-center justify-center leading-10">
         {contractNego.contract.lessonName}
@@ -458,7 +458,7 @@ const ContractNegoQuery: React.FC = () => {
         <div className="absolute w-full mt-10">
           <table className="w-11/12">
             <thead>
-              <tr className="grid items-center h-10 grid-cols-10 gap-10 font-bold text-gray-700 bg-white rounded-lg justify-items-center">
+              <tr className="grid items-center h-10 grid-cols-10 gap-2 font-bold text-gray-700 bg-white rounded-lg justify-items-center">
                 <th className="flex items-center justify-center">课程名称</th>
                 <th className="flex items-center justify-center">
                   总课时（个）
