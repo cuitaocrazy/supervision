@@ -17,7 +17,7 @@ export class EduLesson {
     @Column()
     lessonIntroduce: string
     @Column()
-    lessonImgs: string
+    lessonImages: string
     @Column()
     lessonOutline: boolean
     @Column()

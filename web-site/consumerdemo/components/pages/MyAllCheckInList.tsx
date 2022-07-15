@@ -14,7 +14,7 @@ const MyAllCheckInList = () => {
       <div>
         <Calendar />
         {/* 签到信息card */}
-        <CheckInResultListCard />
+        {/* <CheckInResultListCard /> */}
       </div>
     </IonContent>
   </IonPage>

@@ -10,7 +10,6 @@ const App = dynamic(() => import('../components/AppShell'), {
 export default function Index() {
   const router = useRouter()
   if(router.asPath.toLocaleUpperCase()==='/LOGIN')
-  return <AppContextProvider><Login/></AppContextProvider>
-  
+  return <AppContextProvider><Login/></AppContextProvider>  
   return <App />;
 }

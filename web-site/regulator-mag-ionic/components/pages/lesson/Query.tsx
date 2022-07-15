@@ -5,6 +5,8 @@ import { AppContext, setLessonList, setLessonDetail,setLessonAudit } from '../..
 import { Lesson } from '../../../types/types';
 import { IonPage, IonList, IonLabel, IonItem, IonRow, IonCol } from '@ionic/react';
 import { Dialog, Transition } from '@headlessui/react';
+import Paging from '../../paging';
+
 const findURL = 'http://localhost:3003/edb/eduLesson/find';
 const delURL = 'http://localhost:3003/lesson/del';
 const modifyURL = 'http://localhost:3003/lesson/modifyURL';
@@ -20,6 +22,15 @@ const LessonQuery: React.FC = () => {
   }
   function openOffModal() {
     setIsOffOpen(true);
+  }
+  const [page,setPage] = useState(0)
+  const [total,setTotal]= useState(101)//todo
+  const onPageChange = (records:any,total:number,newPage:number)=>{
+    console.log(records)
+    console.log(total)
+    console.log(newPage)
+    setPage(newPage)
+    refreshLessonList(records)
   }
   const { state, dispatch } = useContext(AppContext);
   const [lessonState, setLessonState] = useState(state.lesson.lessonList);
@@ -123,8 +134,12 @@ const LessonQuery: React.FC = () => {
     })
       .then(res => res.json())
       .then(json => {
-        const { result, records } = json;
-        if (result) refreshLessonList(records);
+        const { result, records,total } = json;
+        if (result) {
+          // todo 测试方便
+          // setTotal(total)
+          refreshLessonList(records);
+        }
       });
   };
   useEffect(onQuery, []);
@@ -378,9 +393,15 @@ const LessonQuery: React.FC = () => {
               {state.lesson.lessonList.map((list: Lesson, i: any) => (
                 <ListEntry lesson={list} key={i} />
               ))}
+              <tr>
+                <td colSpan={5}> <Paging url={paramStr} page={page} pagesize={20} total={total} onPageChange={onPageChange}/></td>
+              </tr>
+
             </tbody>
           </table>
+          {/* <Paging url={paramStr} page={page} pagesize={20} total={total} onPageChange={onPageChange}/> */}
         </div>
+
         {/* <div className='absolute w-full mt-10'>
         <IonList>
           <IonItem key='title'>

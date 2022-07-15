@@ -203,7 +203,7 @@ export const LessonDetail: React.FC = () => {
                 <div className="flex justify-end w-32 mr-2">教师姓名:</div>
                 <input
                   className="w-64 h-10 px-2 rounded-md bg-primary-100 focus:outline-none"
-                  value={lessonState.teacher.teacherName}
+                  value={lessonState.teacherName}
                   readOnly
                 />
               </div>

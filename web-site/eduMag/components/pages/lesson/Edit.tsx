@@ -16,53 +16,43 @@ import {
 } from "@ionic/react";
 import { Redirect } from "react-router-dom";
 import { useCallback, useContext } from "react";
-import { AppContext, setLessonDetail } from "../../../appState";
+import { AppContext, setLessonEdit } from "../../../appState";
 import { Lesson } from "../../../types/types";
 import { PickerColumn } from "@ionic/core";
 import LessonTypeList from "../../components/LessonType";
 import LessonStateList from "../../components/LessonState";
 
 export const LessonDetail: React.FC = () => {
-  console.log("LessonDetail");
-  const modifyURL = "http://localhost:3003/lesson/modifyURL";
+  const modifyURL = "http://localhost:3003/edu/lesson/edit";
   const { state, dispatch } = useContext(AppContext);
-  console.log(state);
   // const {SubscribeDurationDays,TranAmt,USVOrgID,USVItemName,USVItemID,USVItemDesc,SubscribeStartDate,LessonType} = state.lessonDetail
 
   const [lessonState, setLessonState] = useState(state.lesson.lessonEdit);
   const [isPickOpen, setPickOpen] = useState(false);
   const setBack = useCallback(() => {
-    dispatch(setLessonDetail(undefined));
+    dispatch(setLessonEdit(undefined));
   }, []);
-  `                                                       `;
   const onBack = () => () => {
     setBack();
   };
-  if (state.lesson.lessonDetail === undefined) {
+  console.log(state)
+  if (state.lesson.lessonEdit === undefined) {
     return <Redirect to={state.backPage} />;
   }
 
-  const onModify = async (e: React.FormEvent) => () => {
+  const onModify = (e:any) => {
     e.preventDefault();
     fetch(modifyURL, {
-      method: "PUT",
-      body: JSON.stringify({
-        USVItemID: lessonState.USVItemID,
-        USVItemName: lessonState.USVItemName,
-        USVOrgID: lessonState.USVOrgID,
-        USVItemDesc: lessonState.USVItemDesc,
-        TranAmt: lessonState.TranAmt,
-        SubscribeDurationDays: lessonState.SubscribeDurationDays,
-        SubscribeStartDate: lessonState.SubscribeStartDate,
-        LessonType: lessonState.LessonType,
-      }),
+      method: "POST",
+      body: JSON.stringify(lessonState),
       headers: {
         "Content-type": "application/json;charset=UTF-8",
       },
     })
       .then((res) => res.json())
       .then((json) => {
-        alert(json.result);
+        console.log(json)
+        setBack();
       });
   };
   const lessonTypePickerColumn = {
@@ -289,16 +279,11 @@ export const LessonDetail: React.FC = () => {
                   onChange={(e) =>
                     setLessonState({
                       ...lessonState,
-                      ...{
-                        teacher: {
-                          ...lessonState.teacher,
-                          teacherName: e.nativeEvent.target?.value,
-                        },
-                      },
+                      teacherName:e.nativeEvent.target?.value,
                     })
                   }
                   required
-                  value={lessonState.teacher.teacherName}
+                  value={lessonState.teacherName}
                 />
               </div>
               <div className="flex mb-4 leading-10">
@@ -317,17 +302,23 @@ export const LessonDetail: React.FC = () => {
                 />
               </div>
             </div>
-          </form>
-          <div className="flex justify-center">
+            <div className="flex justify-center">
             <input
-              value="返回"
-              type="button"
-              onClick={() => {
-                onBack();
-              }}
+              value="修改"
+              type="submit"
               className="flex w-20 px-6 py-2 font-bold text-white rounded-md bg-primary-600 focus:bg-primary-700"
             />
           </div>
+            <div className="flex justify-center">
+            <input
+              value="返回"
+              type="button"
+              onClick={onBack()}
+              className="flex w-20 px-6 py-2 font-bold text-white rounded-md bg-primary-600 focus:bg-primary-700"
+            />
+          </div>
+          </form>
+
         </IonCardContent>
       </IonCard>
     </IonPage>

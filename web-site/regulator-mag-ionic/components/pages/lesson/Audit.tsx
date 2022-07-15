@@ -31,7 +31,7 @@ export const LessonAudit: React.FC = () => {
     setIsAuditOpen(true);
   }
   console.log('LessonAudit');
-  const modifyURL = 'http://localhost:3003/lesson/modifyURL';
+  const modifyURL = 'http://localhost:3003/edb/lesson/audit';
   const { state, dispatch } = useContext(AppContext);
   // const {SubscribeDurationDays,TranAmt,USVOrgID,USVItemName,USVItemID,USVItemDesc,SubscribeStartDate,LessonType} = state.lessonDetail
 
@@ -40,27 +40,21 @@ export const LessonAudit: React.FC = () => {
   const setBack = useCallback(() => {
     dispatch(setLessonAudit(undefined));
   }, []);
-  `                                                       `;
+
   const onBack = () => () => {
+    
     setBack();
   };
   if (state.lesson.lessonAudit === undefined) {
     return <Redirect to={state.backPage} />;
   }
 
-  const onModify = async (e: React.FormEvent) => () => {
-    e.preventDefault();
+  const onModify = (status:string) => () => {
     fetch(modifyURL, {
-      method: 'PUT',
+      method: 'POST',
       body: JSON.stringify({
-        USVItemID: lessonState.USVItemID,
-        USVItemName: lessonState.USVItemName,
-        USVOrgID: lessonState.USVOrgID,
-        USVItemDesc: lessonState.USVItemDesc,
-        TranAmt: lessonState.TranAmt,
-        SubscribeDurationDays: lessonState.SubscribeDurationDays,
-        SubscribeStartDate: lessonState.SubscribeStartDate,
-        LessonType: lessonState.LessonType,
+        lessonId:lessonState.lessonId,
+        lessonStatus:status
       }),
       headers: {
         'Content-type': 'application/json;charset=UTF-8',
@@ -68,7 +62,7 @@ export const LessonAudit: React.FC = () => {
     })
       .then(res => res.json())
       .then(json => {
-        alert(json.result);
+        setBack();
       });
   };
   const lessonTypePickerColumn = {
@@ -79,20 +73,6 @@ export const LessonAudit: React.FC = () => {
     ],
   } as PickerColumn;
 
-  const onCreate = async (e: React.FormEvent) => () => {
-    e.preventDefault();
-    fetch(createURL, {
-      method: 'PUT',
-      body: JSON.stringify(eduOrgState),
-      headers: {
-        'Content-type': 'application/json;charset=UTF-8',
-      },
-    })
-      .then(res => res.json())
-      .then(json => {
-        alert(json.result);
-      });
-  };
 
   return (
     <IonPage className="bg-gray-100">
@@ -299,7 +279,7 @@ export const LessonAudit: React.FC = () => {
             <input
               value="通过"
               type="button"
-              onClick={onBack()}
+              onClick={onModify('on')}
               className="flex w-20 px-6 py-2 font-bold text-white rounded-md bg-primary-600 focus:bg-primary-700"
             />
             <input
@@ -344,7 +324,6 @@ export const LessonAudit: React.FC = () => {
                       <hr className="mt-2 mb-4" />
                     </Dialog.Title>
                     <form
-                      onSubmit={onCreate}
                       className="flex flex-col items-center mt-8 rounded-lg justify-items-center"
                     >
                       <div className="flex items-center mb-4 justify-items-center">
@@ -375,7 +354,7 @@ export const LessonAudit: React.FC = () => {
                           value="提交"
                           type="button"
                           className="px-6 py-2 text-white border rounded-md bg-primary-600"
-                          onClick={closeAuditModal}
+                          onClick={()=>{onModify('reject')();closeAuditModal()}}
                         />
                       </div>
                     </form>

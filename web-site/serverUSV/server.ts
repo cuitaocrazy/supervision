@@ -26,6 +26,9 @@ app.get('/test', (req, res) => {
   res.send('test connect')
 })
 
+
+
+
 app.post('/preorder', jsonParser, async (req, res) => {
   const body: SubscribeWithSign = { ...req.body, ...{ "appID": appID, "BankID": "BankMSP", "SVOrgID": "EdbMSP", "USVOrgID": "Edu1MSP" } }
   const newBody: SubscribeWithSign = getStartDateAndDurDaysByItemId(body)
@@ -97,19 +100,19 @@ const serverInstance = app.listen(port, () => {
 })
 const io = require('socket.io')(serverInstance);
 
-io.on('connection', function (socket) { // socket相关
-  console.log('somebody connection')
-  socket.emit('open');
+// io.on('connection', function (socket) { // socket相关
+//   console.log('somebody connection')
+//   socket.emit('open');
 
-  socket.on('pay', async function (subscribeID) {
-    cc.listenPayResult(subscribeID, "Edu1MSP", emitter)
-    emitter.once(subscribeID + '_paySuccess', function () {
-      console.log('do pay emit')
-      socket.emit(subscribeID + '_pay', 'Success')
-    });
+//   socket.on('pay', async function (subscribeID) {
+//     cc.listenPayResult(subscribeID, "Edu1MSP", emitter)
+//     emitter.once(subscribeID + '_paySuccess', function () {
+//       console.log('do pay emit')
+//       socket.emit(subscribeID + '_pay', 'Success')
+//     });
 
-  })
-});
+//   })
+// });
 
 
 const yuanToFen = (tranAmtYuan: string | number) => {
@@ -129,6 +132,10 @@ import eduLessonService from './src/edu/LessonService'
 app.get('/edu/lesson/findAll', async (req, res) => {
   console.log('教育机构: 查询所有课程')
   const r = await eduLessonService.findAll()
+  await Promise.all(r.records.map(async (lesson:any)=>{
+    const edu = await findOneEdu({ eduId: lesson.eduId })
+    return lesson.edu = edu
+  }))
   res.send(r)
 })
 app.get('/edu/lesson/find', async (req, res) => {
@@ -136,6 +143,91 @@ app.get('/edu/lesson/find', async (req, res) => {
   const r = await eduLessonService.find(req.query)
   res.send(r)
 })
+app.post('/edu/lesson/create',jsonParser, async (req, res) => {
+  console.log(`教育机构: 添加课程: 条件[${JSON.stringify(req.body)}]`)
+  const lesson:EduLesson = {} as EduLesson
+  lesson.lessonId = randomUUID().replaceAll('-','')
+  lesson.lessonName = req.body.lessonName
+  lesson.lessonTotalQuantity = req.body.lessonTotalTimes
+  lesson.lessonPerPrice = req.body.lessonPerPrice
+  lesson.lessonTotalPrice = req.body.lessonTotalPrice
+  lesson.lessonType = req.body.lessonType
+  lesson.lessonIntroduce = req.body.lessonIntroduce
+  lesson.lessonStartDate = req.body.lessonStartDate?.replaceAll('-','')
+  lesson.lessonEndDate = req.body.lessonEndDate?.replaceAll('-','')
+
+  lesson.lessonStatus = 'pending'
+  lesson.lessonAccumulationQuantity = 0;
+  //todo
+  // lesson.teacherId = req.body.teacherId
+  lesson.teacherId = 'teacher00001'
+  lesson.teacherName = '马老师'
+  lesson.eduId = 'edu0001'
+  lesson.eduName = '测试机构'
+  lesson.lessonImages = 'http://placekitten.com/g/200/300'
+  lesson.lessonOutline = false
+  lesson.lessonStartTime='000000'
+  lesson.lessonEndTime='000000'
+  lesson.lessonCreateDate = moment().format('YYYYMMDD')
+  lesson.lessonCreateTime = moment().format('HHmmss')
+  lesson.lessonUpdateDate = moment().format('YYYYMMDD')
+  lesson.lessonUpdateTime = moment().format('HHmmss')
+  lesson.lessonUpdateReason = '创建课程'
+  try{
+  console.log(lesson)
+  const r = await eduLessonService.saveLesson(lesson)
+  res.send({result:true,recode:r})
+  }catch(e){
+    console.log(e)
+    res.send({result:false,})
+  }
+
+})
+
+app.post('/edu/lesson/edit',jsonParser, async (req, res) => {
+  console.log(`教育机构: 编辑课程: 条件[${JSON.stringify(req.body)}]`)
+  const lesson:EduLesson = {} as EduLesson
+  lesson.lessonId = req.body.lessonId
+  lesson.lessonName = req.body.lessonName
+  lesson.lessonTotalQuantity = req.body.lessonTotalTimes
+  lesson.lessonPerPrice = req.body.lessonPerPrice
+  lesson.lessonTotalPrice = req.body.lessonTotalPrice
+  lesson.lessonType = req.body.lessonType
+  lesson.lessonIntroduce = req.body.lessonIntroduce
+  lesson.lessonStartDate = req.body.lessonStartDate?.replaceAll('-','')
+  lesson.lessonEndDate = req.body.lessonEndDate?.replaceAll('-','')
+  lesson.lessonStatus = 'pending'
+  lesson.lessonAccumulationQuantity = 0;
+  //todo
+  // lesson.teacherId = req.body.teacherId
+  lesson.teacherId = 'teacher00001'
+  lesson.teacherName = '马老师'
+  lesson.eduId = 'edu0001'
+  lesson.eduName = '测试机构'
+  lesson.lessonImages = 'http://placekitten.com/g/200/300'
+  lesson.lessonOutline = false
+  lesson.lessonStartTime='000000'
+  lesson.lessonEndTime='000000'
+  lesson.lessonCreateDate = moment().format('YYYYMMDD')
+  lesson.lessonCreateTime = moment().format('HHmmss')
+  lesson.lessonUpdateDate = moment().format('YYYYMMDD')
+  lesson.lessonUpdateTime = moment().format('HHmmss')
+  lesson.lessonUpdateReason = '编辑课程'
+  try{
+  console.log(lesson)
+  const r = await eduLessonService.saveLesson(lesson)
+  res.send({result:true,recode:r})
+  }catch(e){
+    console.log(e)
+    res.send({result:false,})
+  }
+
+})
+
+
+
+
+
 import eduAttendanceService from './src/edu/AttendanceService';
 app.post('/edu/attendance/apply', jsonParser, async (req, res) => {
   console.log(`教育机构: 发起签到：内容[${req.body}]`)
@@ -161,6 +253,7 @@ import { randomUUID } from 'crypto';
 import * as moment from 'moment';
 import { findOneLesson, findOneTeacher, findAttendance, saveTransfer, findOneEdu, searchLesson, saveContract, searchContract, findOneContract, saveAttendance } from './src/consumer/consumer'
 import { Attendance } from './src/entity/Attendance';
+import {pay,verify} from './src/pay/pay'
 
 const fenToYuan = (tranAmtYuan: string | number) => {
   if (typeof tranAmtYuan === 'number') {
@@ -215,6 +308,20 @@ app.get('/consumer/lesson', jsonParser, async (req, res) => {
   res.send({ status: 'success', result: convertLessonList })
 })
 
+
+io.on('connection', function (socket) { // socket相关
+  console.log('some consumer connection')
+  socket.emit('open');
+
+  socket.on('pay', async function (contractId) {
+    emitter.once(contractId + '_paySuccess', function () {
+      console.log('do pay emit')
+      socket.emit(contractId + '_pay', 'Success')
+    });
+  })
+});
+
+
 app.post('/consumer/preOrder', jsonParser, async (req, res) => {
 
   //todo 
@@ -224,6 +331,7 @@ app.post('/consumer/preOrder', jsonParser, async (req, res) => {
   //todo 根据lessonID获取Lesson
   // const lesson : EduLesson=     { lessonType:'其他',lessonImgs: "http://placekitten.com/g/200/300", lessonName: "小熊美术课程5-7岁", lessonTotalPrice: 88000, lessonTotalQuantity: 58, lessonIntroduce: "艺术教育是未来教育", edu: { eduAddress: '地址：廊坊市安次区和平路荣益广场3层206',eduName:'教育机构1', eduContactPhone: "0316-78909090", eduId: "edu-001", eduLoginName: "kl", supervisorOrgId: "sup-org-001" }, lessonId: "lesson-001", eduId: "edu-001", teacherId: "teacher-001" ,lessonOutline:"01. 太阳（圆型 暖色调）1",teacher:{ teacherName: "李梅2", teacherIntroduce: "李雷，清华大学美术学院，学士、硕士，7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖,7年资深美育教研从业经验，20年媒体从业经历。清华大学美术学院，学士、硕士，7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖,7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖......", teacherId: "teacher-001" } ,lessonStartDate:'20200101'} 
   try {
+  
     const lesson = await findOneLesson({ lessonId: lessonId })
     const edu = await findOneEdu({ eduId: lesson.eduId })
     const teacher = await findOneTeacher({ teacherId: lesson.teacherId })
@@ -258,7 +366,9 @@ app.post('/consumer/preOrder', jsonParser, async (req, res) => {
     }
 
     await saveContract(newContract)
-    res.send({ status: 'success', result: newContract })
+    //todo 根据edu获取merchantId
+    const payUrl = pay(newContract.contractId,newContract.contractDate.concat(newContract.contractTime),String(newContract.lessonTotalPrice),'merchantNo',newContract.lessonName)
+    res.send({ status: 'success', result: newContract,payUrl:payUrl })
   } catch (e) {
     res.send({ status: 'fail', result: '未知异常' })
   }
@@ -384,6 +494,27 @@ app.post('/consumer/login', jsonParser, async (req, res) => {
   res.send({ status: 'success', result: { username: '用户1', loginName: '登录名1' } })
 })
 
+app.post('/consumer/notice',jsonParser,async (req, res) => {
+  const {merchantNo,orderNo,orderSeq,cardType,payTime,orderStatus,payAmount,orderIp,orderRefer,returnActFlag,signData} = req.query
+  //orderNo即contractId
+  const contract = await findOneContract({contractId:orderNo})
+//   0：未处理
+// 1：支付
+// 2：撤销（未启用）
+// 3：退货
+// 4：未明
+// 5：失败
+// 6：下单
+  if(orderStatus=='1'){
+    contract.contractStatus = 'valid'
+    contract.contractUpdateDate = moment().format('YYYYMMDD')
+    contract.contractUpdateTime = moment().format('HHmmss')
+    contract.contractUpdateReason = '付费完成'
+    emitter.emit(orderNo + '_paySuccess',contract)
+  }
+
+})
+
 
 import edbEduOrgService from './src/edb/EduOrgService';
 import { EduOrg } from './src/entity/EduOrg';
@@ -405,6 +536,7 @@ app.get('/edb/contract/find', async (req, res) => {
 })
 import edbAttendanceService from './src/edb/AttendanceService'
 import { Transfer } from './src/entity/Transfer';
+import { EduLesson } from './src/entity/EduLesson';
 app.get('/edb/attendance/find', async (req, res) => {
   console.log(`教育局: 考勤查询: 条件[${JSON.stringify(req.query)}]`)
   const r = await edbAttendanceService.find({ ...new Attendance(), ...req.query })
@@ -419,3 +551,11 @@ app.get('/edb/transfer/find', async (req, res) => {
 app.post('/edb/login', async (req, res) => {
   res.send({ status: 'success', result: { userId:'0',username: '用户1', loginName: '登录名1' } })
 })
+
+
+app.post('/edb/lesson/audit',jsonParser, async (req, res) => {
+  console.log(`教育局: 划拨查询: 条件[${JSON.stringify(req.body)}]`)
+  const r = await edbEduLessonService.update(req.body)
+  res.send(r)
+})
+

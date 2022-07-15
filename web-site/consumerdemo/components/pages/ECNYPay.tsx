@@ -1,16 +1,24 @@
 import React,{ useEffect,useState,useContext} from "react";
 import { IonPage,IonHeader,IonContent } from "@ionic/react";
-import {Link} from 'react-router-dom'
+import {useHistory} from 'react-router-dom'
 import Navbar from '../Navbar'
 import {Contract} from '../../types/types'
 import {preOrderURL} from '../../const/const'
 import {AppContext} from '../../appState';
+import { io } from 'socket.io-client'
+
 // 数币支付页面
 const ECNYPay =()=>{
-
+  const socketUrl = 'http://localhost:3003'
+  const history = useHistory();
+  const socket = io(socketUrl)
   const [contract, setContract ] = useState({} as Contract);
   const { state } = useContext(AppContext);
+  const [payUrl,setPayUrl] = useState("")
   useEffect(()=>{
+    socket.on('open', () => {
+      console.log('socket io is open !')
+    })
     fetch(preOrderURL, {
       method: 'POST',
       body: JSON.stringify({
@@ -24,9 +32,18 @@ const ECNYPay =()=>{
     }).then(res => res.json())
     .then((json) => {
       setContract(json.result)
+      setPayUrl(json.payUrl)
+      socket.emit('pay', json.result.contractId)
+      socket.on(json.result.contractId + '_pay', () => {
+        console.log('支付成功')
+        history.push('/tabs/payResult')
+      })
     })
-  },[])
+      },[])
 
+  const onClick = ()=>{
+    window.open(payUrl)
+  }
 
   return <IonPage>
     <IonHeader>
@@ -63,13 +80,11 @@ const ECNYPay =()=>{
             <span>{contract.lessonTotalPrice}</span>
           </p>
         </div>
-        <Link to="/eCNYPayResult">
         <div className="flex pt-10">
           
-          <input className="w-full py-2 mx-6 font-bold tracking-wider text-white shadow-md rounded-3xl shadow-primary-600 bg-primary-600"  
-          value="去支付" type="button"  />
+          <button onClick={onClick} className="w-full py-2 mx-6 font-bold tracking-wider text-white shadow-md rounded-3xl shadow-primary-600 bg-primary-600"  
+          value="去支付"  />
         </div>
-        </Link>
       </div>
     </IonContent>
   </IonPage>

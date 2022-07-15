@@ -17,6 +17,11 @@ class LessonService {
     async save(eduLession: EduLesson) {
         await mysql.manager.save(eduLession)
     }
+    async saveLesson(eduLesson:EduLesson){
+        const result = await mysql.getRepository(EduLesson).save(eduLesson)
+        return result
+    }
+
 
 }
 export default new LessonService()

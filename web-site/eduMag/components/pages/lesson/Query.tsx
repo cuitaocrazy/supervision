@@ -40,6 +40,7 @@ import { Dialog, Transition } from "@headlessui/react";
 
 const findAll = "http://localhost:3003/edu/lesson/findAll";
 const find = "http://localhost:3003/edu/lesson/find";
+const createUrl = "http://localhost:3003/edu/lesson/create"
 
 // 课程查询页面
 const LessonQuery: React.FC = () => {
@@ -90,8 +91,19 @@ const LessonQuery: React.FC = () => {
     // })
   };
 
-  const onCreate = () => {
-    //todo fetch
+  const onCreate = (e:any) => {
+    e.preventDefault()
+    console.log(createLesson)
+      fetch(createUrl, {
+      method: 'POST',
+      body:JSON.stringify(createLesson),
+      headers: {
+        'Content-type': 'application/json;charset=UTF-8',
+      },
+    }).then(res => res.json())
+    .then((json) => {
+      alert(json.result)
+    })
   };
 
   const { state, dispatch } = useContext(AppContext);
@@ -498,14 +510,14 @@ const LessonQuery: React.FC = () => {
                           </span>
                           <input
                             className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
-                            name="teacherId"
+                            name="lessonType"
                             type="text"
-                            value={createLesson.teacherId}
+                            value={createLesson.lessonType}
                             spellCheck={false}
                             onChange={(e) =>
                               setCreateLesson({
                                 ...createLesson,
-                                ...{ teacherId: e.nativeEvent.target?.value },
+                                ...{ lessonType: e.nativeEvent.target?.value },
                               })
                             }
                             required
@@ -617,7 +629,7 @@ const LessonQuery: React.FC = () => {
                         />
                         <input
                           value="确定"
-                          type="button"
+                          type="submit"
                           className="px-6 py-2 text-white border rounded-md bg-primary-600"
                         />
                       </div>
