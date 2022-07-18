@@ -88,12 +88,12 @@ const democontractNegoList: ContractNego[] = [
 ];
 
 const ContractNegoQuery: React.FC = () => {
-  let [isOffOpen, setIsOffOpen] = useState(false);
-  function closeOffModal() {
-    setIsOffOpen(false);
+  let [isRefundOpen, setIsRefundOpen] = useState(false);
+  function closeRefundModal() {
+    setIsRefundOpen(false);
   }
-  function openOffModal() {
-    setIsOffOpen(true);
+  function openRefundModal() {
+    setIsRefundOpen(true);
   }
   const { state, dispatch } = useContext(AppContext);
   const [queryInfo, setQueryInfo] = useState({ contractId: "", orderId: "" });
@@ -189,7 +189,7 @@ const ContractNegoQuery: React.FC = () => {
   }) => (
     <tr
       key={key}
-      className="grid items-center grid-cols-10 gap-2 text-gray-600 border justify-items-center even:bg-white odd:bg-primary-100"
+      className="grid items-center grid-cols-10 gap-10 text-gray-600 border justify-items-center even:bg-white odd:bg-primary-100"
     >
       <td className="flex items-center justify-center leading-10">
         {contractNego.contract.lessonName}
@@ -223,9 +223,9 @@ const ContractNegoQuery: React.FC = () => {
         <div className="flex gap-2 ">
           <button
             className="p-1 rounded-md text-primary-600"
-            onClick={openOffModal}
+            onClick={openRefundModal}
           >
-            手工退课
+            退课处理
           </button>
         </div>
       </td>
@@ -260,8 +260,8 @@ const ContractNegoQuery: React.FC = () => {
         </div>
 
         {/* 课程退订审批模态框 */}
-        <Transition appear show={isOffOpen} as={Fragment}>
-          <Dialog as="div" className="relative z-10" onClose={closeOffModal}>
+        <Transition appear show={isRefundOpen} as={Fragment}>
+          <Dialog as="div" className="relative z-10" onClose={closeRefundModal}>
             <Transition.Child
               as={Fragment}
               enter="ease-out duration-300"
@@ -438,7 +438,7 @@ const ContractNegoQuery: React.FC = () => {
                           value="取消"
                           type="button"
                           className="px-6 py-2 border rounded-md "
-                          onClick={closeOffModal}
+                          onClick={closeRefundModal}
                         />
                         <input
                           value="确认"
@@ -458,7 +458,7 @@ const ContractNegoQuery: React.FC = () => {
         <div className="absolute w-full mt-10">
           <table className="w-11/12">
             <thead>
-              <tr className="grid items-center h-10 grid-cols-10 gap-2 font-bold text-gray-700 bg-white rounded-lg justify-items-center">
+              <tr className="grid items-center h-10 grid-cols-10 gap-10 font-bold text-gray-700 bg-white rounded-lg justify-items-center">
                 <th className="flex items-center justify-center">课程名称</th>
                 <th className="flex items-center justify-center">
                   总课时（个）
