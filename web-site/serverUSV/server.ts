@@ -124,11 +124,22 @@ const yuanToFen = (tranAmtYuan: string | number) => {
 }
 
 import eduLogin from './src/edu/login'
+
+
+
+
 app.post('/edu/login', jsonParser, async (req, res) => {
   const r = await eduLogin(req.body)
   res.send(r)
 })
 import eduLessonService from './src/edu/LessonService'
+
+app.post('/edu/lesson/off',jsonParser, async (req, res) => {
+  console.log(`教育局: 划拨查询: 条件[${JSON.stringify(req.body)}]`)
+  const r = await eduLessonService.off(req.body)
+  res.send(r)
+})
+
 app.get('/edu/lesson/findAll', async (req, res) => {
   console.log('教育机构: 查询所有课程')
   const r = await eduLessonService.findAll()

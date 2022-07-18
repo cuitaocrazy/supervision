@@ -38,7 +38,6 @@ const Income:React.FC =()=>{
   ,[])
 
   const labels = incomes.map(income=>income.moon)
-  console.log(labels)
   const data = {
     labels,
     datasets: [

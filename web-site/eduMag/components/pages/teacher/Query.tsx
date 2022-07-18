@@ -133,18 +133,7 @@ const TeacherQuery: React.FC = () => {
     [dispatch]
   );
   useEffect(() => {
-    // fetch(paramStr, {
-    //   method: 'GET',
-    //   headers: {
-    //     'Content-type': 'application/json;charset=UTF-8',
-    //   },
-    // }).then(res => res.json())
-    // .then((json) => {
-    // const {TeacherList} = json
 
-    // refreshList(demoTeacherList.filter((teacher:Teacher)=>teacher.teacherName.indexOf(queryInfo.teacherName)>-1))
-    // return
-    // })
 
     refreshList(demoTeacherList);
   }, [refreshList]);
