@@ -17,7 +17,7 @@ export const AttendanceDetail: React.FC = () => {
   const setBack = useCallback(() => {
     dispatch(setAttendanceDetail(undefined));
   },[]);
-  const onBack = ()=>() => {
+  const onBack = () => {
     setBack()
   }
   if(state.attendance.attendanceDetail===undefined){
@@ -32,7 +32,7 @@ export const AttendanceDetail: React.FC = () => {
   }
   return (
     <IonPage className="bg-gray-100">
-      <IonCard className='h-screen  overflow-auto'>
+      <IonCard className='h-screen overflow-auto'>
         {/* 导航 */}
         <div className="flex px-2 pt-2 mx-2 my-2 text-gray-800">
           <div className="mr-2 text-gray-600">

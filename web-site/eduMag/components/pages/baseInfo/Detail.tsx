@@ -66,7 +66,7 @@ export const BaseInfoDetail: React.FC = () => {
     
     dispatch(setEduOrgDetail(undefined));
   },[]);
-  const onBack = ()=>() => {
+  const onBack = () => {
     setBack()
   }
   const onModify = async (e: React.FormEvent)=>() => {
@@ -90,8 +90,8 @@ export const BaseInfoDetail: React.FC = () => {
 
 
   return (
-    <IonPage className="bg-gray-100  ">
-      <IonCard className='h-screen  overflow-auto'>
+    <IonPage className="bg-gray-100 ">
+      <IonCard className='h-screen overflow-auto'>
         {/* 导航 */}
         <div className="flex px-2 pt-2 mx-2 my-2 text-gray-800">
           <div className="mr-2 text-gray-600">

@@ -28,7 +28,7 @@ export const TeacherDetail: React.FC = () => {
     dispatch(setTeacherDetail(undefined));
   }, []);
   `                                                       `;
-  const onBack = () => () => {
+  const onBack =  () => {
     setBack();
   };
   if (state.teacher.teacherDetail === undefined) {

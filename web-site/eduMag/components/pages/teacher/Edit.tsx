@@ -16,7 +16,7 @@ export const TeacherDetail: React.FC = () => {
   const setBack = useCallback(() => {
     dispatch(setTeacherEdit(undefined));
   },[]);
-  const onBack = ()=>() => {
+  const onBack = () => {
     setBack()
   }
   if(state.teacher.teacherEdit===undefined){
@@ -135,7 +135,7 @@ export const TeacherDetail: React.FC = () => {
               onClick={() => {
                 onBack();
               }}
-              className="flex w-20 px-6 py-2 font-bold text-white rounded-md bg-primary-600 focus:bg-primary-700"
+              className="flex w-24 px-6 py-2 font-bold text-white rounded-md bg-primary-600 focus:bg-primary-700"
             />
           </div>
         </IonCardContent>
