@@ -43,6 +43,7 @@ import Student from './pages/statistics/Student';
 import Income from './pages/statistics/income';
 import ChangePwd from './pages/ChangePwd';
 import ComplaintStatistic from './pages/statistics/complaint';
+import BaseInfoDetail from './pages/baseInfo/Detail';
 
 // 装载ionic样式，ionic6 必须执行。
 setupIonicReact();
@@ -82,6 +83,8 @@ const AppShell = () => {
               <Route path="/tabs/black/query" component={Black} exact={true} />
               {/* <Route path="/tabs" render={() => <Redirect to="/tabs/feed" />} exact={true} /> */}
               <Route path="/tabs/baseInfo/query" component={BaseInfo} exact={true} />
+              <Route path="/tabs/baseInfo/Detail" component={BaseInfoDetail} exact={true} />
+              <Route path="/tabs/complaint/query" component={Complaint} exact={true} />
               <Route path="/tabs/complaint/query" component={Complaint} exact={true} />
               <Route path="/tabs/complaint/detail" component={ComplaintDetail} exact={true} />
               <Route path="/tabs/contract/query" component={Contract} exact={true} />
