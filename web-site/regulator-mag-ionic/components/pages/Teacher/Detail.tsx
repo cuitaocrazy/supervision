@@ -131,18 +131,9 @@ export const TeacherDetail: React.FC = () => {
               />
             </div>
             <div className="flex mb-4 leading-10">
-              <div className="flex justify-end w-32 mr-2">个人介绍:</div>
-              <textarea
-                className="w-64 h-32 px-2 rounded-md bg-primary-100 focus:outline-none"
-                name="lessonStartTime"
-                value={teacherState.teacherIntroduce}
-                readOnly
-              />
-            </div>
-            <div className="flex mb-4 leading-10">
               <div className="flex justify-end w-32 mr-2">创建日期:</div>
-              <textarea
-                className="w-64 h-32 px-2 rounded-md bg-primary-100 focus:outline-none"
+              <input
+                className="w-64 h-12 px-2 rounded-md bg-primary-100 focus:outline-none"
                 name="lessonStartTime"
                 value={teacherState.teacherCreatedDate}
                 readOnly
@@ -150,8 +141,8 @@ export const TeacherDetail: React.FC = () => {
             </div>
             <div className="flex mb-4 leading-10">
               <div className="flex justify-end w-32 mr-2">创建时间:</div>
-              <textarea
-                className="w-64 h-32 px-2 rounded-md bg-primary-100 focus:outline-none"
+              <input
+                className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
                 name="lessonStartTime"
                 value={teacherState.teacherCreateTime}
                 readOnly
@@ -159,8 +150,8 @@ export const TeacherDetail: React.FC = () => {
             </div>
             <div className="flex mb-4 leading-10">
               <div className="flex justify-end w-32 mr-2">更新日期:</div>
-              <textarea
-                className="w-64 h-32 px-2 rounded-md bg-primary-100 focus:outline-none"
+              <input
+                className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
                 name="lessonStartTime"
                 value={teacherState.teacherUpdatedDate}
                 readOnly
@@ -168,10 +159,19 @@ export const TeacherDetail: React.FC = () => {
             </div>
             <div className="flex mb-4 leading-10">
               <div className="flex justify-end w-32 mr-2">更新日期:</div>
+              <input
+                className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
+                name="lessonStartTime"
+                value={teacherState.teacherUpdateTime}
+                readOnly
+              />
+            </div>
+            <div className="flex mb-4 leading-10">
+              <div className="flex justify-end w-32 mr-2">个人介绍:</div>
               <textarea
                 className="w-64 h-32 px-2 rounded-md bg-primary-100 focus:outline-none"
                 name="lessonStartTime"
-                value={teacherState.teacherUpdateTime}
+                value={teacherState.teacherIntroduce}
                 readOnly
               />
             </div>
