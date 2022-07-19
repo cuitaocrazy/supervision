@@ -132,6 +132,57 @@ app.post('/edu/login', jsonParser, async (req, res) => {
   const r = await eduLogin(req.body)
   res.send(r)
 })
+
+import eduTeacherService from './src/edu/TeacherService'
+app.get('/edu/teacher/find', async (req, res) => {
+  console.log(`教育机构: 查询教师: 条件[${JSON.stringify(req.query)}]`)
+  const r = await eduTeacherService.find(req.query)
+  res.send(r)
+})
+
+app.post('/edu/teacher/create',jsonParser, async (req, res) => {
+  console.log(`教育机构: 新增教师: 条件[${JSON.stringify(req.body)}]`)
+  console.log(req.body)
+  const teacher:EduTeacher = req.body
+  teacher.teacherId = randomUUID().replaceAll('-','')
+  teacher.teacherRating = 5
+  teacher.teacherCreateDate = moment().format('YYYYMMDD')
+  teacher.teacherCreateTime = moment().format('HHmmss')
+  teacher.teacherUpdateDate = moment().format('YYYYMMDD')
+  teacher.teacherUpdateTime = moment().format('HHmmss')
+  const r = await eduTeacherService.saveEduTeacher(teacher)
+  res.send(r)
+})
+
+app.post('/edu/teacher/modify',jsonParser,async (req, res) => {
+  console.log(`教育机构: 修改教师教师: 条件[${JSON.stringify(req.body)}]`)
+  console.log(req.body)
+  try{
+  let teacher:EduTeacher = await eduTeacherService.findOne(req.body.teacherId)
+  teacher = {...teacher,...req.body}
+  teacher.teacherUpdateDate = moment().format('YYYYMMDD')
+  teacher.teacherUpdateTime = moment().format('HHmmss')
+  const r = await eduTeacherService.saveEduTeacher(teacher)
+  res.send(r)
+  }catch(e){
+    res.send({result:false})
+  } 
+})
+
+app.post('/edu/teacher/del',jsonParser,async (req, res) => {
+  console.log(`教育机构: 删除教师: 条件[${JSON.stringify(req.body)}]`)
+  console.log(req.body)
+  try{
+  let teacher:EduTeacher = await eduTeacherService.findOne(req.body.teacherId)
+  const r = await eduTeacherService.remove(teacher)
+  res.send(r)
+  }catch(e){
+    console.log(e)
+    res.send({result:false})
+  } 
+})
+
+
 import eduLessonService from './src/edu/LessonService'
 
 app.post('/edu/lesson/off',jsonParser, async (req, res) => {
@@ -156,7 +207,7 @@ app.get('/edu/lesson/find', async (req, res) => {
 })
 app.post('/edu/lesson/create',jsonParser, async (req, res) => {
   console.log(`教育机构: 添加课程: 条件[${JSON.stringify(req.body)}]`)
-  const lesson:EduLesson = {} as EduLesson
+  const lesson:EduLesson = req.body
   lesson.lessonId = randomUUID().replaceAll('-','')
   lesson.lessonName = req.body.lessonName
   lesson.lessonTotalQuantity = req.body.lessonTotalTimes
@@ -548,6 +599,7 @@ app.get('/edb/contract/find', async (req, res) => {
 import edbAttendanceService from './src/edb/AttendanceService'
 import { Transfer } from './src/entity/Transfer';
 import { EduLesson } from './src/entity/EduLesson';
+import { EduTeacher } from './src/entity/EduTeacher';
 app.get('/edb/attendance/find', async (req, res) => {
   console.log(`教育局: 考勤查询: 条件[${JSON.stringify(req.query)}]`)
   const r = await edbAttendanceService.find({ ...new Attendance(), ...req.query })

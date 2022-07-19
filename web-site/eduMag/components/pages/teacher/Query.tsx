@@ -24,40 +24,13 @@ import {
   IonInput,
 } from "@ionic/react";
 import { Dialog, Transition } from "@headlessui/react";
+import Paging from '../../paging'
 
-const queryURL = "http://localhost:3003/teacher/query";
-const delURL = "http://localhost:3003/teacher/del";
-const modifyURL = "http://localhost:3003/teacher/modifyURL";
-const applyURL = "http://localhost:3003/teacher/apply";
+const queryURL = "http://localhost:3003/edu/teacher/find";
 
-const demoTeacherList: Teacher[] = [
-  {
-    teacherId: "1",
-    teacherName: "张三",
-    teacherIdentityNo: "123456789012345678",
-    teacherExperience: "3",
-    teacherIntroduce: "教师简介",
-    teacherRating: 5,
-    teacherCreatedDate: "2020-01-01",
-    teacherCreateTime: "00:00:00",
-    teacherUpdatedDate: "2020-01-01",
-    teacherUpdateTime: "00:00:00",
-    teacherField:"专业领域"
-  },
-  {
-    teacherId: "2",
-    teacherName: "张4",
-    teacherIdentityNo: "123456789012345678",
-    teacherExperience: "6",
-    teacherIntroduce: "教师介绍",
-    teacherRating: 5,
-    teacherCreatedDate: "2020-01-01",
-    teacherCreateTime: "00:00:00",
-    teacherUpdatedDate: "2020-01-01",
-    teacherUpdateTime: "00:00:00",
-    teacherField:"专业领域"
-  },
-];
+const createURL = "http://localhost:3003/edu/teacher/create";
+const cancelURL = "http://localhost:3003/edu/teacher/del";
+
 const TeacherQuery: React.FC = () => {
 
   let [isCreateOpen, setIsCreateOpen] = useState(false);
@@ -80,9 +53,16 @@ const TeacherQuery: React.FC = () => {
 
   const [createTeacher, setCreateTeacher] = useState({} as Teacher);
   const [cancelTeacher, setCancelTeacher] = useState({} as Teacher);
-  const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
   const { state, dispatch } = useContext(AppContext);
   const [queryInfo, setQueryInfo] = useState({ teacherName: "" });
+  const [page,setPage] = useState(0)
+  const [total,setTotal]= useState(101)
+  const onPageChange = (records:any,total:number,newPage:number)=>{
+    setPage(newPage)
+    setTotal(total)
+    refreshList(records)    
+  }
+  
   const getParamStr = (params: any, url: string) => {
     let result = "?";
     Object.keys(params).forEach(
@@ -119,8 +99,21 @@ const TeacherQuery: React.FC = () => {
     [dispatch]
   );
 
-  const onCancel = () => {
-    //todo
+  const onCancel = (e) => {
+    e.preventDefault()
+    fetch(cancelURL, {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json;charset=UTF-8',
+      },
+      body:JSON.stringify({teacherId:cancelTeacher.teacherId})
+    }).then(res => res.json())
+    .then((json) => {
+      const { result, records,total } = json;
+      closeDeleteModal();
+      onQuery()
+    }
+      );
   };
 
   const doSetDetail = useCallback(
@@ -132,36 +125,40 @@ const TeacherQuery: React.FC = () => {
     },
     [dispatch]
   );
-  useEffect(() => {
 
-
-    refreshList(demoTeacherList);
-  }, [refreshList]);
 
   const onQuery = () => {
-    // fetch(paramStr, {
-    //   method: 'GET',
-    //   headers: {
-    //     'Content-type': 'application/json;charset=UTF-8',
-    //   },
-    // }).then(res => res.json())
-    // .then((json) => {
-    // const {TeacherList} = json
+    fetch(paramStr, {
+      method: 'GET',
+      headers: {
+        'Content-type': 'application/json;charset=UTF-8',
+      },
+    }).then(res => res.json())
+    .then((json) => {
+      const { result, records,total } = json;
+      if (result) {
+        setTotal(total)
+        refreshList(records)};
+    });
 
-    // refreshList(demoTeacherList.filter((teacher:Teacher)=>teacher.teacherName.indexOf(queryInfo.teacherName)>-1))
-    // return
-    // })
-    refreshList(
-      demoTeacherList.filter(
-        (teacher: Teacher) =>
-          teacher.teacherName.indexOf(queryInfo.teacherName) > -1
-      )
-    );
-    return;
   };
 
-  const onCreate = () => {
+  useEffect(onQuery, []);
+
+  const onCreate = (e:any) => {
+    e.preventDefault()
     console.log(createTeacher);
+    fetch(createURL, {
+      method: 'POST',
+      body:JSON.stringify(createTeacher),
+      headers: {
+        'Content-type': 'application/json;charset=UTF-8',
+      },
+    }).then(res => res.json())
+    .then((json) => {
+      closeCreateModal()
+      onQuery()
+    })
     // setCreateModalOpen(false)
   };
 
@@ -212,7 +209,7 @@ const TeacherQuery: React.FC = () => {
             //              setCancelTeacher(teacher);
             //              openDelateModal;
             //           }}
-            onClick={openDelateModal}
+            onClick={()=>{setCancelTeacher(teacher);openDelateModal()}}
           >
             删除
           </button>
@@ -270,7 +267,7 @@ const TeacherQuery: React.FC = () => {
                     onChange={(e) =>
                       setQueryInfo({
                         ...queryInfo,
-                        ...{ lessonName: e.target.value },
+                        ...{ teacherName: e.target.value },
                       })
                     }
                   />
@@ -369,9 +366,9 @@ const TeacherQuery: React.FC = () => {
                           </span>
                           <textarea
                             className="w-64 h-32 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
-                            name="teacherIntroduce"
+                            name="teacherField"
                             spellCheck={false}
-                            onChange={e => setCreateTeacher({...createTeacher,...{teacherIntroduce:e.nativeEvent.target?.value}})}
+                            onChange={e => setCreateTeacher({...createTeacher,...{teacherField:e.nativeEvent.target?.value}})}
                             required
                           ></textarea>
                         </div>
@@ -379,15 +376,16 @@ const TeacherQuery: React.FC = () => {
                       <div className="flex items-center mb-4 justify-items-center">
                         <div className="flex justify-items-center">
                           <span className="flex justify-end p-1 mr-1 w-36">
-                            从业经验:
+                            从业经验(年):
                           </span>
-                          <textarea
-                            className="w-64 h-32 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
+                          <input
+                            type='number'
+                            className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
                             name="teacherExperience"
                             spellCheck={false}
                             onChange={e => setCreateTeacher({...createTeacher,...{teacherExperience:e.nativeEvent.target?.value}})}
                             required
-                          ></textarea>
+                          ></input>
                         </div>
                       </div>
                       <div className="flex items-center mb-4 justify-items-center">
@@ -421,9 +419,8 @@ const TeacherQuery: React.FC = () => {
                         />
                         <input
                           value="确定"
-                          type="button"
+                          type="submit"
                           className="px-6 py-2 text-white border rounded-md bg-primary-600"
-                          onClick={closeCreateModal}
                         />
                       </div>
                     </form>
@@ -469,7 +466,7 @@ const TeacherQuery: React.FC = () => {
                       <hr className="mt-2 mb-4" />
                     </Dialog.Title>
                     <form
-                      onSubmit={onCreate}
+                      onSubmit={onCancel}
                       className="flex flex-col items-center rounded-lg justify-items-center"
                     >
                       <div className="flex items-center mb-4 justify-items-center">
@@ -512,7 +509,7 @@ const TeacherQuery: React.FC = () => {
                             className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none"
                             name="lessonTotalTimes"
                             spellCheck={false}
-                            value={cancelTeacher}
+                            value={cancelTeacher.teacherField}
                             readOnly
                           ></textarea>
                         </div>
@@ -555,9 +552,8 @@ const TeacherQuery: React.FC = () => {
                         />
                         <input
                           value="确定"
-                          type="button"
+                          type="submit"
                           className="px-6 py-2 text-white border rounded-md bg-primary-600"
-                          onClick={closeDeleteModal}
                         />
                       </div>
                     </form>
@@ -585,6 +581,9 @@ const TeacherQuery: React.FC = () => {
               {state.teacher.teacherList.map((list: Teacher, i: any) => (
                 <ListEntry teacher={list} key={i} />
               ))}
+              <tr>
+                <td colSpan={6}> <Paging url={paramStr} page={page} pagesize={20} total={total} onPageChange={onPageChange}/></td>
+              </tr>
             </tbody>
           </table>
         </div>

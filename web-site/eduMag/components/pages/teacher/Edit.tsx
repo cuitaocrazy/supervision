@@ -8,7 +8,7 @@ import {Teacher} from '../../../types/types'
 import { PickerColumn } from "@ionic/core";
 
 export const TeacherDetail: React.FC = () => {
-  const modifyURL = 'http://localhost:3003/teacher/modifyURL'
+  const modifyURL = 'http://localhost:3003/edu/teacher/modify'
   const { state, dispatch } = useContext(AppContext);
 
   const [teacherState, setTeacherState] = useState(state.teacher.teacherEdit);
@@ -22,18 +22,18 @@ export const TeacherDetail: React.FC = () => {
   if(state.teacher.teacherEdit===undefined){
     return <Redirect to={state.backPage} />
   }
-
-  const onModify = async (e: React.FormEvent)=>() => {
+  const onModify = (e: React.FormEvent)=> {
     e.preventDefault();
+    console.log(teacherState)
     fetch(modifyURL, {
-      method: 'PUT',
+      method: 'POST',
       body: JSON.stringify(teacherState),
       headers: {
         'Content-type': 'application/json;charset=UTF-8',
       },
     }).then(res => res.json())
     .then((json) => {
-      alert(json.result)
+      setBack()
     })
   }
   
@@ -76,7 +76,7 @@ export const TeacherDetail: React.FC = () => {
                   type="text"
                   name="teacherName" 
                   value={teacherState.teacherName} 
-                  onChange={e => setTeacherEdit({...teacherState,...{teacherName:e.nativeEvent.target?.value}})} 
+                  onChange={e => setTeacherState({...teacherState,...{teacherName:e.nativeEvent.target?.value}})} 
                   required
                 />
               </div>
@@ -87,7 +87,7 @@ export const TeacherDetail: React.FC = () => {
                   type="text"
                   name="teacherIdentityNo" 
                   value={teacherState.teacherIdentityNo} 
-                  onChange={e => setTeacherEdit({...teacherState,...{teacherIdentityNo:e.nativeEvent.target?.value}})}
+                  onChange={e => setTeacherState({...teacherState,...{teacherIdentityNo:e.nativeEvent.target?.value}})}
                   required
                 />
               </div>
@@ -98,7 +98,7 @@ export const TeacherDetail: React.FC = () => {
                   type="text"
                   name="teacherField" 
                   value={teacherState.teacherField} 
-                  onChange={e => setTeacherEdit({...teacherState,...{teacherField:e.nativeEvent.target?.value}})}
+                  onChange={e => setTeacherState({...teacherState,...{teacherField:e.nativeEvent.target?.value}})}
                   required
                 />
               </div>
@@ -111,7 +111,7 @@ export const TeacherDetail: React.FC = () => {
                   type="text"
                   name="teacherExperience" 
                   value={teacherState.teacherExperience} 
-                  onChange={e => setTeacherEdit({...teacherState,...{teacherExperience:e.nativeEvent.target?.value}})}
+                  onChange={e => setTeacherState({...teacherState,...{teacherExperience:e.nativeEvent.target?.value}})}
                   required
                 />
               </div>
@@ -121,23 +121,27 @@ export const TeacherDetail: React.FC = () => {
                   className="w-64 px-2 border rounded-md focus:outline-none focus:glow-primary-600"
                   name="teacherIntroduce" 
                   value={teacherState.teacherIntroduce} 
-                  onChange={e => setTeacherEdit({...teacherState,...{teacherIntroduce:e.nativeEvent.target?.value}})}
+                  onChange={e => setTeacherState({...teacherState,...{teacherIntroduce:e.nativeEvent.target?.value}})}
                   required
                 />
               </div>
              
             </div>
-          </form>
-          <div className="flex justify-center">
+            <div className="flex justify-center">
             <input
               value="确定修改"
+              type="submit"
+              className="flex w-24 px-6 py-2 font-bold text-white rounded-md bg-primary-600 focus:bg-primary-700"
+            />
+           <input
+              value="返回"
               type="button"
-              onClick={() => {
-                onBack();
-              }}
+              onClick={setBack}
               className="flex w-24 px-6 py-2 font-bold text-white rounded-md bg-primary-600 focus:bg-primary-700"
             />
           </div>
+          </form>
+
         </IonCardContent>
       </IonCard>
     </IonPage>
