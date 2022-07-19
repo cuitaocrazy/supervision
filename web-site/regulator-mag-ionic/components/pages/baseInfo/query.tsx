@@ -1,8 +1,7 @@
-
-import { useEffect,useCallback,useContext,useState,useRef } from 'react'
+import { useEffect, useCallback, useContext, useState, useRef, Fragment } from 'react';
 import { Redirect } from 'react-router-dom';
-import {AppContext,setUserInfoList,setUserInfoDetail} from '../../../appState';
-import {SupervisorUser} from '../../../types/types'
+import { AppContext, setUserInfoList, setUserInfoDetail } from '../../../appState';
+import { SupervisorUser } from '../../../types/types';
 import {
   IonPage,
   IonList,
@@ -13,76 +12,100 @@ import {
   IonModal,
   IonCard,
   IonCardContent,
-  IonCardHeader
+  IonCardHeader,
 } from '@ionic/react';
+import { Dialog, Transition } from '@headlessui/react';
+import { UserInfo } from 'os';
 
-const queryURL = 'http://localhost:3003/lesson/query'
-const delURL = 'http://localhost:3003/lesson/del'
-const modifyURL = 'http://localhost:3003/lesson/modifyURL'
-const attendURL = 'http://localhost:3003/lesson/attend'
-const demoLessonList:SupervisorUser[] = [
-    { 
-      supervisorLoginName: '监管机构登录名',
-      supervisorUsername: '监管机构用户名',
-      supervisorPhone: '监管机构电话',
-      supervisorOrgId: '监管机构id'
-    },
-    {  
-      supervisorLoginName: '监管机构登录名1',
-      supervisorUsername: '监管机构用户名1',
-      supervisorPhone: '监管机构电话',
-      supervisorOrgId: '监管机构id'
-    }
-    ]
-
-      
-
-
-
+const queryURL = 'http://localhost:3003/lesson/query';
+const delURL = 'http://localhost:3003/lesson/del';
+const modifyURL = 'http://localhost:3003/lesson/modifyURL';
+const attendURL = 'http://localhost:3003/lesson/attend';
+const createUrl = 'http://localhost:3003/baseInfo/create';
+const demoLessonList: SupervisorUser[] = [
+  {
+    supervisorLoginName: '监管机构登录名',
+    supervisorUsername: '监管机构用户名',
+    supervisorPhone: '10090090990',
+    supervisorOrgId: '监管机构id',
+  },
+  {
+    supervisorLoginName: '监管机构登录名1',
+    supervisorUsername: '监管机构用户名1',
+    supervisorPhone: '198099090989',
+    supervisorOrgId: '监管机构id',
+  },
+];
 
 // 课程查询页面
-const BaseInfoQuery:React.FC =()=>{
-
-  const onCancel = (item:SupervisorUser)=>() => {
+const BaseInfoQuery: React.FC = () => {
+  // 新增模态框的状态
+  let [isCreateOpen, setIsCreateOpen] = useState(false);
+  function closeCreateModal() {
+    setIsCreateOpen(false);
+  }
+  function openCreateModal() {
+    setIsCreateOpen(true);
+  }
+  // 删除模态框的状态
+  let [isDeleteOpen, setIsDeleteOpen] = useState(false);
+  function closeDeleteModal() {
+    setIsDeleteOpen(false);
+  }
+  function openDeleteModal() {
+    setIsDeleteOpen(true);
+  }
+  const onCancel = (item: SupervisorUser) => () => {
     fetch(delURL, {
       method: 'PUT',
       body: JSON.stringify({
-        "supervisorLoginName":item.supervisorLoginName,
+        supervisorLoginName: item.supervisorLoginName,
       }),
       headers: {
         'Content-type': 'application/json;charset=UTF-8',
       },
-    }).then(res => res.json())
-    .then((json) => {
-      alert(json.result)
     })
-  }
+      .then(res => res.json())
+      .then(json => {
+        alert(json.result);
+      });
+  };
   const createModal = useRef<HTMLIonModalElement>(null);
-  const [isCreateModalOpen,setIsCreateModalOpen] = useState(false)
-  const [createState,setCreateState] = useState({} as SupervisorUser )
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const [createUserInfo, setCreateUserInfo] = useState({} as SupervisorUser);
+  const [createState, setCreateState] = useState({} as SupervisorUser);
   const { state, dispatch } = useContext(AppContext);
-  const [queryInfo, setQueryInfo] = useState({supervisorLoginName:'',supervisorUsername:''})
-  const getParamStr = (params:any,url:string) =>{
-    let result = '?'
-    Object.keys(params).forEach(key => result = result+key+'='+params[key]+'&')
-    return url+result
-  }
-  const paramStr = getParamStr({
-    supervisorLoginName: queryInfo.supervisorLoginName
-  },queryURL)
+  const [queryInfo, setQueryInfo] = useState({ supervisorLoginName: '', supervisorUsername: '' });
+  const getParamStr = (params: any, url: string) => {
+    let result = '?';
+    Object.keys(params).forEach(key => (result = result + key + '=' + params[key] + '&'));
+    return url + result;
+  };
+  const paramStr = getParamStr(
+    {
+      supervisorLoginName: queryInfo.supervisorLoginName,
+    },
+    queryURL
+  );
 
-  const refreshLessonList = useCallback((loginUser:SupervisorUser[]) => {
-    dispatch(setUserInfoList(loginUser));
-  },[dispatch]);
+  const refreshLessonList = useCallback(
+    (loginUser: SupervisorUser[]) => {
+      dispatch(setUserInfoList(loginUser));
+    },
+    [dispatch]
+  );
 
-  const onDetail = (item:SupervisorUser)=>() => {
-    doSetDetail(item)
-  }
+  const onDetail = (item: SupervisorUser) => () => {
+    doSetDetail(item);
+  };
 
-  const doSetDetail = useCallback(userInfo => {
-    dispatch({...setUserInfoDetail(userInfo),...{backPage:'/tabs/baseInfo/query'}});
-  },[dispatch]);
-  useEffect(() => { 
+  const doSetDetail = useCallback(
+    (userInfo:SupervisorUser | undefined) => {
+      dispatch({ ...setUserInfoDetail(userInfo), ...{ backPage: '/tabs/baseInfo/query' } });
+    },
+    [dispatch]
+  );
+  useEffect(() => {
     // fetch(paramStr, {
     //   method: 'GET',
     //   headers: {
@@ -92,115 +115,342 @@ const BaseInfoQuery:React.FC =()=>{
     // .then((json) => {
     // const {userInfoList} = json //todo
     // refreshLessonList(demoLessonList.filter((userInfo:SupervisorUser)=>userInfo.supervisorUsername&&userInfo.supervisorUsername.indexOf(queryInfo.supervisorUsername)>-1).filter((userInfo:SupervisorUser)=>userInfo.supervisorLoginName.indexOf(queryInfo.supervisorLoginName)>-1))
-    refreshLessonList(demoLessonList)},[]);
+    refreshLessonList(demoLessonList);
+  }, []);
 
-    const onQuery = ()=>{
-       refreshLessonList(demoLessonList.filter((userInfo:SupervisorUser)=>userInfo.supervisorLoginName.indexOf(queryInfo.supervisorLoginName)>-1))
-    
-    }
-
-  const ListEntry = ({ userInfo,key, ...props } : {userInfo:SupervisorUser,key:any}) => (
-    <IonItem key={key} >
-      <IonLabel>
-        <p className='text-center'>{userInfo.supervisorLoginName}</p>
-      </IonLabel>
-      <IonLabel>
-        <p  className='text-center'>{userInfo.supervisorOrgName}</p>
-      </IonLabel>
-      <IonLabel>
-        <p  className='text-center'>{userInfo.supervisorUsername}</p>
-      </IonLabel>
-      <IonLabel>
-        <p  className='text-center'>{userInfo.supervisorPhone}</p>
-      </IonLabel>
-      <IonLabel>
-         <div className='flex gap-2'>
-            <button className='p-1 text-white bg-blue-500 rounded-md' onClick={onCancel(userInfo)}>删除</button> 
-            <button className='p-1 text-white bg-blue-500 rounded-md'  onClick={onDetail(userInfo)}>详情</button>
-         </div>
-      </IonLabel>
-    </IonItem>
+  const onQuery = () => {
+    refreshLessonList(
+      demoLessonList.filter(
+        (userInfo: SupervisorUser) =>
+          userInfo.supervisorLoginName.indexOf(queryInfo.supervisorLoginName) > -1
+      )
     );
-    if(state.userInfo.baseInfoDetail){
-      return <Redirect to="/tabs/baseInfo/detail" />
-    }
+  };
+  const onCreate = (e: any) => {
+    e.preventDefault();
+    fetch(createUrl, {
+      method: 'POST',
+      body: JSON.stringify(createUserInfo),
+      headers: {
+        'Content-type': 'application/json;charset=UTF-8',
+      },
+    })
+      .then(res => res.json())
+      .then(json => {
+        alert(json.result);
+      });
+  };
 
-        return   <IonPage >
-                  <div className='relative'>
-                  <div className='flex'>
-                  <IonRow className='flex justify-between '>
-                        <IonCol className='flex ml-8'>
-                          <IonLabel className='flex h-12 p-2 font-bold text-center text-primary-600 w-28'>登录名查询：</IonLabel>
-                          <input type='text' className="flex w-56 h-12 pt-2.5 font-bold text-center text-primary-600 bg-white rounded-md focus:outline-none focus:glow-secondary-500" onChange={e=>setQueryInfo({...queryInfo,...{PayerStub:e.target.value}})} />
-                        </IonCol> 
-                      </IonRow>
-                    <IonRow className='flex justify-between '>
-                        <IonCol className='flex ml-8' > 
-                            <button onClick={()=>onQuery()} >查询</button>
-                            <button onClick={()=>setIsCreateModalOpen(true)} >新增</button>
-                        </IonCol>
-                  </IonRow> 
-                  </div>
-                  <IonModal isOpen={isCreateModalOpen}  onDidDismiss={async ()=>{setIsCreateModalOpen(false)}}> 
-                  <IonCard>
-                    <IonCardHeader>
-                        新增用户
-                    </IonCardHeader>
-                    <IonCardContent>
-                      <form  onSubmit={()=>{}}>
-                      <IonItem>
-                        <IonLabel >登录名称：{createState.supervisorLoginName}</IonLabel>
-                      </IonItem>
-                      <IonItem>
-                        <IonLabel >用户名：{createState.supervisorUsername}</IonLabel>
-                      </IonItem>
-                      <IonItem>
-                        <IonLabel >联系方式：{createState.supervisorPhone}</IonLabel>
-                      </IonItem>
-                      <IonItem>
-                        <IonLabel >用户密码：{createState.supervisorPassword}</IonLabel>
-                      </IonItem>
-                      <div className='flex mt-2 mb-2 space-x-2 '>
-                        <span  className="flex-1 ">
-                                  <button className='flex items-center justify-center flex-none submutButton focus:outline-none hover:bg-primary-700 ' type='submit' >确认</button>
+  const ListEntry = ({ userInfo, ...props }: { userInfo: SupervisorUser }) => (
+    <tr className="grid items-center grid-cols-5 gap-2 text-gray-600 border justify-items-center even:bg-white odd:bg-primary-100 ">
+      <td className="flex items-center justify-center leading-10">
+        {userInfo.supervisorLoginName}
+      </td>
+      <td className="flex items-center justify-center leading-10">{userInfo.supervisorUsername}</td>
+      <td className="flex items-center justify-center leading-10">{userInfo.supervisorPhone}</td>
+      <td className="flex items-center justify-center leading-10">{userInfo.supervisorOrgName}</td>
+      <td className="flex items-center justify-center leading-10">
+        <div className="flex gap-2 ">
+          <button
+            className="p-1 text-red-600"
+            // onClick={onCancel(userInfo)}
+            onClick={openDeleteModal}
+          >
+            删除
+          </button>
+          <button className="p-1 text-primary-600" onClick={onDetail(userInfo)}>
+            详情
+          </button>
+        </div>
+      </td>
+    </tr>
+  );
 
-                        </span >
-                        <span className="flex-1 ">
-                          <button  className='cancelButton' onClick={ ()=>setIsCreateModalOpen(false)}>取消</button>
-                        </span>
+  console.log(state)
+
+  if (state.userInfo.userInfoDetail) {
+    return <Redirect to="/tabs/baseInfo/detail" />;
+  }
+
+  return (
+    <IonPage className="bg-gray-100">
+      <div className="relative w-full h-screen mx-6 overflow-auto">
+        <div className="flex pt-2 my-2 text-gray-800">
+          <div className="mr-2 text-gray-600">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="w-6 h-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
+              />
+            </svg>
+          </div>
+          <div>
+            <span className="pr-1 text-gray-600">基础信息维护</span>/
+            <span className="pl-1 text-primary-500">用户管理</span>
+          </div>
+        </div>
+        <div className="w-11/12 px-4 py-2 mt-4 bg-white rounded-lg ">
+          <div className="text-base font-bold">快速查询</div>
+          <hr className="mt-2 mb-4" />
+          <div className="flex">
+            <IonRow className="flex items-center w-full mx-4 text-center bg-white rounded-md justify-items-center">
+              <IonCol className="flex ml-8 text-gray-800">
+                <div className="flex items-center justify-center font-bold text-center text-gray-600 w-28">
+                  用户姓名:
+                </div>
+                <input
+                  type="text"
+                  className="flex w-56 h-12 font-bold text-center text-gray-600 bg-white border rounded-md focus:outline-none focus:glow-primary-600"
+                  placeholder="请输入用户姓名"
+                  onChange={e => setQueryInfo({ ...queryInfo, ...{ teacherName: e.target.value } })}
+                />
+              </IonCol>
+              <IonCol className="flex ml-8">
+                <button
+                  className="w-24 h-12 mr-6 text-white border-2 rounded-md shadow-md bg-primary-600 focus:bg-primary-700"
+                  onClick={() => onQuery()}
+                >
+                  查询
+                </button>
+                <button
+                  className="w-24 h-12 bg-gray-100 rounded-md shadow-md text-primary-600 focus:bg-gray-200"
+                  onClick={openCreateModal}
+                >
+                  新增
+                </button>
+              </IonCol>
+            </IonRow>
+          </div>
+        </div>
+        {/* 新增用户模态框 */}
+        <Transition appear show={isCreateOpen} as={Fragment}>
+          <Dialog as="div" className="relative z-10" onClose={closeCreateModal}>
+            <Transition.Child
+              as={Fragment}
+              enter="ease-out duration-300"
+              enterFrom="opacity-0"
+              enterTo="opacity-100"
+              leave="ease-in duration-200"
+              leaveFrom="opacity-100"
+              leaveTo="opacity-0"
+            >
+              <div className="fixed inset-0 bg-black bg-opacity-25" />
+            </Transition.Child>
+
+            <div className="fixed inset-0 overflow-y-auto">
+              <div className="flex items-center justify-center min-h-full p-4 text-center">
+                <Transition.Child
+                  as={Fragment}
+                  enter="ease-out duration-300"
+                  enterFrom="opacity-0 scale-95"
+                  enterTo="opacity-100 scale-100"
+                  leave="ease-in duration-200"
+                  leaveFrom="opacity-100 scale-100"
+                  leaveTo="opacity-0 scale-95"
+                >
+                  <Dialog.Panel className="w-full max-w-md p-4 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
+                    <Dialog.Title
+                      as="h3"
+                      className="text-lg font-medium leading-6 text-center text-gray-900"
+                    >
+                      用户新增
+                      <hr className="mt-2 mb-4" />
+                    </Dialog.Title>
+                    <form
+                      onSubmit={onCreate}
+                      className="flex flex-col items-center rounded-lg justify-items-center"
+                    >
+                      <div className="flex items-center mb-4 justify-items-center">
+                        <div className="flex leading-7 justify-items-center">
+                          <div className="flex justify-end p-1 w-36">登录名:</div>
+                          <input
+                            className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
+                            name="supervisorLoginName"
+                            type="text"
+                            value={createUserInfo.supervisorLoginName}
+                            spellCheck={false}
+                            onChange={e =>
+                              setCreateUserInfo({
+                                ...createUserInfo,
+                                ...{ supervisorUsername: e.nativeEvent.target?.value },
+                              })
+                            }
+                          ></input>
+                        </div>
                       </div>
-                      </form>
-                    </IonCardContent>
-                  </IonCard>
-                </IonModal>
-                  
-                <div className='absolute w-full mt-10'>
-                  <IonList>
-                    <IonItem key='title'>
-                      <IonLabel> 
-                        <div className='font-black text-center'>登录名称</div>
-                      </IonLabel>
-                      <IonLabel>
-                        <div className='font-black text-center'>机构名称</div>
-                      </IonLabel>
-                      <IonLabel>
-                        <div className='font-black text-center'>用户名</div>
-                      </IonLabel>
-                      <IonLabel>
-                        <div className='font-black text-center'>用户电话</div>
-                      </IonLabel>
-                      <IonLabel>
-                        <div className='font-black text-center'>操作</div>
-                      </IonLabel>
-                  </IonItem>
-                      <div className=''>
-                      {state.userInfo.userInfoList.map((list:SupervisorUser, i: any) => (
-                      <ListEntry userInfo={list} key={i} />
-                    ))}
+
+                      <div className="flex items-center mb-4 justify-items-center">
+                        <div className="flex justify-items-center">
+                          <span className="flex justify-end p-1 mr-1 w-36">用户姓名:</span>
+                          <input
+                            className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
+                            name="supervisorUsername"
+                            type="text"
+                            value={createUserInfo.supervisorUsername}
+                            spellCheck={false}
+                            onChange={e =>
+                              setCreateUserInfo({
+                                ...createUserInfo,
+                                ...{ supervisorUsername: e.nativeEvent.target?.value },
+                              })
+                            }
+                            required
+                          ></input>
+                        </div>
                       </div>
-                  </IonList>
-              </div> 
-              </div>            
-        </IonPage>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
-}
-export default BaseInfoQuery
+                      <div className="flex items-center mb-4 justify-items-center">
+                        <div className="flex justify-items-center">
+                          <span className="flex justify-end p-1 mr-1 w-36">联系方式:</span>
+                          <input
+                            className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
+                            name="supervisorPhone"
+                            type="text"
+                            value={createUserInfo.supervisorPhone}
+                            spellCheck={false}
+                            onChange={e =>
+                              setCreateUserInfo({
+                                ...createUserInfo,
+                                ...{ supervisorPhone: e.nativeEvent.target?.value },
+                              })
+                            }
+                          ></input>
+                        </div>
+                      </div>
+                      <div className="flex items-center mb-4 justify-items-center">
+                        <div className="flex justify-items-center">
+                          <span className="flex justify-end p-1 mr-1 w-36">所属机构:</span>
+                          <input
+                            className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
+                            name="supervisorLoginName"
+                            type="text"
+                            value={createUserInfo.supervisorOrgName}
+                            spellCheck={false}
+                            onChange={e =>
+                              setCreateUserInfo({
+                                ...createUserInfo,
+                                ...{ supervisorOrgName: e.nativeEvent.target?.value },
+                              })
+                            }
+                          ></input>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-4 mt-2 justify-items-center">
+                        <input
+                          value="取消"
+                          type="button"
+                          className="px-6 py-2 border rounded-md "
+                          onClick={closeCreateModal}
+                        />
+                        <input
+                          value="确定"
+                          type="submit"
+                          className="px-6 py-2 text-white border rounded-md bg-primary-600"
+                        />
+                      </div>
+                    </form>
+                  </Dialog.Panel>
+                </Transition.Child>
+              </div>
+            </div>
+          </Dialog>
+        </Transition>
+
+        {/* 下架课程模态框 */}
+        <Transition appear show={isDeleteOpen} as={Fragment}>
+          <Dialog as="div" className="relative z-10" onClose={closeDeleteModal}>
+            <Transition.Child
+              as={Fragment}
+              enter="ease-out duration-300"
+              enterFrom="opacity-0"
+              enterTo="opacity-100"
+              leave="ease-in duration-200"
+              leaveFrom="opacity-100"
+              leaveTo="opacity-0"
+            >
+              <div className="fixed inset-0 bg-black bg-opacity-25" />
+            </Transition.Child>
+
+            <div className="fixed inset-0 overflow-y-auto">
+              <div className="flex items-center justify-center min-h-full p-4 text-center">
+                <Transition.Child
+                  as={Fragment}
+                  enter="ease-out duration-300"
+                  enterFrom="opacity-0 scale-95"
+                  enterTo="opacity-100 scale-100"
+                  leave="ease-in duration-200"
+                  leaveFrom="opacity-100 scale-100"
+                  leaveTo="opacity-0 scale-95"
+                >
+                  <Dialog.Panel className="w-full max-w-md p-4 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
+                    <Dialog.Title
+                      as="h3"
+                      className="text-lg font-medium leading-6 text-center text-gray-900"
+                    >
+                      用户删除
+                      <hr className="mt-2 mb-4" />
+                    </Dialog.Title>
+                    <form
+                      // onSubmit={onCreate}
+                      className="flex flex-col items-center rounded-lg justify-items-center"
+                    >
+                      <div className="flex items-center mb-4 justify-items-center">
+                        <div className="flex leading-7 justify-items-center">
+                          <div className="flex justify-end p-1 ">确定要删除该用户？</div>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-4 mt-2 justify-items-center">
+                        <input
+                          value="取消"
+                          type="button"
+                          className="px-6 py-2 border rounded-md "
+                          onClick={closeDeleteModal}
+                        />
+                        <input
+                          value="确定"
+                          type="button"
+                          className="px-6 py-2 text-white border rounded-md bg-primary-600"
+                        />
+                      </div>
+                    </form>
+                  </Dialog.Panel>
+                </Transition.Child>
+              </div>
+            </div>
+          </Dialog>
+        </Transition>
+
+        {/* 列表 */}
+        <div className="absolute w-full mt-10">
+          <table className="w-11/12">
+            <thead>
+              <tr className="grid items-center h-10 grid-cols-5 gap-2 font-bold text-gray-700 bg-white rounded-lg justify-items-center">
+                <th className="flex items-center justify-center">登录名</th>
+                <th className="flex items-center justify-center">用户姓名</th>
+                <th className="flex items-center justify-center">联系方式</th>
+                <th className="flex items-center justify-center">所属机构</th>
+                <th className="flex items-center justify-center">操作</th>
+              </tr>
+            </thead>
+            <tbody>
+              {state.userInfo.userInfoList.map((list: SupervisorUser, i: any) => (
+                <ListEntry userInfo={list} key={i} />
+              ))}
+              <tr>
+                {/* <td colSpan={5}> <Paging url={paramStr} page={page} pagesize={20} total={total} onPageChange={onPageChange}/></td> */}
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </IonPage>
+  );
+};
+export default BaseInfoQuery;
