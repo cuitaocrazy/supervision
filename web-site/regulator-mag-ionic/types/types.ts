@@ -79,7 +79,9 @@ export interface Teacher {
   teacherUpdatedDate?: string,
   teacherCreateTime?: string,
   teacherUpdateTime?: string,
-  eduName: string
+  eduName: string,
+  orgName:string
+
 }
 
 

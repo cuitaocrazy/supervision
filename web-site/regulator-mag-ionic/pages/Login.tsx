@@ -9,19 +9,16 @@ type FormData = {
   password: string;
   role: string;
 };
-const loginStr = "http://localhost:3003/sup/login";
+const loginStr = "http://localhost:3003/edb/login";
 
 const Login = () => {
-  const router = useRouter();
+    console.log('login')
+  const router = useRouter()
   const { state, dispatch } = useContext(AppContext);
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FormData>();
-  const refreshUserInfo = useCallback((userInfo: any) => {
+  const { register, handleSubmit, formState: { errors } } = useForm<FormData>()
+  const refreshUserInfo = useCallback((userInfo:any) => {
     dispatch(setloginUser(userInfo));
-  }, []);
+  },[]);
 
   const onSubmit: SubmitHandler<FormData> = (data: FormData) => {
     fetch(loginStr, {
@@ -45,7 +42,7 @@ const Login = () => {
   };
 
   if (state.loginUser.role && state.loginUser.role !== "") {
-    return <Redirect to="/tabs" />;
+    return <Redirect to="/tabs/home" />;
   }
 
   return (
