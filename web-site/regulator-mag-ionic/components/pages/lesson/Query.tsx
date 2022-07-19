@@ -401,42 +401,6 @@ const LessonQuery: React.FC = () => {
           </table>
           {/* <Paging url={paramStr} page={page} pagesize={20} total={total} onPageChange={onPageChange}/> */}
         </div>
-
-        {/* <div className='absolute w-full mt-10'>
-        <IonList>
-          <IonItem key='title'>
-            <IonLabel>
-              <div className='font-black text-center'>教育机构名称</div>
-            </IonLabel>
-            <IonLabel>
-              <div className='font-black text-center'>课程名称</div>
-            </IonLabel>
-            <IonLabel>
-              <div className='font-black text-center'>总课时</div>
-            </IonLabel>
-            <IonLabel>
-              <div className='font-black text-center'>总价格</div>
-            </IonLabel>
-            <IonLabel>
-              <div className='font-black text-center'>开课日期</div>
-            </IonLabel>
-            <IonLabel>
-              <div className='font-black text-center'>结束日期</div>
-            </IonLabel>
-            <IonLabel>
-              <div className='font-black text-center'>课程状态</div>
-            </IonLabel>
-            <IonLabel>
-              <div className='font-black text-center'>操作</div>
-            </IonLabel>
-          </IonItem>
-          <div className=''>
-            {state.lesson.lessonList.map((list: Lesson, i: any) => (
-              <ListEntry lesson={list} key={i} />
-            ))}
-          </div>
-        </IonList>
-      </div> */}
       </div>
     </IonPage>
   );

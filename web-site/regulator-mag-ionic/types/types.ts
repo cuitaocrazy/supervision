@@ -80,7 +80,8 @@ export interface Teacher {
   teacherCreateTime?: string,
   teacherUpdateTime?: string,
   eduName: string,
-  orgName:string
+  orgName:string,
+  teacherField?:string
 
 }
 
