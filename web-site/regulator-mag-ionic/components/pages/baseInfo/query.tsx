@@ -118,6 +118,17 @@ const BaseInfoQuery: React.FC = () => {
     refreshLessonList(demoLessonList);
   }, []);
 
+  const onEdit = (item: SupervisorUser) => () => {
+    doSetEdit(item);
+  };
+
+  const doSetEdit = useCallback(
+    (userInfo: SupervisorUser) => {
+      dispatch({ ...setUserInfoDetail(userInfo), ...{ backPage: '/tabs/baseInfo/query'} });
+    },
+    [dispatch]
+  );
+
   const onQuery = () => {
     refreshLessonList(
       demoLessonList.filter(
@@ -157,6 +168,9 @@ const BaseInfoQuery: React.FC = () => {
             onClick={openDeleteModal}
           >
             删除
+          </button> 
+          <button className="p-1 text-cyan-600" onClick={onEdit(userInfo)}>
+           编辑 
           </button>
           <button className="p-1 text-primary-600" onClick={onDetail(userInfo)}>
             详情
