@@ -4,30 +4,25 @@ import {
   IonPage,
   IonRow,
   IonCol,
-  IonCard,
-  IonRadioGroup,
-  IonRadio,
-  IonCardHeader,
-  IonCardSubtitle,
-  IonLabel,
-  IonInput,
-  IonCardContent,
-  IonItem,
-  IonButton,
-  IonList,
-  IonDatetime,
-  IonPicker,
 } from '@ionic/react';
 import { Redirect } from 'react-router-dom';
 import { AppContext, setContractList, setContractDetail } from '../../../appState';
 import { Contract } from '../../../types/types';
-import { PickerColumn } from '@ionic/core';
+import Paging from '../../paging';
 
 const findURL = 'http://localhost:3003/edb/contract/find';
 
 const ContractQuery: React.FC = () => {
   const { state, dispatch } = useContext(AppContext);
   const [queryInfo, setQueryInfo] = useState({ eduName: '', lessonName: '', consumerName: '' });
+  const [page,setPage] = useState(0)
+  const [total,setTotal]= useState(0)
+
+  const onPageChange = (records:any,total:number,newPage:number)=>{
+    setPage(newPage)
+    setTotal(total)
+    refreshList(records)
+  }
   const getParamStr = (params: any, url: string) => {
     let result = '?';
     Object.keys(params).forEach(key => {
@@ -61,9 +56,12 @@ const ContractQuery: React.FC = () => {
     })
       .then(res => res.json())
       .then(json => {
-        const { result, records } = json;
-
-        if (result) refreshList(records);
+        const { result, records,total } = json;
+        if (result) {
+          setTotal(total)
+          refreshList(records)
+        };
+        return;
       });
   };
 
@@ -192,6 +190,9 @@ const ContractQuery: React.FC = () => {
                 {state.contract.contractList.map((list: Contract, i: any) => (
                   <ListEntry contract={list} key={i} myKey={i} />
                 ))}
+              <tr>
+                <td colSpan={6}> <Paging url={paramStr} page={page} pagesize={20} total={total} onPageChange={onPageChange}/></td>
+              </tr>
               </tbody>
             </table>
           </div>

@@ -60,12 +60,8 @@ const LessonQuery: React.FC = () => {
   let [isOpen, setIsOpen] = useState(false);
   const [page,setPage] = useState(0)
   const [total,setTotal]= useState(101)//todo
-  const [isCreateModalOpen, setCreateModalOpen] = useState(false);
   const [createLesson, setCreateLesson] = useState({} as Lesson);
   const [offLesson, setOffLesson] = useState({} as Lesson);
-  const [cancelLesson, setCancelLesson] = useState({} as Lesson);
-  const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
-  const [isPickOpen, setPickOpen] = useState(false);
 
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
 

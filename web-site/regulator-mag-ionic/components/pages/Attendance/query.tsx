@@ -3,6 +3,7 @@ import { Redirect } from 'react-router-dom';
 import { AppContext, setAttendanceList, setAttendanceDetail } from '../../../appState';
 import { Attendance } from '../../../types/types';
 import { IonPage, IonList, IonLabel, IonItem, IonRow, IonCol } from '@ionic/react';
+import Paging from '../../paging';
 
 const findURL = 'http://localhost:3003/edb/attendance/find';
 
@@ -13,6 +14,15 @@ const AttendanceQuery: React.FC = () => {
     lessonName: '',
     consumerStuName: '',
   });
+  const [page,setPage] = useState(0)
+  const [total,setTotal]= useState(0)
+
+  const onPageChange = (records:any,total:number,newPage:number)=>{
+    setPage(newPage)
+    setTotal(total)
+    refreshList(records)
+  }
+
   const getParamStr = (params: any, url: string) => {
     let result = '?';
     Object.keys(params).forEach(key => {
@@ -53,8 +63,12 @@ const AttendanceQuery: React.FC = () => {
     })
       .then(res => res.json())
       .then(json => {
-        const { result, records } = json;
-        if (result) refreshList(records);
+        const { result, records,total } = json;
+        if (result) {
+          setTotal(total)
+          refreshList(records)
+        };
+        return;
       });
   };
   useEffect(onQuery, []);
@@ -170,6 +184,9 @@ const AttendanceQuery: React.FC = () => {
                   <ListEntry attendance={list} key={i} myKey={i} />
                 ))}
               </tbody>
+              <tr>
+                <td colSpan={6}> <Paging url={paramStr} page={page} pagesize={20} total={total} onPageChange={onPageChange}/></td>
+              </tr>
             </table>
           </div>
         </div>

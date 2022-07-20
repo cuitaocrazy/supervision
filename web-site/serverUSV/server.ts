@@ -217,7 +217,6 @@ app.post('/edu/lesson/create',jsonParser, async (req, res) => {
   lesson.lessonIntroduce = req.body.lessonIntroduce
   lesson.lessonStartDate = req.body.lessonStartDate?.replaceAll('-','')
   lesson.lessonEndDate = req.body.lessonEndDate?.replaceAll('-','')
-
   lesson.lessonStatus = 'pending'
   lesson.lessonAccumulationQuantity = 0;
   //todo
@@ -591,6 +590,7 @@ app.get('/edb/eduLesson/find', async (req, res) => {
   const r = await edbEduLessonService.find(req.query)
   res.send(r)
 })
+
 app.get('/edb/contract/find', async (req, res) => {
   console.log(`教育局: 合同查询: 条件[${{ ...req.query }}]`)
   const r = await eduContractService.find(req.query)
@@ -602,7 +602,7 @@ import { EduLesson } from './src/entity/EduLesson';
 import { EduTeacher } from './src/entity/EduTeacher';
 app.get('/edb/attendance/find', async (req, res) => {
   console.log(`教育局: 考勤查询: 条件[${JSON.stringify(req.query)}]`)
-  const r = await edbAttendanceService.find({ ...new Attendance(), ...req.query })
+  const r = await edbAttendanceService.find(req.query)
   res.send(r)
 })
 app.get('/edb/transfer/find', async (req, res) => {
