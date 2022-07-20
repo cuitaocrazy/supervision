@@ -94,6 +94,12 @@ const initialState = {
     contractNegoList:[],
     contractNegoDetail:null
   },
+  transferManual:{// 手动划拨
+    transferManualList:[],
+    transferManualConfirm:null
+
+
+  }
 };
 export const AppContext = React.createContext<{state:any,dispatch:React.Dispatch<any>}>({state:initialState,dispatch:()=>{}});
 
@@ -308,6 +314,13 @@ export const setSupervisorOrgEdit = (supervisorOrgEdit:SupervisorOrg) => {
     supervisorOrgEdit:supervisorOrgEdit
   }
 }
+export const setTransferManualList = (transferManualList:Transfer[]) => {
+  return {
+    type: 'setTransferManualList',
+    transferManualList:transferManualList
+  }
+}
+
 
 export const reducer = (state: any, action: any) => {
   console.log('action')
@@ -612,6 +625,17 @@ export const reducer = (state: any, action: any) => {
         black:{
           ...state.black,
           blackList:action.blackList,
+        },
+        backPage:action.backPage||state.backPage
+      }
+    }
+
+    case 'setTransferManualList':{
+      return {
+        ...state,
+        transferManual:{
+          ...state.TransferManual,
+          transferManualList:action.transferManualList,
         },
         backPage:action.backPage||state.backPage
       }

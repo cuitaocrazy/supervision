@@ -382,7 +382,7 @@ const BaseInfoQuery: React.FC = () => {
             </Dialog>
           </Transition>
 
-          {/* 下架课程模态框 */}
+          {/* 删除课程模态框 */}
           <Transition appear show={isDeleteOpen} as={Fragment}>
             <Dialog as="div" className="relative z-10" onClose={closeDeleteModal}>
               <Transition.Child
