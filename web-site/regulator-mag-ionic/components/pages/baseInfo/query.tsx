@@ -124,7 +124,7 @@ const BaseInfoQuery: React.FC = () => {
 
   const doSetEdit = useCallback(
     (userInfo: SupervisorUser) => {
-      dispatch({ ...setUserInfoDetail(userInfo), ...{ backPage: '/tabs/baseInfo/query'} });
+      dispatch({ ...setUserInfoDetail(userInfo), ...{ backPage: '/tabs/baseInfo/query' } });
     },
     [dispatch]
   );
