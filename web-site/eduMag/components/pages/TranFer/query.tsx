@@ -14,6 +14,7 @@ import {
   IonRow,
   IonCol,
 } from "@ionic/react";
+import Paging from '../../paging';
 
 const queryURL = "http://localhost:3003/edu/transfer/find";
 const handleTransfer = "http://localhost:3003/attendannce/handleTransfer";
@@ -24,6 +25,13 @@ const TransferQuery: React.FC = () => {
     consumerName: "",
     lessonName: "",
   });
+  const [page,setPage] = useState(0)
+  const [total,setTotal]= useState(101)//todo
+  const onPageChange = (records:any,total:number,newPage:number)=>{
+    setPage(newPage)
+    setTotal(total)
+    refreshList(records)    
+  }
 
   const onDetail = (item: Transfer) => () => {
     doSetDetail(item);
@@ -86,8 +94,10 @@ const TransferQuery: React.FC = () => {
     })
       .then((res) => res.json())
       .then((json) => {
-        const { result, records } = json;
-        if (result) refreshList(records);
+        const { result, records,total } = json;
+        if (result) {
+          setTotal(total)
+          refreshList(records)};
       });
   };
   useEffect(onQuery, []);
@@ -233,6 +243,9 @@ const TransferQuery: React.FC = () => {
               {state.transfer.transferList.map((list: Transfer, i: any) => (
                 <ListEntry transfer={list} key={i} myKey={i} />
               ))}
+              <tr>
+                <td colSpan={7}> <Paging url={paramStr} page={page} pagesize={20} total={total} onPageChange={onPageChange}/></td>
+              </tr>
             </tbody>
           </table>
         </div>

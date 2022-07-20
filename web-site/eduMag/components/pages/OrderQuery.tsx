@@ -2,6 +2,8 @@ import { FC, useEffect, useState, useCallback, useContext } from "react";
 import { IonPage, IonRow, IonCol, IonLabel } from "@ionic/react";
 import { AppContext, setContractList } from "../../appState";
 import { Contract } from "../../types/types";
+import Paging from "../paging"
+
 const findUrl = "http://localhost:3003/edu/contract/find";
 
 const ListEntry = ({ contract }: { contract: Contract }) => (
@@ -48,6 +50,13 @@ const ListEntry = ({ contract }: { contract: Contract }) => (
 const OrderQuery = () => {
   const { state, dispatch } = useContext(AppContext);
   const [queryInfo, setQueryInfo] = useState({ contractId: "" });
+  const [page,setPage] = useState(0)
+  const [total,setTotal]= useState(101)//todo
+  const onPageChange = (records:any,total:number,newPage:number)=>{
+    setPage(newPage)
+    setTotal(total)
+    refreshList(records)    
+  }
   const refreshList = useCallback(
     (contracts: Contract[]) => {
       dispatch(setContractList(contracts));
@@ -79,8 +88,10 @@ const OrderQuery = () => {
     })
       .then((res) => res.json())
       .then((json) => {
-        const { result, records } = json;
-        if (result) refreshList(records);
+        const { result, records,total } = json;
+        if (result) {
+          setTotal(total)
+          refreshList(records)};
       });
   };
   useEffect(onQuery, []);
@@ -171,6 +182,9 @@ const OrderQuery = () => {
                   <ListEntry key={index} contract={item} />
                 )
               )}
+              <tr>
+                <td colSpan={12}> <Paging url={paramStr} page={page} pagesize={20} total={total} onPageChange={onPageChange}/></td>
+              </tr>
             </tbody>
           </table>
         </div>

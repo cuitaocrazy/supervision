@@ -6,6 +6,7 @@ import { AppContext, setAttendenceLanuchList } from "../../../appState";
 import { Attendance, Lesson } from "../../../types/types";
 import moment from "moment";
 import { Dialog, Transition } from "@headlessui/react";
+import Paging from '../../paging';
 
 const queryURL = "http://localhost:3003/edu/lesson/find";
 const attendanceApplyURL = "http://localhost:3003/edu/attendance/apply";
@@ -22,6 +23,18 @@ const ContractNegoQuery: React.FC = () => {
     attendanceDate: "",
     attendanceTime: "",
   } as Attendance);
+  const [page,setPage] = useState(0)
+  const [total,setTotal]= useState(101)//todo
+
+
+
+  const onPageChange = (records:any,total:number,newPage:number)=>{
+    setPage(newPage)
+    setTotal(total)
+    refreshList(records)    
+  }
+
+
   const getParamStr = (params: any, url: string) => {
     let result = "?";
     Object.keys(params).forEach((key) => {
@@ -80,8 +93,10 @@ const ContractNegoQuery: React.FC = () => {
     })
       .then((res) => res.json())
       .then((json) => {
-        const { result, records } = json;
-        if (result) refreshList(records);
+        const { result, records,total } = json;
+        if (result) {
+          setTotal(total)
+          refreshList(records)};
       });
   };
   useEffect(onQuery, []);
@@ -356,6 +371,9 @@ const ContractNegoQuery: React.FC = () => {
                   <ListEntry lesson={list} key={i} myKey={i} />
                 )
               )}
+              <tr>
+                <td colSpan={4}> <Paging url={paramStr} page={page} pagesize={20} total={total} onPageChange={onPageChange}/></td>
+              </tr>
             </tbody>
           </table>
         </div>

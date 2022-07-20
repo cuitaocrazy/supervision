@@ -26,7 +26,6 @@ class EduLessonService {
         //todo 方便测试
         .skip(0)
         .take(size).getManyAndCount()
-        // const eduLessons = await mysql.getRepository(EduLesson).queryRunner.findBy(req)
         return { result: true, records: eduLessons[0],total:eduLessons[1] }
     }
 

@@ -17,34 +17,32 @@ import {
 import { Lesson } from "../../../types/types";
 import {
   IonPage,
-  IonList,
-  IonLabel,
-  IonItem,
   IonRow,
   IonCol,
-  IonModal,
-  IonCardHeader,
-  IonCardTitle,
-  IonCard,
-  IonCardContent,
-  IonPicker,
-  IonDatetime,
   PickerColumn,
-  IonHeader,
-  IonContent,
 } from "@ionic/react";
 import moment from "moment";
 import RichText from "components/components/RichText";
 import { EditorState } from "draft-js";
 import { Dialog, Transition } from "@headlessui/react";
+import Paging from '../../paging';
 
-const findAll = "http://localhost:3003/edu/lesson/findAll";
+// const findAll = "http://localhost:3003/edu/lesson/findAll";
 const find = "http://localhost:3003/edu/lesson/find";
 const createUrl = "http://localhost:3003/edu/lesson/create"
+const offUrl = "http://localhost:3003/edu/lesson/create"
 
 // 课程查询页面
 const LessonQuery: React.FC = () => {
-  let [isOpen, setIsOpen] = useState(false);
+
+  const onPageChange = (records:any,total:number,newPage:number)=>{
+    console.log(records)
+    console.log(total)
+    console.log(newPage)
+    setPage(newPage)
+    setTotal(total)
+    refreshLessonList(records)
+  }
   function closeModal() {
     setIsOpen(false);
   }
@@ -59,9 +57,12 @@ const LessonQuery: React.FC = () => {
   function openOffModal() {
     setIsOffOpen(true);
   }
-
+  let [isOpen, setIsOpen] = useState(false);
+  const [page,setPage] = useState(0)
+  const [total,setTotal]= useState(101)//todo
   const [isCreateModalOpen, setCreateModalOpen] = useState(false);
   const [createLesson, setCreateLesson] = useState({} as Lesson);
+  const [offLesson, setOffLesson] = useState({} as Lesson);
   const [cancelLesson, setCancelLesson] = useState({} as Lesson);
   const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
   const [isPickOpen, setPickOpen] = useState(false);
@@ -74,22 +75,6 @@ const LessonQuery: React.FC = () => {
   //   editor.current.focus();
 
   // }
-
-  const onCancel = async (e: React.FormEvent) => {
-    //todo fetch
-    // fetch(delURL, {
-    //   method: 'PUT',
-    //   body: JSON.stringify({
-    //     "lessonId":item.lessonId,
-    //   }),
-    //   headers: {
-    //     'Content-type': 'application/json;charset=UTF-8',
-    //   },
-    // }).then(res => res.json())
-    // .then((json) => {
-    //   alert(json.result)
-    // })
-  };
 
   const onCreate = (e:any) => {
     e.preventDefault()
@@ -105,6 +90,21 @@ const LessonQuery: React.FC = () => {
       alert(json.result)
     })
   };
+
+  const onOff = (e:any) =>{
+    e.preventDefault();
+    fetch(offUrl, {
+      method: 'POST',
+      body:JSON.stringify(offLesson),
+      headers: {
+        'Content-type': 'application/json;charset=UTF-8',
+      },
+  }).then(res => res.json())
+  .then((json) => {
+    closeOffModal()
+    alert(json.result)
+  })
+}
 
   const { state, dispatch } = useContext(AppContext);
   const [queryInfo, setQueryInfo] = useState({
@@ -168,7 +168,7 @@ const LessonQuery: React.FC = () => {
     [dispatch]
   );
   useEffect(() => {
-    fetch(findAll, {
+    fetch(find, {
       method: "GET",
       headers: {
         "Content-type": "application/json;charset=UTF-8",
@@ -176,8 +176,12 @@ const LessonQuery: React.FC = () => {
     })
       .then((res) => res.json())
       .then((json) => {
-        const { result, records } = json;
-        if (result) refreshLessonList(records);
+        const { result, records,total } = json;
+
+        if (result) {
+          setTotal(total)
+          refreshLessonList(records);
+        }
         return;
       });
     return;
@@ -192,8 +196,11 @@ const LessonQuery: React.FC = () => {
     })
       .then((res) => res.json())
       .then((json) => {
-        const { result, records } = json;
-        if (result) refreshLessonList(records);
+        const { result, records,total } = json;
+        if (result) {
+          setTotal(total)
+          refreshLessonList(records)
+        };
         return;
       });
   };
@@ -259,7 +266,7 @@ const LessonQuery: React.FC = () => {
             <button
               className="p-1 text-red-500 rounded-md"
               onClick={() => {
-                setCancelLesson(lesson);
+                setOffLesson(lesson);
                 // setIsCancelModalOpen(true);
                 openOffModal();
               }}
@@ -676,7 +683,7 @@ const LessonQuery: React.FC = () => {
                       <hr className="mt-2 mb-4" />
                     </Dialog.Title>
                     <form
-                      onSubmit={onCreate}
+                      onSubmit={onOff}
                       className="flex flex-col items-center rounded-lg justify-items-center"
                     >
                       <div className="flex items-center mb-4 justify-items-center">
@@ -688,14 +695,14 @@ const LessonQuery: React.FC = () => {
                             className="w-64 p-1 text-gray-600 bg-gray-100 border rounded-md justify-self-start focus:outline-none"
                             name="eduId"
                             type="text"
-                            value={state.loginUser.orgName}
+                            value={offLesson.lessonName}
                             spellCheck={false}
                             readOnly
                           ></input>
                         </div>
                       </div>
 
-                      <div className="flex items-center mb-4 justify-items-center">
+                      {/* <div className="flex items-center mb-4 justify-items-center">
                         <div className="flex justify-items-center">
                           <span className="flex justify-end p-1 mr-1 w-36">
                             总价（元）:
@@ -715,7 +722,7 @@ const LessonQuery: React.FC = () => {
                             required
                           ></input>
                         </div>
-                      </div>
+                      </div> */}
                       <div className="flex items-center mb-4 justify-items-center">
                         <div className="flex justify-items-center">
                           <span className="flex justify-end p-1 mr-1 w-36">
@@ -723,14 +730,14 @@ const LessonQuery: React.FC = () => {
                           </span>
                           <textarea
                             className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
-                            name="lessonTotalTimes"
-                            value={createLesson.lessonTotalTimes}
+                            name="offLesson"
+                            value={offLesson.lessonUpdateReason}
                             spellCheck={false}
                             onChange={(e) =>
-                              setCreateLesson({
-                                ...createLesson,
+                              setOffLesson({
+                                ...offLesson,
                                 ...{
-                                  lessonTotalTimes: e.nativeEvent.target?.value,
+                                  lessonUpdateReason: e.nativeEvent.target?.value,
                                 },
                               })
                             }
@@ -747,7 +754,7 @@ const LessonQuery: React.FC = () => {
                         />
                         <input
                           value="下架"
-                          type="button"
+                          type="submit"
                           className="px-6 py-2 text-white border rounded-md bg-primary-600"
                         />
                       </div>
@@ -780,6 +787,9 @@ const LessonQuery: React.FC = () => {
               {state.lesson.lessonList.map((list: Lesson, i: any) => (
                 <ListEntry lesson={list} key={i} />
               ))}
+              <tr>
+                <td colSpan={5}> <Paging url={paramStr} page={page} pagesize={20} total={total} onPageChange={onPageChange}/></td>
+              </tr>
             </tbody>
           </table>
         </div>
