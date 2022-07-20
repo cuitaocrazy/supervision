@@ -1,6 +1,6 @@
 import { useEffect, useCallback, useContext, useState, useRef, Fragment } from 'react';
 import { Redirect } from 'react-router-dom';
-import { AppContext, setUserInfoList, setUserInfoDetail } from '../../../appState';
+import { AppContext, setUserInfoList, setUserInfoDetail,setUserInfoEdit } from '../../../appState';
 import { SupervisorUser } from '../../../types/types';
 import {
   IonPage,
@@ -124,7 +124,7 @@ const BaseInfoQuery: React.FC = () => {
 
   const doSetEdit = useCallback(
     (userInfo: SupervisorUser) => {
-      dispatch({ ...setUserInfoDetail(userInfo), ...{ backPage: '/tabs/baseInfo/query' } });
+      dispatch({ ...setUserInfoEdit(userInfo), ...{ backPage: '/tabs/baseInfo/query' } });
     },
     [dispatch]
   );
@@ -184,6 +184,9 @@ const BaseInfoQuery: React.FC = () => {
 
   if (state.userInfo.userInfoDetail) {
     return <Redirect to="/tabs/baseInfo/detail" />;
+  }
+  if (state.userInfo.userInfoEdit) {
+    return <Redirect to="/tabs/baseInfo/edit" />;
   }
   if (state.userInfo.userInfoDetail == null || state.userInfo.userInfoDetail == undefined) {
     return (

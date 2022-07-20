@@ -127,6 +127,14 @@ export const setUserInfoDetail = (userInfoDetail?:SupervisorUser) => {
   }
 };
 
+export const setUserInfoEdit = (userInfoEdit:SupervisorUser) => {
+  return {
+    type: 'setUserInfoEdit',
+    userInfoEdit:userInfoEdit
+  }
+};
+
+
 
 export const setContractList = (contractList:Contract[]) => {
   return {
@@ -385,6 +393,16 @@ export const reducer = (state: any, action: any) => {
         userInfo:{
           userInfoList:state.userInfo.userInfoList,
           userInfoDetail:action.userInfoDetail
+        },
+        backPage:action.backPage||state.backPage
+      }
+    }
+    case 'setUserInfoEdit': {
+      return {
+        ...state,
+        userInfo:{
+          userInfoList:state.userInfo.userInfoList,
+          userInfoEdit:action.userInfoEdit
         },
         backPage:action.backPage||state.backPage
       }
