@@ -162,6 +162,12 @@ const BaseInfoQuery: React.FC = () => {
       <td className="flex items-center justify-center leading-10">{userInfo.supervisorOrgName}</td>
       <td className="flex items-center justify-center leading-10">
         <div className="flex gap-2 ">
+        <button className="p-1 text-primary-600" onClick={onDetail(userInfo)}>
+            详情
+          </button>
+          <button className="p-1 text-cyan-600" onClick={onEdit(userInfo)}>
+           编辑 
+          </button>
           <button
             className="p-1 text-red-600"
             // onClick={onCancel(userInfo)}
@@ -169,12 +175,6 @@ const BaseInfoQuery: React.FC = () => {
           >
             删除
           </button> 
-          <button className="p-1 text-cyan-600" onClick={onEdit(userInfo)}>
-           编辑 
-          </button>
-          <button className="p-1 text-primary-600" onClick={onDetail(userInfo)}>
-            详情
-          </button>
         </div>
       </td>
     </tr>
