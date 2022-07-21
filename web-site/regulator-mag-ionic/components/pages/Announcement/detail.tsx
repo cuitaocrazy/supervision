@@ -113,7 +113,7 @@ export const AnnouncementDetail: React.FC = () => {
               <div className="flex mb-4 leading-10">
                 <div className="flex justify-end w-32 mr-2">标题:</div>
                 <input
-                  className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
+                  className="w-64 h-10 px-2 rounded-md bg-primary-100 focus:outline-none"
                   name="supervisorPhone"
                   type="text"
                   value={announcementState.announcementTitle}
