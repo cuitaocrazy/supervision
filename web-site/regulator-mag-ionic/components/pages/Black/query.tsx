@@ -81,6 +81,7 @@ const BlackEduOrgQuery:React.FC =()=>{
   const createModal = useRef<HTMLIonModalElement>(null);
   const [isCreateModalOpen,setIsCreateModalOpen] = useState(false)
   const [createState,setCreateState] = useState({} as Black )
+  const [deleteState,setDeleteState] = useState({} as Black )
   const { state, dispatch } = useContext(AppContext);
   const [queryInfo, setQueryInfo] = useState({orgName:''})
   const getParamStr = (params:any,url:string) =>{
@@ -152,9 +153,18 @@ const BlackEduOrgQuery:React.FC =()=>{
       </td>
       <td className="flex items-center justify-center leading-10">
         <div className="flex gap-2 ">
+        <button
+            className="p-1 text-primary-600"
+            onClick={onDetail(item)}
+          >
+            详情
+          </button>
           <button
             className="p-1 text-red-600"
-            onClick={()=>{openDeleteModal()}}
+            onClick={()=>{
+              setDeleteState(item)
+              openDeleteModal()
+            }}
           >
             删除
           </button>
@@ -391,7 +401,7 @@ const BlackEduOrgQuery:React.FC =()=>{
                           />
                           <input
                             value="确定"
-                            onClick={()=>{onCancel(item)}}
+                            onClick={()=>{onCancel(state.black)}}
                             type="button"
                             className="px-6 py-2 text-white border rounded-md bg-primary-600"
                           />
