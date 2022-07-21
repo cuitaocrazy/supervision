@@ -145,7 +145,7 @@ export const AnnouncementEdit: React.FC = () => {
               {/* TODO  */}
               <div className="flex mb-4 leading-10">
                 <div className="flex justify-end w-32 mr-2">政策内容:</div>
-                <div className="items-start w-64 h-48 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600">
+                <div className="items-start w-64 p-1 text-gray-600 justify-self-start focus:outline-none focus:glow-primary-600">
                   <RichText
                     ref={editor}
                     editorState={editorState}
@@ -158,62 +158,21 @@ export const AnnouncementEdit: React.FC = () => {
               </div>
             </div>
           </form>
-          <div className="flex justify-center mt-10">
-            <input
-              value="返回"
-              type="button"
-              onClick={onBack()}
-              className="flex w-20 px-6 py-2 font-bold text-white rounded-md bg-primary-600 focus:bg-primary-700"
-            />
-          </div>
+          <div className="flex items-center justify-center gap-4 mt-10">
+                          <input
+                            value="取消"
+                            type="button"
+                            className="px-6 py-2 border rounded-md "
+                            onClick={onBack()}
+                          />
+                          <input
+                            value="确定"
+                            type="submit"
+                            className="px-6 py-2 text-white border rounded-md bg-primary-600"
+                          />
+                        </div>
         </IonCardContent>
       </IonCard>
     </IonPage>
-    // <IonPage>
-    //   <IonCard>
-    //   <IonCardHeader>
-    //     <IonCardSubtitle className="mx-8 text-3xl text-gray-600">详细信息</IonCardSubtitle>
-    //   </IonCardHeader>
-    //   <IonCardContent>
-    //   <form onSubmit={onModify}>
-    //   <IonList>
-    //   <IonLabel position="stacked" color="primary">发布者</IonLabel>
-    //   <IonInput name="announcementAnnouncer" type="text" value={announcementState.announcementAnnouncer} spellCheck={false} autocapitalize="off" onIonChange={e => setAnnouncementEdit({...announcementState,...{announcementAnnouncer:e.detail.value!}})} required>      </IonInput>
-    //   <IonLabel position="stacked" color="primary">标题</IonLabel>
-    //           <IonInput name="supervisorPhone" type="text" value={announcementState.announcementTitle} spellCheck={false} autocapitalize="off" onIonChange={e => setAnnouncementEdit({...announcementState,...{announcementTitle:e.detail.value!}})} required>
-    //   </IonInput>
-    //   <IonLabel position="stacked" color="primary">内容</IonLabel>
-    //           <IonInput name="announcementContent" type="text" value={announcementState.announcementContent} spellCheck={false} autocapitalize="off" onIonChange={e => setAnnouncementEdit({...announcementState,...{announcementContent:e.detail.value!}})} required>
-    //   </IonInput>
-    //   <IonLabel position="stacked" color="primary" onClick={()=>setPickOpen(true)}>状态</IonLabel>
-    //   <IonPicker
-    //                           isOpen={isPickOpen}
-    //                           columns={[statueTypePickerColumn]}
-    //                           buttons={[
-    //                             {
-    //                               text: "取消",
-    //                               role: "cancel",
-    //                               handler: value => {
-    //                                 setPickOpen(false);
-    //                               }
-    //                             },
-    //                             {
-    //                               text: "确认",
-    //                               handler: value => {
-    //                                 setPickOpen(false);
-    //                                 setAnnouncementEdit({...announcementState,...{announcementContent:value.statueTypePickerColumn.value}})
-    //                               }
-    //                             }
-    //                           ]}
-    //                         ></IonPicker>
-    //   </IonList>
-    //   <IonItem className="">
-    //        <IonButton type="submit" expand="block">确认</IonButton>
-    //       <IonButton className="m-5 text-base " onClick={onBack()} fill="solid">返回</IonButton>
-    //     </IonItem>
-    //  </form>
-    //   </IonCardContent>
-    // </IonCard>
-    // </IonPage>
   );
 };

@@ -1,4 +1,4 @@
-import React, { useState, Fragment, useEffect, useCallback, useContext } from 'react';
+import React, { useState, Fragment, useEffect, useCallback, useContext,useRef } from 'react';
 import {
   IonPage,
   IonRow,
@@ -28,10 +28,13 @@ import {
 import { Announcement } from '../../../types/types';
 import { PickerColumn } from '@ionic/core';
 import { Dialog, Transition } from '@headlessui/react';
+import RichText from '../../RichText';
+import { EditorState } from 'draft-js';
 
 const queryURL = 'http://localhost:3003/announcement/query';
 const delURL = 'http://localhost:3003/announcement/del';
 const modifyURL = 'http://localhost:3003/announcement/modifyURL';
+const createUrl = 'http://localhost:3003/announcement/createURL';
 
 const demoAnnouncementList: Announcement[] = [
   {
@@ -55,6 +58,15 @@ const demoAnnouncementList: Announcement[] = [
 ];
 
 const AnnouncementQuery: React.FC = () => {
+  // 新增模态框的状态
+  let [isCreateOpen, setIsCreateOpen] = useState(false);
+  function closeCreateModal() {
+    setIsCreateOpen(false);
+  }
+  function openCreateModal() {
+    setIsCreateOpen(true);
+  }
+
   // 删除模态框的状态
   let [isDeleteOpen, setIsDeleteOpen] = useState(false);
   function closeDeleteModal() {
@@ -65,7 +77,10 @@ const AnnouncementQuery: React.FC = () => {
   }
 
   const { state, dispatch } = useContext(AppContext);
+  const editor = useRef(null);
+  const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [queryInfo, setQueryInfo] = useState({ announcementTitle: '' });
+  const [createAnnouncement, setCreateAnnouncement] = useState({} as Announcement);
   const getParamStr = (params: any, url: string) => {
     let result = '?';
     Object.keys(params).forEach(key => (result = result + key + '=' + params[key] + '&'));
@@ -154,6 +169,21 @@ const AnnouncementQuery: React.FC = () => {
           announcement.announcementTitle.indexOf(queryInfo.announcementTitle) > -1
       )
     );
+  };
+
+  const onCreate = (e: any) => {
+    e.preventDefault();
+    fetch(createUrl, {
+      method: 'POST',
+      body: JSON.stringify(createAnnouncement),
+      headers: {
+        'Content-type': 'application/json;charset=UTF-8',
+      },
+    })
+      .then(res => res.json())
+      .then(json => {
+        alert(json.result);
+      });
   };
 
   const ListEntry = ({ announcement, ...props }: { announcement: Announcement }) => (
@@ -249,10 +279,142 @@ const AnnouncementQuery: React.FC = () => {
                   >
                     查询
                   </button>
+                  <button
+                    className="w-24 h-12 bg-gray-100 rounded-md shadow-md text-primary-600 focus:bg-gray-200"
+                    onClick={openCreateModal}
+                  >
+                    新增
+                  </button>
                 </IonCol>
               </IonRow>
             </div>
           </div>
+
+          {/* 新增政策模态框 */}
+          <Transition appear show={isCreateOpen} as={Fragment}>
+            <Dialog as="div" className="relative z-10" onClose={closeCreateModal}>
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0"
+                enterTo="opacity-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100"
+                leaveTo="opacity-0"
+              >
+                <div className="fixed inset-0 bg-black bg-opacity-25" />
+              </Transition.Child>
+
+              <div className="fixed inset-0 overflow-y-auto">
+                <div className="flex items-center justify-center min-h-full p-4 text-center">
+                  <Transition.Child
+                    as={Fragment}
+                    enter="ease-out duration-300"
+                    enterFrom="opacity-0 scale-95"
+                    enterTo="opacity-100 scale-100"
+                    leave="ease-in duration-200"
+                    leaveFrom="opacity-100 scale-100"
+                    leaveTo="opacity-0 scale-95"
+                  >
+                    <Dialog.Panel className="w-full max-w-md p-4 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
+                      <Dialog.Title
+                        as="h3"
+                        className="text-lg font-medium leading-6 text-center text-gray-900"
+                      >
+                        用户新增
+                        <hr className="mt-2 mb-4" />
+                      </Dialog.Title>
+                      <form
+                        onSubmit={onCreate}
+                        className="flex flex-col items-center rounded-lg justify-items-center"
+                      >
+                        <div className="flex items-center mb-4 justify-items-center">
+                          <div className="flex leading-7 justify-items-center">
+                            <div className="flex justify-end p-1 w-36">发布日期:</div>
+                            <input
+                              className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
+                              name="supervisorLoginName"
+                              type="text"
+                              value={createAnnouncement.announcementDate}
+                              spellCheck={false}
+                              onChange={e =>
+                                setCreateAnnouncement({
+                                  ...createAnnouncement,
+                                  ...{ announcementDate: e.nativeEvent.target?.value },
+                                })
+                              }
+                            ></input>
+                          </div>
+                        </div>
+
+                        <div className="flex items-center mb-4 justify-items-center">
+                          <div className="flex justify-items-center">
+                            <span className="flex justify-end p-1 mr-1 w-36">政策标题:</span>
+                            <input
+                              className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
+                              name="supervisorUsername"
+                              type="text"
+                              value={createAnnouncement.announcementTitle}
+                              spellCheck={false}
+                              onChange={e =>
+                                setCreateAnnouncement({
+                                  ...createAnnouncement,
+                                  ...{ announcementTitle: e.nativeEvent.target?.value },
+                                })
+                              }
+                              required
+                            ></input>
+                          </div>
+                        </div>
+                        <div className="flex items-center mb-4 justify-items-center">
+                          <div className="flex justify-items-center">
+                            <span className="flex justify-end p-1 mr-1 w-36">政策内容:</span>
+                            {/* <input
+                              className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
+                              name="supervisorUsername"
+                              type="text"
+                              value={createAnnouncement.announcementTitle}
+                              spellCheck={false}
+                              onChange={e =>
+                                setCreateAnnouncement({
+                                  ...createAnnouncement,
+                                  ...{ announcementTitle: e.nativeEvent.target?.value },
+                                })
+                              }
+                              required
+                            ></input> */}
+                            <div className="w-64 p-1 text-gray-600 justify-self-start focus:outline-none focus:glow-primary-600">
+                            <RichText
+                              ref={editor}
+                              editorState={editorState}
+                              onChange={(editorState: any) => {
+                                console.log(editorState);
+                                setEditorState(editorState);
+                              }}
+                            />
+                          </div>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-4 mt-2 justify-items-center">
+                          <input
+                            value="取消"
+                            type="button"
+                            className="px-6 py-2 border rounded-md "
+                            onClick={closeCreateModal}
+                          />
+                          <input
+                            value="确定"
+                            type="submit"
+                            className="px-6 py-2 text-white border rounded-md bg-primary-600"
+                          />
+                        </div>
+                      </form>
+                    </Dialog.Panel>
+                  </Transition.Child>
+                </div>
+              </div>
+            </Dialog>
+          </Transition>
 
           {/* 删除课程模态框 */}
           <Transition appear show={isDeleteOpen} as={Fragment}>

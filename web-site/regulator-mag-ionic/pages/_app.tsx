@@ -12,6 +12,7 @@ import '@ionic/react/css/display.css';
 
 import '../styles/global.css';
 import '../styles/variables.css';
+import '../styles/rich-editor.css';
 interface Props {
   Component:any,
   pageProps:any
