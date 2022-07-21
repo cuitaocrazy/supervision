@@ -229,7 +229,9 @@ export interface ContractNego {
   negoEduAgreeDate: string,
   negoEduAgreeTime: string,
   contract: Contract,
-  negoFinishTimes: string,
+  negoFinishTimes?: string,
+  // attendanceDate?:string,
+  // attendanceTime?:string
 }
 export interface Black {
   orgId: string,

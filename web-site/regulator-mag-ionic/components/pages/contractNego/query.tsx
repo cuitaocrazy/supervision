@@ -1,14 +1,14 @@
 //手工退课
-import React, { useState } from 'react';
-import { useEffect,useCallback,useContext
- } from 'react'
+import React, { useEffect,useCallback,useContext,useState,Fragment } from 'react'
 import { IonPage, IonModal,IonRow,IonCol,IonCard,IonRadioGroup,IonRadio, IonCardHeader, IonCardSubtitle,IonLabel,IonInput, IonCardContent,IonItem,IonButton,IonList,IonDatetime,IonPicker } from '@ionic/react';
 import { Redirect } from 'react-router-dom';
 import {AppContext,setContractNegoList,setContractNegoDetail} from '../../../appState';
 import {ContractNego} from '../../../types/types'
 import { PickerColumn } from "@ionic/core";
+import { Dialog, Transition } from '@headlessui/react';
 
 const queryURL = 'http://localhost:3003/contractNego/query'
+const createURL = 'http://localhost:3003/contractNego/query'
 
 const democontractNegoList:ContractNego[] = [
   {
@@ -64,7 +64,31 @@ const democontractNegoList:ContractNego[] = [
 ]
 
 const ContractNegoQuery:React.FC = () => {
+// 手动退课-确认模态框的状态
+const [isConformOpen, setIsConformOpen] = useState(false);
+function closeConformModal() {
+  setIsConformOpen(false);
+}
+function OpenConformModal() {
+  setIsConformOpen(true);
+}
+
   const { state, dispatch } = useContext(AppContext);
+  const [contractNegoState, setContractNegoState] = useState({} as ContractNego);
+  const onCreate = async (e: React.FormEvent) => () => {
+    e.preventDefault();
+    fetch(createURL, {
+      method: 'PUT',
+      body: JSON.stringify(contractNegoState),
+      headers: {
+        'Content-type': 'application/json;charset=UTF-8',
+      },
+    })
+      .then(res => res.json())
+      .then(json => {
+        alert(json.result);
+      });
+  };
   const [queryInfo, setQueryInfo] = useState({contractId:'',orderId:''})
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [detail,setDetail]= useState({} as ContractNego);
@@ -93,9 +117,9 @@ const onManual =()=>{
 
 
 
-const doSetDetail = useCallback(contractNego => {
-  dispatch({...setContractNegoDetail(contractNego),...{backPage:'/tabs/contractNego/query'}});
-},[dispatch]);
+// const doSetDetail = useCallback(contractNego => {
+//   dispatch({...setContractNegoDetail(contractNego),...{backPage:'/tabs/contractNego/query'}});
+// },[dispatch]);
 useEffect(() => { 
   // fetch(paramStr, {
   //   method: 'GET',
@@ -128,145 +152,260 @@ const onQuery = () => {
   refreshList(democontractNegoList.filter((contractNego:ContractNego)=>contractNego.contractId.indexOf(queryInfo.contractId)>-1))
 }
 
-const ListEntry = ({ contractNego,key, ...props } : {contractNego:ContractNego,key:any}) => (
-  <IonItem key={key} >
-    <IonLabel>
-      <p  className='text-center'>{contractNego.contract.eduName}</p>
-    </IonLabel>
-    <IonLabel>
-      <p  className='text-center'>{contractNego.contract.lessonName}</p>
-    </IonLabel>
-    <IonLabel>
-      <p  className='text-center'>{contractNego.contract.consumerName}</p>
-    </IonLabel>
-    <IonLabel>
-      <p  className='text-center'>{contractNego.negoRefundAmt}</p>
-    </IonLabel>
-    <IonLabel>
-      <p  className='text-center'>{contractNego.contract.lessonTotalPrice}</p>
-    </IonLabel>
-    <IonLabel>
-       <div className='flex gap-2'>
-          <button className='p-1 text-white bg-blue-500 rounded-md'  onClick={onDetail(contractNego)}>手工退课</button>
-       </div>
-    </IonLabel>
-  </IonItem>
+const ListEntry = ({ contractNego, ...props } : {contractNego:ContractNego}) => (
+  <tr className="grid items-center grid-cols-6 gap-2 text-gray-600 border justify-items-center even:bg-white odd:bg-primary-100 ">
+      <td className="flex items-center justify-center leading-10">{contractNego.contract.eduName}</td>
+      <td className="flex items-center justify-center leading-10">{contractNego.contract.lessonName}</td>
+      <td className="flex items-center justify-center leading-10">{contractNego.contract.consumerName}</td>
+      <td className="flex items-center justify-center leading-10">{contractNego.negoRefundAmt}</td>
+      <td className="flex items-center justify-center leading-10">{contractNego.contract.lessonTotalPrice}</td>
+      <td className="flex items-center justify-center leading-10">
+        <div className="flex gap-2 ">
+          <button className="p-1 text-primary-600" 
+          // onClick={onDetail(contractNego)}
+          onClick={()=>{
+            setContractNegoState(contractNego);
+              OpenConformModal()
+          }}
+          >
+            手工退课
+          </button>
+        </div>
+      </td>
+    </tr>
   );
   
-    return   <IonPage >
-                <div className='relative'>
-                <div className='flex'>
-                <IonRow className='flex justify-between '>
-                      <IonCol className='flex ml-8'>
-                        <IonLabel className='flex h-12 p-2 font-bold text-center text-primary-600 w-28'>合同ID</IonLabel>
-                        <input type='text' className="flex w-56 h-12 pt-2.5 font-bold text-center text-primary-600 bg-white rounded-md focus:outline-none focus:glow-secondary-500" onChange={e=>setQueryInfo({...queryInfo,...{contractId:e.target.value}})} />
-                      </IonCol>     
-                      <IonCol className='flex ml-8'>
-                          <button onClick={()=>{onQuery()}}>查询</button>
-                        </IonCol>  
-                </IonRow>
-                </div>
-                <IonModal isOpen={isModalOpen}>
-                        < IonCardContent>
-                          <form onSubmit={onManual}>
-                              <IonList>
-                                <IonRow>
-                                  <IonCol>
-                                    <IonLabel>
-                                      <p  className='text-center'>教育机构名称：</p>
-                                    </IonLabel> 
-                                  </IonCol>
-                                  <IonCol>
-                                    <IonLabel>
-                                      <p  className='text-center'>{detail.contract?.eduName}</p>
-                                    </IonLabel> 
-                                  </IonCol>
-                                </IonRow>
-                                <IonRow>
-                                  <IonCol>
-                                    <IonLabel>
-                                      <p  className='text-center'>课程名称：</p>
-                                    </IonLabel> 
-                                  </IonCol>
-                                  <IonCol>
-                                    <IonLabel>
-                                      <p  className='text-center'>{detail.contract?.lessonName}</p>
-                                    </IonLabel> 
-                                  </IonCol>
-                                  </IonRow>
-                                  <IonRow>
-                                    <IonCol>
-                                      <IonLabel>
-                                        <p  className='text-center'>划拨金额：</p>
-                                      </IonLabel> 
-                                    </IonCol>
-                                    <IonCol>
-                                      <IonLabel>
-                                        <p  className='text-center'></p>
-                                      </IonLabel> 
-                                    </IonCol>
-                                  </IonRow>
-                                  <IonRow>
-                                    <IonCol>
-                                      <IonLabel>
-                                        <p  className='text-center'>退款金额：</p>
-                                      </IonLabel> 
-                                    </IonCol>
-                                    <IonCol>
-                                      <IonLabel>
-                                        <p  className='text-center'></p>
-                                      </IonLabel> 
-                                    </IonCol>
-                                  </IonRow>
-                                  <IonRow>
-                                    <IonCol>
-                                      <IonLabel>
-                                       <button type='submit'>确认</button>
-                                      </IonLabel> 
-                                    </IonCol>
-                                    <IonCol>
-                                      <IonLabel>
-                                        <button onClick={()=>{setIsModalOpen(false)}}>取消</button>
-                                      </IonLabel> 
-                                    </IonCol>
-                                  </IonRow>                               
-                              </IonList>
-                              
-                              
-                          </form>
-                        </IonCardContent>
-                    </IonModal> 
-              <div className='absolute w-full mt-10'>
-                <IonList>
-                  <IonItem key='title'>
-                    <IonLabel> 
-                      <div className='font-black text-center'>教育机构名称</div>
-                    </IonLabel>
-                    <IonLabel>
-                      <div className='font-black text-center'>课程名称</div>
-                    </IonLabel>
-                    <IonLabel>
-                      <div className='font-black text-center'>客户姓名</div>
-                    </IonLabel>
-                    <IonLabel>
-                      <div className='font-black text-center'>退款金额</div>
-                    </IonLabel>
-                    <IonLabel>
-                      <div className='font-black text-center'>总价格</div>
-                    </IonLabel>
-                    <IonLabel>
-                      <div className='font-black text-center'>操作</div>
-                    </IonLabel>
-                </IonItem>
-                    <div className=''>
-                    {state.contractNego.contractNegoList.map((list:ContractNego, i: any) => (
-                    <ListEntry contractNego={list} key={i} />
-                  ))}
+    return  (
+      <IonPage className="bg-gray-100">
+        <div className="relative w-full h-screen mx-6 overflow-auto">
+          <div className="flex pt-2 my-2 text-gray-800">
+            <div className="mr-2 text-gray-600">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="w-6 h-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth="2"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
+                />
+              </svg>
+            </div>
+            <div>
+              <span className="pr-1 text-gray-600">资金管理</span>/
+              <span className="pl-1 text-primary-500">手工退课</span>
+            </div>
+            </div>
+            <div className="w-11/12 px-4 py-2 mt-4 bg-white rounded-lg ">
+              <div className="text-base font-bold">快速查询</div>
+              <hr className="mt-2 mb-4" />
+              <div className="flex">
+                <IonRow className="flex items-center w-full mx-4 text-center bg-white rounded-md justify-items-center">
+                  <IonCol className="flex ml-8 text-gray-800">
+                    <div className="flex items-center justify-center font-bold text-center text-gray-600 w-28">
+                      合同ID:
                     </div>
-                </IonList>
-            </div> 
-            </div>            
+                    <input
+                      type="text"
+                      className="flex w-56 h-12 font-bold text-center text-gray-600 bg-white border rounded-md focus:outline-none focus:glow-primary-600"
+                      placeholder="请输入合同ID"
+                      onChange={e =>
+                        setQueryInfo({ ...queryInfo, ...{ teacherName: e.target.value } })
+                      }
+                    />
+                  </IonCol>
+                  <IonCol className="flex ml-8 text-gray-800">
+                    <div className="flex items-center justify-center font-bold text-center text-gray-600 w-28">
+                      交易系统订单号:
+                    </div>
+                    <input
+                      type="text"
+                      className="flex w-56 h-12 font-bold text-center text-gray-600 bg-white border rounded-md focus:outline-none focus:glow-primary-600"
+                      placeholder="请输入交易系统订单号"
+                      onChange={e =>
+                        setQueryInfo({ ...queryInfo, ...{ teacherName: e.target.value } })
+                      }
+                    />
+                  </IonCol>
+                  <IonCol className="flex ml-8">
+                    <button
+                      className="w-24 h-12 mr-6 text-white border-2 rounded-md shadow-md bg-primary-600 focus:bg-primary-700"
+                      onClick={() => onQuery()}
+                    >
+                      查询
+                    </button>
+                  </IonCol>
+                </IonRow>
+              </div>
+            </div>
+
+            {/* 手动退课-确认模态框 */}
+        <Transition appear show={isConformOpen} as={Fragment}>
+          <Dialog as="div" className="relative z-10" onClose={closeConformModal}>
+            <Transition.Child
+              as={Fragment}
+              enter="ease-out duration-300"
+              enterFrom="opacity-0"
+              enterTo="opacity-100"
+              leave="ease-in duration-200"
+              leaveFrom="opacity-100"
+              leaveTo="opacity-0"
+            >
+              <div className="fixed inset-0 bg-black bg-opacity-25" />
+            </Transition.Child>
+
+            <div className="fixed inset-0 overflow-y-auto">
+              <div className="flex items-center justify-center min-h-full p-4 text-center">
+                <Transition.Child
+                  as={Fragment}
+                  enter="ease-out duration-300"
+                  enterFrom="opacity-0 scale-95"
+                  enterTo="opacity-100 scale-100"
+                  leave="ease-in duration-200"
+                  leaveFrom="opacity-100 scale-100"
+                  leaveTo="opacity-0 scale-95"
+                >
+                  <Dialog.Panel className="w-full max-w-md p-4 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
+                    <Dialog.Title
+                      as="h3"
+                      className="text-lg font-medium leading-6 text-center text-gray-900"
+                    >
+                      手动退课
+                      <hr className="mt-2 mb-4" />
+                    </Dialog.Title>
+                    <form
+                      // onSubmit={onCreate}
+                      className="flex flex-col items-center rounded-lg justify-items-center"
+                    >
+                      <div className="flex items-center mb-4 justify-items-center">
+                        <div className="flex leading-7 justify-items-center">
+                          <div className="flex justify-end p-1 mr-1 w-36">教育机构名称:</div>
+                          <input
+                            className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
+                            name="supervisorLoginName"
+                            type="text"
+                            value={contractNegoState?.contract?.eduName}
+                            spellCheck={false}
+                            onChange={e =>
+                              setContractNegoState({
+                                ...contractNegoState,
+                                ...{ eduName: e.nativeEvent.target?.value },
+                              })
+                            }
+                            required
+                          ></input>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center mb-4 justify-items-center">
+                        <div className="flex justify-items-center">
+                          <span className="flex justify-end p-1 mr-1 w-36">课程名称:</span>
+                          <input
+                            className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
+                            name="supervisorUsername"
+                            type="text"
+                            value={contractNegoState?.contract?.lessonName}
+                            spellCheck={false}
+                            onChange={e =>
+                              setContractNegoState({
+                                ...contractNegoState,
+                                ...{ lessonName: e.nativeEvent.target?.value },
+                              })
+                            }
+                            required
+                          ></input>
+                        </div>
+                      </div>
+                      <div className="flex items-center mb-4 justify-items-center">
+                        <div className="flex justify-items-center">
+                          <span className="flex justify-end p-1 mr-1 w-36">退课金额（元）:</span>
+                          <input
+                            className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
+                            name="supervisorPhone"
+                            type="text"
+                            value={contractNegoState?.negoRefundAmt}
+                            spellCheck={false}
+                            onChange={e =>
+                              setContractNegoState({
+                                ...contractNegoState,
+                                ...{ negoRefundAmt: e.nativeEvent.target?.value },
+                              })
+                            }
+                            required
+                          ></input>
+                        </div>
+                      </div>
+                      <div className="flex items-center mb-4 justify-items-center">
+                        <div className="flex justify-items-center">
+                          <span className="flex justify-end p-1 mr-1 w-36">补偿金额（元）:</span>
+                          <input
+                            className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
+                            name="supervisorPhone"
+                            type="text"
+                            value={contractNegoState?.negoCompensationAmt}
+                            spellCheck={false}
+                            onChange={e =>
+                              setContractNegoState({
+                                ...contractNegoState,
+                                ...{ negoCompensationAmt: e.nativeEvent.target?.value },
+                              })
+                            }
+                            required
+                          ></input>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-4 mt-2 justify-items-center">
+                        <input
+                          value="取消"
+                          type="button"
+                          className="px-6 py-2 border rounded-md "
+                          onClick={closeConformModal}
+                        />
+                        <input
+                          value="确定"
+                          type="submit"
+                          className="px-6 py-2 text-white border rounded-md bg-primary-600"
+                        />
+                      </div>
+                    </form>
+                  </Dialog.Panel>
+                </Transition.Child>
+              </div>
+            </div>
+          </Dialog>
+        </Transition>
+
+          {/* 列表 */}
+        <div className="absolute w-full mt-10">
+          <table className="w-11/12">
+            <thead>
+              <tr className="grid items-center h-10 grid-cols-6 gap-2 font-bold text-gray-700 bg-white rounded-lg justify-items-center">
+                <th className="flex items-center justify-center">教育机构名称</th>
+                <th className="flex items-center justify-center">课程名称</th>
+                <th className="flex items-center justify-center">客户姓名</th>
+                <th className="flex items-center justify-center">退课金额（元）</th>
+                <th className="flex items-center justify-center">补偿金额（元）</th>
+                <th className="flex items-center justify-center">操作</th>
+              </tr>
+            </thead>
+            <tbody>
+                      {state.contractNego.contractNegoList.map((list:ContractNego, i: any) => (
+          <ListEntry contractNego={list} key={i} />
+         ))}
+              <tr>
+                {/* <td colSpan={5}> <Paging url={paramStr} page={page} pagesize={20} total={total} onPageChange={onPageChange}/></td> */}
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        </div>
       </IonPage>
+    )
+    
 }
 export default ContractNegoQuery;
 
