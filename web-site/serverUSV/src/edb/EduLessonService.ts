@@ -18,7 +18,6 @@ class EduLessonService {
         }
         req.page=undefined
         req.size=undefined
-        console.log(nullableFuzzy(eduName))
         const eduLessons =await mysql.getRepository(EduLesson).createQueryBuilder("eduLesson")
 
         .where("eduLesson.eduName like :name and eduLesson.lessonStatus like :status", { name: nullableFuzzy(eduName),status:nullableFuzzy(status) })

@@ -6,18 +6,60 @@ import { Attendance } from '../entity/Attendance'
 import {Transfer} from '../entity/Transfer'
 
 import mysql from '../mysql'
+import {nullableFuzzy} from '../Util'
 import e = require('express')
 
-export const searchLesson =  async ({ page, size,searchValue }) => {
-    const result = await mysql.getRepository(EduLesson).findBy({
-        lessonStatus: 'on',
-    })
-    return result
+// export const searchLesson =  async ({ page, size,searchValue }) => {
+//     const result = await mysql.getRepository(EduLesson).findBy({
+//         lessonStatus: 'on',
+//     })
+//     return result
+// }
+
+export const searchLesson = async (reqParams) =>{
+    let {page,size,queryStr} = reqParams
+    if(page==null){
+        page=0
+    }
+    if(size==null){
+        size=10
+    }
+    reqParams.page=undefined
+    reqParams.size=undefined    
+
+    const lessons =await mysql.getRepository(EduLesson).createQueryBuilder("eduLesson")
+
+    .where("eduLesson.lessonStatus = 'on' and (eduLesson.lessonName like :queryStr or eduLesson.eduName like :queryStr) ", { queryStr: nullableFuzzy(queryStr) })
+    // .skip(page*size)
+    //todo 方便测试
+    .skip(0)
+    .take(size).getManyAndCount()
+    return lessons[0]
 }
 
-export const searchContract =  async ({ page, size,searchValue }) => {
-    const result = await mysql.getRepository(Contract).findBy(searchValue)
-    return result
+
+
+export const searchContract =  async (reqParams) => {
+    let {page,size} = reqParams
+    if(page==null){
+        page=0
+    }
+    if(size==null){
+        size=10
+    }
+    reqParams.page=undefined
+    reqParams.size=undefined   
+
+
+    // const result = await mysql.getRepository(Contract).findBy(searchValue)
+
+    const contracts =await mysql.getRepository(Contract).createQueryBuilder("contract")
+
+    // .skip(page*size)
+    //todo 方便测试
+    .skip(0)
+    .take(size).getManyAndCount()
+    return contracts[0]
 }
 
 export const saveContract =  async (contract) => {

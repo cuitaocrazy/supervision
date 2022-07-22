@@ -1,4 +1,4 @@
-import { IonPage, IonHeader, IonContent } from "@ionic/react"
+import { IonPage, IonHeader, IonContent,IonInfiniteScroll,IonInfiniteScrollContent } from "@ionic/react"
 import Search from '../Search'
 import Navbar from '../Navbar'
 import { Lesson } from '../../types/types'
@@ -8,7 +8,9 @@ import FeaturedRecommendAndMore from '../FeaturedRecommendAndMore'
 import RoundedCornersStyles from '../RoundedCornersStyles'
 import { useEffect,useState } from "react"
 import {searchLessonURL} from '../../const/const'
-import Menu from '../pages/Menu';
+import PullToRefresh from 'react-simple-pull-to-refresh';
+// import Menu from '../pages/Menu';
+// import PulldownRefresh from '@nuonuonuonuoyan/react-pulldown-refresh'
 
 // 首页
 const Home = () => {
@@ -17,22 +19,57 @@ const Home = () => {
   // 课程列表数据
 
   const [lessonList,setLessonList] = useState([] as Lesson[])
-  useEffect(()=>{
-    fetch(searchLessonURL, {
+  const [page,setPage] = useState(0)
+  const onQuery = ()=>{
+    fetch(paramStr, {
       method: 'GET',
-      // body: JSON.stringify({
-        
-      // }),
       headers: {
         'Content-type': 'application/json;charset=UTF-8',
       },
     }).then(res => res.json())
     .then((json) => {
-      setLessonList(json.result)
+      setLessonList(json.result)  
     })
-  },[])
+  }
+
+  useEffect(onQuery,[])
+
+  const [queryStr,setQueryStr] = useState('')
+
+  const getParamStr = (params: any, url: string) => {
+    let result = '?';
+    Object.keys(params).forEach(key => (result = result + key + '=' + params[key] + '&'));
+    return url + result;
+  };
+  const paramStr = getParamStr(
+    {
+      queryStr: queryStr,
+      page:page,
+      size:10
+    },
+    searchLessonURL
+  );
+  const onRefresh = async () => {
+    setPage(0)
+    onQuery()
+  };
 
 
+
+  const onInfiniteScrolldown = (ev: any) => {
+    console.log('onInfiniteScrolldown')
+    setPage(page+1)
+    fetch(paramStr, {
+      method: 'GET',
+      headers: {
+        'Content-type': 'application/json;charset=UTF-8',
+      },
+    }).then(res => res.json())
+    .then((json) => {
+      setLessonList([...lessonList,...json.result])  
+      ev.target.complete();
+    })
+  };
   return <IonPage>
     <IonHeader>
       <Navbar title="教育资金监管平台" />
@@ -41,15 +78,26 @@ const Home = () => {
       <div className='relative bg-primary-600'>
         <RoundedCornersStyles />
         <div className='bg-white'>
-          <Search />
+          <Search setQueryStr={setQueryStr} onQuery={onQuery} />
           <LessonImages lessonImages={lesson.lessonImgs} />
           <FeaturedRecommendAndMore />
-          {/* 课程列表card */}
-          <div className="grid py-2 sm1:grid-cols-2 sm2:grid-cols-2 sm3:grid-cols-2">
-            {lessonList.map((item, index) => {
-              return <LessonListCard key={index} lesson_imgs={item.lessonImgs} lesson_name={item.lessonName} lesson_introduce={item.lessonIntroduce} item={item} edu_address={item.edu?.eduAddress} />
-            })}
-          </div>
+
+            <PullToRefresh onRefresh={onRefresh}>
+            <div className="grid py-2 sm1:grid-cols-2 sm2:grid-cols-2 sm3:grid-cols-2">
+              {lessonList.map((item, index) => {
+                return <LessonListCard key={index} lesson_imgs={item.lessonImgs} lesson_name={item.lessonName} lesson_introduce={item.lessonIntroduce} item={item} edu_address={item.edu?.eduAddress} />
+              })}
+            </div>
+            </PullToRefresh>
+            <IonInfiniteScroll
+            onIonInfinite={onInfiniteScrolldown}
+            threshold="100px"
+            disabled={false}
+            >
+                        <IonInfiniteScrollContent loadingSpinner="bubbles" loadingText="加载数据">
+
+                        </IonInfiniteScrollContent>
+          </IonInfiniteScroll>
         </div>
       </div>
     </IonContent>

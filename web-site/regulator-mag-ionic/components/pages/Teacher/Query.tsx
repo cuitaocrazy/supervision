@@ -12,40 +12,9 @@ import { Teacher } from '../../../types/types';
 import { IonPage, IonList, IonLabel, IonItem, IonRow, IonCol } from '@ionic/react';
 import Paging from '../../paging';
 
-const queryURL = 'http://localhost:3003/teacher/query';
-const delURL = 'http://localhost:3003/teacher/del';
-const modifyURL = 'http://localhost:3003/teacher/modifyURL';
-const applyURL = 'http://localhost:3003/teacher/apply';
-const demoTeacherList: Teacher[] = [
-  {
-    eduName: '灵纳教育',
-    orgName: '河北省教育局',
-    teacherId: '1',
-    teacherName: '张三',
-    teacherIdentityNo: '123456789012345678',
-    teacherExperience: 3,
-    teacherIntroduce: '介绍',
-    teacherRating: 5,
-    teacherCreatedDate: '2020-01-01',
-    teacherCreateTime: '00:00:00',
-    teacherUpdatedDate: '2020-01-01',
-    teacherUpdateTime: '00:00:00',
-  },
-  {
-    eduName: '灵纳教育',
-    orgName: '河北省教育局',
-    teacherId: '2',
-    teacherName: '张4',
-    teacherIdentityNo: '123456789012345678',
-    teacherExperience: 6,
-    teacherIntroduce: '介绍',
-    teacherRating: 5,
-    teacherCreatedDate: '2020-01-01',
-    teacherCreateTime: '00:00:00',
-    teacherUpdatedDate: '2020-01-01',
-    teacherUpdateTime: '00:00:00',
-  },
-];
+const queryURL = 'http://localhost:3003/edb/teacher/find';
+
+
 const TeacherQuery: React.FC = () => {
   const { state, dispatch } = useContext(AppContext);
   const [page,setPage] = useState(0)
@@ -92,41 +61,24 @@ const TeacherQuery: React.FC = () => {
     [dispatch]
   );
   useEffect(() => {
-    // fetch(paramStr, {
-    //   method: 'GET',
-    //   headers: {
-    //     'Content-type': 'application/json;charset=UTF-8',
-    //   },
-    // }).then(res => res.json())
-    // .then((json) => {
-    // const {TeacherList} = json
-
-    // refreshList(demoTeacherList.filter((teacher:Teacher)=>teacher.teacherName.indexOf(queryInfo.teacherName)>-1))
-    // return
-    // })
-
-    refreshList(demoTeacherList);
-  }, [refreshList]);
+    onQuery()
+  }, []);
 
   const onQuery = () => {
-    // fetch(paramStr, {
-    //   method: 'GET',
-    //   headers: {
-    //     'Content-type': 'application/json;charset=UTF-8',
-    //   },
-    // }).then(res => res.json())
-    // .then((json) => {
-    // const {TeacherList} = json
-
-    // refreshList(demoTeacherList.filter((teacher:Teacher)=>teacher.teacherName.indexOf(queryInfo.teacherName)>-1))
-    // return
-    // })
-    refreshList(
-      demoTeacherList.filter(
-        (teacher: Teacher) => teacher.teacherName.indexOf(queryInfo.teacherName) > -1
-      )
-    );
-    return;
+    fetch(paramStr, {
+      method: 'GET',
+      headers: {
+        'Content-type': 'application/json;charset=UTF-8',
+      },
+    }).then(res => res.json())
+    .then(json => {
+      const { result, records,total } = json;
+      if (result) {
+        setTotal(total)
+        refreshList(records)
+      };
+      return;
+    });
   };
 
   const ListEntry = ({ teacher, ...props }: { teacher: Teacher;}) => (
@@ -136,7 +88,7 @@ const TeacherQuery: React.FC = () => {
       <td className="flex items-center justify-center leading-10">{teacher.teacherName}</td>
       <td className="flex items-center justify-center leading-10">{teacher.teacherIntroduce}</td>
       <td className="flex items-center justify-center leading-10">{teacher.teacherExperience}</td>
-      <td className="flex items-center justify-center leading-10">{teacher.teacherCreatedDate}</td>
+      <td className="flex items-center justify-center leading-10">{teacher.teacherCreateDate}</td>
       <td className="flex items-center justify-center leading-10">
         <div className="flex gap-2 ">
           <button className="p-1 text-primary-600" onClick={onDetail(teacher)}>

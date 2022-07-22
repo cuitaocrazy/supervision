@@ -1,11 +1,12 @@
 import { FC,useContext,useCallback,useState,useEffect } from 'react';
-import { IonPage, IonHeader, IonContent } from "@ionic/react"
+import { IonPage, IonHeader, IonContent,IonInfiniteScroll,IonInfiniteScrollContent } from "@ionic/react"
 import Router, { useRouter } from 'next/router'
 import Navbar from 'components/Navbar'
 import { Contract } from '../../types/types'
 import { Link } from 'react-router-dom';
 import {AppContext,setContractDetail} from '../../appState';
 import {searchContractURL} from'../../const/const';
+import PullToRefresh from 'react-simple-pull-to-refresh';
 
 interface OrderListProps {
   lessonImages?: string
@@ -22,6 +23,7 @@ const LessonListCard: FC<OrderListProps> = (props) => {
   const refreshContractDetail = useCallback((contract:Contract) => {
     dispatch(setContractDetail(contract));
   },[dispatch]);
+
   return <div className='pb-3 mx-3 mt-2 bg-white rounded-lg shadow-md'>
     <div className='flex pb-1 mx-2 mb-2 rounde-xl'>
       <img className='w-20 h-20 mt-2 ml-1 rounded-xl' src={props.lessonImages}></img>
@@ -51,27 +53,29 @@ const LessonListCard: FC<OrderListProps> = (props) => {
   </div>
 }
 
-// let orderList: Contract[] = [
-//   { lessonImages: "http://placekitten.com/g/200/300", lessonName: "小熊美术1", teacherName: "张雷", lessonTotalPrice: 999, lessonTotalQuantity: 58, eduAddress: "北京市海淀区大钟寺东路", eduContactPhone: "010-980990090", consumerStuName: "张大宝", lessonCompletedQuantity: 10, teacherIntroduce: "李雷，清华大学美术学院，学士、硕士，7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖,7年资深美育教研从业经验，20年媒体从业经历。清华大学美术学院，学士、硕士，7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖,7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖......", lessonIntroduce: "艺术教育是未来教育，是快乐教育" },
-//   { lessonImages: "http://placekitten.com/g/200/300", lessonName: "小熊美术2", teacherName: "张雷", lessonTotalPrice: 999, lessonTotalQuantity: 58, eduAddress: "北京市海淀区大钟寺东路", eduContactPhone: "010-980990090", consumerStuName: "张大宝", lessonCompletedQuantity: 10, teacherIntroduce: "李雷，清华大学美术学院，学士、硕士，7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖,7年资深美育教研从业经验，20年媒体从业经历。清华大学美术学院，学士、硕士，7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖,7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖......", lessonIntroduce: "艺术教育是未来教育，是快乐教育" },
-//   { lessonImages: "http://placekitten.com/g/200/300", lessonName: "小熊美术3", teacherName: "张雷", lessonTotalPrice: 999, lessonTotalQuantity: 58, eduAddress: "北京市海淀区大钟寺东路", eduContactPhone: "010-980990090", consumerStuName: "张大宝", lessonCompletedQuantity: 10, teacherIntroduce: "李雷，清华大学美术学院，学士、硕士，7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖,7年资深美育教研从业经验，20年媒体从业经历。清华大学美术学院，学士、硕士，7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖,7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖......", lessonIntroduce: "艺术教育是未来教育，是快乐教育" },
-//   { lessonImages: "http://placekitten.com/g/200/300", lessonName: "小熊美术4", teacherName: "张雷", lessonTotalPrice: 999, lessonTotalQuantity: 58, eduAddress: "北京市海淀区大钟寺东路", eduContactPhone: "010-980990090", consumerStuName: "张大宝", lessonCompletedQuantity: 10, teacherIntroduce: "李雷，清华大学美术学院，学士、硕士，7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖,7年资深美育教研从业经验，20年媒体从业经历。清华大学美术学院，学士、硕士，7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖,7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖......", lessonIntroduce: "艺术教育是未来教育，是快乐教育" },
-//   { lessonImages: "http://placekitten.com/g/200/300", lessonName: "小熊美术5", teacherName: "张雷", lessonTotalPrice: 999, lessonTotalQuantity: 58, eduAddress: "北京市海淀区大钟寺东路", eduContactPhone: "010-980990090", consumerStuName: "张大宝", lessonCompletedQuantity: 10, teacherIntroduce: "李雷，清华大学美术学院，学士、硕士，7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖,7年资深美育教研从业经验，20年媒体从业经历。清华大学美术学院，学士、硕士，7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖,7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖......", lessonIntroduce: "艺术教育是未来教育，是快乐教育" },
-//   { lessonImages: "http://placekitten.com/g/200/300", lessonName: "小熊美术6", teacherName: "张雷", lessonTotalPrice: 999, lessonTotalQuantity: 58, eduAddress: "北京市海淀区大钟寺东路", eduContactPhone: "010-980990090", consumerStuName: "张大宝", lessonCompletedQuantity: 10, teacherIntroduce: "李雷，清华大学美术学院，学士、硕士，7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖,7年资深美育教研从业经验，20年媒体从业经历。清华大学美术学院，学士、硕士，7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖,7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖......", lessonIntroduce: "艺术教育是未来教育，是快乐教育" },
-//   { lessonImages: "http://placekitten.com/g/200/300", lessonName: "小熊美术7", teacherName: "张雷", lessonTotalPrice: 999, lessonTotalQuantity: 58, eduAddress: "北京市海淀区大钟寺东路", eduContactPhone: "010-980990090", consumerStuName: "张大宝", lessonCompletedQuantity: 10, teacherIntroduce: "李雷，清华大学美术学院，学士、硕士，7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖,7年资深美育教研从业经验，20年媒体从业经历。清华大学美术学院，学士、硕士，7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖,7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖7年资深美育教研从业经验，20年媒体从业经历。7年资深美育教研工作中，李雷多次获得美术相关奖项：世界最高美术奖、中国美术金彩奖、徐悲鸿美术奖......", lessonIntroduce: "艺术教育是未来教育，是快乐教育" },
-// ]
-
-
-
 // 课程列表页面
 const MyLessonList = () => {
   const [orderList,setOrderList] = useState([] as Contract[])
+  const [page,setPage] = useState(0)
+  const getParamStr = (params: any, url: string) => {
+    let result = '?';
+    Object.keys(params).forEach(key => (result = result + key + '=' + params[key] + '&'));
+    return url + result;
+  };
+  const paramStr = getParamStr(
+    {
+      page:page,
+      size:10
+    },
+    searchContractURL
+  );
 useEffect(()=>{
-  fetch(searchContractURL, {
+  onQuery()
+},[])
+
+const onQuery = ()=>{
+  fetch(paramStr, {
     method: 'GET',
-    // body: JSON.stringify({
-      
-    // }),
     headers: {
       'Content-type': 'application/json;charset=UTF-8',
     },
@@ -79,15 +83,47 @@ useEffect(()=>{
   .then((json) => {
     setOrderList(json.result)
   })
-},[])
+}
+
+const onRefresh = async () => {
+  setPage(0)
+  onQuery()
+};
+
+const onInfiniteScrolldown = (ev:any)=>{
+  setPage(page+1)
+  fetch(paramStr, {
+    method: 'GET',
+    headers: {
+      'Content-type': 'application/json;charset=UTF-8',
+    },
+  }).then(res => res.json())
+  .then((json) => {
+    setOrderList([...orderList,...json.result])  
+    ev.target.complete();
+  })
+}
   return <IonPage>
     <IonHeader>
       <Navbar title="课程列表" />
     </IonHeader>
     <IonContent>
-      {orderList.map((item, index) => {
-        return <LessonListCard key={index} lessonImages={item.lessonImages} lessonName={item.lessonName} consumerStuName={item.consumerStuName} lessonTotalQuantity={item.lessonTotalQuantity} lessonCompletedQuantity={item.lessonAccumulationQuantity} item={item} />
-      })}
+      <PullToRefresh onRefresh={onRefresh}>
+        <div>
+          {orderList.map((item, index) => {
+            return <LessonListCard key={index} lessonImages={item.lessonImages} lessonName={item.lessonName} consumerStuName={item.consumerStuName} lessonTotalQuantity={item.lessonTotalQuantity} lessonCompletedQuantity={item.lessonAccumulationQuantity} item={item} />
+          })}
+        </div>
+      </PullToRefresh>
+       <IonInfiniteScroll
+            onIonInfinite={onInfiniteScrolldown}
+            threshold="100px"
+            disabled={false}
+            >
+                        <IonInfiniteScrollContent loadingSpinner="bubbles" loadingText="加载数据">
+
+                        </IonInfiniteScrollContent>
+          </IonInfiniteScroll>
     </IonContent>
   </IonPage>
 }

@@ -16,10 +16,11 @@ import {
 } from '@ionic/react';
 import { Dialog, Transition } from '@headlessui/react';
 import { UserInfo } from 'os';
+import Paging from '../../paging'
 
-const queryURL = 'http://localhost:3003/lesson/query';
-const delURL = 'http://localhost:3003/lesson/del';
-const modifyURL = 'http://localhost:3003/lesson/modifyURL';
+const queryURL = 'http://localhost:3003/edb/supervisorUser/find';
+const delURL = 'http://localhost:3003/edb/supervisorUser/del';
+const modifyURL = 'http://localhost:3003/edb/supervisorUser/modifyURL';
 const attendURL = 'http://localhost:3003/lesson/attend';
 const createUrl = 'http://localhost:3003/baseInfo/create';
 const demoLessonList: SupervisorUser[] = [
@@ -41,6 +42,14 @@ const demoLessonList: SupervisorUser[] = [
 const BaseInfoQuery: React.FC = () => {
   // 新增模态框的状态
   let [isCreateOpen, setIsCreateOpen] = useState(false);
+  const [page,setPage] = useState(0)
+  const [total,setTotal]= useState(0)
+
+  const onPageChange = (records:any,total:number,newPage:number)=>{
+    setPage(newPage)
+    setTotal(total)
+    refreshList(records)
+  }
   function closeCreateModal() {
     setIsCreateOpen(false);
   }
@@ -57,7 +66,7 @@ const BaseInfoQuery: React.FC = () => {
   }
   const onCancel = (item: SupervisorUser) => () => {
     fetch(delURL, {
-      method: 'PUT',
+      method: 'POST',
       body: JSON.stringify({
         supervisorLoginName: item.supervisorLoginName,
       }),
@@ -67,7 +76,10 @@ const BaseInfoQuery: React.FC = () => {
     })
       .then(res => res.json())
       .then(json => {
-        alert(json.result);
+        if(json.result){
+            closeDeleteModal()
+            onQuery()
+        }
       });
   };
   const createModal = useRef<HTMLIonModalElement>(null);
@@ -105,17 +117,15 @@ const BaseInfoQuery: React.FC = () => {
     },
     [dispatch]
   );
+
+  const refreshList = useCallback(
+    (loginUser: SupervisorUser[]) => {
+      dispatch(setUserInfoList(loginUser));
+    },
+    [dispatch]
+  );
   useEffect(() => {
-    // fetch(paramStr, {
-    //   method: 'GET',
-    //   headers: {
-    //     'Content-type': 'application/json;charset=UTF-8',
-    //   },
-    // }).then(res => res.json())
-    // .then((json) => {
-    // const {userInfoList} = json //todo
-    // refreshLessonList(demoLessonList.filter((userInfo:SupervisorUser)=>userInfo.supervisorUsername&&userInfo.supervisorUsername.indexOf(queryInfo.supervisorUsername)>-1).filter((userInfo:SupervisorUser)=>userInfo.supervisorLoginName.indexOf(queryInfo.supervisorLoginName)>-1))
-    refreshLessonList(demoLessonList);
+    onQuery()
   }, []);
 
   const onEdit = (item: SupervisorUser) => () => {
@@ -130,12 +140,20 @@ const BaseInfoQuery: React.FC = () => {
   );
 
   const onQuery = () => {
-    refreshLessonList(
-      demoLessonList.filter(
-        (userInfo: SupervisorUser) =>
-          userInfo.supervisorLoginName.indexOf(queryInfo.supervisorLoginName) > -1
-      )
-    );
+    fetch(paramStr, {
+      method: 'GET',
+      headers: {
+        'Content-type': 'application/json;charset=UTF-8',
+      },
+    }).then(res => res.json())
+    .then(json => {
+      const { result, records,total } = json;
+      if (result) {
+        setTotal(total)
+        refreshList(records)
+      };
+      return;
+    });
   };
   const onCreate = (e: any) => {
     e.preventDefault();
@@ -417,7 +435,7 @@ const BaseInfoQuery: React.FC = () => {
                         <hr className="mt-2 mb-4" />
                       </Dialog.Title>
                       <form
-                        // onSubmit={onCreate}
+                        onSubmit={onCancel}
                         className="flex flex-col items-center rounded-lg justify-items-center"
                       >
                         <div className="flex items-center mb-4 justify-items-center">
@@ -434,7 +452,7 @@ const BaseInfoQuery: React.FC = () => {
                           />
                           <input
                             value="确定"
-                            type="button"
+                            type="submit"
                             className="px-6 py-2 text-white border rounded-md bg-primary-600"
                           />
                         </div>
@@ -463,7 +481,7 @@ const BaseInfoQuery: React.FC = () => {
                   <ListEntry userInfo={list} key={i} />
                 ))}
                 <tr>
-                  {/* <td colSpan={5}> <Paging url={paramStr} page={page} pagesize={20} total={total} onPageChange={onPageChange}/></td> */}
+                  <td colSpan={5}> <Paging url={paramStr} page={page} pagesize={20} total={total} onPageChange={onPageChange}/></td>
                 </tr>
               </tbody>
             </table>
