@@ -195,6 +195,7 @@ export interface Complaint {
   complaintContent: string,
   complaintStatus: string,
   complaintGrade: string,
+  complaintDescResu:string
 }
 
 export interface Consumer {
