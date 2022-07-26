@@ -38,12 +38,13 @@ export const BlackDetail: React.FC = () => {
     dispatch(setBlackDetail(undefined));
   }, []);
   const onBack = () => () => {
+    console.log("111111")
     setBack();
   };
   // const onBack = () => {
   //   setBack();
   // };
-  if (state.announcement.announcementDetail === undefined) {
+  if (state.black.blackDetail === undefined) {
     return <Redirect to={state.backPage} />;
   }
   const onModify = async (e: React.FormEvent) => () => {
