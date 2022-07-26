@@ -12,6 +12,7 @@ import Announcement from './pages/Announcement/query';
 import { AnnouncementDetail } from './pages/Announcement/detail';
 import { AnnouncementEdit } from './pages/Announcement/edit';
 import Black from './pages/Black/query';
+import {BlackDetail} from './pages/Black/detail';
 import Attendance from './pages/Attendance/query';
 import { AttendanceDetail } from './pages/Attendance/detail';
 
@@ -82,6 +83,7 @@ const AppShell = () => {
               />
               <Route path="/tabs/supervisorOrg/edit" component={SuperVisorOrgEdit} exact={true} />
               <Route path="/tabs/black/query" component={Black} exact={true} />
+              <Route path="/tabs/black/detail" component={BlackDetail} exact={true} />
               {/* <Route path="/tabs" render={() => <Redirect to="/tabs/feed" />} exact={true} /> */}
               <Route path="/tabs/baseInfo/query" component={BaseInfo} exact={true} />
               <Route path="/tabs/baseInfo/Detail" component={BaseInfoDetail} exact={true} />

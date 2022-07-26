@@ -97,9 +97,8 @@ const initialState = {
   transferManual:{// 手动划拨
     transferManualList:[],
     transferManualConfirm:null
-
-
   }
+
 };
 export const AppContext = React.createContext<{state:any,dispatch:React.Dispatch<any>}>({state:initialState,dispatch:()=>{}});
 
