@@ -389,6 +389,7 @@ const ComplaintQuery: React.FC = () => {
                 <tr className="grid items-center h-10 grid-cols-7 gap-2 font-bold text-gray-700 bg-white rounded-lg justify-items-center">
                   <th className="flex items-center justify-center">投诉标题</th>
                   <th className="flex items-center justify-center">投诉类型</th>
+                  <th className="flex items-center justify-center">投诉内容</th>
                   <th className="flex items-center justify-center">投诉日期</th>
                   <th className="flex items-center justify-center">紧急状态</th>
                   <th className="flex items-center justify-center">投诉状态</th>
