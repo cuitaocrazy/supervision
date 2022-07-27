@@ -1,4 +1,4 @@
-import { useEffect, useCallback, useContext, useState,Fragment } from 'react';
+import { useEffect, useCallback, useContext, useState, Fragment } from 'react';
 import { Redirect } from 'react-router-dom';
 import { AppContext, setComplaintList, setComplaintDetail } from '../../../appState';
 import { Complaint } from '../../../types/types';
@@ -20,7 +20,7 @@ import { Dialog, Transition } from '@headlessui/react';
 
 const queryURL = 'http://localhost:3003/complaint/query';
 const handleComplaint = 'http://localhost:3003/complaint/detail';
-const createURL='http://localhost:3003/complaint/detail';
+const createURL = 'http://localhost:3003/complaint/detail';
 
 const demoComplaintList: Complaint[] = [
   {
@@ -38,7 +38,7 @@ const demoComplaintList: Complaint[] = [
     complaintContent: '课程不合理',
     complaintStatus: '1',
     complaintGrade: 'aaa',
-    complaintDescResu:""
+    complaintDescResu: '',
   },
   {
     complaintId: '2',
@@ -55,19 +55,19 @@ const demoComplaintList: Complaint[] = [
     complaintContent: '课程不合理',
     complaintStatus: '1',
     complaintGrade: 'aaa',
-    complaintDescResu:""
+    complaintDescResu: '',
   },
 ];
 
 const ComplaintQuery: React.FC = () => {
-   // 去处理dialog页面状态
-   let [isDealOpen, setIsDealOpen] = useState(false);
-   function closeDealModal() {
+  // 去处理dialog页面状态
+  let [isDealOpen, setIsDealOpen] = useState(false);
+  function closeDealModal() {
     setIsDealOpen(false);
-   }
-   function openDealModal() {
+  }
+  function openDealModal() {
     setIsDealOpen(true);
-   }
+  }
   const { state, dispatch } = useContext(AppContext);
   const [complaintState, setComplaintState] = useState({} as Complaint);
   const onCreate = async (e: React.FormEvent) => () => {
@@ -147,7 +147,7 @@ const ComplaintQuery: React.FC = () => {
     refreshList(demoComplaintList);
   };
 
-  const ListEntry = ({ complaint, ...props }: { complaint: Complaint;}) => (
+  const ListEntry = ({ complaint, ...props }: { complaint: Complaint }) => (
     <tr className="grid items-center grid-cols-7 gap-2 text-gray-600 border justify-items-center even:bg-white odd:bg-primary-100 ">
       <td className="flex items-center justify-center leading-10">{complaint.complaintTitle}</td>
       <td className="flex items-center justify-center leading-10">{complaint.complaintType}</td>
@@ -160,7 +160,13 @@ const ComplaintQuery: React.FC = () => {
           <button className="p-1 text-primary-600" onClick={onDetail(complaint)}>
             详情
           </button>
-          <button className="p-1 text-cyan-600" onClick={openDealModal}>
+          <button
+            className="p-1 text-cyan-600"
+            onClick={() => {
+              setComplaintState(complaint);
+              openDealModal();
+            }}
+          >
             去处理
           </button>
         </div>
@@ -232,8 +238,7 @@ const ComplaintQuery: React.FC = () => {
               </svg>
             </div>
             <div>
-              <span className="pr-1 text-gray-600">教育机构管理</span>/
-              <span className="pl-1 text-primary-500">查看教师信息</span>
+              <span className="pr-1 text-gray-600">投诉管理</span>
             </div>
           </div>
           <div className="w-11/12 px-4 py-2 mt-4 bg-white rounded-lg ">
@@ -266,116 +271,116 @@ const ComplaintQuery: React.FC = () => {
             </div>
           </div>
           {/* 加入黑名单 */}
-        <Transition appear show={isDealOpen} as={Fragment}>
-          <Dialog as="div" className="relative z-10" onClose={closeDealModal}>
-            <Transition.Child
-              as={Fragment}
-              enter="ease-out duration-300"
-              enterFrom="opacity-0"
-              enterTo="opacity-100"
-              leave="ease-in duration-200"
-              leaveFrom="opacity-100"
-              leaveTo="opacity-0"
-            >
-              <div className="fixed inset-0 bg-black bg-opacity-25" />
-            </Transition.Child>
+          <Transition appear show={isDealOpen} as={Fragment}>
+            <Dialog as="div" className="relative z-10" onClose={closeDealModal}>
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0"
+                enterTo="opacity-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100"
+                leaveTo="opacity-0"
+              >
+                <div className="fixed inset-0 bg-black bg-opacity-25" />
+              </Transition.Child>
 
-            <div className="fixed inset-0 overflow-y-auto">
-              <div className="flex items-center justify-center min-h-full p-4 text-center">
-                <Transition.Child
-                  as={Fragment}
-                  enter="ease-out duration-300"
-                  enterFrom="opacity-0 scale-95"
-                  enterTo="opacity-100 scale-100"
-                  leave="ease-in duration-200"
-                  leaveFrom="opacity-100 scale-100"
-                  leaveTo="opacity-0 scale-95"
-                >
-                  <Dialog.Panel className="w-full max-w-md p-4 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
-                    <Dialog.Title
-                      as="h3"
-                      className="text-lg font-medium leading-6 text-center text-gray-900"
-                    >
-                      去处理
-                      <hr className="mt-2 mb-4" />
-                    </Dialog.Title>
-                    <form
-                      // onSubmit={onCreate}
-                      className="flex flex-col items-center rounded-lg justify-items-center"
-                    >
-                      <div className="flex items-center mb-4 justify-items-center">
-                        <div className="flex leading-7 justify-items-center">
-                          <div className="flex justify-end p-1 w-36">投诉标题:</div>
-                          <input
-                            className="w-64 p-1 text-gray-600 bg-gray-100 border rounded-md justify-self-start focus:outline-none"
-                            name="eduName"
-                            value={complaintState.complaintTitle}
-                            onChange={e =>
-                              setComplaintState({
-                                ...complaintState,
-                                complaintTitle: e.nativeEvent.target?.value,
-                              })
-                            }
-                            readOnly
-                          ></input>
+              <div className="fixed inset-0 overflow-y-auto">
+                <div className="flex items-center justify-center min-h-full p-4 text-center">
+                  <Transition.Child
+                    as={Fragment}
+                    enter="ease-out duration-300"
+                    enterFrom="opacity-0 scale-95"
+                    enterTo="opacity-100 scale-100"
+                    leave="ease-in duration-200"
+                    leaveFrom="opacity-100 scale-100"
+                    leaveTo="opacity-0 scale-95"
+                  >
+                    <Dialog.Panel className="w-full max-w-md p-4 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
+                      <Dialog.Title
+                        as="h3"
+                        className="text-lg font-medium leading-6 text-center text-gray-900"
+                      >
+                        去处理
+                        <hr className="mt-2 mb-4" />
+                      </Dialog.Title>
+                      <form
+                        // onSubmit={onCreate}
+                        className="flex flex-col items-center rounded-lg justify-items-center"
+                      >
+                        <div className="flex items-center mb-4 justify-items-center">
+                          <div className="flex leading-7 justify-items-center">
+                            <div className="flex justify-end p-1 w-36">投诉标题:</div>
+                            <input
+                              className="w-64 p-1 text-gray-600 bg-gray-100 border rounded-md justify-self-start focus:outline-none"
+                              name="eduName"
+                              value={complaintState.complaintTitle}
+                              onChange={e =>
+                                setComplaintState({
+                                  ...complaintState,
+                                  complaintTitle: e.nativeEvent.target?.value,
+                                })
+                              }
+                              readOnly
+                            ></input>
+                          </div>
                         </div>
-                      </div>
-                      <div className="flex items-center mb-4 justify-items-center">
-                        <div className="flex justify-items-center">
-                          <span className="flex justify-end p-1 mr-1 w-36">投诉内容:</span>
-                          <input
-                            className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
-                            name="lessonTotalTimes"
-                            type="text"
-                            value={complaintState.complaintContent}
-                            onChange={e =>
-                              setComplaintState({
-                                ...complaintState,
-                                complaintContent: e.nativeEvent.target?.value,
-                              })
-                            }
-                            required
-                          ></input>
+                        <div className="flex items-center mb-4 justify-items-center">
+                          <div className="flex justify-items-center">
+                            <span className="flex justify-end p-1 mr-1 w-36">投诉内容:</span>
+                            <input
+                              className="w-64 p-1 text-gray-600 bg-gray-100 border rounded-md justify-self-start focus:outline-none"
+                              name="lessonTotalTimes"
+                              type="text"
+                              value={complaintState.complaintContent}
+                              onChange={e =>
+                                setComplaintState({
+                                  ...complaintState,
+                                  complaintContent: e.nativeEvent.target?.value,
+                                })
+                              }
+                              required
+                            ></input>
+                          </div>
                         </div>
-                      </div>
-                      <div className="flex items-center mb-4 justify-items-center">
-                        <div className="flex justify-items-center">
-                          <span className="flex justify-end p-1 mr-1 w-36">处理结果:</span>
-                          <textarea
-                            className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
-                            name="eduAddress"
-                            onChange={e =>
-                              setComplaintState({
-                                ...complaintState,
-                                complaintDescResu: e.nativeEvent.target?.value,
-                              })
-                            }
-                            required
+                        <div className="flex items-center mb-4 justify-items-center">
+                          <div className="flex justify-items-center">
+                            <span className="flex justify-end p-1 mr-1 w-36">处理结果:</span>
+                            <textarea
+                              className="w-64 h-32 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
+                              name="eduAddress"
+                              onChange={e =>
+                                setComplaintState({
+                                  ...complaintState,
+                                  complaintDescResu: e.nativeEvent.target?.value,
+                                })
+                              }
+                              required
+                            />
+                          </div>
+                        </div>
+
+                        <div className="flex items-center gap-4 mt-2 justify-items-center">
+                          <input
+                            value="返回"
+                            type="button"
+                            className="px-6 py-2 border rounded-md "
+                            onClick={closeDealModal}
+                          />
+                          <input
+                            value="提交"
+                            type="button"
+                            className="px-6 py-2 text-white border rounded-md bg-primary-600"
+                            onClick={closeDealModal}
                           />
                         </div>
-                      </div>
-
-                      <div className="flex items-center gap-4 mt-2 justify-items-center">
-                        <input
-                          value="返回"
-                          type="button"
-                          className="px-6 py-2 border rounded-md "
-                          onClick={closeDealModal}
-                        />
-                        <input
-                          value="提交"
-                          type="button"
-                          className="px-6 py-2 text-white border rounded-md bg-primary-600"
-                          onClick={closeDealModal}
-                        />
-                      </div>
-                    </form>
-                  </Dialog.Panel>
-                </Transition.Child>
+                      </form>
+                    </Dialog.Panel>
+                  </Transition.Child>
+                </div>
               </div>
-            </div>
-          </Dialog>
-        </Transition>
+            </Dialog>
+          </Transition>
 
           {/* 列表 */}
           <div className="absolute w-full mt-10">
