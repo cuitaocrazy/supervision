@@ -35,7 +35,7 @@ const createURL = 'http://localhost:3003/eduOrg/create';
 
 // 课程查询页面
 const OrgMagQuery: React.FC = () => {
-  // 课程新增dialog页面状态
+  // 教育机构新增dialog页面状态
   let [isCreateOpen, setIsCreateOpen] = useState(false);
   function closeCreateModal() {
     setIsCreateOpen(false);
@@ -50,6 +50,15 @@ const OrgMagQuery: React.FC = () => {
   }
   function openBlackModal() {
     setIsBlackOpen(true);
+  }
+
+  // 删除教育机构模态框的状态
+  let [isDeleteOpen, setIsDeleteOpen] = useState(false);
+  function closeDeleteModal() {
+    setIsDeleteOpen(false);
+  }
+  function openDeleteModal() {
+    setIsDeleteOpen(true);
   }
 
   const onCancel = (item: EduOrg) => () => {
@@ -171,7 +180,10 @@ const OrgMagQuery: React.FC = () => {
           <button className="p-1 text-primary-600" onClick={onDetail(eduOrg)}>
             详情
           </button>
-          <button className="p-1 text-cyan-600" onClick={onCancel(eduOrg)}>
+          <button className="p-1 text-cyan-600" onClick={
+            // onCancel(eduOrg)
+            openDeleteModal
+            }>
             删除
           </button>
           <button className="p-1 text-red-600" onClick={onEdit(eduOrg)}>
@@ -616,6 +628,70 @@ const OrgMagQuery: React.FC = () => {
             </div>
           </Dialog>
         </Transition>
+
+         {/* 删除教育机构模态框 */}
+         <Transition appear show={isDeleteOpen} as={Fragment}>
+            <Dialog as="div" className="relative z-10" onClose={closeDeleteModal}>
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0"
+                enterTo="opacity-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100"
+                leaveTo="opacity-0"
+              >
+                <div className="fixed inset-0 bg-black bg-opacity-25" />
+              </Transition.Child>
+
+              <div className="fixed inset-0 overflow-y-auto">
+                <div className="flex items-center justify-center min-h-full p-4 text-center">
+                  <Transition.Child
+                    as={Fragment}
+                    enter="ease-out duration-300"
+                    enterFrom="opacity-0 scale-95"
+                    enterTo="opacity-100 scale-100"
+                    leave="ease-in duration-200"
+                    leaveFrom="opacity-100 scale-100"
+                    leaveTo="opacity-0 scale-95"
+                  >
+                    <Dialog.Panel className="w-full max-w-md p-4 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
+                      <Dialog.Title
+                        as="h3"
+                        className="text-lg font-medium leading-6 text-center text-gray-900"
+                      >
+                        教育机构删除
+                        <hr className="mt-2 mb-4" />
+                      </Dialog.Title>
+                      <form
+                        onSubmit={onCreate}
+                        className="flex flex-col items-center rounded-lg justify-items-center"
+                      >
+                        <div className="flex items-center mb-4 justify-items-center">
+                          <div className="flex leading-7 justify-items-center">
+                            <div className="flex justify-end p-1 ">确定要删除该教育机构？</div>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-4 mt-2 justify-items-center">
+                          <input
+                            value="取消"
+                            type="button"
+                            className="px-6 py-2 border rounded-md "
+                            onClick={closeDeleteModal}
+                          />
+                          <input
+                            value="确定"
+                            type="submit"
+                            className="px-6 py-2 text-white border rounded-md bg-primary-600"
+                          />
+                        </div>
+                      </form>
+                    </Dialog.Panel>
+                  </Transition.Child>
+                </div>
+              </div>
+            </Dialog>
+          </Transition>
 
         {/* 列表 */}
         <div className="absolute w-full mt-10">

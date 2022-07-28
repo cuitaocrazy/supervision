@@ -20,6 +20,7 @@ import { AppContext, setLessonAudit } from '../../../appState';
 import { Lesson } from '../../../types/types';
 import { PickerColumn } from '@ionic/core';
 import { Dialog, Transition } from '@headlessui/react';
+import Quit from '../../Quit'
 
 export const LessonAudit: React.FC = () => {
   // 课程审核dialog页面状态
@@ -76,6 +77,7 @@ export const LessonAudit: React.FC = () => {
 
   return (
     <IonPage className="bg-gray-100">
+      <Quit />
       <IonCard className="h-screen mx-6 overflow-auto">
         {/* 导航 */}
         <div className="flex px-2 pt-2 mx-2 my-2 text-gray-800">

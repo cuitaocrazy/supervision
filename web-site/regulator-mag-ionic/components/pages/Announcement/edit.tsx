@@ -17,11 +17,11 @@ import {
 import { Redirect } from 'react-router-dom';
 import { useCallback, useContext } from 'react';
 import { AppContext, setAnnouncementEdit } from '../../../appState';
-
 import { Announcement } from '../../../types/types';
 import { PickerColumn } from '@ionic/core';
 import RichText from '../../RichText';
 import { EditorState } from 'draft-js';
+import Quit from '../../Quit'
 
 export const AnnouncementEdit: React.FC = () => {
   let [isOffOpen, setIsOffOpen] = useState(false);
@@ -63,6 +63,7 @@ export const AnnouncementEdit: React.FC = () => {
   };
   return (
     <IonPage>
+      <Quit />
       <IonCard className="h-screen mx-6 overflow-auto">
         {/* 导航 */}
         <div className="flex px-2 pt-2 mx-2 my-2 text-gray-800">

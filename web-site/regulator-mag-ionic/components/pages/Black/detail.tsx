@@ -17,9 +17,9 @@ import {
 import { Redirect } from 'react-router-dom';
 import { useCallback, useContext } from 'react';
 import { AppContext, setBlackDetail } from '../../../appState';
-
 import { Black } from '../../../types/types';
 import { PickerColumn } from '@ionic/core';
+import Quit from '../../Quit'
 
 export const BlackDetail: React.FC = () => {
   const modifyURL = 'http://localhost:3003/announcement/modify';
@@ -63,6 +63,7 @@ export const BlackDetail: React.FC = () => {
   };
   return (
     <IonPage className="bg-gray-100">
+      <Quit />
       <IonCard className="h-screen mx-6 overflow-auto">
         {/* 导航 */}
         <div className="flex px-2 pt-2 mx-2 my-2 text-gray-800">
