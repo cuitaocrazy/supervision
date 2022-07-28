@@ -35,16 +35,6 @@ const Tabs = () => {
         {/* <Route path="/login" component={Login} exact={true} /> */}
         <Route path="/" render={() => <Redirect to="/login" />} exact={true} />
       </IonRouterOutlet>
-      {/* <IonTabBar slot="bottom">
-        <IonTabButton tab="tab1" href="/tabs/query">
-          <IonIcon icon={flash} />
-          <IonLabel>交易明细查询</IonLabel>
-        </IonTabButton>
-        <IonTabButton tab="tab1" href="/tabs/transum">
-          <IonIcon icon={flash} />
-          <IonLabel>交易明细汇总查询</IonLabel>
-        </IonTabButton>
-      </IonTabBar> */}
     </IonTabs>
   );
 };
