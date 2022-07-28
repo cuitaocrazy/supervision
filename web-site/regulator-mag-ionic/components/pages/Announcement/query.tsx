@@ -30,6 +30,7 @@ import { PickerColumn } from '@ionic/core';
 import { Dialog, Transition } from '@headlessui/react';
 import RichText from '../../RichText';
 import { EditorState } from 'draft-js';
+import Quit from '../../Quit'
 
 const queryURL = 'http://localhost:3003/announcement/query';
 const delURL = 'http://localhost:3003/announcement/del';
@@ -231,6 +232,7 @@ const AnnouncementQuery: React.FC = () => {
   ) {
     return (
       <IonPage className="bg-gray-100">
+        <Quit />
         <div className="relative w-full h-screen mx-6 overflow-auto">
           <div className="flex pt-2 my-2 text-gray-800">
             <div className="mr-2 text-gray-600">
