@@ -14,6 +14,7 @@ import {
   IonRow,
   IonCol,
 } from "@ionic/react";
+import Quit from "components/components/Quit";
 
 const queryURL = "http://localhost:3003/attendannce/query";
 
@@ -35,6 +36,9 @@ const demoattendanceList: Attendance[] = [
     updateDate: "2020-01-01",
     updateTime: "2020-01-01",
     updateReason: "aaaa",
+    attendanceUpdateDate: "",
+    attendanceUpdateTime: "",
+    attendanceUpdateReason: "",
   },
   {
     attendanceID: "2",
@@ -53,6 +57,9 @@ const demoattendanceList: Attendance[] = [
     updateDate: "2020-01-01",
     updateTime: "2020-01-01",
     updateReason: "aaaa",
+    attendanceUpdateDate: "",
+    attendanceUpdateTime: "",
+    attendanceUpdateReason: "",
   },
 ];
 
@@ -136,32 +143,30 @@ const AttendanceQuery: React.FC = () => {
     attendance: Attendance;
     key: any;
   }) => (
-    <tr
-      className="grid items-center grid-cols-9 gap-10 text-gray-600 border justify-items-center even:bg-white odd:bg-primary-100"
-    >
+    <tr className="grid items-center grid-cols-9 gap-10 text-gray-600 border justify-items-center even:bg-white odd:bg-primary-100">
       <td className="flex items-center justify-center leading-10">
-      {attendance.lessonName}
+        {attendance.lessonName}
       </td>
       <td className="flex items-center justify-center leading-10">
-      {attendance.consumerName}
+        {attendance.consumerName}
       </td>
       <td className="flex items-center justify-center leading-10">
-      {attendance.consumerStuName}
+        {attendance.consumerStuName}
       </td>
       <td className="flex items-center justify-center leading-10">
-      {attendance.attendanceType}
+        {attendance.attendanceType}
       </td>
       <td className="flex items-center justify-center leading-10">
-      {attendance.attendanceLessonQuantity}
+        {attendance.attendanceLessonQuantity}
       </td>
       <td className="flex items-center justify-center leading-10">
-      {attendance.attendanceDate}
+        {attendance.attendanceDate}
       </td>
       <td className="flex items-center justify-center leading-10">
-      {attendance.attendanceTime}
-      </td>      
+        {attendance.attendanceTime}
+      </td>
       <td className="flex items-center justify-center leading-10">
-      {attendance.attendanceStatus}
+        {attendance.attendanceStatus}
       </td>
       <td className="flex items-center justify-center leading-10">
         <div className="flex gap-2 ">
@@ -174,48 +179,6 @@ const AttendanceQuery: React.FC = () => {
         </div>
       </td>
     </tr>
-    // <IonItem key={key}>
-    //   <IonLabel>
-    //     <p className="text-center">{attendance.lessonName}</p>
-    //   </IonLabel>
-    //   <IonLabel>
-    //     <p className="text-center">{attendance.consumerName}</p>
-    //   </IonLabel>
-    //   <IonLabel>
-    //     <p className="text-center">{attendance.consumerStuName}</p>
-    //   </IonLabel>
-    //   <IonLabel>
-    //     <p className="text-center">{attendance.attendanceType}</p>
-    //   </IonLabel>
-    //   <IonLabel>
-    //     <p className="text-center">{attendance.attendanceTime}</p>
-    //   </IonLabel>
-    //   <IonLabel>
-    //     <p className="text-center">{attendance.attendanceTime}</p>
-    //   </IonLabel>
-    //   <IonLabel>
-    //     <p className="text-center">{attendance.attendanceLessonQuantity}</p>
-    //   </IonLabel>
-    //   <IonLabel>
-    //     <p className="text-center">{attendance.attendanceDate}</p>
-    //   </IonLabel>
-    //   <IonLabel>
-    //     <p className="text-center">{attendance.attendanceTime}</p>
-    //   </IonLabel>
-    //   <IonLabel>
-    //     <p className="text-center">{attendance.attendanceStatus}</p>
-    //   </IonLabel>
-    //   <IonLabel>
-    //     <div className="flex gap-2">
-    //       <button
-    //         className="p-1 text-white bg-blue-500 rounded-md"
-    //         onClick={onDetail(attendance)}
-    //       >
-    //         查看详情
-    //       </button>
-    //     </div>
-    //   </IonLabel>
-    // </IonItem>
   );
 
   if (state.attendance.attendanceDetail) {
@@ -223,6 +186,7 @@ const AttendanceQuery: React.FC = () => {
   }
   return (
     <IonPage className="bg-gray-100">
+      <Quit />
       <div className="relative w-full h-screen mx-6 overflow-auto">
         <div className="flex pt-2 my-2 text-gray-800">
           <div className="mr-2 text-gray-600">
@@ -344,94 +308,6 @@ const AttendanceQuery: React.FC = () => {
             </IonRow>
           </div>
         </div>
-        {/* <div className="flex">
-          <IonRow className="flex justify-between ">
-            <IonCol className="flex ml-8">
-              <IonLabel className="flex h-12 p-2 font-bold text-center text-primary-600 w-28">
-                课程名称：
-              </IonLabel>
-              <input
-                type="text"
-                className="flex w-56 h-12 pt-2.5 font-bold text-center text-primary-600 bg-white rounded-md focus:outline-none focus:glow-secondary-500"
-                onChange={(e) =>
-                  setQueryInfo({
-                    ...queryInfo,
-                    ...{ lessonName: e.target.value },
-                  })
-                }
-              />
-            </IonCol>
-            <IonCol className="flex ml-8">
-              <IonLabel className="flex h-12 p-2 font-bold text-center text-primary-600 w-28">
-                客户姓名：
-              </IonLabel>
-              <input
-                type="text"
-                className="flex w-56 h-12 pt-2.5 font-bold text-center text-primary-600 bg-white rounded-md focus:outline-none focus:glow-secondary-500"
-                onChange={(e) =>
-                  setQueryInfo({
-                    ...queryInfo,
-                    ...{ consumerName: e.target.value },
-                  })
-                }
-              />
-            </IonCol>
-          </IonRow>
-          <IonRow className="flex justify-between ">
-            <IonCol className="flex ml-8">
-              <IonLabel className="flex h-12 p-2 font-bold text-center text-primary-600 w-28">
-                学生姓名：
-              </IonLabel>
-              <input
-                type="text"
-                className="flex w-56 h-12 pt-2.5 font-bold text-center text-primary-600 bg-white rounded-md focus:outline-none focus:glow-secondary-500"
-                onChange={(e) =>
-                  setQueryInfo({
-                    ...queryInfo,
-                    ...{ consumerStuName: e.target.value },
-                  })
-                }
-              />
-            </IonCol>
-            <IonCol className="flex ml-8">
-              <IonLabel className="flex h-12 p-2 font-bold text-center text-primary-600 w-28">
-                考勤类型：
-              </IonLabel>
-              <input
-                type="text"
-                className="flex w-56 h-12 pt-2.5 font-bold text-center text-primary-600 bg-white rounded-md focus:outline-none focus:glow-secondary-500"
-                onChange={(e) =>
-                  setQueryInfo({
-                    ...queryInfo,
-                    ...{ attendanceType: e.target.value },
-                  })
-                }
-              />
-            </IonCol>
-          </IonRow>
-          <IonRow className="flex justify-between ">
-            <IonCol className="flex ml-8">
-              <IonLabel className="flex h-12 p-2 font-bold text-center text-primary-600 w-28">
-                考勤状态：
-              </IonLabel>
-              <input
-                type="text"
-                className="flex w-56 h-12 pt-2.5 font-bold text-center text-primary-600 bg-white rounded-md focus:outline-none focus:glow-secondary-500"
-                onChange={(e) =>
-                  setQueryInfo({
-                    ...queryInfo,
-                    ...{ attendanceStatus: e.target.value },
-                  })
-                }
-              />
-            </IonCol>
-          </IonRow>
-          <IonRow className="flex justify-between ">
-            <IonCol className="flex ml-8" aria-colspan={2}>
-              <button onClick={() => onQuery()}>查询</button>
-            </IonCol>
-          </IonRow>
-        </div> */}
 
         {/* 考勤明细列表 */}
         <div className="absolute w-full mt-10">
@@ -439,9 +315,7 @@ const AttendanceQuery: React.FC = () => {
             <thead>
               <tr className="grid items-center h-10 grid-cols-9 gap-10 font-bold text-gray-700 bg-white rounded-lg justify-items-center">
                 <th className="flex items-center justify-center">课程名称</th>
-                <th className="flex items-center justify-center">
-                客户姓名
-                </th>
+                <th className="flex items-center justify-center">客户姓名</th>
                 <th className="flex items-center justify-center">学生姓名</th>
                 <th className="flex items-center justify-center">考勤类型</th>
                 <th className="flex items-center justify-center">考勤课时</th>
@@ -460,43 +334,6 @@ const AttendanceQuery: React.FC = () => {
             </tbody>
           </table>
         </div>
-        {/* <div className="absolute w-full mt-10">
-          <IonList>
-            <IonItem key="title">
-              <IonLabel>
-                <div className="font-black text-center">课程名称</div>
-              </IonLabel>
-              <IonLabel>
-                <div className="font-black text-center">客户姓名</div>
-              </IonLabel>
-              <IonLabel>
-                <div className="font-black text-center">学生姓名</div>
-              </IonLabel>
-              <IonLabel>
-                <div className="font-black text-center">考勤类型</div>
-              </IonLabel>
-              <IonLabel>
-                <div className="font-black text-center">考勤课时</div>
-              </IonLabel>
-              <IonLabel>
-                <div className="font-black text-center">签到时间</div>
-              </IonLabel>
-              <IonLabel>
-                <div className="font-black text-center">考勤状态</div>
-              </IonLabel>
-              <IonLabel>
-                <div className="font-black text-center">操作</div>
-              </IonLabel>
-            </IonItem>
-            <div className="">
-              {state.attendance?.attendanceList.map(
-                (list: Attendance, i: any) => (
-                  <ListEntry attendance={list} key={i} />
-                )
-              )}
-            </div>
-          </IonList>
-        </div> */}
       </div>
     </IonPage>
   );

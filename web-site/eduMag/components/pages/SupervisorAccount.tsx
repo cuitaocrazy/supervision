@@ -5,9 +5,8 @@ import { IonPage, IonCard, IonRadioGroup, IonRadio, IonCardHeader, IonCardSubtit
 import { Redirect } from 'react-router-dom';
 import { useCallback, useContext, useEffect } from 'react'
 import { AppContext, setEduOrgDetail } from '../../appState';
-
-
 import { PickerColumn } from "@ionic/core";
+import Quit from "components/components/Quit";
 
 export const SupervisorAccount: React.FC = () => {
   //   const queryURL = 'http://localhost:3003/baseInfo/query'
@@ -21,6 +20,7 @@ export const SupervisorAccount: React.FC = () => {
 
   return (
     <IonPage className="bg-gray-100">
+      <Quit />
       <div className="relative w-full h-screen mx-6 overflow-auto">
         <div className="flex pt-2 my-2 text-gray-800">
           <div className="mr-2 text-gray-600">
@@ -43,19 +43,19 @@ export const SupervisorAccount: React.FC = () => {
             <span className="pr-1 text-gray-600">监管账户余额</span>
           </div>
         </div>
-        <div className="w-11/12 px-4 py-2 mt-4 bg-white rounded-lg h-screen">
+        <div className="w-11/12 h-screen px-4 py-2 mt-4 bg-white rounded-lg">
           <span className='font-bold'>
           监管账户余额
           </span>
         <hr className="mt-2 mb-4" />
         <div className='flex flex-col items-center justify-center'>
-          <div className='w-screen h-96 flex items-center justify-center'>
+          <div className='flex items-center justify-center w-screen h-96'>
             <img className="rounded-lg cursor-pointer" src='http://placekitten.com/g/200/300' alt="" />
           </div>
           <div className="mt-6">
             <span className='font-bold'>教育机构监管账户余额：</span>
-            <span className='text-orange-600 font-blod text-lg'>{supversingAccountAmt}</span>
-            <span className='font-bold pl-1'>元</span> 
+            <span className='text-lg text-orange-600 font-blod'>{supversingAccountAmt}</span>
+            <span className='pl-1 font-bold'>元</span> 
             <a className='pl-2 text-sm text-blue-600' onClick={onQuery}>点击查看</a>
           </div>
         </div>
@@ -63,17 +63,6 @@ export const SupervisorAccount: React.FC = () => {
       </div>
 
     </IonPage>
-
-    // <IonPage>
-    //         <IonCard>
-    //   <IonCardHeader>
-    //     <IonCardSubtitle className="mx-8 text-3xl text-gray-600">详细信息</IonCardSubtitle>
-    //   </IonCardHeader>
-    //   <IonCardContent>
-    //         教育机构监管账户余额：{supversingAccountAmt}元 <a onClick={onQuery}>点击查看</a>
-    //   </IonCardContent>
-    //   </IonCard>
-    // </IonPage>
   );
 };
 

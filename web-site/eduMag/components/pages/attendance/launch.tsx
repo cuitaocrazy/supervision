@@ -7,6 +7,7 @@ import { Attendance, Lesson } from "../../../types/types";
 import moment from "moment";
 import { Dialog, Transition } from "@headlessui/react";
 import Paging from '../../paging';
+import Quit from "components/components/Quit";
 
 const queryURL = "http://localhost:3003/edu/lesson/find";
 const attendanceApplyURL = "http://localhost:3003/edu/attendance/apply";
@@ -149,6 +150,7 @@ const ContractNegoQuery: React.FC = () => {
 
   return (
     <IonPage className="bg-gray-100">
+      <Quit />
       <div className="relative w-full h-screen mx-6 overflow-auto">
         <div className="flex pt-2 my-2 text-gray-800">
           <div className="mr-2 text-gray-600">

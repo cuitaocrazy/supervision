@@ -21,6 +21,7 @@ import { Lesson } from "../../../types/types";
 import { PickerColumn } from "@ionic/core";
 import LessonTypeList from "../../components/LessonType";
 import LessonStateList from "../../components/LessonState";
+import Quit from "components/components/Quit";
 
 export const LessonDetail: React.FC = () => {
   const modifyURL = "http://localhost:3003/edu/lesson/edit";
@@ -66,6 +67,7 @@ export const LessonDetail: React.FC = () => {
   return (
     <IonPage className="bg-gray-100">
       <IonCard>
+        <Quit />
         {/* 导航 */}
         <div className="flex px-2 pt-2 mx-2 my-2 text-gray-800">
           <div className="mr-2 text-gray-600">

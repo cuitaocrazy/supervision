@@ -20,6 +20,7 @@ import { AppContext, setLessonDetail } from "../../../appState";
 import { Lesson } from "../../../types/types";
 import { PickerColumn } from "@ionic/core";
 import Router from "next/router";
+import Quit from "components/components/Quit";
 
 export const LessonDetail: React.FC = () => {
   console.log("LessonDetail");
@@ -36,7 +37,7 @@ export const LessonDetail: React.FC = () => {
   const onBack = () => () => {
     setBack();
   };
-  if (state.lesson.lessonDetail === undefined) {
+  if (state.lesson?.lessonDetail === undefined) {
     return <Redirect to={state.backPage} />;
   }
 
@@ -74,6 +75,7 @@ export const LessonDetail: React.FC = () => {
   return (
     <IonPage className="bg-gray-100">
       <IonCard>
+      <Quit />
         {/* 导航 */}
         <div className="flex px-2 pt-2 mx-2 my-2 text-gray-800">
           <div className="mr-2 text-gray-600">
@@ -195,7 +197,7 @@ export const LessonDetail: React.FC = () => {
                 <div className="flex justify-end w-32 mr-2"> 教育机构名称:</div>
                 <input
                   className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
-                  value={lessonState.edu.eduName}
+                  value={lessonState.eduName}
                   readOnly
                 />
               </div>

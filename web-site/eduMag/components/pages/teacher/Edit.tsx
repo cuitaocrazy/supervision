@@ -1,45 +1,62 @@
 //Teacher管理的详细页面
-import React, { useState } from 'react';
-import { IonPage, IonCard,IonRadioGroup,IonRadio, IonCardHeader, IonCardSubtitle,IonInput, IonCardContent,IonItem,IonButton,IonList,IonDatetime,IonPicker } from '@ionic/react';
-import { Redirect } from 'react-router-dom';
-import { useCallback,useContext } from 'react'
-import {AppContext,setTeacherEdit} from '../../../appState';
-import {Teacher} from '../../../types/types'
+import React, { useState } from "react";
+import {
+  IonPage,
+  IonCard,
+  IonRadioGroup,
+  IonRadio,
+  IonCardHeader,
+  IonCardSubtitle,
+  IonInput,
+  IonCardContent,
+  IonItem,
+  IonButton,
+  IonList,
+  IonDatetime,
+  IonPicker,
+} from "@ionic/react";
+import { Redirect } from "react-router-dom";
+import { useCallback, useContext } from "react";
+import { AppContext, setTeacherEdit } from "../../../appState";
+import { Teacher } from "../../../types/types";
 import { PickerColumn } from "@ionic/core";
+import Quit from "components/components/Quit";
 
 export const TeacherDetail: React.FC = () => {
-  const modifyURL = 'http://localhost:3003/edu/teacher/modify'
+  const modifyURL = "http://localhost:3003/edu/teacher/modify";
   const { state, dispatch } = useContext(AppContext);
 
   const [teacherState, setTeacherState] = useState(state.teacher.teacherEdit);
   const [isPickOpen, setPickOpen] = useState(false);
   const setBack = useCallback(() => {
     dispatch(setTeacherEdit(undefined));
-  },[]);
+  }, []);
   const onBack = () => {
-    setBack()
+    setBack();
+  };
+  if (state.teacher.teacherEdit === undefined) {
+    return <Redirect to={state.backPage} />;
   }
-  if(state.teacher.teacherEdit===undefined){
-    return <Redirect to={state.backPage} />
-  }
-  const onModify = (e: React.FormEvent)=> {
+  const onModify = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(teacherState)
+    console.log(teacherState);
     fetch(modifyURL, {
-      method: 'POST',
+      method: "POST",
       body: JSON.stringify(teacherState),
       headers: {
-        'Content-type': 'application/json;charset=UTF-8',
+        "Content-type": "application/json;charset=UTF-8",
       },
-    }).then(res => res.json())
-    .then((json) => {
-      setBack()
     })
-  }
-  
+      .then((res) => res.json())
+      .then((json) => {
+        setBack();
+      });
+  };
+
   return (
     <IonPage className="bg-gray-100">
       <IonCard>
+        <Quit />
         {/* 导航 */}
         <div className="flex px-2 pt-2 mx-2 my-2 text-gray-800">
           <div className="mr-2 text-gray-600">
@@ -74,9 +91,14 @@ export const TeacherDetail: React.FC = () => {
                 <input
                   className="w-64 px-2 border rounded-md focus:outline-none focus:glow-primary-600"
                   type="text"
-                  name="teacherName" 
-                  value={teacherState.teacherName} 
-                  onChange={e => setTeacherState({...teacherState,...{teacherName:e.nativeEvent.target?.value}})} 
+                  name="teacherName"
+                  value={teacherState.teacherName}
+                  onChange={(e) =>
+                    setTeacherState({
+                      ...teacherState,
+                      ...{ teacherName: e.nativeEvent.target?.value },
+                    })
+                  }
                   required
                 />
               </div>
@@ -85,9 +107,14 @@ export const TeacherDetail: React.FC = () => {
                 <input
                   className="w-64 px-2 border rounded-md focus:outline-none focus:glow-primary-600"
                   type="text"
-                  name="teacherIdentityNo" 
-                  value={teacherState.teacherIdentityNo} 
-                  onChange={e => setTeacherState({...teacherState,...{teacherIdentityNo:e.nativeEvent.target?.value}})}
+                  name="teacherIdentityNo"
+                  value={teacherState.teacherIdentityNo}
+                  onChange={(e) =>
+                    setTeacherState({
+                      ...teacherState,
+                      ...{ teacherIdentityNo: e.nativeEvent.target?.value },
+                    })
+                  }
                   required
                 />
               </div>
@@ -96,22 +123,30 @@ export const TeacherDetail: React.FC = () => {
                 <input
                   className="w-64 px-2 border rounded-md"
                   type="text"
-                  name="teacherField" 
-                  value={teacherState.teacherField} 
-                  onChange={e => setTeacherState({...teacherState,...{teacherField:e.nativeEvent.target?.value}})}
+                  name="teacherField"
+                  value={teacherState.teacherField}
+                  onChange={(e) =>
+                    setTeacherState({
+                      ...teacherState,
+                      ...{ teacherField: e.nativeEvent.target?.value },
+                    })
+                  }
                   required
                 />
               </div>
               <div className="flex mb-4 leading-10">
-                <div className="flex justify-end w-32 mr-2">
-                  从业经验:
-                </div>
+                <div className="flex justify-end w-32 mr-2">从业经验:</div>
                 <input
                   className="w-64 px-2 border rounded-md focus:outline-none focus:glow-primary-600"
                   type="text"
-                  name="teacherExperience" 
-                  value={teacherState.teacherExperience} 
-                  onChange={e => setTeacherState({...teacherState,...{teacherExperience:e.nativeEvent.target?.value}})}
+                  name="teacherExperience"
+                  value={teacherState.teacherExperience}
+                  onChange={(e) =>
+                    setTeacherState({
+                      ...teacherState,
+                      ...{ teacherExperience: e.nativeEvent.target?.value },
+                    })
+                  }
                   required
                 />
               </div>
@@ -119,96 +154,36 @@ export const TeacherDetail: React.FC = () => {
                 <div className="flex justify-end w-32 mr-2">教师简介:</div>
                 <textarea
                   className="w-64 px-2 border rounded-md focus:outline-none focus:glow-primary-600"
-                  name="teacherIntroduce" 
-                  value={teacherState.teacherIntroduce} 
-                  onChange={e => setTeacherState({...teacherState,...{teacherIntroduce:e.nativeEvent.target?.value}})}
+                  name="teacherIntroduce"
+                  value={teacherState.teacherIntroduce}
+                  onChange={(e) =>
+                    setTeacherState({
+                      ...teacherState,
+                      ...{ teacherIntroduce: e.nativeEvent.target?.value },
+                    })
+                  }
                   required
                 />
               </div>
-             
             </div>
-            <div className="flex justify-center">
-            <input
-              value="确定修改"
-              type="submit"
-              className="flex w-24 px-6 py-2 font-bold text-white rounded-md bg-primary-600 focus:bg-primary-700"
-            />
-           <input
-              value="返回"
-              type="button"
-              onClick={setBack}
-              className="flex w-24 px-6 py-2 font-bold text-white rounded-md bg-primary-600 focus:bg-primary-700"
-            />
-          </div>
+            <div className="flex items-center justify-center gap-4 mt-10">
+              <input
+                value="取消"
+                type="button"
+                className="px-6 py-2 border rounded-md "
+                onClick={setBack}
+              />
+              <input
+                value="确定"
+                type="submit"
+                className="px-6 py-2 text-white border rounded-md bg-primary-600"
+              />
+            </div>
           </form>
-
         </IonCardContent>
       </IonCard>
     </IonPage>
-    
-    // <IonPage>
-    //   <IonCard>
-    //   <IonCardHeader>
-    //     <IonCardSubtitle className="mx-8 text-3xl text-gray-600">详细信息</IonCardSubtitle>
-    //   </IonCardHeader>
-    //     <IonCardContent>
-    //     <form onSubmit={onModify}>
-    //     <tbody>
-    //     <tr>
-    //         <td>
-    //               <label  className='myLabel'>教师姓名:</label>
-    //         </td>
-    //         <td>        
-    //               <IonInput className='normalInput' name="teacherName" value={teacherState.teacherName} onIonChange={e => setTeacherEdit({...teacherState,...{teacherName:e.detail.value!}})} required></IonInput>
-    //         </td>
-    //     </tr>
-    //     <tr>
-    //       <td>
-    //             <label  className='myLabel'>身份证号:</label>
-    //       </td>
-    //       <td>
-    //             <IonInput className='normalInput' name="teacherName" value={teacherState.teacherIdentityNo} onIonChange={e => setTeacherEdit({...teacherState,...{teacherIdentityNo:e.detail.value!}})} required></IonInput>
-    //       </td>
-    //     </tr>
-    //     <tr>
-    //         <td>
-    //               <label className='myLabel'>专业领域：</label>
-    //         </td>
-    //         <td>
-    //             <IonInput className='normalInput' name="teacherName" value={teacherState.teacherIntroduce} onIonChange={e => setTeacherEdit({...teacherState,...{teacherIntroduce:e.detail.value!}})} required></IonInput>
-    //         </td>
-    //     </tr>
-    //     <tr>
-    //     <td>
-    //         <label  className='myLabel'>从业经历(年)：</label>              
-    //         </td>
-    //         <td>
-    //               <IonInput className='normalInput' name="teacherName" value={teacherState.teacherExperience} onIonChange={e => setTeacherEdit({...teacherState,...{teacherExperience:e.detail.value!}})} required></IonInput>
-    //         </td>
-    //     </tr>
-    //     <tr>
-    //         <td>
-    //               <label className='myLabel'>教师简介:</label>
-    //         </td>
-    //         <td>
-    //           <IonInput className='normalInput' name="teacherName" value={teacherState.teacherIntroduce} onIonChange={e => setTeacherEdit({...teacherState,...{teacherExperience:e.detail.value!}})} required></IonInput>
-    //         </td>
-    //     </tr> 
+  );
+};
 
-    //     <tr>
-    //         <td>
-    //           <button className="submutButton" type='submit'>提交</button>
-    //         </td>
-    //         <td>
-    //           <button className="m-5 text-base cancelButton " onClick={onBack()} >返回 </button>
-    //         </td>
-    //     </tr> 
-    //       </tbody>
-    //     </form>
-    //   </IonCardContent>
-    //   </IonCard>
-    //   </IonPage>
-      )
-    };
-
-    export default TeacherDetail
+export default TeacherDetail;

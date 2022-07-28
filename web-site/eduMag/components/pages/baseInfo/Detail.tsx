@@ -5,11 +5,9 @@ import { IonPage,IonModal,IonCard,IonRadioGroup,IonRadio, IonCardHeader, IonInpu
 import { Redirect } from 'react-router-dom';
 import { useCallback,useContext,useEffect } from 'react'
 import {AppContext,setEduOrgDetail} from '../../../appState';
-
 import {EduOrg, Lesson} from '../../../types/types'
 import { PickerColumn } from "@ionic/core";
-
-
+import Quit from "components/components/Quit";
 
 export const BaseInfoDetail: React.FC = () => {
   const modifyURL = 'http://localhost:3003/baseInfo/modify'
@@ -92,6 +90,7 @@ export const BaseInfoDetail: React.FC = () => {
   return (
     <IonPage className="bg-gray-100 ">
       <IonCard className='h-screen overflow-auto'>
+        <Quit />
         {/* 导航 */}
         <div className="flex px-2 pt-2 mx-2 my-2 text-gray-800">
           <div className="mr-2 text-gray-600">

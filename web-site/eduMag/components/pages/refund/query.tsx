@@ -29,6 +29,7 @@ import {
 import { ContractNego } from "../../../types/types";
 import { PickerColumn } from "@ionic/core";
 import { Dialog, Transition } from "@headlessui/react";
+import Quit from "components/components/Quit";
 
 const queryURL = "http://localhost:3003/contractNego/query";
 
@@ -234,6 +235,7 @@ const ContractNegoQuery: React.FC = () => {
 
   return (
     <IonPage className="bg-gray-100">
+      <Quit />
       <div className="relative w-full h-screen mx-6 overflow-auto">
         {/* 导航 */}
         <div className="flex pt-2 my-2 text-gray-800">

@@ -3,6 +3,7 @@ import { IonPage, IonRow, IonCol, IonLabel } from "@ionic/react";
 import { AppContext, setContractList } from "../../appState";
 import { Contract } from "../../types/types";
 import Paging from "../paging"
+import Quit from "components/components/Quit";
 
 const findUrl = "http://localhost:3003/edu/contract/find";
 
@@ -97,6 +98,7 @@ const OrderQuery = () => {
   useEffect(onQuery, []);
   return (
     <IonPage className="bg-gray-100">
+      <Quit />
       <div className="relative w-full h-screen mx-6 overflow-auto">
         <div className="flex pt-2 my-2 text-gray-800">
           <div className="mr-2 text-gray-600">

@@ -4,9 +4,9 @@ import { IonPage, IonCard, IonCardHeader,IonRow,IonCol, IonCardSubtitle,IonLabel
 import { Redirect } from 'react-router-dom';
 import { useCallback,useContext } from 'react'
 import {AppContext,setAttendanceDetail} from '../../../appState';
-
 import {Attendance} from '../../../types/types'
 import { Link } from 'react-router-dom';
+import Quit from "components/components/Quit";
 
 export const AttendanceDetail: React.FC = () => {
   const { state, dispatch } = useContext(AppContext);
@@ -33,6 +33,7 @@ export const AttendanceDetail: React.FC = () => {
   return (
     <IonPage className="bg-gray-100">
       <IonCard className='h-screen overflow-auto'>
+        <Quit />
         {/* 导航 */}
         <div className="flex px-2 pt-2 mx-2 my-2 text-gray-800">
           <div className="mr-2 text-gray-600">
