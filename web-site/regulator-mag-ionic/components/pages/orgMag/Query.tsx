@@ -25,6 +25,7 @@ import {
 } from '@ionic/react';
 import { Dialog, Transition } from '@headlessui/react';
 import EduIsPublic from '../../EduIsPublic';
+import Quit from '../../Quit'
 
 const findURL = 'http://localhost:3003/edb/eduOrg/find';
 const delURL = 'http://localhost:3003/eduOrg/del';
@@ -158,9 +159,8 @@ const OrgMagQuery: React.FC = () => {
   );
   useEffect(onQuery, []);
 
-  const ListEntry = ({ eduOrg, key, ...props }: { eduOrg: EduOrg; key: any }) => (
+  const ListEntry = ({ eduOrg, ...props }: { eduOrg: EduOrg;}) => (
     <tr
-      key={key}
       className="grid items-center grid-cols-4 gap-10 text-gray-600 border justify-items-center even:bg-white odd:bg-primary-100 "
     >
       <td className="flex items-center justify-center leading-10">{eduOrg.eduId}</td>
@@ -193,6 +193,7 @@ const OrgMagQuery: React.FC = () => {
 
   return (
     <IonPage className="bg-gray-100 ">
+      <Quit />
       <div className="relative w-full h-screen mx-6 overflow-auto">
         <div className="flex pt-2 my-2 text-gray-800">
           <div className="mr-2 text-gray-600">

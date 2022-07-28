@@ -4,6 +4,7 @@ import { AppContext, setAttendanceList, setAttendanceDetail } from '../../../app
 import { Attendance } from '../../../types/types';
 import { IonPage, IonList, IonLabel, IonItem, IonRow, IonCol } from '@ionic/react';
 import Paging from '../../paging';
+import Quit from '../../Quit'
 
 const findURL = 'http://localhost:3003/edb/attendance/find';
 
@@ -97,6 +98,7 @@ const AttendanceQuery: React.FC = () => {
   if (state.attendance.attendanceDetail == null || state.attendance.attendanceDetail == undefined) {
     return (
       <IonPage className="bg-gray-100">
+        <Quit />
         <div className="relative w-full h-screen mx-6 overflow-auto">
           {/* 导航 */}
           <div className="flex pt-2 my-2 text-gray-800">

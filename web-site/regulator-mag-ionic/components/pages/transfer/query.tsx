@@ -4,6 +4,7 @@ import { AppContext, setTransferList, setTransferDetail } from '../../../appStat
 import { Transfer } from '../../../types/types';
 import { IonPage, IonList, IonLabel, IonItem, IonRow, IonCol } from '@ionic/react';
 import Paging from '../../paging';
+import Quit from '../../Quit'
 
 const findURL = 'http://localhost:3003/edb/transfer/find';
 const handleTransfer = 'http://localhost:3003/attendannce/handleTransfer';
@@ -111,6 +112,7 @@ const TransferQuery: React.FC = () => {
   if (state.transfer.transferDetail == null || state.transfer.transferDetail == undefined) {
     return (
       <IonPage className="bg-gray-100">
+        <Quit />
         <div className="relative w-full h-screen mx-6 overflow-auto">
           {/* 导航 */}
           <div className="flex pt-2 my-2 text-gray-800">

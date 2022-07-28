@@ -11,6 +11,7 @@ import {
 import { Teacher } from '../../../types/types';
 import { IonPage, IonList, IonLabel, IonItem, IonRow, IonCol } from '@ionic/react';
 import Paging from '../../paging';
+import Quit from '../../Quit'
 
 const queryURL = 'http://localhost:3003/edb/teacher/find';
 
@@ -101,6 +102,7 @@ const TeacherQuery: React.FC = () => {
   if (state.teacher.teacherDetail == null || state.teacher.teacherDetail == undefined) {
     return (
       <IonPage className="bg-gray-100">
+        <Quit />
         <div className="relative w-full h-screen mx-6 overflow-auto">
           <div className="flex pt-2 my-2 text-gray-800">
             <div className="mr-2 text-gray-600">

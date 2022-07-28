@@ -9,6 +9,7 @@ import { Redirect } from 'react-router-dom';
 import { AppContext, setContractList, setContractDetail } from '../../../appState';
 import { Contract } from '../../../types/types';
 import Paging from '../../paging';
+import Quit from '../../Quit'
 
 const findURL = 'http://localhost:3003/edb/contract/find';
 
@@ -98,6 +99,7 @@ const ContractQuery: React.FC = () => {
   if (state.contract.contractDetail == null || state.contract.contractDetail == undefined) {
     return (
       <IonPage className="bg-gray-100">
+        <Quit />
         <div className="relative w-full h-screen mx-6 overflow-auto">
           <div className="flex pt-2 my-2 text-gray-800">
             <div className="mr-2 text-gray-600">

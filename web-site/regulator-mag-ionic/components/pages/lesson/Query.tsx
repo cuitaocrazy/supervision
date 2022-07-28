@@ -6,6 +6,7 @@ import { Lesson } from '../../../types/types';
 import { IonPage, IonList, IonLabel, IonItem, IonRow, IonCol } from '@ionic/react';
 import { Dialog, Transition } from '@headlessui/react';
 import Paging from '../../paging';
+import Quit from '../../Quit'
 
 const findURL = 'http://localhost:3003/edb/eduLesson/find';
 const delURL = 'http://localhost:3003/lesson/del';
@@ -208,6 +209,7 @@ const LessonQuery: React.FC = () => {
 
   return (
     <IonPage className="bg-gray-100">
+      <Quit />
       <div className="relative w-full h-screen mx-6 overflow-auto">
         <div className="flex pt-2 my-2 text-gray-800">
           <div className="mr-2 text-gray-600">
