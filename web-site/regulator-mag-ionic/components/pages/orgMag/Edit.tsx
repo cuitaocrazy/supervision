@@ -305,14 +305,19 @@ export const EduOrgEdit: React.FC = () => {
               </div>
             </div>
           </form>
-          <div className="flex justify-center">
-            <input
-              value="返回"
-              type="button"
-              onClick={onBack()}
-              className="flex w-20 px-6 py-2 font-bold text-white rounded-md bg-primary-600 focus:bg-primary-700"
-            />
-          </div>
+          <div className="flex items-center justify-center gap-4 mt-10">
+                          <input
+                            value="取消"
+                            type="button"
+                            className="px-6 py-2 border rounded-md "
+                            onClick={onBack()}
+                          />
+                          <input
+                            value="确定"
+                            type="submit"
+                            className="px-6 py-2 text-white border rounded-md bg-primary-600"
+                          />
+                        </div>
         </IonCardContent>
       </IonCard>
     </IonPage>
