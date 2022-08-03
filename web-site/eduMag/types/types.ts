@@ -233,5 +233,22 @@ export interface ContractNego {
   contract: Contract,
 }
 
+export interface LessonDiscussInfo{
+  lessonImages?:string,
+  lessonName?:string,
+  lessonDate?:string,
+  lessonTime?:string,
+  lessonContent?:string,
+  discussTitle?:string,
+  attendanceState?:string,
+  discussContent?:string,
+  discussDate?:string,
+  discussTime?:string,
+  consumerName?:string,
+  stuName?:string,
+  teacherName?:string,
+  item?: LessonDiscussInfo
+}
+
 
 

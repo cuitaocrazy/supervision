@@ -20,6 +20,7 @@ import {
   IonRow,
   IonCol,
   PickerColumn,
+  IonToast,
 } from "@ionic/react";
 import moment from "moment";
 import RichText from "components/components/RichText";
@@ -44,6 +45,9 @@ const LessonQuery: React.FC = () => {
     setTotal(total)
     refreshLessonList(records)
   }
+
+  // 添加课程dialog状态
+  let [isOpen, setIsOpen] = useState(false);
   function closeModal() {
     setIsOpen(false);
   }
@@ -51,6 +55,8 @@ const LessonQuery: React.FC = () => {
     setIsOpen(true);
   }
 
+
+  // 下架课程dialog状态
   let [isOffOpen, setIsOffOpen] = useState(false);
   function closeOffModal() {
     setIsOffOpen(false);
@@ -58,7 +64,14 @@ const LessonQuery: React.FC = () => {
   function openOffModal() {
     setIsOffOpen(true);
   }
-  let [isOpen, setIsOpen] = useState(false);
+
+   // 课程添加成功Toast
+   const [showLeaveToast, setShowLeaveToast] = useState(false);
+   const addLessonSuccessInfo=()=>{
+    setShowLeaveToast(true)
+   }
+   
+
   const [page,setPage] = useState(0)
   const [total,setTotal]= useState(101)//todo
   const [createLesson, setCreateLesson] = useState({} as Lesson);
@@ -84,7 +97,8 @@ const LessonQuery: React.FC = () => {
       },
     }).then(res => res.json())
     .then((json) => {
-      alert(json.result)
+      // alert(json.result)
+      addLessonSuccessInfo()
     })
   };
 
@@ -630,12 +644,13 @@ const LessonQuery: React.FC = () => {
                           value="取消"
                           type="button"
                           className="px-6 py-2 border rounded-md "
-                          onClick={closeOffModal}
+                          onClick={closeModal}
                         />
                         <input
                           value="确定"
                           type="submit"
                           className="px-6 py-2 text-white border rounded-md bg-primary-600"
+                          // onClick={addLessonSuccessInfo}
                         />
                       </div>
                     </form>
@@ -643,6 +658,15 @@ const LessonQuery: React.FC = () => {
                 </Transition.Child>
               </div>
             </div>
+            <IonToast
+              isOpen={showLeaveToast}
+              onDidDismiss={() => setShowLeaveToast(false)}
+              message="课程添加成功."
+              duration={400}
+              position="middle"
+              // style="z-index:9999"
+              
+            />
           </Dialog>
         </Transition>
 

@@ -31,6 +31,8 @@ import TeacherEdit from "./pages/teacher/Edit";
 import Income from "./pages/statistic/income";
 import Refund from "./pages/refund/query";
 import OrderQuery from "./pages/OrderQuery";
+import Discuss from "./pages/Discuss/query";
+import DiscussDetail from "./pages/Discuss/detail";
 import { useContext } from "react";
 
 // 装载ionic样式，ionic6 必须执行。
@@ -156,6 +158,16 @@ const AppShell = () => {
               <Route
                 path="/tabs/orderQuery"
                 component={OrderQuery}
+                exact={true}
+              />
+              <Route
+                path="/tabs/discussQuery"
+                component={Discuss}
+                exact={true}
+              />
+              <Route
+                path="/tabs/discussInfo/detail"
+                component={DiscussDetail}
                 exact={true}
               />
               <Route exact path="/" render={() => <Redirect to="/login" />} />

@@ -12,6 +12,7 @@ import {
   Announcement,
   Complaint,
   ContractNego,
+  LessonDiscussInfo
 } from "./types/types";
 /**
  * This is a simple redux-like state management pattern for React using hooks
@@ -96,6 +97,11 @@ const initialState = {
     contractNegoList: [],
     contractNegoDetail: null,
   },
+  discuss:{
+    // 课程协商
+    discussList:[],
+    discussDetail:null
+  }
 };
 export const AppContext = React.createContext<{
   state: any;
@@ -152,6 +158,18 @@ export const setContractDetail = (contractDetail: Contract) => {
   return {
     type: "setContractDetail",
     contractDetail: contractDetail,
+  };
+};
+export const setDiscussList = (discussList: LessonDiscussInfo[]) => {
+  return {
+    type: "setDiscussList",
+    discussList: discussList,
+  };
+};
+export const setDiscussDetail = (discussDetail: LessonDiscussInfo[]) => {
+  return {
+    type: "setDiscussDetail",
+    discussDetail: discussDetail,
   };
 };
 export const setLessonList = (lessonList: Lesson[]) => {
@@ -338,6 +356,26 @@ export const reducer = (state: any, action: any) => {
         contract: {
           contractList: state.contract.contractList,
           contractDetail: action.contractDetail,
+        },
+        backPage: action.backPage || state.backPage,
+      };
+    }
+    case "setDiscussList": {
+      return {
+        ...state,
+        discuss: {
+          discussList: action.discussList,
+          discussDetail: state.discuss.discussDetail,
+        },
+        backPage: action.backPage || state.backPage,
+      };
+    }
+    case "setDiscussDetail": {
+      return {
+        ...state,
+        discuss: {
+          discussList: state.discuss.discussList,
+          discussDetail: action.discussDetail,
         },
         backPage: action.backPage || state.backPage,
       };
