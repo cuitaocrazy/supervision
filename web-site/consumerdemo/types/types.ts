@@ -227,5 +227,19 @@ export interface ContractNego{
   negoEduAgreeTime:string,
 }
 
+export interface LessonDiscussInfo{
+  lessonImages?:string,
+  lessonName?:string,
+  lessonDate?:string,
+  lessonTime?:string,
+  lessonContent?:string,
+  discussTitle?:string,
+  attendanceState?:string,
+  discussContent?:string,
+  discussDate?:string,
+  discussTime?:string,
+  item?: LessonDiscussInfo
+}
+
 
 

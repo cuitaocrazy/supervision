@@ -70,6 +70,13 @@ export const setContractDetail =(contractDetail:any)=>{
   }
 }
 
+export const setDiscussDetail =(discussDetail:any)=>{
+  return {
+    type: 'setDiscussDetail',
+    contractDetail:discussDetail
+  }
+}
+
 export const setStuName = (stuName:any)=>{
   return {
     type: 'setStuName',
@@ -95,6 +102,12 @@ export const reducer = (state: any, action: any) => {
       return {
         ...state,
         contractDetail:action.contractDetail
+      }
+    }
+    case 'setDiscussDetail': {
+      return {
+        ...state,
+        discussDetail:action.discussDetail
       }
     }
     case 'setStuName':{

@@ -1,13 +1,13 @@
 import React from "react";
 import { IonPage, IonHeader, IonContent } from "@ionic/react";
 import Navbar from "components/Navbar";
-import { Redirect } from 'react-router-dom';
+import { Redirect } from "react-router-dom";
 
 // 个人中心页面
 const MyPersonalCenter = () => {
-  const setFun=()=>{
+  const setFun = () => {
     return <Redirect to="./setting" />;
-  }
+  };
   return (
     <IonPage>
       <IonHeader>
@@ -25,9 +25,10 @@ const MyPersonalCenter = () => {
               <p className="pt-1">18610206133</p>
             </div>
           </div>
-          <a className="flex items-center justify-center pr-4"
-          // onClick={setFun}
-          href="./setting"
+          <a
+            className="flex items-center justify-center pr-4"
+            // onClick={setFun}
+            href="./setting"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -290,6 +291,28 @@ const MyPersonalCenter = () => {
                   </svg>
                 </p>
                 <p className="text-gray-500">签到记录</p>
+              </a>
+
+              <a
+                className="flex flex-col items-center w-24 h-24 mt-4 rounded-md shadow-md bg-cyan-100 justify-items-center shadow-cyan-200"
+                href="./myDiscussList"
+              >
+                <p className="mt-4">
+                  <svg
+                    className="w-10 h-10 text-cyan-400"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"
+                    />
+                  </svg>
+                </p>
+                <p className="text-gray-500">协商列表</p>
               </a>
             </div>
           </div>
