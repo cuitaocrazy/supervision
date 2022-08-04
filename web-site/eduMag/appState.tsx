@@ -166,7 +166,7 @@ export const setDiscussList = (discussList: LessonDiscussInfo[]) => {
     discussList: discussList,
   };
 };
-export const setDiscussDetail = (discussDetail: LessonDiscussInfo[]) => {
+export const setDiscussDetail = (discussDetail: LessonDiscussInfo) => {
   return {
     type: "setDiscussDetail",
     discussDetail: discussDetail,

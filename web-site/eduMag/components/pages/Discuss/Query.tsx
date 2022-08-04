@@ -10,12 +10,9 @@ import {
 import { Redirect } from "react-router-dom";
 import {
   AppContext,
-  // setLessonList,
-  // setLessonDetail,
   setDiscussList,
   setDiscussDetail
 } from "../../../appState";
-// import { Lesson } from "../../../types/types";
 import {LessonDiscussInfo} from "../../../types/types";
 import {
   IonPage,
@@ -28,10 +25,9 @@ import { EditorState } from "draft-js";
 import Paging from '../../paging';
 import Quit from "components/components/Quit";
 
-// const findAll = "http://localhost:3003/edu/lesson/findAll";
-const find = "http://localhost:3003/edu/lesson/find";
+const find = "http://localhost:3003/edu/discuss/find";
 
-// 课程查询页面
+// 课程协商查询页面
 const DiscussQuery: React.FC = () => {
 
   const onPageChange = (records:any,total:number,newPage:number)=>{
@@ -98,7 +94,7 @@ const DiscussQuery: React.FC = () => {
     (discussInfo: LessonDiscussInfo | undefined) => {
       dispatch({
         ...setDiscussDetail(discussInfo),
-        ...{ backPage: "/tabs/discuss/query" },
+        ...{ backPage: "/tabs/discussQuery" },
       });
     },
     [dispatch]
