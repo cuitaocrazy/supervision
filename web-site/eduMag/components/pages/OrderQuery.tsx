@@ -8,41 +8,41 @@ import Quit from "components/components/Quit";
 const findUrl = "http://localhost:3003/edu/contract/find";
 
 const ListEntry = ({ contract }: { contract: Contract }) => (
-  <tr className="grid items-center grid-cols-12 gap-2 text-gray-600 border justify-items-center even:bg-white odd:bg-primary-100 ">
-    <td className="flex items-center justify-center leading-10">
+  <tr className="flex items-center justify-center gap-5 text-gray-600 border justify-items-center even:bg-white odd:bg-primary-100">
+    <td className="flex items-center justify-center flex-1 leading-10 break-all">
       {contract.contractId}
     </td>
-    <td className="flex items-center justify-center leading-10">
+    <td className="flex items-center justify-center flex-1 leading-10 ">
       {contract.consumerName}
     </td>
-    <td className="flex items-center justify-center leading-10">
+    <td className="flex items-center justify-center flex-1 leading-10">
       {contract.consumerStuName}
     </td>
-    <td className="flex items-center justify-center leading-10">
+    <td className="flex items-center justify-center flex-1 leading-10 ">
       {contract.lessonName}
     </td>
-    <td className="flex items-center justify-center leading-10">
+    <td className="flex items-center justify-center flex-1 leading-10 ">
       {contract.lessonType}
     </td>
-    <td className="flex items-center justify-center leading-10">
+    <td className="flex items-center justify-center flex-1 leading-10 ">
       {contract.lessonStartDate}
     </td>
-    <td className="flex items-center justify-center leading-10">
+    <td className="flex items-center justify-center flex-1 leading-10 ">
       {contract.lessonEndDate}
     </td>
-    <td className="flex items-center justify-center leading-10">
+    <td className="flex items-center justify-center flex-1 leading-10">
       {contract.lessonAttendanceType}
     </td>
-    <td className="flex items-center justify-center leading-10">
+    <td className="flex items-center justify-center flex-1 leading-10 ">
       {contract.lessonTotalQuantity}
     </td>
-    <td className="flex items-center justify-center leading-10">
+    <td className="flex items-center justify-center flex-1 w-10 leading-10">
       {contract.lessonTotalPrice}
     </td>
-    <td className="flex items-center justify-center leading-10">
+    {/* <td className="flex items-center justify-center leading-10">
       {contract.lessonPerPrice}
-    </td>
-    <td className="flex items-center justify-center leading-10">
+    </td> */}
+    <td className="flex items-center justify-center flex-1 leading-10">
       {contract.teacherName}
     </td>
   </tr>
@@ -155,27 +155,27 @@ const OrderQuery = () => {
           </div>
         </div>
         <div className="absolute w-full mt-10">
-          <table className="w-11/12 ">
+          <table className="w-11/12">
             <thead>
-              <tr className="grid items-center h-10 grid-cols-12 gap-2 font-bold text-gray-700 bg-white rounded-lg w-fulls justify-items-center">
-                <th className="flex items-center justify-center">订单号</th>
-                <th className="flex items-center justify-center">客户姓名</th>
-                <th className="flex items-center justify-center">学生姓名</th>
-                <th className="flex items-center justify-center">课程名称</th>
-                <th className="flex items-center justify-center">课程类型</th>
-                <th className="flex items-center justify-center">
-                  课程开始日期
+              <tr className="grid items-center w-full h-10 grid-cols-11 font-bold text-gray-700 bg-white rounded-lg justify-items-center">
+                <th className="flex items-center justify-center flex-1 leading-10 ">订单号</th>
+                <th className="flex items-center justify-center flex-1 leading-10 ">客户姓名</th>
+                <th className="flex items-center justify-center flex-1 leading-10 ">学生姓名</th>
+                <th className="flex items-center justify-center flex-1 leading-10 ">课程名称</th>
+                <th className="flex items-center justify-center flex-1 leading-10 ">课程类型</th>
+                <th className="flex items-center justify-center flex-1 leading-10 ">
+                  开课日期
                 </th>
-                <th className="flex items-center justify-center">
-                  课程结束日期
+                <th className="flex items-center justify-center flex-1 leading-10 ">
+                  结课日期
                 </th>
-                <th className="flex items-center justify-center">
+                <th className="flex items-center justify-center flex-1 leading-10 ">
                   课程签到类型
                 </th>
-                <th className="flex items-center justify-center">总课时</th>
-                <th className="flex items-center justify-center">总价格</th>
-                <th className="flex items-center justify-center">课时单价</th>
-                <th className="flex items-center justify-center">教师姓名</th>
+                <th className="flex items-center justify-center flex-1 leading-10 ">总课时</th>
+                <th className="flex items-center justify-center flex-1 leading-10 ">总价格</th>
+                {/* <th className="flex items-center justify-center">课时单价</th> */}
+                <th className="flex items-center justify-center flex-1 leading-10 ">教师姓名</th>
               </tr>
             </thead>
             <tbody>
