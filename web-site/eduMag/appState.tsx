@@ -100,7 +100,8 @@ const initialState = {
   discuss:{
     // 课程协商
     discussList:[],
-    discussDetail:null
+    discussDetail:null,
+    discussAudit:null,
   }
 };
 export const AppContext = React.createContext<{
@@ -170,6 +171,12 @@ export const setDiscussDetail = (discussDetail?: LessonDiscussInfo) => {
   return {
     type: "setDiscussDetail",
     discussDetail: discussDetail,
+  };
+};
+export const setDiscussAudit = (discussAudit?: LessonDiscussInfo) => {
+  return {
+    type: "setDiscussAudit",
+    discussAudit: discussAudit,
   };
 };
 export const setLessonList = (lessonList: Lesson[]) => {
@@ -356,6 +363,16 @@ export const reducer = (state: any, action: any) => {
         discuss: {
           ...state.discuss,
           discussDetail: action.discussDetail,
+        },
+        backPage: action.backPage || state.backPage,
+      };
+    }
+    case "setDiscussAudit": {
+      return {
+        ...state,
+        discuss: {
+          ...state.discuss,
+          discussAudit: action.discussAudit,
         },
         backPage: action.backPage || state.backPage,
       };

@@ -1,34 +1,65 @@
-//课程协商的详细页面
-import React, { useState } from "react";
+//Lesson协商的详细页面
+import React, { useState,Fragment } from 'react';
 import {
   IonPage,
   IonCard,
   IonCardContent,
-} from "@ionic/react";
-import { Redirect } from "react-router-dom";
-import { useCallback, useContext } from "react";
-import { AppContext, setDiscussDetail } from "../../../appState";
-import { Link } from "react-router-dom";
+} from '@ionic/react';
+import { Redirect } from 'react-router-dom';
+import { useCallback, useContext } from 'react';
+import { AppContext, setDiscussAudit } from '../../../appState';
+import { Dialog, Transition } from '@headlessui/react';
 import Quit from "components/components/Quit";
 
-export const DiscussDetail: React.FC = () => {
+export const DiscussAudit: React.FC = () => {
+  // 课程协商审核dialog页面状态
+  let [isAuditOpen, setIsAuditOpen] = useState(false);
+  function closeAuditModal() {
+    setIsAuditOpen(false);
+  }
+  function openCreateModal() {
+    setIsAuditOpen(true);
+  }
+  console.log('LessonAudit');
+  const modifyURL = 'http://localhost:3003/edb/lesson/audit';
   const { state, dispatch } = useContext(AppContext);
+  // const {SubscribeDurationDays,TranAmt,USVOrgID,USVItemName,USVItemID,USVItemDesc,SubscribeStartDate,LessonType} = state.lessonDetail
 
-  const [discussState, setDiscussState] = useState(state.discuss.discussDetail);
-
+  const [discussState, setDiscussState] = useState(state.discuss.discussAudit);
+  const [isPickOpen, setPickOpen] = useState(false);
   const setBack = useCallback(() => {
-    dispatch(setDiscussDetail(undefined));
+    dispatch(setDiscussAudit(undefined));
   }, []);
-  const onBack = () => {
+
+  const onBack = () => () => {
+    
     setBack();
   };
-  if (state.discuss.discussDetail === undefined) {
+
+  const onModify = (status:string) => () => {
+    fetch(modifyURL, {
+      method: 'POST',
+      body: JSON.stringify({
+        discussId:discussState.discussId,
+        discussStatus:status
+      }),
+      headers: {
+        'Content-type': 'application/json;charset=UTF-8',
+      },
+    })
+      .then(res => res.json())
+      .then(json => {
+        setBack();
+      });
+  };
+  if (state.discuss.discussAudit === undefined) {
     return <Redirect to={state.backPage} />;
   }
+
   return (
     <IonPage className="bg-gray-100">
-      <IonCard className="h-screen overflow-auto">
-        <Quit />
+      <Quit />
+      <IonCard className="h-screen mx-6 overflow-auto">
         {/* 导航 */}
         <div className="flex px-2 pt-2 mx-2 my-2 text-gray-800">
           <div className="mr-2 text-gray-600">
@@ -48,13 +79,13 @@ export const DiscussDetail: React.FC = () => {
             </svg>
           </div>
           <div>
-            <span className="pr-1 text-gray-600 ">课程协商管理</span>/
-            <span className="pl-1 text-primary-500">课程协商详情</span>
+          <span className="pr-1 text-gray-600">课程协商管理</span>/
+            <span className="pl-1 text-primary-500">课程协商审核</span>
           </div>
         </div>
         <IonCardContent>
           {/* 详情 */}
-          <div className="font-bold text-gray-800">课程协商详情</div>
+          <div className="font-bold text-gray-800"></div>
           <hr className="mt-2 mb-4" />
           <div className="grid grid-cols-2 justify-items-center ">
             <div className="flex items-center mb-4 leading-10 justify-items-center">
@@ -154,18 +185,100 @@ export const DiscussDetail: React.FC = () => {
               />
             </div>
           </div>
-          <div className="flex justify-center">
+          <div className="flex justify-center gap-10 mt-8">
             <input
-              value="返回"
+              value="通过"
               type="button"
-              onClick={() => {
-                onBack();
-              }}
+              onClick={onModify('on')}
               className="flex w-20 px-6 py-2 font-bold text-white rounded-md bg-primary-600 focus:bg-primary-700"
             />
+            <input
+              value="不通过"
+              type="button"
+              onClick={openCreateModal}
+              className="flex w-20 px-6 py-2 font-bold bg-gray-100 rounded-md text-primary-600 focus:bg-gray-200"
+            />
           </div>
+          {/* 课程审协商核通过dialog */}
+          <Transition appear show={isAuditOpen} as={Fragment}>
+          <Dialog as="div" className="relative z-10" onClose={closeAuditModal}>
+            <Transition.Child
+              as={Fragment}
+              enter="ease-out duration-300"
+              enterFrom="opacity-0"
+              enterTo="opacity-100"
+              leave="ease-in duration-200"
+              leaveFrom="opacity-100"
+              leaveTo="opacity-0"
+            >
+              <div className="fixed inset-0 bg-black bg-opacity-25" />
+            </Transition.Child>
+
+            <div className="fixed inset-0 overflow-y-auto">
+              <div className="flex items-center justify-center min-h-full p-4 text-center">
+                <Transition.Child
+                  as={Fragment}
+                  enter="ease-out duration-300"
+                  enterFrom="opacity-0 scale-95"
+                  enterTo="opacity-100 scale-100"
+                  leave="ease-in duration-200"
+                  leaveFrom="opacity-100 scale-100"
+                  leaveTo="opacity-0 scale-95"
+                >
+                  <Dialog.Panel className="w-full max-w-md p-4 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
+                    <Dialog.Title
+                      as="h3"
+                      className="text-lg font-medium leading-6 text-center text-gray-900"
+                    >
+                      审核结果
+                      <hr className="mt-2 mb-4" />
+                    </Dialog.Title>
+                    <form
+                      className="flex flex-col items-center mt-8 rounded-lg justify-items-center"
+                    >
+                      <div className="flex items-center mb-4 justify-items-center">
+                        <div className="flex leading-7 justify-items-center">
+                          <div className="flex justify-end w-24 p-1">不通过原因:</div>
+                          <textarea
+                            className="h-32 p-1 text-gray-600 bg-gray-100 border rounded-md w-72 justify-self-start focus:outline-none"
+                            name="eduName"
+                            placeholder='请输入审核不通过原因'
+                            value={discussState.discussReason}
+                            onChange={e =>
+                              setDiscussAudit({
+                                ...discussState,
+                                discussReason: e.nativeEvent.target?.value,
+                              })
+                            }
+                          ></textarea>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-4 mt-2 justify-items-center">
+                        <input
+                          value="返回"
+                          type="button"
+                          className="px-6 py-2 border rounded-md "
+                          onClick={closeAuditModal}
+                        />
+                        <input
+                          value="提交"
+                          type="button"
+                          className="px-6 py-2 text-white border rounded-md bg-primary-600"
+                          onClick={()=>{onModify('reject')();closeAuditModal()}}
+                        />
+                      </div>
+                    </form>
+                  </Dialog.Panel>
+                </Transition.Child>
+              </div>
+            </div>
+          </Dialog>
+        </Transition>
+
         </IonCardContent>
       </IonCard>
     </IonPage>
   );
 };
+
+export default DiscussAudit;

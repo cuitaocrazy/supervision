@@ -249,7 +249,8 @@ export interface LessonDiscussInfo{
   consumerPhone?:string,
   stuName?:string,
   teacherName?:string,
-  item?: LessonDiscussInfo
+  discussStatus?:string,
+  discussReason?:string,
 }
 
 
