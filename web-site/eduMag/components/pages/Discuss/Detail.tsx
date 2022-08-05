@@ -1,4 +1,4 @@
-//Lesson的详细页面
+//课程协商的详细页面
 import React, { useState } from "react";
 import {
   IonPage,
@@ -8,31 +8,27 @@ import {
 import { Redirect } from "react-router-dom";
 import { useCallback, useContext } from "react";
 import { AppContext, setDiscussDetail } from "../../../appState";
-import { PickerColumn } from "@ionic/core";
-import Router from "next/router";
+import { Link } from "react-router-dom";
 import Quit from "components/components/Quit";
 
 export const DiscussDetail: React.FC = () => {
-  console.log("DiscussDetail");
   const { state, dispatch } = useContext(AppContext);
 
   const [discussState, setDiscussState] = useState(state.discuss.discussDetail);
+
   const setBack = useCallback(() => {
     dispatch(setDiscussDetail(undefined));
   }, []);
-  `                                                       `;
-  const onBack = () => () => {
+  const onBack = () => {
     setBack();
   };
-  if (state.discuss?.discussDetail === undefined) {
+  if (state.discuss.discussDetail === undefined) {
     return <Redirect to={state.backPage} />;
   }
-
-
   return (
     <IonPage className="bg-gray-100">
-      <IonCard>
-      <Quit />
+      <IonCard className="h-screen overflow-auto">
+        <Quit />
         {/* 导航 */}
         <div className="flex px-2 pt-2 mx-2 my-2 text-gray-800">
           <div className="mr-2 text-gray-600">
@@ -57,93 +53,91 @@ export const DiscussDetail: React.FC = () => {
           </div>
         </div>
         <IonCardContent>
-            {/* 详情 */}
-            <div className="font-bold text-gray-800">课程协商详情</div>
-            <hr className="mt-2 mb-4" />
-            <div className="grid grid-cols-2 justify-items-center ">
-              <div className="flex items-center mb-4 leading-10 justify-items-center">
-                <div className="flex justify-end w-32 mr-2">课程名称:</div>
-                <input
-                  className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
-                  value={discussState.lessonName}
-                  readOnly
-                />
-              </div>
-              <div className="flex mb-4 leading-10">
-                <div className="flex justify-end w-32 mr-2">课程日期:</div>
-                <input
-                  className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
-                  value={discussState.lessonDate}
-                  readOnly
-                />
-              </div>
-              <div className="flex mb-4 leading-10">
-                <div className="flex justify-end w-32 mr-2">课程时间:</div>
-                <input
-                  className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
-                  value={discussState.lessonTime}
-                  readOnly
-                />
-              </div>
-              <div className="flex mb-4 leading-10">
-                <div className="flex justify-end w-32 mr-2">消费者姓名:</div>
-                <input
-                  className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
-                  value={discussState.consumerName}
-                  readOnly
-                />
-              </div>
-              <div className="flex mb-4 leading-10">
-                <div className="flex justify-end w-32 mr-2">
-                  学生姓名:
-                </div>
-                <input
-                  className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
-                  value={discussState.stuName}
-                  readOnly
-                />
-              </div>
-              <div className="flex mb-4 leading-10">
-                <div className="flex justify-end w-32 mr-2">考勤状态:</div>
-                <input
-                  className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
-                  value={discussState.attendanceState}
-                  readOnly
-                />
-              </div>
-              <div className="flex mb-4 leading-10">
-                <div className="flex justify-end w-32 mr-2">协商标题:</div>
-                <input
-                  className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
-                  value={discussState.discussTitle}
-                  readOnly
-                />
-              </div>
-              <div className="flex mb-4 leading-10">
-                <div className="flex justify-end w-32 mr-2">协商内容:</div>
-                <input
-                  className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
-                  value={discussState.discussContent}
-                  readOnly
-                />
-              </div>
-              <div className="flex mb-4 leading-10">
-                <div className="flex justify-end w-32 mr-2">提交协商日期:</div>
-                <input
-                  className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
-                  value={discussState.discussDate}
-                  readOnly
-                />
-              </div>
-              <div className="flex mb-4 leading-10">
-                <div className="flex justify-end w-32 mr-2">提交协商时间:</div>
-                <input
-                  className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
-                  value={discussState.discussTime}
-                  readOnly
-                />
-              </div>
+          {/* 详情 */}
+          <div className="font-bold text-gray-800">课程协商详情</div>
+          <hr className="mt-2 mb-4" />
+          <div className="grid grid-cols-2 justify-items-center ">
+            <div className="flex items-center mb-4 leading-10 justify-items-center">
+              <div className="flex justify-end w-32 mr-2">课程名称:</div>
+              <input
+                className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
+                value={discussState.lessonName}
+                readOnly
+              />
             </div>
+            <div className="flex mb-4 leading-10">
+              <div className="flex justify-end w-32 mr-2">课程日期:</div>
+              <input
+                className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
+                value={discussState.lessonDate}
+                readOnly
+              />
+            </div>
+            <div className="flex mb-4 leading-10">
+              <div className="flex justify-end w-32 mr-2">课程时间:</div>
+              <input
+                className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
+                value={discussState.lessonTime}
+                readOnly
+              />
+            </div>
+            <div className="flex mb-4 leading-10">
+              <div className="flex justify-end w-32 mr-2">消费者姓名:</div>
+              <input
+                className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
+                value={discussState.consumerName}
+                readOnly
+              />
+            </div>
+            <div className="flex mb-4 leading-10">
+              <div className="flex justify-end w-32 mr-2">学生姓名:</div>
+              <input
+                className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
+                value={discussState.stuName}
+                readOnly
+              />
+            </div>
+            <div className="flex mb-4 leading-10">
+              <div className="flex justify-end w-32 mr-2">考勤状态:</div>
+              <input
+                className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
+                value={discussState.attendanceState}
+                readOnly
+              />
+            </div>
+            <div className="flex mb-4 leading-10">
+              <div className="flex justify-end w-32 mr-2">协商标题:</div>
+              <input
+                className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
+                value={discussState.discussTitle}
+                readOnly
+              />
+            </div>
+            <div className="flex mb-4 leading-10">
+              <div className="flex justify-end w-32 mr-2">协商内容:</div>
+              <input
+                className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
+                value={discussState.discussContent}
+                readOnly
+              />
+            </div>
+            <div className="flex mb-4 leading-10">
+              <div className="flex justify-end w-32 mr-2">提交协商日期:</div>
+              <input
+                className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
+                value={discussState.discussDate}
+                readOnly
+              />
+            </div>
+            <div className="flex mb-4 leading-10">
+              <div className="flex justify-end w-32 mr-2">提交协商时间:</div>
+              <input
+                className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
+                value={discussState.discussTime}
+                readOnly
+              />
+            </div>
+          </div>
           <div className="flex justify-center">
             <input
               value="返回"
@@ -159,5 +153,3 @@ export const DiscussDetail: React.FC = () => {
     </IonPage>
   );
 };
-
-export default DiscussDetail;

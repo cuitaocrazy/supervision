@@ -1,196 +1,162 @@
-//课程协商列表页面
-import {
-  useEffect,
-  useCallback,
-  useContext,
-  useState,
-  useRef,
-  Fragment,
-} from "react";
+import { useEffect, useCallback, useContext, useState } from "react";
 import { Redirect } from "react-router-dom";
 import {
   AppContext,
   setDiscussList,
-  setDiscussDetail
+  setDiscussDetail,
 } from "../../../appState";
-import {LessonDiscussInfo} from "../../../types/types";
+import { LessonDiscussInfo } from "../../../types/types";
 import {
   IonPage,
+  IonList,
+  IonLabel,
+  IonItem,
   IonRow,
   IonCol,
-  PickerColumn,
-  IonToast,
 } from "@ionic/react";
-import { EditorState } from "draft-js";
-import Paging from '../../paging';
 import Quit from "components/components/Quit";
 
-const find = "http://localhost:3003/edu/discuss/find";
+const queryURL = "http://localhost:3003/discuss/query";
 
-// 课程协商查询页面
-const DiscussQuery: React.FC = () => {
-
-  const onPageChange = (records:any,total:number,newPage:number)=>{
-    console.log(records)
-    console.log(total)
-    console.log(newPage)
-    setPage(newPage)
-    setTotal(total)
-    refreshDiscussList(records)
+const demoDiscussList: LessonDiscussInfo[] = [
+  {
+    lessonImages: "1111",
+    lessonName: "数学课",
+    lessonDate: "20210101",
+    lessonTime: "090909",
+    discussTitle: "本次课程已请假",
+    attendanceState: "上课",
+    discussContent: "本次课程因孩子生病未上课，APP却显示已上课",
+    discussDate: "20220909",
+    discussTime: "090909",
+    consumerName: "张小白",
+    stuName: "小红",
+    teacherName: "李老师",
+  },
+  {
+    lessonImages: "2222",
+    lessonName: "数学课",
+    lessonDate: "20210101",
+    lessonTime: "090909",
+    discussTitle: "本次课程已请假",
+    attendanceState: "上课",
+    discussContent: "本次课程因孩子生病未上课，APP却显示已上课",
+    discussDate: "20220909",
+    discussTime: "090909",
+    consumerName: "张小白",
+    stuName: "小红",
+    teacherName: "李老师",
   }
+]
 
-  const [page,setPage] = useState(0)
-  const [total,setTotal]= useState(101)//todo
-
-  const [editorState, setEditorState] = useState(EditorState.createEmpty());
-
-  const editor = useRef(null);
-
-  // function focusEditor() {
-  //   editor.current.focus();
-
-  // }
-
-
+const DiscussQuery: React.FC = () => {
   const { state, dispatch } = useContext(AppContext);
   const [queryInfo, setQueryInfo] = useState({
+    consumerName: "",
     lessonName: "",
-    lessonStatus: null,
+    consumerStuName: "",
+    attendanceType: "",
+    attendanceStatus: "",
   });
+
   const getParamStr = (params: any, url: string) => {
     let result = "?";
-    Object.keys(params).forEach((key) => {
-      if (params[key]) result = result + key + "=" + params[key] + "&";
-    });
+    Object.keys(params).forEach(
+      (key) => (result = result + key + "=" + params[key] + "&")
+    );
     return url + result;
   };
   const paramStr = getParamStr(
     {
+      consumerName: queryInfo.consumerName,
       lessonName: queryInfo.lessonName,
+      consumerStuName: queryInfo.consumerStuName,
     },
-    find
+    queryURL
   );
-
-  const lessonTypePickerColumn = {
-    name: "lessonTypePickerColumn",
-    options: [
-      { text: "语文", value: "0" },
-      { text: "数学", value: "1" },
-    ],
-  } as PickerColumn;
-
-  const refreshDiscussList = useCallback(
-    (discussInfo: LessonDiscussInfo[]) => {
-      dispatch(setDiscussList(discussInfo));
+  const refreshList = useCallback(
+    (discuss: LessonDiscussInfo[]) => {
+      dispatch(setDiscussList(discuss));
     },
     [dispatch]
   );
-
   const onDetail = (item: LessonDiscussInfo) => () => {
     doSetDetail(item);
   };
 
   const doSetDetail = useCallback(
-    (discussInfo: LessonDiscussInfo | undefined) => {
+    (discuss: any) => {
       dispatch({
-        ...setDiscussDetail(discussInfo),
+        ...setDiscussDetail(discuss),
         ...{ backPage: "/tabs/discussQuery" },
       });
     },
     [dispatch]
   );
   useEffect(() => {
-    fetch(find, {
-      method: "GET",
-      headers: {
-        "Content-type": "application/json;charset=UTF-8",
-      },
-    })
-      .then((res) => res.json())
-      .then((json) => {
-        const { result, records,total } = json;
+    // fetch(paramStr, {
+    //   method: 'GET',
+    //   headers: {
+    //     'Content-type': 'application/json;charset=UTF-8',
+    //   },
+    // }).then(res => res.json())
+    // .then((json) => {
+    // const {attendanceList} = json
 
-        if (result) {
-          setTotal(total)
-          refreshDiscussList(records);
-        }
-        return;
-      });
-    return;
+    // refreshList(demoattendanceList.filter((attendance:Attendance)=>attendance.consumerName.indexOf(queryInfo.consumerName)>-1).filter((attendance:Attendance)=>attendance.lessonName.indexOf(queryInfo.lessonName)>-1).filter((attendance:Attendance)=>attendance.consumerStuName.indexOf(queryInfo.consumerStuName)>-1))
+    // return
+    // })
+    console.log(demoDiscussList);
+    refreshList(demoDiscussList);
   }, []);
-
   const onQuery = () => {
-    fetch(paramStr, {
-      method: "GET",
-      headers: {
-        "Content-type": "application/json;charset=UTF-8",
-      },
-    })
-      .then((res) => res.json())
-      .then((json) => {
-        const { result, records,total } = json;
-        if (result) {
-          setTotal(total)
-          refreshDiscussList(records)
-        };
-        return;
-      });
+    // refreshList(
+    //   demoDiscussList
+    //     .filter(
+    //       (discuss: LessonDiscussInfo) =>
+    //         discuss.lessonName.indexOf(queryInfo.lessonName) > -1
+    //     )
+    // );
   };
-
-  const getStatus = (statusEnglish: any) => {
-    if (statusEnglish === "pending") {
-      return "待审核";
-    }
-    if (statusEnglish === "reject") {
-      return "审核未通过";
-    }
-    if (statusEnglish === "on") {
-      return "上架";
-    }
-    if (statusEnglish === "off") {
-      return "下架";
-    }
-    return statusEnglish;
-  };
-
   const ListEntry = ({
-    discussInfo,
+    discuss,
     ...props
   }: {
-    discussInfo: LessonDiscussInfo;
+    discuss: LessonDiscussInfo;
+    key: any;
   }) => (
     <tr
       className="grid items-center grid-cols-9 gap-2 text-gray-600 border justify-items-center even:bg-white odd:bg-primary-100"
     >
       <td className="flex items-center justify-center leading-10">
-        {discussInfo.lessonName}
+        {discuss.lessonName}
       </td>
       <td className="flex items-center justify-center leading-10">
-        {discussInfo.lessonDate}
+        {discuss.lessonDate}
       </td>
       <td className="flex items-center justify-center leading-10">
-      {discussInfo.consumerName}
+        {discuss.consumerName}
       </td>
       <td className="flex items-center justify-center leading-10">
-      {discussInfo.stuName}
+        {discuss.stuName}
       </td>
       <td className="flex items-center justify-center leading-10">
-      {discussInfo.attendanceState}
+        {discuss.attendanceState}
       </td>
       <td className="flex items-center justify-center leading-10">
-      {discussInfo.discussTitle}
+        {discuss.discussTitle}
       </td>
       <td className="flex items-center justify-center leading-10">
-      {discussInfo.discussDate}
+        {discuss.discussDate}
       </td>
       <td className="flex items-center justify-center leading-10">
-      {discussInfo.discussTime}
+        {discuss.discussTime}
       </td>
       <td className="flex items-center justify-center leading-10">
         <div className="flex gap-2 ">
           <button
             className="p-1 rounded-md text-primary-600"
-            onClick={onDetail(discussInfo)}
+            onClick={onDetail(discuss)}
           >
             查看详情
           </button>
@@ -198,10 +164,10 @@ const DiscussQuery: React.FC = () => {
       </td>
     </tr>
   );
-  if (state.discuss.lessonDetail) {
+
+  if (state.discuss.discussDetail) {
     return <Redirect to="/tabs/discuss/detail" />;
   }
-
   return (
     <IonPage className="bg-gray-100">
       <Quit />
@@ -225,7 +191,7 @@ const DiscussQuery: React.FC = () => {
           </div>
           <div>
             <span className="pr-1 text-gray-600">课程协商管理</span>/
-            <span className="pl-1 text-primary-500">课程协商列表</span>
+            <span className="pl-1 text-primary-500">协商列表</span>
           </div>
         </div>
         <div className="w-11/12 px-4 py-2 mt-4 bg-white rounded-lg ">
@@ -249,6 +215,7 @@ const DiscussQuery: React.FC = () => {
                   }
                 />
               </IonCol>
+              
               <IonCol className="flex ml-8">
                 <button
                   className="w-24 h-12 mr-6 text-white border-2 rounded-md shadow-md bg-primary-600 focus:bg-primary-700"
@@ -263,29 +230,28 @@ const DiscussQuery: React.FC = () => {
           </div>
         </div>
 
-        {/* 课程协商列表 */}
+        {/* 课程协商明细列表 */}
         <div className="absolute w-full mt-10">
           <table className="w-11/12">
             <thead>
-              <tr className="grid items-center h-10 grid-cols-9 gap-2 font-bold text-gray-700 bg-white rounded-lg justify-items-center">
-                <th className="flex items-center justify-center">课程名称</th>
-                <th className="flex items-center justify-center">课程日期</th>
-                <th className="flex items-center justify-center">家长姓名</th>
-                <th className="flex items-center justify-center">学生姓名</th>
-                <th className="flex items-center justify-center">考勤状态</th>
-                <th className="flex items-center justify-center">协商标题</th>
-                <th className="flex items-center justify-center">提交协商日期</th>
-                <th className="flex items-center justify-center">提交协商日期</th>
-                <th className="flex items-center justify-center">操作</th>
-              </tr>
+            <tr className="grid items-center h-10 grid-cols-9 gap-2 font-bold text-gray-700 bg-white rounded-lg justify-items-center">
+                 <th className="flex items-center justify-center">课程名称</th>
+                 <th className="flex items-center justify-center">课程日期</th>
+                 <th className="flex items-center justify-center">家长姓名</th>
+                 <th className="flex items-center justify-center">学生姓名</th>
+                 <th className="flex items-center justify-center">考勤状态</th>
+                 <th className="flex items-center justify-center">协商标题</th>
+                 <th className="flex items-center justify-center">提交协商日期</th>
+                 <th className="flex items-center justify-center">提交协商日期</th>
+                 <th className="flex items-center justify-center">操作</th>
+               </tr>
             </thead>
             <tbody>
-              {state.discuss.discussList.map((list: LessonDiscussInfo, i: any) => (
-                <ListEntry discussInfo={list} key={i} />
-              ))}
-              <tr>
-                <td colSpan={5}> <Paging url={paramStr} page={page} pagesize={20} total={total} onPageChange={onPageChange}/></td>
-              </tr>
+              {state.discuss?.discussList.map(
+                (list: LessonDiscussInfo, i: any) => (
+                  <ListEntry discuss={list} key={i} />
+                )
+              )}
             </tbody>
           </table>
         </div>
@@ -294,3 +260,4 @@ const DiscussQuery: React.FC = () => {
   );
 };
 export default DiscussQuery;
+

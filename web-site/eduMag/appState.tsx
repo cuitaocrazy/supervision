@@ -166,7 +166,7 @@ export const setDiscussList = (discussList: LessonDiscussInfo[]) => {
     discussList: discussList,
   };
 };
-export const setDiscussDetail = (discussDetail: LessonDiscussInfo) => {
+export const setDiscussDetail = (discussDetail?: LessonDiscussInfo) => {
   return {
     type: "setDiscussDetail",
     discussDetail: discussDetail,
@@ -320,26 +320,6 @@ export const reducer = (state: any, action: any) => {
         },
       };
     }
-    //   case 'setUserInfoList': {
-    //     return {
-    //       ...state,
-    //       userInfo:{
-    //         userInfoList:action.userInfoList,
-    //         userInfoDetail:state.userInfo.userInfoDetail
-    //       },
-    //       backPage:action.backPage||state.backPage
-    //     }
-    //   }
-    //   case 'setUserInfoDetail': {
-    //     return {
-    //       ...state,
-    //       userInfo:{
-    //         userInfoList:state.userInfo.userInfoList,
-    //         userInfoDetail:action.userInfoDetail
-    //       },
-    //       backPage:action.backPage||state.backPage
-    //     }
-    //   }
     case "setContractList": {
       return {
         ...state,
@@ -364,8 +344,8 @@ export const reducer = (state: any, action: any) => {
       return {
         ...state,
         discuss: {
+          ...state.discuss,
           discussList: action.discussList,
-          discussDetail: state.discuss.discussDetail,
         },
         backPage: action.backPage || state.backPage,
       };
@@ -374,7 +354,7 @@ export const reducer = (state: any, action: any) => {
       return {
         ...state,
         discuss: {
-          discussList: state.discuss.discussList,
+          ...state.discuss,
           discussDetail: action.discussDetail,
         },
         backPage: action.backPage || state.backPage,
