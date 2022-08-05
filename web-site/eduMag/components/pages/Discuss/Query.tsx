@@ -22,6 +22,7 @@ const demoDiscussList: LessonDiscussInfo[] = [
   {
     lessonImages: "1111",
     lessonName: "数学课",
+    lessonQuantity:"2",
     lessonDate: "20210101",
     lessonTime: "090909",
     discussTitle: "本次课程已请假",
@@ -30,12 +31,14 @@ const demoDiscussList: LessonDiscussInfo[] = [
     discussDate: "20220909",
     discussTime: "090909",
     consumerName: "张小白",
+    consumerPhone:"18610909098",
     stuName: "小红",
     teacherName: "李老师",
   },
   {
     lessonImages: "2222",
     lessonName: "数学课",
+    lessonQuantity:"2",
     lessonDate: "20210101",
     lessonTime: "090909",
     discussTitle: "本次课程已请假",
@@ -44,6 +47,7 @@ const demoDiscussList: LessonDiscussInfo[] = [
     discussDate: "20220909",
     discussTime: "090909",
     consumerName: "张小白",
+    consumerPhone:"18610909098",
     stuName: "小红",
     teacherName: "李老师",
   }
@@ -126,31 +130,34 @@ const DiscussQuery: React.FC = () => {
     key: any;
   }) => (
     <tr
-      className="grid items-center grid-cols-9 gap-2 text-gray-600 border justify-items-center even:bg-white odd:bg-primary-100"
+      className="grid items-center grid-cols-10 gap-2 text-gray-600 border justify-items-center even:bg-white odd:bg-primary-100"
     >
       <td className="flex items-center justify-center leading-10">
         {discuss.lessonName}
       </td>
       <td className="flex items-center justify-center leading-10">
-        {discuss.lessonDate}
-      </td>
-      <td className="flex items-center justify-center leading-10">
-        {discuss.consumerName}
-      </td>
-      <td className="flex items-center justify-center leading-10">
-        {discuss.stuName}
+        {discuss.lessonQuantity}
       </td>
       <td className="flex items-center justify-center leading-10">
         {discuss.attendanceState}
       </td>
       <td className="flex items-center justify-center leading-10">
+        {discuss.lessonDate}
+      </td>
+      <td className="flex items-center justify-center leading-10">
+        {discuss.lessonTime}
+      </td>
+      <td className="flex items-center justify-center leading-10">
         {discuss.discussTitle}
+      </td>      
+      <td className="flex items-center justify-center leading-10">
+        {discuss.consumerName}
       </td>
       <td className="flex items-center justify-center leading-10">
-        {discuss.discussDate}
+        {discuss.consumerPhone}
       </td>
       <td className="flex items-center justify-center leading-10">
-        {discuss.discussTime}
+        {discuss.stuName}
       </td>
       <td className="flex items-center justify-center leading-10">
         <div className="flex gap-2 ">
@@ -234,15 +241,16 @@ const DiscussQuery: React.FC = () => {
         <div className="absolute w-full mt-10">
           <table className="w-11/12">
             <thead>
-            <tr className="grid items-center h-10 grid-cols-9 gap-2 font-bold text-gray-700 bg-white rounded-lg justify-items-center">
+            <tr className="grid items-center h-10 grid-cols-10 gap-2 font-bold text-gray-700 bg-white rounded-lg justify-items-center">
                  <th className="flex items-center justify-center">课程名称</th>
-                 <th className="flex items-center justify-center">课程日期</th>
-                 <th className="flex items-center justify-center">家长姓名</th>
-                 <th className="flex items-center justify-center">学生姓名</th>
-                 <th className="flex items-center justify-center">考勤状态</th>
+                 <th className="flex items-center justify-center">本次课时</th>
+                 <th className="flex items-center justify-center">课时状态</th>
+                 <th className="flex items-center justify-center">上课日期</th>
+                 <th className="flex items-center justify-center">上课时间</th>
                  <th className="flex items-center justify-center">协商标题</th>
-                 <th className="flex items-center justify-center">提交协商日期</th>
-                 <th className="flex items-center justify-center">提交协商日期</th>
+                 <th className="flex items-center justify-center">消费者姓名</th>
+                 <th className="flex items-center justify-center">联系方式</th>
+                 <th className="flex items-center justify-center">学生姓名</th>
                  <th className="flex items-center justify-center">操作</th>
                </tr>
             </thead>

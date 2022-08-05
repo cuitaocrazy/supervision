@@ -236,6 +236,7 @@ export interface ContractNego {
 export interface LessonDiscussInfo{
   lessonImages?:string,
   lessonName?:string,
+  lessonQuantity?:string,
   lessonDate?:string,
   lessonTime?:string,
   lessonContent?:string,
@@ -245,6 +246,7 @@ export interface LessonDiscussInfo{
   discussDate?:string,
   discussTime?:string,
   consumerName?:string,
+  consumerPhone?:string,
   stuName?:string,
   teacherName?:string,
   item?: LessonDiscussInfo

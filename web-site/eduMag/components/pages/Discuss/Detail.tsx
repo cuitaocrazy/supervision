@@ -65,8 +65,24 @@ export const DiscussDetail: React.FC = () => {
                 readOnly
               />
             </div>
+            <div className="flex items-center mb-4 leading-10 justify-items-center">
+              <div className="flex justify-end w-32 mr-2">本次课时:</div>
+              <input
+                className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
+                value={discussState.lessonQuantity}
+                readOnly
+              />
+            </div>
             <div className="flex mb-4 leading-10">
-              <div className="flex justify-end w-32 mr-2">课程日期:</div>
+              <div className="flex justify-end w-32 mr-2">课时状态:</div>
+              <input
+                className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
+                value={discussState.attendanceState}
+                readOnly
+              />
+            </div>
+            <div className="flex mb-4 leading-10">
+              <div className="flex justify-end w-32 mr-2">上课日期:</div>
               <input
                 className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
                 value={discussState.lessonDate}
@@ -74,7 +90,7 @@ export const DiscussDetail: React.FC = () => {
               />
             </div>
             <div className="flex mb-4 leading-10">
-              <div className="flex justify-end w-32 mr-2">课程时间:</div>
+              <div className="flex justify-end w-32 mr-2">上课时间:</div>
               <input
                 className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
                 value={discussState.lessonTime}
@@ -90,6 +106,14 @@ export const DiscussDetail: React.FC = () => {
               />
             </div>
             <div className="flex mb-4 leading-10">
+              <div className="flex justify-end w-32 mr-2">联系方式:</div>
+              <input
+                className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
+                value={discussState.consumerPhone}
+                readOnly
+              />
+            </div>
+            <div className="flex mb-4 leading-10">
               <div className="flex justify-end w-32 mr-2">学生姓名:</div>
               <input
                 className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
@@ -98,25 +122,17 @@ export const DiscussDetail: React.FC = () => {
               />
             </div>
             <div className="flex mb-4 leading-10">
-              <div className="flex justify-end w-32 mr-2">考勤状态:</div>
-              <input
-                className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
-                value={discussState.attendanceState}
-                readOnly
-              />
-            </div>
-            <div className="flex mb-4 leading-10">
               <div className="flex justify-end w-32 mr-2">协商标题:</div>
               <input
-                className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
+                className="w-64 h-10 px-2 rounded-md bg-primary-100 focus:outline-none"
                 value={discussState.discussTitle}
                 readOnly
               />
             </div>
             <div className="flex mb-4 leading-10">
               <div className="flex justify-end w-32 mr-2">协商内容:</div>
-              <input
-                className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
+              <textarea
+                className="w-64 h-32 px-2 rounded-md bg-primary-100 focus:outline-none"
                 value={discussState.discussContent}
                 readOnly
               />
