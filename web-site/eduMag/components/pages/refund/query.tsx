@@ -3,22 +3,7 @@ import React, { useState, Fragment } from "react";
 import { useEffect, useCallback, useContext } from "react";
 import {
   IonPage,
-  IonModal,
-  IonRow,
-  IonCol,
-  IonCard,
-  IonRadioGroup,
-  IonRadio,
-  IonCardHeader,
-  IonCardSubtitle,
-  IonLabel,
-  IonInput,
-  IonCardContent,
-  IonItem,
-  IonButton,
-  IonList,
-  IonDatetime,
-  IonPicker,
+  useIonToast,
 } from "@ionic/react";
 import { Redirect } from "react-router-dom";
 import {
@@ -32,6 +17,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import Quit from "components/components/Quit";
 
 const queryURL = "http://localhost:3003/contractNego/query";
+const refundLessonURL = "http://localhost:3003/edu/refundLesson/desc";
 
 const democontractNegoList: ContractNego[] = [
   {
@@ -89,6 +75,7 @@ const democontractNegoList: ContractNego[] = [
 ];
 
 const ContractNegoQuery: React.FC = () => {
+  const [present, dismiss] = useIonToast();
   let [isRefundOpen, setIsRefundOpen] = useState(false);
   function closeRefundModal() {
     setIsRefundOpen(false);
@@ -128,9 +115,37 @@ const ContractNegoQuery: React.FC = () => {
   const onCreate = () => {
     //todo fetch
   };
-
+// 退课处理
   const onManual = () => {
     //todo fetch
+    alert('3333333')
+    const reqBody = JSON.stringify({
+      ...detail
+    });
+    fetch(refundLessonURL, {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json;charset=UTF-8",
+      },
+      body: reqBody,
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        const { result, msg } = json;
+        alert('444')
+        if (result) 
+        {
+          present('发起签到成功', 3000);
+          onQuery();
+        } else 
+        present({
+          buttons: [{ text: '关闭', handler: () => dismiss() }],
+          message: '发起签到失败，失败原因：'+msg,
+          onDidDismiss: () => console.log('dismissed'),
+          onWillDismiss: () => console.log('will dismiss'),
+        })
+        closeRefundModal
+      });
     console.log("提交");
   };
 
@@ -446,6 +461,7 @@ const ContractNegoQuery: React.FC = () => {
                           value="确认"
                           type="button"
                           className="px-6 py-2 text-white border rounded-md bg-primary-600"
+                          onClick={onManual}
                         />
                       </div>
                     </form>

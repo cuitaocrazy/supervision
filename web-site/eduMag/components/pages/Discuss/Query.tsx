@@ -9,15 +9,14 @@ import {
 import { LessonDiscussInfo } from "../../../types/types";
 import {
   IonPage,
-  IonList,
-  IonLabel,
-  IonItem,
   IonRow,
   IonCol,
+  useIonToast,
 } from "@ionic/react";
 import Quit from "components/components/Quit";
 
 const queryURL = "http://localhost:3003/discuss/query";
+const discussURL = "http://localhost:3003/discuss/lesson";
 
 const demoDiscussList: LessonDiscussInfo[] = [
   {
@@ -59,6 +58,7 @@ const demoDiscussList: LessonDiscussInfo[] = [
 ];
 
 const DiscussQuery: React.FC = () => {
+  const [present, dismiss] = useIonToast();
   const { state, dispatch } = useContext(AppContext);
   const [queryInfo, setQueryInfo] = useState({
     consumerName: "",
@@ -105,6 +105,30 @@ const DiscussQuery: React.FC = () => {
 
   const onAudit = (item: LessonDiscussInfo) => () => {
     doSetAudit(item);
+    console.log(queryInfo);
+    fetch(discussURL, {
+      method: "POST",
+      body: JSON.stringify(queryInfo),
+      headers: {
+        "Content-type": "application/json;charset=UTF-8",
+      },
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        const result=json
+        if (result) 
+        {
+          present('课程协商审核通过操作成功', 3000);
+        } else 
+        present({
+          buttons: [{ text: '关闭', handler: () => dismiss() }],
+          message: '课程协商审核通过操作失败',
+          onDidDismiss: () => console.log('dismissed'),
+          onWillDismiss: () => console.log('will dismiss'),
+        })
+        
+      });
+    
   };
 
   const doSetAudit = useCallback(

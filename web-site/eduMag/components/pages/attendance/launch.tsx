@@ -1,7 +1,7 @@
-//手工退课
+//课程签到发起
 import React, { useState, Fragment } from "react";
 import { useEffect, useCallback, useContext } from "react";
-import { IonPage, IonModal, IonRow, IonCol, IonLabel } from "@ionic/react";
+import { IonPage, IonModal, IonRow, IonCol, IonLabel, useIonToast} from "@ionic/react";
 import { AppContext, setAttendenceLanuchList } from "../../../appState";
 import { Attendance, Lesson } from "../../../types/types";
 import moment from "moment";
@@ -13,6 +13,23 @@ const queryURL = "http://localhost:3003/edu/lesson/find";
 const attendanceApplyURL = "http://localhost:3003/edu/attendance/apply";
 
 const ContractNegoQuery: React.FC = () => {
+  const [present, dismiss] = useIonToast();
+  //  结果状态
+  const resultState="000"
+  // 展示操作结果
+  const resultFun=()=>{
+    if(resultState=="000"){
+      present('课程添加成功', 3000);
+    }
+    else{
+      present({
+        buttons: [{ text: '关闭', handler: () => dismiss() }],
+        message: '课程添加失败，失败原因：......',
+        onDidDismiss: () => console.log('dismissed'),
+        onWillDismiss: () => console.log('will dismiss'),
+      })
+    }
+  }
   let [isAttendanceOpen, setIsAttendanceOpen] = useState(false);
 
   const { state, dispatch } = useContext(AppContext);
@@ -77,10 +94,16 @@ const ContractNegoQuery: React.FC = () => {
       .then((json) => {
         const { result, msg } = json;
         if (result) {
-          alert("发起签到成功");
+          present('发起签到成功', 3000);
           setIsAttendanceOpen(false);
           onQuery();
-        } else alert("发起签到失败, 原因: " + msg);
+        } else 
+        present({
+          buttons: [{ text: '关闭', handler: () => dismiss() }],
+          message: '发起签到失败，失败原因：'+msg,
+          onDidDismiss: () => console.log('dismissed'),
+          onWillDismiss: () => console.log('will dismiss'),
+        })
       });
     console.log("提交");
   };

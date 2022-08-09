@@ -10,18 +10,9 @@ import {
 import { Teacher } from "../../../types/types";
 import {
   IonPage,
-  IonList,
-  IonLabel,
-  IonItem,
   IonRow,
   IonCol,
-  IonModal,
-  IonButton,
-  IonCardHeader,
-  IonCardTitle,
-  IonCard,
-  IonCardContent,
-  IonInput,
+  useIonToast
 } from "@ionic/react";
 import { Dialog, Transition } from "@headlessui/react";
 import Paging from '../../paging'
@@ -33,6 +24,7 @@ const createURL = "http://localhost:3003/edu/teacher/create";
 const cancelURL = "http://localhost:3003/edu/teacher/del";
 
 const TeacherQuery: React.FC = () => {
+  const [present, dismiss] = useIonToast();
 
   let [isCreateOpen, setIsCreateOpen] = useState(false);
   function closeCreateModal() {
@@ -111,6 +103,17 @@ const TeacherQuery: React.FC = () => {
     }).then(res => res.json())
     .then((json) => {
       const { result, records,total } = json;
+      if (result) 
+      {
+        present('教师删除成功', 3000);
+        onQuery();
+      } else 
+      present({
+        buttons: [{ text: '关闭', handler: () => dismiss() }],
+        message: '教师删除失败',
+        onDidDismiss: () => console.log('dismissed'),
+        onWillDismiss: () => console.log('will dismiss'),
+      })
       closeDeleteModal();
       onQuery()
     }
@@ -157,6 +160,18 @@ const TeacherQuery: React.FC = () => {
       },
     }).then(res => res.json())
     .then((json) => {
+      const { result, msg } = json;
+        if (result) 
+        {
+          present('教师添加成功', 3000);
+          onQuery();
+        } else 
+        present({
+          buttons: [{ text: '关闭', handler: () => dismiss() }],
+          message: '教师添加失败，失败原因：'+msg,
+          onDidDismiss: () => console.log('dismissed'),
+          onWillDismiss: () => console.log('will dismiss'),
+        })
       closeCreateModal()
       onQuery()
     })

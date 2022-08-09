@@ -3,17 +3,8 @@ import React, { useState } from "react";
 import {
   IonPage,
   IonCard,
-  IonRadioGroup,
-  IonRadio,
-  IonCardHeader,
-  IonCardSubtitle,
-  IonInput,
   IonCardContent,
-  IonItem,
-  IonButton,
-  IonList,
-  IonDatetime,
-  IonPicker,
+  useIonToast
 } from "@ionic/react";
 import { Redirect } from "react-router-dom";
 import { useCallback, useContext } from "react";
@@ -23,6 +14,7 @@ import { PickerColumn } from "@ionic/core";
 import Quit from "components/components/Quit";
 
 export const TeacherDetail: React.FC = () => {
+  const [present, dismiss] = useIonToast();
   const modifyURL = "http://localhost:3003/edu/teacher/modify";
   const { state, dispatch } = useContext(AppContext);
 
@@ -49,6 +41,17 @@ export const TeacherDetail: React.FC = () => {
     })
       .then((res) => res.json())
       .then((json) => {
+        const result=json
+        if (result) 
+        {
+          present('教师编辑成功', 3000);
+        } else 
+        present({
+          buttons: [{ text: '关闭', handler: () => dismiss() }],
+          message: '教师编辑失败',
+          onDidDismiss: () => console.log('dismissed'),
+          onWillDismiss: () => console.log('will dismiss'),
+        })
         setBack();
       });
   };

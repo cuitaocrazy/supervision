@@ -21,6 +21,8 @@ import {
   IonCol,
   PickerColumn,
   IonToast,
+  IonButton,
+  useIonToast,
 } from "@ionic/react";
 import moment from "moment";
 import RichText from "components/components/RichText";
@@ -36,7 +38,24 @@ const offUrl = "http://localhost:3003/edu/lesson/create"
 
 // 课程查询页面
 const LessonQuery: React.FC = () => {
-
+  const [present, dismiss] = useIonToast();
+  //  结果状态
+  const resultState="000"
+  // 展示操作结果
+  const resultFun=()=>{
+    if(resultState=="000"){
+      present('课程添加成功', 3000);
+    }
+    else{
+      present({
+        buttons: [{ text: '关闭', handler: () => dismiss() }],
+        message: '课程添加失败，失败原因：......',
+        onDidDismiss: () => console.log('dismissed'),
+        onWillDismiss: () => console.log('will dismiss'),
+      })
+    }
+    closeModal()
+  }
   const onPageChange = (records:any,total:number,newPage:number)=>{
     console.log(records)
     console.log(total)
@@ -231,6 +250,8 @@ const LessonQuery: React.FC = () => {
     }
     return statusEnglish;
   };
+
+  
 
   const ListEntry = ({
     lesson,
@@ -650,7 +671,10 @@ const LessonQuery: React.FC = () => {
                           value="确定"
                           type="submit"
                           className="px-6 py-2 text-white border rounded-md bg-primary-600"
-                          // onClick={addLessonSuccessInfo}
+                           // onClick={()=>{addLessonSuccessInfo();closeModal()}}
+                           
+                          onClick={() => {resultFun()}}  // 成功
+
                         />
                       </div>
                     </form>
@@ -658,15 +682,14 @@ const LessonQuery: React.FC = () => {
                 </Transition.Child>
               </div>
             </div>
-            <IonToast
+            {/* <IonToast
               isOpen={showLeaveToast}
               onDidDismiss={() => setShowLeaveToast(false)}
               message="课程添加成功."
-              duration={400}
-              position="middle"
-              // style="z-index:9999"
-              
-            />
+              duration={100000}
+              position="top"
+            /> */}
+            
           </Dialog>
         </Transition>
 

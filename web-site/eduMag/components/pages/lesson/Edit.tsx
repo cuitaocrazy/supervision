@@ -3,16 +3,9 @@ import React, { useState } from "react";
 import {
   IonPage,
   IonCard,
-  IonCardHeader,
-  IonCardSubtitle,
-  IonLabel,
-  IonInput,
   IonCardContent,
-  IonItem,
   IonButton,
-  IonList,
-  IonDatetime,
-  IonPicker,
+  useIonToast,
 } from "@ionic/react";
 import { Redirect } from "react-router-dom";
 import { useCallback, useContext } from "react";
@@ -24,6 +17,7 @@ import LessonStateList from "../../components/LessonState";
 import Quit from "components/components/Quit";
 
 export const LessonDetail: React.FC = () => {
+  const [present, dismiss] = useIonToast();
   const modifyURL = "http://localhost:3003/edu/lesson/edit";
   const { state, dispatch } = useContext(AppContext);
   // const {SubscribeDurationDays,TranAmt,USVOrgID,USVItemName,USVItemID,USVItemDesc,SubscribeStartDate,LessonType} = state.lessonDetail
@@ -56,6 +50,22 @@ export const LessonDetail: React.FC = () => {
         setBack();
       });
   };
+  //  结果状态
+  const resultState="000"
+  // 展示操作结果
+  const resultFun=()=>{
+    if(resultState==="000"){
+      present('课程修改成功', 3000);
+    }
+    else{
+      present({
+        buttons: [{ text: '关闭', handler: () => dismiss() }],
+        message: '课程修改失败，失败原因：......',
+        onDidDismiss: () => console.log('dismissed'),
+        onWillDismiss: () => console.log('will dismiss'),
+      })
+    }
+  }
   const lessonTypePickerColumn = {
     name: "lessonTypePickerColumn",
     options: [
@@ -270,7 +280,7 @@ export const LessonDetail: React.FC = () => {
                     })
                   }
                   required
-                  value={lessonState.edu.eduName}
+                  value={lessonState.eduName}
                 />
               </div>
               <div className="flex mb-4 leading-10">
@@ -309,6 +319,7 @@ export const LessonDetail: React.FC = () => {
               value="修改"
               type="submit"
               className="flex w-20 px-6 py-2 font-bold text-white rounded-md bg-primary-600 focus:bg-primary-700"
+              onClick={() => {resultFun()}}  
             />
           </div>
             <div className="flex justify-center">
@@ -324,85 +335,6 @@ export const LessonDetail: React.FC = () => {
         </IonCardContent>
       </IonCard>
     </IonPage>
-    // <IonPage>
-    //   <IonCard>
-    //     <IonCardHeader>
-    //       <IonCardSubtitle className="mx-8 text-3xl text-gray-600">详细信息</IonCardSubtitle>
-    //     </IonCardHeader>
-    //     <IonCardContent>
-    //       <form onSubmit={onModify}>
-    //         <IonList>
-    //           <IonLabel position="stacked" color="primary">机构ID</IonLabel>
-    //           <IonInput name="eduId" type="text" value={lessonState.eduId} spellCheck={false} autocapitalize="off" readonly required>
-    //           </IonInput>
-    //           <IonLabel position="stacked" color="primary">课程ID</IonLabel>
-    //           <IonInput name="lessonId" type="text" value={lessonState.lessonId} spellCheck={false} autocapitalize="off" readonly required>
-    //           </IonInput>
-    //           <IonLabel position="stacked" color="primary">课程名称</IonLabel>
-    //           <IonInput name="lessonName" type="text" value={lessonState.lessonName} spellCheck={false} autocapitalize="off" onIonChange={e => setLessonState({ ...lessonState, ...{ lessonName: e.detail.value! } })} required>
-    //           </IonInput>
-    //           <IonLabel position="stacked" color="primary">课程描述</IonLabel>
-    //           <IonInput name="lessonIntroduce" type="text" value={lessonState.lessonIntroduce} spellCheck={false} autocapitalize="off" onIonChange={e => setLessonState({ ...lessonState, ...{ lessonIntroduce: e.detail.value! } })} required>
-    //           </IonInput>
-    //           <IonLabel position="stacked" color="primary">课程类型</IonLabel>
-    //           <IonPicker
-    //             isOpen={isPickOpen}
-    //             columns={[lessonTypePickerColumn]}
-    //             buttons={[
-    //               {
-    //                 text: "取消",
-    //                 role: "cancel",
-    //                 handler: value => {
-    //                   setPickOpen(false);
-    //                 }
-    //               },
-    //               {
-    //                 text: "确认",
-    //                 handler: value => {
-    //                   setPickOpen(false);
-    //                   setLessonState({ ...lessonState, ...{ lessonType: value.lessonTypePickerColumn.value } })
-    //                 }
-    //               }
-    //             ]}
-    //           ></IonPicker>
-    //           <IonLabel position="stacked" color="primary">课程大纲</IonLabel>
-    //           <IonInput name="lessonOutline" type="text" value={lessonState.lessonOutline} spellCheck={false} autocapitalize="off" onIonChange={e => setLessonState({ ...lessonState, ...{ lessonOutline: e.detail.value! } })} required>
-    //           </IonInput>
-    //           <IonLabel position="stacked" color="primary">课程开始日期</IonLabel>
-    //           <IonDatetime className="flex w-56 h-6 pt-2.5 font-bold text-center text-primary-600 bg-white rounded-md" value={lessonState.lessonStartDate} name='lessonStartDate' onIonChange={e => { setLessonState({ ...lessonState, ...{ lessonStartDate: e.detail.value! } }) }}></IonDatetime>
-    //           <IonLabel position="stacked" color="primary">课程结束日期</IonLabel>
-    //           <IonDatetime className="flex w-56 h-6 pt-2.5 font-bold text-center text-primary-600 bg-white rounded-md" value={lessonState.lessonEndDate} name='lessonStartDate' onIonChange={e => { setLessonState({ ...lessonState, ...{ lessonEndDate: e.detail.value! } }) }}></IonDatetime>
-    //           <IonLabel position="stacked" color="primary">课程状态</IonLabel>
-    //           <IonInput name="lessonStatus" type="text" value={lessonState.lessonStatus} spellCheck={false} autocapitalize="off" readonly required>
-    //           </IonInput>
-    //           <IonLabel position="stacked" color="primary">课程创建时间</IonLabel>
-    //           <IonInput name="lessonCreateDate" type="text" value={lessonState.lessonCreateDate} spellCheck={false} autocapitalize="off" readonly required>
-    //           </IonInput>
-    //           <IonLabel position="stacked" color="primary">课程修改时间</IonLabel>
-    //           <IonInput name="lessonCreateDate" type="text" value={lessonState.lessonUpdateDate} spellCheck={false} autocapitalize="off" readonly required>
-    //           </IonInput>
-    //           <IonLabel position="stacked" color="primary">修改原因</IonLabel>
-    //           <IonInput name="lessonUpdateReason" type="text" value={lessonState.lessonUpdateReason} spellCheck={false} autocapitalize="off" onIonChange={e => setLessonState({ ...lessonState, ...{ lessonUpdateReason: e.detail.value! } })} required>
-    //           </IonInput>
-    //           <IonLabel position="stacked" color="primary">教育机构ID</IonLabel>
-    //           <IonInput name="eduId" type="text" value={lessonState.eduId} spellCheck={false} autocapitalize="off" readonly required>
-    //           </IonInput>
-    //           <IonLabel position="stacked" color="primary">教师ID</IonLabel>
-    //           <IonInput name="teacherId" type="text" value={lessonState.teacherId} spellCheck={false} autocapitalize="off" onIonChange={e => setLessonState({ ...lessonState, ...{ teacherId: e.detail.value! } })} required>
-    //           </IonInput>
-
-    //         </IonList>
-
-    //         <IonItem className="">
-    //           <IonButton className="m-5 text-base " type='submit' fill="solid">更新</IonButton>
-    //         </IonItem>
-    //         <IonItem className="">
-    //           <IonButton className="m-5 text-base " onClick={onBack()} fill="solid">返回</IonButton>
-    //         </IonItem>
-    //       </form>
-    //     </IonCardContent>
-    //   </IonCard>
-    // </IonPage>
   );
 };
 

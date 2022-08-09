@@ -4,6 +4,7 @@ import {
   IonPage,
   IonCard,
   IonCardContent,
+  useIonToast
 } from '@ionic/react';
 import { Redirect } from 'react-router-dom';
 import { useCallback, useContext } from 'react';
@@ -12,6 +13,7 @@ import { Dialog, Transition } from '@headlessui/react';
 import Quit from "components/components/Quit";
 
 export const DiscussAudit: React.FC = () => {
+  const [present, dismiss] = useIonToast();
   // 课程协商审核dialog页面状态
   let [isAuditOpen, setIsAuditOpen] = useState(false);
   function closeAuditModal() {
@@ -36,7 +38,7 @@ export const DiscussAudit: React.FC = () => {
     setBack();
   };
 
-  const onModify = (status:string) => () => {
+  const onAduit = (status:string) => () => {
     fetch(modifyURL, {
       method: 'POST',
       body: JSON.stringify({
@@ -49,9 +51,21 @@ export const DiscussAudit: React.FC = () => {
     })
       .then(res => res.json())
       .then(json => {
+        const result=json
+        if (result) 
+        {
+          present('课程协商审核通过操作成功', 3000);
+        } else 
+        present({
+          buttons: [{ text: '关闭', handler: () => dismiss() }],
+          message: '课程协商审核通过操作失败',
+          onDidDismiss: () => console.log('dismissed'),
+          onWillDismiss: () => console.log('will dismiss'),
+        })
         setBack();
       });
   };
+
   if (state.discuss.discussAudit === undefined) {
     return <Redirect to={state.backPage} />;
   }
@@ -189,7 +203,7 @@ export const DiscussAudit: React.FC = () => {
             <input
               value="通过"
               type="button"
-              onClick={onModify('on')}
+              onClick={onAduit('on')}
               className="flex w-20 px-6 py-2 font-bold text-white rounded-md bg-primary-600 focus:bg-primary-700"
             />
             <input
@@ -264,7 +278,7 @@ export const DiscussAudit: React.FC = () => {
                           value="提交"
                           type="button"
                           className="px-6 py-2 text-white border rounded-md bg-primary-600"
-                          onClick={()=>{onModify('reject')();closeAuditModal()}}
+                          onClick={()=>{onAduit('reject')();closeAuditModal()}}
                         />
                       </div>
                     </form>
