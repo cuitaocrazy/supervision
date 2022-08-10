@@ -1,31 +1,15 @@
 //eduOrg管理的详细页面
 import React, { useState } from 'react';
-import {
-  IonPage,
-  IonCard,
-  IonRadioGroup,
-  IonRadio,
-  IonCardHeader,
-  IonCardSubtitle,
-  IonLabel,
-  IonInput,
-  IonCardContent,
-  IonItem,
-  IonButton,
-  IonList,
-  IonDatetime,
-  IonPicker,
-  IonCol,
-  IonRow,
-} from '@ionic/react';
+import { IonPage, IonCard, IonCardContent, useIonToast } from '@ionic/react';
 import { Redirect } from 'react-router-dom';
 import { useCallback, useContext } from 'react';
 import { AppContext, setEduOrgEdit } from '../../../appState';
 import { EduOrg } from '../../../types/types';
 import { PickerColumn } from '@ionic/core';
-import Quit from '../../Quit'
+import Quit from '../../Quit';
 
 export const EduOrgEdit: React.FC = () => {
+  const [present, dismiss] = useIonToast();
   const modifyURL = 'http://localhost:3003/eduOrg/modifyURL';
   const { state, dispatch } = useContext(AppContext);
 
@@ -44,19 +28,32 @@ export const EduOrgEdit: React.FC = () => {
     return <Redirect to={state.backPage} />;
   }
 
-  const onModify = async (e: React.FormEvent) => () => {
-    e.preventDefault();
-    fetch(modifyURL, {
-      method: 'POST',
-      body: JSON.stringify(eduOrgState),
-      headers: {
-        'Content-type': 'application/json;charset=UTF-8',
-      },
-    })
-      .then(res => res.json())
-      .then(json => {
-        alert(json.result);
+  // const onModify = async (e: React.FormEvent) => () => {
+  const onModify = (e: React.FormEvent) => {
+    console.log('111111');
+    // e.preventDefault();
+    // fetch(modifyURL, {
+    //   method: 'POST',
+    //   body: JSON.stringify(eduOrgState),
+    //   headers: {
+    //     'Content-type': 'application/json;charset=UTF-8',
+    //   },
+    // })
+    //   .then(res => res.json())
+    //   .then(json => {
+    //     const result=json
+    const result = { true: Boolean };
+    if (result) {
+      present('编辑成功', 3000);
+    } else
+      present({
+        buttons: [{ text: '关闭', handler: () => dismiss() }],
+        message: '编辑失败',
+        onDidDismiss: () => console.log('dismissed'),
+        onWillDismiss: () => console.log('will dismiss'),
       });
+    setBack();
+    // });
   };
   // const eduOrgTypePickerColumn = {
   //   name: "eduOrgTypePickerColumn",
@@ -304,20 +301,20 @@ export const EduOrgEdit: React.FC = () => {
                 />
               </div>
             </div>
+            <div className="flex items-center justify-center gap-4 mt-10">
+              <input
+                value="取消"
+                type="button"
+                className="px-6 py-2 border rounded-md "
+                onClick={setBack}
+              />
+              <input
+                value="确定"
+                type="submit"
+                className="px-6 py-2 text-white border rounded-md bg-primary-600"
+              />
+            </div>
           </form>
-          <div className="flex items-center justify-center gap-4 mt-10">
-                          <input
-                            value="取消"
-                            type="button"
-                            className="px-6 py-2 border rounded-md "
-                            onClick={onBack()}
-                          />
-                          <input
-                            value="确定"
-                            type="submit"
-                            className="px-6 py-2 text-white border rounded-md bg-primary-600"
-                          />
-                        </div>
         </IonCardContent>
       </IonCard>
     </IonPage>

@@ -11,8 +11,7 @@ import {
   IonItem,
   IonButton,
   IonList,
-  IonDatetime,
-  IonPicker,
+  useIonToast
 } from '@ionic/react';
 import { Redirect } from 'react-router-dom';
 import { useCallback, useContext } from 'react';
@@ -22,6 +21,7 @@ import { EduOrg } from '../../../types/types';
 import { IonRadio, IonRadioGroup } from '@ionic/react';
 
 export const EduOrgCreate: React.FC = () => {
+  const [present, dismiss] = useIonToast();
   const createURL = 'http://localhost:3003/eduOrg/create';
   const { state, dispatch } = useContext(AppContext);
   const [eduOrgState, setEduOrgState] = useState({} as EduOrg);
@@ -42,6 +42,18 @@ export const EduOrgCreate: React.FC = () => {
     })
       .then(res => res.json())
       .then(json => {
+        const { result, msg } = json;
+        if (result) 
+        {
+          present('发起签到成功', 3000);
+          onQuery();
+        } else 
+        present({
+          buttons: [{ text: '关闭', handler: () => dismiss() }],
+          message: '发起签到失败，失败原因：'+msg,
+          onDidDismiss: () => console.log('dismissed'),
+          onWillDismiss: () => console.log('will dismiss'),
+        })
         alert(json.result);
       });
   };

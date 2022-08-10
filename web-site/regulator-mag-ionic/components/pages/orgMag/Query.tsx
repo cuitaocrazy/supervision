@@ -6,22 +6,9 @@ import { EduOrg } from '../../../types/types';
 import { modalController } from '@ionic/core';
 import {
   IonPage,
-  IonList,
-  IonLabel,
-  IonItem,
   IonRow,
   IonCol,
-  IonCard,
-  IonCardContent,
-  IonCardHeader,
-  IonCardTitle,
-  IonButton,
-  IonModal,
-  IonContent,
-  IonInput,
-  IonRadioGroup,
-  IonRadio,
-  IonRouterLink,
+  useIonToast,
 } from '@ionic/react';
 import { Dialog, Transition } from '@headlessui/react';
 import EduIsPublic from '../../EduIsPublic';
@@ -35,6 +22,7 @@ const createURL = 'http://localhost:3003/eduOrg/create';
 
 // 课程查询页面
 const OrgMagQuery: React.FC = () => {
+  const [present, dismiss] = useIonToast();
   // 教育机构新增dialog页面状态
   let [isCreateOpen, setIsCreateOpen] = useState(false);
   function closeCreateModal() {
@@ -61,20 +49,35 @@ const OrgMagQuery: React.FC = () => {
     setIsDeleteOpen(true);
   }
 
-  const onCancel = (item: EduOrg) => () => {
-    fetch(delURL, {
-      method: 'PUT',
-      body: JSON.stringify({
-        eduId: item.eduId,
-      }),
-      headers: {
-        'Content-type': 'application/json;charset=UTF-8',
-      },
-    })
-      .then(res => res.json())
-      .then(json => {
-        alert(json.result);
-      });
+  const onCancel = (e) => {
+    e.preventDefault()
+    // fetch(delURL, {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-type': 'application/json;charset=UTF-8',
+    //   },
+    //   body: JSON.stringify({
+    //     eduId: cancelEduOrg.eduId,
+    //   }),
+    // })
+    //   .then(res => res.json())
+    //   .then(json => {
+        // const { result, records,total } = json;
+        const result={true:Boolean}
+      if (result) 
+      {
+        present('删除成功', 3000);
+        onQuery();
+      } else 
+      present({
+        buttons: [{ text: '关闭', handler: () => dismiss() }],
+        message: '删除失败',
+        onDidDismiss: () => console.log('dismissed'),
+        onWillDismiss: () => console.log('will dismiss'),
+      })
+      closeDeleteModal();
+      onQuery()
+      // });
   };
 
   const onQuery = () => {
@@ -91,39 +94,81 @@ const OrgMagQuery: React.FC = () => {
       });
   };
 
-  const onApply = (item: EduOrg) => () => {
-    fetch(modifyURL, {
-      method: 'PUT',
-      body: JSON.stringify({
-        eduId: item.eduId,
-      }),
-      headers: {
-        'Content-type': 'application/json;charset=UTF-8',
-      },
-    })
-      .then(res => res.json())
-      .then(json => {
-        alert(json.result);
-      });
+  const onApply = () => {
+    console.log("1111")
+    // fetch(modifyURL, {
+    //   method: 'PUT',
+    //   body: JSON.stringify({
+    //     eduId: item.eduId,
+    //   }),
+    //   headers: {
+    //     'Content-type': 'application/json;charset=UTF-8',
+    //   },
+    // })
+    //   .then(res => res.json())
+    //   .then(json => {
+    //     const { result, msg } = json;
+    const result={true:Boolean}
+        if (result) {
+          present('加入黑名单成功', 3000);
+          setIsBlackOpen(false);
+          onQuery();
+        } else 
+        present({
+          buttons: [{ text: '关闭', handler: () => dismiss() }],
+          message: '加入黑名单失败，失败原因：',
+          onDidDismiss: () => console.log('dismissed'),
+          onWillDismiss: () => console.log('will dismiss'),
+        })
+        closeBlackModal()
+        onQuery()
+      // });
   };
 
   const { state, dispatch } = useContext(AppContext);
   const [queryInfo, setQueryInfo] = useState({ eduName: '' });
   const [eduOrgState, setEduOrgState] = useState({} as EduOrg);
-  const onCreate = async (e: React.FormEvent) => () => {
-    e.preventDefault();
-    fetch(createURL, {
-      method: 'PUT',
-      body: JSON.stringify(eduOrgState),
-      headers: {
-        'Content-type': 'application/json;charset=UTF-8',
-      },
-    })
-      .then(res => res.json())
-      .then(json => {
-        alert(json.result);
-      });
+  const [createEduOrg, setCreateEduOrg] = useState({} as EduOrg);
+  const [cancelEduOrg, setCancelEduOrg] = useState({} as EduOrg);
+  const [detail,setDetail]=useState({} as EduOrg);
+  // const [eduOrg, setEduOrg] = useState({
+  //   eduId: "",
+  //   attendanceLessonQuantity: 1,
+  //   attendanceDate: "",
+  //   attendanceTime: "",
+  // } as Attendance);
+
+  const onCreate = (e: any) => {
+    // e.preventDefault();
+    // console.log(createEduOrg);
+    // fetch(createURL, {
+    //   method: 'POST',
+    //   body: JSON.stringify(createEduOrg),
+    //   headers: {
+    //     'Content-type': 'application/json;charset=UTF-8',
+    //   },
+    // })
+    //   .then(res => res.json())
+    //   .then(json => {
+    //     const { result, msg } = json;
+    const result={true:Boolean}
+        if (result) 
+        {
+          present('机构添加成功', 3000);
+          onQuery();
+        } else 
+        present({
+          buttons: [{ text: '关闭', handler: () => dismiss() }],
+          message: '机构添加失败，失败原因：'+msg,
+          onDidDismiss: () => console.log('dismissed'),
+          onWillDismiss: () => console.log('will dismiss'),
+        })
+        closeCreateModal()
+        onQuery()
+
+      // });
   };
+
   const getParamStr = (params: any, url: string) => {
     let result = '?';
     Object.keys(params).forEach(key => {
@@ -181,15 +226,23 @@ const OrgMagQuery: React.FC = () => {
             详情
           </button>
           <button className="p-1 text-cyan-600" onClick={
-            // onCancel(eduOrg)
-            openDeleteModal
+            ()=>{
+              // onCancel(eduOrg)
+              setCancelEduOrg(eduOrg)
+              openDeleteModal()
+            }
             }>
             删除
           </button>
           <button className="p-1 text-red-600" onClick={onEdit(eduOrg)}>
             编辑
           </button>
-          <button className="p-1 text-fuchsia-600" onClick={openBlackModal}>
+          <button className="p-1 text-fuchsia-600" onClick={
+            ()=>{
+              setDetail(eduOrg);
+              openBlackModal()
+            }
+          }>
             加入黑名单
           </button>
         </div>
@@ -305,16 +358,15 @@ const OrgMagQuery: React.FC = () => {
                         <div className="flex leading-7 justify-items-center">
                           <div className="flex justify-end p-1 w-36">教育机构名称:</div>
                           <input
-                            className="w-64 p-1 text-gray-600 bg-gray-100 border rounded-md justify-self-start focus:outline-none"
+                            className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none"
                             name="eduName"
-                            value={eduOrgState.eduName}
                             onChange={e =>
-                              setEduOrgState({
-                                ...eduOrgState,
-                                eduName: e.nativeEvent.target?.value,
+                              setCreateEduOrg({
+                                ...createEduOrg,
+                                ...{eduName:e.nativeEvent.target?.value},
                               })
                             }
-                            readOnly
+                            required
                           ></input>
                         </div>
                       </div>
@@ -325,29 +377,27 @@ const OrgMagQuery: React.FC = () => {
                             className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
                             name="eduAddress"
                             type="text"
-                            value={eduOrgState.eduAddress}
                             onChange={e =>
                               setEduOrgState({
                                 ...eduOrgState,
-                                eduAddress: e.nativeEvent.target?.value,
+                                ...{eduAddress:e.nativeEvent.target?.value},
                               })
                             }
                             required
                           ></input>
                         </div>
                       </div>
-                      {/* <div className="flex items-center mb-4 justify-items-center">
+                      <div className="flex items-center mb-4 justify-items-center">
                         <div className="flex justify-items-center">
                           <span className="flex justify-end p-1 mr-1 w-36">教育机构法人:</span>
                           <input
                             className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
                             name="lessonTotalTimes"
                             type="text"
-                            value={eduOrgState.eduLegalPerson}
                             onChange={e =>
                               setEduOrgState({
                                 ...eduOrgState,
-                                eduLegalPerson: e.nativeEvent.target?.value,
+                                ...{eduLegalPerson:e.nativeEvent.target?.value},
                               })
                             }
                             required
@@ -360,11 +410,10 @@ const OrgMagQuery: React.FC = () => {
                           <input
                             className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
                             name="lessonTotalPrice"
-                            value={eduOrgState.eduLegalPhone}
                             onChange={e =>
                               setEduOrgState({
                                 ...eduOrgState,
-                                eduLegalPhone: e.nativeEvent.target?.value,
+                                ...{eduLegalPhone:e.nativeEvent.target?.value},
                               })
                             }
                             required
@@ -378,11 +427,10 @@ const OrgMagQuery: React.FC = () => {
                             className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
                             name="eduContact"
                             type="text"
-                            value={eduOrgState.eduContact}
                             onChange={e =>
                               setEduOrgState({
                                 ...eduOrgState,
-                                eduContact: e.nativeEvent.target?.value,
+                                ...{eduContact:e.nativeEvent.target?.value},
                               })
                             }
                             required
@@ -396,11 +444,10 @@ const OrgMagQuery: React.FC = () => {
                             className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
                             name="eduContactPhone"
                             type="text"
-                            value={eduOrgState.eduContactPhone}
                             onChange={e =>
                               setEduOrgState({
                                 ...eduOrgState,
-                                eduContactPhone: e.nativeEvent.target?.value,
+                                ...{eduContactPhone:e.nativeEvent.target?.value},
                               })
                             }
                             required
@@ -420,11 +467,10 @@ const OrgMagQuery: React.FC = () => {
                             className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
                             name="eduLicense"
                             type="text"
-                            value={eduOrgState.eduLicense}
                             onChange={e =>
                               setEduOrgState({
                                 ...eduOrgState,
-                                eduLicense: e.nativeEvent.target?.value,
+                                ...{eduLicense:e.nativeEvent.target?.value},
                               })
                             }
                           ></input>
@@ -437,11 +483,10 @@ const OrgMagQuery: React.FC = () => {
                             className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
                             name="eduSupervisedAccount"
                             type="text"
-                            value={eduOrgState.eduSupervisedAccount}
                             onChange={e =>
                               setEduOrgState({
                                 ...eduOrgState,
-                                eduSupervisedAccount: e.nativeEvent.target?.value,
+                                ...{eduSupervisedAccount:e.nativeEvent.target?.value},
                               })
                             }
                             required
@@ -455,11 +500,10 @@ const OrgMagQuery: React.FC = () => {
                             className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
                             name="eduSupervisedAccount"
                             type="text"
-                            value={eduOrgState.eduSupervisedAccount}
                             onChange={e =>
                               setEduOrgState({
                                 ...eduOrgState,
-                                eduSupervisedAccount: e.nativeEvent.target?.value,
+                                ...{eduSupervisedAccount:e.nativeEvent.target?.value},
                               })
                             }
                             required
@@ -473,11 +517,10 @@ const OrgMagQuery: React.FC = () => {
                             className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
                             name="eduSupervisedMerNo"
                             type="text"
-                            value={eduOrgState.eduSupervisedMerNo}
                             onChange={e =>
                               setEduOrgState({
                                 ...eduOrgState,
-                                eduSupervisedMerNo: e.nativeEvent.target?.value,
+                                ...{eduSupervisedMerNo:e.nativeEvent.target?.value},
                               })
                             }
                           />
@@ -490,28 +533,26 @@ const OrgMagQuery: React.FC = () => {
                             className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
                             name="eduLoginName"
                             type="text"
-                            value={eduOrgState.eduLoginName}
                             onChange={e =>
                               setEduOrgState({
                                 ...eduOrgState,
-                                eduLoginName: e.nativeEvent.target?.value,
+                                ...{eduLoginName:e.nativeEvent.target?.value},
                               })
                             }
                           />
                         </div>
-                      </div> */}
+                      </div>
                       <div className="flex items-center gap-4 mt-2 justify-items-center">
                         <input
-                          value="返回"
+                          value="取消"
                           type="button"
                           className="px-6 py-2 border rounded-md "
                           onClick={closeCreateModal}
                         />
                         <input
-                          value="提交"
-                          type="button"
+                          value="确定"
+                          type="submit"
                           className="px-6 py-2 text-white border rounded-md bg-primary-600"
-                          onClick={closeCreateModal}
                         />
                       </div>
                     </form>
@@ -557,7 +598,7 @@ const OrgMagQuery: React.FC = () => {
                       <hr className="mt-2 mb-4" />
                     </Dialog.Title>
                     <form
-                      onSubmit={onCreate}
+                      onSubmit={onApply}
                       className="flex flex-col items-center rounded-lg justify-items-center"
                     >
                       <div className="flex items-center mb-4 justify-items-center">
@@ -581,8 +622,8 @@ const OrgMagQuery: React.FC = () => {
                         <div className="flex justify-items-center">
                           <span className="flex justify-end p-1 mr-1 w-36">教育机构法人:</span>
                           <input
-                            className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
-                            name="lessonTotalTimes"
+                            className="w-64 p-1 text-gray-600 bg-gray-100 border rounded-md justify-self-start focus:outline-none"
+                            name="eduLegalPerson"
                             type="text"
                             value={eduOrgState.eduLegalPerson}
                             onChange={e =>
@@ -591,7 +632,7 @@ const OrgMagQuery: React.FC = () => {
                                 eduLegalPerson: e.nativeEvent.target?.value,
                               })
                             }
-                            required
+                            readOnly
                           ></input>
                         </div>
                       </div>
@@ -600,8 +641,8 @@ const OrgMagQuery: React.FC = () => {
                           <span className="flex justify-end p-1 mr-1 w-36">加入黑名单原因:</span>
                           <textarea
                             className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
-                            name="eduAddress"
-                            // onChange={e => setEduOrgState({...eduOrgState, eduAddress: e.nativeEvent.target?.value})}
+                            name="blackEduCreateReason"
+                            onChange={e => setEduOrgState({...eduOrgState, blackEduCreateReason: e.nativeEvent.target?.value})}
                             required
                           />
                         </div>
@@ -616,9 +657,8 @@ const OrgMagQuery: React.FC = () => {
                         />
                         <input
                           value="提交"
-                          type="button"
+                          type="submit"
                           className="px-6 py-2 text-white border rounded-md bg-primary-600"
-                          onClick={closeBlackModal}
                         />
                       </div>
                     </form>
@@ -664,7 +704,7 @@ const OrgMagQuery: React.FC = () => {
                         <hr className="mt-2 mb-4" />
                       </Dialog.Title>
                       <form
-                        onSubmit={onCreate}
+                        onSubmit={onCancel}
                         className="flex flex-col items-center rounded-lg justify-items-center"
                       >
                         <div className="flex items-center mb-4 justify-items-center">

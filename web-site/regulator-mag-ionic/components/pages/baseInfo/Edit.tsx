@@ -3,25 +3,17 @@ import React, { useState } from 'react';
 import {
   IonPage,
   IonCard,
-  IonCardHeader,
-  IonCardSubtitle,
-  IonLabel,
-  IonInput,
   IonCardContent,
-  IonItem,
-  IonButton,
-  IonList,
-  IonDatetime,
-  IonPicker,
+  useIonToast,
 } from '@ionic/react';
 import { Redirect } from 'react-router-dom';
 import { useCallback, useContext } from 'react';
 import { AppContext, setUserInfoEdit } from '../../../appState';
-import { Lesson } from '../../../types/types';
 import { PickerColumn } from '@ionic/core';
 import Quit from '../../Quit';
 
 export const BaseInfoEdit: React.FC = () => {
+  const [present, dismiss] = useIonToast();
   const modifyURL = 'http://localhost:3003/lesson/modify';
   const { state, dispatch } = useContext(AppContext);
 
@@ -48,7 +40,18 @@ export const BaseInfoEdit: React.FC = () => {
     })
       .then(res => res.json())
       .then(json => {
-        alert(json.result);
+        const result=json
+        if (result) 
+        {
+          present('编辑成功', 3000);
+        } else 
+        present({
+          buttons: [{ text: '关闭', handler: () => dismiss() }],
+          message: '编辑失败',
+          onDidDismiss: () => console.log('dismissed'),
+          onWillDismiss: () => console.log('will dismiss'),
+        })
+        setBack();
       });
   };
 
@@ -149,18 +152,18 @@ export const BaseInfoEdit: React.FC = () => {
             </div>
           </form>
           <div className="flex items-center justify-center gap-4 mt-10">
-                          <input
-                            value="取消"
-                            type="button"
-                            className="px-6 py-2 border rounded-md "
-                            onClick={onBack()}
-                          />
-                          <input
-                            value="确定"
-                            type="submit"
-                            className="px-6 py-2 text-white border rounded-md bg-primary-600"
-                          />
-                        </div>
+            <input
+              value="取消"
+              type="button"
+              className="px-6 py-2 border rounded-md "
+              onClick={onBack()}
+            />
+            <input
+              value="确定"
+              type="submit"
+              className="px-6 py-2 text-white border rounded-md bg-primary-600"
+            />
+          </div>
         </IonCardContent>
       </IonCard>
     </IonPage>

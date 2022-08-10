@@ -151,6 +151,9 @@ export interface EduOrg {
   eduPassword?: string,
   eduLoginName: string,
   supervisorOrgId: string,
+  blackEduCreateReason?:string,
+  blackEduCreateDate?:string,
+  blackEduCreateTime?:string,
 }
 
 
