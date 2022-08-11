@@ -3,16 +3,8 @@ import React, { useState,Fragment } from 'react';
 import {
   IonPage,
   IonCard,
-  IonCardHeader,
-  IonCardSubtitle,
-  IonLabel,
-  IonInput,
   IonCardContent,
-  IonItem,
-  IonButton,
-  IonList,
-  IonDatetime,
-  IonPicker,
+  useIonToast
 } from '@ionic/react';
 import { Redirect } from 'react-router-dom';
 import { useCallback, useContext } from 'react';
@@ -23,6 +15,7 @@ import { Dialog, Transition } from '@headlessui/react';
 import Quit from '../../Quit'
 
 export const LessonAudit: React.FC = () => {
+  const [present, dismiss] = useIonToast();
   // 课程审核dialog页面状态
   let [isAuditOpen, setIsAuditOpen] = useState(false);
   function closeAuditModal() {
@@ -63,6 +56,17 @@ export const LessonAudit: React.FC = () => {
     })
       .then(res => res.json())
       .then(json => {
+        if (json.result) 
+        {
+          present('课程审核通过，操作成功', 3000);
+          // onQuery();
+        } else 
+        present({
+          buttons: [{ text: '关闭', handler: () => dismiss() }],
+          message: '课程审核通过，操作失败',
+          onDidDismiss: () => console.log('dismissed'),
+          onWillDismiss: () => console.log('will dismiss'),
+        })
         setBack();
       });
   };
@@ -353,8 +357,8 @@ export const LessonAudit: React.FC = () => {
                           onClick={closeAuditModal}
                         />
                         <input
-                          value="提交"
-                          type="button"
+                          value="button"
+                          type="submit"
                           className="px-6 py-2 text-white border rounded-md bg-primary-600"
                           onClick={()=>{onModify('reject')();closeAuditModal()}}
                         />

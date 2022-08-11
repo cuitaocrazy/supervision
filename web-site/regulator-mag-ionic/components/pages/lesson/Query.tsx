@@ -3,7 +3,7 @@ import { useEffect, useCallback, useContext, useState, Fragment } from 'react';
 import { Redirect } from 'react-router-dom';
 import { AppContext, setLessonList, setLessonDetail,setLessonAudit } from '../../../appState';
 import { Lesson } from '../../../types/types';
-import { IonPage, IonList, IonLabel, IonItem, IonRow, IonCol } from '@ionic/react';
+import { IonPage, IonList, IonLabel, IonItem, IonRow, IonCol,useIonToast } from '@ionic/react';
 import { Dialog, Transition } from '@headlessui/react';
 import Paging from '../../paging';
 import Quit from '../../Quit'
@@ -16,6 +16,7 @@ const createURL = 'http://localhost:3003/lesson/create';
 
 // 课程查询页面
 const LessonQuery: React.FC = () => {
+  const [present, dismiss] = useIonToast();
   // 课程下架dialog页面状态
   let [isOffOpen, setIsOffOpen] = useState(false);
   function closeOffModal() {
@@ -35,7 +36,7 @@ const LessonQuery: React.FC = () => {
   }
   const { state, dispatch } = useContext(AppContext);
   const [lessonState, setLessonState] = useState(state.lesson.lessonList);
-  const onCreate = async (e: React.FormEvent) => () => {
+  const onCreate = (e: React.FormEvent)=> {
     e.preventDefault();
     fetch(createURL, {
       method: 'PUT',
@@ -46,7 +47,20 @@ const LessonQuery: React.FC = () => {
     })
       .then(res => res.json())
       .then(json => {
-        alert(json.result);
+        alert(json)
+        if (json.result) 
+        {
+          present('课程下架成功', 3000);
+          onQuery();
+        } else 
+        present({
+          buttons: [{ text: '关闭', handler: () => dismiss() }],
+          message: '课程下架失败',
+          onDidDismiss: () => console.log('dismissed'),
+          onWillDismiss: () => console.log('will dismiss'),
+        })
+        closeOffModal();
+        onQuery();
       });
   };
   const onCancel = (item: Lesson) => () => {
@@ -365,7 +379,7 @@ const LessonQuery: React.FC = () => {
                         />
                         <input
                           value="下架"
-                          type="button"
+                          type="submit"
                           className="px-6 py-2 text-white border rounded-md bg-primary-600"
                         />
                       </div>
