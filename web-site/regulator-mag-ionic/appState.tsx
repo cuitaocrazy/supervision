@@ -12,7 +12,8 @@ import {
   Complaint,
   ContractNego,
   SupervisorOrg,
-  Black
+  Black,
+  ChainCode,
 } from './types/types'
 /**
  * This is a simple redux-like state management pattern for React using hooks
@@ -97,6 +98,9 @@ const initialState = {
   transferManual:{// 手动划拨
     transferManualList:[],
     transferManualConfirm:null
+  },
+  chainCode:{// 链码部署信息
+    chainCodeList:[],
   }
 
 };
@@ -141,12 +145,20 @@ export const setUserInfoEdit = (userInfoEdit:SupervisorUser) => {
 
 
 
+export const setChainCodeList = (chainCodeList:ChainCode[]) => {
+  return {
+    type: 'setChainCodeList',
+    chainCodeList:chainCodeList
+  }
+}
+
 export const setContractList = (contractList:Contract[]) => {
   return {
     type: 'setContractList',
     contractList:contractList
   }
 }
+
 export const setContractDetail = (contractDetail:Contract) => {
   return {
     type: 'setContractDetail',
@@ -415,6 +427,15 @@ export const reducer = (state: any, action: any) => {
         userInfo:{
           userInfoList:state.userInfo.userInfoList,
           userInfoEdit:action.userInfoEdit
+        },
+        backPage:action.backPage||state.backPage
+      }
+    }
+    case 'setChainCodeList':{
+      return {
+        ...state,
+        chainCode:{
+          chainCodeList:action.chainCodeList
         },
         backPage:action.backPage||state.backPage
       }
