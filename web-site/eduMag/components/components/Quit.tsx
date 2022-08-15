@@ -33,7 +33,7 @@ const Quit: React.FC = () => {
       <>
           <IonHeader >
             <IonToolbar className="flex pr-10 bg-white">
-              <div className="flex justify-end gap-1 text-base font-bold leading-6 text-red-400 ">
+              <div className="flex justify-end gap-1 text-base font-bold leading-7 text-red-400">
                 <button className='flex gap-1' onClick={openQuitModal}>
                 <div className='flex items-center'>
                   <svg

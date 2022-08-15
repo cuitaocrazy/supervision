@@ -105,7 +105,11 @@ const TeacherQuery: React.FC = () => {
       const { result, records,total } = json;
       if (result) 
       {
-        present('教师删除成功', 3000);
+        present({
+          message: '教师删除成功',
+          position:'top',
+        })
+        // present('教师删除成功', 3000);
         onQuery();
       } else 
       present({
@@ -307,7 +311,7 @@ const TeacherQuery: React.FC = () => {
             </div>
           </div>
 
-           {/* 新增课程模态框 */}
+           {/* 新增教师模态框 */}
         <Transition appear show={isCreateOpen} as={Fragment}>
           <Dialog as="div" className="relative z-10" onClose={closeCreateModal}>
             <Transition.Child

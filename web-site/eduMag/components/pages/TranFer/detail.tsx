@@ -19,8 +19,8 @@ export const TransferDetail: React.FC = () => {
   }
 
   return (
-    <IonPage>
-      <IonCard>
+    <IonPage className='bg-gray-100'>
+      <div className='h-screen overflow-auto'>
         <Quit />
         {/* 导航 */}
         <div className='flex px-2 pt-2 mx-2 my-2 text-gray-800'>
@@ -33,7 +33,7 @@ export const TransferDetail: React.FC = () => {
             <span className='pr-1 text-gray-600 '>课程管理</span>/<span className='pl-1 text-primary-500'>课程划拨详情</span>
           </div>
         </div>
-        <IonCardContent>
+        <IonCardContent className="m-4 bg-white rounded-lg">
           <form>
             {/* 详情 */}
             <div className='font-bold text-gray-800'>课程划拨详情</div>
@@ -79,7 +79,7 @@ export const TransferDetail: React.FC = () => {
               className='flex w-20 px-6 py-2 font-bold text-white rounded-md bg-primary-600 focus:bg-primary-700' />
           </div>
         </IonCardContent>
-      </IonCard>
+      </div>
     </IonPage>
   )
 };

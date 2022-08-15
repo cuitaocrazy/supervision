@@ -34,7 +34,7 @@ export const LessonDetail: React.FC = () => {
     dispatch(setLessonDetail(undefined));
   }, []);
   `                                                       `;
-  const onBack = () => () => {
+  const onBack =() => {
     setBack();
   };
   if (state.lesson?.lessonDetail === undefined) {
@@ -74,7 +74,7 @@ export const LessonDetail: React.FC = () => {
 
   return (
     <IonPage className="bg-gray-100">
-      <IonCard>
+      <div className='h-screen overflow-auto'>
       <Quit />
         {/* 导航 */}
         <div className="flex px-2 pt-2 mx-2 my-2 text-gray-800">
@@ -99,7 +99,7 @@ export const LessonDetail: React.FC = () => {
             <span className="pl-1 text-primary-500">课程详情</span>
           </div>
         </div>
-        <IonCardContent>
+        <IonCardContent className="m-4 bg-white rounded-lg">
             {/* 详情 */}
             <div className="font-bold text-gray-800">课程详情</div>
             <hr className="mt-2 mb-4" />
@@ -229,7 +229,7 @@ export const LessonDetail: React.FC = () => {
             />
           </div>
         </IonCardContent>
-      </IonCard>
+        </div>
     </IonPage>
   );
 };

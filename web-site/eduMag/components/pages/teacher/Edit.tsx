@@ -58,7 +58,7 @@ export const TeacherDetail: React.FC = () => {
 
   return (
     <IonPage className="bg-gray-100">
-      <IonCard>
+      <div>
         <Quit />
         {/* 导航 */}
         <div className="flex px-2 pt-2 mx-2 my-2 text-gray-800">
@@ -83,7 +83,7 @@ export const TeacherDetail: React.FC = () => {
             <span className="pl-1 text-primary-500">教师信息编辑</span>
           </div>
         </div>
-        <IonCardContent>
+        <IonCardContent className="m-4 bg-white rounded-lg">
           <form onSubmit={onModify}>
             {/* 编辑内容 */}
             <div className="font-bold text-gray-800">教师信息编辑</div>
@@ -184,7 +184,7 @@ export const TeacherDetail: React.FC = () => {
             </div>
           </form>
         </IonCardContent>
-      </IonCard>
+      </div>
     </IonPage>
   );
 };
