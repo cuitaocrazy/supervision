@@ -19,8 +19,11 @@ import {
   IonContent,
 } from '@ionic/react';
 import { Dialog, Transition } from '@headlessui/react';
+import { Redirect,Link } from "react-router-dom";
+import {useRouter} from 'next/router'
 
 const Quit: React.FC = () => {
+  const router = useRouter();
     // 退出dialog页面状态
     let [isQuitOpen, setIsQuitOpen] = useState(false);
     function closeQuitModal() {
@@ -111,7 +114,7 @@ const Quit: React.FC = () => {
                               value="确定"
                               type="button"
                               className="px-6 py-2 text-white border rounded-md bg-primary-600"
-                              onClick={closeQuitModal}
+                              onClick={()=>{router.push("login")}}
                             />
                           </div>
                         </form>
