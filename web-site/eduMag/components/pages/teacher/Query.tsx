@@ -115,6 +115,7 @@ const TeacherQuery: React.FC = () => {
       present({
         buttons: [{ text: '关闭', handler: () => dismiss() }],
         message: '教师删除失败',
+        position:"top",
         onDidDismiss: () => console.log('dismissed'),
         onWillDismiss: () => console.log('will dismiss'),
       })
@@ -173,6 +174,7 @@ const TeacherQuery: React.FC = () => {
         present({
           buttons: [{ text: '关闭', handler: () => dismiss() }],
           message: '教师添加失败，失败原因：'+msg,
+          position:"top",
           onDidDismiss: () => console.log('dismissed'),
           onWillDismiss: () => console.log('will dismiss'),
         })
