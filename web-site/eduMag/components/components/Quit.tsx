@@ -116,7 +116,7 @@ const Quit: React.FC = () => {
                             />
                             <input
                               value="确定"
-                              type="submit"
+                              type="button"
                               className="px-6 py-2 text-white border rounded-md bg-primary-600"
                               // onClick={
                               //   returnLogin
