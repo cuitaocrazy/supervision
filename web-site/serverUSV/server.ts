@@ -584,6 +584,9 @@ app.get('/edb/teacher/find', async (req, res) => {
 
 
 
+
+
+
 app.get('/edb/eduOrg/find', async (req, res) => {
   console.log(`教育局: 查询教育机构: 条件[${req.query}]`)
   const r = await edbEduOrgService.find({ ...new EduOrg(), ...req.query })
@@ -602,10 +605,19 @@ app.get('/edb/contract/find', async (req, res) => {
   res.send(r)
 })
 import edbAttendanceService from './src/edb/AttendanceService'
+import edbTransferService from './src/edb/TransferService'
+import edbContractService from './src/edb/ContractService'
 import { Transfer } from './src/entity/Transfer';
 import { EduLesson } from './src/entity/EduLesson';
 import { EduTeacher } from './src/entity/EduTeacher';
 import edbSupervisorUserService from './src/edb/SupervisorService'
+app.get('/edb/chaincode/count', async (req, res) => {
+  console.log(`教育局: 查询考勤:`)
+  const attendanceCount = await edbAttendanceService.count()
+  const transferCount = await edbTransferService.count()
+  const contractCount = await edbContractService.count()
+  res.send({result:true,attendanceTotal:attendanceCount,transferCount:transferCount,contractCount:contractCount})
+})
 
 app.get('/edb/attendance/find', async (req, res) => {
   console.log(`教育局: 考勤查询: 条件[${JSON.stringify(req.query)}]`)

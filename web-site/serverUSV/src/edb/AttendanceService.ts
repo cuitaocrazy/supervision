@@ -45,6 +45,12 @@ class AttendanceService {
     }
 
 
+    async count() {
+        const attendanceCount =await mysql.getRepository(Attendance).count();
+        return attendanceCount
+    }
+
+
 }
 
 export default new AttendanceService()
