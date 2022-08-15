@@ -245,5 +245,12 @@ export interface Black {
   blackTime: string,
 }
 
+export interface ChainCode{
+  chaincodeDesc:string,
+  deployDate:string,
+  version:string,
+  sn:string,
+  chaincodeName:string,
+}
 
 
