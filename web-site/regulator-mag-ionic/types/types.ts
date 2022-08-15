@@ -32,7 +32,7 @@ export interface Contract {
   consumerName: string,
   consumerStuName: string,
   orderNo: string,
-
+  subscribeID:string,
 }
 // export interface TranSum{
 //   USVOrgID?: string,
