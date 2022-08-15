@@ -314,7 +314,7 @@ import { randomUUID } from 'crypto';
 import * as moment from 'moment';
 import { findOneLesson, findOneTeacher, findAttendance, saveTransfer, findOneEdu, searchLesson, saveContract, searchContract, findOneContract, saveAttendance } from './src/consumer/consumer'
 import { Attendance } from './src/entity/Attendance';
-import {pay,verify} from './src/pay/pay'
+// import {pay,orderQuery} from './src/pay/pay'
 
 const fenToYuan = (tranAmtYuan: string | number) => {
   if (typeof tranAmtYuan === 'number') {
@@ -421,9 +421,10 @@ app.post('/consumer/preOrder', jsonParser, async (req, res) => {
     }
 
     await saveContract(newContract)
-    //todo 根据edu获取merchantId
-    const payUrl = pay(newContract.contractId,newContract.contractDate.concat(newContract.contractTime),String(newContract.lessonTotalPrice),'merchantNo',newContract.lessonName)
-    res.send({ status: 'success', result: newContract,payUrl:payUrl })
+    res.send({ status: 'success', result: newContract })
+    //todo 数币完成后走下面
+    // const payUrl = pay(newContract.contractId,newContract.contractDate.concat(newContract.contractTime),String(newContract.lessonTotalPrice),'merchantNo',newContract.lessonName)
+    // res.send({ status: 'success', result: newContract,payUrl:payUrl })
   } catch (e) {
     res.send({ status: 'fail', result: '未知异常' })
   }
@@ -565,10 +566,18 @@ app.post('/consumer/notice',jsonParser,async (req, res) => {
 
 import edbEduOrgService from './src/edb/EduOrgService';
 import edbTeacherService from './src/edb/TeacherService';
+import edbChainCodeService from './src/edb/ChainCodeService';
 import { EduOrg } from './src/entity/EduOrg';
+import { ChainCode } from './src/entity/ChainCode';
+
+app.get('/edb/chainCode/find', async (req, res) => {
+  console.log(`教育局: 查询链码: `)
+  const r = await edbChainCodeService.find()
+  res.send(r)
+})
 
 app.get('/edb/teacher/find', async (req, res) => {
-  console.log(`教育机构: 查询教师: 条件[${JSON.stringify(req.query)}]`)
+  console.log(`教育局: 查询教师: 条件[${JSON.stringify(req.query)}]`)
   const r = await edbTeacherService.find(req.query)
   res.send(r)
 })

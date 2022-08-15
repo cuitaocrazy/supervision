@@ -36,3 +36,9 @@ INSERT INTO yadadb.t_l_attendance (attendance_id,contract_id,fabric_contract_id,
 INSERT INTO yadadb.t_l_transfer (transfer_id,attendance_id,contract_id,fabric_contract_id,attendance_date,attendance_time,attendance_type,edu_id,edu_name,lesson_id,lesson_name,consumer_id,consumer_name,consumer_stu_name,tran_ls_id,supversing_account,normal_account,transfer_amt,transfer_result,reason,transfer_update_date,transfer_update_time) VALUES
 	 ('transfer00001','attendance00001','contract00001','fabric00001',NULL,NULL,NULL,'edu0001','测试机构','lesson00002','英语入门兴趣班','testuser','测试用户','测试用户','tranlsid00001','supaccount001','normalaccount001',10,'success',NULL,NULL,NULL),
 	 ('transfer00002','attendance00002','contract00001','fabric00001',NULL,NULL,NULL,'edu0001','测试机构','lesson00002','英语入门兴趣班','testuser','测试用户','测试用户','tranls00002','supaccount001','normalaccount001',10,'success',NULL,NULL,NULL);
+
+
+Insert INTO yadadb.t_b_chaincode(chaincode_desc,version,deploy_date,sn,chaincode_name,node_number) VALUES
+('消费链码','1.0.0','20220701','1','consumerChainCode',3),
+('签到链码','1.0.0','20220701','1','attendanceChainCode',3),
+('划拨链码','1.0.0','20220701','1','transFerChainCode',3);	  

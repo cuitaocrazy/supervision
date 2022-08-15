@@ -14,6 +14,7 @@ import { SupervisorBlackEdu } from './entity/SupervisorBlackEdu';
 import { SupervisorOrg } from './entity/SupervisorOrg';
 import { SupervisorUser } from './entity/SupervisorUser';
 import { Transfer } from './entity/Transfer';
+import { ChainCode } from './entity/ChainCode';
 const datasource = new DataSource({
     type: "mysql",
     host: "localhost",
@@ -25,7 +26,7 @@ const datasource = new DataSource({
     logging: true,
     entities: [Announcement, Attendance, Complaint, Consumer, ConsumerStudent,
         Contract, ContractNego, EduLesson, EduOrg, EduTeacher, SupervisorBlackEdu,
-        SupervisorOrg, SupervisorUser, Transfer],
+        SupervisorOrg, SupervisorUser, Transfer,ChainCode],
     subscribers: [],
     migrations: [],
     namingStrategy: new SnakeNamingStrategy(),

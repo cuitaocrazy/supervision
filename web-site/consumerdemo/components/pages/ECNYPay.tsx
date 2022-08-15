@@ -1,6 +1,6 @@
 import React,{ useEffect,useState,useContext} from "react";
 import { IonPage,IonHeader,IonContent } from "@ionic/react";
-import {useHistory} from 'react-router-dom'
+import {useHistory,Link} from 'react-router-dom'
 import Navbar from '../Navbar'
 import {Contract} from '../../types/types'
 import {preOrderURL} from '../../const/const'
@@ -11,14 +11,14 @@ import { io } from 'socket.io-client'
 const ECNYPay =()=>{
   const socketUrl = 'http://localhost:3003'
   const history = useHistory();
-  const socket = io(socketUrl)
+  // const socket = io(socketUrl)
   const [contract, setContract ] = useState({} as Contract);
   const { state } = useContext(AppContext);
   const [payUrl,setPayUrl] = useState("")
   useEffect(()=>{
-    socket.on('open', () => {
-      console.log('socket io is open !')
-    })
+    // socket.on('open', () => {
+    //   console.log('socket io is open !')
+    // })
     fetch(preOrderURL, {
       method: 'POST',
       body: JSON.stringify({
@@ -32,12 +32,13 @@ const ECNYPay =()=>{
     }).then(res => res.json())
     .then((json) => {
       setContract(json.result)
-      setPayUrl(json.payUrl)
-      socket.emit('pay', json.result.contractId)
-      socket.on(json.result.contractId + '_pay', () => {
-        console.log('支付成功')
-        history.push('/tabs/payResult')
-      })
+      // history.push('/tabs/payResult')
+      // setPayUrl(json.payUrl)
+      // socket.emit('pay', json.result.contractId)
+      // socket.on(json.result.contractId + '_pay', () => {
+      //   console.log('支付成功')
+      //   history.push('/tabs/payResult')
+      // })
     })
       },[])
 
@@ -68,11 +69,6 @@ const ECNYPay =()=>{
             <span className="pr-3 text-gray-400">课程数量</span>
             <span className="text-gray-800">{contract.lessonTotalQuantity}</span>
           </p>
-          {/* <p>
-            <span className="pr-3 text-gray-400">优惠金额</span>
-            <span className="text-gray-800">183.00</span>
-            <span className="text-gray-800">元</span>
-          </p> */}
           <hr className="my-4 text-gray-300" />
           <p className="font-bold text-right text-gray-800">
             <span className="pr-1">实付金额:</span>
@@ -80,11 +76,15 @@ const ECNYPay =()=>{
             <span>{contract.lessonTotalPrice}</span>
           </p>
         </div>
+        <Link to="/eCNYPayResult">
         <div className="flex pt-10">
           
-          <button onClick={onClick} className="w-full py-2 mx-6 font-bold tracking-wider text-white shadow-md rounded-3xl shadow-primary-600 bg-primary-600"  
+          <button 
+          // onClick={onClick} 
+          className="w-full py-2 mx-6 font-bold tracking-wider text-white shadow-md rounded-3xl shadow-primary-600 bg-primary-600"  
           value="去支付"  />
         </div>
+        </Link>
       </div>
     </IonContent>
   </IonPage>

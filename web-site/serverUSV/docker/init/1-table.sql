@@ -312,3 +312,18 @@ CREATE TABLE yadadb.t_b_consumer_student (
 ENGINE=InnoDB
 DEFAULT CHARSET=utf8mb4
 COLLATE=utf8mb4_unicode_ci;
+
+
+-- 链码表
+CREATE TABLE yadadb.t_b_chaincode (
+	chaincode_desc varchar(255) NOT NULL,
+	version varchar(32) NULL,
+	deploy_date char(8) NULL,
+	sn varchar(32) NULL,
+	chaincode_name varchar(255) NOT NULL,
+	node_number int Null,
+	CONSTRAINT t_b_chaincode_PK PRIMARY KEY (chaincode_name)
+)
+ENGINE=InnoDB
+DEFAULT CHARSET=utf8mb4
+COLLATE=utf8mb4_unicode_ci;
