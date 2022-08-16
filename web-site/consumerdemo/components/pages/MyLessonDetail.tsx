@@ -57,27 +57,6 @@ const MyLessonDetail = () => {
     <IonPage>
       <IonHeader>
         <Navbar title="课程详情"/>
-        {/* <nav className="grid items-center h-10 grid-cols-3 gap-4 font-medium text-center text-white justify-items-stretch bg-primary-600 margin-auto">
-          <div className="flex col-span-2 mr-8 text-center justify-self-end">
-            课程详情
-          </div>
-          <div className="flex mr-2 justify-self-end">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="w-6 h-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth="2"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"
-              />
-            </svg>
-          </div>
-        </nav> */}
         <div className="absolute top-0 right-0 max-w-sm ">
             <Popover className="relative">
               {({ open }) => (

@@ -142,7 +142,7 @@ const StuInfoList = () => {
         </div>
         <div className="flex w-full mb-20 justify-items-center">
           <Link to="/conOrder" className="flex self-center w-full ">
-            <button className="self-center w-full h-10 mx-6 mt-1 text-sm font-medium text-white bg-primary-600 rounded-3xl">
+            <button className="self-center w-full h-10 mt-1 text-sm font-medium text-white mx-36 bg-primary-600 rounded-3xl">
               返回
             </button>
           </Link>

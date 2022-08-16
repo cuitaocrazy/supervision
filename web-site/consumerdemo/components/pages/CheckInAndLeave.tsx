@@ -34,7 +34,7 @@ const CheckInAndLeave = () => {
   function openLeaveModal() {
     setIsLeaveOpen(true);
   }
-  console.log(state.contractDetail.lessonAccumulationQuantity);
+  console.log(state.contractDetail.lessonAccumulationQuantity);    
   if (back) {
     return <Redirect to={back as string}></Redirect>;
   }
