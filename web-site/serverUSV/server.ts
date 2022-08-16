@@ -614,7 +614,7 @@ app.get('/edb/chaincode/count', async (req, res) => {
   const attendanceCount = await edbAttendanceService.count()
   const transferCount = await edbTransferService.count()
   const contractCount = await edbContractService.count()
-  res.send({result:true,attendanceTotal:attendanceCount,transferCount:transferCount,contractCount:contractCount})
+  res.send({result:true,records:{attendanceTotal:attendanceCount,transferCount:transferCount,contractCount:contractCount}})
 })
 
 app.get('/edb/attendance/find', async (req, res) => {
