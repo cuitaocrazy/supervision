@@ -94,18 +94,20 @@ const ContractNegoQuery: React.FC = () => {
       .then((json) => {
         const { result, msg } = json;
         if (result) {
-          present('发起签到成功', 3000);
+          present({
+            message: '发起签到成功',
+            position:'top',
+            duration:3000
+          })
           setIsAttendanceOpen(false);
           onQuery();
         } else 
         present({
           buttons: [{ text: '关闭', handler: () => dismiss() }],
           message: '发起签到失败，失败原因：'+msg,
-          onDidDismiss: () => console.log('dismissed'),
-          onWillDismiss: () => console.log('will dismiss'),
+          position:'top',
         })
       });
-    console.log("提交");
   };
 
   const onQuery = () => {

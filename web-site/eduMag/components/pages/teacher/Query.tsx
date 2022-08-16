@@ -108,8 +108,8 @@ const TeacherQuery: React.FC = () => {
         present({
           message: '教师删除成功',
           position:'top',
+          duration:3000
         })
-        // present('教师删除成功', 3000);
         onQuery();
       } else 
       present({
@@ -119,6 +119,7 @@ const TeacherQuery: React.FC = () => {
         onDidDismiss: () => console.log('dismissed'),
         onWillDismiss: () => console.log('will dismiss'),
       })
+
       closeDeleteModal();
       onQuery()
     }
@@ -168,15 +169,17 @@ const TeacherQuery: React.FC = () => {
       const { result, msg } = json;
         if (result) 
         {
-          present('教师添加成功', 3000);
+          present({
+            message: '教师添加成功',
+            position:'top',
+            duration:3000
+          })
           onQuery();
         } else 
         present({
           buttons: [{ text: '关闭', handler: () => dismiss() }],
           message: '教师添加失败，失败原因：'+msg,
           position:"top",
-          onDidDismiss: () => console.log('dismissed'),
-          onWillDismiss: () => console.log('will dismiss'),
         })
       closeCreateModal()
       onQuery()

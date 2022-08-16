@@ -44,13 +44,16 @@ export const TeacherDetail: React.FC = () => {
         const result=json
         if (result) 
         {
-          present('教师编辑成功', 3000);
+          present({
+            message: '教师编辑成功',
+            position:'top',
+            duration:3000
+          })
         } else 
         present({
           buttons: [{ text: '关闭', handler: () => dismiss() }],
           message: '教师编辑失败',
-          onDidDismiss: () => console.log('dismissed'),
-          onWillDismiss: () => console.log('will dismiss'),
+          position:'top',
         })
         setBack();
       });

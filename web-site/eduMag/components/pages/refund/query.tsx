@@ -118,35 +118,37 @@ const ContractNegoQuery: React.FC = () => {
 // 退课处理
   const onManual = () => {
     //todo fetch
-    alert('3333333')
-    const reqBody = JSON.stringify({
-      ...detail
-    });
-    fetch(refundLessonURL, {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json;charset=UTF-8",
-      },
-      body: reqBody,
-    })
-      .then((res) => res.json())
-      .then((json) => {
-        const { result, msg } = json;
-        alert('444')
+    // const reqBody = JSON.stringify({
+    //   ...detail
+    // });
+    // fetch(refundLessonURL, {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-type": "application/json;charset=UTF-8",
+    //   },
+    //   body: reqBody,
+    // })
+    //   .then((res) => res.json())
+    //   .then((json) => {
+    //     const { result, msg } = json;
+    //     console.log(result);
+        const result={true:Boolean}
         if (result) 
         {
-          present('发起签到成功', 3000);
+          present({
+            message: '课程退订审批通过操作成功',
+            position:'top',
+            duration:3000
+          })
           onQuery();
         } else 
         present({
           buttons: [{ text: '关闭', handler: () => dismiss() }],
-          message: '发起签到失败，失败原因：'+msg,
-          onDidDismiss: () => console.log('dismissed'),
-          onWillDismiss: () => console.log('will dismiss'),
+          message: '课程退订审批通过操作失败，失败原因：'+msg,
+          position:'top',
         })
         closeRefundModal
-      });
-    console.log("提交");
+      // });
   };
 
   const doSetDetail = useCallback(
@@ -196,15 +198,11 @@ const ContractNegoQuery: React.FC = () => {
   };
 
   const ListEntry = ({
-    contractNego,
-    key,
-    ...props
+    contractNego
   }: {
     contractNego: ContractNego;
-    key: any;
   }) => (
     <tr
-      key={key}
       className="grid items-center grid-cols-10 gap-10 text-gray-600 border justify-items-center even:bg-white odd:bg-primary-100"
     >
       <td className="flex items-center justify-center leading-10">

@@ -20,7 +20,6 @@ import {
   IonRow,
   IonCol,
   PickerColumn,
-  IonToast,
   IonButton,
   useIonToast,
 } from "@ionic/react";
@@ -44,14 +43,18 @@ const LessonQuery: React.FC = () => {
   // 展示操作结果
   const resultFun=()=>{
     if(resultState=="000"){
-      present('课程添加成功', 3000);
+      present({
+        message: '课程添加成功',
+        position:'top',
+        duration:3000
+      })
+      onQuery();
     }
     else{
       present({
         buttons: [{ text: '关闭', handler: () => dismiss() }],
         message: '课程添加失败，失败原因：......',
-        onDidDismiss: () => console.log('dismissed'),
-        onWillDismiss: () => console.log('will dismiss'),
+        position:'top',
       })
     }
     closeModal()
@@ -116,7 +119,6 @@ const LessonQuery: React.FC = () => {
       },
     }).then(res => res.json())
     .then((json) => {
-      // alert(json.result)
       addLessonSuccessInfo()
     })
   };
@@ -131,8 +133,22 @@ const LessonQuery: React.FC = () => {
       },
   }).then(res => res.json())
   .then((json) => {
+    if(resultState=="000"){
+      present({
+        message: '课程下架成功',
+        position:'top',
+        duration:3000
+      })
+      onQuery();
+    }
+    else{
+      present({
+        buttons: [{ text: '关闭', handler: () => dismiss() }],
+        message: '课程下架失败，失败原因：......',
+        position:'top',
+      })
+    }
     closeOffModal()
-    alert(json.result)
   })
 }
 

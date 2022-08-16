@@ -30,12 +30,12 @@ export const LessonDetail: React.FC = () => {
   const onBack = () => () => {
     setBack();
   };
-  console.log(state)
+  console.log(state);
   if (state.lesson.lessonEdit === undefined) {
     return <Redirect to={state.backPage} />;
   }
 
-  const onModify = (e:any) => {
+  const onModify = (e: any) => {
     e.preventDefault();
     fetch(modifyURL, {
       method: "POST",
@@ -46,26 +46,30 @@ export const LessonDetail: React.FC = () => {
     })
       .then((res) => res.json())
       .then((json) => {
-        console.log(json)
+        console.log(json);
         setBack();
       });
   };
   //  结果状态
-  const resultState="000"
+  const resultState = "000";
   // 展示操作结果
-  const resultFun=()=>{
-    if(resultState==="000"){
-      present('课程修改成功', 3000);
-    }
-    else{
+  const resultFun = () => {
+    if (resultState === "000") {
       present({
-        buttons: [{ text: '关闭', handler: () => dismiss() }],
-        message: '课程修改失败，失败原因：......',
-        onDidDismiss: () => console.log('dismissed'),
-        onWillDismiss: () => console.log('will dismiss'),
-      })
+        message: "课程修改成功",
+        position: "top",
+        duration: 3000,
+      });
+    } else {
+      present({
+        buttons: [{ text: "关闭", handler: () => dismiss() }],
+        message: "课程修改失败，失败原因：......",
+        position: "top",
+        onDidDismiss: () => console.log("dismissed"),
+        onWillDismiss: () => console.log("will dismiss"),
+      });
     }
-  }
+  };
   const lessonTypePickerColumn = {
     name: "lessonTypePickerColumn",
     options: [
@@ -291,7 +295,7 @@ export const LessonDetail: React.FC = () => {
                   onChange={(e) =>
                     setLessonState({
                       ...lessonState,
-                      teacherName:e.nativeEvent.target?.value,
+                      teacherName: e.nativeEvent.target?.value,
                     })
                   }
                   required
@@ -314,24 +318,23 @@ export const LessonDetail: React.FC = () => {
                 />
               </div>
             </div>
-            <div className="flex justify-center">
-            <input
-              value="修改"
-              type="submit"
-              className="flex w-20 px-6 py-2 font-bold text-white rounded-md bg-primary-600 focus:bg-primary-700"
-              onClick={() => {resultFun()}}  
-            />
-          </div>
-            <div className="flex justify-center">
-            <input
-              value="返回"
-              type="button"
-              onClick={onBack()}
-              className="flex w-20 px-6 py-2 font-bold text-white rounded-md bg-primary-600 focus:bg-primary-700"
-            />
-          </div>
+            <div className="flex items-center justify-center gap-4 mt-10">
+              <input
+                value="取消"
+                type="button"
+                className="px-6 py-2 border rounded-md "
+                onClick={onBack()}
+              />
+              <input
+                value="确定"
+                type="submit"
+                className="px-6 py-2 text-white border rounded-md bg-primary-600"
+                onClick={() => {
+                  resultFun();
+                }}
+              />
+            </div>
           </form>
-
         </IonCardContent>
       </IonCard>
     </IonPage>

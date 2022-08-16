@@ -54,13 +54,16 @@ export const DiscussAudit: React.FC = () => {
         const result=json
         if (result) 
         {
-          present('课程协商审核通过操作成功', 3000);
+          present({
+            message: '操作成功',
+            position:'top',
+            duration:3000
+          })
         } else 
         present({
           buttons: [{ text: '关闭', handler: () => dismiss() }],
-          message: '课程协商审核通过操作失败',
-          onDidDismiss: () => console.log('dismissed'),
-          onWillDismiss: () => console.log('will dismiss'),
+          message: '操作失败',
+          position:'top',
         })
         setBack();
       });
