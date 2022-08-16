@@ -26,7 +26,7 @@ import {
 const initialState = {
   backPage:undefined,
   loginUser:{//登录用户信息
-    userId:'test',
+    userId:null,
     loginName:null,
     username:null,
     phone:null,

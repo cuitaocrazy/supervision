@@ -31,6 +31,10 @@ const MyLoginTabs = () => {
 
   // console.log(handleSubmit)
 
+  const refreshLoginUser = useCallback((loginUser:any) => {
+    dispatch(setloginUser(loginUser));
+  },[dispatch]);
+
   const onSubmit = (loginType:string) => (data: FormDate)=>{
     console.log('login')
     console.log(loginType)
@@ -47,7 +51,7 @@ const MyLoginTabs = () => {
       }).then(res => res.json())
       .then((json) => {
          setUserName(json.result.username)
-        setloginUser({loginName:json.loginName,username:json.username})
+         refreshLoginUser({loginName:json.loginName,username:json.username})
       })
     }else{
         fetch(loginURL, {
@@ -62,7 +66,7 @@ const MyLoginTabs = () => {
         }).then(res => res.json())
         .then((json) => {
          setUserName(json.result.username)
-          setloginUser({loginName:json.result.loginName,username:json.result.username})
+          refreshLoginUser({loginName:json.result.loginName,username:json.result.username})
         })
     }
 

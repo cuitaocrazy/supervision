@@ -6,9 +6,11 @@ import LessonListCard from '../LessonListCard'
 import LessonImages from "components/LessonImages"
 import FeaturedRecommendAndMore from '../FeaturedRecommendAndMore'
 import RoundedCornersStyles from '../RoundedCornersStyles'
-import { useEffect,useState } from "react"
+import { useEffect,useState,useContext } from "react"
 import {searchLessonURL} from '../../const/const'
 import PullToRefresh from 'react-simple-pull-to-refresh';
+import {AppContext} from '../../appState';
+import { Redirect } from "react-router-dom"
 // import Menu from '../pages/Menu';
 // import PulldownRefresh from '@nuonuonuonuoyan/react-pulldown-refresh'
 
@@ -31,6 +33,7 @@ const Home = () => {
       setLessonList(json.result)  
     })
   }
+  const { state } = useContext(AppContext);
 
   useEffect(onQuery,[])
 
@@ -70,6 +73,11 @@ const Home = () => {
       ev.target.complete();
     })
   };
+  console.log(state)
+  if(state.loginUser.loginName==null){
+    console.log('AAAAAAA')
+    return <Redirect to="/login" />
+  }
   return <IonPage>
     <IonHeader>
       <Navbar title="教育资金监管平台" />
