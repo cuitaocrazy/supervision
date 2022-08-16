@@ -3,16 +3,8 @@ import React, { useState } from 'react';
 import {
   IonPage,
   IonCard,
-  IonRadioGroup,
-  IonRadio,
-  IonCardHeader,
-  IonCardSubtitle,
   IonCardContent,
-  IonItem,
-  IonButton,
-  IonList,
-  IonDatetime,
-  IonPicker
+  useIonToast
 } from '@ionic/react';
 import { Redirect } from 'react-router-dom';
 import { useCallback, useContext, useEffect } from 'react';
@@ -22,6 +14,7 @@ import Quit from '../Quit';
 import { PickerColumn } from '@ionic/core';
 
 export const BaseInfoDetail: React.FC = () => {
+  const [present, dismiss] = useIonToast();
   const modifyURL = 'http://localhost:3003/baseInfo/modify';
   const queryURL = 'http://localhost:3003/baseInfo/query';
   const { state, dispatch } = useContext(AppContext);
@@ -32,8 +25,9 @@ export const BaseInfoDetail: React.FC = () => {
   //   const onBack = ()=>() => {
   //     setBack()
   //   }
-  const onModify = async (e: React.FormEvent) => () => {
-    e.preventDefault();
+  // const onModify = async (e: React.FormEvent) => () => {
+    const onModify = () => {
+    // e.preventDefault();
     //todo fetch
     // fetch(modifyURL, {
     //   method: 'PUT',
@@ -45,6 +39,21 @@ export const BaseInfoDetail: React.FC = () => {
     // .then((json) => {
     //   alert(json.result)
     // })
+    const result={true:Boolean}
+    const msg={"网络异常":String}
+      if (result) 
+      {
+        present({
+          message:"密码修改成功",
+          duration:3000,
+          position:"top",
+        });
+      } else 
+      present({
+        buttons: [{ text: '关闭', handler: () => dismiss() }],
+        message: '密码修改失败,，失败原因：'+msg,
+        position:"top",
+      })
   };
 
   return (
@@ -118,7 +127,7 @@ export const BaseInfoDetail: React.FC = () => {
             <div className="flex justify-center mt-10">
               <input
                 value="确认"
-                type="button"
+                type="submit"
                 className="flex w-20 px-6 py-2 font-bold text-white rounded-md bg-primary-600 focus:bg-primary-700"
               />
             </div>

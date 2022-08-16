@@ -4,15 +4,9 @@ import { AppContext, setBlackList, setBlackDetail } from '../../../appState';
 import { Black } from '../../../types/types';
 import {
   IonPage,
-  IonList,
-  IonLabel,
-  IonItem,
   IonRow,
   IonCol,
-  IonModal,
-  IonCard,
-  IonCardContent,
-  IonCardHeader,
+  useIonToast,
 } from '@ionic/react';
 import { Dialog, Transition } from '@headlessui/react';
 import Quit from '../../Quit';
@@ -39,6 +33,7 @@ const demoBlackList: Black[] = [
 
 // 黑名单查询页面
 const BlackEduOrgQuery: React.FC = () => {
+  const [present, dismiss] = useIonToast();
   // 新增黑名单模态框的状态
   let [isCreateOpen, setIsCreateOpen] = useState(false);
   function closeCreateModal() {
@@ -71,7 +66,22 @@ const BlackEduOrgQuery: React.FC = () => {
     })
       .then(res => res.json())
       .then(json => {
-        alert(json.result);
+        const result=json
+        console.log(result+"result")
+        if (result) 
+        {
+          present({
+            message: '教育机构黑名单删除成功',
+            position:'top',
+            duration:3000
+          })
+        } else 
+        present({
+          buttons: [{ text: '关闭', handler: () => dismiss() }],
+          message: '教育机构黑名单删除失败',
+          position:'top',
+        })
+        onQuery
       });
   };
   const createModal = useRef<HTMLIonModalElement>(null);
@@ -140,7 +150,21 @@ const BlackEduOrgQuery: React.FC = () => {
     })
       .then(res => res.json())
       .then(json => {
-        alert(json.result);
+        const result=json
+        console.log(result+"result")
+        if (result) 
+        {
+          present({
+            message: '教育机构黑名单添加成功',
+            position:'top',
+            duration:3000
+          })
+        } else 
+        present({
+          buttons: [{ text: '关闭', handler: () => dismiss() }],
+          message: '教育机构黑名单添加失败',
+          position:'top',
+        })
       });
   };
 

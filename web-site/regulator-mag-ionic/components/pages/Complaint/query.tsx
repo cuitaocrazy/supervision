@@ -4,22 +4,9 @@ import { AppContext, setComplaintList, setComplaintDetail } from '../../../appSt
 import { Complaint } from '../../../types/types';
 import {
   IonPage,
-  IonList,
-  IonLabel,
-  IonItem,
   IonRow,
   IonCol,
-  IonModal,
-  IonCard,
-  IonCardContent,
-  IonCardHeader,
-  IonInput,
-  IonButton,
-  IonHeader,
-  IonTitle,
-  IonToolbar,
-  IonMenu,
-  IonContent,
+  useIonToast,
 } from '@ionic/react';
 import { Dialog, Transition } from '@headlessui/react';
 import Quit from '../../Quit'
@@ -67,6 +54,7 @@ const demoComplaintList: Complaint[] = [
 ];
 
 const ComplaintQuery: React.FC = () => {
+  const [present, dismiss] = useIonToast();
   // 去处理dialog页面状态
   let [isDealOpen, setIsDealOpen] = useState(false);
   function closeDealModal() {
@@ -97,7 +85,21 @@ const ComplaintQuery: React.FC = () => {
     })
       .then(res => res.json())
       .then(json => {
-        alert(json.result);
+        const result={true:Boolean}
+        if (result) 
+        {
+          present({
+            message:'投诉处理提交成功',
+            position:'top',
+            duration:3000,
+          });
+          onQuery();
+        } else 
+        present({
+          buttons: [{ text: '关闭', handler: () => dismiss() }],
+          message: '投诉处理提交失败',
+          position:'top',
+        })
       });
   };
   const [queryInfo, setQueryInfo] = useState({
@@ -191,12 +193,6 @@ const ComplaintQuery: React.FC = () => {
   );
   if (state.complaint.complaintDetail == null || state.complaint.complaintDetail == undefined) {
     return (
-      // <Layout title='123456'>
-      //   <IonPage>
-      //     <IonHeader>222</IonHeader>
-      //     <IonContent>33</IonContent>
-      //   </IonPage>
-      // </Layout>
       <IonPage className="bg-gray-100">
       <Quit />
       <div className="relative w-full h-screen mx-6 overflow-auto">
@@ -285,7 +281,7 @@ const ComplaintQuery: React.FC = () => {
                       <hr className="mt-2 mb-4" />
                     </Dialog.Title>
                     <form
-                      // onSubmit={onCreate}
+                      onSubmit={onCreate}
                       className="flex flex-col items-center rounded-lg justify-items-center"
                     >
                       <div className="flex items-center mb-4 justify-items-center">

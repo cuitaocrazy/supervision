@@ -1,6 +1,6 @@
 //手工退课
 import React, { useEffect,useCallback,useContext,useState,Fragment } from 'react'
-import { IonPage, IonModal,IonRow,IonCol,IonCard,IonRadioGroup,IonRadio, IonCardHeader, IonCardSubtitle,IonLabel,IonInput, IonCardContent,IonItem,IonButton,IonList,IonDatetime,IonPicker } from '@ionic/react';
+import { IonPage, IonCol,IonRow, useIonToast} from '@ionic/react';
 import { Redirect } from 'react-router-dom';
 import {AppContext,setContractNegoList,setContractNegoDetail} from '../../../appState';
 import {ContractNego} from '../../../types/types'
@@ -65,6 +65,7 @@ const democontractNegoList:ContractNego[] = [
 ]
 
 const ContractNegoQuery:React.FC = () => {
+  const [present, dismiss] = useIonToast();
 // 手动退课-确认模态框的状态
 const [isConformOpen, setIsConformOpen] = useState(false);
 function closeConformModal() {
@@ -87,7 +88,21 @@ function OpenConformModal() {
     })
       .then(res => res.json())
       .then(json => {
-        alert(json.result);
+        const result=json
+        console.log(result+"result")
+        if (result) 
+        {
+          present({
+            message: '手工退课成功',
+            position:'top',
+            duration:3000
+          })
+        } else 
+        present({
+          buttons: [{ text: '关闭', handler: () => dismiss() }],
+          message: '手工退课失败',
+          position:'top',
+        })
       });
   };
   const [queryInfo, setQueryInfo] = useState({contractId:'',orderId:''})
@@ -280,7 +295,7 @@ const ListEntry = ({ contractNego, ...props } : {contractNego:ContractNego}) => 
                       <hr className="mt-2 mb-4" />
                     </Dialog.Title>
                     <form
-                      // onSubmit={onCreate}
+                      onSubmit={onCreate}
                       className="flex flex-col items-center rounded-lg justify-items-center"
                     >
                       <div className="flex items-center mb-4 justify-items-center">

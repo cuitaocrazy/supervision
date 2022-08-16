@@ -28,31 +28,36 @@ export const BaseInfoEdit: React.FC = () => {
   if (state.userInfo.userInfoEdit === undefined) {
     return <Redirect to={state.backPage} />;
   }
-
-  const onModify = async (e: React.FormEvent) => () => {
-    e.preventDefault();
-    fetch(modifyURL, {
-      method: 'PUT',
-      body: JSON.stringify(baseInfoState),
-      headers: {
-        'Content-type': 'application/json;charset=UTF-8',
-      },
-    })
-      .then(res => res.json())
-      .then(json => {
-        const result=json
+  const onModify =  () => {
+  // const onModify = async (e: React.FormEvent) => () => {
+    // e.preventDefault();
+    // fetch(modifyURL, {
+    //   method: 'PUT',
+    //   body: JSON.stringify(baseInfoState),
+    //   headers: {
+    //     'Content-type': 'application/json;charset=UTF-8',
+    //   },
+    // })
+    //   .then(res => res.json())
+    //   .then(json => {
+        const result={true:Boolean}
+    const msg={"网络异常":String}
         if (result) 
         {
-          present('编辑成功', 3000);
+          present({
+            message: '编辑用户信息操作成功',
+            position:'top',
+            duration:3000
+          })
+
         } else 
         present({
           buttons: [{ text: '关闭', handler: () => dismiss() }],
-          message: '编辑失败',
-          onDidDismiss: () => console.log('dismissed'),
-          onWillDismiss: () => console.log('will dismiss'),
+          message: '编辑用户信息操作失败'+msg,
+          position:'top',
         })
         setBack();
-      });
+      // });
   };
 
   return (
@@ -150,7 +155,7 @@ export const BaseInfoEdit: React.FC = () => {
                 />
               </div>
             </div>
-          </form>
+         
           <div className="flex items-center justify-center gap-4 mt-10">
             <input
               value="取消"
@@ -164,6 +169,7 @@ export const BaseInfoEdit: React.FC = () => {
               className="px-6 py-2 text-white border rounded-md bg-primary-600"
             />
           </div>
+          </form>
         </IonCardContent>
       </IonCard>
     </IonPage>

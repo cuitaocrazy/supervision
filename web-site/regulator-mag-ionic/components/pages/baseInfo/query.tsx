@@ -4,18 +4,11 @@ import { AppContext, setUserInfoList, setUserInfoDetail,setUserInfoEdit } from '
 import { SupervisorUser } from '../../../types/types';
 import {
   IonPage,
-  IonList,
-  IonLabel,
-  IonItem,
   IonRow,
   IonCol,
-  IonModal,
-  IonCard,
-  IonCardContent,
-  IonCardHeader,
+  useIonToast
 } from '@ionic/react';
 import { Dialog, Transition } from '@headlessui/react';
-import { UserInfo } from 'os';
 import Paging from '../../paging'
 import Quit from '../../Quit'
 
@@ -41,6 +34,7 @@ const demoLessonList: SupervisorUser[] = [
 
 // 课程查询页面
 const BaseInfoQuery: React.FC = () => {
+  const [present, dismiss] = useIonToast();
   // 新增模态框的状态
   let [isCreateOpen, setIsCreateOpen] = useState(false);
   const [page,setPage] = useState(0)
@@ -77,11 +71,23 @@ const BaseInfoQuery: React.FC = () => {
     })
       .then(res => res.json())
       .then(json => {
-        if(json.result){
-            closeDeleteModal()
-            onQuery()
-        }
+        const result=json
+        if (result) 
+        {
+          present({
+            message: '删除用户信息操作成功',
+            position:'top',
+            duration:3000
+          })
+          closeDeleteModal()
+        } else 
+        present({
+          buttons: [{ text: '关闭', handler: () => dismiss() }],
+          message: '删除用户信息操作失败',
+          position:'top',
+        })
       });
+      onQuery()
   };
   const createModal = useRef<HTMLIonModalElement>(null);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
@@ -157,18 +163,34 @@ const BaseInfoQuery: React.FC = () => {
     });
   };
   const onCreate = (e: any) => {
-    e.preventDefault();
-    fetch(createUrl, {
-      method: 'POST',
-      body: JSON.stringify(createUserInfo),
-      headers: {
-        'Content-type': 'application/json;charset=UTF-8',
-      },
-    })
-      .then(res => res.json())
-      .then(json => {
-        alert(json.result);
-      });
+    // e.preventDefault();
+    // fetch(createUrl, {
+    //   method: 'POST',
+    //   body: JSON.stringify(createUserInfo),
+    //   headers: {
+    //     'Content-type': 'application/json;charset=UTF-8',
+    //   },
+    // })
+    //   .then(res => res.json())
+    //   .then(json => {
+    //     const result=json.result
+    const result={true:Boolean}
+    const msg={"网络异常":String}
+        if (result) 
+        {
+          present({
+            message: '添加用户信息操作成功',
+            position:'top',
+            duration:3000
+          })
+          closeDeleteModal()
+        } else 
+        present({
+          buttons: [{ text: '关闭', handler: () => dismiss() }],
+          message: '添加用户信息操作失败'+msg,
+          position:'top',
+        })
+      // });
   };
 
   const ListEntry = ({ userInfo, ...props }: { userInfo: SupervisorUser }) => (
@@ -402,7 +424,7 @@ const BaseInfoQuery: React.FC = () => {
             </Dialog>
           </Transition>
 
-          {/* 删除课程模态框 */}
+          {/* 删除用户模态框 */}
           <Transition appear show={isDeleteOpen} as={Fragment}>
             <Dialog as="div" className="relative z-10" onClose={closeDeleteModal}>
               <Transition.Child

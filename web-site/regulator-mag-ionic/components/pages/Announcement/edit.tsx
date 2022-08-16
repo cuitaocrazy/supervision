@@ -3,16 +3,8 @@ import React, { useState, useRef } from 'react';
 import {
   IonPage,
   IonCard,
-  IonCardHeader,
-  IonCardSubtitle,
-  IonLabel,
-  IonInput,
   IonCardContent,
-  IonItem,
-  IonButton,
-  IonList,
-  IonDatetime,
-  IonPicker,
+  useIonToast,
 } from '@ionic/react';
 import { Redirect } from 'react-router-dom';
 import { useCallback, useContext } from 'react';
@@ -24,6 +16,7 @@ import { EditorState } from 'draft-js';
 import Quit from '../../Quit'
 
 export const AnnouncementEdit: React.FC = () => {
+  const [present, dismiss] = useIonToast();
   let [isOffOpen, setIsOffOpen] = useState(false);
   const modifyURL = 'http://localhost:3003/announcement/modify';
   const { state, dispatch } = useContext(AppContext);
@@ -58,7 +51,21 @@ export const AnnouncementEdit: React.FC = () => {
     })
       .then(res => res.json())
       .then(json => {
-        alert(json.result);
+        const result=json
+        console.log(result+"result")
+        if (result) 
+        {
+          present({
+            message: '政策公告编辑成功',
+            position:'top',
+            duration:3000
+          })
+        } else 
+        present({
+          buttons: [{ text: '关闭', handler: () => dismiss() }],
+          message: '政策公告编辑失败',
+          position:'top',
+        })
       });
   };
   return (

@@ -2,21 +2,8 @@ import React, { useState, Fragment, useEffect, useCallback, useContext,useRef } 
 import {
   IonPage,
   IonRow,
-  IonCardTitle,
   IonCol,
-  IonCard,
-  IonRadioGroup,
-  IonRadio,
-  IonCardHeader,
-  IonCardSubtitle,
-  IonLabel,
-  IonInput,
-  IonCardContent,
-  IonItem,
-  IonButton,
-  IonList,
-  IonDatetime,
-  IonPicker,
+  useIonToast,
 } from '@ionic/react';
 import { Redirect } from 'react-router-dom';
 import {
@@ -59,6 +46,7 @@ const demoAnnouncementList: Announcement[] = [
 ];
 
 const AnnouncementQuery: React.FC = () => {
+  const [present, dismiss] = useIonToast();
   // 新增模态框的状态
   let [isCreateOpen, setIsCreateOpen] = useState(false);
   function closeCreateModal() {
@@ -118,7 +106,21 @@ const AnnouncementQuery: React.FC = () => {
     })
       .then(res => res.json())
       .then(json => {
-        alert(json.result);
+        const result=json
+        console.log(result+"result")
+        if (result) 
+        {
+          present({
+            message: '政策公告删除成功',
+            position:'top',
+            duration:3000
+          })
+        } else 
+        present({
+          buttons: [{ text: '关闭', handler: () => dismiss() }],
+          message: '政策公告删除失败',
+          position:'top',
+        })
       });
   };
 
@@ -183,7 +185,21 @@ const AnnouncementQuery: React.FC = () => {
     })
       .then(res => res.json())
       .then(json => {
-        alert(json.result);
+        const result=json
+        console.log(result+"result")
+        if (result) 
+        {
+          present({
+            message: '政策公告添加成功',
+            position:'top',
+            duration:3000
+          })
+        } else 
+        present({
+          buttons: [{ text: '关闭', handler: () => dismiss() }],
+          message: '政策公告添加失败',
+          position:'top',
+        })
       });
   };
 
@@ -323,7 +339,7 @@ const AnnouncementQuery: React.FC = () => {
                         as="h3"
                         className="text-lg font-medium leading-6 text-center text-gray-900"
                       >
-                        用户新增
+                        政策公告新增
                         <hr className="mt-2 mb-4" />
                       </Dialog.Title>
                       <form

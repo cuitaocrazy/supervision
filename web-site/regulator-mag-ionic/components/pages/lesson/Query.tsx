@@ -37,31 +37,35 @@ const LessonQuery: React.FC = () => {
   const { state, dispatch } = useContext(AppContext);
   const [lessonState, setLessonState] = useState(state.lesson.lessonList);
   const onCreate = (e: React.FormEvent)=> {
-    e.preventDefault();
-    fetch(createURL, {
-      method: 'PUT',
-      body: JSON.stringify(lessonState),
-      headers: {
-        'Content-type': 'application/json;charset=UTF-8',
-      },
-    })
-      .then(res => res.json())
-      .then(json => {
-        alert(json)
-        if (json.result) 
+    // e.preventDefault();
+    // fetch(createURL, {
+    //   method: 'PUT',
+    //   body: JSON.stringify(lessonState),
+    //   headers: {
+    //     'Content-type': 'application/json;charset=UTF-8',
+    //   },
+    // })
+    //   .then(res => res.json())
+    //   .then(json => {
+    //     alert(json)
+    const result={true:Boolean}
+        if (result) 
         {
-          present('课程下架成功', 3000);
+          present({
+            message:'课程下架成功',
+            position:'top',
+            duration:3000,
+          });
           onQuery();
         } else 
         present({
           buttons: [{ text: '关闭', handler: () => dismiss() }],
           message: '课程下架失败',
-          onDidDismiss: () => console.log('dismissed'),
-          onWillDismiss: () => console.log('will dismiss'),
+          position:'top',
         })
         closeOffModal();
         onQuery();
-      });
+      // });
   };
   const onCancel = (item: Lesson) => () => {
     fetch(delURL, {

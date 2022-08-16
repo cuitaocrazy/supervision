@@ -43,12 +43,18 @@ export const EduOrgEdit: React.FC = () => {
     //   .then(json => {
     //     const result=json
     const result = { true: Boolean };
+    const msg={"网络异常":String}
     if (result) {
-      present('编辑成功', 3000);
+      present({
+        message: '教育机构编辑成功',
+        position:'top',
+        duration:3000
+      })
     } else
       present({
         buttons: [{ text: '关闭', handler: () => dismiss() }],
-        message: '编辑失败',
+        message: '教育机构编辑失败'+msg,
+        position:'top',
         onDidDismiss: () => console.log('dismissed'),
         onWillDismiss: () => console.log('will dismiss'),
       });

@@ -58,14 +58,17 @@ export const LessonAudit: React.FC = () => {
       .then(json => {
         if (json.result) 
         {
-          present('课程审核通过，操作成功', 3000);
+          present({
+            message:'课程审核通过，操作成功',
+            position:'top',
+            duration:3000,
+          });
           // onQuery();
         } else 
         present({
           buttons: [{ text: '关闭', handler: () => dismiss() }],
           message: '课程审核通过，操作失败',
-          onDidDismiss: () => console.log('dismissed'),
-          onWillDismiss: () => console.log('will dismiss'),
+          position:'top',
         })
         setBack();
       });
@@ -357,7 +360,7 @@ export const LessonAudit: React.FC = () => {
                           onClick={closeAuditModal}
                         />
                         <input
-                          value="button"
+                          value="提交"
                           type="submit"
                           className="px-6 py-2 text-white border rounded-md bg-primary-600"
                           onClick={()=>{onModify('reject')();closeAuditModal()}}

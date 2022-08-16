@@ -66,7 +66,11 @@ const OrgMagQuery: React.FC = () => {
         const result={true:Boolean}
       if (result) 
       {
-        present('删除成功', 3000);
+        present({
+          message:"删除成功",
+          duration:3000,
+          position:"top",
+        });
         onQuery();
       } else 
       present({
@@ -110,15 +114,18 @@ const OrgMagQuery: React.FC = () => {
     //     const { result, msg } = json;
     const result={true:Boolean}
         if (result) {
-          present('加入黑名单成功', 3000);
+          present({
+            message: '加入黑名单成功',
+            position:'top',
+            duration:3000
+          })
           setIsBlackOpen(false);
           onQuery();
         } else 
         present({
           buttons: [{ text: '关闭', handler: () => dismiss() }],
           message: '加入黑名单失败，失败原因：',
-          onDidDismiss: () => console.log('dismissed'),
-          onWillDismiss: () => console.log('will dismiss'),
+          position:'top',
         })
         closeBlackModal()
         onQuery()
@@ -152,16 +159,20 @@ const OrgMagQuery: React.FC = () => {
     //   .then(json => {
     //     const { result, msg } = json;
     const result={true:Boolean}
+    const msg={"网络异常":String}
         if (result) 
         {
-          present('机构添加成功', 3000);
+          present({
+            message: '机构添加成功',
+            position:'top',
+            duration:3000
+          })
           onQuery();
         } else 
         present({
           buttons: [{ text: '关闭', handler: () => dismiss() }],
           message: '机构添加失败，失败原因：'+msg,
-          onDidDismiss: () => console.log('dismissed'),
-          onWillDismiss: () => console.log('will dismiss'),
+          position:'top',
         })
         closeCreateModal()
         onQuery()

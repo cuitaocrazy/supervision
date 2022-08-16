@@ -4,13 +4,7 @@ import { AppContext, setTransferManualList } from '../../../appState';
 import { Transfer } from '../../../types/types';
 import {
   IonPage,
-  IonList,
-  IonLabel,
-  IonItem,
-  IonRow,
-  IonCol,
-  IonModal,
-  IonCardContent,
+  useIonToast
 } from '@ionic/react';
 import { Dialog, Transition } from '@headlessui/react';
 
@@ -60,6 +54,7 @@ const demotransferList: Transfer[] = [
 ];
 
 const TransferManualQuery: React.FC = () => {
+  const [present, dismiss] = useIonToast();
   // 手动划拨-确认模态框的状态
   const [isConformOpen, setIsConformOpen] = useState(false);
   function closeConformModal() {
@@ -82,7 +77,21 @@ const TransferManualQuery: React.FC = () => {
     })
       .then(res => res.json())
       .then(json => {
-        alert(json.result);
+        const result=json
+        console.log(result+"result")
+        if (result) 
+        {
+          present({
+            message: '手动划拨成功',
+            position:'top',
+            duration:3000
+          })
+        } else 
+        present({
+          buttons: [{ text: '关闭', handler: () => dismiss() }],
+          message: '手动划拨失败',
+          position:'top',
+        })
       });
   };
   const [queryInfo, setQueryInfo] = useState({});
