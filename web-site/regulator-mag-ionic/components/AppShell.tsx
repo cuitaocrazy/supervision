@@ -47,6 +47,7 @@ import ComplaintStatistic from './pages/statistics/complaint';
 import BaseInfoDetail from './pages/baseInfo/Detail';
 import BaseInfoEdit from './pages/baseInfo/Edit';
 import ChainCode from './pages/ChainCodeInfo'
+import ChainCodeSignSum from './pages/chainCodeSignSum'
 
 // 装载ionic样式，ionic6 必须执行。
 setupIonicReact();
@@ -108,6 +109,8 @@ const AppShell = () => {
               <Route path="/tabs/statistics/student" component={Student} exact={true} />
               <Route path="/tabs/statistics/income" component={Income} exact={true} />
               <Route path="/tabs/chainCode/query" component={ChainCode} exact={true} />
+              <Route path="/tabs/chainCodeSignSum/query" component={ChainCodeSignSum} exact={true} />
+              
               <Route
                 path="/tabs/statistics/complaint"
                 component={ComplaintStatistic}

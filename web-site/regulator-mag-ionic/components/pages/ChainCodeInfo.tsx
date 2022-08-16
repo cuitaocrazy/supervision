@@ -1,4 +1,4 @@
-// 链码部署信息表
+// 智能合约部署查询
 import React, { useState } from 'react';
 import { useEffect, useCallback, useContext } from 'react';
 import {
@@ -38,6 +38,7 @@ const ChinCodeQuery: React.FC = () => {
     },
     findURL
   );
+  console.log(paramStr)
   const refreshList = useCallback(
     (chainCodes: ChainCode[]) => {
       dispatch(setChainCodeList(chainCodes));
@@ -101,22 +102,22 @@ console.log(state)
               </svg>
             </div>
             <div>
-              <span className="pr-1 text-gray-600">链码描述信息查询</span>
+              <span className="pr-1 text-gray-600">智能合约部署信息</span>
             </div>
           </div>
-          <div className="w-11/12 px-4 py-2 mt-4 bg-white rounded-lg ">
+          {/* <div className="w-11/12 px-4 py-2 mt-4 bg-white rounded-lg ">
             <div className="text-base font-bold">快速查询</div>
             <hr className="mt-2 mb-4" />
             <div className="flex">
               <IonRow className="flex items-center w-full mx-4 text-center bg-white rounded-md justify-items-center">
                 <IonCol className="flex ml-8 text-gray-800">
                   <div className="flex items-center justify-center font-bold text-center text-gray-600 w-28">
-                    链码描述：
+                    智能合约描述：
                   </div>
                   <input
                     type="text"
                     className="flex w-56 h-12 font-bold text-center text-gray-600 bg-white border rounded-md focus:outline-none focus:glow-primary-600"
-                    placeholder="请输入链码描述"
+                    placeholder="请输入智能合约描述"
                     onChange={e => setQueryInfo({ ...queryInfo, ...{ chaincodeDesc: e.target.value } })}
                   />
                 </IonCol>
@@ -130,7 +131,7 @@ console.log(state)
                 </IonCol>
               </IonRow>
             </div>
-          </div>
+          </div> */}
 
           <div className="absolute w-full mt-10">
             <table className="w-11/12">

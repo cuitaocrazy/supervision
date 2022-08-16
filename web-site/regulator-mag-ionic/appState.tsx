@@ -14,6 +14,7 @@ import {
   SupervisorOrg,
   Black,
   ChainCode,
+  ChainCodeSignSum
 } from './types/types'
 /**
  * This is a simple redux-like state management pattern for React using hooks
@@ -101,6 +102,9 @@ const initialState = {
   },
   chainCode:{// 链码部署信息
     chainCodeList:[],
+  },
+  chainCodeSignSum:{
+    chainCodeSignSumInfo:null
   }
 
 };
@@ -149,6 +153,13 @@ export const setChainCodeList = (chainCodeList:ChainCode[]) => {
   return {
     type: 'setChainCodeList',
     chainCodeList:chainCodeList
+  }
+}
+
+export const setChainCodeSignSumInfo = (chainCodeSignSumInfo:ChainCodeSignSum) => {
+  return {
+    type: 'setChainCodeSignSumInfo',
+    chainCodeSignSumInfo:chainCodeSignSumInfo
   }
 }
 
@@ -436,6 +447,15 @@ export const reducer = (state: any, action: any) => {
         ...state,
         chainCode:{
           chainCodeList:action.chainCodeList
+        },
+        backPage:action.backPage||state.backPage
+      }
+    }
+    case 'setChainCodeSignSumInfo':{
+      return {
+        ...state,
+        chainCodeSignSum:{
+          chainCodeSignSumInfo:action.chainCodeSignSumInfo
         },
         backPage:action.backPage||state.backPage
       }

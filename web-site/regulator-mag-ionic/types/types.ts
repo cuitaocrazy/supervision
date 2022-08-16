@@ -253,4 +253,10 @@ export interface ChainCode{
   chaincodeName:string,
 }
 
+export interface ChainCodeSignSum{
+  attendanceTotal:string,
+  transferCount:string,
+  contractCount:string,
+}
+
 
