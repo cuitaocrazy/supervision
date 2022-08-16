@@ -69,7 +69,7 @@ console.log(state)
   useEffect(onQuery, []);
   const ListEntry = ({ chainCode }: { chainCode: ChainCode }) => (
     <tr
-      className="grid items-center grid-cols-6 gap-10 text-gray-600 border justify-items-center even:bg-white odd:bg-primary-100 "
+      className="grid items-center grid-cols-5 gap-10 text-gray-600 border justify-items-center even:bg-white odd:bg-primary-100 "
     >
       <td className="flex items-center justify-center leading-10">{chainCode.chaincodeDesc}</td>
       <td className="flex items-center justify-center leading-10">{chainCode.deployDate}</td>
@@ -136,7 +136,7 @@ console.log(state)
           <div className="absolute w-full mt-10">
             <table className="w-11/12">
               <thead>
-                <tr className="grid items-center h-10 grid-cols-6 gap-10 font-bold text-gray-700 bg-white rounded-lg justify-items-center">
+                <tr className="grid items-center h-10 grid-cols-5 gap-10 font-bold text-gray-700 bg-white rounded-lg justify-items-center">
                   <th className="flex items-center justify-center">链码描述</th>
                   <th className="flex items-center justify-center">部署日期</th>
                   <th className="flex items-center justify-center">版本</th>
