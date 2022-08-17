@@ -88,10 +88,11 @@ const MyCheckInList = () => {
       <Navbar title="签到列表" />
     </IonHeader>
     <IonContent>
-      <div>
-        <Calendar  onActiveStartDateChange={(item)=>setDate(item.value)}   tileContent={({ date, view }) => {
+      <div className=''>
+        <Calendar className="w-full px-2 py-2 mt-2 border-0 rounded-lg shadow-md"
+          onActiveStartDateChange={(item)=>setDate(item.value)}   tileContent={({ date, view }) => {
             if(view==='month'){
-              return <p>{getAttendString(date)}</p>
+              return <p className='text-white bg-green-600 rounded-md'>{getAttendString(date)}</p>
             }
             return null
             // return view === 'year' && date.getDay()=== 0 ? <p>aaaa</p>: null

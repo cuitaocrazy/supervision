@@ -107,7 +107,7 @@ const MyLoginTabs = () => {
           {({ selected }) => {
             return <button id='loginButton'
               className={
-                selected ? ' px-2 pt-2 mx-2 mt-4 font-bold  text-primary-600 focus:outline-none ' : 'px-2 py-2 mx-2 my-4  text-gray-800 font-bold '
+                selected ? ' px-2 pt-2 mx-2 mt-4 font-bold  text-primary-600 focus:outline-none border' : 'px-2 py-2 mx-2 my-4  text-gray-800 font-bold '
               }
             >
               验证码登录

@@ -63,7 +63,7 @@ const AppShell = () => {
         <IonReactRouter>
           {/* <Menu></Menu> */}
 
-          <IonSplitPane contentId="main" className="space-y-16 bg-gray-300 shadow-lg rounded-tl-xl rounded-bl-xl">
+          <IonSplitPane contentId="main" className="rounded-tl-xl rounded-tr-xl">
             <IonRouterOutlet id="main">
               <Route path="/tabs" render={() => <Tabs />} />
               <Route path="/login" render={() => <Login />} />
