@@ -89,7 +89,7 @@ export interface Attendance{
   attendanceDate:string,
   attendanceTime:string,
   attendanceType:string,
-  attendancelessonQuantity:string,
+  attendanceLessonQuantity:string,
   eduId:string,
   eduName:string,
   lessonId:string,

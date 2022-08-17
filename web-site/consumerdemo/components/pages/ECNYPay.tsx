@@ -29,7 +29,7 @@ const ECNYPay = () => {
       body: JSON.stringify({
         lessonId: state.lessonDetail.lessonId,
         username: state.loginUser?.username,
-        studentName: state.studentName,
+        studentName: state.stuName,
       }),
       headers: {
         "Content-type": "application/json;charset=UTF-8",

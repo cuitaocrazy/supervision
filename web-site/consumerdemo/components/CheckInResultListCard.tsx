@@ -16,13 +16,13 @@ const CheckInResultListCard = (props:{attendance:Attendance}) => {
     <div className='text-sm leading-7'>
       <span>{attendance.lessonName}</span>
       <span>（{attendance.consumerStuName}）</span>
-      <span>第</span>
-      <span>{attendance.attendancelessonQuantity}</span> 
-      <span className='inline'>课</span>
+      <span>本次签到</span>
+      <span>{attendance.attendanceLessonQuantity}</span> 
+      <span className='inline'>课时</span>
     </div>
     <div className='leading-7'>
-      <span className='font-bold'>签到时间:</span>
-      <span className='font-bold'>{attendance.attendanceTime}</span>
+      <span className='font-bold'>签到日期时间:</span>
+      <span className='font-bold'>{attendance.attendanceDate} {attendance.attendanceTime}</span>
       <input className='inline px-2 ml-4 text-xs text-center border border-secondary-300 text-secondary-300 rounded-3xl' 
       type="button" value="去协商"
       onClick={()=>{router.push("./applyDiscuss")}} />

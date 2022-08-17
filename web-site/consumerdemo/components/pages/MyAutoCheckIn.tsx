@@ -45,7 +45,7 @@ const MyAutoCheckIn = () => {
         present({
           message:"自动签到成功",
           duration:3000,
-          position:"top",
+          position:"middle",
         });
       } else 
       present({
@@ -64,7 +64,7 @@ const MyAutoCheckIn = () => {
         <div className='flex mt-10'>
           <input className='w-full py-2 mx-3 font-bold text-white shadow-md bg-primary-600 rounded-3xl shadow-primary-600'
             type="button" value="开启自动签到"
-            onClick={() => setIsOpen(true)} />
+            onClick={() => onTosat()} />
         </div>
         
         
