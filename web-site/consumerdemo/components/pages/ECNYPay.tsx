@@ -1,10 +1,10 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext,useCallback } from "react";
 import { IonPage, IonHeader, IonContent } from "@ionic/react";
 import { useHistory } from "react-router-dom";
 import Navbar from "../Navbar";
 import { Contract } from "../../types/types";
 import { preOrderURL } from "../../const/const";
-import { AppContext } from "../../appState";
+import { AppContext,setContractDetail } from "../../appState";
 import { io } from "socket.io-client";
 import { Link } from "react-router-dom";
 
@@ -14,12 +14,16 @@ const ECNYPay = () => {
   const history = useHistory();
   const socket = io(socketUrl);
   const [contract, setContract] = useState({} as Contract);
-  const { state } = useContext(AppContext);
+  const { state,dispatch } = useContext(AppContext);
   const [payUrl, setPayUrl] = useState("");
+  const refreshContract = useCallback((contract:Contract) => {
+    dispatch(setContractDetail(contract));
+  },[dispatch]);
+
   useEffect(() => {
-    socket.on("open", () => {
-      console.log("socket io is open !");
-    });
+    // socket.on("open", () => {
+    //   console.log("socket io is open !");
+    // });
     fetch(preOrderURL, {
       method: "POST",
       body: JSON.stringify({
@@ -33,13 +37,14 @@ const ECNYPay = () => {
     })
       .then((res) => res.json())
       .then((json) => {
-        setContract(json.result);
-        setPayUrl(json.payUrl);
-        socket.emit("pay", json.result.contractId);
-        socket.on(json.result.contractId + "_pay", () => {
-          console.log("支付成功");
-          history.push("/tabs/payResult");
-        });
+        setContract(json.result)
+        refreshContract(json.result);
+        // setPayUrl(json.payUrl);
+        // socket.emit("pay", json.result.contractId);
+        // socket.on(json.result.contractId + "_pay", () => {
+        //   console.log("支付成功");
+        //   history.push("/tabs/payResult");
+        // });
       });
   }, []);
 
