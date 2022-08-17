@@ -5,14 +5,14 @@ import Navbar from "../Navbar";
 import { Contract } from "../../types/types";
 import { preOrderURL } from "../../const/const";
 import { AppContext,setContractDetail } from "../../appState";
-import { io } from "socket.io-client";
+// import { io } from "socket.io-client";
 import { Link } from "react-router-dom";
 
 // 数币支付页面
 const ECNYPay = () => {
   const socketUrl = "http://localhost:3003";
   const history = useHistory();
-  const socket = io(socketUrl);
+  // const socket = io(socketUrl);
   const [contract, setContract] = useState({} as Contract);
   const { state,dispatch } = useContext(AppContext);
   const [payUrl, setPayUrl] = useState("");

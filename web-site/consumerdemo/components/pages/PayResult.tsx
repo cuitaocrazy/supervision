@@ -31,7 +31,8 @@ const PayResult = () => {
           <Link to='searchLessonlist' className='py-2 text-sm text-white shadow-md shadow-secondary-300 bg-secondary-300 rounded-3xl text-center'>
           继续购买
             </Link>
-            <Link to='myLessonDetail' className='py-2 text-sm text-white bg-red-400 shadow-md shadow-remind-400 rounded-3xl text-center'>
+            {/* <Link to='myLessonDetail'  className='py-2 text-sm text-white bg-red-400 shadow-md shadow-remind-400 rounded-3xl text-center'> */}
+            <Link to={{pathname:'myLessonDetail',state:{backPage:'/tabs/home'}}}  className='py-2 text-sm text-white bg-red-400 shadow-md shadow-remind-400 rounded-3xl text-center'>
           查看详情
             </Link>
         </div>
