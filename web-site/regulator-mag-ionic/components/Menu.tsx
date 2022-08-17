@@ -14,9 +14,9 @@ import {
 } from '@ionic/react';
 import { useEffect, useState,useContext } from 'react';
 import {  flash,arrowDown,arrowUp } from 'ionicons/icons';
-import Router from 'next/router'
+import { useRouter } from "next/router";
 import {AppContext} from '../appState';
-import { Link } from 'react-router-dom';
+import { Link, Redirect, Route } from 'react-router-dom';
 
 const pages = [
   // {
@@ -44,6 +44,16 @@ const Menu = () => {
   const [fundVisible, setFundVisible] = useState(false);
   const [statisticVisible, setStatisticVisible] = useState(false);
   const { state } = useContext(AppContext);
+  const router = useRouter()
+  console.log('window.loginUser')
+  //todo 以后根据保存到localstorage的信息判断
+  console.log(window.loginUser)
+  if(!window.loginUser){
+    console.log('未登录')
+    router.push('/Login')
+  }
+
+
   const handleOpen = async () => {
     try {
       await StatusBar.setStyle({

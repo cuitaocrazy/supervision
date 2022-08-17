@@ -32,17 +32,20 @@ const Login = () => {
       .then(async (json) => {
         const { result, msg, loginUser } = json;
         if (result) {
-          refreshUserInfo(loginUser);
+          refreshUserInfo(result);
+          //todo 以后保存到localstorage
+          window.loginUser=result.loginName
           await router.push("./tabs/orgMag/query");
-          router.reload();
+          // router.reload();
         } else {
           alert(msg);
         }
       });
   };
-
-  if (state.loginUser.role && state.loginUser.role !== "") {
-    return <Redirect to="/tabs/home" />;
+  console.log(state)
+  if (state.loginUser.loginName && state.loginUser.loginName !== "") {
+     router.push("./tabs/orgMag/query");
+    // return <Redirect to="/tabs/home" />;
   }
 
   return (
