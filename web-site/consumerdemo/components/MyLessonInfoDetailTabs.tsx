@@ -60,6 +60,7 @@ import { Lesson, Teacher, EduOrg,Contract } from '../types/types'
 import {useRouter} from 'next/router'
 import {AppContext} from '../appState';
 import { useContext } from 'react';
+ import OrderInfo from './OrderInfo';
 
 // 课程详情标签选项卡
 const LessonDetailTabs = () => {
@@ -91,6 +92,7 @@ const LessonDetailTabs = () => {
           <OrgLessonInfo lessonName={order.lessonName} teacherName={order.teacherName} lessonTotalPrice={order.lessonTotalPrice} lessonTotalQuantity={order.lessonTotalQuantity} eduAddress={order.eduAddress} eduContactPhone={order.eduContactPhone} />
           <LessonIntroduce lessonIntroduce={order.lessonIntroduce} />
           <TeacherIntroduce teacherIntroduce={order.teacherIntroduce} />
+          <OrderInfo />
         </Tab.Panel>
         <Tab.Panel>
           <LessonFrame />
