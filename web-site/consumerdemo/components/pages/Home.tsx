@@ -1,6 +1,6 @@
 import { IonPage, IonHeader, IonContent,IonInfiniteScroll,IonInfiniteScrollContent } from "@ionic/react"
 import Search from '../Search'
-import Navbar from '../Navbar'
+import NavbarNoGoBackBtn from '../NavbarNoGoBackBtn'
 import { Lesson } from '../../types/types'
 import LessonListCard from '../LessonListCard'
 import LessonImages from "components/LessonImages"
@@ -80,7 +80,7 @@ const Home = () => {
   }
   return <IonPage>
     <IonHeader>
-      <Navbar title="教育资金监管平台" />
+      <NavbarNoGoBackBtn title="教育资金监管平台" />
     </IonHeader>
     <IonContent>
       <div className='relative bg-primary-600'>

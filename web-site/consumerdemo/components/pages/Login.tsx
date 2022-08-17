@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { Redirect } from 'react-router-dom';
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { Tab } from '@headlessui/react'
-import Navbar from '../Navbar'
+import NavbarNoGoBackBtn from '../NavbarNoGoBackBtn'
 import {AppContext,setloginUser} from '../../appState';
 import {loginURL} from '../../const/const'
 
@@ -207,7 +207,7 @@ const LoginBtn = () => {
 const Login = () => {
   return <IonPage>
     <IonHeader>
-      <Navbar title="用户登录" />
+      <NavbarNoGoBackBtn title="用户登录" />
     </IonHeader>
     <IonContent>
       <MyLoginTabs />
