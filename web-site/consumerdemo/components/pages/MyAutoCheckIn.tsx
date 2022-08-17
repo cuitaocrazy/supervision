@@ -1,5 +1,5 @@
 import { useState, useEffect, FC } from 'react'
-import { IonPage, IonHeader, IonContent } from '@ionic/react'
+import { IonPage, IonHeader, IonContent,useIonToast } from '@ionic/react'
 import { useRouter } from 'next/router'
 // import ModalFrame from 'components/ModalFrame'
 import { Dialog } from '@headlessui/react'
@@ -37,6 +37,23 @@ const AutoCheckInLessonCard = () => {
 const MyAutoCheckIn = () => {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
+  const [present, dismiss] = useIonToast();
+  const onTosat=()=>{
+    const result={true:Boolean}
+      if (result) 
+      {
+        present({
+          message:"自动签到成功",
+          duration:3000,
+          position:"top",
+        });
+      } else 
+      present({
+        buttons: [{ text: '关闭', handler: () => dismiss() }],
+        message: '自动签到失败',
+      })
+
+  }
   return <IonPage>
     <IonHeader>
       <Navbar title="自动签到" />
@@ -49,10 +66,11 @@ const MyAutoCheckIn = () => {
             type="button" value="开启自动签到"
             onClick={() => setIsOpen(true)} />
         </div>
-        {/* <ModalFrame visible={modalVisible}  />   */}
-        <Dialog open={isOpen} onClose={() => setIsOpen(false)}>
+        
+        
+        {/* <Dialog open={isOpen} onClose={() => setIsOpen(false)}>
           <Dialog.Overlay className="fixed inset-0 bg-black opacity-30" />
-        </Dialog>
+        </Dialog> */}
       </div>
     </IonContent>
   </IonPage>

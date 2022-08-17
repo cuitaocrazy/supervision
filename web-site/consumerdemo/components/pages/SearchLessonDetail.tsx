@@ -20,9 +20,6 @@ const SearchLessonDetail= (props:LessonProps) => {
 
   return <IonPage>
     <IonHeader>
-        {/* <IonButtons slot="start">
-          <IonBackButton text="buttonText" icon="buttonIcon" />
-        </IonButtons> */}
       <Navbar title="课程详情" />
     </IonHeader>
     <IonContent>
