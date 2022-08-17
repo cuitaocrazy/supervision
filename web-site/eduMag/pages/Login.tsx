@@ -36,17 +36,17 @@ const Login = () => {
         const { result, msg, loginUser } = json;
         if (result) {
           refreshUserInfo(loginUser);
+            //todo 以后保存到localstorage
+          window.loginUser=loginUser.loginName
           await router.push("./tabs/lesson/query");
-          router.reload();
+          // router.reload();
         } else {
           alert(msg);
         }
       });
   };
 
-  if (state.loginUser.role && state.loginUser.role !== "") {
-    return <Redirect to="/tabs" />;
-  }
+
 
   return (
     <div className="flex h-screen bg-primary-500">

@@ -15,7 +15,7 @@ import {
 } from '@ionic/react';
 import { useEffect, useState, useContext } from 'react';
 import { flash, arrowDown, arrowUp } from 'ionicons/icons';
-
+import { useRouter } from "next/router";
 import { AppContext } from '../appState';
 import Router from 'next/router'
 import { Link } from 'react-router-dom';
@@ -28,6 +28,14 @@ const Menu = () => {
 
   const [attendanceVisible, setAttendanceVisible] = useState(false);
   const [statisticVisible, setStatisticVisible] = useState(false);
+  const router = useRouter()
+    //todo 以后根据保存到localstorage的信息判断
+  console.log(window.loginUser)
+  if(!window.loginUser){
+    console.log('未登录')
+    router.push('/Login')
+  }
+
   const handleOpen = async () => {
     try {
       await StatusBar.setStyle({
