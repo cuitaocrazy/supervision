@@ -457,7 +457,7 @@ app.post('/consumer/checkIn', jsonParser, async (req, res) => {
       attendanceDate: moment().format('YYYYMMDD'),
       attendanceTime: moment().format('HHmmss'),
       attendanceType: 'manual',
-      attendancelessonQuantity: 1,
+      attendanceLessonQuantity: 1,
       eduId: contract.eduId,
       eduName: contract.eduName,
       lessonId: contract.lessonId,
@@ -488,7 +488,7 @@ app.post('/consumer/checkIn', jsonParser, async (req, res) => {
       consumerStuName: contract.consumerStuName,
       supversingAccount: edu.eduSupervisedAccount,
       normalAccount: edu.eduNormalAccount,
-      transferAmt: contract.lessonPerPrice * attendance.attendancelessonQuantity,
+      transferAmt: contract.lessonPerPrice * attendance.attendanceLessonQuantity,
       transferResult: 'todo',//todo
       reason: '签到后划拨'
     }
