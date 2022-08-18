@@ -14,6 +14,7 @@ import moment from "moment";
 import { checkInURL, leaveURL } from "../../const/const";
 import { informationCircle, star } from "ionicons/icons";
 import { Dialog, Transition } from '@headlessui/react';
+import { strictEqual } from "assert";
 
 // 签到和请假页面
 const CheckInAndLeave = () => {
@@ -34,7 +35,6 @@ const CheckInAndLeave = () => {
   function openLeaveModal() {
     setIsLeaveOpen(true);
   }
-  console.log(state.contractDetail.lessonAccumulationQuantity);    
   if (back) {
     return <Redirect to={back as string}></Redirect>;
   }
@@ -70,11 +70,11 @@ const CheckInAndLeave = () => {
 
   // 请假结果提示
   
+  console.log(state)
   const LeaveFun = () => {   
-    function LeaveFun() {
-      setIsLeave(true);
-    }
-    if (isLeave === true) {
+    // function LeaveFun() {
+    //   setIsLeave(true);
+    // }
       fetch(leaveURL, {
         method: "POST",
         body: JSON.stringify({
@@ -88,13 +88,11 @@ const CheckInAndLeave = () => {
       })
         .then((res) => res.json())
         .then((json) => {
-          setBack("/tabs/myLessonList");
+          setBack("/MyCheckInList");
         });
       // setBack('/MyCheckInList')
       setShowLeaveToast(true)
-    } else if (isLeave === false) {
-      
-    }
+    
   };
 
   return (
@@ -187,7 +185,7 @@ const CheckInAndLeave = () => {
                       <div className="flex items-center mb-4 justify-items-center">
                         <div className="flex leading-7 justify-items-center">
                           <div className="p-1 text-gray-600 w-72 justify-self-start focus:outline-none">
-                            您确定要给学生<span className="font-bold">何小白</span>请<span className="font-bold">英语入门兴趣班课程的</span>假吗？ </div>
+                            您确定要给学生<span className="font-bold">{state.contractDetail.consumerName}</span>请<span className="font-bold">{state.contractDetail.lessonName}</span>假吗？ </div>
                         </div>
                       </div>
                       <div className="flex items-center gap-4 mt-2 justify-items-center">
@@ -201,7 +199,7 @@ const CheckInAndLeave = () => {
                           value="请假"
                           type="button"
                           className="px-6 py-2 text-white border rounded-md bg-primary-600"
-                          onClick={CheckIn}
+                          onClick={LeaveFun}
                         />
                       </div>
                     </form>
