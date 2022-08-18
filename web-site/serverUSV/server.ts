@@ -203,6 +203,8 @@ app.get('/edu/lesson/findAll', async (req, res) => {
 app.get('/edu/lesson/find', async (req, res) => {
   console.log(`教育机构: 搜索课程: 条件[${JSON.stringify(req.query)}]`)
   const r = await eduLessonService.find(req.query)
+
+  r.records.map((lesson:EduLesson)=>{lesson.lessonTotalPrice=fenToYuan(lesson.lessonTotalPrice);lesson.lessonPerPrice = fenToYuan(lesson.lessonPerPrice)})
   res.send(r)
 })
 app.post('/edu/lesson/create',jsonParser, async (req, res) => {
@@ -211,8 +213,8 @@ app.post('/edu/lesson/create',jsonParser, async (req, res) => {
   lesson.lessonId = randomUUID().replaceAll('-','')
   lesson.lessonName = req.body.lessonName
   lesson.lessonTotalQuantity = req.body.lessonTotalTimes
-  lesson.lessonPerPrice = req.body.lessonPerPrice
-  lesson.lessonTotalPrice = req.body.lessonTotalPrice
+  lesson.lessonPerPrice = req.body.lessonPerPrice*100
+  lesson.lessonTotalPrice = req.body.lessonTotalPrice*100
   lesson.lessonType = req.body.lessonType
   lesson.lessonIntroduce = req.body.lessonIntroduce
   lesson.lessonStartDate = req.body.lessonStartDate?.replaceAll('-','')
@@ -251,8 +253,8 @@ app.post('/edu/lesson/edit',jsonParser, async (req, res) => {
   lesson.lessonId = req.body.lessonId
   lesson.lessonName = req.body.lessonName
   lesson.lessonTotalQuantity = req.body.lessonTotalTimes
-  lesson.lessonPerPrice = req.body.lessonPerPrice
-  lesson.lessonTotalPrice = req.body.lessonTotalPrice
+  lesson.lessonPerPrice = req.body.lessonPerPrice*100
+  lesson.lessonTotalPrice = req.body.lessonTotalPrice*100
   lesson.lessonType = req.body.lessonType
   lesson.lessonIntroduce = req.body.lessonIntroduce
   lesson.lessonStartDate = req.body.lessonStartDate?.replaceAll('-','')
