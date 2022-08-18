@@ -304,7 +304,8 @@ const LessonQuery: React.FC = () => {
         {lesson.lessonTotalPrice}
       </td>
       <td className="flex items-center justify-center leading-10">
-        {Number(lesson.lessonTotalPrice) / 100}
+        {/* {Number(lesson.lessonTotalPrice) / 100} */}
+        {lesson.lessonTotalTimes}
       </td>
       <td className="flex items-center justify-center leading-10">
         {lesson.lessonType}
