@@ -96,9 +96,8 @@ const LessonQuery: React.FC = () => {
 
   const [page,setPage] = useState(0)
   const [total,setTotal]= useState(101)//todo
-  const [createLesson, setCreateLesson] = useState({} as Lesson);
-  var myDay=new Date()
-  const [offLesson, setOffLesson] = useState({ lessonStartDate: moment().format("YYYYMMDD"), lessonEndDate: moment().format("YYYYMMDD")} as unknown as Lesson);
+  const [createLesson, setCreateLesson] = useState({lessonStartDate:moment().format("YYYYMMDD"),lessonEndDate:moment().format("YYYYMMDD")} as Lesson);
+  const [offLesson, setOffLesson] = useState({} as Lesson);
 
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
 
