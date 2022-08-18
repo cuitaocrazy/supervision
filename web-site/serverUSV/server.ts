@@ -416,6 +416,7 @@ app.post('/consumer/preOrder', jsonParser, async (req, res) => {
       // lessonAttendanceType:lesson.lessonAttendanceType,
       lessonTotalQuantity: lesson.lessonTotalQuantity,
       lessonTotalPrice: fenToYuan(lesson.lessonTotalPrice),
+      lessonAttendanceType:'manual',
       lessonPerPrice: lesson.lessonPerPrice,
       teacherId: lesson.teacherId,
       teacherName: teacher.teacherName,
