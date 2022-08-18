@@ -15,56 +15,59 @@ import {
   IonCol,
 } from "@ionic/react";
 import Quit from "components/components/Quit";
+import Paging from '../../paging';
 
-const queryURL = "http://localhost:3003/attendannce/query";
+const queryURL = "http://localhost:3003/edu/attendance/find";
 
-const demoattendanceList: Attendance[] = [
-  {
-    attendanceID: "1",
-    attendanceDate: "2020-01-01",
-    attendanceTime: "00:00:00",
-    attendanceType: "vaild",
-    attendanceLessonQuantity: 111,
-    eduId: "1",
-    eduName: "教育机构1",
-    lessonId: "1",
-    lessonName: "课程1",
-    consumerId: "1",
-    consumerName: "消费者1",
-    consumerStuName: "学生1",
-    attendanceStatus: "vaild",
-    updateDate: "2020-01-01",
-    updateTime: "2020-01-01",
-    updateReason: "aaaa",
-    attendanceUpdateDate: "",
-    attendanceUpdateTime: "",
-    attendanceUpdateReason: "",
-  },
-  {
-    attendanceID: "2",
-    attendanceDate: "2020-01-01",
-    attendanceTime: "00:00:00",
-    attendanceType: "vaild",
-    attendanceLessonQuantity: 111,
-    eduId: "1",
-    eduName: "教育机构1",
-    lessonId: "1",
-    lessonName: "课程1",
-    consumerId: "1",
-    consumerName: "消费者1",
-    consumerStuName: "学生2",
-    attendanceStatus: "vaild",
-    updateDate: "2020-01-01",
-    updateTime: "2020-01-01",
-    updateReason: "aaaa",
-    attendanceUpdateDate: "",
-    attendanceUpdateTime: "",
-    attendanceUpdateReason: "",
-  },
-];
+// const demoattendanceList: Attendance[] = [
+//   {
+//     attendanceID: "1",
+//     attendanceDate: "2020-01-01",
+//     attendanceTime: "00:00:00",
+//     attendanceType: "vaild",
+//     attendanceLessonQuantity: 111,
+//     eduId: "1",
+//     eduName: "教育机构1",
+//     lessonId: "1",
+//     lessonName: "课程1",
+//     consumerId: "1",
+//     consumerName: "消费者1",
+//     consumerStuName: "学生1",
+//     attendanceStatus: "vaild",
+//     updateDate: "2020-01-01",
+//     updateTime: "2020-01-01",
+//     updateReason: "aaaa",
+//     attendanceUpdateDate: "",
+//     attendanceUpdateTime: "",
+//     attendanceUpdateReason: "",
+//   },
+//   {
+//     attendanceID: "2",
+//     attendanceDate: "2020-01-01",
+//     attendanceTime: "00:00:00",
+//     attendanceType: "vaild",
+//     attendanceLessonQuantity: 111,
+//     eduId: "1",
+//     eduName: "教育机构1",
+//     lessonId: "1",
+//     lessonName: "课程1",
+//     consumerId: "1",
+//     consumerName: "消费者1",
+//     consumerStuName: "学生2",
+//     attendanceStatus: "vaild",
+//     updateDate: "2020-01-01",
+//     updateTime: "2020-01-01",
+//     updateReason: "aaaa",
+//     attendanceUpdateDate: "",
+//     attendanceUpdateTime: "",
+//     attendanceUpdateReason: "",
+//   },
+// ];
 
 const AttendanceQuery: React.FC = () => {
   const { state, dispatch } = useContext(AppContext);
+  const [page,setPage] = useState(0)
+  const [total,setTotal]= useState(101)//todo
   const [queryInfo, setQueryInfo] = useState({
     consumerName: "",
     lessonName: "",
@@ -72,6 +75,14 @@ const AttendanceQuery: React.FC = () => {
     attendanceType: "",
     attendanceStatus: "",
   });
+  const onPageChange = (records:any,total:number,newPage:number)=>{
+    console.log(records)
+    console.log(total)
+    console.log(newPage)
+    setPage(newPage)
+    setTotal(total)
+    refreshLessonList(records)
+  }
 
   const getParamStr = (params: any, url: string) => {
     let result = "?";
@@ -107,41 +118,83 @@ const AttendanceQuery: React.FC = () => {
     },
     [dispatch]
   );
-  useEffect(() => {
-    // fetch(paramStr, {
-    //   method: 'GET',
-    //   headers: {
-    //     'Content-type': 'application/json;charset=UTF-8',
-    //   },
-    // }).then(res => res.json())
-    // .then((json) => {
-    // const {attendanceList} = json
+  // useEffect(() => {
+  //   fetch(paramStr, {
+  //     method: 'GET',
+  //     headers: {
+  //       'Content-type': 'application/json;charset=UTF-8',
+  //     },
+  //   }).then(res => res.json())
+  //   .then((json) => {
+  //   const {attendanceList} = json
 
-    // refreshList(demoattendanceList.filter((attendance:Attendance)=>attendance.consumerName.indexOf(queryInfo.consumerName)>-1).filter((attendance:Attendance)=>attendance.lessonName.indexOf(queryInfo.lessonName)>-1).filter((attendance:Attendance)=>attendance.consumerStuName.indexOf(queryInfo.consumerStuName)>-1))
-    // return
-    // })
-    console.log(demoattendanceList);
-    refreshList(demoattendanceList);
+  //   refreshList(demoattendanceList.filter((attendance:Attendance)=>attendance.consumerName.indexOf(queryInfo.consumerName)>-1).filter((attendance:Attendance)=>attendance.lessonName.indexOf(queryInfo.lessonName)>-1).filter((attendance:Attendance)=>attendance.consumerStuName.indexOf(queryInfo.consumerStuName)>-1))
+  //   return
+  //   })
+  //   console.log(demoattendanceList);
+  //   refreshList(demoattendanceList);
+  // }, []);
+
+  useEffect(() => {
+    fetch(paramStr, {
+      method: "GET",
+      headers: {
+        "Content-type": "application/json;charset=UTF-8",
+      },
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        const { result, records,total } = json;
+
+        if (result) {
+          setTotal(total)
+          refreshLessonList(records);
+        }
+        return;
+      });
+    return;
   }, []);
+
+  const refreshLessonList = useCallback(
+    (attendance: Attendance[]) => {
+      dispatch(setAttendanceList(attendance));
+    },
+    [dispatch]
+  );
+  // const onQuery = () => {
+  //   refreshList(
+  //     demoattendanceList
+  //       .filter(
+  //         (attendance: Attendance) =>
+  //           attendance.consumerName.indexOf(queryInfo.consumerName) > -1
+  //       )
+  //       .filter(
+  //         (attendance: Attendance) =>
+  //           attendance.lessonName.indexOf(queryInfo.lessonName) > -1
+  //       )
+  //   );
+  // };
   const onQuery = () => {
-    refreshList(
-      demoattendanceList
-        .filter(
-          (attendance: Attendance) =>
-            attendance.consumerName.indexOf(queryInfo.consumerName) > -1
-        )
-        .filter(
-          (attendance: Attendance) =>
-            attendance.lessonName.indexOf(queryInfo.lessonName) > -1
-        )
-    );
+    fetch(paramStr, {
+      method: "GET",
+      headers: {
+        "Content-type": "application/json;charset=UTF-8",
+      },
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        const { result, records,total } = json;
+        if (result) {
+          setTotal(total)
+          refreshLessonList(records)
+        };
+        return;
+      });
   };
   const ListEntry = ({
     attendance,
-    ...props
   }: {
     attendance: Attendance;
-    key: any;
   }) => (
     <tr className="grid items-center grid-cols-9 gap-10 text-gray-600 border justify-items-center even:bg-white odd:bg-primary-100">
       <td className="flex items-center justify-center leading-10">
@@ -332,6 +385,9 @@ const AttendanceQuery: React.FC = () => {
                 )
               )}
             </tbody>
+            <tr>
+                <td colSpan={5}> <Paging url={paramStr} page={page} pagesize={20} total={total} onPageChange={onPageChange}/></td>
+              </tr>
           </table>
         </div>
       </div>

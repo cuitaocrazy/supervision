@@ -167,6 +167,7 @@ const TeacherQuery: React.FC = () => {
     }).then(res => res.json())
     .then((json) => {
       const { result, msg } = json;
+      console.log("result"+result)
         if (result) 
         {
           present({
@@ -182,7 +183,6 @@ const TeacherQuery: React.FC = () => {
           position:"top",
         })
       closeCreateModal()
-      onQuery()
     })
     // setCreateModalOpen(false)
   };
