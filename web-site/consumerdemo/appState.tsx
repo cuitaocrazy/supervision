@@ -89,6 +89,7 @@ export const reducer = (state: any, action: any) => {
     case 'setloginUser': {
       return {
         ...state,
+        stuName:action.loginUser.username,
         loginUser:action.loginUser
       }
     }
