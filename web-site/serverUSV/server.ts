@@ -538,7 +538,7 @@ app.post('/consumer/leave', jsonParser, async (req, res) => {
 app.get('/consumer/attendance', jsonParser, async (req, res) => {
   try {
     // const {consumerId,lessonId} = req.params
-    const attendanceList = await findAttendance(req.params as { consumerId: string, lessonId: string })
+    const attendanceList = await findAttendance(req.query as { consumerId: string, lessonId: string })
     res.send({ status: 'success', result: attendanceList })
   } catch (e) {
     res.send({ status: 'fail', msg: '未知异常' })
@@ -546,7 +546,7 @@ app.get('/consumer/attendance', jsonParser, async (req, res) => {
 })
 
 app.post('/consumer/login', jsonParser, async (req, res) => {
-  res.send({ status: 'success', result: { username: '用户1', loginName: '登录名1' } })
+  res.send({ status: 'success', result: { username: '用户1', loginName: '登录名1',userId:1 } })
 })
 
 app.post('/consumer/notice',jsonParser,async (req, res) => {

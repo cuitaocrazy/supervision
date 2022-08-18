@@ -65,7 +65,7 @@ const MyLoginTabs = () => {
         console.log('asda')
          console.log(json)
          setUserName(json.result.username)
-         refreshLoginUser({loginName:json.result.loginName,username:json.result.username})
+         refreshLoginUser({loginName:json.result.loginName,username:json.result.username,userId:json.result.userId})
       })
     }else{
         fetch(loginURL, {
@@ -80,7 +80,7 @@ const MyLoginTabs = () => {
         }).then(res => res.json())
         .then((json) => {
          setUserName(json.result.username)
-         refreshLoginUser({loginName:json.result.loginName,username:json.result.username})
+         refreshLoginUser({loginName:json.result.loginName,username:json.result.username,userId:json.result.userId})
         })
     }
   }

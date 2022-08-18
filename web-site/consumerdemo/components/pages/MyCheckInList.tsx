@@ -27,6 +27,7 @@ const MyCheckInList = () => {
   };
 
   // lessonId,consumerId,lessonQuantity
+  console.log(state)
   const paramStr = getParamStr(
     {
       consumerId: state.loginUser.userId,

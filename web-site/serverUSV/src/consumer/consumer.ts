@@ -94,15 +94,31 @@ export const findOneContract = async ({ contractId }) => {
 //     return result
 // }
 
-export const findAttendance = async ({ lessonId,consumerId }) => {
-    const result = await mysql.getRepository(Attendance).findBy({
-        lessonId: lessonId,
-        consumerId:consumerId
-    })
-    if (result === null)
-    throw e;
-    return result
+// export const findAttendance = async ({ lessonId,consumerId }) => {
+//     const result = await mysql.getRepository(Attendance).findBy({
+//         lessonId: lessonId,
+//         consumerId:consumerId
+//     })
+//     if (result === null)
+//     throw e;
+//     return result
+// }
+
+export const  findAttendance= async ({ lessonId,consumerId }) => {
+    const result =await mysql.getRepository(Attendance).createQueryBuilder("attendance")
+
+    .where("attendance.lesson_id = :lessonId and attendance.consumer_id = :consumerId ", { lessonId: lessonId,consumerId: consumerId})
+    // .skip(page*size)
+    //todo 方便测试
+    .orderBy("attendance.attendance_date desc,attendance.attendance_time desc,lesson_id")
+    .skip(0)
+    .getMany()
+    return result//{ result: true, records: result[0],total:result[1] }
+
+    // const records = await mysql.getRepository(Contract).findBy(req)
+    // return { result: true, records: records }
 }
+
 
 export const findOneLesson = async ({ lessonId }) => {
     const result = await mysql.getRepository(EduLesson).findOneBy({
