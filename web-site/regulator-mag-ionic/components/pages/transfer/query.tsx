@@ -201,7 +201,7 @@ const TransferQuery: React.FC = () => {
                   <th className="flex items-center justify-center">教育机构名称</th>
                   <th className="flex items-center justify-center">课程名称</th>
                   <th className="flex items-center justify-center">客户姓名</th>
-                  <th className="flex items-center justify-center">划拨金额</th>
+                  <th className="flex items-center justify-center">划拨金额(元)</th>
                   <th className="flex items-center justify-center">划拨结果</th>
                   <th className="flex items-center justify-center">操作</th>
                 </tr>
