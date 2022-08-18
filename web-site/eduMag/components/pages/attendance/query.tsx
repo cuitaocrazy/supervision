@@ -191,6 +191,36 @@ const AttendanceQuery: React.FC = () => {
         return;
       });
   };
+
+  const getAttendanceType = (typeEnglish: any) => {
+    if (typeEnglish === "manual") {
+      return "手工";
+    }
+    if (typeEnglish === "auto") {
+      return "超时自动打卡";
+    }
+    return typeEnglish;
+  };
+
+  const getAttendanceState = (stateEnglish: any) => {
+    if (stateEnglish === "conforming") {
+      return "待客户确认";
+    }
+    if (stateEnglish === "valid") {
+      return "考勤有效";
+    }
+    if (stateEnglish === "negotiating") {
+      return "双方协商中";
+    }
+    if (stateEnglish === "invalid") {
+      return "无效状态（包括请假）";
+    }
+    if (stateEnglish === "final") {
+      return "划拨完成";
+    }
+    return stateEnglish;
+  };
+
   const ListEntry = ({
     attendance,
   }: {
@@ -207,7 +237,7 @@ const AttendanceQuery: React.FC = () => {
         {attendance.consumerStuName}
       </td>
       <td className="flex items-center justify-center leading-10">
-        {attendance.attendanceType}
+      {getAttendanceType(attendance.attendanceType)}
       </td>
       <td className="flex items-center justify-center leading-10">
         {attendance.attendanceLessonQuantity}
@@ -219,7 +249,7 @@ const AttendanceQuery: React.FC = () => {
         {attendance.attendanceTime}
       </td>
       <td className="flex items-center justify-center leading-10">
-        {attendance.attendanceStatus}
+        {getAttendanceState(attendance.attendanceStatus)}
       </td>
       <td className="flex items-center justify-center leading-10">
         <div className="flex gap-2 ">
