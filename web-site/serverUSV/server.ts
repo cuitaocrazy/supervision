@@ -474,10 +474,10 @@ app.post('/consumer/checkIn', jsonParser, async (req, res) => {
       consumerName: contract.consumerName,
       consumerId: contract.consumerId,
       consumerStuName: contract.consumerStuName,
-      attendanceStatus: 'manual'
+      attendanceStatus: 'valid'
     }
 
-    attendance.attendanceStatus = 'manual'
+    attendance.attendanceStatus = 'valid'
 
     await saveAttendance(attendance);
     contract.lessonAccumulationQuantity = contract.lessonAccumulationQuantity + 1;
@@ -524,7 +524,7 @@ app.post('/consumer/leave', jsonParser, async (req, res) => {
       consumerName: contract.consumerName,
       consumerId: contract.consumerId,
       consumerStuName: contract.consumerStuName,
-      attendanceStatus: 'leave'
+      attendanceStatus: 'invalid'
     }
     const result = await saveAttendance(attendance);
     contract.lessonAccumulationQuantity = contract.lessonAccumulationQuantity + 1;
