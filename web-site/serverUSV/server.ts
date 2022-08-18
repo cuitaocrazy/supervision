@@ -497,7 +497,7 @@ app.post('/consumer/checkIn', jsonParser, async (req, res) => {
       supversingAccount: edu.eduSupervisedAccount,
       normalAccount: edu.eduNormalAccount,
       transferAmt: contract.lessonPerPrice * attendance.attendanceLessonQuantity,
-      transferResult: 'todo',//todo
+      transferResult: 'success',
       reason: '签到后划拨'
     }
     await saveTransfer(transfer)
