@@ -634,6 +634,7 @@ app.get('/edb/attendance/find', async (req, res) => {
 app.get('/edb/transfer/find', async (req, res) => {
   console.log(`教育局: 划拨查询: 条件[${JSON.stringify(req.query)}]`)
   const r = await eduTransferService.find({ ...new Transfer(), ...req.query })
+  r.records.map((transfer:Transfer)=>{transfer.transferAmt=fenToYuan(transfer.transferAmt)})
   res.send(r)
 })
 
