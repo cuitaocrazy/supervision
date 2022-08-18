@@ -11,7 +11,7 @@ const CheckInResultListCard = (props:{attendance:Attendance}) => {
     <div className='text-sm leading-7'>
       <span className='text-green-500 '>已签到</span>
       <span className='pl-2 text-gray-500 '>签到类型：</span>
-      <span className='pl-1 text-gray-500 '>手动签到</span>
+      <span className='pl-1 text-gray-500 '>手动</span>
     </div>
     <div className='text-sm leading-7'>
       <span>{attendance.lessonName}</span>
