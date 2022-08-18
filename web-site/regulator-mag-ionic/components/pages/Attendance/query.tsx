@@ -73,6 +73,15 @@ const AttendanceQuery: React.FC = () => {
       });
   };
   useEffect(onQuery, []);
+  const getAttendanceType = (typeEnglish: any) => {
+    if (typeEnglish === "manual") {
+      return "手工";
+    }
+    if (typeEnglish === "auto") {
+      return "超时自动打卡";
+    }
+    return typeEnglish;
+  };
 
   const ListEntry = ({ attendance, myKey, ...props }: { attendance: Attendance; myKey: any }) => (
     <tr
@@ -85,7 +94,7 @@ const AttendanceQuery: React.FC = () => {
       <td className="flex items-center justify-center leading-10">{attendance.consumerName}</td>
       <td className="flex items-center justify-center leading-10">{attendance.attendanceDate}</td>
       <td className="flex items-center justify-center leading-10">{attendance.attendanceTime}</td>
-      <td className="flex items-center justify-center leading-10">{attendance.attendanceType}</td>
+      <td className="flex items-center justify-center leading-10">{getAttendanceType(attendance.attendanceType)}</td>
       <td className="flex items-center justify-center leading-10">
         <div className="flex gap-2 ">
           <button className="p-1 text-primary-600" onClick={onDetail(attendance)}>
