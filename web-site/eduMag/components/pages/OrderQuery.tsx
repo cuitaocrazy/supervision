@@ -6,6 +6,15 @@ import Paging from "../paging"
 import Quit from "components/components/Quit";
 
 const findUrl = "http://localhost:3003/edu/contract/find";
+const getAttendanceType = (typeEnglish: any) => {
+  if (typeEnglish === "manual") {
+    return "手工";
+  }
+  if (typeEnglish === "auto") {
+    return "超时自动打卡";
+  }
+  return typeEnglish;
+};
 
 const ListEntry = ({ contract }: { contract: Contract }) => (
   <tr className="flex items-center justify-center gap-5 text-gray-600 border justify-items-center even:bg-white odd:bg-primary-100">
@@ -31,7 +40,7 @@ const ListEntry = ({ contract }: { contract: Contract }) => (
       {contract.lessonEndDate}
     </td>
     <td className="flex items-center justify-center flex-1 leading-10">
-      {contract.lessonAttendanceType}
+      {getAttendanceType(contract.lessonAttendanceType)}
     </td>
     <td className="flex items-center justify-center flex-1 leading-10 ">
       {contract.lessonTotalQuantity}
