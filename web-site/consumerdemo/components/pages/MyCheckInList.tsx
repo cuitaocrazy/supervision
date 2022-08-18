@@ -10,7 +10,7 @@ import { Attendance } from "@/types/types";
 import { compassSharp } from "ionicons/icons";
 import "react-calendar/dist/Calendar.css";
 
-// 一门课程的签到结果列表页面
+// 一门课程的签到结果列表页面----
 const MyCheckInList = () => {
   const { state, dispatch } = useContext(AppContext);
   const [attendanceList, setAttendanceList] = useState([] as Attendance[]);
@@ -85,7 +85,6 @@ const MyCheckInList = () => {
     return "";
   };
 
-<<<<<<< HEAD
   return (
     <IonPage>
       <IonHeader>
@@ -128,21 +127,5 @@ const MyCheckInList = () => {
     </IonPage>
   );
 };
-=======
-  return <IonPage>
-    <IonHeader>
-      <Navbar title="签到列表" />
-    </IonHeader>
-    <IonContent>
-      <div className=''>
-        <Calendar className="w-full px-2 py-2 mt-2 border-0 rounded-lg shadow-md"
-          onActiveStartDateChange={(item)=>setDate(item.activeStartDate)}   tileContent={({ date, view }) => {
-            if(view==='month'){
-              return <p className='text-white bg-green-600 rounded-md'>{getAttendString(date)}</p>
-            }
-            return null
-            // return view === 'year' && date.getDay()=== 0 ? <p>aaaa</p>: null
-          }
->>>>>>> 4f14de0084c2d884745eee1bee8c7407a21b157f
 
 export default MyCheckInList;
