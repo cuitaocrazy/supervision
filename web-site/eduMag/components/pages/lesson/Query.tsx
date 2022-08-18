@@ -119,6 +119,8 @@ const LessonQuery: React.FC = () => {
       },
     }).then(res => res.json())
     .then((json) => {
+      console.log("result"+json.result)
+      console.log(json)
       if(json.result){
         present({
           message: '课程添加成功',
