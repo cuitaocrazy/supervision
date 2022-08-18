@@ -83,18 +83,38 @@ const AttendanceQuery: React.FC = () => {
     return typeEnglish;
   };
 
+  const getAttendanceState = (stateEnglish: any) => {
+    if (stateEnglish === "conforming") {
+      return "待客户确认";
+    }
+    if (stateEnglish === "valid") {
+      return "考勤有效";
+    }
+    if (stateEnglish === "negotiating") {
+      return "双方协商中";
+    }
+    if (stateEnglish === "invalid") {
+      return "无效状态（包括请假）";
+    }
+    if (stateEnglish === "final") {
+      return "划拨完成";
+    }
+    return stateEnglish;
+  };
+
   const ListEntry = ({ attendance, myKey, ...props }: { attendance: Attendance; myKey: any }) => (
     <tr
       key={myKey}
       className="grid items-center grid-cols-8 gap-10 text-gray-600 border justify-items-center even:bg-white odd:bg-primary-100 "
     >
-      <td className="flex items-center justify-center leading-10">{attendance.contractId}</td>
+      {/* <td className="flex items-center justify-center leading-10">{attendance.contractId}</td> */}
       <td className="flex items-center justify-center leading-10">{attendance.eduName}</td>
       <td className="flex items-center justify-center leading-10">{attendance.lessonName}</td>
       <td className="flex items-center justify-center leading-10">{attendance.consumerName}</td>
       <td className="flex items-center justify-center leading-10">{attendance.attendanceDate}</td>
       <td className="flex items-center justify-center leading-10">{attendance.attendanceTime}</td>
       <td className="flex items-center justify-center leading-10">{getAttendanceType(attendance.attendanceType)}</td>
+      <td className="flex items-center justify-center leading-10">{getAttendanceState(attendance.attendanceStatus)}</td>
       <td className="flex items-center justify-center leading-10">
         <div className="flex gap-2 ">
           <button className="p-1 text-primary-600" onClick={onDetail(attendance)}>
@@ -180,13 +200,14 @@ const AttendanceQuery: React.FC = () => {
             <table className="w-11/12">
               <thead>
                 <tr className="grid items-center h-10 grid-cols-8 gap-10 font-bold text-gray-700 bg-white rounded-lg justify-items-center">
-                  <th className="flex items-center justify-center">合同ID</th>
+                  {/* <th className="flex items-center justify-center">合同ID</th> */}
                   <th className="flex items-center justify-center">教育机构名称</th>
                   <th className="flex items-center justify-center">课程名称</th>
                   <th className="flex items-center justify-center">客户姓名</th>
                   <th className="flex items-center justify-center">签到日期</th>
                   <th className="flex items-center justify-center">签到时间</th>
                   <th className="flex items-center justify-center">签到类型</th>
+                  <th className="flex items-center justify-center">签到状态</th>
                   <th className="flex items-center justify-center">操作</th>
                 </tr>
               </thead>
