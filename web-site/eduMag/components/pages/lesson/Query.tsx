@@ -41,24 +41,24 @@ const LessonQuery: React.FC = () => {
   //  结果状态
   const resultState="000"
   // 展示操作结果
-  const resultFun=()=>{
-    if(resultState=="000"){
-      present({
-        message: '课程添加成功',
-        position:'top',
-        duration:3000
-      })
-      onQuery();
-    }
-    else{
-      present({
-        buttons: [{ text: '关闭', handler: () => dismiss() }],
-        message: '课程添加失败，失败原因：......',
-        position:'top',
-      })
-    }
-    closeModal()
-  }
+  // const resultFun=()=>{
+  //   if(resultState=="000"){
+  //     present({
+  //       message: '课程添加成功',
+  //       position:'top',
+  //       duration:3000
+  //     })
+  //     onQuery();
+  //   }
+  //   else{
+  //     present({
+  //       buttons: [{ text: '关闭', handler: () => dismiss() }],
+  //       message: '课程添加失败，失败原因：......',
+  //       position:'top',
+  //     })
+  //   }
+  //   closeModal()
+  // }
   const onPageChange = (records:any,total:number,newPage:number)=>{
     console.log(records)
     console.log(total)
@@ -97,7 +97,8 @@ const LessonQuery: React.FC = () => {
   const [page,setPage] = useState(0)
   const [total,setTotal]= useState(101)//todo
   const [createLesson, setCreateLesson] = useState({} as Lesson);
-  const [offLesson, setOffLesson] = useState({} as Lesson);
+  var myDay=new Date()
+  const [offLesson, setOffLesson] = useState({ lessonStartDate: moment().format("YYYYMMDD"), lessonEndDate: moment().format("YYYYMMDD")} as unknown as Lesson);
 
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
 
@@ -119,6 +120,22 @@ const LessonQuery: React.FC = () => {
       },
     }).then(res => res.json())
     .then((json) => {
+      if(json.result){
+        present({
+          message: '课程添加成功',
+          position:'top',
+          duration:3000
+        })
+        onQuery();
+      }
+      else{
+        present({
+          buttons: [{ text: '关闭', handler: () => dismiss() }],
+          message: '课程添加失败，失败原因：......',
+          position:'top',
+        })
+      }
+      closeModal()
       addLessonSuccessInfo()
     })
   };
@@ -689,7 +706,7 @@ const LessonQuery: React.FC = () => {
                           className="px-6 py-2 text-white border rounded-md bg-primary-600"
                            // onClick={()=>{addLessonSuccessInfo();closeModal()}}
                            
-                          onClick={() => {resultFun()}}  // 成功
+                          // onClick={() => {resultFun()}}  
 
                         />
                       </div>
@@ -833,10 +850,10 @@ const LessonQuery: React.FC = () => {
             <thead>
               <tr className="grid items-center h-10 grid-cols-8 gap-10 font-bold text-gray-700 bg-white rounded-lg justify-items-center">
                 <th className="flex items-center justify-center">课程名称</th>
+                <th className="flex items-center justify-center">总价格(元)</th>
                 <th className="flex items-center justify-center">
                   总课时（个）
                 </th>
-                <th className="flex items-center justify-center">总价格(元)</th>
                 <th className="flex items-center justify-center">课程类型</th>
                 <th className="flex items-center justify-center">开课日期</th>
                 <th className="flex items-center justify-center">结束日期</th>
