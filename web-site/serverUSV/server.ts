@@ -295,6 +295,12 @@ app.post('/edu/attendance/apply', jsonParser, async (req, res) => {
   const r = await eduAttendanceService.apply(req.body)
   res.send(r)
 })
+app.get('/edu/attendance/find', async (req, res) => {
+  console.log(`教育机构: 发起查询：内容[${req.query}]`)
+  const r = await eduAttendanceService.find(req.query)
+  res.send(r)
+})
+
 import eduTransferService from './src/edu/TransferService';
 app.get('/edu/transfer/find', async (req, res) => {
   console.log(`教育机构: 查询划拨: 条件[${req.query}]`)

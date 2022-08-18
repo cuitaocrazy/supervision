@@ -1,7 +1,7 @@
 import { Attendance } from '../entity/Attendance'
 import { Contract } from '../entity/Contract'
 import { EduLesson } from '../entity/EduLesson'
-
+import {nullableFuzzy} from '../Util'
 import mysql from '../mysql'
 
 class AttendanceService {
@@ -39,6 +39,35 @@ class AttendanceService {
 
     }
 
+
+    /**
+     * 
+     * 查询考勤信息
+     * 
+     */
+     async find(req) {
+        let {page,size,lessonName,consumerName,consumerStuName,attendanceType,attendanceStatus} = req
+        if(page==null){
+            page=0
+        }
+        if(size==null){
+            size=20
+        }
+        req.page=undefined
+        req.size=undefined    
+
+        const result =await mysql.getRepository(Attendance).createQueryBuilder("attendance")
+
+        .where("attendance.lessonName like :lessonName and attendance.consumerName like :consumerName  and attendance.consumerStuName like :consumerStuName and attendance.attendanceType like :attendanceType and attendance.attendanceStatus like :attendanceStatus", { lessonName: nullableFuzzy(lessonName),consumerName: nullableFuzzy(consumerName),consumerStuName: nullableFuzzy(consumerStuName),attendanceType: nullableFuzzy(attendanceType),attendanceStatus: nullableFuzzy(attendanceStatus) })
+        // .skip(page*size)
+        //todo 方便测试
+        .skip(0)
+        .take(size).getManyAndCount()
+        return { result: true, records: result[0],total:result[1] }
+
+        // const records = await mysql.getRepository(Contract).findBy(req)
+        // return { result: true, records: records }
+    }
 }
 
 export default new AttendanceService()
