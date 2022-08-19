@@ -338,15 +338,12 @@ const fenToYuan = (tranAmtYuan: string | number) => {
 //todo
 const get3rdOrder = async () => {
   return {
-    orderNo: 'aaaaa'
+    orderNo: randomUUID().replaceAll('-','')
   }
 }
 //todo
 const getUserInfoByToken = async () => {
-  return {
-    userId: '1',
-    username: 'testUserName'
-  }
+  return { username: '用户1', loginName: '登录名1',userId:1 }
 }
 
 app.get('/consumer/lesson', jsonParser, async (req, res) => {
