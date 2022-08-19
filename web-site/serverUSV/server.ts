@@ -227,7 +227,7 @@ app.post('/edu/lesson/create',jsonParser, async (req, res) => {
   lesson.teacherName = '马老师'
   lesson.eduId = 'edu0001'
   lesson.eduName = '测试机构'
-  lesson.lessonImages = 'http://placekitten.com/g/200/300'
+  lesson.lessonImages = 'https://thumbnail0.baidupcs.com/thumbnail/65300108en8f9cda4e29e7e9179d8435?fid=2752445829-250528-783677635977553&time=1660892400&rt=sh&sign=FDTAER-DCb740ccc5511e5e8fedcff06b081203-4c2obg3JG%2F7W4KNak%2FIiDuJx1r8%3D&expires=8h&chkv=0&chkbd=0&chkpc=&dp-logid=8808559097594353079&dp-callid=0&file_type=0&size=c710_u400&quality=100&vuk=-&ft=video'//'http://placekitten.com/g/200/300'
   lesson.lessonOutline = false
   lesson.lessonStartTime='000000'
   lesson.lessonEndTime='000000'
@@ -267,7 +267,7 @@ app.post('/edu/lesson/edit',jsonParser, async (req, res) => {
   lesson.teacherName = '马老师'
   lesson.eduId = 'edu0001'
   lesson.eduName = '测试机构'
-  lesson.lessonImages = 'http://placekitten.com/g/200/300'
+  lesson.lessonImages = 'https://thumbnail0.baidupcs.com/thumbnail/65300108en8f9cda4e29e7e9179d8435?fid=2752445829-250528-783677635977553&time=1660892400&rt=sh&sign=FDTAER-DCb740ccc5511e5e8fedcff06b081203-4c2obg3JG%2F7W4KNak%2FIiDuJx1r8%3D&expires=8h&chkv=0&chkbd=0&chkpc=&dp-logid=8808559097594353079&dp-callid=0&file_type=0&size=c710_u400&quality=100&vuk=-&ft=video'//'http://placekitten.com/g/200/300'
   lesson.lessonOutline = false
   lesson.lessonStartTime='000000'
   lesson.lessonEndTime='000000'
@@ -359,7 +359,7 @@ app.get('/consumer/lesson', jsonParser, async (req, res) => {
     const teacher = await findOneTeacher({ teacherId: lesson.teacherId })
     lesson.edu = edu
     lesson.teacher = teacher
-    lesson.lessonImgs = "http://placekitten.com/g/200/300"
+    lesson.lessonImgs = 'https://thumbnail0.baidupcs.com/thumbnail/65300108en8f9cda4e29e7e9179d8435?fid=2752445829-250528-783677635977553&time=1660892400&rt=sh&sign=FDTAER-DCb740ccc5511e5e8fedcff06b081203-4c2obg3JG%2F7W4KNak%2FIiDuJx1r8%3D&expires=8h&chkv=0&chkbd=0&chkpc=&dp-logid=8808559097594353079&dp-callid=0&file_type=0&size=c710_u400&quality=100&vuk=-&ft=video'//"http://placekitten.com/g/200/300"
     return lesson
   }
   ))

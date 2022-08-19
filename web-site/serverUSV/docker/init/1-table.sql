@@ -55,7 +55,7 @@ COLLATE=utf8mb4_unicode_ci;
 
 -- 教育机构课程表
 CREATE TABLE yadadb.t_b_edu_lesson (
-	lesson_images varchar(256) NOT NULL,
+	lesson_images varchar(1024) NOT NULL,
 	lesson_id varchar(32) NOT NULL,
 	lesson_name varchar(64) NULL,
 	lesson_total_quantity int NULL,
