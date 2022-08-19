@@ -74,9 +74,9 @@ const MyCheckInList = () => {
           return "待确认";
         } else if (attendanceList[i].attendanceStatus === "conforming") {
           return "待确认";
-        } else if (attendanceList[i].attendanceStatus === "vaild") {
+        } else if (attendanceList[i].attendanceStatus === "valid") {
           return "已签到";
-        } else if (attendanceList[i].attendanceStatus === "invaild") {
+        } else if (attendanceList[i].attendanceStatus === "invalid") {
           return "请假";
         } else {
           return attendanceList[i].attendanceStatus;
@@ -100,7 +100,7 @@ const MyCheckInList = () => {
             tileContent={({ date, view }) => {
               if (view === "month") {
                 return (
-                  <p className="text-white bg-green-600 rounded-md">
+                  <p className="text-xs text-white bg-green-600 rounded-md">
                     {getAttendString(date)}
                   </p>
                 );
