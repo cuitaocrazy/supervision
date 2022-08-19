@@ -19,13 +19,13 @@ const getAttendanceType = (typeEnglish: any) => {
 const ListEntry = ({ contract }: { contract: Contract }) => (
   <tr className="flex items-center justify-center text-gray-600 border justify-items-center even:bg-white odd:bg-primary-100">
     <td className="flex items-center justify-center flex-1 leading-10 ">
-      <span className="w-12 overflow-hidden">{contract.contractId}</span>
-      <button className="ml-2 text-sm border border-gray-500 rounded-md">复制</button>
+      <span className="w-12 overflow-hidden" >{contract.contractId}</span>
+      <button className="ml-2 text-sm border border-gray-500 rounded-md" onClick={() => {navigator.clipboard.writeText(contract.contractId);alert('复制成功')}}>复制</button>
     </td>
     <td className="flex items-center justify-center flex-1 leading-10 ">
       {contract.consumerName}
     </td>
-    {/* <td className="flex items-center justify-center flex-1 leading-10">
+    {/* <td className="flex items-center justify-center flex-1 leading-10">/
       {contract.consumerStuName}
     </td> */}
     <td className="flex items-center justify-center flex-1 leading-10 ">
