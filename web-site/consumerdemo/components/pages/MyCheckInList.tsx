@@ -112,6 +112,7 @@ const MyCheckInList = () => {
           {attendanceList
             .filter(
               (item) =>
+                date&&
                 Number(item.attendanceDate.substring(0, 6)) ===
                 date.getFullYear() * 100 + date.getMonth() + 1
             )
