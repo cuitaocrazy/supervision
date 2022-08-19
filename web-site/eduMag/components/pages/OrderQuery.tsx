@@ -1,5 +1,5 @@
 import { FC, useEffect, useState, useCallback, useContext } from "react";
-import { IonPage, IonRow, IonCol, IonLabel } from "@ionic/react";
+import { IonPage, IonRow, IonCol, IonLabel,useIonToast } from "@ionic/react";
 import { AppContext, setContractList } from "../../appState";
 import { Contract } from "../../types/types";
 import Paging from "../paging"
@@ -17,59 +17,22 @@ const getAttendanceType = (typeEnglish: any) => {
   return typeEnglish;
 };
 
-const ListEntry = ({ contract }: { contract: Contract }) => (
-  <tr className="flex items-center justify-center text-gray-600 border justify-items-center even:bg-white odd:bg-primary-100">
-    <td className="flex items-center justify-center flex-1 leading-10 ">
-      <span className="w-12 overflow-hidden" >{contract.contractId}</span>
-      <Clipboard  data-clipboard-text={contract.contractId} onSuccess={()=>alert('复制成功')}>
-        复制
-      </Clipboard>
-      {/* <button className="ml-2 text-sm border border-gray-500 rounded-md" onClick={() => {navigator.clipboard.writeText(contract.contractId);alert('复制成功')}}>复制</button> */}
-    </td>
-    <td className="flex items-center justify-center flex-1 leading-10 ">
-      {contract.consumerName}
-    </td>
-    {/* <td className="flex items-center justify-center flex-1 leading-10">/
-      {contract.consumerStuName}
-    </td> */}
-    <td className="flex items-center justify-center flex-1 leading-10 ">
-      {contract.lessonName}
-    </td>
-    {/* <td className="flex items-center justify-center flex-1 leading-10 ">
-      {contract.lessonType}
-    </td> */}
-    <td className="flex items-center justify-center flex-1 leading-10 ">
-      {contract.contractDate} 
-    </td>
-    {/* <td className="flex items-center justify-center flex-1 leading-10 ">
-      {contract.lessonEndDate}
-    </td> */}
-    {/* <td className="flex items-center justify-center flex-1 leading-10">
-      {getAttendanceType(contract.lessonAttendanceType)}
-    </td> */}
-    {/* <td className="flex items-center justify-center flex-1 leading-10 ">
-      {contract.lessonTotalQuantity}
-    </td> */}
-    <td className="flex items-center justify-center flex-1 w-10 leading-10">
-      {contract.lessonTotalPrice}
-    </td>
-    {/* <td className="flex items-center justify-center leading-10">
-      {contract.lessonPerPrice}
-    </td> */}
-    {/* <td className="flex items-center justify-center flex-1 leading-10">
-      {contract.teacherName}
-    </td> */}
-    <td className="flex items-center justify-center flex-1 w-10 leading-10">
-      详情
-    </td>
-  </tr>
-);
+
 
 const OrderQuery = () => {
   const { state, dispatch } = useContext(AppContext);
+  const [present, dismiss] = useIonToast();
   const [queryInfo, setQueryInfo] = useState({ contractId: "" });
   const [page,setPage] = useState(0)
   const [total,setTotal]= useState(101)//todo
+  const ToastFun=()=>{
+    present({
+      message: '复制成功',
+      position:'top',
+      duration:3000
+    })
+}
+
   const onPageChange = (records:any,total:number,newPage:number)=>{
     setPage(newPage)
     setTotal(total)
@@ -113,6 +76,50 @@ const OrderQuery = () => {
       });
   };
   useEffect(onQuery, []);
+  const ListEntry = ({ contract }: { contract: Contract }) => (
+    <tr className="flex items-center justify-center text-gray-600 border justify-items-center even:bg-white odd:bg-primary-100">
+      <td className="flex items-center justify-center flex-1 leading-10">
+        <span className="w-12 overflow-hidden" >{contract.contractId}</span>
+        <Clipboard className="ml-2 text-sm border border-gray-500 rounded-md"  data-clipboard-text={contract.contractId} onSuccess={()=>ToastFun()}>
+          复制
+        </Clipboard>
+      </td>
+      <td className="flex items-center justify-center flex-1 leading-10 ">
+        {contract.consumerName}
+      </td>
+      <td className="flex items-center justify-center flex-1 leading-10">
+        {contract.consumerStuName}
+      </td>
+      <td className="flex items-center justify-center flex-1 leading-10 ">
+        {contract.lessonName}
+      </td>
+      <td className="flex items-center justify-center flex-1 leading-10 ">
+        {contract.lessonType}
+      </td>
+      <td className="flex items-center justify-center flex-1 leading-10 ">
+        {contract.contractDate} 
+      </td>
+      <td className="flex items-center justify-center flex-1 leading-10 ">
+        {contract.lessonEndDate}
+      </td>
+      <td className="flex items-center justify-center flex-1 leading-10">
+        {getAttendanceType(contract.lessonAttendanceType)}
+      </td>
+      <td className="flex items-center justify-center flex-1 leading-10 ">
+        {contract.lessonTotalQuantity}
+      </td>
+      <td className="flex items-center justify-center flex-1 w-10 leading-10">
+        {contract.lessonTotalPrice}
+      </td>
+      {/* <td className="flex items-center justify-center leading-10">
+        {contract.lessonPerPrice}
+      </td> */}
+      <td className="flex items-center justify-center flex-1 leading-10">
+        {contract.teacherName}
+      </td>
+    </tr>
+  );
+
   return (
     <IonPage className="bg-gray-100">
       <Quit />
@@ -174,26 +181,25 @@ const OrderQuery = () => {
         <div className="absolute w-full mt-10">
           <table className="w-11/12">
             <thead>
-              <tr className="grid items-end w-full h-10 grid-cols-6 font-bold text-gray-700 bg-white rounded-lg justify-items-center">
+              <tr className="grid items-end w-full h-10 grid-cols-11 font-bold text-gray-700 bg-white rounded-lg justify-items-center">
                 <th className="flex items-center flex-1 leading-10 justify-items-end ">订单号</th>
                 <th className="flex items-center flex-1 leading-10 justify-items-end ">客户姓名</th>
-                {/* <th className="flex items-center justify-center flex-1 leading-10 ">学生姓名</th> */}
+                <th className="flex items-center justify-center flex-1 leading-10 ">学生姓名</th>
                 <th className="flex items-center justify-center flex-1 leading-10 ">课程名称</th>
-                {/* <th className="flex items-center justify-center flex-1 leading-10 ">课程类型</th> */}
+                <th className="flex items-center justify-center flex-1 leading-10 ">课程类型</th>
                 <th className="flex items-center justify-center flex-1 leading-10 ">
                   订单日期
                 </th>
-                {/* <th className="flex items-center justify-center flex-1 leading-10 ">
+                <th className="flex items-center justify-center flex-1 leading-10 ">
                   结课日期
-                </th> */}
-                {/* <th className="flex items-center justify-center flex-1 leading-10 ">
+                </th>
+                <th className="flex items-center justify-center flex-1 leading-10 ">
                   课程签到类型
-                </th> */}
-                {/* <th className="flex items-center justify-center flex-1 leading-10 ">总课时</th> */}
+                </th>
+                <th className="flex items-center justify-center flex-1 leading-10 ">总课时</th>
                 <th className="flex items-center justify-center flex-1 leading-10 ">总价格(元)</th>
                 {/* <th className="flex items-center justify-center">课时单价</th> */}
-                {/* <th className="flex items-center justify-center flex-1 leading-10 ">教师姓名</th> */}
-                <th className="flex items-center justify-center flex-1 leading-10 ">操作</th>
+                <th className="flex items-center justify-center flex-1 leading-10 ">教师姓名</th>
               </tr>
             </thead>
             <tbody>
