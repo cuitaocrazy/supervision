@@ -102,7 +102,7 @@ const OrderQuery = () => {
         {contract.contractDate} 
       </td>
       <td className="flex items-center justify-center flex-1 leading-10 ">
-        {contract.lessonEndDate}
+        {contract.contractTime}
       </td>
       <td className="flex items-center justify-center flex-1 leading-10">
         {getAttendanceType(contract.lessonAttendanceType)}
@@ -193,7 +193,7 @@ const OrderQuery = () => {
                   订单日期
                 </th>
                 <th className="flex items-center justify-center flex-1 leading-10 ">
-                  结课日期
+                  订单时间
                 </th>
                 <th className="flex items-center justify-center flex-1 leading-10 ">
                   课程签到类型
