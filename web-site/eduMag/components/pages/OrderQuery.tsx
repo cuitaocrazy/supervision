@@ -4,6 +4,7 @@ import { AppContext, setContractList } from "../../appState";
 import { Contract } from "../../types/types";
 import Paging from "../paging"
 import Quit from "components/components/Quit";
+import Clipboard from 'react-clipboard.js';
 
 const findUrl = "http://localhost:3003/edu/contract/find";
 const getAttendanceType = (typeEnglish: any) => {
@@ -20,7 +21,10 @@ const ListEntry = ({ contract }: { contract: Contract }) => (
   <tr className="flex items-center justify-center text-gray-600 border justify-items-center even:bg-white odd:bg-primary-100">
     <td className="flex items-center justify-center flex-1 leading-10 ">
       <span className="w-12 overflow-hidden" >{contract.contractId}</span>
-      <button className="ml-2 text-sm border border-gray-500 rounded-md" onClick={() => {navigator.clipboard.writeText(contract.contractId);alert('复制成功')}}>复制</button>
+      <Clipboard  data-clipboard-text={contract.contractId} onSuccess={()=>alert('复制成功')}>
+        复制
+      </Clipboard>
+      {/* <button className="ml-2 text-sm border border-gray-500 rounded-md" onClick={() => {navigator.clipboard.writeText(contract.contractId);alert('复制成功')}}>复制</button> */}
     </td>
     <td className="flex items-center justify-center flex-1 leading-10 ">
       {contract.consumerName}
