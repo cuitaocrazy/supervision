@@ -33,6 +33,15 @@ export const AttendanceDetail: React.FC = () => {
   if (state.attendance.attendanceDetail === undefined) {
     return <Redirect to={state.backPage} />;
   }
+  const getAttendanceType = (typeEnglish: any) => {
+    if (typeEnglish === "manual") {
+      return "手工";
+    }
+    if (typeEnglish === "auto") {
+      return "超时自动打卡";
+    }
+    return typeEnglish;
+  };
 
   return (
     <IonPage className="bg-gray-100">
@@ -133,7 +142,7 @@ export const AttendanceDetail: React.FC = () => {
                 className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
                 name="attendanceType"
                 type="text"
-                value={attendanceState.attendanceType}
+                value={getAttendanceType(attendanceState.attendanceType)}
                 readOnly
               />
             </div>
