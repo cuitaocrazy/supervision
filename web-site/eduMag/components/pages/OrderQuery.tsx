@@ -92,20 +92,15 @@ const OrderQuery = () => {
       <td className="flex items-center justify-center flex-1 leading-10">
         {contract.consumerStuName}
       </td>
+      <td className="flex items-center justify-center flex-1 leading-10">
+        {getAttendanceType(contract.lessonAttendanceType)}
+      </td>
       <td className="flex items-center justify-center flex-1 leading-10 ">
         {contract.lessonName}
       </td>
+      
       <td className="flex items-center justify-center flex-1 leading-10 ">
         {contract.lessonType}
-      </td>
-      <td className="flex items-center justify-center flex-1 leading-10 ">
-        {contract.contractDate} 
-      </td>
-      <td className="flex items-center justify-center flex-1 leading-10 ">
-        {contract.contractTime}
-      </td>
-      <td className="flex items-center justify-center flex-1 leading-10">
-        {getAttendanceType(contract.lessonAttendanceType)}
       </td>
       <td className="flex items-center justify-center flex-1 leading-10 ">
         {contract.lessonTotalQuantity}
@@ -118,6 +113,12 @@ const OrderQuery = () => {
       </td> */}
       <td className="flex items-center justify-center flex-1 leading-10">
         {contract.teacherName}
+      </td>
+      <td className="flex items-center justify-center flex-1 leading-10 ">
+        {contract.contractDate} 
+      </td>
+      <td className="flex items-center justify-center flex-1 leading-10 ">
+        {contract.contractTime}
       </td>
     </tr>
   );
@@ -187,21 +188,15 @@ const OrderQuery = () => {
                 <th className="flex items-center flex-1 leading-10 justify-items-end ">订单号</th>
                 <th className="flex items-center flex-1 leading-10 justify-items-end ">客户姓名</th>
                 <th className="flex items-center justify-center flex-1 leading-10 ">学生姓名</th>
+                <th className="flex items-center justify-center flex-1 leading-10 ">课程签到类型</th>
                 <th className="flex items-center justify-center flex-1 leading-10 ">课程名称</th>
                 <th className="flex items-center justify-center flex-1 leading-10 ">课程类型</th>
-                <th className="flex items-center justify-center flex-1 leading-10 ">
-                  订单日期
-                </th>
-                <th className="flex items-center justify-center flex-1 leading-10 ">
-                  订单时间
-                </th>
-                <th className="flex items-center justify-center flex-1 leading-10 ">
-                  课程签到类型
-                </th>
                 <th className="flex items-center justify-center flex-1 leading-10 ">总课时</th>
                 <th className="flex items-center justify-center flex-1 leading-10 ">总价格(元)</th>
                 {/* <th className="flex items-center justify-center">课时单价</th> */}
                 <th className="flex items-center justify-center flex-1 leading-10 ">教师姓名</th>
+                <th className="flex items-center justify-center flex-1 leading-10 ">订单日期</th>
+                <th className="flex items-center justify-center flex-1 leading-10 ">订单时间</th>
               </tr>
             </thead>
             <tbody>

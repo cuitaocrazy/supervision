@@ -66,7 +66,7 @@ export const TransferDetail: React.FC = () => {
               </div>
               <div className='flex mb-4 leading-10'>
                 <div className='flex justify-end w-32 mr-2'>划拨金额:</div>
-                <input className='w-64 px-2 rounded-md bg-primary-100 focus:outline-none' value={state.transfer.transferDetail.transferAmt} readOnly required />
+                <input className='w-64 px-2 rounded-md bg-primary-100 focus:outline-none' value={Number(state.transfer.transferDetail.transferAmt)/100} readOnly required />
               </div>
               <div className='flex mb-4 leading-10'>
                 <div className='flex justify-end w-32 mr-2'>划拨结果:</div>
