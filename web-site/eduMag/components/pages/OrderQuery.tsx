@@ -29,7 +29,9 @@ const OrderQuery = () => {
     present({
       message: '复制成功',
       position:'top',
-      duration:3000
+      duration:3000,
+      color:"dark",
+      cssClass:"text-center"
     })
 }
 
@@ -80,7 +82,7 @@ const OrderQuery = () => {
     <tr className="flex items-center justify-center text-gray-600 border justify-items-center even:bg-white odd:bg-primary-100">
       <td className="flex items-center justify-center flex-1 leading-10">
         <span className="w-12 overflow-hidden" >{contract.contractId}</span>
-        <Clipboard className="ml-2 text-sm border border-gray-500 rounded-md"  data-clipboard-text={contract.contractId} onSuccess={()=>ToastFun()}>
+        <Clipboard className="px-1 ml-2 text-sm border border-gray-600 rounded-md shadow-lg"  data-clipboard-text={contract.contractId} onSuccess={()=>ToastFun()}>
           复制
         </Clipboard>
       </td>
