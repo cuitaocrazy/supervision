@@ -182,7 +182,7 @@ const OrderQuery = () => {
                   课程签到类型
                 </th>
                 <th className="flex items-center justify-center flex-1 leading-10 ">总课时</th>
-                <th className="flex items-center justify-center flex-1 leading-10 ">总价格</th>
+                <th className="flex items-center justify-center flex-1 leading-10 ">总价格(元)</th>
                 {/* <th className="flex items-center justify-center">课时单价</th> */}
                 <th className="flex items-center justify-center flex-1 leading-10 ">教师姓名</th>
               </tr>
