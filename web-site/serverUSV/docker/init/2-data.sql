@@ -7,10 +7,9 @@ INSERT INTO yadadb.t_b_edu_teacher (teacher_id,teacher_name,teacher_identity_no,
 -- 插入课程
 
 
---"http://placekitten.com/g/200/300"备用图片
 INSERT INTO yadadb.t_b_edu_lesson (lesson_images,lesson_id,lesson_name,lesson_total_quantity,lesson_per_price,lesson_total_price,lesson_type,lesson_introduce,lesson_imgs,lesson_outline,lesson_start_date,lesson_start_time,lesson_end_date,lesson_end_time,lesson_status,lesson_create_date,lesson_create_time,lesson_update_date,lesson_update_time,lesson_update_reason,edu_id,edu_name,teacher_id,teacher_name,lesson_accumulation_quantity) VALUES
-	 ("https://thumbnail0.baidupcs.com/thumbnail/65300108en8f9cda4e29e7e9179d8435?fid=2752445829-250528-783677635977553&time=1660892400&rt=sh&sign=FDTAER-DCb740ccc5511e5e8fedcff06b081203-4c2obg3JG%2F7W4KNak%2FIiDuJx1r8%3D&expires=8h&chkv=0&chkbd=0&chkpc=&dp-logid=8808559097594353079&dp-callid=0&file_type=0&size=c710_u400&quality=100&vuk=-&ft=video",'lesson00001','数学课',100,120,12000,'math','课程介绍测试内容',NULL,'课程大纲测试内容','20220630','000000','20230630','235959','pending','20220630','000000',NULL,NULL,NULL,'edu0001','测试机构','teacher00001','马老师',0),
-	 ("https://thumbnail0.baidupcs.com/thumbnail/65300108en8f9cda4e29e7e9179d8435?fid=2752445829-250528-783677635977553&time=1660892400&rt=sh&sign=FDTAER-DCb740ccc5511e5e8fedcff06b081203-4c2obg3JG%2F7W4KNak%2FIiDuJx1r8%3D&expires=8h&chkv=0&chkbd=0&chkpc=&dp-logid=8808559097594353079&dp-callid=0&file_type=0&size=c710_u400&quality=100&vuk=-&ft=video",'lesson00002','英语入门兴趣班',10,50,500,'english','英语培训班介绍',NULL,'英语兴趣班大纲','20220630','000000','20220830','000000','on','20220630','000000',NULL,NULL,NULL,'edu0001','测试机构','teacher00001','马老师',4);
+	 ("https://s3.bmp.ovh/imgs/2022/08/22/6413446f9e3649da.jpg",'lesson00001','数学课',100,120,12000,'math','课程介绍测试内容',NULL,'课程大纲测试内容','20220630','000000','20230630','235959','pending','20220630','000000',NULL,NULL,NULL,'edu0001','测试机构','teacher00001','马老师',0),
+	 ("https://s3.bmp.ovh/imgs/2022/08/22/6413446f9e3649da.jpg",'lesson00002','英语入门兴趣班',10,50,500,'english','英语培训班介绍',NULL,'英语兴趣班大纲','20220630','000000','20220830','000000','on','20220630','000000',NULL,NULL,NULL,'edu0001','测试机构','teacher00001','马老师',4);
 
 -- 插入消费者
 INSERT INTO yadadb.t_b_consumer (consumer_login_name,consumer_password,consumer_name,consumer_phone,consumer_identity_no,consumer_birthday,consumer_gender) VALUES
