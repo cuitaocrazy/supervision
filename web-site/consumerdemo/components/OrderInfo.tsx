@@ -40,7 +40,7 @@ const OrderInfo:FC<orderInfoProps> = (props) => {
     </div>
     <div className='flex leading-6'>
       <div className='pr-3 text-gray-500'>支付方式</div>
-      <div className='text-gray-700'>数币支付支付</div>
+      <div className='text-gray-700'>数币支付</div>
     </div>
     <div className='flex leading-6'>
       <div className='pr-3 text-gray-500'>客户姓名</div>
