@@ -18,6 +18,7 @@ import { Redirect } from "react-router-dom"
 const Home = () => {
   // 轮播图数据
   let lesson: Lesson = { lessonImgs: "http://placekitten.com/g/200/300" }
+  // let lesson: Lesson = { lessonImgs: "../../img/shuffling_1.png" }
   // 课程列表数据
 
   const [lessonList,setLessonList] = useState([] as Lesson[])
