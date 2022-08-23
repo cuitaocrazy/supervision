@@ -80,12 +80,12 @@ const OrderQuery = () => {
   useEffect(onQuery, []);
   const ListEntry = ({ contract }: { contract: Contract }) => (
     <tr className="flex items-center justify-center text-gray-600 border justify-items-center even:bg-white odd:bg-primary-100">
-      <td className="flex items-center justify-center flex-1 leading-10">
+      {/* <td className="flex items-center justify-center flex-1 leading-10">
         <span className="w-12 overflow-hidden" >{contract.contractId}</span>
         <Clipboard className="px-1 ml-2 text-sm border border-gray-600 rounded-md shadow-lg"  data-clipboard-text={contract.contractId} onSuccess={()=>ToastFun()}>
           复制
         </Clipboard>
-      </td>
+      </td> */}
       <td className="flex items-center justify-center flex-1 leading-10 ">
         {contract.consumerName}
       </td>
@@ -184,8 +184,8 @@ const OrderQuery = () => {
         <div className="absolute w-full mt-10">
           <table className="w-11/12">
             <thead>
-              <tr className="grid items-end w-full h-10 grid-cols-11 font-bold text-gray-700 bg-white rounded-lg justify-items-center">
-                <th className="flex items-center flex-1 leading-10 justify-items-end ">订单号</th>
+              <tr className="grid items-end w-full h-10 grid-cols-10 font-bold text-gray-700 bg-white rounded-lg justify-items-center">
+                {/* <th className="flex items-center flex-1 leading-10 justify-items-end ">订单号</th> */}
                 <th className="flex items-center flex-1 leading-10 justify-items-end ">客户姓名</th>
                 <th className="flex items-center justify-center flex-1 leading-10 ">学生姓名</th>
                 <th className="flex items-center justify-center flex-1 leading-10 ">课程签到类型</th>
