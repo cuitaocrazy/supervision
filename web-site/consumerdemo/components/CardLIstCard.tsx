@@ -1,6 +1,9 @@
 import {FC} from 'react'
 interface cardListProps{
-  className?:string
+  className?:string,
+  cardName?:string,
+  bankName?:string,
+  balanceAmt?:string
 }
 
 
