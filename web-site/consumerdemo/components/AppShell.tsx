@@ -43,6 +43,7 @@ import Demo from './pages/Demo'
 import Setting from './pages/Setting'
 import MyDiscussList from './pages/MyDiscussList'
 import MyDiscussDetail from './pages/MyDiscussDetail'
+import CardList from './pages/CardList'
 import { AppContextProvider } from '../appState'
 
 
@@ -104,6 +105,7 @@ const AppShell = () => {
               <Route path="/demo" render={() => <Demo />} />
               <Route path="/myDiscussList" render={() => <MyDiscussList />} />
               <Route path="/myDiscussDetail" render={() => <MyDiscussDetail />} />
+              <Route path="/cardList" render={() => <CardList />} />
               <Route exact={true} path="/" render={() => <Redirect to="/tabs/home" />} />
             </IonRouterOutlet>
           </IonSplitPane>
