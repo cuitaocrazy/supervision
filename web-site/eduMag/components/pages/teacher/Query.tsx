@@ -197,7 +197,7 @@ const TeacherQuery: React.FC = () => {
   }) => (
     <tr
       key={key}
-      className="grid items-center grid-cols-6 gap-10 text-gray-600 border justify-items-center even:bg-white odd:bg-primary-100"
+      className="grid items-center grid-cols-5 gap-10 text-gray-600 border justify-items-center even:bg-white odd:bg-primary-100"
     >
       <td className="flex items-center justify-center leading-10">
       {teacher.teacherName}
@@ -208,9 +208,9 @@ const TeacherQuery: React.FC = () => {
       <td className="flex items-center justify-center leading-10">
       {teacher.teacherField}
       </td>
-      <td className="flex items-center justify-center leading-10">
+      {/* <td className="flex items-center justify-center leading-10">
       {teacher.teacherIntroduce}
-      </td>
+      </td> */}
       <td className="flex items-center justify-center leading-10">
       {teacher.teacherCreatedDate}
       </td>
@@ -594,11 +594,11 @@ const TeacherQuery: React.FC = () => {
         <div className="absolute w-full mt-10">
           <table className="w-11/12">
             <thead>
-              <tr className="grid items-center h-10 grid-cols-6 gap-10 font-bold text-gray-700 bg-white rounded-lg justify-items-center">
+              <tr className="grid items-center h-10 grid-cols-5 gap-10 font-bold text-gray-700 bg-white rounded-lg justify-items-center">
                 <th className="flex items-center justify-center">教师姓名</th>
                 <th className="flex items-center justify-center">教师身份证号码</th>
                 <th className="flex items-center justify-center">专业领域</th>
-                <th className="flex items-center justify-center">从业经历</th>
+                {/* <th className="flex items-center justify-center">从业经历</th> */}
                 <th className="flex items-center justify-center">日期</th>
                 <th className="flex items-center justify-center">操作</th>
               </tr>
