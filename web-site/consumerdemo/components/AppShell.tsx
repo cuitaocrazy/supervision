@@ -47,6 +47,7 @@ import CardList from './pages/CardList'
 import CardHome from './pages/CardHome'
 import CardRightsAndInterests from './pages/CardRightsAndInterests'
 import CardUseRecordsList from './pages/CardUseRecordsList'
+import CardUseRecordDetail from './pages/CardUseRecordDetail'
 import { AppContextProvider } from '../appState'
 
 
@@ -112,6 +113,7 @@ const AppShell = () => {
               <Route path="/cardHome" render={() => <CardHome />} />
               <Route path="/cardRightsAndInterests" render={() => <CardRightsAndInterests />} />
               <Route path="/cardUseRecordsList" render={() => <CardUseRecordsList />} />
+              <Route path="/cardUseRecordDetail" render={() => <CardUseRecordDetail />} />
               <Route exact={true} path="/" render={() => <Redirect to="/tabs/home" />} />
             </IonRouterOutlet>
           </IonSplitPane>
