@@ -1,11 +1,16 @@
 import { FC, useEffect, useState, useCallback, useContext } from "react";
-import { IonPage, IonRow, IonCol, IonLabel, useIonToast } from "@ionic/react";
+import { IonPage, IonHeader,IonContent,IonRow, IonCol, IonLabel, useIonToast } from "@ionic/react";
+import Navbar from "../Navbar";
 
 const CardHome: FC = () => {
   return (
     <IonPage>
+      <IonHeader>
+        <Navbar title="我的会员卡" />
+      </IonHeader>
+      <IonContent>
       <div className="bg-white">
-        <div className="relative mx-6 my-6 text-white bg-gray-500 rounded-lg bg-gradient-to-r from-gray-400 to-gray-500">
+        <div className="relative mx-6 mt-4 mb-6 text-white bg-gray-500 rounded-lg bg-gradient-to-r from-gray-400 to-gray-500">
           <img
             className="absolute bottom-0 right-0"
             width="140px"
@@ -51,7 +56,60 @@ const CardHome: FC = () => {
             <div className="text-lg font-bold text-orange-400">32</div>
           </div>
         </div>
+        {/* 查看权益 */}
+        <a className="flex items-center justify-center mt-10 mb-10">
+          <div className="py-2 text-orange-400 bg-gray-100 rounded-sm px-14"
+          
+          >查看权益</div>
+        </a>
+        {/* 按钮 */}
+        <div className="mx-6 text-gray-500">
+          <hr />
+          <div className="flex justify-between mt-4 mb-4">
+            <div className="text-lg">消费</div>
+            <div>
+            <svg className="w-6 h-6 "  width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <polyline points="9 6 15 12 9 18" /></svg>
+            </div>
+          </div>
+          <hr />
+          <div className="flex justify-between mt-4 mb-4">
+            <div className="text-lg">使用记录</div>
+            <div>
+            <svg className="w-6 h-6 "  width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <polyline points="9 6 15 12 9 18" /></svg>
+            </div>
+          </div>
+          <hr />
+          <div className="flex justify-between mt-4 mb-4">
+            <div className="text-lg">会员卡详情</div>
+            <div>
+            <svg className="w-6 h-6 "  width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <polyline points="9 6 15 12 9 18" /></svg>
+            </div>
+          </div>
+          <hr />
+          <div className="flex justify-between mt-4 mb-4">
+            <div className="text-lg">协议详情</div>
+            <div>
+            <svg className="w-6 h-6 "  width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <polyline points="9 6 15 12 9 18" /></svg>
+            </div>
+          </div>
+          <hr />
+          <div className="flex justify-between mt-4 mb-4">
+            <div className="text-lg">商家小程序</div>
+            <div>
+            <svg className="w-6 h-6 "  width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <polyline points="9 6 15 12 9 18" /></svg>
+            </div>
+          </div>
+          <hr />
+          <div className="flex justify-between mt-4 mb-4">
+            <div className="text-lg">退课</div>
+            <div>
+            <svg className="w-6 h-6 "  width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <polyline points="9 6 15 12 9 18" /></svg>
+            </div>
+          </div>
+          <hr />
+        </div>
       </div>
+      </IonContent>
     </IonPage>
   );
 };
