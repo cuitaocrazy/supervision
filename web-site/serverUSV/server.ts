@@ -128,6 +128,7 @@ import eduLogin from './src/edu/login'
 
 
 
+
 app.post('/edu/login', jsonParser, async (req, res) => {
   const r = await eduLogin(req.body)
   res.send(r)
@@ -320,7 +321,7 @@ app.get('/edu/contract/find', async (req, res) => {
 
 import { randomUUID } from 'crypto';
 import * as moment from 'moment';
-import { findOneLesson, findOneTeacher, findAttendance, saveTransfer, findOneEdu, searchLesson, saveContract, searchContract, findOneContract, saveAttendance } from './src/consumer/consumer'
+import { findOneLesson, findOneTeacher, findAttendance, saveTransfer, findOneEdu, searchLesson, saveContract, searchContract, findOneContract, saveAttendance,saveTransaction } from './src/consumer/consumer'
 import { Attendance } from './src/entity/Attendance';
 // import {pay,orderQuery} from './src/pay/pay'
 
@@ -340,6 +341,14 @@ const get3rdOrder = async () => {
   return {
     orderNo: randomUUID().replaceAll('-','')
   }
+}
+
+const getContractId = () => {
+  return randomUUID().replaceAll('-','')
+}
+
+const getTransactionId = ()=>{
+  return randomUUID().replaceAll('-','')
 }
 //todo
 const getUserInfoByToken = async () => {
@@ -384,6 +393,9 @@ io.on('connection', function (socket) { // socket相关
 });
 
 
+
+
+
 app.post('/consumer/preOrder', jsonParser, async (req, res) => {
 
   //todo 
@@ -397,7 +409,7 @@ app.post('/consumer/preOrder', jsonParser, async (req, res) => {
     const teacher = await findOneTeacher({ teacherId: lesson.teacherId })
     //todo 合同状态
     const newContract = {
-      contractId: randomUUID().replaceAll('-', ''),
+      contractId: getContractId(),
       contractDate: moment().format('YYYYMMDD'),
       contractTime: moment().format('HHmmss'),
       contractStatus: 'valid',
@@ -425,8 +437,19 @@ app.post('/consumer/preOrder', jsonParser, async (req, res) => {
       orderNo: otherSystemInfo.orderNo,
       lessonAccumulationQuantity: lesson.lessonAccumulationQuantity,
     }
-
+    console.log(newContract)
     await saveContract(newContract)
+    const newTransaction = {
+      transactionId:getTransactionId(),
+      contractId: newContract.contractId,
+      transactionAmt:lesson.lessonTotalPrice,
+      tranType : 'buycard',
+      tranDate : newContract.contractDate,
+      tranTime : newContract.contractTime,
+      eduSupervisedAccount : edu.eduSupervisedAccount,
+    }
+
+    saveTransaction(newTransaction)
     res.send({ status: 'success', result: newContract })
     //todo 数币完成后走下面
     // const payUrl = pay(newContract.contractId,newContract.contractDate.concat(newContract.contractTime),String(newContract.lessonTotalPrice),'merchantNo',newContract.lessonName)
@@ -573,6 +596,7 @@ app.post('/consumer/notice',jsonParser,async (req, res) => {
 import edbEduOrgService from './src/edb/EduOrgService';
 import edbTeacherService from './src/edb/TeacherService';
 import edbChainCodeService from './src/edb/ChainCodeService';
+import edbTransactionService from './src/edb/TransactionService';
 import { EduOrg } from './src/entity/EduOrg';
 import { ChainCode } from './src/entity/ChainCode';
 
@@ -582,14 +606,33 @@ app.get('/edb/chainCode/find', async (req, res) => {
   res.send(r)
 })
 
-app.get('/edb/teacher/find', async (req, res) => {
-  console.log(`教育局: 查询教师: 条件[${JSON.stringify(req.query)}]`)
-  const r = await edbTeacherService.find(req.query)
+
+app.get('/edb/refund/find', async (req, res) => {
+  console.log(`教育局: 查询退款信息: 条件[${JSON.stringify(req.query)}]`)
+  const r = await edbTransactionService.refundQuery(req.query)
+  res.send(r)
+})
+
+app.get('/edb/transaction/find', async (req, res) => {
+  console.log(`教育局: 查询流水信息: 条件[${JSON.stringify(req.query)}]`)
+  const r = await edbTransactionService.query(req.query)
+  res.send(r)
+})
+
+app.get('/edb/balance/find', async (req, res) => {
+  console.log(`教育局: 查询余额信息: 条件[${JSON.stringify(req.query)}]`)
+  const r = await edbTransactionService.balanceQuery(req.query)
+  r.records.map((record:any)=>{record.sum=fenToYuan(record.sum)})
   res.send(r)
 })
 
 
 
+app.get('/edb/teacher/find', async (req, res) => {
+  console.log(`教育局: 查询教师: 条件[${JSON.stringify(req.query)}]`)
+  const r = await edbTeacherService.find(req.query)
+  res.send(r)
+})
 
 
 
@@ -617,6 +660,7 @@ import { Transfer } from './src/entity/Transfer';
 import { EduLesson } from './src/entity/EduLesson';
 import { EduTeacher } from './src/entity/EduTeacher';
 import edbSupervisorUserService from './src/edb/SupervisorService'
+import TransferService from './src/edu/TransferService';
 app.get('/edb/chaincode/count', async (req, res) => {
   console.log(`教育局: 查询考勤:`)
   const attendanceCount = await edbAttendanceService.count()

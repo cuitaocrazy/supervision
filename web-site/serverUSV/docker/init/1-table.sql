@@ -179,6 +179,22 @@ ENGINE=InnoDB
 DEFAULT CHARSET=utf8mb4
 COLLATE=utf8mb4_unicode_ci;
 
+-- 交易流水表，tran_type --'buycard','refund','transfer','cancel'
+CREATE TABLE yadadb.t_l_transaction (
+	transaction_id varchar(32) NOT NULL,
+	contract_id varchar(32) NOT NULL,
+	transaction_amt decimal(12,0) NOT NULL, 
+	tran_type  varchar(16) NOT NULL,   
+	tran_date char(8) NULL,
+	tran_time char(6) NULL,
+	edu_supervised_account varchar(32),
+	CONSTRAINT t_l_transaction_PK PRIMARY KEY (transaction_id)
+)
+ENGINE=InnoDB
+DEFAULT CHARSET=utf8mb4
+COLLATE=utf8mb4_unicode_ci;
+
+
 -- 合同协商表
 CREATE TABLE yadadb.t_b_contract_nego (
 	nego_id varchar(32) NOT NULL,

@@ -14,6 +14,8 @@ class ContractService {
         const count =await mysql.getRepository(Contract).count();
         return count
     }
+
+
 }
 
 export default new ContractService()
