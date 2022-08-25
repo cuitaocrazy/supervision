@@ -17,7 +17,7 @@ const CardRightsAndInterests = () => {
         <Navbar title="权益详情" />
       </IonHeader>
       <IonContent>
-        <div className="p-4 mx-2 my-4 text-gray-500 shadow-lg">
+        <div className="p-4 mx-2 my-4 text-gray-500 shadow-lg scroll-auto">
           <div className="text-lg font-bold">黑马程序员(前端进阶课)</div>
           <div className="flex mt-2 font-bold ">
             <div className="">张大宝剩余:</div>

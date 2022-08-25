@@ -6,7 +6,7 @@ const CardHome: FC = () => {
   return (
     <IonPage>
       <IonHeader>
-        <Navbar title="我的会员卡" />
+        <Navbar title="我的卡信息" />
       </IonHeader>
       <IonContent>
       <div className="bg-white">
@@ -73,15 +73,16 @@ const CardHome: FC = () => {
             </div>
           </div>
           <hr />
-          <div className="flex justify-between mt-4 mb-4">
+          <a className="flex justify-between mt-4 mb-4"
+          href="./cardUseRecordsList">
             <div className="text-lg">使用记录</div>
             <div>
             <svg className="w-6 h-6 "  width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <polyline points="9 6 15 12 9 18" /></svg>
             </div>
-          </div>
+          </a>
           <hr />
           <div className="flex justify-between mt-4 mb-4">
-            <div className="text-lg">会员卡详情</div>
+            <div className="text-lg">卡详情</div>
             <div>
             <svg className="w-6 h-6 "  width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <polyline points="9 6 15 12 9 18" /></svg>
             </div>
@@ -103,6 +104,13 @@ const CardHome: FC = () => {
           <hr />
           <div className="flex justify-between mt-4 mb-4">
             <div className="text-lg">退课</div>
+            <div>
+            <svg className="w-6 h-6 "  width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <polyline points="9 6 15 12 9 18" /></svg>
+            </div>
+          </div>
+          <hr />
+          <div className="flex justify-between mt-4 mb-4">
+            <div className="text-lg">更多</div>
             <div>
             <svg className="w-6 h-6 "  width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <polyline points="9 6 15 12 9 18" /></svg>
             </div>

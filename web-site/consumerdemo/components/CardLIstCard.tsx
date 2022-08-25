@@ -18,7 +18,7 @@ const cardListCard: FC<cardListProps> = (props) => {
         ></img>
         <div className="relative z-20 flex items-center justify-center mx-2 ">
           <img
-            className="rounded-full w-14 h-14 "
+            className="w-16 rounded-full h-14 "
             src="http://placekitten.com/g/200/300"
           ></img>
         </div>
