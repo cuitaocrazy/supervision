@@ -12,6 +12,7 @@ const CardList: FC = () => {
         <CardListCard cardName="爵士舞（一对多中班）" bankName="中国银行" balanceAmt="789.89" className="relative z-0 flex mx-5 my-3 text-white rounded-lg bg-gradient-to-r from-orange-300 to-orange-400" />
         <CardListCard cardName="时尚造型会员卡" bankName="中国银行" balanceAmt="9999.00" className="relative z-0 flex mx-5 my-3 text-white rounded-lg bg-gradient-to-r from-gray-800 to-gray-900" />
         <CardListCard cardName="黑马程序员（前端进阶班）" bankName="中国银行" balanceAmt="10000.00" className="relative z-0 flex mx-5 my-3 text-white rounded-lg bg-gradient-to-r from-gray-300 to-gray-500" />
+        <CardListCard cardName="乐博乐博机器人编程（4岁班）" bankName="中国银行" balanceAmt="10000.00" className="relative z-0 flex mx-5 my-3 text-white rounded-lg bg-gradient-to-r from-blue-300 to-blue-500" />
       </div>
       
     </IonPage>
