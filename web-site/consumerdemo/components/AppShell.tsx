@@ -45,6 +45,7 @@ import MyDiscussList from './pages/MyDiscussList'
 import MyDiscussDetail from './pages/MyDiscussDetail'
 import CardList from './pages/CardList'
 import CardHome from './pages/CardHome'
+import CardRightsAndInterests from './pages/CardRightsAndInterests'
 import { AppContextProvider } from '../appState'
 
 
@@ -108,6 +109,7 @@ const AppShell = () => {
               <Route path="/myDiscussDetail" render={() => <MyDiscussDetail />} />
               <Route path="/cardList" render={() => <CardList />} />
               <Route path="/cardHome" render={() => <CardHome />} />
+              <Route path="/cardRightsAndInterests" render={() => <CardRightsAndInterests />} />
               <Route exact={true} path="/" render={() => <Redirect to="/tabs/home" />} />
             </IonRouterOutlet>
           </IonSplitPane>

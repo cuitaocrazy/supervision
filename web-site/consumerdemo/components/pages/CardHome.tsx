@@ -57,7 +57,8 @@ const CardHome: FC = () => {
           </div>
         </div>
         {/* 查看权益 */}
-        <a className="flex items-center justify-center mt-10 mb-10">
+        <a className="flex items-center justify-center mt-10 mb-10"
+         href="./cardRightsAndInterests">
           <div className="py-2 text-orange-400 bg-gray-100 rounded-sm px-14"
           
           >查看权益</div>
