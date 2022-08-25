@@ -5,7 +5,7 @@ const CardHome: FC = () => {
   return (
     <IonPage>
       <div className="bg-white">
-        <div className="relative mx-4 my-4 text-white bg-gray-500 rounded-lg bg-gradient-to-r from-gray-400 to-gray-500">
+        <div className="relative mx-6 my-6 text-white bg-gray-500 rounded-lg bg-gradient-to-r from-gray-400 to-gray-500">
           <img
             className="absolute bottom-0 right-0"
             width="140px"
@@ -45,7 +45,7 @@ const CardHome: FC = () => {
             <div className="text-gray-500">余额(元)</div>
             <div className="text-lg font-bold text-orange-400">986.00</div>
           </div>
-          <div className="">|</div>
+          
           <div className="flex flex-col items-center justify-center">
             <div className="flex text-gray-500">权益(课时)</div>
             <div className="text-lg font-bold text-orange-400">32</div>
