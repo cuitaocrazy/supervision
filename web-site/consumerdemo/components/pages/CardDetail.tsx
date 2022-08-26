@@ -24,7 +24,7 @@ const CardDetail = () => {
             </div>
             <div className="flex">
               <span className="mr-2 text-right text-gray-400 w-28">协议详情</span>
-              <a className="mr-2 text-gray-800" href="">点击查看详情</a>
+              <a className="mr-2 text-gray-800" href="./cardProtocolDetail">点击查看详情</a>
             </div>
             <div className="flex">
               <span className="mr-2 text-right text-gray-400 w-28">卡号</span>

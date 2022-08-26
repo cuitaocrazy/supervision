@@ -135,9 +135,20 @@ app.post('/edu/login', jsonParser, async (req, res) => {
 })
 
 import eduTeacherService from './src/edu/TeacherService'
+import eduTransactionService from './src/edu/TransactionService'
+import eduEduService from './src/edu/EduService'
 app.get('/edu/teacher/find', async (req, res) => {
   console.log(`教育机构: 查询教师: 条件[${JSON.stringify(req.query)}]`)
   const r = await eduTeacherService.find(req.query)
+  res.send(r)
+})
+
+app.get('/edu/transaction/find', async (req, res) => {
+  console.log(`教育机构: 查询流水信息: 条件[${JSON.stringify(req.query)}]`)
+  const loginName = req.query.loginName;
+  const edu = await EduService.findByLoginName(loginName)
+
+  const r = await eduTransactionService.query(req.query,  edu.eduSupervisedAccount)
   res.send(r)
 })
 
@@ -661,6 +672,7 @@ import { EduLesson } from './src/entity/EduLesson';
 import { EduTeacher } from './src/entity/EduTeacher';
 import edbSupervisorUserService from './src/edb/SupervisorService'
 import TransferService from './src/edu/TransferService';
+import EduService from './src/edu/EduService';
 app.get('/edb/chaincode/count', async (req, res) => {
   console.log(`教育局: 查询考勤:`)
   const attendanceCount = await edbAttendanceService.count()

@@ -32,9 +32,10 @@ import Income from "./pages/statistic/income";
 import Refund from "./pages/refund/query";
 import OrderQuery from "./pages/OrderQuery";
 import Discuss from "./pages/Discuss/Query";
-import {DiscussDetail} from "./pages/Discuss/Detail";
-import {DiscussAudit} from "./pages/Discuss/Audit";
-import Home from "./pages/Home"
+import { DiscussDetail } from "./pages/Discuss/Detail";
+import { DiscussAudit } from "./pages/Discuss/Audit";
+import Transaction from "./pages/statistic/transaction";
+import Home from "./pages/Home";
 import { useContext } from "react";
 
 // 装载ionic样式，ionic6 必须执行。
@@ -168,20 +169,21 @@ const AppShell = () => {
                 exact={true}
               />
               <Route
-                path="/tabs/discuss/detail"  
+                path="/tabs/discuss/detail"
                 component={DiscussDetail}
                 exact={true}
               />
-               <Route
+              <Route
                 path="/tabs/discuss/audit"
                 component={DiscussAudit}
                 exact={true}
               />
               <Route
-                path="/tabs/home"
-                component={Home}
+                path="/tabs/statistic/transaction"
+                component={Transaction}
                 exact={true}
               />
+              <Route path="/tabs/home" component={Home} exact={true} />
               <Route exact path="/" render={() => <Redirect to="/login" />} />
             </IonRouterOutlet>
           </IonSplitPane>
