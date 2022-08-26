@@ -1,6 +1,7 @@
 import { FC, useEffect, useState, useCallback, useContext } from "react";
 import { IonPage, IonHeader,IonContent,IonRow, IonCol, IonLabel, useIonToast } from "@ionic/react";
 import Navbar from "../Navbar";
+import { NavLink } from "react-router-dom";
 
 const CardHome: FC = () => {
   return (
@@ -10,7 +11,8 @@ const CardHome: FC = () => {
       </IonHeader>
       <IonContent>
       <div className="bg-white scroll-auto">
-        <a href="./cardQRcode">
+        
+        <NavLink to="./cardQRcode">
         <div className="relative mx-6 mt-4 mb-6 text-white bg-gray-500 rounded-lg bg-gradient-to-r from-gray-400 to-gray-500">
           <img
             className="absolute bottom-0 right-0"
@@ -45,7 +47,7 @@ const CardHome: FC = () => {
             <div>yunfei liu</div>
           </div>
         </div>
-        </a>
+        </NavLink>
         {/* 余额和权益 */}
         <div className="flex flex-row justify-around">
           <div className="flex flex-col items-center justify-center">
@@ -59,12 +61,12 @@ const CardHome: FC = () => {
           </div>
         </div>
         {/* 查看权益 */}
-        <a className="flex items-center justify-center mt-10 mb-10"
-         href="./cardRightsAndInterests">
+        <NavLink className="flex items-center justify-center mt-10 mb-10"
+         to="./cardRightsAndInterests">
           <div className="py-2 text-orange-400 bg-gray-100 rounded-sm px-14"
           
           >查看权益</div>
-        </a>
+        </NavLink>
         {/* 按钮 */}
         <div className="mx-6 text-gray-500">
           <hr />
@@ -75,29 +77,29 @@ const CardHome: FC = () => {
             </div>
           </div>
           <hr />
-          <a className="flex justify-between mt-4 mb-4"
-          href="./cardUseRecordsList">
+          <NavLink className="flex justify-between mt-4 mb-4"
+          to="./cardUseRecordsList">
             <div className="text-lg">使用记录</div>
             <div>
             <svg className="w-6 h-6 "  width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <polyline points="9 6 15 12 9 18" /></svg>
             </div>
-          </a>
+          </NavLink>
           <hr />
-          <a className="flex justify-between mt-4 mb-4"
-          href="./cardDetail">
+          <NavLink className="flex justify-between mt-4 mb-4"
+          to="./cardDetail">
             <div className="text-lg">卡详情</div>
             <div>
             <svg className="w-6 h-6 "  width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <polyline points="9 6 15 12 9 18" /></svg>
             </div>
-          </a>
+          </NavLink>
           <hr />
-          <a className="flex justify-between mt-4 mb-4"
-          href="./cardProtocolDetail">
+          <NavLink className="flex justify-between mt-4 mb-4"
+          to="./cardProtocolDetail">
             <div className="text-lg">协议详情</div>
             <div>
             <svg className="w-6 h-6 "  width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <polyline points="9 6 15 12 9 18" /></svg>
             </div>
-          </a>
+          </NavLink>
           <hr />
           <div className="flex justify-between mt-4 mb-4">
             <div className="text-lg">商家小程序</div>
