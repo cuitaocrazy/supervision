@@ -2,7 +2,6 @@ import React from "react";
 import { IonPage, IonHeader, IonContent } from "@ionic/react";
 import Navbar from "components/Navbar";
 import { Redirect } from "react-router-dom";
-import { NavLink } from "react-router-dom";
 
 // 个人中心页面
 const MyPersonalCenter = () => {
@@ -26,10 +25,10 @@ const MyPersonalCenter = () => {
               <p className="pt-1">18610206133</p>
             </div>
           </div>
-          <NavLink
+          <a
             className="flex items-center justify-center pr-4"
             // onClick={setFun}
-            to="./setting"
+            href="./setting"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -43,7 +42,7 @@ const MyPersonalCenter = () => {
                 clipRule="evenodd"
               />
             </svg>
-          </NavLink>
+          </a>
         </div>
       </IonHeader>
       <IonContent>
@@ -51,9 +50,9 @@ const MyPersonalCenter = () => {
           <div className="w-full h-4 bg-white rounded-t-full"></div>
           <div className="bg-white ">
             <div className="grid grid-cols-3 mx-2 justify-items-center">
-              <NavLink
+              <a
                 className="flex flex-col items-center w-24 h-24 mt-4 bg-red-100 rounded-md shadow-md justify-items-center shadow-red-200"
-                to="./myNoticeInfoList"
+                href="./myNoticeInfoList"
               >
                 {/* <motion.div key="2" className={'reactive ' } animate={{ scale: [1, 1.2, 1] }} transition={{ duration: 0.2 }}><span className="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full">2</span></motion.div> */}
                 <p className="mt-4">
@@ -72,11 +71,11 @@ const MyPersonalCenter = () => {
                   </svg>
                 </p>
                 <p className="text-gray-500">公告信息</p>
-              </NavLink>
+              </a>
 
-              <NavLink
+              <a
                 className="flex flex-col items-center w-24 h-24 mt-4 bg-green-100 rounded-md shadow-md justify-items-center shadow-green-200"
-                to="./myPersonalInfo"
+                href="./myPersonalInfo"
               >
                 {/* <motion.div key="2" className={'reactive ' } animate={{ scale: [1, 1.2, 1] }} transition={{ duration: 0.2 }}><span className="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full">2</span></motion.div> */}
                 <p className="mt-4">
@@ -98,11 +97,11 @@ const MyPersonalCenter = () => {
                   </svg>
                 </p>
                 <p className="text-gray-500">个人信息</p>
-              </NavLink>
+              </a>
 
-              <NavLink
+              <a
                 className="flex flex-col items-center w-24 h-24 mt-4 bg-purple-100 rounded-md shadow-md justify-items-center shadow-purple-200"
-                to="./myCompList"
+                href="./myCompList"
               >
                 {/* <motion.div key="2" className={'reactive ' } animate={{ scale: [1, 1.2, 1] }} transition={{ duration: 0.2 }}><span className="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full">2</span></motion.div> */}
                 <p className="mt-4">
@@ -126,11 +125,11 @@ const MyPersonalCenter = () => {
                   </svg>
                 </p>
                 <p className="text-gray-500">我的投诉</p>
-              </NavLink>
+              </a>
 
-              <NavLink
+              <a
                 className="flex flex-col items-center w-24 h-24 mt-4 bg-orange-100 rounded-md shadow-md justify-items-center shadow-orange-200"
-                to="./myLessonEvalList"
+                href="./myLessonEvalList"
               >
                 {/* <motion.div key="2" className={'reactive ' } animate={{ scale: [1, 1.2, 1] }} transition={{ duration: 0.2 }}><span className="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full">2</span></motion.div> */}
                 <p className="mt-4">
@@ -156,11 +155,11 @@ const MyPersonalCenter = () => {
                   </svg>
                 </p>
                 <p className="text-gray-500">我的评价</p>
-              </NavLink>
+              </a>
 
-              <NavLink
+              <a
                 className="flex flex-col items-center w-24 h-24 mt-4 bg-red-100 rounded-md shadow-md justify-items-center shadow-red-200"
-                to="./myLessonList"
+                href="./myLessonList"
               >
                 {/* <motion.div key="2" className={'reactive ' } animate={{ scale: [1, 1.2, 1] }} transition={{ duration: 0.2 }}><span className="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full">2</span></motion.div> */}
                 <p className="mt-4">
@@ -179,11 +178,11 @@ const MyPersonalCenter = () => {
                   </svg>
                 </p>
                 <p className="text-gray-500">课程列表</p>
-              </NavLink>
+              </a>
 
-              <NavLink
+              <a
                 className="flex flex-col items-center w-24 h-24 mt-4 rounded-md shadow-md bg-cyan-100 justify-items-center shadow-cyan-200"
-                to="./editPwd"
+                href="./editPwd"
               >
                 {/* <motion.div key="2" className={'reactive ' } animate={{ scale: [1, 1.2, 1] }} transition={{ duration: 0.2 }}><span className="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full">2</span></motion.div> */}
                 <p className="mt-4">
@@ -207,11 +206,11 @@ const MyPersonalCenter = () => {
                   </svg>
                 </p>
                 <p className="text-gray-500">修改密码</p>
-              </NavLink>
+              </a>
 
-              <NavLink
+              <a
                 className="flex flex-col items-center w-24 h-24 mt-4 bg-green-100 rounded-md shadow-md justify-items-center shadow-green-200"
-                to="./myBatchCheckIn"
+                href="./myBatchCheckIn"
               >
                 {/* <motion.div key="2" className={'reactive ' } animate={{ scale: [1, 1.2, 1] }} transition={{ duration: 0.2 }}><span className="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full">2</span></motion.div> */}
                 <p className="mt-4 ">
@@ -237,11 +236,11 @@ const MyPersonalCenter = () => {
                   </svg>
                 </p>
                 <p className="text-gray-500">批量签到</p>
-              </NavLink>
+              </a>
 
-              <NavLink
+              <a
                 className="flex flex-col items-center w-24 h-24 mt-4 bg-purple-100 rounded-md shadow-md justify-items-center shadow-purple-200"
-                to="./myAutoCheckIn"
+                href="./myAutoCheckIn"
               >
                 {/* <motion.div key="2" className={'reactive ' } animate={{ scale: [1, 1.2, 1] }} transition={{ duration: 0.2 }}><span className="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full">2</span></motion.div> */}
                 <p className="mt-4">
@@ -262,11 +261,11 @@ const MyPersonalCenter = () => {
                   </svg>
                 </p>
                 <p className="text-gray-500">自动签到</p>
-              </NavLink>
+              </a>
 
-              <NavLink
+              <a
                 className="flex flex-col items-center w-24 h-24 mt-4 bg-orange-100 rounded-md shadow-md justify-items-center shadow-orange-200"
-                to="./myAllCheckInList"
+                href="./myAllCheckInList"
               >
                 {/* <motion.div key="2" className={'reactive ' } animate={{ scale: [1, 1.2, 1] }} transition={{ duration: 0.2 }}><span className="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full">2</span></motion.div> */}
                 <p className="mt-4">
@@ -292,11 +291,11 @@ const MyPersonalCenter = () => {
                   </svg>
                 </p>
                 <p className="text-gray-500">签到记录</p>
-              </NavLink>
+              </a>
 
-              <NavLink
+              <a
                 className="flex flex-col items-center w-24 h-24 mt-4 rounded-md shadow-md bg-cyan-100 justify-items-center shadow-cyan-200"
-                to="./myDiscussList"
+                href="./myDiscussList"
               >
                 <p className="mt-4">
                   <svg
@@ -314,10 +313,10 @@ const MyPersonalCenter = () => {
                   </svg>
                 </p>
                 <p className="text-gray-500">协商列表</p>
-              </NavLink>
-              <NavLink
+              </a>
+              <a
                 className="flex flex-col items-center w-24 h-24 mt-4 bg-green-100 rounded-md shadow-md justify-items-center shadow-green-200"
-                to="./cardList"
+                href="./cardList"
               >
                 <p className="mt-4">
                   <svg
@@ -335,7 +334,7 @@ const MyPersonalCenter = () => {
                   </svg>
                 </p>
                 <p className="text-gray-500">卡包</p>
-              </NavLink>
+              </a>
             </div>
           </div>
         </div>
