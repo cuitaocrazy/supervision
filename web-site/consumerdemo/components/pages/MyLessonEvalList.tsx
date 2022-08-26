@@ -8,6 +8,9 @@ const MyLessonEvalList = () => {
   return <IonPage>
     <IonHeader>
       <Navbar title="我的评价" />
+      <div className='h-10 pt-2 font-medium text-center text-white bg-primary-600 margin-auto'>
+        <div className='text-center'>我的评价</div>
+      </div>
     </IonHeader>
     <IonContent>
       <div className='px-2 pt-4 pb-3 mx-3 my-2 mb-2 text-xs rounded-md shadow-md'>
