@@ -4,6 +4,8 @@ import {
   IonContent,
 } from "@ionic/react";
 import Navbar from "../Navbar";
+import { NavLink } from "react-router-dom";
+
 
 const CardUseReacrdsList = () => {
   return (
@@ -14,8 +16,8 @@ const CardUseReacrdsList = () => {
       <IonContent>
         <div className="px-4 py-2 mx-2 my-2 bg-white rounded-lg shadow-lg scroll-auto">
           <>
-            <a className="flex flex-row items-center justify-between mt-4"
-            href="./cardUseRecordDetail">
+            <NavLink className="flex flex-row items-center justify-between mt-4"
+            to="./cardUseRecordDetail">
               <div className="flex flex-col justify-self-start">
                 <div className="text-gray-800">黑马程序员(前端进阶班)</div>
                 <div className="text-sm text-gray-400">
@@ -29,13 +31,13 @@ const CardUseReacrdsList = () => {
                   消费成功
                 </div>
               </div>
-            </a>
+            </NavLink>
             <hr className="mt-4" />
           </>
 
           <>
-          <a className="flex flex-row items-center justify-between mt-4"
-            href="./cardUseRecordDetail">
+          <NavLink className="flex flex-row items-center justify-between mt-4"
+            to="./cardUseRecordDetail">
               <div className="flex flex-col justify-self-start">
                 <div className="text-gray-800">黑马程序员(前端进阶班)</div>
                 <div className="text-sm text-gray-400">
@@ -49,13 +51,13 @@ const CardUseReacrdsList = () => {
                   已退课
                 </div>
               </div>
-            </a>
+            </NavLink>
             <hr className="mt-4" />
           </>
 
           <>
-            <a className="flex flex-row items-center justify-between mt-4"
-            href="./cardUseRecordDetail">
+            <NavLink className="flex flex-row items-center justify-between mt-4"
+            to="./cardUseRecordDetail">
               <div className="flex flex-col justify-self-start">
                 <div className="text-gray-800">黑马程序员(前端进阶班)</div>
                 <div className="text-sm text-gray-400">
@@ -69,13 +71,13 @@ const CardUseReacrdsList = () => {
                   消费成功
                 </div>
               </div>
-            </a>
+            </NavLink>
             <hr className="mt-4" />
           </>
 
           <>
-            <a className="flex flex-row items-center justify-between mt-4"
-            href="./cardUseRecordDetail">
+            <NavLink className="flex flex-row items-center justify-between mt-4"
+            to="./cardUseRecordDetail">
               <div className="flex flex-col justify-self-start">
                 <div className="text-gray-800">黑马程序员(前端进阶班)</div>
                 <div className="text-sm text-gray-400">
@@ -89,13 +91,13 @@ const CardUseReacrdsList = () => {
                   消费成功
                 </div>
               </div>
-            </a>
+            </NavLink>
             <hr className="mt-4" />
           </>
 
           <>
-            <a className="flex flex-row items-center justify-between mt-4"
-            href="./cardUseRecordDetail">
+            <NavLink className="flex flex-row items-center justify-between mt-4"
+            to="./cardUseRecordDetail">
               <div className="flex flex-col justify-self-start">
                 <div className="text-gray-800">黑马程序员(前端进阶班)</div>
                 <div className="text-sm text-gray-400">
@@ -109,13 +111,13 @@ const CardUseReacrdsList = () => {
                   消费成功
                 </div>
               </div>
-            </a>
+            </NavLink>
             <hr className="mt-4" />
           </>
 
           <>
-            <a className="flex flex-row items-center justify-between mt-4"
-            href="./cardUseRecordDetail">
+            <NavLink className="flex flex-row items-center justify-between mt-4"
+            to="./cardUseRecordDetail">
               <div className="flex flex-col justify-self-start">
                 <div className="text-gray-800">黑马程序员(前端进阶班)</div>
                 <div className="text-sm text-gray-400">
@@ -129,13 +131,13 @@ const CardUseReacrdsList = () => {
                   消费成功
                 </div>
               </div>
-            </a>
+            </NavLink>
             <hr className="mt-4" />
           </>
 
           <>
-            <a className="flex flex-row items-center justify-between mt-4"
-            href="./cardUseRecordDetail">
+            <NavLink className="flex flex-row items-center justify-between mt-4"
+            to="./cardUseRecordDetail">
               <div className="flex flex-col justify-self-start">
                 <div className="text-gray-800">黑马程序员(前端进阶班)</div>
                 <div className="text-sm text-gray-400">
@@ -149,13 +151,13 @@ const CardUseReacrdsList = () => {
                   消费成功
                 </div>
               </div>
-            </a>
+            </NavLink>
             <hr className="mt-4" />
           </>
 
           <>
-            <a className="flex flex-row items-center justify-between mt-4"
-            href="./cardUseRecordDetail">
+            <NavLink className="flex flex-row items-center justify-between mt-4"
+            to="./cardUseRecordDetail">
               <div className="flex flex-col justify-self-start">
                 <div className="text-gray-800">黑马程序员(前端进阶班)</div>
                 <div className="text-sm text-gray-400">
@@ -169,13 +171,13 @@ const CardUseReacrdsList = () => {
                   消费成功
                 </div>
               </div>
-            </a>
+            </NavLink>
             <hr className="mt-4" />
           </>
 
           <>
-            <a className="flex flex-row items-center justify-between mt-4"
-            href="./cardUseRecordDetail">
+            <NavLink className="flex flex-row items-center justify-between mt-4"
+            to="./cardUseRecordDetail">
               <div className="flex flex-col justify-self-start">
                 <div className="text-gray-800">黑马程序员(前端进阶班)</div>
                 <div className="text-sm text-gray-400">
@@ -189,13 +191,13 @@ const CardUseReacrdsList = () => {
                   消费成功
                 </div>
               </div>
-            </a>
+            </NavLink>
             <hr className="mt-4" />
           </>
 
           <>
-            <a className="flex flex-row items-center justify-between mt-4"
-            href="./cardUseRecordDetail">
+            <NavLink className="flex flex-row items-center justify-between mt-4"
+            to="./cardUseRecordDetail">
               <div className="flex flex-col justify-self-start">
                 <div className="text-gray-800">黑马程序员(前端进阶班)</div>
                 <div className="text-sm text-gray-400">
@@ -209,13 +211,13 @@ const CardUseReacrdsList = () => {
                   消费成功
                 </div>
               </div>
-            </a>
+            </NavLink>
             <hr className="mt-4" />
           </>
 
           <>
-            <a className="flex flex-row items-center justify-between mt-4"
-            href="./cardUseRecordDetail">
+            <NavLink className="flex flex-row items-center justify-between mt-4"
+            to="./cardUseRecordDetail">
               <div className="flex flex-col justify-self-start">
                 <div className="text-gray-800">黑马程序员(前端进阶班)</div>
                 <div className="text-sm text-gray-400">
@@ -229,13 +231,13 @@ const CardUseReacrdsList = () => {
                   消费成功
                 </div>
               </div>
-            </a>
+            </NavLink>
             <hr className="mt-4" />
           </>
 
           <>
-            <a className="flex flex-row items-center justify-between mt-4"
-            href="./cardUseRecordDetail">
+            <NavLink className="flex flex-row items-center justify-between mt-4"
+            to="./cardUseRecordDetail">
               <div className="flex flex-col justify-self-start">
                 <div className="text-gray-800">黑马程序员(前端进阶班)</div>
                 <div className="text-sm text-gray-400">
@@ -249,13 +251,13 @@ const CardUseReacrdsList = () => {
                   消费成功
                 </div>
               </div>
-            </a>
+            </NavLink>
             <hr className="mt-4" />
           </>
 
           <>
-            <a className="flex flex-row items-center justify-between mt-4"
-            href="./cardUseRecordDetail">
+            <NavLink className="flex flex-row items-center justify-between mt-4"
+            to="./cardUseRecordDetail">
               <div className="flex flex-col justify-self-start">
                 <div className="text-gray-800">黑马程序员(前端进阶班)</div>
                 <div className="text-sm text-gray-400">
@@ -269,7 +271,7 @@ const CardUseReacrdsList = () => {
                   消费成功
                 </div>
               </div>
-            </a>
+            </NavLink>
             <hr className="mt-4" />
           </>
         </div>
