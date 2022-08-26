@@ -89,12 +89,13 @@ const CardHome: FC = () => {
             </div>
           </a>
           <hr />
-          <div className="flex justify-between mt-4 mb-4">
+          <a className="flex justify-between mt-4 mb-4"
+          href="./cardProtocolDetail">
             <div className="text-lg">协议详情</div>
             <div>
             <svg className="w-6 h-6 "  width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <polyline points="9 6 15 12 9 18" /></svg>
             </div>
-          </div>
+          </a>
           <hr />
           <div className="flex justify-between mt-4 mb-4">
             <div className="text-lg">商家小程序</div>
