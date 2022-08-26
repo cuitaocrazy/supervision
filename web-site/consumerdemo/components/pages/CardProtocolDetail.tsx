@@ -9,22 +9,22 @@ const CardProtocolDetail=()=>{
       </IonHeader>
       <IonContent>
         <div className="bg-white scroll-auto">
-          <div className="flex flex-col items-center justify-center mx-2 my-2 rounded-lg shadow-lg">
+          <div className="flex flex-col justify-center mx-2 my-2 rounded-lg shadow-lg items-left">
           <div className="text-left">GF-2022-2604</div>
-          <div className="mt-6">中小学生校外培训服务合同</div>
-          <div className="mt-2">(2022年修订版)</div>
-          <div className="mt-20 text-right">制定部门：[教育部市场监管总局]</div>
-          <div className="mt-2">2022版</div>
-          <div className="mt-6 font-bold">使用说明</div>
-          <div className="mt-2">一、本合同文本为示范文本，供受培训者（学员）监护人与校外培训机构之间签订培训合同时参照使用，双方当事人也可使用本合同电子版在电子商务平台上签约。</div>
-          <div>二、合同双方当事人在签约之前应当仔细阅读本合同内容，特别是具有选择性、补充性、填充性、修改性的内容。</div>
-          <div>三、双方当事人应结合具体情况选定本合同文本的选择性条款（在方框内打“√”，以示双方确认），空白行供双方当事人自行约定或者补充约定。双方当事人可以对文本条款的内容进行修改、增补或删除，但不得随意减轻或者免除依法应当由校外培训机构承担的责任。合同签订生效后，未被修改的文本印刷文字视为双方同意内容。</div>
-          <div>四、本合同文本中涉及到的选择、填写内容以手写项为优先。</div>
-          <div>五、学前教育阶段培训机构可参考本示范文本制定符合自身特点的合同文本。</div>
-          <div>六、本合同文本所称校外培训机构是指，面向中小学生开展非学历其他文化教育培训的培训机构。合同签订前，培训机构应当出示办学许可证，营业执照（或事业单位法人证书、民办非企业单位登记证书）等证明文件。</div>
-          <div>七、本合同示范文本由教育部和市场监管总局联合制定。</div>
-          <div>合同编号：1243214314321</div>
-          <div>中小学生校外培训服务合同</div>
+          <div className="mt-6 text-center">中小学生校外培训服务合同</div>
+          <div className="mt-2 text-center">(2022年修订版)</div>
+          <div className="mt-20 text-center">制定部门：[教育部市场监管总局]</div>
+          <div className="mt-2 text-center">2022版</div>
+          <div className="mt-6 font-bold text-center">使用说明</div>
+          <div className="mt-2 indent-8">一、本合同文本为示范文本，供受培训者（学员）监护人与校外培训机构之间签订培训合同时参照使用，双方当事人也可使用本合同电子版在电子商务平台上签约。</div>
+          <div className="indent-8">二、合同双方当事人在签约之前应当仔细阅读本合同内容，特别是具有选择性、补充性、填充性、修改性的内容。</div>
+          <div className="indent-8">三、双方当事人应结合具体情况选定本合同文本的选择性条款（在方框内打“√”，以示双方确认），空白行供双方当事人自行约定或者补充约定。双方当事人可以对文本条款的内容进行修改、增补或删除，但不得随意减轻或者免除依法应当由校外培训机构承担的责任。合同签订生效后，未被修改的文本印刷文字视为双方同意内容。</div>
+          <div className="indent-8">四、本合同文本中涉及到的选择、填写内容以手写项为优先。</div>
+          <div className="indent-8">五、学前教育阶段培训机构可参考本示范文本制定符合自身特点的合同文本。</div>
+          <div className="indent-8">六、本合同文本所称校外培训机构是指，面向中小学生开展非学历其他文化教育培训的培训机构。合同签订前，培训机构应当出示办学许可证，营业执照（或事业单位法人证书、民办非企业单位登记证书）等证明文件。</div>
+          <div className="indent-8">七、本合同示范文本由教育部和市场监管总局联合制定。</div>
+          <div className="mt-4 font-bold text-right">合同编号：1243214314321</div>
+          <div className="my-4 text-2xl text-center">中小学生校外培训服务合同</div>
           <div>甲方（提供培训方）：</div>
           <div>机构名称（与营业执照或办学许可证一致）：          </div>
           <div>办学地址（与营业执照或办学许可证一致）：         </div>

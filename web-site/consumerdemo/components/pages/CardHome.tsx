@@ -10,6 +10,7 @@ const CardHome: FC = () => {
       </IonHeader>
       <IonContent>
       <div className="bg-white scroll-auto">
+        <a href="./cardQRcode">
         <div className="relative mx-6 mt-4 mb-6 text-white bg-gray-500 rounded-lg bg-gradient-to-r from-gray-400 to-gray-500">
           <img
             className="absolute bottom-0 right-0"
@@ -44,6 +45,7 @@ const CardHome: FC = () => {
             <div>yunfei liu</div>
           </div>
         </div>
+        </a>
         {/* 余额和权益 */}
         <div className="flex flex-row justify-around">
           <div className="flex flex-col items-center justify-center">
