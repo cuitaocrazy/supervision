@@ -11,6 +11,7 @@ const CardHome: FC = () => {
       </IonHeader>
       <IonContent>
       <div className="bg-white scroll-auto">
+        <NavLink to="./cardQRcode">
         <div className="relative mx-6 mt-4 mb-6 text-white bg-gray-500 rounded-lg bg-gradient-to-r from-gray-400 to-gray-500">
           <img
             className="absolute bottom-0 right-0"
@@ -57,6 +58,7 @@ const CardHome: FC = () => {
             <div className="text-lg font-bold text-orange-400">32</div>
           </div>
         </div>
+        </NavLink>
         {/* 查看权益 */}
         <NavLink className="flex items-center justify-center mt-10 mb-10"
          to="./cardRightsAndInterests">
@@ -90,12 +92,13 @@ const CardHome: FC = () => {
             </div>
           </NavLink>
           <hr />
-          <div className="flex justify-between mt-4 mb-4">
+          <NavLink className="flex justify-between mt-4 mb-4"
+          to="./cardProtocolDetail">
             <div className="text-lg">协议详情</div>
             <div>
             <svg className="w-6 h-6 "  width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <polyline points="9 6 15 12 9 18" /></svg>
             </div>
-          </div>
+          </NavLink>
           <hr />
           <div className="flex justify-between mt-4 mb-4">
             <div className="text-lg">商家小程序</div>
