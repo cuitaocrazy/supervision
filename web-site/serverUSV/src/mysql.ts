@@ -15,9 +15,10 @@ import { SupervisorOrg } from './entity/SupervisorOrg';
 import { SupervisorUser } from './entity/SupervisorUser';
 import { Transfer } from './entity/Transfer';
 import { ChainCode } from './entity/ChainCode';
+
 const datasource = new DataSource({
     type: "mysql",
-    host: "localhost",
+    host: process.env.DB_HOST || "localhost",
     port: 3306,
     username: "yadadb",
     password: "yadadb",
@@ -26,7 +27,7 @@ const datasource = new DataSource({
     logging: true,
     entities: [Announcement, Attendance, Complaint, Consumer, ConsumerStudent,
         Contract, ContractNego, EduLesson, EduOrg, EduTeacher, SupervisorBlackEdu,
-        SupervisorOrg, SupervisorUser, Transfer,ChainCode],
+        SupervisorOrg, SupervisorUser, Transfer, ChainCode],
     subscribers: [],
     migrations: [],
     namingStrategy: new SnakeNamingStrategy(),

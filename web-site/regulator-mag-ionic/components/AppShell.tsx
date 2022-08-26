@@ -46,8 +46,8 @@ import ChangePwd from './pages/ChangePwd';
 import ComplaintStatistic from './pages/statistics/complaint';
 import BaseInfoDetail from './pages/baseInfo/Detail';
 import BaseInfoEdit from './pages/baseInfo/Edit';
-import ChainCode from './pages/ChainCodeInfo'
-import ChainCodeSignSum from './pages/chainCodeSignSum'
+import ChainCode from './pages/ChainCodeInfo';
+import ChainCodeSignSum from './pages/ChainCodeSignSum';
 
 // 装载ionic样式，ionic6 必须执行。
 setupIonicReact();
@@ -64,10 +64,7 @@ const AppShell = () => {
     <AppContextProvider>
       <IonApp>
         <IonReactRouter>
-          <IonSplitPane
-            contentId="main"
-            className="bg-gray-300 shadow-lg"
-          >
+          <IonSplitPane contentId="main" className="bg-gray-300 shadow-lg">
             <Menu />
             <IonRouterOutlet id="main">
               {/* <Route path="/tabs" render={() => <Tabs />} /> */}
@@ -78,7 +75,11 @@ const AppShell = () => {
               <Route path="/tabs/attendance/detail" component={AttendanceDetail} exact={true} />
               <Route path="/tabs/changePwd" component={ChangePwd} exact={true}></Route>
               <Route path="/tabs/supervisorOrg/query" component={SuperVisorOrgQuery} exact={true} />
-              <Route path="/tabs/supervisorOrg/detail" component={SuperVisorOrgDetail} exact={true} />
+              <Route
+                path="/tabs/supervisorOrg/detail"
+                component={SuperVisorOrgDetail}
+                exact={true}
+              />
               <Route path="/tabs/supervisorOrg/edit" component={SuperVisorOrgEdit} exact={true} />
               <Route path="/tabs/black/query" component={Black} exact={true} />
               <Route path="/tabs/black/detail" component={BlackDetail} exact={true} />
@@ -109,8 +110,12 @@ const AppShell = () => {
               <Route path="/tabs/statistics/student" component={Student} exact={true} />
               <Route path="/tabs/statistics/income" component={Income} exact={true} />
               <Route path="/tabs/chainCode/query" component={ChainCode} exact={true} />
-              <Route path="/tabs/chainCodeSignSum/query" component={ChainCodeSignSum} exact={true} />
-              
+              <Route
+                path="/tabs/chainCodeSignSum/query"
+                component={ChainCodeSignSum}
+                exact={true}
+              />
+
               <Route
                 path="/tabs/statistics/complaint"
                 component={ComplaintStatistic}

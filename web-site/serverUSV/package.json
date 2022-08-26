@@ -8,6 +8,7 @@
     "cleandevdb": "docker-compose -f ./docker/docker-compose.yml down -v",
     "dev": "npx tsc && node ./dist/server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
+    "demo": "npm i && npm run dev",
     "typeorm": "typeorm-ts-node-commonjs"
   },
   "author": "",

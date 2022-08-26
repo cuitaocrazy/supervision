@@ -1,6 +1,6 @@
 
 const nextConfig = {
-  basePath: '',
+  basePath: '/consumer',
 }
 
 module.exports = nextConfig
