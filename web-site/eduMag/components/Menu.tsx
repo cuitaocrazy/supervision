@@ -71,7 +71,7 @@ const Menu = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent>
-        <div className=" flex flex-col items-center justify-start w-full h-auto px-6 text-white bg-primary-600 scroll-auto">
+        <div className="flex flex-col items-center justify-start w-full h-full px-6 text-white bg-primary-600 scroll-auto">
           <Link
             className="flex items-center justify-start w-full px-3 py-2 mt-2 space-x-6 rounded-lg hover:text-white focus:bg-primary-500 focus:text-white hover:bg-primary-500 focus:rounded-lg md:w-52"
             to="/tabs/home"
