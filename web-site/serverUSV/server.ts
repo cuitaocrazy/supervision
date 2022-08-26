@@ -152,6 +152,16 @@ app.get('/edu/transaction/find', async (req, res) => {
   res.send(r)
 })
 
+app.get('/edu/transaction/sum', async (req, res) => {
+  console.log(`教育机构: 查询流水信息: 条件[${JSON.stringify(req.query)}]`)
+  const loginName = req.query.loginName;
+  const edu = await EduService.findByLoginName(loginName)
+
+  const r = await eduTransactionService.sum(edu.eduSupervisedAccount)
+  res.send(r)
+})
+
+
 app.post('/edu/teacher/create',jsonParser, async (req, res) => {
   console.log(`教育机构: 新增教师: 条件[${JSON.stringify(req.body)}]`)
   console.log(req.body)

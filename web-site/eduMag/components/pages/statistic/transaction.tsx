@@ -82,8 +82,6 @@ const Transaction: React.FC = () => {
   };
   useEffect(onQuery, []);
 
-  const { state } = useContext(AppContext);
-  console.log(state);
   const ListEntry = ({ record, ...props }: { record: any }) => (
     <tr className="grid items-center grid-cols-7 gap-2 text-gray-600 border justify-items-center even:bg-white odd:bg-primary-100 ">
       <td className="flex items-center justify-center leading-10">
@@ -209,7 +207,7 @@ const Transaction: React.FC = () => {
           <table className="w-11/12">
             <thead>
               <tr className="grid items-center h-10 grid-cols-7 gap-2 font-bold text-gray-700 bg-white rounded-lg justify-items-center">
-                <th className="flex items-center justify-center">交易ID</th>
+                <th className="flex items-center justify-center ">交易ID</th>
                 <th className="flex items-center justify-center">合同号</th>
                 <th className="flex items-center justify-center">金额</th>
                 <th className="flex items-center justify-center">交易日期</th>
