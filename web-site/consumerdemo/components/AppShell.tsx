@@ -48,6 +48,14 @@ import Demo from "./pages/Demo";
 import Setting from "./pages/Setting";
 import MyDiscussList from "./pages/MyDiscussList";
 import MyDiscussDetail from "./pages/MyDiscussDetail";
+import CardList from "./pages/CardList";
+import CardHome from "./pages/CardHome";
+import CardRightsAndInterests from "./pages/CardRightsAndInterests";
+import CardUseRecordsList from "./pages/CardUseRecordsList";
+import CardUseRecordDetail from "./pages/CardUseRecordDetail";
+import CardDetail from "./pages/CardDetail";
+import CardProtocolDetail from "./pages/CardProtocolDetail";
+import CardQRcode from "./pages/CardQRcode";
 import { AppContextProvider } from "../appState";
 
 // 装载ionic样式，ionic6 必须执行。
@@ -140,6 +148,26 @@ const AppShell = () => {
                 path="/myDiscussDetail"
                 render={() => <MyDiscussDetail />}
               />
+              <Route path="/cardList" render={() => <CardList />} />
+              <Route path="/cardHome" render={() => <CardHome />} />
+              <Route
+                path="/cardRightsAndInterests"
+                render={() => <CardRightsAndInterests />}
+              />
+              <Route
+                path="/cardUseRecordsList"
+                render={() => <CardUseRecordsList />}
+              />
+              <Route
+                path="/cardUseRecordDetail"
+                render={() => <CardUseRecordDetail />}
+              />
+              <Route path="/cardDetail" render={() => <CardDetail />} />
+              <Route
+                path="/cardProtocolDetail"
+                render={() => <CardProtocolDetail />}
+              />
+              <Route path="/cardQRcode" render={() => <CardQRcode />} />
               <Route
                 exact={true}
                 path="/"
@@ -152,5 +180,4 @@ const AppShell = () => {
     </AppContextProvider>
   );
 };
-
 export default AppShell;

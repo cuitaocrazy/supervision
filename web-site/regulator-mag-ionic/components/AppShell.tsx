@@ -49,6 +49,10 @@ import BaseInfoEdit from './pages/baseInfo/Edit';
 import ChainCode from './pages/ChainCodeInfo';
 import ChainCodeSignSum from './pages/ChainCodeSignSum';
 
+import RefundStatistic from './pages/statistics/refund';
+import BalanceStatistic from './pages/statistics/balance';
+import TransactionStatistic from './pages/statistics/transaction';
+
 // 装载ionic样式，ionic6 必须执行。
 setupIonicReact();
 window.matchMedia('(prefers-color-scheme: dark)').addListener(async status => {
@@ -116,6 +120,13 @@ const AppShell = () => {
                 exact={true}
               />
 
+              <Route path="/tabs/statistics/refund" component={RefundStatistic} exact={true} />
+              <Route path="/tabs/statistics/balance" component={BalanceStatistic} exact={true} />
+              <Route
+                path="/tabs/statistics/transaction"
+                component={TransactionStatistic}
+                exact={true}
+              />
               <Route
                 path="/tabs/statistics/complaint"
                 component={ComplaintStatistic}

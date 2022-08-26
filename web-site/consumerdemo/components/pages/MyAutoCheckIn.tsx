@@ -46,6 +46,7 @@ const MyAutoCheckIn = () => {
           message:"自动签到成功",
           duration:3000,
           position:"middle",
+          
         });
       } else 
       present({

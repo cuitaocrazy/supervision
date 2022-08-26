@@ -4,6 +4,7 @@ import { EduOrg } from '../entity/EduOrg'
 import { EduTeacher } from '../entity/EduTeacher'
 import { Attendance } from '../entity/Attendance'
 import {Transfer} from '../entity/Transfer'
+import {Transaction} from '../entity/Transaction'
 
 import mysql from '../mysql'
 import {nullableFuzzy} from '../Util'
@@ -154,6 +155,11 @@ export const saveAttendance =  async (attendance) => {
     const result = await mysql.getRepository(Attendance).save(attendance)
     return result
 }
+
+export const saveTransaction =  async (transaction) => {
+    const result = await mysql.getRepository(Transaction).save(transaction)
+    return result
+} 
 
 
 

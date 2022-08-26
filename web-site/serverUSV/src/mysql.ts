@@ -15,22 +15,22 @@ import { SupervisorOrg } from './entity/SupervisorOrg';
 import { SupervisorUser } from './entity/SupervisorUser';
 import { Transfer } from './entity/Transfer';
 import { ChainCode } from './entity/ChainCode';
-
+import { Transaction } from './entity/Transaction'
 const datasource = new DataSource({
-    type: "mysql",
-    host: process.env.DB_HOST || "localhost",
-    port: 3306,
-    username: "yadadb",
-    password: "yadadb",
-    database: "yadadb",
-    synchronize: false,
-    logging: true,
-    entities: [Announcement, Attendance, Complaint, Consumer, ConsumerStudent,
-        Contract, ContractNego, EduLesson, EduOrg, EduTeacher, SupervisorBlackEdu,
-        SupervisorOrg, SupervisorUser, Transfer, ChainCode],
-    subscribers: [],
-    migrations: [],
-    namingStrategy: new SnakeNamingStrategy(),
+        type: "mysql",
+        host: "localhost",
+        port: 3306,
+        username: "yadadb",
+        password: "yadadb",
+        database: "yadadb",
+        synchronize: false,
+        logging: true,
+        entities: [Announcement, Attendance, Complaint, Consumer, ConsumerStudent,
+                Contract, ContractNego, EduLesson, EduOrg, EduTeacher, SupervisorBlackEdu,
+                SupervisorOrg, SupervisorUser, Transfer, ChainCode, Transaction],
+        subscribers: [],
+        migrations: [],
+        namingStrategy: new SnakeNamingStrategy(),
 })
 datasource.initialize()
 export default datasource;
