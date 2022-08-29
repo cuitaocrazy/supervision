@@ -111,7 +111,7 @@ export const SupervisorAccount: React.FC = () => {
           </div>
         </div> */}
         <div className="w-11/12 h-screen px-4 py-2 mt-4 bg-white rounded-lg">
-          <span className="font-bold">监管账户汇总</span>
+          <span className="font-bold">交易汇总</span>
           <hr className="mt-2 mb-4" />
           <div className="flex flex-col items-center justify-center">
             <div className="flex items-center justify-center w-screen h-96">
