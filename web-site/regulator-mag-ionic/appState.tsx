@@ -14,672 +14,680 @@ import {
   SupervisorOrg,
   Black,
   ChainCode,
-  ChainCodeSignSum
-} from './types/types'
+  ChainCodeSignSum,
+} from './types/types';
 /**
  * This is a simple redux-like state management pattern for React using hooks
  * that might be useful in your simpler Ionic React apps that don't
  * require something as complex as Redux.
- * 
+ *
  * See each page for an example of how to read from state and
  * dispatch actions.
- * 
+ *
  * Learn more:
  * https://ionicframework.com/blog/a-state-management-pattern-for-ionic-react-with-react-hooks/
  */
 const initialState = {
-
-  backPage:undefined,
-  loginUser:{//登录用户信息
-    orgId:null,
-    orgName:null,
-    loginName:null,
-    username:null,
-    phone:null,
-    role:null,
+  backPage: undefined,
+  loginUser: {
+    //登录用户信息
+    orgId: null,
+    orgName: null,
+    loginName: null,
+    username: null,
+    phone: null,
+    role: null,
   },
-  supervisorOrg:{//监管机构信息
-    supervisorOrgList:[],
-    supervisorOrgDetail:null,
-    supervisorOrgEdit:null,
+  supervisorOrg: {
+    //监管机构信息
+    supervisorOrgList: [],
+    supervisorOrgDetail: null,
+    supervisorOrgEdit: null,
   },
-  userInfo:{
-    userInfoList:[],
-    userInfoDetail:null,
+  userInfo: {
+    userInfoList: [],
+    userInfoDetail: null,
   },
-  contract:{//合同
-    contractList:[],
-    contractDetail:null
+  contract: {
+    //合同
+    contractList: [],
+    contractDetail: null,
   },
-  lesson:{//课程
-    lessonList:[],
-    lessonDetail:null,
-    lessonAduit:null
+  lesson: {
+    //课程
+    lessonList: [],
+    lessonDetail: null,
+    lessonAduit: null,
   },
-  teacher:{//教师
-    teacherDetail:null,
-    teacherList:[]
+  teacher: {
+    //教师
+    teacherDetail: null,
+    teacherList: [],
   },
-  black:{
-    blackList:[],
-    blackDetail:null,
+  black: {
+    blackList: [],
+    blackDetail: null,
   },
-  attendance:{//考勤
-    attendanceList:[],
-    attendanceDetail:null
+  attendance: {
+    //考勤
+    attendanceList: [],
+    attendanceDetail: null,
   },
-  transfer:{//转让
-    transferList:[],
-    transferDetail:null
+  transfer: {
+    //转让
+    transferList: [],
+    transferDetail: null,
   },
-  eduOrg:{//教育机构
-    eduOrgList:[],
-    eduOrgDetail:null,
-    eduOrgEdit:null,
+  eduOrg: {
+    //教育机构
+    eduOrgList: [],
+    eduOrgDetail: null,
+    eduOrgEdit: null,
   },
-  announcement:{//公告
-    announcementList:[],
-    announcementDetail:null,
-    announcementEdit:null,
+  announcement: {
+    //公告
+    announcementList: [],
+    announcementDetail: null,
+    announcementEdit: null,
   },
-  complaint:{//投诉
-    complaintList:[],
-    complaintDetail:null
+  complaint: {
+    //投诉
+    complaintList: [],
+    complaintDetail: null,
   },
-  consumerStundent:{//消费者学员
-    consumerLoginName:null,
-    consumerName:null,
-    consumerPhone:null,
-    consumerIdentityNo:null,
+  consumerStundent: {
+    //消费者学员
+    consumerLoginName: null,
+    consumerName: null,
+    consumerPhone: null,
+    consumerIdentityNo: null,
   },
-  contractNego:{//合同谈判
-    contractNegoList:[],
-    contractNegoDetail:null
+  contractNego: {
+    //合同谈判
+    contractNegoList: [],
+    contractNegoDetail: null,
   },
-  transferManual:{// 手动划拨
-    transferManualList:[],
-    transferManualConfirm:null
+  transferManual: {
+    // 手动划拨
+    transferManualList: [],
+    transferManualConfirm: null,
   },
-  chainCode:{// 链码部署信息
-    chainCodeList:[],
+  chainCode: {
+    // 链码部署信息
+    chainCodeList: [],
   },
-  chainCodeSignSum:{
-    chainCodeSignSumInfo:null
-  }
-
+  chainCodeSignSum: {
+    chainCodeSignSumInfo: null,
+  },
 };
-export const AppContext = React.createContext<{state:any,dispatch:React.Dispatch<any>}>({state:initialState,dispatch:()=>{}});
+export const AppContext = React.createContext<{ state: any; dispatch: React.Dispatch<any> }>({
+  state: initialState,
+  dispatch: () => {},
+});
 
-export const AppContextProvider = (props: { children: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined; }) => {
+export const AppContextProvider = (props: {
+  children: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined;
+}) => {
   const fullInitialState = {
     ...initialState,
-  }
+  };
   let [state, dispatch] = React.useReducer(reducer, fullInitialState);
-  let value = { state:state, dispatch:dispatch };
-  return <AppContext.Provider value={value}>{props.children}</AppContext.Provider>
-} 
+  let value = { state: state, dispatch: dispatch };
+  return <AppContext.Provider value={value}>{props.children}</AppContext.Provider>;
+};
 
-export const setloginUser = (loginUser:any) => {
+export const setloginUser = (loginUser: any) => {
   return {
     type: 'setloginUser',
-    loginUser:loginUser
-  }
+    loginUser: loginUser,
+  };
 };
 
-export const setUserInfoList = (userInfoList:SupervisorUser[]) => {
+export const setUserInfoList = (userInfoList: SupervisorUser[]) => {
   return {
     type: 'setUserInfoList',
-    userInfoList:userInfoList
-  }
+    userInfoList: userInfoList,
+  };
 };
 
-export const setUserInfoDetail = (userInfoDetail?:SupervisorUser) => {
+export const setUserInfoDetail = (userInfoDetail?: SupervisorUser) => {
   return {
     type: 'setUserInfoDetail',
-    userInfoDetail:userInfoDetail
-  }
+    userInfoDetail: userInfoDetail,
+  };
 };
 
-export const setUserInfoEdit = (userInfoEdit:SupervisorUser) => {
+export const setUserInfoEdit = (userInfoEdit: SupervisorUser) => {
   return {
     type: 'setUserInfoEdit',
-    userInfoEdit:userInfoEdit
-  }
+    userInfoEdit: userInfoEdit,
+  };
 };
 
-
-
-export const setChainCodeList = (chainCodeList:ChainCode[]) => {
+export const setChainCodeList = (chainCodeList: ChainCode[]) => {
   return {
     type: 'setChainCodeList',
-    chainCodeList:chainCodeList
-  }
-}
+    chainCodeList: chainCodeList,
+  };
+};
 
-export const setChainCodeSignSumInfo = (chainCodeSignSumInfo:ChainCodeSignSum) => {
+export const setChainCodeSignSumInfo = (chainCodeSignSumInfo: ChainCodeSignSum) => {
   return {
     type: 'setChainCodeSignSumInfo',
-    chainCodeSignSumInfo:chainCodeSignSumInfo
-  }
-}
+    chainCodeSignSumInfo: chainCodeSignSumInfo,
+  };
+};
 
-export const setContractList = (contractList:Contract[]) => {
+export const setContractList = (contractList: Contract[]) => {
   return {
     type: 'setContractList',
-    contractList:contractList
-  }
-}
+    contractList: contractList,
+  };
+};
 
-export const setContractDetail = (contractDetail:Contract) => {
+export const setContractDetail = (contractDetail: Contract) => {
   return {
     type: 'setContractDetail',
-    contractDetail:contractDetail
-  }
-}
-export const setLessonList = (lessonList:Lesson[]) => {
+    contractDetail: contractDetail,
+  };
+};
+export const setLessonList = (lessonList: Lesson[]) => {
   return {
     type: 'setLessonList',
-    lessonList:lessonList
-  }
-}
-export const setLessonDetail = (lessonDetail?:Lesson) => {
+    lessonList: lessonList,
+  };
+};
+export const setLessonDetail = (lessonDetail?: Lesson) => {
   return {
     type: 'setLessonDetail',
-    lessonDetail:lessonDetail
-  }
-}
-export const setLessonAudit = (lessonAudit?:Lesson) => {
+    lessonDetail: lessonDetail,
+  };
+};
+export const setLessonAudit = (lessonAudit?: Lesson) => {
   return {
     type: 'setLessonAudit',
-    lessonAudit:lessonAudit
-  }
-}
-export const setTeacherList = (teacherList:Teacher[]) => {
+    lessonAudit: lessonAudit,
+  };
+};
+export const setTeacherList = (teacherList: Teacher[]) => {
   return {
     type: 'setTeacherList',
-    teacherList:teacherList
-  }
-}
-export const setTeacherDetail = (teacherDetail?:Teacher) => {
+    teacherList: teacherList,
+  };
+};
+export const setTeacherDetail = (teacherDetail?: Teacher) => {
   return {
     type: 'setTeacherDetail',
-    teacherDetail:teacherDetail
-  }
-}
-export const setAttendanceList = (attendanceList:Attendance[]) => {
+    teacherDetail: teacherDetail,
+  };
+};
+export const setAttendanceList = (attendanceList: Attendance[]) => {
   return {
     type: 'setAttendanceList',
-    attendanceList:attendanceList
-  }
-}
-export const setAttendanceDetail = (attendanceDetail:Attendance) => {
+    attendanceList: attendanceList,
+  };
+};
+export const setAttendanceDetail = (attendanceDetail: Attendance) => {
   return {
     type: 'setAttendanceDetail',
-    attendanceDetail:attendanceDetail
-  }
-}
-export const setTransferList = (transferList:Transfer[]) => {
+    attendanceDetail: attendanceDetail,
+  };
+};
+export const setTransferList = (transferList: Transfer[]) => {
   return {
     type: 'setTransferList',
-    transferList:transferList
-  }
-}
-export const setTransferDetail = (transferDetail:Transfer) => {
+    transferList: transferList,
+  };
+};
+export const setTransferDetail = (transferDetail: Transfer) => {
   return {
     type: 'setTransferDetail',
-    transferDetail:transferDetail
-  }
-}
-export const setEduOrgList = (eduOrgList:EduOrg[]) => {
+    transferDetail: transferDetail,
+  };
+};
+export const setEduOrgList = (eduOrgList: EduOrg[]) => {
   return {
     type: 'setEduOrgList',
-    eduOrgList:eduOrgList
-  }
-}
-export const setEduOrgDetail = (eduOrgDetail?:EduOrg) => {
+    eduOrgList: eduOrgList,
+  };
+};
+export const setEduOrgDetail = (eduOrgDetail?: EduOrg) => {
   return {
     type: 'setEduOrgDetail',
-    eduOrgDetail:eduOrgDetail
-  }
-}
-export const setEduOrgEdit = (eduOrgEdit?:EduOrg) => {
+    eduOrgDetail: eduOrgDetail,
+  };
+};
+export const setEduOrgEdit = (eduOrgEdit?: EduOrg) => {
   return {
     type: 'setEduOrgEdit',
-    eduOrgEdit:eduOrgEdit
-  }
-}
+    eduOrgEdit: eduOrgEdit,
+  };
+};
 
-
-export const setAnnouncementList = (announcementList:Announcement[]) => {
+export const setAnnouncementList = (announcementList: Announcement[]) => {
   return {
     type: 'setAnnouncementList',
-    announcementList:announcementList
-  }
-}
-export const setAnnouncementDetail = (announcementDetail:Announcement) => {
+    announcementList: announcementList,
+  };
+};
+export const setAnnouncementDetail = (announcementDetail: Announcement) => {
   return {
     type: 'setAnnouncementDetail',
-    announcementDetail:announcementDetail
-  }
-}
+    announcementDetail: announcementDetail,
+  };
+};
 
-export const setAnnouncementEdit = (announcementEdit:Announcement) => {
+export const setAnnouncementEdit = (announcementEdit: Announcement) => {
   return {
     type: 'setAnnouncementEdit',
-    announcementEdit:announcementEdit
-  }
-}
+    announcementEdit: announcementEdit,
+  };
+};
 
-export const setBlackList = (blackList:Black[]) => {
+export const setBlackList = (blackList: Black[]) => {
   return {
     type: 'setBlackList',
-    blackList:blackList
-  }
-}
-export const setBlackDetail = (blackDetail:Black) => {
+    blackList: blackList,
+  };
+};
+export const setBlackDetail = (blackDetail: Black) => {
   return {
     type: 'setBlackDetail',
-    blackDetail:blackDetail
-  }
-}
+    blackDetail: blackDetail,
+  };
+};
 
-
-
-
-export const setComplaintList = (complaintList:Complaint[]) => {
+export const setComplaintList = (complaintList: Complaint[]) => {
   return {
     type: 'setComplaintList',
-    complaintList:complaintList
-  }
-}
-export const setComplaintDetail = (complaintDetail:Complaint) => {
+    complaintList: complaintList,
+  };
+};
+export const setComplaintDetail = (complaintDetail: Complaint) => {
   return {
     type: 'setComplaintDetail',
-    complaintDetail:complaintDetail
-  }
-}
-export const setConsumerStundent = (consumerStundent:ConsumerStudent) => {
+    complaintDetail: complaintDetail,
+  };
+};
+export const setConsumerStundent = (consumerStundent: ConsumerStudent) => {
   return {
     type: 'setConsumerStundent',
-    consumerStundent:consumerStundent
-  }
-}
-export const setContractNegoList = (contractNegoList:ContractNego[]) => {
+    consumerStundent: consumerStundent,
+  };
+};
+export const setContractNegoList = (contractNegoList: ContractNego[]) => {
   return {
     type: 'setContractNegoList',
-    contractNegoList:contractNegoList
-  }
-}
-export const setContractNegoDetail = (contractNegoDetail:ContractNego) => {
+    contractNegoList: contractNegoList,
+  };
+};
+export const setContractNegoDetail = (contractNegoDetail: ContractNego) => {
   return {
     type: 'setContractNegoDetail',
-    contractNegoDetail:contractNegoDetail
-  }
-}
+    contractNegoDetail: contractNegoDetail,
+  };
+};
 
-
-export const setSupervisorOrgList = (supervisorOrgList:SupervisorOrg[]) => {
+export const setSupervisorOrgList = (supervisorOrgList: SupervisorOrg[]) => {
   return {
     type: 'setSupervisorOrgList',
-    supervisorOrgList:supervisorOrgList
-  }
-}
-export const setSupervisorOrgDetail = (supervisorOrgDetail?:SupervisorOrg) => {
+    supervisorOrgList: supervisorOrgList,
+  };
+};
+export const setSupervisorOrgDetail = (supervisorOrgDetail?: SupervisorOrg) => {
   return {
     type: 'setSupervisorOrgDetail',
-    supervisorOrgDetail:supervisorOrgDetail
-  }
-}
-export const setSupervisorOrgEdit = (supervisorOrgEdit:SupervisorOrg) => {
+    supervisorOrgDetail: supervisorOrgDetail,
+  };
+};
+export const setSupervisorOrgEdit = (supervisorOrgEdit: SupervisorOrg) => {
   return {
     type: 'setSupervisorOrgList',
-    supervisorOrgEdit:supervisorOrgEdit
-  }
-}
-export const setTransferManualList = (transferManualList:Transfer[]) => {
+    supervisorOrgEdit: supervisorOrgEdit,
+  };
+};
+export const setTransferManualList = (transferManualList: Transfer[]) => {
   return {
     type: 'setTransferManualList',
-    transferManualList:transferManualList
-  }
-}
-
+    transferManualList: transferManualList,
+  };
+};
 
 export const reducer = (state: any, action: any) => {
-  console.log('action')
-  console.log(action)
+  console.log('action');
+  console.log(action);
   switch (action.type) {
     //new
-    
+
     case 'setloginUser': {
       return {
         ...state,
-        loginUser:action.loginUser
-      }
+        loginUser: action.loginUser,
+      };
     }
-    case 'setEduOrgList':{
+    case 'setEduOrgList': {
       return {
         ...state,
-        eduOrg:{
+        eduOrg: {
           ...state.eduOrg,
-          eduOrgList:action.eduOrgList
-        }
-      }
+          eduOrgList: action.eduOrgList,
+        },
+      };
     }
-    case 'setEduOrgDetail':{
+    case 'setEduOrgDetail': {
       return {
         ...state,
-        eduOrg:{
+        eduOrg: {
           ...state.eduOrg,
-          eduOrgDetail:action.eduOrgDetail
-        }
-      }
+          eduOrgDetail: action.eduOrgDetail,
+        },
+      };
     }
-    case 'setSupervisorOrgList':{
+    case 'setSupervisorOrgList': {
       return {
         ...state,
-        supervisorOrg:{
+        supervisorOrg: {
           ...state.supervisorOrg,
-          supervisorOrgList:action.supervisorOrgList
-        }
-      }
+          supervisorOrgList: action.supervisorOrgList,
+        },
+      };
     }
-    case 'setSupervisorOrgDetail':{
+    case 'setSupervisorOrgDetail': {
       return {
         ...state,
-        supervisorOrg:{
+        supervisorOrg: {
           ...state.supervisorOrg,
-          supervisorOrgDetail:action.supervisorOrgDetail
-        }
-      }
+          supervisorOrgDetail: action.supervisorOrgDetail,
+        },
+      };
     }
-    case 'setSupervisorOrgEdit':{
+    case 'setSupervisorOrgEdit': {
       return {
         ...state,
-        supervisorOrg:{
+        supervisorOrg: {
           ...state.supervisorOrg,
-          supervisorOrgEdit:action.supervisorOrgEdit
-        }
-      }
+          supervisorOrgEdit: action.supervisorOrgEdit,
+        },
+      };
     }
-    case 'setEduOrgEdit':{
+    case 'setEduOrgEdit': {
       return {
         ...state,
-        eduOrg:{
+        eduOrg: {
           ...state.eduOrg,
-          eduOrgEdit:action.eduOrgEdit
-        }
-      }
+          eduOrgEdit: action.eduOrgEdit,
+        },
+        backPage: action.backPage || state.backPage,
+      };
     }
-
 
     case 'setUserInfoList': {
       return {
         ...state,
-        userInfo:{
-          userInfoList:action.userInfoList,
-          userInfoDetail:state.userInfo.userInfoDetail
+        userInfo: {
+          userInfoList: action.userInfoList,
+          userInfoDetail: state.userInfo.userInfoDetail,
         },
-        backPage:action.backPage||state.backPage
-      }
+        backPage: action.backPage || state.backPage,
+      };
     }
     case 'setUserInfoDetail': {
       return {
         ...state,
-        userInfo:{
-          userInfoList:state.userInfo.userInfoList,
-          userInfoDetail:action.userInfoDetail
+        userInfo: {
+          userInfoList: state.userInfo.userInfoList,
+          userInfoDetail: action.userInfoDetail,
         },
-        backPage:action.backPage||state.backPage
-      }
+        backPage: action.backPage || state.backPage,
+      };
     }
     case 'setUserInfoEdit': {
       return {
         ...state,
-        userInfo:{
-          userInfoList:state.userInfo.userInfoList,
-          userInfoEdit:action.userInfoEdit
+        userInfo: {
+          userInfoList: state.userInfo.userInfoList,
+          userInfoEdit: action.userInfoEdit,
         },
-        backPage:action.backPage||state.backPage
-      }
+        backPage: action.backPage || state.backPage,
+      };
     }
-    case 'setChainCodeList':{
+    case 'setChainCodeList': {
       return {
         ...state,
-        chainCode:{
-          chainCodeList:action.chainCodeList
+        chainCode: {
+          chainCodeList: action.chainCodeList,
         },
-        backPage:action.backPage||state.backPage
-      }
+        backPage: action.backPage || state.backPage,
+      };
     }
-    case 'setChainCodeSignSumInfo':{
+    case 'setChainCodeSignSumInfo': {
       return {
         ...state,
-        chainCodeSignSum:{
-          chainCodeSignSumInfo:action.chainCodeSignSumInfo
+        chainCodeSignSum: {
+          chainCodeSignSumInfo: action.chainCodeSignSumInfo,
         },
-        backPage:action.backPage||state.backPage
-      }
+        backPage: action.backPage || state.backPage,
+      };
     }
-    case 'setContractList':{
+    case 'setContractList': {
       return {
         ...state,
-        contract:{
-          contractList:action.contractList,
-          contractDetail:state.contract.contractDetail
+        contract: {
+          contractList: action.contractList,
+          contractDetail: state.contract.contractDetail,
         },
-        backPage:action.backPage||state.backPage
-      }
+        backPage: action.backPage || state.backPage,
+      };
     }
-    case 'setContractDetail':{
+    case 'setContractDetail': {
       return {
         ...state,
-        contract:{
-          contractList:state.contract.contractList,
-          contractDetail:action.contractDetail
+        contract: {
+          contractList: state.contract.contractList,
+          contractDetail: action.contractDetail,
         },
-        backPage:action.backPage||state.backPage
-      }
+        backPage: action.backPage || state.backPage,
+      };
     }
-    case 'setLessonList':{
+    case 'setLessonList': {
       return {
         ...state,
-        lesson:{
-          lessonList:action.lessonList,
-          lessonDetail:state.lesson.lessonDetail
+        lesson: {
+          lessonList: action.lessonList,
+          lessonDetail: state.lesson.lessonDetail,
         },
-        backPage:action.backPage||state.backPage
-      }
+        backPage: action.backPage || state.backPage,
+      };
     }
-    case 'setLessonDetail':{
-      return {   
-        ...state,
-        lesson:{
-          lessonList:state.lesson.lessonList,
-          lessonDetail:action.lessonDetail
-        },
-        backPage:action.backPage||state.backPage
-      }
-    }
-    case 'setLessonAudit':{
-      return {   
-        ...state,
-        lesson:{
-          lessonList:state.lesson.lessonList,
-          lessonAudit:action.lessonAudit
-        },
-        backPage:action.backPage||state.backPage
-      }
-    }
-    case 'setTeacherList':{
+    case 'setLessonDetail': {
       return {
         ...state,
-        teacher:{
-          teacherList:action.teacherList,
-          teacherDetail:state.teacher.teacherDetail
+        lesson: {
+          lessonList: state.lesson.lessonList,
+          lessonDetail: action.lessonDetail,
         },
-        backPage:action.backPage||state.backPage
-      }
+        backPage: action.backPage || state.backPage,
+      };
     }
-    case 'setTeacherDetail':{
+    case 'setLessonAudit': {
       return {
         ...state,
-        teacher:{
-          teacherList:state.teacher.teacherList,
-          teacherDetail:action.teacherDetail
+        lesson: {
+          lessonList: state.lesson.lessonList,
+          lessonAudit: action.lessonAudit,
         },
-        backPage:action.backPage||state.backPage
-      }
+        backPage: action.backPage || state.backPage,
+      };
     }
-    case 'setAttendanceList':{
+    case 'setTeacherList': {
       return {
         ...state,
-        attendance:{
-          attendanceList:action.attendanceList,
-          attendanceDetail:state.attendance.attendanceDetail
+        teacher: {
+          teacherList: action.teacherList,
+          teacherDetail: state.teacher.teacherDetail,
         },
-        backPage:action.backPage||state.backPage
-      }
+        backPage: action.backPage || state.backPage,
+      };
     }
-    case 'setAttendanceDetail':{
+    case 'setTeacherDetail': {
       return {
         ...state,
-        attendance:{
-          attendanceList:state.attendance.attendanceList,
-          attendanceDetail:action.attendanceDetail
+        teacher: {
+          teacherList: state.teacher.teacherList,
+          teacherDetail: action.teacherDetail,
         },
-        backPage:action.backPage||state.backPage
-      }
+        backPage: action.backPage || state.backPage,
+      };
     }
-    case 'setComplaintList':{
+    case 'setAttendanceList': {
       return {
         ...state,
-        complaint:{
-          complaintList:action.complaintList,
-          complaintDetail:state.complaint.complaintDetail
+        attendance: {
+          attendanceList: action.attendanceList,
+          attendanceDetail: state.attendance.attendanceDetail,
         },
-        backPage:action.backPage||state.backPage
-      }
+        backPage: action.backPage || state.backPage,
+      };
     }
-    case 'setComplaintDetail':{
+    case 'setAttendanceDetail': {
       return {
         ...state,
-        complaint:{
-          complaintList:state.complaint.complaintList,
-          complaintDetail:action.complaintDetail
+        attendance: {
+          attendanceList: state.attendance.attendanceList,
+          attendanceDetail: action.attendanceDetail,
         },
-        backPage:action.backPage||state.backPage
-      }
+        backPage: action.backPage || state.backPage,
+      };
+    }
+    case 'setComplaintList': {
+      return {
+        ...state,
+        complaint: {
+          complaintList: action.complaintList,
+          complaintDetail: state.complaint.complaintDetail,
+        },
+        backPage: action.backPage || state.backPage,
+      };
+    }
+    case 'setComplaintDetail': {
+      return {
+        ...state,
+        complaint: {
+          complaintList: state.complaint.complaintList,
+          complaintDetail: action.complaintDetail,
+        },
+        backPage: action.backPage || state.backPage,
+      };
     }
     case 'setConsumerStundent': {
       return {
         ...state,
-        consumerStundent:action.consumerStundent
-      }
+        consumerStundent: action.consumerStundent,
+      };
     }
     case 'setContractNegoList': {
       return {
         ...state,
-        contractNego:{
-          contractNegoList:action.contractNegoList,
-          contractNegoDetail:state.contractNego.contractNegoDetail
+        contractNego: {
+          contractNegoList: action.contractNegoList,
+          contractNegoDetail: state.contractNego.contractNegoDetail,
         },
-        backPage:action.backPage||state.backPage
-      }
+        backPage: action.backPage || state.backPage,
+      };
     }
     case 'setContractNegoDetail': {
       return {
         ...state,
-        contractNego:{
-          contractNegoList:state.contractNego.contractNegoList,
-          contractNegoDetail:action.contractNegoDetail
+        contractNego: {
+          contractNegoList: state.contractNego.contractNegoList,
+          contractNegoDetail: action.contractNegoDetail,
         },
-        backPage:action.backPage||state.backPage
-      }
+        backPage: action.backPage || state.backPage,
+      };
     }
-    case 'setTransferDetail':{
+    case 'setTransferDetail': {
       return {
         ...state,
-        transfer:{
-          transferList:state.transfer.transferList,
-          transferDetail:action.transferDetail
+        transfer: {
+          transferList: state.transfer.transferList,
+          transferDetail: action.transferDetail,
         },
-        backPage:action.backPage||state.backPage
-      }
+        backPage: action.backPage || state.backPage,
+      };
     }
-    case 'setTransferList':{
+    case 'setTransferList': {
       return {
         ...state,
-        transfer:{
-          transferDetail:state.transfer.transferDetail,
-          transferList:action.transferList
+        transfer: {
+          transferDetail: state.transfer.transferDetail,
+          transferList: action.transferList,
         },
-        backPage:action.backPage||state.backPage
-      }
-    }
-
-    case 'setAnnouncementEdit':{
-      return {
-        ...state,
-        announcement:{
-          ...state.announcement,
-          announcementEdit:action.announcementEdit
-        },
-        backPage:action.backPage||state.backPage
-      }
-    }
-    case 'setAnnouncementDetail':{
-      return {
-        ...state,
-        announcement:{
-          ...state.announcement,
-          announcementDetail:action.announcementDetail
-        },
-        backPage:action.backPage||state.backPage
-      }
-    }
-    case 'setAnnouncementList':{
-      return {
-        ...state,
-        announcement:{
-          ...state.announcement,
-          announcementList:action.announcementList
-        },
-        backPage:action.backPage||state.backPage
-      }
+        backPage: action.backPage || state.backPage,
+      };
     }
 
-    case 'setBlackDetail':{
+    case 'setAnnouncementEdit': {
       return {
         ...state,
-        black:{
+        announcement: {
+          ...state.announcement,
+          announcementEdit: action.announcementEdit,
+        },
+        backPage: action.backPage || state.backPage,
+      };
+    }
+    case 'setAnnouncementDetail': {
+      return {
+        ...state,
+        announcement: {
+          ...state.announcement,
+          announcementDetail: action.announcementDetail,
+        },
+        backPage: action.backPage || state.backPage,
+      };
+    }
+    case 'setAnnouncementList': {
+      return {
+        ...state,
+        announcement: {
+          ...state.announcement,
+          announcementList: action.announcementList,
+        },
+        backPage: action.backPage || state.backPage,
+      };
+    }
+
+    case 'setBlackDetail': {
+      return {
+        ...state,
+        black: {
           ...state.black,
-          blackDetail:action.blackDetail,
+          blackDetail: action.blackDetail,
         },
-        backPage:action.backPage||state.backPage
-      }
+        backPage: action.backPage || state.backPage,
+      };
     }
 
-    case 'setBlackList':{
+    case 'setBlackList': {
       return {
         ...state,
-        black:{
+        black: {
           ...state.black,
-          blackList:action.blackList,
+          blackList: action.blackList,
         },
-        backPage:action.backPage||state.backPage
-      }
+        backPage: action.backPage || state.backPage,
+      };
     }
 
-    case 'setTransferManualList':{
+    case 'setTransferManualList': {
       return {
         ...state,
-        transferManual:{
+        transferManual: {
           ...state.TransferManual,
-          transferManualList:action.transferManualList,
+          transferManualList: action.transferManualList,
         },
-        backPage:action.backPage||state.backPage
-      }
+        backPage: action.backPage || state.backPage,
+      };
     }
-
   }
-}
+};
