@@ -59,7 +59,7 @@ const OrgMagQuery: React.FC = () => {
     })
       .then(res => res.json())
       .then(json => {
-        const { result} = json;
+        const { result } = json;
         if (result) {
           present({
             message: '删除成功',
@@ -87,15 +87,15 @@ const OrgMagQuery: React.FC = () => {
     })
       .then(res => res.json())
       .then(json => {
-        const { result, records, total } = json; 
-        if(result){
-          setTotal(total)
-          refreshList(records)
+        const { result, records, total } = json;
+        if (result) {
+          setTotal(total);
+          refreshList(records);
         }
-       });
+      });
   };
 
-  const onApply = (e:any) => {
+  const onApply = (e: any) => {
     e.preventDefault();
 
     fetch(applyURL, {
@@ -117,7 +117,7 @@ const OrgMagQuery: React.FC = () => {
             position: 'top',
             duration: 3000,
           });
-         } else
+        } else
           present({
             buttons: [{ text: '关闭', handler: () => dismiss() }],
             message: '加入黑名单失败，失败原因：',
@@ -128,20 +128,20 @@ const OrgMagQuery: React.FC = () => {
   };
 
   const { state, dispatch } = useContext(AppContext);
-  const [page,setPage] = useState(0)
-  const [total,setTotal]= useState(0)//todo
-  const onPageChange = (records:any,total:number,newPage:number)=>{
-    console.log(records)
-    console.log(total)
-    console.log(newPage)
-    setPage(newPage)
-    refreshList(records)
-  }
+  const [page, setPage] = useState(0);
+  const [total, setTotal] = useState(0); //todo
+  const onPageChange = (records: any, total: number, newPage: number) => {
+    console.log(records);
+    console.log(total);
+    console.log(newPage);
+    setPage(newPage);
+    refreshList(records);
+  };
   const [queryInfo, setQueryInfo] = useState({ eduName: '' });
   const [eduOrgState, setEduOrgState] = useState({} as EduOrg);
   const [cancelEduOrg, setCancelEduOrg] = useState({} as EduOrg);
   const [detail, setDetail] = useState({} as EduOrg);
-  const [backReasonInfo, setBackReasonState] = useState({ blackEduCreateReason: '' }); 
+  const [backReasonInfo, setBackReasonState] = useState({ blackEduCreateReason: '' });
   /**
    * 新增弹窗 确定事件
    * @param e
@@ -149,8 +149,8 @@ const OrgMagQuery: React.FC = () => {
   const onCreate = (e: any) => {
     e.preventDefault();
     console.log(eduOrgState);
-   // eduOrgState.eduIsPublic=? TODO 设置公立下拉选择值
-     fetch(createURL, {
+    // eduOrgState.eduIsPublic=? TODO 设置公立下拉选择值
+    fetch(createURL, {
       method: 'POST',
       body: JSON.stringify(eduOrgState),
       headers: {
@@ -223,36 +223,38 @@ const OrgMagQuery: React.FC = () => {
   useEffect(onQuery, []);
 
   /**
- * 
- * @param status 教育机构状态
- * @returns 
- */
-function getStatus(status: any) {
-  //'valid：有效（默认值）；<br />invalid：无效；<br />pending：待审核；<br />reject：拒绝。',
-  switch (status) {
-    case 'valid':
-      return '有效';
-    case 'invalid':
-      return '无效';
-    case 'pending':
-      return '待审核';
-    case 'reject':
-      return '拒绝';
+   *
+   * @param status 教育机构状态
+   * @returns
+   */
+  function getStatus(status: any) {
+    //'valid：有效（默认值）；<br />invalid：无效；<br />pending：待审核；<br />reject：拒绝。',
+    switch (status) {
+      case 'valid':
+        return '有效';
+      case 'invalid':
+        return '无效';
+      case 'pending':
+        return '待审核';
+      case 'reject':
+        return '拒绝';
+    }
   }
-}
-/**
- * 
- * @param isPublic 是否公立
- */
+  /**
+   *
+   * @param isPublic 是否公立
+   */
 
-function getpublicStr(isPublic:any){
-  return '是';
-}
+  function getpublicStr(isPublic: number) {
+    return isPublic ? '是' : '否';
+  }
   const ListEntry = ({ eduOrg, ...props }: { eduOrg: EduOrg }) => (
     <tr className="grid items-center grid-cols-4 gap-10 text-gray-600 border justify-items-center even:bg-white odd:bg-primary-100 ">
       {/* <td className="flex items-center justify-center leading-10">{eduOrg.eduId}</td>  */}
       <td className="flex items-center justify-center leading-10">{eduOrg.eduName}</td>
-       <td className="flex items-center justify-center leading-10">{getpublicStr(eduOrg.eduIsPublic)}</td>
+      <td className="flex items-center justify-center leading-10">
+        {getpublicStr(eduOrg.eduIsPublic! || 0)}
+      </td>
       <td className="flex items-center justify-center leading-10">{getStatus(eduOrg.eduStatus)}</td>
 
       <td className="flex items-center justify-center leading-10">
@@ -494,7 +496,15 @@ function getpublicStr(isPublic:any){
                       <div className="flex items-center mb-4 justify-items-center">
                         <div className="flex justify-items-center">
                           <span className="flex justify-end p-1 mr-1 w-36">是否公立:</span>
-                          <EduIsPublic name="eduIsPublic"/>
+                          <EduIsPublic
+                            isPublic={eduOrgState.eduIsPublic}
+                            setIsPublic={v => {
+                              setEduOrgState({
+                                ...eduOrgState,
+                                ...{ eduIsPublic: v },
+                              });
+                            }}
+                          />
                         </div>
                       </div>
                       <div className="flex items-center mb-4 justify-items-center">
@@ -770,7 +780,7 @@ function getpublicStr(isPublic:any){
               <tr className="grid items-center h-10 grid-cols-4 gap-10 font-bold text-gray-700 bg-white rounded-lg justify-items-center">
                 {/* <th className="flex items-center justify-center">教育机构ID</th>  */}
                 <th className="flex items-center justify-center">名称</th>
-                 <th className="flex items-center justify-center">公立</th>
+                <th className="flex items-center justify-center">公立</th>
                 <th className="flex items-center justify-center">状态</th>
                 <th className="flex items-center justify-center">操作</th>
               </tr>
@@ -779,8 +789,17 @@ function getpublicStr(isPublic:any){
               {state.eduOrg.eduOrgList.map((list: EduOrg, i: any) => (
                 <ListEntry eduOrg={list} key={i} />
               ))}
-               <tr>
-                <td colSpan={5}> <Paging url={paramStr} page={page} pagesize={10} total={total} onPageChange={onPageChange}/></td>
+              <tr>
+                <td colSpan={5}>
+                  {' '}
+                  <Paging
+                    url={paramStr}
+                    page={page}
+                    pagesize={10}
+                    total={total}
+                    onPageChange={onPageChange}
+                  />
+                </td>
               </tr>
             </tbody>
           </table>

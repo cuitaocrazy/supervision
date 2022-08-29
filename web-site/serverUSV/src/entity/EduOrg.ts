@@ -18,7 +18,7 @@ export class EduOrg {
   @Column()
   eduContactPhone: string;
   @Column()
-  eduIsPublic: boolean;
+  eduIsPublic: number;
   @Column()
   eduLicense: string;
   @Column()
