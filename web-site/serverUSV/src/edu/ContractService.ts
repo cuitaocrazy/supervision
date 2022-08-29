@@ -28,6 +28,36 @@ class ContractService {
     }
 
 
+    async sum(eduId){
+        const result = {contractValid:0,contractFinish:0} ;
+        var where = " contract.edu_id != 'eduId' "
+        const infos =await mysql.getRepository(Contract).createQueryBuilder("contract")
+              .select("count(*) count,contract.contract_status status")
+              .where(where ,{eduId:eduId})
+              .groupBy("contract.contract_status")
+              .getRawMany()
+        if(infos==null){
+            return result
+        }
+        infos.map(info=>{
+            switch(info.status){
+                case "valid": {
+                    result.contractValid = info.count
+                    break;
+                }
+                case "finished": {
+                    result.contractFinish += info.finished
+                    break;
+                }
+                case "terminnated": {
+                    result.contractFinish += info.finished
+                    break;
+                }
+            }
+        })
+
+        return result
+    }
 
     
 }

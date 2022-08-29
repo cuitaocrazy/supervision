@@ -33,6 +33,9 @@ export const SupervisorAccount: React.FC = () => {
   const [refundAmt, setRefundAmt] = useState("0");
   const [transferNumber, setTranferNumber] = useState("0");
   const [transferAmt, setTranferAmt] = useState("0");
+
+  const [contractValid, setContractValid] = useState("0");
+  const [contractFinish, setContractFinish] = useState("0");
   const onQuery = () => {
     //todo fetch
     fetch(paramStr, {
@@ -51,6 +54,8 @@ export const SupervisorAccount: React.FC = () => {
           refundAmt,
           transferNumber,
           transferAmt,
+          contractValid,
+          contractFinish,
         } = json;
         if (result) {
           setBuyCardNumber(buyCardNumber);
@@ -59,6 +64,8 @@ export const SupervisorAccount: React.FC = () => {
           setRefundAmt(refundAmt);
           setTranferNumber(transferNumber);
           setTranferAmt(transferAmt);
+          setContractFinish(contractFinish);
+          setContractValid(contractValid);
         }
       });
   };
@@ -162,6 +169,12 @@ export const SupervisorAccount: React.FC = () => {
             </div>
             <div className="items-center text-center bg-blue-300 h-20 pt-8">
               今日划拨金额:{transferAmt}
+            </div>
+            <div className="items-center text-center bg-green-100 h-20 pt-8">
+              进行中合同:{contractValid}
+            </div>
+            <div className="items-center text-center bg-green-300 h-20 pt-8">
+              已完成:{contractFinish}
             </div>
           </div>
         </div>
