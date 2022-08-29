@@ -1,10 +1,10 @@
-import React, { useEffect, useState, useContext,useCallback } from "react";
+import React, { useEffect, useState, useContext, useCallback } from "react";
 import { IonPage, IonHeader, IonContent } from "@ionic/react";
 import { useHistory } from "react-router-dom";
 import Navbar from "../Navbar";
 import { Contract } from "../../types/types";
 import { preOrderURL } from "../../const/const";
-import { AppContext,setContractDetail } from "../../appState";
+import { AppContext, setContractDetail } from "../../appState";
 // import { io } from "socket.io-client";
 import { Link } from "react-router-dom";
 
@@ -14,11 +14,14 @@ const ECNYPay = () => {
   const history = useHistory();
   // const socket = io(socketUrl);
   const [contract, setContract] = useState({} as Contract);
-  const { state,dispatch } = useContext(AppContext);
+  const { state, dispatch } = useContext(AppContext);
   const [payUrl, setPayUrl] = useState("");
-  const refreshContract = useCallback((contract:Contract) => {
-    dispatch(setContractDetail(contract));
-  },[dispatch]);
+  const refreshContract = useCallback(
+    (contract: Contract) => {
+      dispatch(setContractDetail(contract));
+    },
+    [dispatch]
+  );
 
   useEffect(() => {
     // socket.on("open", () => {
@@ -37,7 +40,7 @@ const ECNYPay = () => {
     })
       .then((res) => res.json())
       .then((json) => {
-        setContract(json.result)
+        setContract(json.result);
         refreshContract(json.result);
         // setPayUrl(json.payUrl);
         // socket.emit("pay", json.result.contractId);
@@ -62,7 +65,7 @@ const ECNYPay = () => {
           <div className="px-4 py-4 mx-2 my-2 text-base leading-7 rounded-md shadow-md">
             <p>
               <span className="pr-3 text-gray-400">订单编号</span>
-              <span className="text-gray-800">{contract.orderNo}</span>
+              <span className="text-gray-800">{contract.contractId}</span>
             </p>
             <p>
               <span className="pr-3 text-gray-400">机构名称</span>

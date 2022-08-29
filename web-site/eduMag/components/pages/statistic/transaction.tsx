@@ -87,9 +87,7 @@ const Transaction: React.FC = () => {
       <td className="flex items-center justify-center leading-10">
         {record.transactionId}
       </td>
-      <td className="flex items-center justify-center leading-10">
-        {record.contractId}
-      </td>
+      <td className="flex items-center justify-center leading-10">{""}</td>
       <td className="flex items-center justify-center leading-10">
         {record.transactionAmt}
       </td>

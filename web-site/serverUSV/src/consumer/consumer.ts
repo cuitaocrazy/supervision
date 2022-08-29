@@ -5,7 +5,7 @@ import { EduTeacher } from '../entity/EduTeacher'
 import { Attendance } from '../entity/Attendance'
 import {Transfer} from '../entity/Transfer'
 import {Transaction} from '../entity/Transaction'
-
+import {Seq} from '../entity/Seq'
 import mysql from '../mysql'
 import {nullableFuzzy} from '../Util'
 import e = require('express')
@@ -160,6 +160,16 @@ export const saveTransaction =  async (transaction) => {
     const result = await mysql.getRepository(Transaction).save(transaction)
     return result
 } 
+
+
+export const getNextSeq = async() =>{
+    
+    await mysql.getRepository(Seq).save({})
+    const result = await mysql.getRepository(Seq).createQueryBuilder("seq").select("count(*) countResult").getRawOne();
+    console.log(result)
+    const padZeroResult = String(result.countResult).padStart(3,"0")
+    return padZeroResult.substring((padZeroResult).length-3,((padZeroResult).length));
+}
 
 
 

@@ -61,6 +61,8 @@ export class EduOrg {
     eduCity: string
     @Column()
     eduArea: string
+    @Column()
+    merNo: string
 
 
 }

@@ -161,7 +161,7 @@ export const SupervisorAccount: React.FC = () => {
               今日划拨次数:{transferNumber}
             </div>
             <div className="items-center text-center bg-blue-300 h-20 pt-8">
-              今日划拨金额:{transferNumber}
+              今日划拨金额:{transferAmt}
             </div>
           </div>
         </div>
