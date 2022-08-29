@@ -30,7 +30,7 @@ class ContractService {
 
     async sum(eduId){
         const result = {contractValid:0,contractFinish:0} ;
-        var where = " contract.edu_id != 'eduId' "
+        var where = " contract.edu_id = :eduId "
         const infos =await mysql.getRepository(Contract).createQueryBuilder("contract")
               .select("count(*) count,contract.contract_status status")
               .where(where ,{eduId:eduId})

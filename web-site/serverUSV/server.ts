@@ -154,7 +154,7 @@ app.get('/edu/transaction/find', async (req, res) => {
 })
 
 app.get('/edu/transaction/sum', async (req, res) => {
-  console.log(`教育机构: 查询流水信息: 条件[${JSON.stringify(req.query)}]`)
+  console.log(`教育机构: 查询汇总信息: 条件[${JSON.stringify(req.query)}]`)
   const loginName = req.query.loginName;
   const edu = await EduService.findByLoginName(loginName)
   const contractSum =  await eduContractService.sum(edu.eduId);
@@ -704,6 +704,18 @@ app.get('/edb/contract/find', async (req, res) => {
   });
   res.send(r)
 })
+
+app.get('/edb/transaction/sum', async (req, res) => {
+  console.log(`监管机构: 查询汇总信息: 条件[${JSON.stringify(req.query)}]`)
+  const loginName = req.query.loginName;
+  const edu = await EduService.findByLoginName(loginName)
+  const contractSum =  await edbContractService.sum();
+  const r = await edbTransactionService.sum()
+  const result = {...contractSum,...r}
+  res.send(result)
+})
+
+
 import edbAttendanceService from './src/edb/AttendanceService'
 import edbTransferService from './src/edb/TransferService'
 import edbContractService from './src/edb/ContractService'
