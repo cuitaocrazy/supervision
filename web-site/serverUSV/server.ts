@@ -157,9 +157,10 @@ app.get('/edu/transaction/sum', async (req, res) => {
   console.log(`教育机构: 查询流水信息: 条件[${JSON.stringify(req.query)}]`)
   const loginName = req.query.loginName;
   const edu = await EduService.findByLoginName(loginName)
-
+  const contractSum =  await eduContractService.sum(edu.eduId);
   const r = await eduTransactionService.sum(edu.eduSupervisedAccount)
-  res.send(r)
+  const result = {...contractSum,...r}
+  res.send(result)
 })
 
 
