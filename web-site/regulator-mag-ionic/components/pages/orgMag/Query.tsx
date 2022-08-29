@@ -4,21 +4,16 @@ import { Redirect } from 'react-router-dom';
 import { AppContext, setEduOrgList, setEduOrgDetail, setEduOrgEdit } from '../../../appState';
 import { EduOrg } from '../../../types/types';
 import { modalController } from '@ionic/core';
-import {
-  IonPage,
-  IonRow,
-  IonCol,
-  useIonToast,
-} from '@ionic/react';
+import { IonPage, IonRow, IonCol, useIonToast } from '@ionic/react';
 import { Dialog, Transition } from '@headlessui/react';
 import EduIsPublic from '../../EduIsPublic';
-import Quit from '../../Quit'
+import Paging from '../../paging';
+import Quit from '../../Quit';
 
 const findURL = 'http://localhost:3003/edb/eduOrg/find';
-const delURL = 'http://localhost:3003/eduOrg/del';
-const modifyURL = 'http://localhost:3003/eduOrg/modifyURL';
-const applyURL = 'http://localhost:3003/eduOrg/apply';
-const createURL = 'http://localhost:3003/eduOrg/create';
+const delURL = 'http://localhost:3003/edb/eduOrg/del';
+const applyURL = 'http://localhost:3003/edb/eduOrg/apply';
+const createURL = 'http://localhost:3003/edb/eduOrg/create';
 
 // 课程查询页面
 const OrgMagQuery: React.FC = () => {
@@ -48,40 +43,39 @@ const OrgMagQuery: React.FC = () => {
   function openDeleteModal() {
     setIsDeleteOpen(true);
   }
+  /**
+   * 确定删除
+   * author wqy
+   */
+  const onCancel = (e: any) => {
+    e.preventDefault();
 
-  const onCancel = (e) => {
-    e.preventDefault()
-    // fetch(delURL, {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-type': 'application/json;charset=UTF-8',
-    //   },
-    //   body: JSON.stringify({
-    //     eduId: cancelEduOrg.eduId,
-    //   }),
-    // })
-    //   .then(res => res.json())
-    //   .then(json => {
-        // const { result, records,total } = json;
-        const result={true:Boolean}
-      if (result) 
-      {
-        present({
-          message:"删除成功",
-          duration:3000,
-          position:"top",
-        });
-        onQuery();
-      } else 
-      present({
-        buttons: [{ text: '关闭', handler: () => dismiss() }],
-        message: '删除失败',
-        onDidDismiss: () => console.log('dismissed'),
-        onWillDismiss: () => console.log('will dismiss'),
-      })
-      closeDeleteModal();
-      onQuery()
-      // });
+    fetch(delURL, {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ eduId: cancelEduOrg.eduId }),
+    })
+      .then(res => res.json())
+      .then(json => {
+        const { result} = json;
+        if (result) {
+          present({
+            message: '删除成功',
+            duration: 3000,
+            position: 'top',
+          });
+          onQuery();
+        } else
+          present({
+            buttons: [{ text: '关闭', handler: () => dismiss() }],
+            message: '删除失败',
+            onDidDismiss: () => console.log('dismissed'),
+            onWillDismiss: () => console.log('will dismiss'),
+          });
+        closeDeleteModal();
+      });
   };
 
   const onQuery = () => {
@@ -93,91 +87,95 @@ const OrgMagQuery: React.FC = () => {
     })
       .then(res => res.json())
       .then(json => {
-        const { result, records } = json; //todo
-        refreshList(records);
-      });
+        const { result, records, total } = json; 
+        if(result){
+          setTotal(total)
+          refreshList(records)
+        }
+       });
   };
 
-  const onApply = () => {
-    console.log("1111")
-    // fetch(modifyURL, {
-    //   method: 'PUT',
-    //   body: JSON.stringify({
-    //     eduId: item.eduId,
-    //   }),
-    //   headers: {
-    //     'Content-type': 'application/json;charset=UTF-8',
-    //   },
-    // })
-    //   .then(res => res.json())
-    //   .then(json => {
-    //     const { result, msg } = json;
-    const result={true:Boolean}
+  const onApply = (e:any) => {
+    e.preventDefault();
+
+    fetch(applyURL, {
+      method: 'post',
+      body: JSON.stringify({
+        eduId: detail.eduId,
+        blackEduCreateReason: backReasonInfo.blackEduCreateReason,
+      }),
+      headers: {
+        'Content-type': 'application/json;charset=UTF-8',
+      },
+    })
+      .then(res => res.json())
+      .then(json => {
+        const { result, msg } = json;
         if (result) {
           present({
             message: '加入黑名单成功',
-            position:'top',
-            duration:3000
-          })
-          setIsBlackOpen(false);
-          onQuery();
-        } else 
-        present({
-          buttons: [{ text: '关闭', handler: () => dismiss() }],
-          message: '加入黑名单失败，失败原因：',
-          position:'top',
-        })
-        closeBlackModal()
-        onQuery()
-      // });
+            position: 'top',
+            duration: 3000,
+          });
+         } else
+          present({
+            buttons: [{ text: '关闭', handler: () => dismiss() }],
+            message: '加入黑名单失败，失败原因：',
+            position: 'top',
+          });
+        closeBlackModal();
+      });
   };
 
   const { state, dispatch } = useContext(AppContext);
+  const [page,setPage] = useState(0)
+  const [total,setTotal]= useState(0)//todo
+  const onPageChange = (records:any,total:number,newPage:number)=>{
+    console.log(records)
+    console.log(total)
+    console.log(newPage)
+    setPage(newPage)
+    refreshList(records)
+  }
   const [queryInfo, setQueryInfo] = useState({ eduName: '' });
   const [eduOrgState, setEduOrgState] = useState({} as EduOrg);
-  const [createEduOrg, setCreateEduOrg] = useState({} as EduOrg);
   const [cancelEduOrg, setCancelEduOrg] = useState({} as EduOrg);
-  const [detail,setDetail]=useState({} as EduOrg);
-  // const [eduOrg, setEduOrg] = useState({
-  //   eduId: "",
-  //   attendanceLessonQuantity: 1,
-  //   attendanceDate: "",
-  //   attendanceTime: "",
-  // } as Attendance);
-
+  const [detail, setDetail] = useState({} as EduOrg);
+  const [backReasonInfo, setBackReasonState] = useState({ blackEduCreateReason: '' }); 
+  /**
+   * 新增弹窗 确定事件
+   * @param e
+   */
   const onCreate = (e: any) => {
-    // e.preventDefault();
-    // console.log(createEduOrg);
-    // fetch(createURL, {
-    //   method: 'POST',
-    //   body: JSON.stringify(createEduOrg),
-    //   headers: {
-    //     'Content-type': 'application/json;charset=UTF-8',
-    //   },
-    // })
-    //   .then(res => res.json())
-    //   .then(json => {
-    //     const { result, msg } = json;
-    const result={true:Boolean}
-    const msg={"网络异常":String}
-        if (result) 
-        {
+    e.preventDefault();
+    console.log(eduOrgState);
+   // eduOrgState.eduIsPublic=? TODO 设置公立下拉选择值
+     fetch(createURL, {
+      method: 'POST',
+      body: JSON.stringify(eduOrgState),
+      headers: {
+        'Content-type': 'application/json;charset=UTF-8',
+      },
+    })
+      .then(res => res.json())
+      .then(json => {
+        const { result, msg } = json;
+        console.log('添加结果:' + json);
+        if (result) {
           present({
-            message: '机构添加成功',
-            position:'top',
-            duration:3000
-          })
+            message: msg, //'机构添加成功',
+            position: 'top',
+            duration: 3000,
+          });
           onQuery();
-        } else 
-        present({
-          buttons: [{ text: '关闭', handler: () => dismiss() }],
-          message: '机构添加失败，失败原因：'+msg,
-          position:'top',
-        })
-        closeCreateModal()
-        onQuery()
-
-      // });
+        } else
+          present({
+            buttons: [{ text: '关闭', handler: () => dismiss() }],
+            message: '机构添加失败，失败原因：' + msg,
+            position: 'top',
+          });
+        closeCreateModal();
+      });
   };
 
   const getParamStr = (params: any, url: string) => {
@@ -224,36 +222,63 @@ const OrgMagQuery: React.FC = () => {
   );
   useEffect(onQuery, []);
 
-  const ListEntry = ({ eduOrg, ...props }: { eduOrg: EduOrg;}) => (
-    <tr
-      className="grid items-center grid-cols-4 gap-10 text-gray-600 border justify-items-center even:bg-white odd:bg-primary-100 "
-    >
-      <td className="flex items-center justify-center leading-10">{eduOrg.eduId}</td>
+  /**
+ * 
+ * @param status 教育机构状态
+ * @returns 
+ */
+function getStatus(status: any) {
+  //'valid：有效（默认值）；<br />invalid：无效；<br />pending：待审核；<br />reject：拒绝。',
+  switch (status) {
+    case 'valid':
+      return '有效';
+    case 'invalid':
+      return '无效';
+    case 'pending':
+      return '待审核';
+    case 'reject':
+      return '拒绝';
+  }
+}
+/**
+ * 
+ * @param isPublic 是否公立
+ */
+
+function getpublicStr(isPublic:any){
+  return '是';
+}
+  const ListEntry = ({ eduOrg, ...props }: { eduOrg: EduOrg }) => (
+    <tr className="grid items-center grid-cols-4 gap-10 text-gray-600 border justify-items-center even:bg-white odd:bg-primary-100 ">
+      {/* <td className="flex items-center justify-center leading-10">{eduOrg.eduId}</td>  */}
       <td className="flex items-center justify-center leading-10">{eduOrg.eduName}</td>
-      <td className="flex items-center justify-center leading-10">{eduOrg.eduStatus}</td>
+       <td className="flex items-center justify-center leading-10">{getpublicStr(eduOrg.eduIsPublic)}</td>
+      <td className="flex items-center justify-center leading-10">{getStatus(eduOrg.eduStatus)}</td>
+
       <td className="flex items-center justify-center leading-10">
         <div className="flex gap-2 ">
           <button className="p-1 text-primary-600" onClick={onDetail(eduOrg)}>
             详情
           </button>
-          <button className="p-1 text-cyan-600" onClick={
-            ()=>{
-              // onCancel(eduOrg)
-              setCancelEduOrg(eduOrg)
-              openDeleteModal()
-            }
-            }>
+          <button
+            className="p-1 text-cyan-600"
+            onClick={() => {
+              setCancelEduOrg(eduOrg);
+              openDeleteModal();
+            }}
+          >
             删除
           </button>
           <button className="p-1 text-red-600" onClick={onEdit(eduOrg)}>
             编辑
           </button>
-          <button className="p-1 text-fuchsia-600" onClick={
-            ()=>{
+          <button
+            className="p-1 text-fuchsia-600"
+            onClick={() => {
               setDetail(eduOrg);
-              openBlackModal()
-            }
-          }>
+              openBlackModal();
+            }}
+          >
             加入黑名单
           </button>
         </div>
@@ -362,6 +387,7 @@ const OrgMagQuery: React.FC = () => {
                       <hr className="mt-2 mb-4" />
                     </Dialog.Title>
                     <form
+                      id="handle-form"
                       onSubmit={onCreate}
                       className="flex flex-col items-center rounded-lg justify-items-center"
                     >
@@ -372,9 +398,9 @@ const OrgMagQuery: React.FC = () => {
                             className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none"
                             name="eduName"
                             onChange={e =>
-                              setCreateEduOrg({
-                                ...createEduOrg,
-                                ...{eduName:e.nativeEvent.target?.value},
+                              setEduOrgState({
+                                ...eduOrgState,
+                                ...{ eduName: e.nativeEvent.target?.value },
                               })
                             }
                             required
@@ -391,7 +417,7 @@ const OrgMagQuery: React.FC = () => {
                             onChange={e =>
                               setEduOrgState({
                                 ...eduOrgState,
-                                ...{eduAddress:e.nativeEvent.target?.value},
+                                ...{ eduAddress: e.nativeEvent.target?.value },
                               })
                             }
                             required
@@ -408,7 +434,7 @@ const OrgMagQuery: React.FC = () => {
                             onChange={e =>
                               setEduOrgState({
                                 ...eduOrgState,
-                                ...{eduLegalPerson:e.nativeEvent.target?.value},
+                                ...{ eduLegalPerson: e.nativeEvent.target?.value },
                               })
                             }
                             required
@@ -424,7 +450,7 @@ const OrgMagQuery: React.FC = () => {
                             onChange={e =>
                               setEduOrgState({
                                 ...eduOrgState,
-                                ...{eduLegalPhone:e.nativeEvent.target?.value},
+                                ...{ eduLegalPhone: e.nativeEvent.target?.value },
                               })
                             }
                             required
@@ -441,7 +467,7 @@ const OrgMagQuery: React.FC = () => {
                             onChange={e =>
                               setEduOrgState({
                                 ...eduOrgState,
-                                ...{eduContact:e.nativeEvent.target?.value},
+                                ...{ eduContact: e.nativeEvent.target?.value },
                               })
                             }
                             required
@@ -458,7 +484,7 @@ const OrgMagQuery: React.FC = () => {
                             onChange={e =>
                               setEduOrgState({
                                 ...eduOrgState,
-                                ...{eduContactPhone:e.nativeEvent.target?.value},
+                                ...{ eduContactPhone: e.nativeEvent.target?.value },
                               })
                             }
                             required
@@ -468,7 +494,7 @@ const OrgMagQuery: React.FC = () => {
                       <div className="flex items-center mb-4 justify-items-center">
                         <div className="flex justify-items-center">
                           <span className="flex justify-end p-1 mr-1 w-36">是否公立:</span>
-                          <EduIsPublic />
+                          <EduIsPublic name="eduIsPublic"/>
                         </div>
                       </div>
                       <div className="flex items-center mb-4 justify-items-center">
@@ -481,7 +507,7 @@ const OrgMagQuery: React.FC = () => {
                             onChange={e =>
                               setEduOrgState({
                                 ...eduOrgState,
-                                ...{eduLicense:e.nativeEvent.target?.value},
+                                ...{ eduLicense: e.nativeEvent.target?.value },
                               })
                             }
                           ></input>
@@ -497,7 +523,7 @@ const OrgMagQuery: React.FC = () => {
                             onChange={e =>
                               setEduOrgState({
                                 ...eduOrgState,
-                                ...{eduSupervisedAccount:e.nativeEvent.target?.value},
+                                ...{ eduSupervisedAccount: e.nativeEvent.target?.value },
                               })
                             }
                             required
@@ -514,7 +540,7 @@ const OrgMagQuery: React.FC = () => {
                             onChange={e =>
                               setEduOrgState({
                                 ...eduOrgState,
-                                ...{eduSupervisedAccount:e.nativeEvent.target?.value},
+                                ...{ eduSupervisedAccount: e.nativeEvent.target?.value },
                               })
                             }
                             required
@@ -531,7 +557,7 @@ const OrgMagQuery: React.FC = () => {
                             onChange={e =>
                               setEduOrgState({
                                 ...eduOrgState,
-                                ...{eduSupervisedMerNo:e.nativeEvent.target?.value},
+                                ...{ eduSupervisedMerNo: e.nativeEvent.target?.value },
                               })
                             }
                           />
@@ -547,7 +573,7 @@ const OrgMagQuery: React.FC = () => {
                             onChange={e =>
                               setEduOrgState({
                                 ...eduOrgState,
-                                ...{eduLoginName:e.nativeEvent.target?.value},
+                                ...{ eduLoginName: e.nativeEvent.target?.value },
                               })
                             }
                           />
@@ -618,13 +644,7 @@ const OrgMagQuery: React.FC = () => {
                           <input
                             className="w-64 p-1 text-gray-600 bg-gray-100 border rounded-md justify-self-start focus:outline-none"
                             name="eduName"
-                            value={eduOrgState.eduName}
-                            onChange={e =>
-                              setEduOrgState({
-                                ...eduOrgState,
-                                eduName: e.nativeEvent.target?.value,
-                              })
-                            }
+                            value={detail.eduName}
                             readOnly
                           ></input>
                         </div>
@@ -636,13 +656,7 @@ const OrgMagQuery: React.FC = () => {
                             className="w-64 p-1 text-gray-600 bg-gray-100 border rounded-md justify-self-start focus:outline-none"
                             name="eduLegalPerson"
                             type="text"
-                            value={eduOrgState.eduLegalPerson}
-                            onChange={e =>
-                              setEduOrgState({
-                                ...eduOrgState,
-                                eduLegalPerson: e.nativeEvent.target?.value,
-                              })
-                            }
+                            value={detail.eduLegalPerson}
                             readOnly
                           ></input>
                         </div>
@@ -653,7 +667,12 @@ const OrgMagQuery: React.FC = () => {
                           <textarea
                             className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
                             name="blackEduCreateReason"
-                            onChange={e => setEduOrgState({...eduOrgState, blackEduCreateReason: e.nativeEvent.target?.value})}
+                            onChange={e =>
+                              setBackReasonState({
+                                ...backReasonInfo,
+                                blackEduCreateReason: e.nativeEvent.target?.value,
+                              })
+                            }
                             required
                           />
                         </div>
@@ -680,77 +699,78 @@ const OrgMagQuery: React.FC = () => {
           </Dialog>
         </Transition>
 
-         {/* 删除教育机构模态框 */}
-         <Transition appear show={isDeleteOpen} as={Fragment}>
-            <Dialog as="div" className="relative z-10" onClose={closeDeleteModal}>
-              <Transition.Child
-                as={Fragment}
-                enter="ease-out duration-300"
-                enterFrom="opacity-0"
-                enterTo="opacity-100"
-                leave="ease-in duration-200"
-                leaveFrom="opacity-100"
-                leaveTo="opacity-0"
-              >
-                <div className="fixed inset-0 bg-black bg-opacity-25" />
-              </Transition.Child>
+        {/* 删除教育机构模态框 */}
+        <Transition appear show={isDeleteOpen} as={Fragment}>
+          <Dialog as="div" className="relative z-10" onClose={closeDeleteModal}>
+            <Transition.Child
+              as={Fragment}
+              enter="ease-out duration-300"
+              enterFrom="opacity-0"
+              enterTo="opacity-100"
+              leave="ease-in duration-200"
+              leaveFrom="opacity-100"
+              leaveTo="opacity-0"
+            >
+              <div className="fixed inset-0 bg-black bg-opacity-25" />
+            </Transition.Child>
 
-              <div className="fixed inset-0 overflow-y-auto">
-                <div className="flex items-center justify-center min-h-full p-4 text-center">
-                  <Transition.Child
-                    as={Fragment}
-                    enter="ease-out duration-300"
-                    enterFrom="opacity-0 scale-95"
-                    enterTo="opacity-100 scale-100"
-                    leave="ease-in duration-200"
-                    leaveFrom="opacity-100 scale-100"
-                    leaveTo="opacity-0 scale-95"
-                  >
-                    <Dialog.Panel className="w-full max-w-md p-4 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
-                      <Dialog.Title
-                        as="h3"
-                        className="text-lg font-medium leading-6 text-center text-gray-900"
-                      >
-                        教育机构删除
-                        <hr className="mt-2 mb-4" />
-                      </Dialog.Title>
-                      <form
-                        onSubmit={onCancel}
-                        className="flex flex-col items-center rounded-lg justify-items-center"
-                      >
-                        <div className="flex items-center mb-4 justify-items-center">
-                          <div className="flex leading-7 justify-items-center">
-                            <div className="flex justify-end p-1 ">确定要删除该教育机构？</div>
-                          </div>
+            <div className="fixed inset-0 overflow-y-auto">
+              <div className="flex items-center justify-center min-h-full p-4 text-center">
+                <Transition.Child
+                  as={Fragment}
+                  enter="ease-out duration-300"
+                  enterFrom="opacity-0 scale-95"
+                  enterTo="opacity-100 scale-100"
+                  leave="ease-in duration-200"
+                  leaveFrom="opacity-100 scale-100"
+                  leaveTo="opacity-0 scale-95"
+                >
+                  <Dialog.Panel className="w-full max-w-md p-4 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
+                    <Dialog.Title
+                      as="h3"
+                      className="text-lg font-medium leading-6 text-center text-gray-900"
+                    >
+                      教育机构删除
+                      <hr className="mt-2 mb-4" />
+                    </Dialog.Title>
+                    <form
+                      onSubmit={onCancel}
+                      className="flex flex-col items-center rounded-lg justify-items-center"
+                    >
+                      <div className="flex items-center mb-4 justify-items-center">
+                        <div className="flex leading-7 justify-items-center">
+                          <div className="flex justify-end p-1 ">确定要删除该教育机构？</div>
                         </div>
-                        <div className="flex items-center gap-4 mt-2 justify-items-center">
-                          <input
-                            value="取消"
-                            type="button"
-                            className="px-6 py-2 border rounded-md "
-                            onClick={closeDeleteModal}
-                          />
-                          <input
-                            value="确定"
-                            type="submit"
-                            className="px-6 py-2 text-white border rounded-md bg-primary-600"
-                          />
-                        </div>
-                      </form>
-                    </Dialog.Panel>
-                  </Transition.Child>
-                </div>
+                      </div>
+                      <div className="flex items-center gap-4 mt-2 justify-items-center">
+                        <input
+                          value="取消"
+                          type="button"
+                          className="px-6 py-2 border rounded-md "
+                          onClick={closeDeleteModal}
+                        />
+                        <input
+                          value="确定"
+                          type="submit"
+                          className="px-6 py-2 text-white border rounded-md bg-primary-600"
+                        />
+                      </div>
+                    </form>
+                  </Dialog.Panel>
+                </Transition.Child>
               </div>
-            </Dialog>
-          </Transition>
+            </div>
+          </Dialog>
+        </Transition>
 
         {/* 列表 */}
         <div className="absolute w-full mt-10">
           <table className="w-11/12">
             <thead>
               <tr className="grid items-center h-10 grid-cols-4 gap-10 font-bold text-gray-700 bg-white rounded-lg justify-items-center">
-                <th className="flex items-center justify-center">教育机构ID</th>
+                {/* <th className="flex items-center justify-center">教育机构ID</th>  */}
                 <th className="flex items-center justify-center">名称</th>
+                 <th className="flex items-center justify-center">公立</th>
                 <th className="flex items-center justify-center">状态</th>
                 <th className="flex items-center justify-center">操作</th>
               </tr>
@@ -759,6 +779,9 @@ const OrgMagQuery: React.FC = () => {
               {state.eduOrg.eduOrgList.map((list: EduOrg, i: any) => (
                 <ListEntry eduOrg={list} key={i} />
               ))}
+               <tr>
+                <td colSpan={5}> <Paging url={paramStr} page={page} pagesize={10} total={total} onPageChange={onPageChange}/></td>
+              </tr>
             </tbody>
           </table>
         </div>

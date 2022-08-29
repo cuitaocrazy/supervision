@@ -3,64 +3,25 @@ import React, { useState } from 'react';
 import {
   IonPage,
   IonCard,
-  IonCardHeader,
-  IonCardSubtitle,
-  IonLabel,
-  IonInput,
   IonCardContent,
-  IonItem,
-  IonButton,
-  IonList,
-  IonDatetime,
-  IonPicker,
 } from '@ionic/react';
 import { Redirect } from 'react-router-dom';
 import { useCallback, useContext } from 'react';
 import { AppContext, setBlackDetail } from '../../../appState';
-import { Black } from '../../../types/types';
-import { PickerColumn } from '@ionic/core';
-import Quit from '../../Quit'
+ import Quit from '../../Quit'
 
 export const BlackDetail: React.FC = () => {
-  const modifyURL = 'http://localhost:3003/announcement/modify';
   const { state, dispatch } = useContext(AppContext);
-
   const [blackState, setBlackState] = useState(state.black.blackDetail);
-  const [isPickOpen, setPickOpen] = useState(false);
-  const statueTypePickerColumn = {
-    name: 'statueTypePickerColumn',
-    options: [
-      { text: '开启', value: 'on' },
-      { text: '下线', value: 'off' },
-    ],
-  } as PickerColumn;
   const setBack = useCallback(() => {
     dispatch(setBlackDetail(undefined));
   }, []);
   const onBack = () => () => {
-    console.log("111111")
-    setBack();
+     setBack();
   };
-  // const onBack = () => {
-  //   setBack();
-  // };
   if (state.black.blackDetail === undefined) {
     return <Redirect to={state.backPage} />;
-  }
-  const onModify = async (e: React.FormEvent) => () => {
-    e.preventDefault();
-    fetch(modifyURL, {
-      method: 'PUT',
-      body: JSON.stringify(blackState),
-      headers: {
-        'Content-type': 'application/json;charset=UTF-8',
-      },
-    })
-      .then(res => res.json())
-      .then(json => {
-        alert(json.result);
-      });
-  };
+  } 
   return (
     <IonPage className="bg-gray-100">
       <Quit />
@@ -89,7 +50,7 @@ export const BlackDetail: React.FC = () => {
           </div>
         </div>
         <IonCardContent>
-          <form onSubmit={onModify}>
+          <form>
             {/* 详情 */}
             <div className="font-bold text-gray-800">黑名单详情</div>
             <hr className="mt-2 mb-4" />
@@ -98,19 +59,20 @@ export const BlackDetail: React.FC = () => {
                 <div className="flex justify-end w-32 mr-2">添加日期:</div>
                 <input
                   className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
-                  name="announcementAnnouncer"
+                  name="blackEduCreateDate"
                   type="text"
-                  value={blackState.blackDate}
+                  value={blackState.blackEduCreateDate}
                   readOnly
                 />
+                  
               </div>
               <div className="flex items-center mb-4 leading-10 justify-items-center">
                 <div className="flex justify-end w-32 mr-2">添加时间:</div>
                 <input
                   className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
-                  name="announcementAnnouncer"
+                  name="blackEduCreateTime"
                   type="text"
-                  value={blackState.blackTime}
+                  value={blackState.blackEduCreateTime}
                   readOnly
                 />
               </div>
@@ -118,9 +80,9 @@ export const BlackDetail: React.FC = () => {
                 <div className="flex justify-end w-32 mr-2">教育机构名称:</div>
                 <input
                   className="w-64 h-10 px-2 rounded-md bg-primary-100 focus:outline-none"
-                  name="supervisorPhone"
+                  name="eduName"
                   type="text"
-                  value={blackState.orgName}
+                  value={blackState.eduName}
                   readOnly
                 />
               </div>
@@ -128,8 +90,8 @@ export const BlackDetail: React.FC = () => {
                 <div className="flex justify-end w-32 mr-2">黑名单原因:</div>
                 <textarea
                   className="w-64 h-32 px-2 rounded-md bg-primary-100 focus:outline-none"
-                  name="announcementContent"
-                  value={blackState.reason}
+                  name="blackEduCreateReason"
+                  value={blackState.blackEduCreateReason}
                   readOnly
                 />
               </div>

@@ -10,7 +10,7 @@ import Quit from '../../Quit';
 
 export const EduOrgEdit: React.FC = () => {
   const [present, dismiss] = useIonToast();
-  const modifyURL = 'http://localhost:3003/eduOrg/modifyURL';
+  const modifyURL = 'http://localhost:3003/edb/eduOrg/modifyURL';
   const { state, dispatch } = useContext(AppContext);
 
   const [eduOrgState, setEduOrgState] = useState(state.eduOrg.eduOrgEdit);
@@ -29,38 +29,38 @@ export const EduOrgEdit: React.FC = () => {
   }
 
   // const onModify = async (e: React.FormEvent) => () => {
-  const onModify = (e: React.FormEvent) => {
-    console.log('111111');
-    // e.preventDefault();
-    // fetch(modifyURL, {
-    //   method: 'POST',
-    //   body: JSON.stringify(eduOrgState),
-    //   headers: {
-    //     'Content-type': 'application/json;charset=UTF-8',
-    //   },
-    // })
-    //   .then(res => res.json())
-    //   .then(json => {
-    //     const result=json
-    const result = { true: Boolean };
-    const msg={"网络异常":String}
-    if (result) {
-      present({
-        message: '教育机构编辑成功',
-        position:'top',
-        duration:3000
+    const onModify = (e: React.FormEvent) => {
+      e.preventDefault();   
+      //eduOrgState.eduIsPublic=eduIsPublic;
+      fetch(modifyURL, {
+        method: 'POST',
+        body: JSON.stringify(eduOrgState),
+        headers: {
+          'Content-type': 'application/json;charset=UTF-8',
+        },
       })
-    } else
-      present({
-        buttons: [{ text: '关闭', handler: () => dismiss() }],
-        message: '教育机构编辑失败'+msg,
-        position:'top',
-        onDidDismiss: () => console.log('dismissed'),
-        onWillDismiss: () => console.log('will dismiss'),
+        .then(res => res.json())
+        .then(json => {
+          const result=json;
+     // const result = { true: Boolean };
+      const msg={"网络异常":String};
+      if (result) {
+        present({
+          message: '教育机构编辑成功',
+          position:'top',
+          duration:3000
+        })
+      } else
+        present({
+          buttons: [{ text: '关闭', handler: () => dismiss() }],
+          message: '教育机构编辑失败'+msg,
+          position:'top',
+          onDidDismiss: () => console.log('dismissed'),
+          onWillDismiss: () => console.log('will dismiss'),
+        });
+      setBack();
       });
-    setBack();
-    // });
-  };
+    };
   // const eduOrgTypePickerColumn = {
   //   name: "eduOrgTypePickerColumn",
   //   options: [{'text':'','value':'0'},{'text':'数学','value':'1'}],
