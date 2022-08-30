@@ -154,7 +154,7 @@ export const LessonDetail: React.FC = () => {
                   }
                   value={lessonState.lessonTotalPrice}
                   required
-                />
+                />一天
               </div>
               <div className="flex mb-4 leading-10">
                 <div className="flex justify-end w-32 mr-2">
