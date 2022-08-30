@@ -1,50 +1,29 @@
 import { useEffect, useCallback, useContext, useState, useRef, Fragment } from 'react';
 import { Redirect } from 'react-router-dom';
-import { AppContext, setUserInfoList, setUserInfoDetail,setUserInfoEdit } from '../../../appState';
+import { AppContext, setUserInfoList, setUserInfoDetail, setUserInfoEdit } from '../../../appState';
 import { SupervisorUser } from '../../../types/types';
-import {
-  IonPage,
-  IonRow,
-  IonCol,
-  useIonToast
-} from '@ionic/react';
+import { IonPage, IonRow, IonCol, useIonToast } from '@ionic/react';
 import { Dialog, Transition } from '@headlessui/react';
-import Paging from '../../paging'
-import Quit from '../../Quit'
+import Paging from '../../paging';
+import Quit from '../../Quit';
+import { edbSupervisorUserDelURL, edbSupervisorUserFindURL } from 'const/const';
 
-const queryURL = 'http://localhost:3003/edb/supervisorUser/find';
-const delURL = 'http://localhost:3003/edb/supervisorUser/del';
-const modifyURL = 'http://localhost:3003/edb/supervisorUser/modifyURL';
-const attendURL = 'http://localhost:3003/lesson/attend';
-const createUrl = 'http://localhost:3003/baseInfo/create';
-const demoLessonList: SupervisorUser[] = [
-  {
-    supervisorLoginName: '监管机构登录名',
-    supervisorUsername: '监管机构用户名',
-    supervisorPhone: '10090090990',
-    supervisorOrgId: '监管机构id',
-  },
-  {
-    supervisorLoginName: '监管机构登录名1',
-    supervisorUsername: '监管机构用户名1',
-    supervisorPhone: '198099090989',
-    supervisorOrgId: '监管机构id',
-  },
-];
+const queryURL = edbSupervisorUserFindURL;
+const delURL = edbSupervisorUserDelURL;
 
 // 课程查询页面
 const BaseInfoQuery: React.FC = () => {
   const [present, dismiss] = useIonToast();
   // 新增模态框的状态
   let [isCreateOpen, setIsCreateOpen] = useState(false);
-  const [page,setPage] = useState(0)
-  const [total,setTotal]= useState(0)
+  const [page, setPage] = useState(0);
+  const [total, setTotal] = useState(0);
 
-  const onPageChange = (records:any,total:number,newPage:number)=>{
-    setPage(newPage)
-    setTotal(total)
-    refreshList(records)
-  }
+  const onPageChange = (records: any, total: number, newPage: number) => {
+    setPage(newPage);
+    setTotal(total);
+    refreshList(records);
+  };
   function closeCreateModal() {
     setIsCreateOpen(false);
   }
@@ -71,23 +50,22 @@ const BaseInfoQuery: React.FC = () => {
     })
       .then(res => res.json())
       .then(json => {
-        const result=json
-        if (result) 
-        {
+        const result = json;
+        if (result) {
           present({
             message: '删除用户信息操作成功',
-            position:'top',
-            duration:3000
-          })
-          closeDeleteModal()
-        } else 
-        present({
-          buttons: [{ text: '关闭', handler: () => dismiss() }],
-          message: '删除用户信息操作失败',
-          position:'top',
-        })
+            position: 'top',
+            duration: 3000,
+          });
+          closeDeleteModal();
+        } else
+          present({
+            buttons: [{ text: '关闭', handler: () => dismiss() }],
+            message: '删除用户信息操作失败',
+            position: 'top',
+          });
       });
-      onQuery()
+    onQuery();
   };
   const createModal = useRef<HTMLIonModalElement>(null);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
@@ -132,7 +110,7 @@ const BaseInfoQuery: React.FC = () => {
     [dispatch]
   );
   useEffect(() => {
-    onQuery()
+    onQuery();
   }, []);
 
   const onEdit = (item: SupervisorUser) => () => {
@@ -152,15 +130,16 @@ const BaseInfoQuery: React.FC = () => {
       headers: {
         'Content-type': 'application/json;charset=UTF-8',
       },
-    }).then(res => res.json())
-    .then(json => {
-      const { result, records,total } = json;
-      if (result) {
-        setTotal(total)
-        refreshList(records)
-      };
-      return;
-    });
+    })
+      .then(res => res.json())
+      .then(json => {
+        const { result, records, total } = json;
+        if (result) {
+          setTotal(total);
+          refreshList(records);
+        }
+        return;
+      });
   };
   const onCreate = (e: any) => {
     // e.preventDefault();
@@ -174,23 +153,22 @@ const BaseInfoQuery: React.FC = () => {
     //   .then(res => res.json())
     //   .then(json => {
     //     const result=json.result
-    const result={true:Boolean}
-    const msg={"网络异常":String}
-        if (result) 
-        {
-          present({
-            message: '添加用户信息操作成功',
-            position:'top',
-            duration:3000
-          })
-          closeDeleteModal()
-        } else 
-        present({
-          buttons: [{ text: '关闭', handler: () => dismiss() }],
-          message: '添加用户信息操作失败'+msg,
-          position:'top',
-        })
-      // });
+    const result = { true: Boolean };
+    const msg = { 网络异常: String };
+    if (result) {
+      present({
+        message: '添加用户信息操作成功',
+        position: 'top',
+        duration: 3000,
+      });
+      closeDeleteModal();
+    } else
+      present({
+        buttons: [{ text: '关闭', handler: () => dismiss() }],
+        message: '添加用户信息操作失败' + msg,
+        position: 'top',
+      });
+    // });
   };
 
   const ListEntry = ({ userInfo, ...props }: { userInfo: SupervisorUser }) => (
@@ -203,11 +181,11 @@ const BaseInfoQuery: React.FC = () => {
       <td className="flex items-center justify-center leading-10">{userInfo.supervisorOrgName}</td>
       <td className="flex items-center justify-center leading-10">
         <div className="flex gap-2 ">
-        <button className="p-1 text-primary-600" onClick={onDetail(userInfo)}>
+          <button className="p-1 text-primary-600" onClick={onDetail(userInfo)}>
             详情
           </button>
           <button className="p-1 text-cyan-600" onClick={onEdit(userInfo)}>
-           编辑 
+            编辑
           </button>
           <button
             className="p-1 text-red-600"
@@ -215,7 +193,7 @@ const BaseInfoQuery: React.FC = () => {
             onClick={openDeleteModal}
           >
             删除
-          </button> 
+          </button>
         </div>
       </td>
     </tr>
@@ -505,7 +483,16 @@ const BaseInfoQuery: React.FC = () => {
                   <ListEntry userInfo={list} key={i} />
                 ))}
                 <tr>
-                  <td colSpan={5}> <Paging url={paramStr} page={page} pagesize={20} total={total} onPageChange={onPageChange}/></td>
+                  <td colSpan={5}>
+                    {' '}
+                    <Paging
+                      url={paramStr}
+                      page={page}
+                      pagesize={20}
+                      total={total}
+                      onPageChange={onPageChange}
+                    />
+                  </td>
                 </tr>
               </tbody>
             </table>

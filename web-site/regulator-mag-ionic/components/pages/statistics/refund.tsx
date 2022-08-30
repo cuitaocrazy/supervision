@@ -1,27 +1,11 @@
-import { useEffect, useCallback, useContext, useState } from 'react';
-import {
-  IonButton,
-  IonContent,
-  IonHeader,
-  IonIcon,
-  IonItem,
-  IonLabel,
-  IonList,
-  IonMenu,
-  IonMenuToggle,
-  IonTitle,
-  IonToolbar,
-  IonPage,
-  IonCard,
-  IonCardContent,
-  IonRow,
-  IonCol,
-} from '@ionic/react';
+import { useEffect, useState } from 'react';
+import { IonPage, IonRow, IonCol } from '@ionic/react';
 import Quit from '../../Quit';
 import Paging from '../../paging';
 import moment from 'moment';
+import { edbRefundFindURL } from 'const/const';
 
-const findURL = 'http://localhost:3003/edb/refund/find';
+const findURL = edbRefundFindURL;
 
 const Refund: React.FC = () => {
   const [page, setPage] = useState(0);
@@ -53,7 +37,6 @@ const Refund: React.FC = () => {
   );
 
   const onQuery = () => {
-    console.log('qqq');
     fetch(paramStr, {
       method: 'GET',
       headers: {

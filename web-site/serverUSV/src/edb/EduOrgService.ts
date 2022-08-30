@@ -1,6 +1,8 @@
 import { EduOrg } from "../entity/EduOrg";
 import mysql from "../mysql";
 import { nullableFuzzy } from "../Util";
+import { SupervisorBlackEdu } from "../entity/SupervisorBlackEdu";
+
 class EduOrgService {
   async find(reqParams) {
     let { page, size, eduName } = reqParams;
@@ -13,9 +15,17 @@ class EduOrgService {
     const records = await mysql
       .getRepository(EduOrg)
       .createQueryBuilder("eduOrg")
+      .leftJoinAndMapOne(
+        "eduOrg.blackEdu",
+        SupervisorBlackEdu,
+        "blackEdu",
+        "blackEdu.eduId=eduOrg.eduId"
+      )
       .where("eduOrg.eduName like :name ", {
         name: nullableFuzzy(eduName),
       })
+      .orderBy("eduOrg.eduCreateDate", "DESC")
+      .addOrderBy("eduOrg.eduCreateTime", "DESC")
       .skip(page * size)
       .take(size)
       .getManyAndCount(); // 最后查询出全部

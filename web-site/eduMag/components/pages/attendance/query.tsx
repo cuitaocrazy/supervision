@@ -15,59 +15,15 @@ import {
   IonCol,
 } from "@ionic/react";
 import Quit from "components/components/Quit";
-import Paging from '../../paging';
+import Paging from "../../paging";
+import { eduAttendanceFindURL } from "const/consts";
 
-const queryURL = "http://localhost:3003/edu/attendance/find";
-
-// const demoattendanceList: Attendance[] = [
-//   {
-//     attendanceID: "1",
-//     attendanceDate: "2020-01-01",
-//     attendanceTime: "00:00:00",
-//     attendanceType: "vaild",
-//     attendanceLessonQuantity: 111,
-//     eduId: "1",
-//     eduName: "教育机构1",
-//     lessonId: "1",
-//     lessonName: "课程1",
-//     consumerId: "1",
-//     consumerName: "消费者1",
-//     consumerStuName: "学生1",
-//     attendanceStatus: "vaild",
-//     updateDate: "2020-01-01",
-//     updateTime: "2020-01-01",
-//     updateReason: "aaaa",
-//     attendanceUpdateDate: "",
-//     attendanceUpdateTime: "",
-//     attendanceUpdateReason: "",
-//   },
-//   {
-//     attendanceID: "2",
-//     attendanceDate: "2020-01-01",
-//     attendanceTime: "00:00:00",
-//     attendanceType: "vaild",
-//     attendanceLessonQuantity: 111,
-//     eduId: "1",
-//     eduName: "教育机构1",
-//     lessonId: "1",
-//     lessonName: "课程1",
-//     consumerId: "1",
-//     consumerName: "消费者1",
-//     consumerStuName: "学生2",
-//     attendanceStatus: "vaild",
-//     updateDate: "2020-01-01",
-//     updateTime: "2020-01-01",
-//     updateReason: "aaaa",
-//     attendanceUpdateDate: "",
-//     attendanceUpdateTime: "",
-//     attendanceUpdateReason: "",
-//   },
-// ];
+const queryURL = eduAttendanceFindURL;
 
 const AttendanceQuery: React.FC = () => {
   const { state, dispatch } = useContext(AppContext);
-  const [page,setPage] = useState(0)
-  const [total,setTotal]= useState(101)//todo
+  const [page, setPage] = useState(0);
+  const [total, setTotal] = useState(101); //todo
   const [queryInfo, setQueryInfo] = useState({
     consumerName: "",
     lessonName: "",
@@ -75,14 +31,14 @@ const AttendanceQuery: React.FC = () => {
     attendanceType: "",
     attendanceStatus: "",
   });
-  const onPageChange = (records:any,total:number,newPage:number)=>{
-    console.log(records)
-    console.log(total)
-    console.log(newPage)
-    setPage(newPage)
-    setTotal(total)
-    refreshLessonList(records)
-  }
+  const onPageChange = (records: any, total: number, newPage: number) => {
+    console.log(records);
+    console.log(total);
+    console.log(newPage);
+    setPage(newPage);
+    setTotal(total);
+    refreshLessonList(records);
+  };
 
   const getParamStr = (params: any, url: string) => {
     let result = "?";
@@ -144,10 +100,10 @@ const AttendanceQuery: React.FC = () => {
     })
       .then((res) => res.json())
       .then((json) => {
-        const { result, records,total } = json;
+        const { result, records, total } = json;
 
         if (result) {
-          setTotal(total)
+          setTotal(total);
           refreshLessonList(records);
         }
         return;
@@ -183,11 +139,11 @@ const AttendanceQuery: React.FC = () => {
     })
       .then((res) => res.json())
       .then((json) => {
-        const { result, records,total } = json;
+        const { result, records, total } = json;
         if (result) {
-          setTotal(total)
-          refreshLessonList(records)
-        };
+          setTotal(total);
+          refreshLessonList(records);
+        }
         return;
       });
   };
@@ -221,11 +177,7 @@ const AttendanceQuery: React.FC = () => {
     return stateEnglish;
   };
 
-  const ListEntry = ({
-    attendance,
-  }: {
-    attendance: Attendance;
-  }) => (
+  const ListEntry = ({ attendance }: { attendance: Attendance }) => (
     <tr className="grid items-center grid-cols-9 gap-10 text-gray-600 border justify-items-center even:bg-white odd:bg-primary-100">
       <td className="flex items-center justify-center leading-10">
         {attendance.lessonName}
@@ -237,7 +189,7 @@ const AttendanceQuery: React.FC = () => {
         {attendance.consumerStuName}
       </td>
       <td className="flex items-center justify-center leading-10">
-      {getAttendanceType(attendance.attendanceType)}
+        {getAttendanceType(attendance.attendanceType)}
       </td>
       <td className="flex items-center justify-center leading-10">
         {attendance.attendanceLessonQuantity}
@@ -416,8 +368,17 @@ const AttendanceQuery: React.FC = () => {
               )}
             </tbody>
             <tr>
-                <td colSpan={5}> <Paging url={paramStr} page={page} pagesize={20} total={total} onPageChange={onPageChange}/></td>
-              </tr>
+              <td colSpan={5}>
+                {" "}
+                <Paging
+                  url={paramStr}
+                  page={page}
+                  pagesize={20}
+                  total={total}
+                  onPageChange={onPageChange}
+                />
+              </td>
+            </tr>
           </table>
         </div>
       </div>

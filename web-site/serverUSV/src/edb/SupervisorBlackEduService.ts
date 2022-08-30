@@ -45,28 +45,37 @@ class SupervisorBlackEduService {
     }
     const resultMap = await mysql
       .getRepository(SupervisorBlackEdu)
-      .createQueryBuilder("blackEdu") // 创建查询生成器，supervisorBlackEdu生成对象
-      .leftJoinAndSelect(EduOrg, "eduOrg", "blackEdu.eduId = eduOrg.eduId")
-      .select(
-        `
-      blackEdu.eduId as blackEdu_edu_id,
-      eduOrg.eduId as eduId, 
-      eduOrg.eduName as eduName,
-      blackEdu.blackEduCreateDate as blackEduCreateDate,
-      blackEdu.blackEduCreateTime as blackEduCreateTime,
-      blackEdu.blackEduCreateReason as blackEduCreateReason
-    `
+      .createQueryBuilder("blackEdu")
+      //.leftJoinAndSelect(EduOrg, "eduOrg", "blackEdu.eduId=eduOrg.eduId")
+      // 创建查询生成器，supervisorBlackEdu生成对象
+      .leftJoinAndMapOne(
+        "blackEdu.eduOrg",
+        EduOrg,
+        "eduOrg",
+        "blackEdu.eduId=eduOrg.eduId"
       )
       .where("eduOrg.eduName like :eduName", {
         eduName: nullableFuzzy(eduName),
       })
+      .orderBy("blackEdu.blackEduCreateDate", "DESC")
+      .addOrderBy("blackEdu.blackEduCreateTime", "DESC")
       .skip(page * size)
       .take(size)
-      .getRawMany(); // 最后查询出全部
-
-    console.log(`黑名单查询结果[${JSON.stringify(resultMap)}]`);
-    //resultMap[1]
-    return { result: true, records: resultMap, total: 4 };
+      .getManyAndCount();
+    let arrAfter: SupervisorBlackEdu[] = [];
+    if (resultMap[0].length > 0) {
+      let r = resultMap[0];
+      r.forEach((k) => {
+        let item: SupervisorBlackEdu = new SupervisorBlackEdu();
+        item.blackEduCreateDate = k.blackEduCreateDate;
+        item.blackEduCreateTime = k.blackEduCreateTime;
+        item.blackEduCreateReason = k.blackEduCreateReason;
+        item.eduId = k.eduId;
+        item.eduName = k.eduOrg.eduName;
+        arrAfter.push(item);
+      });
+    }
+    return { result: true, records: arrAfter, total: resultMap[1] };
   }
 }
 

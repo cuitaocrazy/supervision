@@ -1,35 +1,42 @@
 //课程签到发起
 import React, { useState, Fragment } from "react";
 import { useEffect, useCallback, useContext } from "react";
-import { IonPage, IonModal, IonRow, IonCol, IonLabel, useIonToast} from "@ionic/react";
+import {
+  IonPage,
+  IonModal,
+  IonRow,
+  IonCol,
+  IonLabel,
+  useIonToast,
+} from "@ionic/react";
+import { eduAttendanceApplyURL, eduLessonFindURL } from "const/consts";
 import { AppContext, setAttendenceLanuchList } from "../../../appState";
 import { Attendance, Lesson } from "../../../types/types";
 import moment from "moment";
 import { Dialog, Transition } from "@headlessui/react";
-import Paging from '../../paging';
+import Paging from "../../paging";
 import Quit from "components/components/Quit";
 
-const queryURL = "http://localhost:3003/edu/lesson/find";
-const attendanceApplyURL = "http://localhost:3003/edu/attendance/apply";
+const queryURL = eduLessonFindURL;
+const attendanceApplyURL = eduAttendanceApplyURL;
 
 const ContractNegoQuery: React.FC = () => {
   const [present, dismiss] = useIonToast();
   //  结果状态
-  const resultState="000"
+  const resultState = "000";
   // 展示操作结果
-  const resultFun=()=>{
-    if(resultState=="000"){
-      present('课程添加成功', 3000);
-    }
-    else{
+  const resultFun = () => {
+    if (resultState == "000") {
+      present("课程添加成功", 3000);
+    } else {
       present({
-        buttons: [{ text: '关闭', handler: () => dismiss() }],
-        message: '课程添加失败，失败原因：......',
-        onDidDismiss: () => console.log('dismissed'),
-        onWillDismiss: () => console.log('will dismiss'),
-      })
+        buttons: [{ text: "关闭", handler: () => dismiss() }],
+        message: "课程添加失败，失败原因：......",
+        onDidDismiss: () => console.log("dismissed"),
+        onWillDismiss: () => console.log("will dismiss"),
+      });
     }
-  }
+  };
   let [isAttendanceOpen, setIsAttendanceOpen] = useState(false);
 
   const { state, dispatch } = useContext(AppContext);
@@ -41,17 +48,14 @@ const ContractNegoQuery: React.FC = () => {
     attendanceDate: "",
     attendanceTime: "",
   } as Attendance);
-  const [page,setPage] = useState(0)
-  const [total,setTotal]= useState(101)//todo
+  const [page, setPage] = useState(0);
+  const [total, setTotal] = useState(101); //todo
 
-
-
-  const onPageChange = (records:any,total:number,newPage:number)=>{
-    setPage(newPage)
-    setTotal(total)
-    refreshList(records)    
-  }
-
+  const onPageChange = (records: any, total: number, newPage: number) => {
+    setPage(newPage);
+    setTotal(total);
+    refreshList(records);
+  };
 
   const getParamStr = (params: any, url: string) => {
     let result = "?";
@@ -95,18 +99,18 @@ const ContractNegoQuery: React.FC = () => {
         const { result, msg } = json;
         if (result) {
           present({
-            message: '发起签到成功',
-            position:'top',
-            duration:3000
-          })
+            message: "发起签到成功",
+            position: "top",
+            duration: 3000,
+          });
           setIsAttendanceOpen(false);
           onQuery();
-        } else 
-        present({
-          buttons: [{ text: '关闭', handler: () => dismiss() }],
-          message: '发起签到失败，失败原因：'+msg,
-          position:'top',
-        })
+        } else
+          present({
+            buttons: [{ text: "关闭", handler: () => dismiss() }],
+            message: "发起签到失败，失败原因：" + msg,
+            position: "top",
+          });
       });
   };
 
@@ -119,10 +123,11 @@ const ContractNegoQuery: React.FC = () => {
     })
       .then((res) => res.json())
       .then((json) => {
-        const { result, records,total } = json;
+        const { result, records, total } = json;
         if (result) {
-          setTotal(total)
-          refreshList(records)};
+          setTotal(total);
+          refreshList(records);
+        }
       });
   };
   useEffect(onQuery, []);
@@ -399,7 +404,16 @@ const ContractNegoQuery: React.FC = () => {
                 )
               )}
               <tr>
-                <td colSpan={4}> <Paging url={paramStr} page={page} pagesize={20} total={total} onPageChange={onPageChange}/></td>
+                <td colSpan={4}>
+                  {" "}
+                  <Paging
+                    url={paramStr}
+                    page={page}
+                    pagesize={20}
+                    total={total}
+                    onPageChange={onPageChange}
+                  />
+                </td>
               </tr>
             </tbody>
           </table>
