@@ -17,7 +17,7 @@ export const edbSupervisorBackEduRemoveURL = `${serverPath}/supervisorBackEdu/re
 
 export const edbContractFindURL = `${serverPath}/contract/find`
 
-export const edbEduOrgModifyURL = `${serverPath}/eduOrg/modifyURL`
+export const edbEduOrgModifyURL = `${serverPath}/eduOrg/modify`
 export const edbEduOrgFindURL = `${serverPath}/eduOrg/find`
 export const edbEduOrgDelURL = `${serverPath}/eduOrg/del`
 export const edbEduOrgApplyURL = `${serverPath}/eduOrg/apply`
