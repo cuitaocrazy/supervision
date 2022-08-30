@@ -88,7 +88,9 @@ export const TeacherDetail: React.FC = () => {
             <hr className="mt-2 mb-4" />
             <div className="grid grid-cols-2 justify-items-center ">
               <div className="flex items-center mb-4 leading-10 justify-items-center">
-                <div className="flex justify-end w-32 mr-2">教师姓名:</div>
+                <div className="flex justify-end w-32 mr-2">
+                  <span className="px-1 text-red-600">*</span>
+                  教师姓名:</div>
                 <input
                   className="w-64 px-2 border rounded-md focus:outline-none focus:glow-primary-600"
                   type="text"
@@ -116,11 +118,12 @@ export const TeacherDetail: React.FC = () => {
                       ...{ teacherIdentityNo: e.nativeEvent.target?.value },
                     })
                   }
-                  required
                 />
               </div>
               <div className="flex mb-4 leading-10">
-                <div className="flex justify-end w-32 mr-2">专业领域:</div>
+                <div className="flex justify-end w-32 mr-2">
+                  <span className="px-1 text-red-600">*</span>
+                  专业领域:</div>
                 <input
                   className="w-64 px-2 border rounded-md"
                   type="text"
@@ -148,11 +151,12 @@ export const TeacherDetail: React.FC = () => {
                       ...{ teacherExperience: e.nativeEvent.target?.value },
                     })
                   }
-                  required
                 />
               </div>
               <div className="flex mb-4 leading-10">
-                <div className="flex justify-end w-32 mr-2">教师简介:</div>
+                <div className="flex justify-end w-32 mr-2">
+                  <span className="px-1 text-red-600">*</span>
+                  教师简介:</div>
                 <textarea
                   className="w-64 px-2 border rounded-md focus:outline-none focus:glow-primary-600"
                   name="teacherIntroduce"
@@ -163,7 +167,6 @@ export const TeacherDetail: React.FC = () => {
                       ...{ teacherIntroduce: e.nativeEvent.target?.value },
                     })
                   }
-                  required
                 />
               </div>
             </div>
