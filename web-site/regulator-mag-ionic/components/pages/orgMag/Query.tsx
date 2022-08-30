@@ -396,8 +396,9 @@ const OrgMagQuery: React.FC = () => {
                       <div className="flex items-center mb-4 justify-items-center">
                         <div className="flex leading-7 justify-items-center">
                           <div className="flex justify-end p-1 w-36">
-                            <span className='px-1 text-red-600'>*</span>
-                            教育机构名称:</div>
+                            <span className="px-1 text-red-600">*</span>
+                            教育机构名称:
+                          </div>
                           <input
                             className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none"
                             name="eduName"
@@ -414,8 +415,9 @@ const OrgMagQuery: React.FC = () => {
                       <div className="flex items-center mb-4 justify-items-center">
                         <div className="flex justify-items-center">
                           <div className="flex justify-end p-1 mr-1 w-36">
-                            <span className='px-1 text-red-600'>*</span>
-                            教育机构地址:</div>
+                            <span className="px-1 text-red-600">*</span>
+                            教育机构地址:
+                          </div>
                           <input
                             className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
                             name="eduAddress"
@@ -452,7 +454,7 @@ const OrgMagQuery: React.FC = () => {
                           <span className="flex justify-end p-1 mr-1 w-36">法人联系方式:</span>
                           <input
                             className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
-                            name="lessonTotalPrice"
+                            name="eduLegalPhone"
                             onChange={e =>
                               setEduOrgState({
                                 ...eduOrgState,
@@ -466,8 +468,9 @@ const OrgMagQuery: React.FC = () => {
                       <div className="flex items-center mb-4 justify-items-center">
                         <div className="flex justify-items-center">
                           <div className="flex justify-end p-1 mr-1 w-36">
-                            <span className='px-1 text-red-600'>*</span>
-                            教育机构联系人:</div>
+                            <span className="px-1 text-red-600">*</span>
+                            教育机构联系人:
+                          </div>
                           <input
                             className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
                             name="eduContact"
@@ -485,8 +488,9 @@ const OrgMagQuery: React.FC = () => {
                       <div className="flex items-center mb-4 justify-items-center">
                         <div className="flex justify-items-center">
                           <div className="flex justify-end p-1 mr-1 w-36">
-                          <span className='px-1 text-red-600'>*</span>
-                          教育机构联系方式:</div>
+                            <span className="px-1 text-red-600">*</span>
+                            教育机构联系方式:
+                          </div>
                           <input
                             className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
                             name="eduContactPhone"
@@ -517,7 +521,7 @@ const OrgMagQuery: React.FC = () => {
                       </div>
                       <div className="flex items-center mb-4 justify-items-center">
                         <div className="flex justify-items-center">
-                          <span className="flex justify-end p-1 mr-1 w-36">监管机构名称:</span>
+                          <span className="flex justify-end p-1 mr-1 w-36">许可文件:</span>
                           <input
                             className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
                             name="eduLicense"
@@ -534,8 +538,9 @@ const OrgMagQuery: React.FC = () => {
                       <div className="flex items-center mb-4 justify-items-center">
                         <div className="flex justify-items-center">
                           <div className="flex justify-end p-1 mr-1 w-36">
-                          <span className='px-1 text-red-600'>*</span>
-                          监管账户:</div>
+                            <span className="px-1 text-red-600">*</span>
+                            监管账户:
+                          </div>
                           <input
                             className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
                             name="eduSupervisedAccount"
@@ -553,16 +558,17 @@ const OrgMagQuery: React.FC = () => {
                       <div className="flex items-center mb-4 justify-items-center">
                         <div className="flex justify-items-center">
                           <div className="flex justify-end p-1 mr-1 w-36">
-                            <span className='px-1 text-red-600'>*</span>
-                          普通账户:</div>
+                            <span className="px-1 text-red-600">*</span>
+                            普通账户:
+                          </div>
                           <input
                             className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
-                            name="eduSupervisedAccount"
+                            name="eduNormalAccount"
                             type="text"
                             onChange={e =>
                               setEduOrgState({
                                 ...eduOrgState,
-                                ...{ eduSupervisedAccount: e.nativeEvent.target?.value },
+                                ...{ eduNormalAccount: e.nativeEvent.target?.value },
                               })
                             }
                             required
@@ -588,8 +594,9 @@ const OrgMagQuery: React.FC = () => {
                       <div className="flex items-center mb-4 justify-items-center">
                         <div className="flex justify-items-center">
                           <div className="flex justify-end p-1 mr-1 w-36">
-                          <span className='px-1 text-red-600'>*</span>
-                          登录名称:</div>
+                            <span className="px-1 text-red-600">*</span>
+                            登录名称:
+                          </div>
                           <input
                             className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
                             name="eduLoginName"

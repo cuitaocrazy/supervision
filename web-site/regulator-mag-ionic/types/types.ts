@@ -147,6 +147,7 @@ export interface EduOrg {
   blackEduCreateReason?: string;
   blackEduCreateDate?: string;
   blackEduCreateTime?: string;
+  blackEdu?: object;
 }
 
 export interface SupervisorOrg {
