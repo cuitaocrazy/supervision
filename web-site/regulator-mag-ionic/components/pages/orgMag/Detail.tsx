@@ -30,7 +30,6 @@ export const EduOrgDetail: React.FC = () => {
   const { state, dispatch } = useContext(AppContext);
 
   const [eduOrgState, setEduOrgState] = useState(state.eduOrg.eduOrgDetail);
-  const [isPickOpen, setPickOpen] = useState(false);
   const setBack = useCallback(() => {
     dispatch(setEduOrgDetail(undefined));
   }, []);
@@ -41,25 +40,6 @@ export const EduOrgDetail: React.FC = () => {
   if (state.eduOrg.eduOrgDetail === undefined) {
     return <Redirect to={state.backPage} />;
   }
-
-  const onModify = async (e: React.FormEvent) => () => {
-    e.preventDefault();
-    fetch(modifyURL, {
-      method: 'PUT',
-      body: JSON.stringify(eduOrgState),
-      headers: {
-        'Content-type': 'application/json;charset=UTF-8',
-      },
-    })
-      .then(res => res.json())
-      .then(json => {
-        alert(json.result);
-      });
-  };
-  // const eduOrgTypePickerColumn = {
-  //   name: "eduOrgTypePickerColumn",
-  //   options: [{'text':'','value':'0'},{'text':'数学','value':'1'}],
-  // } as PickerColumn;
   /**todo 教育机构所在城市*/
   return (
     <IonPage className="bg-gray-100">
@@ -90,7 +70,7 @@ export const EduOrgDetail: React.FC = () => {
           </div>
         </div>
         <IonCardContent>
-          <form onSubmit={onModify}>
+          <form>
             {/* 详情 */}
             <div className="font-bold text-gray-800">机构详情</div>
             <hr className="mt-2 mb-4" />
@@ -155,7 +135,7 @@ export const EduOrgDetail: React.FC = () => {
                 <input
                   className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
                   name="Public"
-                  value={eduOrgState.eduIsPublic}
+                  value={eduOrgState.eduIsPublic ==0 ? '否':'是'}
                   readOnly
                 />
               </div>
