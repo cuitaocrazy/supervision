@@ -104,7 +104,9 @@ export const EduOrgEdit: React.FC = () => {
                 />
               </div>
               <div className="flex mb-4 leading-10">
-                <div className="flex justify-end w-32 mr-2">教育机构名称:</div>
+                <div className="flex justify-end w-32 mr-2">
+                  <span className="px-1 text-red-600">*</span>
+                  教育机构名称:</div>
                 <input
                   className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
                   name="eduName"
@@ -115,17 +117,19 @@ export const EduOrgEdit: React.FC = () => {
                   required
                 />
               </div>
-              <div className="flex mb-4 leading-10">
-                {/* <div className="flex justify-end w-32 mr-2">教育机构城市:</div>
+              {/*<div className="flex mb-4 leading-10">
+                <div className="flex justify-end w-32 mr-2">教育机构城市:</div>
                 <input
                   className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
                   name="eduAddress"
                   value={eduOrgState.eduAddress}
                   required
-                /> */}
-              </div>
+                /> 
+              </div>*/}
               <div className="flex mb-4 leading-10">
-                <div className="flex justify-end w-32 mr-2">教育机构地址:</div>
+                <div className="flex justify-end w-32 mr-2">
+                  <span className="px-1 text-red-600">*</span>
+                  教育机构地址:</div>
                 <input
                   className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
                   name="eduAddress"
@@ -145,7 +149,6 @@ export const EduOrgEdit: React.FC = () => {
                   onChange={e =>
                     setEduOrgState({ ...eduOrgState, eduLegalPerson: e.nativeEvent.target?.value })
                   }
-                  required
                 />
               </div>
 
@@ -158,7 +161,6 @@ export const EduOrgEdit: React.FC = () => {
                   onChange={e =>
                     setEduOrgState({ ...eduOrgState, eduLegalPhone: e.nativeEvent.target?.value })
                   }
-                  required
                 />
               </div>
               <div className="flex mb-4 leading-10">
@@ -173,44 +175,10 @@ export const EduOrgEdit: React.FC = () => {
                   }}
                 />
               </div>
-              {/* <div className="flex mb-4 leading-10">
-                <div className="flex justify-end w-32 mr-2">许可证文件:</div>
-                <input
-                  className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
-                  name="eduLicense"
-                  value={eduOrgState.eduLicense}
-                />
-              </div>
               <div className="flex mb-4 leading-10">
-                <div className="flex justify-end w-32 mr-2">年检日期:</div>
-                <input
-                  className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
-                  name="eduAnnualInspectionDate"
-                  value={eduOrgState.eduAnnualInspectionDate}
-                  onChange={e =>
-                    setEduOrgState({
-                      ...eduOrgState,
-                      eduAnnualInspectionDate: e.nativeEvent.target?.value,
-                    })
-                  }
-                />
-              </div>
-              <div className="flex mb-4 leading-10">
-                <div className="flex justify-end w-32 mr-2">年检时间:</div>
-                <input
-                  className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
-                  name="eduAnnualInspectionTime"
-                  value={eduOrgState.eduAnnualInspectionTime}
-                  onChange={e =>
-                    setEduOrgState({
-                      ...eduOrgState,
-                      eduAnnualInspectionTime: e.nativeEvent.target?.value,
-                    })
-                  }
-                />
-              </div> */}
-              <div className="flex mb-4 leading-10">
-                <div className="flex justify-end w-32 mr-2"> 监管账户:</div>
+                <div className="flex justify-end w-32 mr-2">
+                  <span className="px-1 text-red-600">*</span>
+                  监管账户:</div>
                 <input
                   className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
                   name="eduSupervisedAccount"
@@ -225,18 +193,23 @@ export const EduOrgEdit: React.FC = () => {
                 />
               </div>
               <div className="flex mb-4 leading-10">
-                <div className="flex justify-end w-32 mr-2">普通账户:</div>
+                <div className="flex justify-end w-32 mr-2">
+                  <span className="px-1 text-red-600">*</span>
+                  普通账户:</div>
                 <input
                   className="w-64 h-10 px-2 rounded-md bg-primary-100 focus:outline-none"
-                  name="normalAccount"
+                  name="eduNormalAccount"
                   value={eduOrgState.eduNormalAccount}
                   onChange={e =>
-                    setEduOrgState({ ...eduOrgState, normalAccount: e.nativeEvent.target?.value })
+                    setEduOrgState({ ...eduOrgState, eduNormalAccount: e.nativeEvent.target?.value })
                   }
+                  required
                 />
               </div>
               <div className="flex mb-4 leading-10">
-                <div className="flex justify-end w-32 mr-2">登录名:</div>
+                <div className="flex justify-end w-32 mr-2">
+                  <span className="px-1 text-red-600">*</span>
+                  登录名:</div>
                 <input
                   className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
                   name="eduAnnualInspectionTime"
@@ -259,14 +232,13 @@ export const EduOrgEdit: React.FC = () => {
                       eduSupervisedMerNo: e.nativeEvent.target?.value,
                     })
                   }
-                  required
                 />
               </div>
               <div className="flex mb-4 leading-10">
                 <div className="flex justify-end w-32 mr-2">监管机构名:</div>
                 <input
                   className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
-                  name="Public"
+                  name="supervisorOrgId"
                   value={eduOrgState.supervisorOrgId}
                   onChange={e =>
                     setEduOrgState({ ...eduOrgState, supervisorOrgId: e.nativeEvent.target?.value })

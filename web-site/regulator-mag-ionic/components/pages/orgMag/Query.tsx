@@ -443,7 +443,7 @@ const OrgMagQuery: React.FC = () => {
                           <span className="flex justify-end p-1 mr-1 w-36">教育机构法人:</span>
                           <input
                             className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
-                            name="lessonTotalTimes"
+                            name="eduLegalPerson"
                             type="text"
                             onChange={e =>
                               setEduOrgState({
@@ -575,12 +575,13 @@ const OrgMagQuery: React.FC = () => {
                                 ...{ eduNormalAccount: e.nativeEvent.target?.value },
                               })
                             }
+                            required
                           ></input>
                         </div>
                       </div>
                       <div className="flex items-center mb-4 justify-items-center">
                         <div className="flex justify-items-center">
-                          <span className="flex justify-end p-1 mr-1 w-36">支付商户号:</span>
+                          <span className="flex justify-end p-1 mr-1 w-36">监管商户号:</span>
                           <input
                             className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
                             name="eduSupervisedMerNo"
@@ -610,6 +611,7 @@ const OrgMagQuery: React.FC = () => {
                                 ...{ eduLoginName: e.nativeEvent.target?.value },
                               })
                             }
+                            required
                           />
                         </div>
                       </div>
