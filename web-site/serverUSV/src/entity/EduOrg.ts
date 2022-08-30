@@ -1,5 +1,5 @@
 import { Entity, PrimaryColumn, Column } from 'typeorm'
-
+import { SupervisorBlackEdu } from "./SupervisorBlackEdu";
 @Entity({ name: "t_b_edu_org" })
 export class EduOrg {
   @PrimaryColumn()
@@ -63,6 +63,6 @@ export class EduOrg {
   eduArea: string
   @Column()
   merNo: string
-
-
+  //黑名单
+  blackEdu: SupervisorBlackEdu;
 }

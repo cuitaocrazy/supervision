@@ -1,12 +1,12 @@
 import { FC, useEffect, useState, useCallback, useContext } from "react";
-import { IonPage, IonRow, IonCol, IonLabel,useIonToast } from "@ionic/react";
+import { IonPage, IonRow, IonCol, IonLabel, useIonToast } from "@ionic/react";
 import { AppContext, setContractList } from "../../appState";
 import { Contract } from "../../types/types";
-import Paging from "../paging"
+import Paging from "../paging";
 import Quit from "components/components/Quit";
-import Clipboard from 'react-clipboard.js';
+import { eduContractFindURL } from "const/consts";
 
-const findUrl = "http://localhost:3003/edu/contract/find";
+const findUrl = eduContractFindURL;
 const getAttendanceType = (typeEnglish: any) => {
   if (typeEnglish === "manual") {
     return "手工";
@@ -17,29 +17,27 @@ const getAttendanceType = (typeEnglish: any) => {
   return typeEnglish;
 };
 
-
-
 const OrderQuery = () => {
   const { state, dispatch } = useContext(AppContext);
   const [present, dismiss] = useIonToast();
   const [queryInfo, setQueryInfo] = useState({ contractId: "" });
-  const [page,setPage] = useState(0)
-  const [total,setTotal]= useState(101)//todo
-  const ToastFun=()=>{
+  const [page, setPage] = useState(0);
+  const [total, setTotal] = useState(101); //todo
+  const ToastFun = () => {
     present({
-      message: '复制成功',
-      position:'top',
-      duration:3000,
-      color:"dark",
-      cssClass:"text-center"
-    })
-}
+      message: "复制成功",
+      position: "top",
+      duration: 3000,
+      color: "dark",
+      cssClass: "text-center",
+    });
+  };
 
-  const onPageChange = (records:any,total:number,newPage:number)=>{
-    setPage(newPage)
-    setTotal(total)
-    refreshList(records)    
-  }
+  const onPageChange = (records: any, total: number, newPage: number) => {
+    setPage(newPage);
+    setTotal(total);
+    refreshList(records);
+  };
   const refreshList = useCallback(
     (contracts: Contract[]) => {
       dispatch(setContractList(contracts));
@@ -71,10 +69,11 @@ const OrderQuery = () => {
     })
       .then((res) => res.json())
       .then((json) => {
-        const { result, records,total } = json;
+        const { result, records, total } = json;
         if (result) {
-          setTotal(total)
-          refreshList(records)};
+          setTotal(total);
+          refreshList(records);
+        }
       });
   };
   useEffect(onQuery, []);
@@ -98,7 +97,7 @@ const OrderQuery = () => {
       <td className="flex items-center justify-center flex-1 leading-10 ">
         {contract.lessonName}
       </td>
-      
+
       <td className="flex items-center justify-center flex-1 leading-10 ">
         {contract.lessonType}
       </td>
@@ -115,7 +114,7 @@ const OrderQuery = () => {
         {contract.teacherName}
       </td>
       <td className="flex items-center justify-center flex-1 leading-10 ">
-        {contract.contractDate} 
+        {contract.contractDate}
       </td>
       <td className="flex items-center justify-center flex-1 leading-10 ">
         {contract.contractTime}
@@ -186,17 +185,37 @@ const OrderQuery = () => {
             <thead>
               <tr className="grid items-end w-full h-10 grid-cols-10 font-bold text-gray-700 bg-white rounded-lg justify-items-center">
                 {/* <th className="flex items-center flex-1 leading-10 justify-items-end ">订单号</th> */}
-                <th className="flex items-center flex-1 leading-10 justify-items-end ">客户姓名</th>
-                <th className="flex items-center justify-center flex-1 leading-10 ">学生姓名</th>
-                <th className="flex items-center justify-center flex-1 leading-10 ">课程签到类型</th>
-                <th className="flex items-center justify-center flex-1 leading-10 ">课程名称</th>
-                <th className="flex items-center justify-center flex-1 leading-10 ">课程类型</th>
-                <th className="flex items-center justify-center flex-1 leading-10 ">总课时</th>
-                <th className="flex items-center justify-center flex-1 leading-10 ">总价格(元)</th>
+                <th className="flex items-center flex-1 leading-10 justify-items-end ">
+                  客户姓名
+                </th>
+                <th className="flex items-center justify-center flex-1 leading-10 ">
+                  学生姓名
+                </th>
+                <th className="flex items-center justify-center flex-1 leading-10 ">
+                  课程签到类型
+                </th>
+                <th className="flex items-center justify-center flex-1 leading-10 ">
+                  课程名称
+                </th>
+                <th className="flex items-center justify-center flex-1 leading-10 ">
+                  课程类型
+                </th>
+                <th className="flex items-center justify-center flex-1 leading-10 ">
+                  总课时
+                </th>
+                <th className="flex items-center justify-center flex-1 leading-10 ">
+                  总价格(元)
+                </th>
                 {/* <th className="flex items-center justify-center">课时单价</th> */}
-                <th className="flex items-center justify-center flex-1 leading-10 ">教师姓名</th>
-                <th className="flex items-center justify-center flex-1 leading-10 ">订单日期</th>
-                <th className="flex items-center justify-center flex-1 leading-10 ">订单时间</th>
+                <th className="flex items-center justify-center flex-1 leading-10 ">
+                  教师姓名
+                </th>
+                <th className="flex items-center justify-center flex-1 leading-10 ">
+                  订单日期
+                </th>
+                <th className="flex items-center justify-center flex-1 leading-10 ">
+                  订单时间
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -206,7 +225,16 @@ const OrderQuery = () => {
                 )
               )}
               <tr>
-                <td colSpan={12}> <Paging url={paramStr} page={page} pagesize={20} total={total} onPageChange={onPageChange}/></td>
+                <td colSpan={12}>
+                  {" "}
+                  <Paging
+                    url={paramStr}
+                    page={page}
+                    pagesize={20}
+                    total={total}
+                    onPageChange={onPageChange}
+                  />
+                </td>
               </tr>
             </tbody>
           </table>

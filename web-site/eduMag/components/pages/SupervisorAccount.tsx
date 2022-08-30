@@ -23,6 +23,7 @@ import { useCallback, useContext, useEffect } from "react";
 import { AppContext, setEduOrgDetail } from "../../appState";
 import { PickerColumn } from "@ionic/core";
 import Quit from "components/components/Quit";
+import { eduTransactionSumURL } from "const/consts";
 
 export const SupervisorAccount: React.FC = () => {
   //   const queryURL = 'http://localhost:3003/baseInfo/query'
@@ -71,7 +72,7 @@ export const SupervisorAccount: React.FC = () => {
   };
   useEffect(onQuery, []);
 
-  const findURL = "http://localhost:3003/edu/transaction/sum";
+  const findURL = eduTransactionSumURL;
   const getParamStr = (params: any, url: string) => {
     let result = "?";
     Object.keys(params).forEach((key) => {

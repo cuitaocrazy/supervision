@@ -6,10 +6,11 @@ import { useCallback, useContext } from 'react';
 import { AppContext, setEduOrgEdit } from '../../../appState';
 import Quit from '../../Quit';
 import EduIsPublic from 'components/EduIsPublic';
+import { edbEduOrgModifyURL } from 'const/const';
 
 export const EduOrgEdit: React.FC = () => {
   const [present, dismiss] = useIonToast();
-  const modifyURL = 'http://localhost:3003/edb/eduOrg/modifyURL';
+  const modifyURL = edbEduOrgModifyURL;
   const { state, dispatch } = useContext(AppContext);
 
   const [eduOrgState, setEduOrgState] = useState(state.eduOrg.eduOrgEdit);
@@ -25,7 +26,6 @@ export const EduOrgEdit: React.FC = () => {
   // const onModify = async (e: React.FormEvent) => () => {
   const onModify = (e: React.FormEvent) => {
     e.preventDefault();
-    //eduOrgState.eduIsPublic=eduIsPublic;
     fetch(modifyURL, {
       method: 'POST',
       body: JSON.stringify(eduOrgState),
@@ -177,28 +177,15 @@ export const EduOrgEdit: React.FC = () => {
                 <div className="flex justify-end w-32 mr-2">许可证文件:</div>
                 <input
                   className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
-                  name="Public"
-                />
-              </div>
-              <div className="flex mb-4 leading-10">
-                <div className="flex justify-end w-32 mr-2">年检状态:</div>
-                <input
-                  className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
-                  name="eduAnnualInspection"
-                  value={eduOrgState.eduAnnualInspection}
-                  onChange={e =>
-                    setEduOrgState({
-                      ...eduOrgState,
-                      eduAnnualInspection: e.nativeEvent.target?.value,
-                    })
-                  }
+                  name="eduLicense"
+                  value={eduOrgState.eduLicense}
                 />
               </div>
               <div className="flex mb-4 leading-10">
                 <div className="flex justify-end w-32 mr-2">年检日期:</div>
                 <input
                   className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
-                  name="Public"
+                  name="eduAnnualInspectionDate"
                   value={eduOrgState.eduAnnualInspectionDate}
                   onChange={e =>
                     setEduOrgState({
@@ -242,7 +229,7 @@ export const EduOrgEdit: React.FC = () => {
                 <input
                   className="w-64 h-10 px-2 rounded-md bg-primary-100 focus:outline-none"
                   name="normalAccount"
-                  value={eduOrgState.normalAccount}
+                  value={eduOrgState.eduNormalAccount}
                   onChange={e =>
                     setEduOrgState({ ...eduOrgState, normalAccount: e.nativeEvent.target?.value })
                   }
@@ -284,15 +271,6 @@ export const EduOrgEdit: React.FC = () => {
                   onChange={e =>
                     setEduOrgState({ ...eduOrgState, supervisorOrgId: e.nativeEvent.target?.value })
                   }
-                />
-              </div>
-              <div className="flex mb-4 leading-10">
-                <div className="flex justify-end w-32 mr-2">是否为黑名单:</div>
-                <input
-                  className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
-                  name="eduAnnualInspectionTime"
-                  value={'否'}
-                  required
                 />
               </div>
             </div>

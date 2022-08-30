@@ -1,46 +1,18 @@
-import { useEffect, useCallback, useContext, useState } from 'react';
-import {
-  IonButton,
-  IonContent,
-  IonHeader,
-  IonIcon,
-  IonItem,
-  IonLabel,
-  IonList,
-  IonMenu,
-  IonMenuToggle,
-  IonTitle,
-  IonToolbar,
-  IonPage,
-  IonCard,
-  IonCardContent,
-  IonRow,
-  IonCol,
-} from '@ionic/react';
-import { AppContext, setLessonList, setLessonDetail, setLessonAudit } from '../../../appState';
+import { useContext, useState } from 'react';
+import { IonPage, IonRow, IonCol } from '@ionic/react';
+import { AppContext } from '../../../appState';
 import Quit from '../../Quit';
-import Paging from '../../paging';
 import moment from 'moment';
+import { edbBalanceFindURL } from 'const/const';
 
-const findURL = 'http://localhost:3003/edb/balance/find';
+const findURL = edbBalanceFindURL;
 
 const Balance: React.FC = () => {
-  console.log('aaaaaaaaa');
-  const [page, setPage] = useState(0);
-  const [total, setTotal] = useState(101); //todo
   const [balanceStatState, setBalanceStatState] = useState({
     account: '',
     sum: null,
     tranDate: '',
   });
-  const { state, dispatch } = useContext(AppContext);
-  const onPageChange = (records: any, total: number, newPage: number) => {
-    console.log(records);
-    console.log(total);
-    console.log(newPage);
-    setPage(newPage);
-    setBalanceStatState(records[0]);
-  };
   const [queryInfo, setQueryInfo] = useState({
     account: '',
     tranDate: moment().format('YYYYMMDD'),

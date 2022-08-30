@@ -775,11 +775,10 @@ app.post('/edb/login', async (req, res) => {
 
 
 app.post('/edb/lesson/audit', jsonParser, async (req, res) => {
-  console.log(`教育局: 划拨查询: 条件[${JSON.stringify(req.body)}]`)
+  console.log(`教育局: 课程审核: 条件[${JSON.stringify(req.body)}]`)
   const r = await edbEduLessonService.update(req.body)
   res.send(r)
 })
-
 
 //app.use(express.json())
 //新增
@@ -790,12 +789,16 @@ app.post("/edb/eduOrg/create", jsonParser, async (req, res) => {
   edu.eduCreateDate = moment().format("YYYYMMDD");
   edu.eduCreateTime = moment().format("HHmmss");
   edu.eduId = geneUSVOrderNo(); //await getUUIDWithEM(mysql.manager)
-
+  //默认年检
+  edu.eduAnnualInspectionDate = moment().format("YYYYMMDD");
+  edu.eduAnnualInspectionTime = moment().format("HHmmss");
+  edu.eduAnnualInspection = "qualified"; //年检状态默认合格
+  edu.supervisorOrgId = "123456789";
   const r = await edbEduOrgService.create(edu);
   res.send(r);
 });
 //编辑
-app.post("/edb/eduOrg/modifyURL", jsonParser, async (req, res) => {
+app.post("/edb/eduOrg/modify", jsonParser, async (req, res) => {
   console.log(`教育局: 更新教育机构: 更新信息[${JSON.stringify(req.body)}]`);
   const edu: EduOrg = req.body;
   edu.eduUpdateDate = moment().format("YYYYMMDD");
@@ -843,3 +846,9 @@ app.delete("/edb/supervisorBackEdu/remove", jsonParser, async (req, res) => {
   });
   res.send(r);
 });
+
+app.post('/edu/lesson/audit', jsonParser, async (req, res) => {
+  console.log(`教育机构: 课程审核: 条件[${JSON.stringify(req.body)}]`)
+  const r = await edbEduLessonService.update(req.body)
+  res.send(r)
+})

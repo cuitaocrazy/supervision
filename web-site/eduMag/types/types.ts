@@ -1,8 +1,3 @@
-
-
-
-
-
 export interface Contract {
   contractId: string,
   contractDate: string,
@@ -78,8 +73,8 @@ export interface Teacher {
   teacherExperience?: string,
   teacherIntroduce?: string,
   teacherRating?: number,
-  teacherCreatedDate?: string,
-  teacherUpdatedDate?: string,
+  teacherCreateDate?: string,
+  teacherUpdateDate?: string,
   teacherCreateTime?: string,
   teacherUpdateTime?: string,
   teacherField?:string,

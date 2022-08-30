@@ -2,41 +2,36 @@ import { useEffect, useCallback, useContext, useState, useRef, Fragment } from '
 import { Redirect } from 'react-router-dom';
 import { AppContext, setBlackList, setBlackDetail } from '../../../appState';
 import { Black } from '../../../types/types';
-import {
-  IonPage,
-  IonRow,
-  IonCol,
-  useIonToast,
-} from '@ionic/react';
+import { IonPage, IonRow, IonCol, useIonToast } from '@ionic/react';
 import { Dialog, Transition } from '@headlessui/react';
 import Paging from '../../paging';
 import Quit from '../../Quit';
+import { edbSupervisorBackEduFindURL, edbSupervisorBackEduRemoveURL } from 'const/const';
 
-const queryURL = 'http://localhost:3003/edb/supervisorBackEdu/find';
-const delURL = 'http://localhost:3003/edb/supervisorBackEdu/remove';
+const queryURL = edbSupervisorBackEduFindURL;
+const delURL = edbSupervisorBackEduRemoveURL;
 // 黑名单查询页面
 const BlackEduOrgQuery: React.FC = () => {
   const [present, dismiss] = useIonToast();
-  
+
   const [deleteState, setDeleteState] = useState({} as Black);
   const { state, dispatch } = useContext(AppContext);
   const [queryInfo, setQueryInfo] = useState({ eduName: '' });
-  const [page,setPage] = useState(0)
-  const [total,setTotal]= useState(101)//todo
-  const onPageChange = (records:any,total:number,newPage:number)=>{
-    console.log(records)
-    console.log(total)
-    console.log(newPage)
-    setPage(newPage)
-    refreshList(records)
-  }
+  const [page, setPage] = useState(0);
+  const [total, setTotal] = useState(101); //todo
+  const onPageChange = (records: any, total: number, newPage: number) => {
+    console.log(records);
+    console.log(total);
+    console.log(newPage);
+    setPage(newPage);
+    refreshList(records);
+  };
   const refreshList = useCallback(
     (item: Black[]) => {
       dispatch(setBlackList(item));
     },
     [dispatch]
   );
- 
 
   const getParamStr = (params: any, url: string) => {
     let result = '?';
@@ -49,39 +44,40 @@ const BlackEduOrgQuery: React.FC = () => {
     },
     queryURL
   );
-  
+
   const onDetail = (item: Black) => () => {
     doSetDetail(item);
   };
 
   const doSetDetail = useCallback(
-    (item: Black)  => {
+    (item: Black) => {
       dispatch({ ...setBlackDetail(item), ...{ backPage: '/tabs/black/query' } });
     },
     [dispatch]
   );
   useEffect(() => {
-    onQuery()
+    onQuery();
   }, []);
   //查询
   const onQuery = () => {
-       fetch(paramStr, {
-        method: 'GET',
-        headers: {
-          'Content-type': 'application/json;charset=UTF-8',
-        },
-      }).then(res => res.json())
+    fetch(paramStr, {
+      method: 'GET',
+      headers: {
+        'Content-type': 'application/json;charset=UTF-8',
+      },
+    })
+      .then(res => res.json())
       .then(json => {
         console.log(json);
-        const { result, records,total } = json;
+        const { result, records, total } = json;
         if (result) {
-          setTotal(total)
-          refreshList(records)
-        };
+          setTotal(total);
+          refreshList(records);
+        }
         return;
       });
-   };
-   // 删除黑名单模态框的状态
+  };
+  // 删除黑名单模态框的状态
   let [isDeleteOpen, setIsDeleteOpen] = useState(false);
   function closeDeleteModal() {
     setIsDeleteOpen(false);
@@ -89,44 +85,43 @@ const BlackEduOrgQuery: React.FC = () => {
   function openDeleteModal() {
     setIsDeleteOpen(true);
   }
-//删除
-const onCancel =(e: any) => {
-  e.preventDefault();
-  fetch(delURL, {
-    method: 'delete',
-    body: JSON.stringify({
-      eduId: deleteState.eduId,
-    }),
-    headers: {
-      'Content-type': 'application/json;charset=UTF-8',
-    },
-  })
-    .then(res => res.json())
-    .then(json => {
-      const { result} = json;
-      console.log(result+"result")
-      if (result) 
-      {
-        present({
-          message: '教育机构黑名单删除成功',
-          position:'top',
-          duration:3000
-        })
-        onQuery();
-      } else 
-      present({
-        buttons: [{ text: '关闭', handler: () => dismiss() }],
-        message: '教育机构黑名单删除失败',
-        position:'top',
-      })
-      closeDeleteModal();
-    });
-};
+  //删除
+  const onCancel = (e: any) => {
+    e.preventDefault();
+    fetch(delURL, {
+      method: 'delete',
+      body: JSON.stringify({
+        eduId: deleteState.eduId,
+      }),
+      headers: {
+        'Content-type': 'application/json;charset=UTF-8',
+      },
+    })
+      .then(res => res.json())
+      .then(json => {
+        const { result } = json;
+        console.log(result + 'result');
+        if (result) {
+          present({
+            message: '教育机构黑名单删除成功',
+            position: 'top',
+            duration: 3000,
+          });
+          onQuery();
+        } else
+          present({
+            buttons: [{ text: '关闭', handler: () => dismiss() }],
+            message: '教育机构黑名单删除失败',
+            position: 'top',
+          });
+        closeDeleteModal();
+      });
+  };
   const ListEntry = ({ item, ...props }: { item: Black }) => (
     <tr className="grid items-center grid-cols-3 gap-10 text-gray-600 border justify-items-center even:bg-white odd:bg-primary-100 ">
       <td className="flex items-center justify-center leading-10">{item.eduName}</td>
       <td className="flex items-center justify-center leading-10">{item.blackEduCreateReason}</td>
-       <td className="flex items-center justify-center leading-10">
+      <td className="flex items-center justify-center leading-10">
         <div className="flex gap-2 ">
           <button className="p-1 text-primary-600" onClick={onDetail(item)}>
             详情
@@ -187,9 +182,7 @@ const onCancel =(e: any) => {
                   type="text"
                   className="flex w-56 h-12 font-bold text-center text-gray-600 bg-white border rounded-md focus:outline-none focus:glow-primary-600"
                   placeholder="请输入机构名称"
-                  onChange={e =>
-                    setQueryInfo({ ...queryInfo, ...{ eduName: e.target.value } })
-                  }
+                  onChange={e => setQueryInfo({ ...queryInfo, ...{ eduName: e.target.value } })}
                 />
               </IonCol>
               <IonCol className="flex ml-8">
@@ -275,7 +268,7 @@ const onCancel =(e: any) => {
             <thead>
               <tr className="grid items-center h-10 grid-cols-3 gap-2 font-bold text-gray-700 bg-white rounded-lg justify-items-center">
                 <th className="flex items-center justify-center">机构名称</th>
-                <th className="flex items-center justify-center">加入原因</th> 
+                <th className="flex items-center justify-center">加入原因</th>
                 <th className="flex items-center justify-center">操作</th>
               </tr>
             </thead>
@@ -284,7 +277,16 @@ const onCancel =(e: any) => {
                 <ListEntry item={list} key={i} />
               ))}
               <tr>
-             <td colSpan={5}> <Paging url={paramStr} page={page} pagesize={10} total={total} onPageChange={onPageChange}/></td> 
+                <td colSpan={5}>
+                  {' '}
+                  <Paging
+                    url={paramStr}
+                    page={page}
+                    pagesize={10}
+                    total={total}
+                    onPageChange={onPageChange}
+                  />
+                </td>
               </tr>
             </tbody>
           </table>

@@ -14,10 +14,11 @@ import {
   IonRow,
   IonCol,
 } from "@ionic/react";
-import Paging from '../../paging';
+import Paging from "../../paging";
 import Quit from "components/components/Quit";
+import { eduTransferFindURL } from "const/consts";
 
-const queryURL = "http://localhost:3003/edu/transfer/find";
+const queryURL = eduTransferFindURL;
 const handleTransfer = "http://localhost:3003/attendannce/handleTransfer";
 
 const TransferQuery: React.FC = () => {
@@ -26,13 +27,13 @@ const TransferQuery: React.FC = () => {
     consumerName: "",
     lessonName: "",
   });
-  const [page,setPage] = useState(0)
-  const [total,setTotal]= useState(101)//todo
-  const onPageChange = (records:any,total:number,newPage:number)=>{
-    setPage(newPage)
-    setTotal(total)
-    refreshList(records)    
-  }
+  const [page, setPage] = useState(0);
+  const [total, setTotal] = useState(101); //todo
+  const onPageChange = (records: any, total: number, newPage: number) => {
+    setPage(newPage);
+    setTotal(total);
+    refreshList(records);
+  };
 
   const onDetail = (item: Transfer) => () => {
     doSetDetail(item);
@@ -95,10 +96,11 @@ const TransferQuery: React.FC = () => {
     })
       .then((res) => res.json())
       .then((json) => {
-        const { result, records,total } = json;
+        const { result, records, total } = json;
         if (result) {
-          setTotal(total)
-          refreshList(records)};
+          setTotal(total);
+          refreshList(records);
+        }
       });
   };
   useEffect(onQuery, []);
@@ -236,7 +238,9 @@ const TransferQuery: React.FC = () => {
                 <th className="flex items-center justify-center">客户姓名</th>
                 <th className="flex items-center justify-center">考勤日期</th>
                 <th className="flex items-center justify-center">考勤时间</th>
-                <th className="flex items-center justify-center">划拨金额（元）</th>
+                <th className="flex items-center justify-center">
+                  划拨金额（元）
+                </th>
                 <th className="flex items-center justify-center">划拨结果</th>
                 <th className="flex items-center justify-center">操作</th>
               </tr>
@@ -246,7 +250,16 @@ const TransferQuery: React.FC = () => {
                 <ListEntry transfer={list} key={i} myKey={i} />
               ))}
               <tr>
-                <td colSpan={7}> <Paging url={paramStr} page={page} pagesize={20} total={total} onPageChange={onPageChange}/></td>
+                <td colSpan={7}>
+                  {" "}
+                  <Paging
+                    url={paramStr}
+                    page={page}
+                    pagesize={20}
+                    total={total}
+                    onPageChange={onPageChange}
+                  />
+                </td>
               </tr>
             </tbody>
           </table>
