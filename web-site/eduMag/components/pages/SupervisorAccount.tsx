@@ -23,6 +23,7 @@ import { useCallback, useContext, useEffect } from "react";
 import { AppContext, setEduOrgDetail } from "../../appState";
 import { PickerColumn } from "@ionic/core";
 import Quit from "components/components/Quit";
+import { eduTransactionSumURL } from "const/consts";
 
 export const SupervisorAccount: React.FC = () => {
   //   const queryURL = 'http://localhost:3003/baseInfo/query'
@@ -71,7 +72,7 @@ export const SupervisorAccount: React.FC = () => {
   };
   useEffect(onQuery, []);
 
-  const findURL = "http://localhost:3003/edu/transaction/sum";
+  const findURL = eduTransactionSumURL;
   const getParamStr = (params: any, url: string) => {
     let result = "?";
     Object.keys(params).forEach((key) => {
@@ -119,9 +120,9 @@ export const SupervisorAccount: React.FC = () => {
         </div> */}
         <div className="w-11/12 h-screen px-4 py-2 mt-4 bg-white rounded-lg">
           <span className="font-bold">交易汇总</span>
-          <hr className="mt-2 mb-4" />
+          <hr className="mt-6 mb-4" />
           <div className="flex flex-col items-center justify-center">
-            <div className="flex items-center justify-center w-screen h-96">
+            <div className="flex items-center justify-center w-screen h-64">
               <svg
                 className="rounded-lg cursor-pointer"
                 viewBox="0 0 1024 1024"
@@ -151,7 +152,7 @@ export const SupervisorAccount: React.FC = () => {
               </a>
             </div>
           </div>
-          <div className="grid grid-cols-2 justify-items-stretch">
+          <div className="grid grid-cols-2 mt-6 justify-items-stretch">
             <div className="items-center h-20 pt-8 text-center bg-red-100">
               今日购课数量:{buyCardNumber}
             </div>
@@ -170,10 +171,10 @@ export const SupervisorAccount: React.FC = () => {
             <div className="items-center h-20 pt-8 text-center bg-blue-300">
               今日划拨金额:{transferAmt}
             </div>
-            <div className="items-center text-center bg-green-100 h-20 pt-8">
+            <div className="items-center h-20 pt-8 text-center bg-green-100">
               进行中合同:{contractValid}
             </div>
-            <div className="items-center text-center bg-green-300 h-20 pt-8">
+            <div className="items-center h-20 pt-8 text-center bg-green-300">
               已完成:{contractFinish}
             </div>
           </div>

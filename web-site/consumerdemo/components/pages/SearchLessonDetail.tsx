@@ -5,7 +5,7 @@ import LessonImage from '../LessonImage'
 import LessonDetailBottomMenu from '../LessonDetailBottomMenu'
 import {Lesson} from '../../types/types'
 
-let lesson:Lesson={lessonImgs:"https://s3.bmp.ovh/imgs/2022/08/22/6413446f9e3649da.jpg"}
+let lesson:Lesson={lessonImgs:"https://s3.bmp.ovh/imgs/2022/08/30/28f95385d82b4f7c.jpg"}
 
 interface LessonProps {
   lesson_imgs?: string

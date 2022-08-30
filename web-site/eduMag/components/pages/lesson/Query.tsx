@@ -27,19 +27,20 @@ import moment from "moment";
 import RichText from "components/components/RichText";
 import { EditorState } from "draft-js";
 import { Dialog, Transition } from "@headlessui/react";
-import Paging from '../../paging';
+import Paging from "../../paging";
 import Quit from "components/components/Quit";
+import { eduLessonCreateURL, eduLessonFindURL } from "const/consts";
 
-// const findAll = "http://localhost:3003/edu/lesson/findAll";
-const find = "http://localhost:3003/edu/lesson/find";
-const createUrl = "http://localhost:3003/edu/lesson/create"
-const offUrl = "http://localhost:3003/edu/lesson/create"
+const find = eduLessonFindURL;
+const createUrl = eduLessonCreateURL;
+// TODO off后台接口没有
+const offUrl = "";
 
 // 课程查询页面
 const LessonQuery: React.FC = () => {
   const [present, dismiss] = useIonToast();
   //  结果状态
-  const resultState="000"
+  const resultState = "000";
   // 展示操作结果
   // const resultFun=()=>{
   //   if(resultState=="000"){
@@ -59,14 +60,14 @@ const LessonQuery: React.FC = () => {
   //   }
   //   closeModal()
   // }
-  const onPageChange = (records:any,total:number,newPage:number)=>{
-    console.log(records)
-    console.log(total)
-    console.log(newPage)
-    setPage(newPage)
-    setTotal(total)
-    refreshLessonList(records)
-  }
+  const onPageChange = (records: any, total: number, newPage: number) => {
+    console.log(records);
+    console.log(total);
+    console.log(newPage);
+    setPage(newPage);
+    setTotal(total);
+    refreshLessonList(records);
+  };
 
   // 添加课程dialog状态
   let [isOpen, setIsOpen] = useState(false);
@@ -77,7 +78,6 @@ const LessonQuery: React.FC = () => {
     setIsOpen(true);
   }
 
-
   // 下架课程dialog状态
   let [isOffOpen, setIsOffOpen] = useState(false);
   function closeOffModal() {
@@ -87,16 +87,18 @@ const LessonQuery: React.FC = () => {
     setIsOffOpen(true);
   }
 
-   // 课程添加成功Toast
-   const [showLeaveToast, setShowLeaveToast] = useState(false);
-   const addLessonSuccessInfo=()=>{
-    setShowLeaveToast(true)
-   }
-   
+  // 课程添加成功Toast
+  const [showLeaveToast, setShowLeaveToast] = useState(false);
+  const addLessonSuccessInfo = () => {
+    setShowLeaveToast(true);
+  };
 
-  const [page,setPage] = useState(0)
-  const [total,setTotal]= useState(101)//todo
-  const [createLesson, setCreateLesson] = useState({lessonStartDate:moment().format("YYYYMMDD"),lessonEndDate:moment().format("YYYYMMDD")} as Lesson);
+  const [page, setPage] = useState(0);
+  const [total, setTotal] = useState(101); //todo
+  const [createLesson, setCreateLesson] = useState({
+    lessonStartDate: moment().format("YYYYMMDD"),
+    lessonEndDate: moment().format("YYYYMMDD"),
+  } as Lesson);
   const [offLesson, setOffLesson] = useState({} as Lesson);
 
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
@@ -108,67 +110,67 @@ const LessonQuery: React.FC = () => {
 
   // }
 
-  const onCreate = (e:any) => {
-    e.preventDefault()
-    console.log(createLesson)
-      fetch(createUrl, {
-      method: 'POST',
-      body:JSON.stringify(createLesson),
+  const onCreate = (e: any) => {
+    e.preventDefault();
+    console.log(createLesson);
+    fetch(createUrl, {
+      method: "POST",
+      body: JSON.stringify(createLesson),
       headers: {
-        'Content-type': 'application/json;charset=UTF-8',
+        "Content-type": "application/json;charset=UTF-8",
       },
-    }).then(res => res.json())
-    .then((json) => {
-      console.log("result"+json.result)
-      console.log(json)
-      if(json.result){
-        present({
-          message: '课程添加成功',
-          position:'top',
-          duration:3000
-        })
-        onQuery();
-      }
-      else{
-        present({
-          buttons: [{ text: '关闭', handler: () => dismiss() }],
-          message: '课程添加失败，失败原因：......',
-          position:'top',
-        })
-      }
-      closeModal()
-      addLessonSuccessInfo()
     })
+      .then((res) => res.json())
+      .then((json) => {
+        console.log("result" + json.result);
+        console.log(json);
+        if (json.result) {
+          present({
+            message: "课程添加成功",
+            position: "top",
+            duration: 3000,
+          });
+          onQuery();
+        } else {
+          present({
+            buttons: [{ text: "关闭", handler: () => dismiss() }],
+            message: "课程添加失败，失败原因：......",
+            position: "top",
+          });
+        }
+        closeModal();
+        addLessonSuccessInfo();
+      });
   };
 
-  const onOff = (e:any) =>{
+  const onOff = (e: any) => {
     e.preventDefault();
     fetch(offUrl, {
-      method: 'POST',
-      body:JSON.stringify(offLesson),
+      method: "POST",
+      body: JSON.stringify(offLesson),
       headers: {
-        'Content-type': 'application/json;charset=UTF-8',
+        "Content-type": "application/json;charset=UTF-8",
       },
-  }).then(res => res.json())
-  .then((json) => {
-    if(resultState=="000"){
-      present({
-        message: '课程下架成功',
-        position:'top',
-        duration:3000
-      })
-      onQuery();
-    }
-    else{
-      present({
-        buttons: [{ text: '关闭', handler: () => dismiss() }],
-        message: '课程下架失败，失败原因：......',
-        position:'top',
-      })
-    }
-    closeOffModal()
-  })
-}
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        if (resultState == "000") {
+          present({
+            message: "课程下架成功",
+            position: "top",
+            duration: 3000,
+          });
+          onQuery();
+        } else {
+          present({
+            buttons: [{ text: "关闭", handler: () => dismiss() }],
+            message: "课程下架失败，失败原因：......",
+            position: "top",
+          });
+        }
+        closeOffModal();
+      });
+  };
 
   const { state, dispatch } = useContext(AppContext);
   const [queryInfo, setQueryInfo] = useState({
@@ -240,10 +242,10 @@ const LessonQuery: React.FC = () => {
     })
       .then((res) => res.json())
       .then((json) => {
-        const { result, records,total } = json;
+        const { result, records, total } = json;
 
         if (result) {
-          setTotal(total)
+          setTotal(total);
           refreshLessonList(records);
         }
         return;
@@ -260,11 +262,11 @@ const LessonQuery: React.FC = () => {
     })
       .then((res) => res.json())
       .then((json) => {
-        const { result, records,total } = json;
+        const { result, records, total } = json;
         if (result) {
-          setTotal(total)
-          refreshLessonList(records)
-        };
+          setTotal(total);
+          refreshLessonList(records);
+        }
         return;
       });
   };
@@ -284,8 +286,6 @@ const LessonQuery: React.FC = () => {
     }
     return statusEnglish;
   };
-
-  
 
   const ListEntry = ({
     lesson,
@@ -475,13 +475,14 @@ const LessonQuery: React.FC = () => {
                       <div className="flex items-center mb-4 justify-items-center">
                         <div className="flex leading-7 justify-items-center">
                           <div className="flex justify-end p-1 w-36">
+                          <span className='px-1 text-red-600'>*</span>
                             教育机构名称:
                           </div>
                           <input
                             className="w-64 p-1 text-gray-600 bg-gray-100 border rounded-md justify-self-start focus:outline-none"
                             name="eduId"
                             type="text"
-                            value={state.loginUser.orgName}
+                            value={window.eduName}
                             spellCheck={false}
                             readOnly
                           ></input>
@@ -490,9 +491,10 @@ const LessonQuery: React.FC = () => {
 
                       <div className="flex items-center mb-4 justify-items-center">
                         <div className="flex justify-items-center">
-                          <span className="flex justify-end p-1 mr-1 w-36">
+                          <div className="flex justify-end p-1 mr-1 w-36">
+                            <span className='px-1 text-red-600'>*</span>
                             课程名称:
-                          </span>
+                          </div>
                           <input
                             className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
                             name="lessonName"
@@ -511,9 +513,10 @@ const LessonQuery: React.FC = () => {
                       </div>
                       <div className="flex items-center mb-4 justify-items-center">
                         <div className="flex justify-items-center">
-                          <span className="flex justify-end p-1 mr-1 w-36">
+                          <div className="flex justify-end p-1 mr-1 w-36">
+                            <span className='px-1 text-red-600'>*</span>
                             总课时:
-                          </span>
+                          </div>
                           <input
                             className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
                             name="lessonTotalTimes"
@@ -534,9 +537,10 @@ const LessonQuery: React.FC = () => {
                       </div>
                       <div className="flex items-center mb-4 justify-items-center">
                         <div className="flex justify-items-center">
-                          <span className="flex justify-end p-1 mr-1 w-36">
+                          <div className="flex justify-end p-1 mr-1 w-36">
+                          <span className='px-1 text-red-600'>*</span>
                             总价格(元):
-                          </span>
+                          </div>
                           <input
                             className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
                             name="lessonTotalPrice"
@@ -557,9 +561,10 @@ const LessonQuery: React.FC = () => {
                       </div>
                       <div className="flex items-center mb-4 justify-items-center">
                         <div className="flex justify-items-center">
-                          <span className="flex justify-end p-1 mr-1 w-36">
+                          <div className="flex justify-end p-1 mr-1 w-36">
+                          <span className='px-1 text-red-600'>*</span>
                             课程单价:
-                          </span>
+                          </div>
                           <input
                             className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
                             name="lessonPerPrice"
@@ -595,7 +600,7 @@ const LessonQuery: React.FC = () => {
                                 ...{ lessonType: e.nativeEvent.target?.value },
                               })
                             }
-                            required
+                            
                           ></input>
                         </div>
                       </div>
@@ -653,15 +658,16 @@ const LessonQuery: React.FC = () => {
                                 },
                               })
                             }
-                            required
+                            
                           ></textarea>
                         </div>
                       </div>
                       <div className="flex items-center mb-4 justify-items-center">
                         <div className="flex justify-items-center">
-                          <span className="flex justify-end p-1 mr-1 w-36">
+                          <div className="flex justify-end p-1 mr-1 w-36">
+                            <span className='px-1 text-red-600'>*</span>
                             教师姓名:
-                          </span>
+                          </div>
                           <input
                             className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
                             name="teacherId"
@@ -706,10 +712,9 @@ const LessonQuery: React.FC = () => {
                           value="确定"
                           type="submit"
                           className="px-6 py-2 text-white border rounded-md bg-primary-600"
-                           // onClick={()=>{addLessonSuccessInfo();closeModal()}}
-                           
-                          // onClick={() => {resultFun()}}  
+                          // onClick={()=>{addLessonSuccessInfo();closeModal()}}
 
+                          // onClick={() => {resultFun()}}
                         />
                       </div>
                     </form>
@@ -724,7 +729,6 @@ const LessonQuery: React.FC = () => {
               duration={100000}
               position="top"
             /> */}
-            
           </Dialog>
         </Transition>
 
@@ -817,7 +821,8 @@ const LessonQuery: React.FC = () => {
                               setOffLesson({
                                 ...offLesson,
                                 ...{
-                                  lessonUpdateReason: e.nativeEvent.target?.value,
+                                  lessonUpdateReason:
+                                    e.nativeEvent.target?.value,
                                 },
                               })
                             }
@@ -868,7 +873,16 @@ const LessonQuery: React.FC = () => {
                 <ListEntry lesson={list} key={i} />
               ))}
               <tr>
-                <td colSpan={5}> <Paging url={paramStr} page={page} pagesize={20} total={total} onPageChange={onPageChange}/></td>
+                <td colSpan={5}>
+                  {" "}
+                  <Paging
+                    url={paramStr}
+                    page={page}
+                    pagesize={20}
+                    total={total}
+                    onPageChange={onPageChange}
+                  />
+                </td>
               </tr>
             </tbody>
           </table>

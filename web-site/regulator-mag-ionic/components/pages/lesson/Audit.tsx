@@ -1,18 +1,14 @@
 //Lesson的详细页面
-import React, { useState,Fragment } from 'react';
-import {
-  IonPage,
-  IonCard,
-  IonCardContent,
-  useIonToast
-} from '@ionic/react';
+import React, { useState, Fragment } from 'react';
+import { IonPage, IonCard, IonCardContent, useIonToast } from '@ionic/react';
 import { Redirect } from 'react-router-dom';
 import { useCallback, useContext } from 'react';
 import { AppContext, setLessonAudit } from '../../../appState';
 import { Lesson } from '../../../types/types';
 import { PickerColumn } from '@ionic/core';
 import { Dialog, Transition } from '@headlessui/react';
-import Quit from '../../Quit'
+import Quit from '../../Quit';
+import { edbLessonAuditURL } from 'const/const';
 
 export const LessonAudit: React.FC = () => {
   const [present, dismiss] = useIonToast();
@@ -24,8 +20,7 @@ export const LessonAudit: React.FC = () => {
   function openCreateModal() {
     setIsAuditOpen(true);
   }
-  console.log('LessonAudit');
-  const modifyURL = 'http://localhost:3003/edb/lesson/audit';
+  const modifyURL = edbLessonAuditURL;
   const { state, dispatch } = useContext(AppContext);
   // const {SubscribeDurationDays,TranAmt,USVOrgID,USVItemName,USVItemID,USVItemDesc,SubscribeStartDate,LessonType} = state.lessonDetail
 
@@ -36,19 +31,18 @@ export const LessonAudit: React.FC = () => {
   }, []);
 
   const onBack = () => () => {
-    
     setBack();
   };
   if (state.lesson.lessonAudit === undefined) {
     return <Redirect to={state.backPage} />;
   }
 
-  const onModify = (status:string) => () => {
+  const onModify = (status: string) => () => {
     fetch(modifyURL, {
       method: 'POST',
       body: JSON.stringify({
-        lessonId:lessonState.lessonId,
-        lessonStatus:status
+        lessonId: lessonState.lessonId,
+        lessonStatus: status,
       }),
       headers: {
         'Content-type': 'application/json;charset=UTF-8',
@@ -56,20 +50,19 @@ export const LessonAudit: React.FC = () => {
     })
       .then(res => res.json())
       .then(json => {
-        if (json.result) 
-        {
+        if (json.result) {
           present({
-            message:'课程审核通过，操作成功',
-            position:'top',
-            duration:3000,
+            message: '课程审核通过，操作成功',
+            position: 'top',
+            duration: 3000,
           });
           // onQuery();
-        } else 
-        present({
-          buttons: [{ text: '关闭', handler: () => dismiss() }],
-          message: '课程审核通过，操作失败',
-          position:'top',
-        })
+        } else
+          present({
+            buttons: [{ text: '关闭', handler: () => dismiss() }],
+            message: '课程审核通过，操作失败',
+            position: 'top',
+          });
         setBack();
       });
   };
@@ -80,7 +73,6 @@ export const LessonAudit: React.FC = () => {
       { text: '数学', value: '1' },
     ],
   } as PickerColumn;
-
 
   return (
     <IonPage className="bg-gray-100">
@@ -105,8 +97,8 @@ export const LessonAudit: React.FC = () => {
             </svg>
           </div>
           <div>
-          <span className="pr-1 text-gray-600">教育机构管理</span>/
-          <span className="pl-1 pr-1 text-primary-500">课程管理</span>/
+            <span className="pr-1 text-gray-600">教育机构管理</span>/
+            <span className="pl-1 pr-1 text-primary-500">课程管理</span>/
             <span className="pl-1 text-primary-500">课程审核</span>
           </div>
         </div>
@@ -272,9 +264,9 @@ export const LessonAudit: React.FC = () => {
                 请查看课程大纲
               </a>
             </div>
-            </div>
-            {/* TODO：课程表缺少课程人数 */}
-            {/* <div className="flex mb-4 leading-10">
+          </div>
+          {/* TODO：课程表缺少课程人数 */}
+          {/* <div className="flex mb-4 leading-10">
               <div className="flex justify-end w-32 mr-2">人数:</div>
               <input
                 className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
@@ -300,80 +292,80 @@ export const LessonAudit: React.FC = () => {
           </div>
           {/* 课程审核通过dialog */}
           <Transition appear show={isAuditOpen} as={Fragment}>
-          <Dialog as="div" className="relative z-10" onClose={closeAuditModal}>
-            <Transition.Child
-              as={Fragment}
-              enter="ease-out duration-300"
-              enterFrom="opacity-0"
-              enterTo="opacity-100"
-              leave="ease-in duration-200"
-              leaveFrom="opacity-100"
-              leaveTo="opacity-0"
-            >
-              <div className="fixed inset-0 bg-black bg-opacity-25" />
-            </Transition.Child>
+            <Dialog as="div" className="relative z-10" onClose={closeAuditModal}>
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0"
+                enterTo="opacity-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100"
+                leaveTo="opacity-0"
+              >
+                <div className="fixed inset-0 bg-black bg-opacity-25" />
+              </Transition.Child>
 
-            <div className="fixed inset-0 overflow-y-auto">
-              <div className="flex items-center justify-center min-h-full p-4 text-center">
-                <Transition.Child
-                  as={Fragment}
-                  enter="ease-out duration-300"
-                  enterFrom="opacity-0 scale-95"
-                  enterTo="opacity-100 scale-100"
-                  leave="ease-in duration-200"
-                  leaveFrom="opacity-100 scale-100"
-                  leaveTo="opacity-0 scale-95"
-                >
-                  <Dialog.Panel className="w-full max-w-md p-4 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
-                    <Dialog.Title
-                      as="h3"
-                      className="text-lg font-medium leading-6 text-center text-gray-900"
-                    >
-                      审核结果
-                      <hr className="mt-2 mb-4" />
-                    </Dialog.Title>
-                    <form
-                      className="flex flex-col items-center mt-8 rounded-lg justify-items-center"
-                    >
-                      <div className="flex items-center mb-4 justify-items-center">
-                        <div className="flex leading-7 justify-items-center">
-                          <div className="flex justify-end w-24 p-1">不合格原因:</div>
-                          <textarea
-                            className="h-32 p-1 text-gray-600 bg-gray-100 border rounded-md w-72 justify-self-start focus:outline-none"
-                            name="eduName"
-                            placeholder='请输入审核不通过原因'
-                            value={lessonState.lesson_update_reason}
-                            onChange={e =>
-                              setLessonAudit({
-                                ...lessonState,
-                                lesson_update_reason: e.nativeEvent.target?.value,
-                              })
-                            }
-                          ></textarea>
+              <div className="fixed inset-0 overflow-y-auto">
+                <div className="flex items-center justify-center min-h-full p-4 text-center">
+                  <Transition.Child
+                    as={Fragment}
+                    enter="ease-out duration-300"
+                    enterFrom="opacity-0 scale-95"
+                    enterTo="opacity-100 scale-100"
+                    leave="ease-in duration-200"
+                    leaveFrom="opacity-100 scale-100"
+                    leaveTo="opacity-0 scale-95"
+                  >
+                    <Dialog.Panel className="w-full max-w-md p-4 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
+                      <Dialog.Title
+                        as="h3"
+                        className="text-lg font-medium leading-6 text-center text-gray-900"
+                      >
+                        审核结果
+                        <hr className="mt-2 mb-4" />
+                      </Dialog.Title>
+                      <form className="flex flex-col items-center mt-8 rounded-lg justify-items-center">
+                        <div className="flex items-center mb-4 justify-items-center">
+                          <div className="flex leading-7 justify-items-center">
+                            <div className="flex justify-end w-24 p-1">不合格原因:</div>
+                            <textarea
+                              className="h-32 p-1 text-gray-600 bg-gray-100 border rounded-md w-72 justify-self-start focus:outline-none"
+                              name="eduName"
+                              placeholder="请输入审核不通过原因"
+                              value={lessonState.lesson_update_reason}
+                              onChange={e =>
+                                setLessonAudit({
+                                  ...lessonState,
+                                  lesson_update_reason: e.nativeEvent.target?.value,
+                                })
+                              }
+                            ></textarea>
+                          </div>
                         </div>
-                      </div>
-                      <div className="flex items-center gap-4 mt-2 justify-items-center">
-                        <input
-                          value="返回"
-                          type="button"
-                          className="px-6 py-2 border rounded-md "
-                          onClick={closeAuditModal}
-                        />
-                        <input
-                          value="提交"
-                          type="submit"
-                          className="px-6 py-2 text-white border rounded-md bg-primary-600"
-                          onClick={()=>{onModify('reject')();closeAuditModal()}}
-                        />
-                      </div>
-                    </form>
-                  </Dialog.Panel>
-                </Transition.Child>
+                        <div className="flex items-center gap-4 mt-2 justify-items-center">
+                          <input
+                            value="返回"
+                            type="button"
+                            className="px-6 py-2 border rounded-md "
+                            onClick={closeAuditModal}
+                          />
+                          <input
+                            value="提交"
+                            type="submit"
+                            className="px-6 py-2 text-white border rounded-md bg-primary-600"
+                            onClick={() => {
+                              onModify('reject')();
+                              closeAuditModal();
+                            }}
+                          />
+                        </div>
+                      </form>
+                    </Dialog.Panel>
+                  </Transition.Child>
+                </div>
               </div>
-            </div>
-          </Dialog>
-        </Transition>
-
+            </Dialog>
+          </Transition>
         </IonCardContent>
       </IonCard>
     </IonPage>

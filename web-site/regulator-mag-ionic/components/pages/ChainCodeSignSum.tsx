@@ -7,8 +7,9 @@ import { AppContext, setChainCodeSignSumInfo } from '../../appState';
 import { ChainCodeSignSum } from '../../types/types';
 import Paging from '../paging';
 import Quit from '../Quit';
+import { edbChaincodeCountURL } from 'const/const';
 
-const findURL = 'http://localhost:3003/edb/chaincode/count';
+const findURL = edbChaincodeCountURL;
 
 const ChinCodeSignSumQuery: React.FC = () => {
   const { state, dispatch } = useContext(AppContext);

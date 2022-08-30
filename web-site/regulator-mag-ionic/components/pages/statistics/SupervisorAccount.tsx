@@ -1,28 +1,9 @@
 //BaseInfo的详细页面
 import React, { useState } from 'react';
-import {
-  IonPage,
-  IonCard,
-  IonRadioGroup,
-  IonRadio,
-  IonCardHeader,
-  IonCardSubtitle,
-  IonLabel,
-  IonInput,
-  IonCardContent,
-  IonItem,
-  IonButton,
-  IonList,
-  IonDatetime,
-  IonPicker,
-  IonCol,
-  IonRow,
-} from '@ionic/react';
-import { Redirect } from 'react-router-dom';
-import { useCallback, useContext, useEffect } from 'react';
-import { AppContext, setEduOrgDetail } from '../../../appState';
-import { PickerColumn } from '@ionic/core';
+import { IonPage } from '@ionic/react';
+import { useEffect } from 'react';
 import Quit from '../../Quit';
+import { edbTransactionSumURL } from 'const/const';
 
 export const SupervisorAccount: React.FC = () => {
   //   const queryURL = 'http://localhost:3003/baseInfo/query'
@@ -71,7 +52,7 @@ export const SupervisorAccount: React.FC = () => {
   };
   useEffect(onQuery, []);
 
-  const findURL = 'http://localhost:3003/edb/transaction/sum';
+  const findURL = edbTransactionSumURL;
   const getParamStr = (params: any, url: string) => {
     let result = '?';
     Object.keys(params).forEach(key => {

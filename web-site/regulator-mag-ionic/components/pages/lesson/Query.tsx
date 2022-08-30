@@ -1,18 +1,17 @@
 //Lesson的查询页面
 import { useEffect, useCallback, useContext, useState, Fragment } from 'react';
 import { Redirect } from 'react-router-dom';
-import { AppContext, setLessonList, setLessonDetail,setLessonAudit } from '../../../appState';
+import { AppContext, setLessonList, setLessonDetail, setLessonAudit } from '../../../appState';
 import { Lesson } from '../../../types/types';
-import { IonPage, IonList, IonLabel, IonItem, IonRow, IonCol,useIonToast } from '@ionic/react';
+import { IonPage, IonList, IonLabel, IonItem, IonRow, IonCol, useIonToast } from '@ionic/react';
 import { Dialog, Transition } from '@headlessui/react';
 import Paging from '../../paging';
-import Quit from '../../Quit'
+import Quit from '../../Quit';
+import { edbEduLessonFindURL, edbLessonAttendURL, edbLessonDelURL } from 'const/const';
 
-const findURL = 'http://localhost:3003/edb/eduLesson/find';
-const delURL = 'http://localhost:3003/lesson/del';
-const modifyURL = 'http://localhost:3003/lesson/modifyURL';
-const attendURL = 'http://localhost:3003/lesson/attend';
-const createURL = 'http://localhost:3003/lesson/create';
+const findURL = edbEduLessonFindURL;
+const delURL = edbLessonDelURL;
+const attendURL = edbLessonAttendURL;
 
 // 课程查询页面
 const LessonQuery: React.FC = () => {
@@ -25,18 +24,18 @@ const LessonQuery: React.FC = () => {
   function openOffModal() {
     setIsOffOpen(true);
   }
-  const [page,setPage] = useState(0)
-  const [total,setTotal]= useState(101)//todo
-  const onPageChange = (records:any,total:number,newPage:number)=>{
-    console.log(records)
-    console.log(total)
-    console.log(newPage)
-    setPage(newPage)
-    refreshLessonList(records)
-  }
+  const [page, setPage] = useState(0);
+  const [total, setTotal] = useState(101); //todo
+  const onPageChange = (records: any, total: number, newPage: number) => {
+    console.log(records);
+    console.log(total);
+    console.log(newPage);
+    setPage(newPage);
+    refreshLessonList(records);
+  };
   const { state, dispatch } = useContext(AppContext);
   const [lessonState, setLessonState] = useState(state.lesson.lessonList);
-  const onCreate = (e: React.FormEvent)=> {
+  const onCreate = (e: React.FormEvent) => {
     // e.preventDefault();
     // fetch(createURL, {
     //   method: 'PUT',
@@ -48,24 +47,23 @@ const LessonQuery: React.FC = () => {
     //   .then(res => res.json())
     //   .then(json => {
     //     alert(json)
-    const result={true:Boolean}
-        if (result) 
-        {
-          present({
-            message:'课程下架成功',
-            position:'top',
-            duration:3000,
-          });
-          onQuery();
-        } else 
-        present({
-          buttons: [{ text: '关闭', handler: () => dismiss() }],
-          message: '课程下架失败',
-          position:'top',
-        })
-        closeOffModal();
-        onQuery();
-      // });
+    const result = { true: Boolean };
+    if (result) {
+      present({
+        message: '课程下架成功',
+        position: 'top',
+        duration: 3000,
+      });
+      onQuery();
+    } else
+      present({
+        buttons: [{ text: '关闭', handler: () => dismiss() }],
+        message: '课程下架失败',
+        position: 'top',
+      });
+    closeOffModal();
+    onQuery();
+    // });
   };
   const onCancel = (item: Lesson) => () => {
     fetch(delURL, {
@@ -153,7 +151,7 @@ const LessonQuery: React.FC = () => {
     })
       .then(res => res.json())
       .then(json => {
-        const { result, records,total } = json;
+        const { result, records, total } = json;
         if (result) {
           // todo 测试方便
           // setTotal(total)
@@ -414,9 +412,17 @@ const LessonQuery: React.FC = () => {
                 <ListEntry lesson={list} key={i} />
               ))}
               <tr>
-                <td colSpan={5}> <Paging url={paramStr} page={page} pagesize={20} total={total} onPageChange={onPageChange}/></td>
+                <td colSpan={5}>
+                  {' '}
+                  <Paging
+                    url={paramStr}
+                    page={page}
+                    pagesize={20}
+                    total={total}
+                    onPageChange={onPageChange}
+                  />
+                </td>
               </tr>
-
             </tbody>
           </table>
           {/* <Paging url={paramStr} page={page} pagesize={20} total={total} onPageChange={onPageChange}/> */}

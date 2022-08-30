@@ -10,7 +10,7 @@ import { Fragment } from "react";
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 
-let lesson: Lesson = { lessonImgs: "https://s3.bmp.ovh/imgs/2022/08/22/6413446f9e3649da.jpg" };
+let lesson: Lesson = { lessonImgs: "https://s3.bmp.ovh/imgs/2022/08/30/28f95385d82b4f7c.jpg" };
 const solutions = [
   {
     name: "Insights",

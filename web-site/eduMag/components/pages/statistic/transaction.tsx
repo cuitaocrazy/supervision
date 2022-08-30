@@ -20,10 +20,11 @@ import {
 } from "@ionic/react";
 import Paging from "../../paging";
 import moment from "moment";
-import { AppContext } from "../../../appState";
-import Clipboard from 'react-clipboard.js';
+import Clipboard from "react-clipboard.js";
+import Quit from "components/components/Quit";
+import { eduTransactionFindURL } from "const/consts";
 
-const findURL = "http://localhost:3003/edu/transaction/find";
+const findURL = eduTransactionFindURL;
 
 const Transaction: React.FC = () => {
   const [page, setPage] = useState(0);
@@ -84,15 +85,15 @@ const Transaction: React.FC = () => {
       });
   };
   const [present, dismiss] = useIonToast();
-  const ToastFun=()=>{
+  const ToastFun = () => {
     present({
-      message: '复制成功',
-      position:'top',
-      duration:3000,
-      color:"dark",
-      cssClass:"text-center"
-    })
-}
+      message: "复制成功",
+      position: "top",
+      duration: 3000,
+      color: "dark",
+      cssClass: "text-center",
+    });
+  };
   useEffect(onQuery, []);
 
   const ListEntry = ({ record, ...props }: { record: any }) => (
@@ -102,8 +103,12 @@ const Transaction: React.FC = () => {
       </td> */}
       {/* <td className="flex items-center justify-center leading-10">{record.contractId}</td> */}
       <td className="flex items-center justify-center leading-10">
-        <span className="w-32 overflow-hidden" >{record.contractId}</span>
-        <Clipboard className="px-1 ml-2 text-sm border border-gray-600 rounded-md shadow-lg"  data-clipboard-text={record.contractId} onSuccess={()=>ToastFun()}>
+        <span className="w-32 overflow-hidden">{record.contractId}</span>
+        <Clipboard
+          className="px-1 ml-2 text-sm border border-gray-600 rounded-md shadow-lg"
+          data-clipboard-text={record.contractId}
+          onSuccess={() => ToastFun()}
+        >
           复制
         </Clipboard>
       </td>
@@ -126,7 +131,8 @@ const Transaction: React.FC = () => {
   );
 
   return (
-    <IonPage>
+    <IonPage className="bg-gray-100">
+      <Quit />
       <div className="relative w-full h-screen mx-6 overflow-auto">
         <div className="flex pt-2 my-2 text-gray-800">
           <div className="mr-2 text-gray-600">

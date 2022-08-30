@@ -3,13 +3,14 @@ import { useContext, useCallback } from "react";
 import { AppContext, setloginUser } from "../appState";
 import { Redirect } from "react-router-dom";
 import { useRouter } from "next/router";
+import { eduLoginURL } from "const/consts";
 
 type FormData = {
   username: string;
   password: string;
   role: string;
 };
-const loginStr = "http://localhost:3003/edu/login";
+const loginStr = eduLoginURL;
 
 const Login = () => {
   const router = useRouter();
@@ -36,8 +37,10 @@ const Login = () => {
         const { result, msg, loginUser } = json;
         if (result) {
           refreshUserInfo(loginUser);
-            //todo 以后保存到localstorage
-          window.loginUser=loginUser.loginName
+          //todo 以后保存到localstorage
+          window.loginUser = loginUser.loginName;
+          // todo
+          window.eduName = loginUser.orgName;
           await router.push("./tabs/lesson/query");
           // router.reload();
         } else {
@@ -45,8 +48,6 @@ const Login = () => {
         }
       });
   };
-
-
 
   return (
     <div className="flex h-screen bg-primary-500">
@@ -84,7 +85,9 @@ const Login = () => {
               placeholder="请输入密码"
             />
             {errors.password && (
-              <p className="pt-2 pl-3 text-base text-remind-500">密码不能为空</p>
+              <p className="pt-2 pl-3 text-base text-remind-500">
+                密码不能为空
+              </p>
             )}
           </div>
         </fieldset>

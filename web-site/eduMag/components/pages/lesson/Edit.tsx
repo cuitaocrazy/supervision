@@ -15,10 +15,11 @@ import { PickerColumn } from "@ionic/core";
 import LessonTypeList from "../../components/LessonType";
 import LessonStateList from "../../components/LessonState";
 import Quit from "components/components/Quit";
+import { eduLessonEditURL } from "const/consts";
 
 export const LessonDetail: React.FC = () => {
   const [present, dismiss] = useIonToast();
-  const modifyURL = "http://localhost:3003/edu/lesson/edit";
+  const modifyURL = eduLessonEditURL;
   const { state, dispatch } = useContext(AppContext);
   // const {SubscribeDurationDays,TranAmt,USVOrgID,USVItemName,USVItemID,USVItemDesc,SubscribeStartDate,LessonType} = state.lessonDetail
 

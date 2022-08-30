@@ -1,34 +1,17 @@
-import { useEffect, useCallback, useContext, useState } from 'react';
-import {
-  IonButton,
-  IonContent,
-  IonHeader,
-  IonIcon,
-  IonItem,
-  IonLabel,
-  IonList,
-  IonMenu,
-  IonMenuToggle,
-  IonTitle,
-  IonToolbar,
-  IonPage,
-  IonCard,
-  IonCardContent,
-  IonRow,
-  IonCol,
-} from '@ionic/react';
+import { useEffect, useState } from 'react';
+import { IonPage, IonRow, IonCol } from '@ionic/react';
 import Quit from '../../Quit';
 import Paging from '../../paging';
 import moment from 'moment';
+import { edbTransactionFindURL } from 'const/const';
 
-const findURL = 'http://localhost:3003/edb/transaction/find';
+const findURL = edbTransactionFindURL;
 
 const Transaction: React.FC = () => {
   //todo 根据token获取LoginUser信息
   const loginName = window.loginUser;
   const [page, setPage] = useState(0);
   const [total, setTotal] = useState(101); //todo
-
 
   const [transactionStatState, setTransactionStatState] = useState([] as any[]);
   const onPageChange = (records: any, total: number, newPage: number) => {

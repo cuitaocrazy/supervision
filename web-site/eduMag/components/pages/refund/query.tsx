@@ -1,10 +1,7 @@
 //手工退课
 import React, { useState, Fragment } from "react";
 import { useEffect, useCallback, useContext } from "react";
-import {
-  IonPage,
-  useIonToast,
-} from "@ionic/react";
+import { IonPage, useIonToast } from "@ionic/react";
 import { Redirect } from "react-router-dom";
 import {
   AppContext,
@@ -16,8 +13,9 @@ import { PickerColumn } from "@ionic/core";
 import { Dialog, Transition } from "@headlessui/react";
 import Quit from "components/components/Quit";
 
-const queryURL = "http://localhost:3003/contractNego/query";
-const refundLessonURL = "http://localhost:3003/edu/refundLesson/desc";
+//TODO 未实现
+const queryURL = "";
+const refundLessonURL = "";
 
 const democontractNegoList: ContractNego[] = [
   {
@@ -115,7 +113,7 @@ const ContractNegoQuery: React.FC = () => {
   const onCreate = () => {
     //todo fetch
   };
-// 退课处理
+  // 退课处理
   const onManual = () => {
     //todo fetch
     // const reqBody = JSON.stringify({
@@ -132,23 +130,22 @@ const ContractNegoQuery: React.FC = () => {
     //   .then((json) => {
     //     const { result, msg } = json;
     //     console.log(result);
-        const result={true:Boolean}
-        if (result) 
-        {
-          present({
-            message: '课程退订审批通过操作成功',
-            position:'top',
-            duration:3000
-          })
-          onQuery();
-        } else 
-        present({
-          buttons: [{ text: '关闭', handler: () => dismiss() }],
-          message: '课程退订审批通过操作失败，失败原因：'+msg,
-          position:'top',
-        })
-        closeRefundModal
-      // });
+    const result = { true: Boolean };
+    if (result) {
+      present({
+        message: "课程退订审批通过操作成功",
+        position: "top",
+        duration: 3000,
+      });
+      onQuery();
+    } else
+      present({
+        buttons: [{ text: "关闭", handler: () => dismiss() }],
+        message: "课程退订审批通过操作失败，失败原因：" + msg,
+        position: "top",
+      });
+    closeRefundModal;
+    // });
   };
 
   const doSetDetail = useCallback(
@@ -197,14 +194,8 @@ const ContractNegoQuery: React.FC = () => {
     );
   };
 
-  const ListEntry = ({
-    contractNego
-  }: {
-    contractNego: ContractNego;
-  }) => (
-    <tr
-      className="grid items-center grid-cols-10 gap-10 text-gray-600 border justify-items-center even:bg-white odd:bg-primary-100"
-    >
+  const ListEntry = ({ contractNego }: { contractNego: ContractNego }) => (
+    <tr className="grid items-center grid-cols-10 gap-10 text-gray-600 border justify-items-center even:bg-white odd:bg-primary-100">
       <td className="flex items-center justify-center leading-10">
         {contractNego.contract.lessonName}
       </td>

@@ -1,15 +1,15 @@
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useContext, useCallback } from 'react';
 import { AppContext, setloginUser } from '../appState';
-import { Redirect } from 'react-router-dom';
 import { useRouter } from 'next/router';
+import { edbLoginURL } from 'const/const';
 
 type FormData = {
   username: string;
   password: string;
   role: string;
 };
-const loginStr = 'http://localhost:3003/edb/login';
+const loginStr = edbLoginURL;
 
 const Login = () => {
   console.log('login');
