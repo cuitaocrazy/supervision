@@ -245,9 +245,10 @@ app.post('/edu/lesson/create', jsonParser, async (req, res) => {
   lesson.teacherId = "teacher00001";
   lesson.teacherName = "马老师";
   lesson.eduId = "edu0001";
-  lesson.eduName = "测试机构";
+  // lesson.eduName = "测试机构";
+ lesson.eduName = req.body.eduName
   lesson.lessonImages =
-    "https://s3.bmp.ovh/imgs/2022/08/22/6413446f9e3649da.jpg"; //'http://placekitten.com/g/200/300'
+    "https://s3.bmp.ovh/imgs/2022/08/30/28f95385d82b4f7c.jpg"; //'http://placekitten.com/g/200/300'
   lesson.lessonOutline = false;
   lesson.lessonStartTime = "000000";
   lesson.lessonEndTime = "000000";
@@ -285,9 +286,10 @@ app.post("/edu/lesson/edit", jsonParser, async (req, res) => {
   lesson.teacherId = "teacher00001";
   lesson.teacherName = "马老师";
   lesson.eduId = "edu0001";
-  lesson.eduName = "测试机构";
+  // lesson.eduName = "测试机构";
+  lesson.eduName = req.body.eduName
   lesson.lessonImages =
-    "https://s3.bmp.ovh/imgs/2022/08/22/6413446f9e3649da.jpg"; //'http://placekitten.com/g/200/300'
+    "https://s3.bmp.ovh/imgs/2022/08/30/28f95385d82b4f7c.jpg"; //'http://placekitten.com/g/200/300'
   lesson.lessonOutline = false;
   lesson.lessonStartTime = "000000";
   lesson.lessonEndTime = "000000";
@@ -392,7 +394,7 @@ app.get('/consumer/lesson', jsonParser, async (req, res) => {
     lesson.edu = edu
     lesson.teacher = teacher
     if (lesson.lessonImgs == null) {
-      lesson.lessonImgs = 'https://s3.bmp.ovh/imgs/2022/08/22/6413446f9e3649da.jpg'//"http://placekitten.com/g/200/300"
+      lesson.lessonImgs = 'https://s3.bmp.ovh/imgs/2022/08/30/28f95385d82b4f7c.jpg'//"http://placekitten.com/g/200/300"
     }
     return lesson
   }
