@@ -16,10 +16,13 @@ import {
   IonCardContent,
   IonRow,
   IonCol,
+  useIonToast,
 } from "@ionic/react";
 import Paging from "../../paging";
 import moment from "moment";
 import { AppContext } from "../../../appState";
+import Clipboard from 'react-clipboard.js';
+
 const findURL = "http://localhost:3003/edu/transaction/find";
 
 const Transaction: React.FC = () => {
@@ -80,17 +83,29 @@ const Transaction: React.FC = () => {
         }
       });
   };
+  const [present, dismiss] = useIonToast();
+  const ToastFun=()=>{
+    present({
+      message: '复制成功',
+      position:'top',
+      duration:3000,
+      color:"dark",
+      cssClass:"text-center"
+    })
+}
   useEffect(onQuery, []);
 
-  const { state } = useContext(AppContext);
-  console.log(state);
   const ListEntry = ({ record, ...props }: { record: any }) => (
-    <tr className="grid items-center grid-cols-7 gap-2 text-gray-600 border justify-items-center even:bg-white odd:bg-primary-100 ">
-      <td className="flex items-center justify-center leading-10">
+    <tr className="grid items-center grid-cols-6 gap-2 text-gray-600 border justify-items-center even:bg-white odd:bg-primary-100 ">
+      {/* <td className="flex items-center justify-center leading-10">
         {record.transactionId}
-      </td>
+      </td> */}
+      {/* <td className="flex items-center justify-center leading-10">{record.contractId}</td> */}
       <td className="flex items-center justify-center leading-10">
-        {record.contractId}
+        <span className="w-32 overflow-hidden" >{record.contractId}</span>
+        <Clipboard className="px-1 ml-2 text-sm border border-gray-600 rounded-md shadow-lg"  data-clipboard-text={record.contractId} onSuccess={()=>ToastFun()}>
+          复制
+        </Clipboard>
       </td>
       <td className="flex items-center justify-center leading-10">
         {record.transactionAmt}
@@ -132,7 +147,7 @@ const Transaction: React.FC = () => {
           </div>
           <div>
             <span className="pr-1 text-gray-600">监管机构管理</span>/
-            <span className="pl-1 text-primary-500">余额查询</span>
+            <span className="pl-1 text-primary-500">监管账户明细</span>
           </div>
         </div>
 
@@ -208,8 +223,8 @@ const Transaction: React.FC = () => {
         <div className="absolute w-full mt-10">
           <table className="w-11/12">
             <thead>
-              <tr className="grid items-center h-10 grid-cols-7 gap-2 font-bold text-gray-700 bg-white rounded-lg justify-items-center">
-                <th className="flex items-center justify-center">交易ID</th>
+              <tr className="grid items-center h-10 grid-cols-6 gap-2 font-bold text-gray-700 bg-white rounded-lg justify-items-center">
+                {/* <th className="flex items-center justify-center ">交易ID</th> */}
                 <th className="flex items-center justify-center">合同号</th>
                 <th className="flex items-center justify-center">金额</th>
                 <th className="flex items-center justify-center">交易日期</th>

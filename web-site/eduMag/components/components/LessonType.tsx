@@ -8,7 +8,7 @@ const lessonType = [
   { id: 3, name: '语文', unavailable: false },
 ]
 
-// 学生性别下拉菜单组件
+// 课程类型下拉菜单组件
 const LessonTypeList = () => {
   const [selected, setSelected] = useState(lessonType[0])
   return (

@@ -127,7 +127,7 @@ export interface EduOrg {
   eduLegalPhone?: string;
   eduContact?: string;
   eduContactPhone?: string;
-  eduIsPublic?: boolean;
+  eduIsPublic?: number;
   eduLicense?: string;
   eduStatus?: string;
   eduAnnualInspection?: string;

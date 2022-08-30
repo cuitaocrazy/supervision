@@ -20,7 +20,7 @@ const ConOrderLessCard = () => {
         <div className="grid h-24 grid-cols-12 mx-2 rounded-lg">
           <img
             className="w-20 h-20 col-span-4 mt-2 ml-1 mr-2 rounded-xl"
-            src="http://placekitten.com/g/200/300"
+            src="https://s3.bmp.ovh/imgs/2022/08/22/6413446f9e3649da.jpg"
           ></img>
           <div className="flex flex-col col-span-8 mt-5 mr-3 justify-items-start">
             <div className="overflow-hidden text-sm font-medium tracking-wide text-ellipsis">

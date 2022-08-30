@@ -53,6 +53,8 @@ import RefundStatistic from './pages/statistics/refund';
 import BalanceStatistic from './pages/statistics/balance';
 import TransactionStatistic from './pages/statistics/transaction';
 
+import SupervisorAccount from './pages/statistics/SupervisorAccount';
+
 // 装载ionic样式，ionic6 必须执行。
 setupIonicReact();
 window.matchMedia('(prefers-color-scheme: dark)').addListener(async status => {
@@ -132,6 +134,12 @@ const AppShell = () => {
                 component={ComplaintStatistic}
                 exact={true}
               />
+              <Route
+                path="/tabs/statistics/supervisorAccount"
+                component={SupervisorAccount}
+                exact={true}
+              />
+
               {/* <Route path="/login" component={Login} /> */}
               <Route exact path="/" render={() => <Redirect to="/login" />} />
               {/* <Route path="/login" render={() => <Login />} />
