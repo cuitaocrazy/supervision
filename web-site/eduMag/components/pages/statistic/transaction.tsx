@@ -22,6 +22,7 @@ import Paging from "../../paging";
 import moment from "moment";
 import { AppContext } from "../../../appState";
 import Clipboard from 'react-clipboard.js';
+import Quit from "components/components/Quit";
 
 const findURL = "http://localhost:3003/edu/transaction/find";
 
@@ -126,7 +127,8 @@ const Transaction: React.FC = () => {
   );
 
   return (
-    <IonPage>
+    <IonPage className="bg-gray-100">
+      <Quit />
       <div className="relative w-full h-screen mx-6 overflow-auto">
         <div className="flex pt-2 my-2 text-gray-800">
           <div className="mr-2 text-gray-600">
