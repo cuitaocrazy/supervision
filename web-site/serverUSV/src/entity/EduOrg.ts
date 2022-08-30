@@ -1,63 +1,68 @@
-import { Entity, PrimaryColumn, Column, OneToOne } from "typeorm";
+import { Entity, PrimaryColumn, Column } from 'typeorm'
+
 @Entity({ name: "t_b_edu_org" })
 export class EduOrg {
   @PrimaryColumn()
-  eduId: string;
+  eduId: string
   @Column()
-  eduLogo: string;
+  eduLogo: string
   @Column()
-  eduName: string;
+  eduName: string
   @Column()
-  eduAddress: string;
+  eduAddress: string
   @Column()
-  eduLegalPerson: string;
+  eduLegalPerson: string
   @Column()
-  eduLegalPhone: string;
+  eduLegalPhone: string
   @Column()
-  eduContact: string;
+  eduContact: string
   @Column()
-  eduContactPhone: string;
+  eduContactPhone: string
   @Column()
-  eduIsPublic: number;
+  eduIsPublic: boolean
   @Column()
-  eduLicense: string;
+  eduLicense: string
   @Column()
-  eduStatus: string;
+  eduStatus: string
   @Column()
-  eduAnnualInspection: string;
+  eduAnnualInspection: string
   @Column()
-  eduAnnualInspectionDate: string;
+  eduAnnualInspectionDate: string
   @Column()
-  eduAnnualInspectionTime: string;
+  eduAnnualInspectionTime: string
   @Column()
-  eduSupervisedAccount: string;
+  eduSupervisedAccount: string
   @Column()
-  eduNormalAccount: string;
+  eduNormalAccount: string
   @Column()
-  eduSupervisedMerNo: string;
+  eduSupervisedMerNo: string
   @Column()
-  eduCreateDate: string;
+  eduCreateDate: string
   @Column()
-  eduCreateTime: string;
+  eduCreateTime: string
   @Column()
-  eduUpdateDate: string;
+  eduUpdateDate: string
   @Column()
-  eduUpdateTime: string;
+  eduUpdateTime: string
   @Column({
     precision: 3,
-    scale: 1,
+    scale: 1
   })
-  eduRating: number;
+  eduRating: number
   @Column()
-  eduLoginName: string;
+  eduLoginName: string
   @Column()
-  eduPassword: string;
+  eduPassword: string
   @Column()
-  supervisorOrgId: string;
+  supervisorOrgId: string
   @Column()
-  eduProvince: string;
+  eduProvince: string
   @Column()
-  eduCity: string;
+  eduCity: string
   @Column()
-  eduArea: string;
+  eduArea: string
+  @Column()
+  merNo: string
+
+
 }

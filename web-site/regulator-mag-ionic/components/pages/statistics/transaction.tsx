@@ -24,8 +24,12 @@ import moment from 'moment';
 const findURL = 'http://localhost:3003/edb/transaction/find';
 
 const Transaction: React.FC = () => {
+  //todo 根据token获取LoginUser信息
+  const loginName = window.loginUser;
   const [page, setPage] = useState(0);
   const [total, setTotal] = useState(101); //todo
+
+
   const [transactionStatState, setTransactionStatState] = useState([] as any[]);
   const onPageChange = (records: any, total: number, newPage: number) => {
     setPage(newPage);
@@ -48,6 +52,7 @@ const Transaction: React.FC = () => {
       contractId: queryInfo.contractId,
       account: queryInfo.account,
       tranDate: queryInfo.tranDate,
+      loginName: loginName,
     },
     findURL
   );
@@ -82,6 +87,7 @@ const Transaction: React.FC = () => {
       });
   };
   useEffect(onQuery, []);
+
   const ListEntry = ({ record, ...props }: { record: any }) => (
     <tr className="grid items-center grid-cols-7 gap-2 text-gray-600 border justify-items-center even:bg-white odd:bg-primary-100 ">
       <td className="flex items-center justify-center leading-10">{record.transactionId}</td>

@@ -1,6 +1,7 @@
 import { Transaction } from '../entity/Transaction'
 import mysql from '../mysql'
 import {nullableFuzzy} from '../Util'
+import moment = require('moment')
 
 class TransactionService {
 
@@ -65,6 +66,42 @@ class TransactionService {
         }
         return {result:true,records:[{sum:amount.sum,tranDate:tranDate,account:amount.account}]}
     // .getRawOne()
+    }
+
+
+    async sum(){
+        const today  = moment().format("YYYYMMDD")
+        const result = {result:true,buyCardNumber:0,buyCardAmt:0,refundNumber:0,refundAmt:0,transferNumber:0,transferAmt:0} 
+        var where = " transaction.tran_Type != 'cancel' and tran_date = :today "
+        const infos =await mysql.getRepository(Transaction).createQueryBuilder("transaction")
+              .select("SUM(transaction.transactionAmt) sum,count(transaction.transactionAmt) count,transaction.tran_type tranType")
+              .where(where ,{today:today})
+              .groupBy("transaction.tranType")
+              .getRawMany()
+        if(infos==null){
+            return result
+        }
+        infos.map(info=>{
+            switch(info.tranType){
+                case "buycard": {
+                    result.buyCardAmt = info.sum/100
+                    result.buyCardNumber = info.count
+                    break;
+                }
+                case "refund": {
+                    result.refundAmt = info.sum/100
+                    result.refundNumber = info.count
+                    break;
+                }
+                case "transfer": {
+                    result.transferAmt = info.sum/100
+                    result.transferNumber = info.count
+                    break;
+                }
+            }
+        })
+
+        return result
     }
 }
 export default new TransactionService()

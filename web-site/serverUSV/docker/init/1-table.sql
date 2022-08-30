@@ -28,6 +28,7 @@ CREATE TABLE yadadb.t_b_edu_org (
 	edu_province varchar(32) NULL,
 	edu_city varchar(32) NULL,
 	edu_area varchar(32) NULL,
+	mer_no varchar(15) NULL,
 	CONSTRAINT t_b_edu_org_PK PRIMARY KEY (edu_id)
 )
 ENGINE=InnoDB
@@ -339,6 +340,14 @@ CREATE TABLE yadadb.t_b_chaincode (
 	chaincode_name varchar(255) NOT NULL,
 	node_number int Null,
 	CONSTRAINT t_b_chaincode_PK PRIMARY KEY (chaincode_name)
+)
+ENGINE=InnoDB
+DEFAULT CHARSET=utf8mb4
+COLLATE=utf8mb4_unicode_ci;
+
+
+create Table yadadb.t_b_seq_table(
+	seq int primary key auto_increment 
 )
 ENGINE=InnoDB
 DEFAULT CHARSET=utf8mb4

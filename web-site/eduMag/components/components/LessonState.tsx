@@ -9,7 +9,7 @@ const lessonState = [
   { id: 3, name: '下架', unavailable: false },
 ]
 
-// 学生性别下拉菜单组件
+// 课程状态下拉菜单组件
 const LessonStateList = () => {
   const [selected, setSelected] = useState(lessonState[0])
   return (
