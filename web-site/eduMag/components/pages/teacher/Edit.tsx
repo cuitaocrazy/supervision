@@ -1,21 +1,17 @@
 //Teacher管理的详细页面
 import React, { useState } from "react";
-import {
-  IonPage,
-  IonCard,
-  IonCardContent,
-  useIonToast
-} from "@ionic/react";
+import { IonPage, IonCard, IonCardContent, useIonToast } from "@ionic/react";
 import { Redirect } from "react-router-dom";
 import { useCallback, useContext } from "react";
 import { AppContext, setTeacherEdit } from "../../../appState";
 import { Teacher } from "../../../types/types";
 import { PickerColumn } from "@ionic/core";
 import Quit from "components/components/Quit";
+import { eduTeacherModifyURL } from "const/consts";
 
 export const TeacherDetail: React.FC = () => {
   const [present, dismiss] = useIonToast();
-  const modifyURL = "http://localhost:3003/edu/teacher/modify";
+  const modifyURL = eduTeacherModifyURL;
   const { state, dispatch } = useContext(AppContext);
 
   const [teacherState, setTeacherState] = useState(state.teacher.teacherEdit);
@@ -41,20 +37,19 @@ export const TeacherDetail: React.FC = () => {
     })
       .then((res) => res.json())
       .then((json) => {
-        const result=json
-        if (result) 
-        {
+        const result = json;
+        if (result) {
           present({
-            message: '教师编辑成功',
-            position:'top',
-            duration:3000
-          })
-        } else 
-        present({
-          buttons: [{ text: '关闭', handler: () => dismiss() }],
-          message: '教师编辑失败',
-          position:'top',
-        })
+            message: "教师编辑成功",
+            position: "top",
+            duration: 3000,
+          });
+        } else
+          present({
+            buttons: [{ text: "关闭", handler: () => dismiss() }],
+            message: "教师编辑失败",
+            position: "top",
+          });
         setBack();
       });
   };
