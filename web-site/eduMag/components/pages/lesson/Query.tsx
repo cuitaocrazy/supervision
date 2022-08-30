@@ -481,7 +481,7 @@ const LessonQuery: React.FC = () => {
                             className="w-64 p-1 text-gray-600 bg-gray-100 border rounded-md justify-self-start focus:outline-none"
                             name="eduId"
                             type="text"
-                            value={state.loginUser.orgName}
+                            value={window.eduName}
                             spellCheck={false}
                             readOnly
                           ></input>

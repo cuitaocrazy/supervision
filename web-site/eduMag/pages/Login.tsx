@@ -38,6 +38,8 @@ const Login = () => {
           refreshUserInfo(loginUser);
             //todo 以后保存到localstorage
           window.loginUser=loginUser.loginName
+          // todo 
+          window.eduName=loginUser.orgName
           await router.push("./tabs/lesson/query");
           // router.reload();
         } else {
