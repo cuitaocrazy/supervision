@@ -17,7 +17,7 @@ import { Redirect } from "react-router-dom"
 // 首页
 const Home = () => {
   // 轮播图数据
-  let lesson: Lesson = { lessonImgs: "http://placekitten.com/g/200/300" }
+  let lesson: Lesson = { lessonImgs: "https://s3.bmp.ovh/imgs/2022/08/22/281ec3695ed000e6.png" }
   // let lesson: Lesson = { lessonImgs: "../../img/shuffling_1.png" }
   // 课程列表数据
 
