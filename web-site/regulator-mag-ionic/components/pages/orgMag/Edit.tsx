@@ -6,10 +6,11 @@ import { useCallback, useContext } from 'react';
 import { AppContext, setEduOrgEdit } from '../../../appState';
 import Quit from '../../Quit';
 import EduIsPublic from 'components/EduIsPublic';
+import { edbEduOrgModifyURL } from 'const/const';
 
 export const EduOrgEdit: React.FC = () => {
   const [present, dismiss] = useIonToast();
-  const modifyURL = 'http://localhost:3003/edb/eduOrg/modifyURL';
+  const modifyURL = edbEduOrgModifyURL;
   const { state, dispatch } = useContext(AppContext);
 
   const [eduOrgState, setEduOrgState] = useState(state.eduOrg.eduOrgEdit);
@@ -178,7 +179,7 @@ export const EduOrgEdit: React.FC = () => {
                   className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
                   name="eduLicense"
                   value={eduOrgState.eduLicense}
-                 />
+                />
               </div>
               <div className="flex mb-4 leading-10">
                 <div className="flex justify-end w-32 mr-2">年检日期:</div>

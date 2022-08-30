@@ -2,11 +2,12 @@ import { useEffect, useCallback, useContext, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { AppContext, setAttendanceList, setAttendanceDetail } from '../../../appState';
 import { Attendance } from '../../../types/types';
-import { IonPage, IonList, IonLabel, IonItem, IonRow, IonCol } from '@ionic/react';
+import { IonPage, IonRow, IonCol } from '@ionic/react';
 import Paging from '../../paging';
-import Quit from '../../Quit'
+import Quit from '../../Quit';
+import { edbAttendanceFindURL } from 'const/const';
 
-const findURL = 'http://localhost:3003/edb/attendance/find';
+const findURL = edbAttendanceFindURL;
 
 const AttendanceQuery: React.FC = () => {
   const { state, dispatch } = useContext(AppContext);
@@ -15,14 +16,14 @@ const AttendanceQuery: React.FC = () => {
     lessonName: '',
     consumerStuName: '',
   });
-  const [page,setPage] = useState(0)
-  const [total,setTotal]= useState(0)
+  const [page, setPage] = useState(0);
+  const [total, setTotal] = useState(0);
 
-  const onPageChange = (records:any,total:number,newPage:number)=>{
-    setPage(newPage)
-    setTotal(total)
-    refreshList(records)
-  }
+  const onPageChange = (records: any, total: number, newPage: number) => {
+    setPage(newPage);
+    setTotal(total);
+    refreshList(records);
+  };
 
   const getParamStr = (params: any, url: string) => {
     let result = '?';
@@ -64,40 +65,40 @@ const AttendanceQuery: React.FC = () => {
     })
       .then(res => res.json())
       .then(json => {
-        const { result, records,total } = json;
+        const { result, records, total } = json;
         if (result) {
-          setTotal(total)
-          refreshList(records)
-        };
+          setTotal(total);
+          refreshList(records);
+        }
         return;
       });
   };
   useEffect(onQuery, []);
   const getAttendanceType = (typeEnglish: any) => {
-    if (typeEnglish === "manual") {
-      return "手工";
+    if (typeEnglish === 'manual') {
+      return '手工';
     }
-    if (typeEnglish === "auto") {
-      return "超时自动打卡";
+    if (typeEnglish === 'auto') {
+      return '超时自动打卡';
     }
     return typeEnglish;
   };
 
   const getAttendanceState = (stateEnglish: any) => {
-    if (stateEnglish === "conforming") {
-      return "待客户确认";
+    if (stateEnglish === 'conforming') {
+      return '待客户确认';
     }
-    if (stateEnglish === "valid") {
-      return "考勤有效";
+    if (stateEnglish === 'valid') {
+      return '考勤有效';
     }
-    if (stateEnglish === "negotiating") {
-      return "双方协商中";
+    if (stateEnglish === 'negotiating') {
+      return '双方协商中';
     }
-    if (stateEnglish === "invalid") {
-      return "无效状态（包括请假）";
+    if (stateEnglish === 'invalid') {
+      return '无效状态（包括请假）';
     }
-    if (stateEnglish === "final") {
-      return "划拨完成";
+    if (stateEnglish === 'final') {
+      return '划拨完成';
     }
     return stateEnglish;
   };
@@ -113,8 +114,12 @@ const AttendanceQuery: React.FC = () => {
       <td className="flex items-center justify-center leading-10">{attendance.consumerName}</td>
       <td className="flex items-center justify-center leading-10">{attendance.attendanceDate}</td>
       <td className="flex items-center justify-center leading-10">{attendance.attendanceTime}</td>
-      <td className="flex items-center justify-center leading-10">{getAttendanceType(attendance.attendanceType)}</td>
-      <td className="flex items-center justify-center leading-10">{getAttendanceState(attendance.attendanceStatus)}</td>
+      <td className="flex items-center justify-center leading-10">
+        {getAttendanceType(attendance.attendanceType)}
+      </td>
+      <td className="flex items-center justify-center leading-10">
+        {getAttendanceState(attendance.attendanceStatus)}
+      </td>
       <td className="flex items-center justify-center leading-10">
         <div className="flex gap-2 ">
           <button className="p-1 text-primary-600" onClick={onDetail(attendance)}>
@@ -217,7 +222,16 @@ const AttendanceQuery: React.FC = () => {
                 ))}
               </tbody>
               <tr>
-                <td colSpan={6}> <Paging url={paramStr} page={page} pagesize={20} total={total} onPageChange={onPageChange}/></td>
+                <td colSpan={6}>
+                  {' '}
+                  <Paging
+                    url={paramStr}
+                    page={page}
+                    pagesize={20}
+                    total={total}
+                    onPageChange={onPageChange}
+                  />
+                </td>
               </tr>
             </table>
           </div>

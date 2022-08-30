@@ -9,11 +9,17 @@ import { Dialog, Transition } from '@headlessui/react';
 import EduIsPublic from '../../EduIsPublic';
 import Paging from '../../paging';
 import Quit from '../../Quit';
+import {
+  edbEduOrgApplyURL,
+  edbEduOrgCreateURL,
+  edbEduOrgDelURL,
+  edbEduOrgFindURL,
+} from 'const/const';
 
-const findURL = 'http://localhost:3003/edb/eduOrg/find';
-const delURL = 'http://localhost:3003/edb/eduOrg/del';
-const applyURL = 'http://localhost:3003/edb/eduOrg/apply';
-const createURL = 'http://localhost:3003/edb/eduOrg/create';
+const findURL = edbEduOrgFindURL;
+const delURL = edbEduOrgDelURL;
+const applyURL = edbEduOrgApplyURL;
+const createURL = edbEduOrgCreateURL;
 
 // 课程查询页面
 const OrgMagQuery: React.FC = () => {

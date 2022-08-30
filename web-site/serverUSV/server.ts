@@ -773,11 +773,10 @@ app.post('/edb/login', async (req, res) => {
 
 
 app.post('/edb/lesson/audit', jsonParser, async (req, res) => {
-  console.log(`教育局: 划拨查询: 条件[${JSON.stringify(req.body)}]`)
+  console.log(`教育局: 课程审核: 条件[${JSON.stringify(req.body)}]`)
   const r = await edbEduLessonService.update(req.body)
   res.send(r)
 })
-
 
 //app.use(express.json())
 //新增
@@ -788,7 +787,7 @@ app.post("/edb/eduOrg/create", jsonParser, async (req, res) => {
   edu.eduCreateDate = moment().format("YYYYMMDD");
   edu.eduCreateTime = moment().format("HHmmss");
   edu.eduId = geneUSVOrderNo(); //await getUUIDWithEM(mysql.manager)
-//默认年检
+  //默认年检
   edu.eduAnnualInspectionDate = moment().format("YYYYMMDD");
   edu.eduAnnualInspectionTime = moment().format("HHmmss");
   edu.eduAnnualInspection = "qualified"; //年检状态默认合格
@@ -845,3 +844,9 @@ app.delete("/edb/supervisorBackEdu/remove", jsonParser, async (req, res) => {
   });
   res.send(r);
 });
+
+app.post('/edu/lesson/audit', jsonParser, async (req, res) => {
+  console.log(`教育机构: 课程审核: 条件[${JSON.stringify(req.body)}]`)
+  const r = await edbEduLessonService.update(req.body)
+  res.send(r)
+})
