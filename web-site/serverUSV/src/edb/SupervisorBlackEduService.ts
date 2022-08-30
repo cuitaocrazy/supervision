@@ -57,6 +57,8 @@ class SupervisorBlackEduService {
       .where("eduOrg.eduName like :eduName", {
         eduName: nullableFuzzy(eduName),
       })
+      .orderBy("blackEdu.blackEduCreateDate", "DESC")
+      .addOrderBy("blackEdu.blackEduCreateTime", "DESC")
       .skip(page * size)
       .take(size)
       .getManyAndCount();

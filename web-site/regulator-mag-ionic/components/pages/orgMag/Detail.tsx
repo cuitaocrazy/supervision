@@ -3,43 +3,25 @@ import React, { useState } from 'react';
 import {
   IonPage,
   IonCard,
-  IonRadioGroup,
-  IonRadio,
-  IonRow,
-  IonCol,
-  IonCardHeader,
-  IonCardSubtitle,
-  IonLabel,
-  IonInput,
-  IonCardContent,
-  IonItem,
-  IonButton,
-  IonList,
-  IonDatetime,
-  IonPicker,
+  IonCardContent
 } from '@ionic/react';
 import { Redirect } from 'react-router-dom';
 import { useCallback, useContext } from 'react';
 import { AppContext, setEduOrgDetail } from '../../../appState';
-import { EduOrg } from '../../../types/types';
-import { PickerColumn } from '@ionic/core';
 import Quit from '../../Quit'
 
 export const EduOrgDetail: React.FC = () => {
-  const modifyURL = 'http://localhost:3003/eduOrg/modifyURL';
-  const { state, dispatch } = useContext(AppContext);
-
+const { state, dispatch } = useContext(AppContext);
   const [eduOrgState, setEduOrgState] = useState(state.eduOrg.eduOrgDetail);
   const setBack = useCallback(() => {
     dispatch(setEduOrgDetail(undefined));
   }, []);
-  `                                                       `;
   const onBack = () => () => {
     setBack();
   };
   if (state.eduOrg.eduOrgDetail === undefined) {
     return <Redirect to={state.backPage} />;
-  }
+  }  
   /**todo 教育机构所在城市*/
   return (
     <IonPage className="bg-gray-100">
@@ -143,7 +125,9 @@ export const EduOrgDetail: React.FC = () => {
                 <div className="flex justify-end w-32 mr-2">许可证文件:</div>
                 <input
                   className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
-                  name="Public"
+                  name="eduLicense"
+                  value={eduOrgState.eduLicense}
+
                   readOnly
                 />
               </div>
@@ -152,7 +136,7 @@ export const EduOrgDetail: React.FC = () => {
                 <input
                   className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
                   name="eduAnnualInspection"
-                  value={eduOrgState.eduAnnualInspection}
+                  value={eduOrgState.eduAnnualInspection == 'qualified' ?'合格':'不合格'}
                   readOnly
                 />
               </div>
@@ -187,8 +171,8 @@ export const EduOrgDetail: React.FC = () => {
                 <div className="flex justify-end w-32 mr-2">普通账户:</div>
                 <input
                   className="w-64 h-10 px-2 rounded-md bg-primary-100 focus:outline-none"
-                  name="normalAccount"
-                  value={eduOrgState.normalAccount}
+                  name="eduNormalAccount"
+                  value={eduOrgState.eduNormalAccount}
                   readOnly
                 />
               </div>
@@ -196,7 +180,7 @@ export const EduOrgDetail: React.FC = () => {
                 <div className="flex justify-end w-32 mr-2">登录名:</div>
                 <input
                   className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
-                  name="eduAnnualInspectionTime"
+                  name="eduLoginName"
                   value={eduOrgState.eduLoginName}
                   readOnly
                 />
@@ -211,10 +195,10 @@ export const EduOrgDetail: React.FC = () => {
                 />
               </div>
               <div className="flex mb-4 leading-10">
-                <div className="flex justify-end w-32 mr-2">监管机构名:</div>
+                <div className="flex justify-end w-32 mr-2">监管机构ID:</div>
                 <input
                   className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
-                  name="Public"
+                  name="supervisorOrgId"
                   value={eduOrgState.supervisorOrgId}
                   readOnly
                 />
@@ -223,8 +207,7 @@ export const EduOrgDetail: React.FC = () => {
                 <div className="flex justify-end w-32 mr-2">是否为黑名单:</div>
                 <input
                   className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
-                  name="eduAnnualInspectionTime"
-                  value={'否'}
+                  value={eduOrgState.blackEdu==null?'否':'是'}
                   readOnly
                 />
               </div>

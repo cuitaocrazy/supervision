@@ -121,8 +121,7 @@ const TeacherQuery: React.FC = () => {
       })
 
       closeDeleteModal();
-      onQuery()
-    }
+     }
       );
   };
 
@@ -212,7 +211,7 @@ const TeacherQuery: React.FC = () => {
       {teacher.teacherIntroduce}
       </td> */}
       <td className="flex items-center justify-center leading-10">
-      {teacher.teacherCreatedDate}
+      {teacher.teacherCreateDate}
       </td>
       <td className="flex items-center justify-center leading-10">
         <div className="flex gap-2 ">
@@ -495,80 +494,11 @@ const TeacherQuery: React.FC = () => {
                       onSubmit={onCancel}
                       className="flex flex-col items-center rounded-lg justify-items-center"
                     >
-                      <div className="flex items-center mb-4 justify-items-center">
+                        <div className="flex items-center mb-4 justify-items-center">
                         <div className="flex leading-7 justify-items-center">
-                          <div className="flex justify-end p-1 w-36">
-                            教师姓名:
-                          </div>
-                          <input
-                            className="w-64 p-1 text-gray-600 bg-gray-100 border rounded-md justify-self-start focus:outline-none"
-                            name="eduId"
-                            type="text"
-                            value={cancelTeacher.teacherName}
-                            spellCheck={false}
-                            readOnly
-                          ></input>
+                          <div className="flex justify-end p-1 ">确定要删除该教师信息？</div>
                         </div>
                       </div>
-
-                      <div className="flex items-center mb-4 justify-items-center">
-                        <div className="flex justify-items-center">
-                          <span className="flex justify-end p-1 mr-1 w-36">
-                            教师身份证:
-                          </span>
-                          <input
-                            className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none"
-                            name="lessonName"
-                            type="text"
-                            value={cancelTeacher.teacherIdentityNo}
-                            spellCheck={false}
-                            readOnly
-                          ></input>
-                        </div>
-                      </div>
-                      <div className="flex items-center mb-4 justify-items-center">
-                        <div className="flex justify-items-center">
-                          <span className="flex justify-end p-1 mr-1 w-36">
-                            专业领域:
-                          </span>
-                          <textarea
-                            className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none"
-                            name="lessonTotalTimes"
-                            spellCheck={false}
-                            value={cancelTeacher.teacherField}
-                            readOnly
-                          ></textarea>
-                        </div>
-                      </div>
-                      <div className="flex items-center mb-4 justify-items-center">
-                        <div className="flex justify-items-center">
-                          <span className="flex justify-end p-1 mr-1 w-36">
-                            从业经验:
-                          </span>
-                          <textarea
-                            className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none"
-                            name="teacherExperience"
-                            value={cancelTeacher.teacherExperience}
-                            spellCheck={false}
-                            readOnly
-                          ></textarea>
-                        </div>
-                      </div>
-                      <div className="flex items-center mb-4 justify-items-center">
-                        <div className="flex justify-items-center">
-                          <span className="flex justify-end p-1 mr-1 w-36">
-                            教师简介:
-                          </span>
-                          <textarea
-                            className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none"
-                            name="teacherIntroduce"
-                            value={cancelTeacher.teacherIntroduce}
-                            spellCheck={false}
-                            readOnly
-                          ></textarea>
-                        </div>
-                      </div>
-                      
                       <div className="flex items-center gap-4 mt-2 justify-items-center">
                         <input
                           value="取消"
@@ -608,7 +538,7 @@ const TeacherQuery: React.FC = () => {
                 <ListEntry teacher={list} key={i} />
               ))}
               <tr>
-                <td colSpan={6}> <Paging url={paramStr} page={page} pagesize={20} total={total} onPageChange={onPageChange}/></td>
+                <td colSpan={6}> <Paging url={paramStr} page={page} pagesize={5} total={total} onPageChange={onPageChange}/></td>
               </tr>
             </tbody>
           </table>

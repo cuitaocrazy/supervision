@@ -135,7 +135,7 @@ export const TeacherDetail: React.FC = () => {
                 <div className="flex justify-end w-32 mr-2">创建日期:</div>
                 <input
                   className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
-                  value={teacherState.teacherCreatedDate}
+                  value={teacherState.teacherCreateDate}
                   readOnly
                 />
               </div>
@@ -151,7 +151,7 @@ export const TeacherDetail: React.FC = () => {
                 <div className="flex justify-end w-32 mr-2">更新日期:</div>
                 <input
                   className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
-                  value={teacherState.teacherUpdatedDate}
+                  value={teacherState.teacherUpdateDate}
                   readOnly
                 />
               </div>
