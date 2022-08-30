@@ -26,7 +26,7 @@ const LessonListCard: FC<OrderListProps> = (props) => {
 
   return <div className='pb-3 mx-3 mt-2 bg-white rounded-lg shadow-md'>
     <div className='flex pb-1 mx-2 mb-2 rounde-xl'>
-      <img className='w-20 h-20 mt-2 ml-1 rounded-xl' src={props.lessonImages}></img>
+      <img className='w-20 h-20 mt-2 ml-1 rounded-xl' src="https://s3.bmp.ovh/imgs/2022/08/30/28f95385d82b4f7c.jpg"></img>
       <div className='mt-3 ml-3'>
         <div className='text-sm font-medium text-gray-700 '>{props.lessonName}</div>
         <div className='flex mt-1'>

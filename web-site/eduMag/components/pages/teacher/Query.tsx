@@ -367,6 +367,7 @@ const TeacherQuery: React.FC = () => {
                       <div className="flex items-center mb-4 justify-items-center">
                         <div className="flex leading-7 justify-items-center">
                           <div className="flex justify-end p-1 w-36">
+                            <span className="px-1 text-red-600">*</span>
                             教师姓名:
                           </div>
                           <input
@@ -410,9 +411,10 @@ const TeacherQuery: React.FC = () => {
                       </div>
                       <div className="flex items-center mb-4 justify-items-center">
                         <div className="flex justify-items-center">
-                          <span className="flex justify-end p-1 mr-1 w-36">
+                          <div className="flex justify-end p-1 mr-1 w-36">
+                            <span className="px-1 text-red-600">*</span>
                             专业领域:
-                          </span>
+                          </div>
                           <textarea
                             className="w-64 h-32 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
                             name="teacherField"
@@ -454,9 +456,10 @@ const TeacherQuery: React.FC = () => {
                       </div>
                       <div className="flex items-center mb-4 justify-items-center">
                         <div className="flex justify-items-center">
-                          <span className="flex justify-end p-1 mr-1 w-36">
+                          <div className="flex justify-end p-1 mr-1 w-36">
+                            <span className="px-1 text-red-600">*</span>
                             教师简介:
-                          </span>
+                          </div>
                           <textarea
                             className="w-64 h-32 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
                             name="teacherIntroduce"

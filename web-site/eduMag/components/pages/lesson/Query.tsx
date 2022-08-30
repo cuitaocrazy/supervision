@@ -475,6 +475,7 @@ const LessonQuery: React.FC = () => {
                       <div className="flex items-center mb-4 justify-items-center">
                         <div className="flex leading-7 justify-items-center">
                           <div className="flex justify-end p-1 w-36">
+                          <span className='px-1 text-red-600'>*</span>
                             教育机构名称:
                           </div>
                           <input
@@ -490,9 +491,10 @@ const LessonQuery: React.FC = () => {
 
                       <div className="flex items-center mb-4 justify-items-center">
                         <div className="flex justify-items-center">
-                          <span className="flex justify-end p-1 mr-1 w-36">
+                          <div className="flex justify-end p-1 mr-1 w-36">
+                            <span className='px-1 text-red-600'>*</span>
                             课程名称:
-                          </span>
+                          </div>
                           <input
                             className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
                             name="lessonName"
@@ -511,9 +513,10 @@ const LessonQuery: React.FC = () => {
                       </div>
                       <div className="flex items-center mb-4 justify-items-center">
                         <div className="flex justify-items-center">
-                          <span className="flex justify-end p-1 mr-1 w-36">
+                          <div className="flex justify-end p-1 mr-1 w-36">
+                            <span className='px-1 text-red-600'>*</span>
                             总课时:
-                          </span>
+                          </div>
                           <input
                             className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
                             name="lessonTotalTimes"
@@ -534,9 +537,10 @@ const LessonQuery: React.FC = () => {
                       </div>
                       <div className="flex items-center mb-4 justify-items-center">
                         <div className="flex justify-items-center">
-                          <span className="flex justify-end p-1 mr-1 w-36">
+                          <div className="flex justify-end p-1 mr-1 w-36">
+                          <span className='px-1 text-red-600'>*</span>
                             总价格(元):
-                          </span>
+                          </div>
                           <input
                             className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
                             name="lessonTotalPrice"
@@ -557,9 +561,10 @@ const LessonQuery: React.FC = () => {
                       </div>
                       <div className="flex items-center mb-4 justify-items-center">
                         <div className="flex justify-items-center">
-                          <span className="flex justify-end p-1 mr-1 w-36">
+                          <div className="flex justify-end p-1 mr-1 w-36">
+                          <span className='px-1 text-red-600'>*</span>
                             课程单价:
-                          </span>
+                          </div>
                           <input
                             className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
                             name="lessonPerPrice"
@@ -595,7 +600,7 @@ const LessonQuery: React.FC = () => {
                                 ...{ lessonType: e.nativeEvent.target?.value },
                               })
                             }
-                            required
+                            
                           ></input>
                         </div>
                       </div>
@@ -653,15 +658,16 @@ const LessonQuery: React.FC = () => {
                                 },
                               })
                             }
-                            required
+                            
                           ></textarea>
                         </div>
                       </div>
                       <div className="flex items-center mb-4 justify-items-center">
                         <div className="flex justify-items-center">
-                          <span className="flex justify-end p-1 mr-1 w-36">
+                          <div className="flex justify-end p-1 mr-1 w-36">
+                            <span className='px-1 text-red-600'>*</span>
                             教师姓名:
-                          </span>
+                          </div>
                           <input
                             className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
                             name="teacherId"

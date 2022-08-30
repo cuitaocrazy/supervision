@@ -451,7 +451,6 @@ const OrgMagQuery: React.FC = () => {
                                 ...{ eduLegalPerson: e.nativeEvent.target?.value },
                               })
                             }
-                            required
                           ></input>
                         </div>
                       </div>
@@ -467,7 +466,6 @@ const OrgMagQuery: React.FC = () => {
                                 ...{ eduLegalPhone: e.nativeEvent.target?.value },
                               })
                             }
-                            required
                           ></input>
                         </div>
                       </div>
@@ -577,7 +575,6 @@ const OrgMagQuery: React.FC = () => {
                                 ...{ eduNormalAccount: e.nativeEvent.target?.value },
                               })
                             }
-                            required
                           ></input>
                         </div>
                       </div>

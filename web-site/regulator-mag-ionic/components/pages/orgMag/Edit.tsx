@@ -173,7 +173,7 @@ export const EduOrgEdit: React.FC = () => {
                   }}
                 />
               </div>
-              <div className="flex mb-4 leading-10">
+              {/* <div className="flex mb-4 leading-10">
                 <div className="flex justify-end w-32 mr-2">许可证文件:</div>
                 <input
                   className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
@@ -208,7 +208,7 @@ export const EduOrgEdit: React.FC = () => {
                     })
                   }
                 />
-              </div>
+              </div> */}
               <div className="flex mb-4 leading-10">
                 <div className="flex justify-end w-32 mr-2"> 监管账户:</div>
                 <input
