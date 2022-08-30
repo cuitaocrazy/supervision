@@ -4,62 +4,56 @@ import { IonPage, IonCard, IonCardContent, useIonToast } from '@ionic/react';
 import { Redirect } from 'react-router-dom';
 import { useCallback, useContext } from 'react';
 import { AppContext, setEduOrgEdit } from '../../../appState';
-import { EduOrg } from '../../../types/types';
-import { PickerColumn } from '@ionic/core';
 import Quit from '../../Quit';
+import EduIsPublic from 'components/EduIsPublic';
 
 export const EduOrgEdit: React.FC = () => {
   const [present, dismiss] = useIonToast();
-  const modifyURL = 'http://localhost:3003/eduOrg/modifyURL';
+  const modifyURL = 'http://localhost:3003/edb/eduOrg/modifyURL';
   const { state, dispatch } = useContext(AppContext);
 
   const [eduOrgState, setEduOrgState] = useState(state.eduOrg.eduOrgEdit);
-  const [isPickOpen, setPickOpen] = useState(false);
   const setBack = useCallback(() => {
     dispatch(setEduOrgEdit(undefined));
   }, []);
   `                                                       `;
-  const onBack = () => () => {
-    setBack();
-  };
-  console.log('state');
-  console.log(state);
+
   if (state.eduOrg.eduOrgEdit === undefined) {
     return <Redirect to={state.backPage} />;
   }
 
   // const onModify = async (e: React.FormEvent) => () => {
   const onModify = (e: React.FormEvent) => {
-    console.log('111111');
-    // e.preventDefault();
-    // fetch(modifyURL, {
-    //   method: 'POST',
-    //   body: JSON.stringify(eduOrgState),
-    //   headers: {
-    //     'Content-type': 'application/json;charset=UTF-8',
-    //   },
-    // })
-    //   .then(res => res.json())
-    //   .then(json => {
-    //     const result=json
-    const result = { true: Boolean };
-    const msg={"网络异常":String}
-    if (result) {
-      present({
-        message: '教育机构编辑成功',
-        position:'top',
-        duration:3000
-      })
-    } else
-      present({
-        buttons: [{ text: '关闭', handler: () => dismiss() }],
-        message: '教育机构编辑失败'+msg,
-        position:'top',
-        onDidDismiss: () => console.log('dismissed'),
-        onWillDismiss: () => console.log('will dismiss'),
+    e.preventDefault();
+    //eduOrgState.eduIsPublic=eduIsPublic;
+    fetch(modifyURL, {
+      method: 'POST',
+      body: JSON.stringify(eduOrgState),
+      headers: {
+        'Content-type': 'application/json;charset=UTF-8',
+      },
+    })
+      .then(res => res.json())
+      .then(json => {
+        const result = json;
+        // const result = { true: Boolean };
+        const msg = { 网络异常: String };
+        if (result) {
+          present({
+            message: '教育机构编辑成功',
+            position: 'top',
+            duration: 3000,
+          });
+        } else
+          present({
+            buttons: [{ text: '关闭', handler: () => dismiss() }],
+            message: '教育机构编辑失败' + msg,
+            position: 'top',
+            onDidDismiss: () => console.log('dismissed'),
+            onWillDismiss: () => console.log('will dismiss'),
+          });
+        setBack();
       });
-    setBack();
-    // });
   };
   // const eduOrgTypePickerColumn = {
   //   name: "eduOrgTypePickerColumn",
@@ -169,13 +163,14 @@ export const EduOrgEdit: React.FC = () => {
               </div>
               <div className="flex mb-4 leading-10">
                 <div className="flex justify-end w-32 mr-2">是否公办:</div>
-                <input
-                  className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
-                  name="Public"
-                  onChange={e =>
-                    setEduOrgState({ ...eduOrgState, eduIsPublic: e.nativeEvent.target?.value })
-                  }
-                  required
+                <EduIsPublic
+                  isPublic={eduOrgState.eduIsPublic}
+                  setIsPublic={v => {
+                    setEduOrgState({
+                      ...eduOrgState,
+                      ...{ eduIsPublic: v },
+                    });
+                  }}
                 />
               </div>
               <div className="flex mb-4 leading-10">
@@ -183,7 +178,6 @@ export const EduOrgEdit: React.FC = () => {
                 <input
                   className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
                   name="Public"
-                  required
                 />
               </div>
               <div className="flex mb-4 leading-10">
@@ -198,7 +192,6 @@ export const EduOrgEdit: React.FC = () => {
                       eduAnnualInspection: e.nativeEvent.target?.value,
                     })
                   }
-                  required
                 />
               </div>
               <div className="flex mb-4 leading-10">
@@ -213,7 +206,6 @@ export const EduOrgEdit: React.FC = () => {
                       eduAnnualInspectionDate: e.nativeEvent.target?.value,
                     })
                   }
-                  required
                 />
               </div>
               <div className="flex mb-4 leading-10">
@@ -228,7 +220,6 @@ export const EduOrgEdit: React.FC = () => {
                       eduAnnualInspectionTime: e.nativeEvent.target?.value,
                     })
                   }
-                  required
                 />
               </div>
               <div className="flex mb-4 leading-10">
@@ -255,7 +246,6 @@ export const EduOrgEdit: React.FC = () => {
                   onChange={e =>
                     setEduOrgState({ ...eduOrgState, normalAccount: e.nativeEvent.target?.value })
                   }
-                  required
                 />
               </div>
               <div className="flex mb-4 leading-10">
@@ -294,7 +284,6 @@ export const EduOrgEdit: React.FC = () => {
                   onChange={e =>
                     setEduOrgState({ ...eduOrgState, supervisorOrgId: e.nativeEvent.target?.value })
                   }
-                  required
                 />
               </div>
               <div className="flex mb-4 leading-10">

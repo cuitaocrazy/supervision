@@ -9,87 +9,35 @@ import {
   useIonToast,
 } from '@ionic/react';
 import { Dialog, Transition } from '@headlessui/react';
+import Paging from '../../paging';
 import Quit from '../../Quit';
 
-const queryURL = 'http://localhost:3003/lesson/query';
-const delURL = 'http://localhost:3003/lesson/del';
-const createUrl = 'http://localhost:3003/black/createURL';
-const demoBlackList: Black[] = [
-  {
-    orgId: '1',
-    orgName: '机构',
-    reason: '1111',
-    blackDate: '2020-01-01',
-    blackTime: '00:00:00',
-  },
-  {
-    orgId: '2',
-    orgName: '机构3',
-    reason: '1111',
-    blackDate: '2020-01-01',
-    blackTime: '00:00:00',
-  },
-];
-
+const queryURL = 'http://localhost:3003/edb/supervisorBackEdu/find';
+const delURL = 'http://localhost:3003/edb/supervisorBackEdu/remove';
 // 黑名单查询页面
 const BlackEduOrgQuery: React.FC = () => {
   const [present, dismiss] = useIonToast();
-  // 新增黑名单模态框的状态
-  let [isCreateOpen, setIsCreateOpen] = useState(false);
-  function closeCreateModal() {
-    setIsCreateOpen(false);
-  }
-  function openCreateModal() {
-    setIsCreateOpen(true);
-  }
-
-  // 删除黑名单模态框的状态
-  let [isDeleteOpen, setIsDeleteOpen] = useState(false);
-  function closeDeleteModal() {
-    setIsDeleteOpen(false);
-  }
-  function openDeleteModal() {
-    setIsDeleteOpen(true);
-  }
-
-  const [createBlack, setCreateBlack] = useState({} as Black);
-
-  const onCancel = (item: Black) => () => {
-    fetch(delURL, {
-      method: 'PUT',
-      body: JSON.stringify({
-        orgId: item.orgId,
-      }),
-      headers: {
-        'Content-type': 'application/json;charset=UTF-8',
-      },
-    })
-      .then(res => res.json())
-      .then(json => {
-        const result=json
-        console.log(result+"result")
-        if (result) 
-        {
-          present({
-            message: '教育机构黑名单删除成功',
-            position:'top',
-            duration:3000
-          })
-        } else 
-        present({
-          buttons: [{ text: '关闭', handler: () => dismiss() }],
-          message: '教育机构黑名单删除失败',
-          position:'top',
-        })
-        onQuery
-      });
-  };
-  const createModal = useRef<HTMLIonModalElement>(null);
-  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
-  const [createState, setCreateState] = useState({} as Black);
+  
   const [deleteState, setDeleteState] = useState({} as Black);
   const { state, dispatch } = useContext(AppContext);
-  const [queryInfo, setQueryInfo] = useState({ orgName: '' });
+  const [queryInfo, setQueryInfo] = useState({ eduName: '' });
+  const [page,setPage] = useState(0)
+  const [total,setTotal]= useState(101)//todo
+  const onPageChange = (records:any,total:number,newPage:number)=>{
+    console.log(records)
+    console.log(total)
+    console.log(newPage)
+    setPage(newPage)
+    refreshList(records)
+  }
+  const refreshList = useCallback(
+    (item: Black[]) => {
+      dispatch(setBlackList(item));
+    },
+    [dispatch]
+  );
+ 
+
   const getParamStr = (params: any, url: string) => {
     let result = '?';
     Object.keys(params).forEach(key => (result = result + key + '=' + params[key] + '&'));
@@ -97,84 +45,88 @@ const BlackEduOrgQuery: React.FC = () => {
   };
   const paramStr = getParamStr(
     {
-      orgName: queryInfo.orgName,
+      eduName: queryInfo.eduName,
     },
     queryURL
   );
-
-  console.log(state);
-  const refreshLessonList = useCallback(
-    (items: Black[]) => {
-      dispatch(setBlackList(items));
-    },
-    [dispatch]
-  );
-
+  
   const onDetail = (item: Black) => () => {
     doSetDetail(item);
   };
 
   const doSetDetail = useCallback(
-    item => {
+    (item: Black)  => {
       dispatch({ ...setBlackDetail(item), ...{ backPage: '/tabs/black/query' } });
     },
     [dispatch]
   );
   useEffect(() => {
-    // fetch(paramStr, {
-    //   method: 'GET',
-    //   headers: {
-    //     'Content-type': 'application/json;charset=UTF-8',
-    //   },
-    // }).then(res => res.json())
-    // .then((json) => {
-    // const {userInfoList} = json //todo
-    // refreshLessonList(demoLessonList.filter((userInfo:SupervisorUser)=>userInfo.supervisorUsername&&userInfo.supervisorUsername.indexOf(queryInfo.supervisorUsername)>-1).filter((userInfo:SupervisorUser)=>userInfo.supervisorLoginName.indexOf(queryInfo.supervisorLoginName)>-1))
-    refreshLessonList(demoBlackList);
+    onQuery()
   }, []);
-
+  //查询
   const onQuery = () => {
-    refreshLessonList(
-      demoBlackList.filter((item: Black) => item.orgName.indexOf(queryInfo.orgName) > -1)
-    );
-  };
-
-  const onCreate = (e: any) => {
-    e.preventDefault();
-    fetch(createUrl, {
-      method: 'POST',
-      body: JSON.stringify(createBlack),
-      headers: {
-        'Content-type': 'application/json;charset=UTF-8',
-      },
-    })
-      .then(res => res.json())
+       fetch(paramStr, {
+        method: 'GET',
+        headers: {
+          'Content-type': 'application/json;charset=UTF-8',
+        },
+      }).then(res => res.json())
       .then(json => {
-        const result=json
-        console.log(result+"result")
-        if (result) 
-        {
-          present({
-            message: '教育机构黑名单添加成功',
-            position:'top',
-            duration:3000
-          })
-        } else 
-        present({
-          buttons: [{ text: '关闭', handler: () => dismiss() }],
-          message: '教育机构黑名单添加失败',
-          position:'top',
-        })
+        console.log(json);
+        const { result, records,total } = json;
+        if (result) {
+          setTotal(total)
+          refreshList(records)
+        };
+        return;
       });
-  };
-
+   };
+   // 删除黑名单模态框的状态
+  let [isDeleteOpen, setIsDeleteOpen] = useState(false);
+  function closeDeleteModal() {
+    setIsDeleteOpen(false);
+  }
+  function openDeleteModal() {
+    setIsDeleteOpen(true);
+  }
+//删除
+const onCancel =(e: any) => {
+  e.preventDefault();
+  fetch(delURL, {
+    method: 'delete',
+    body: JSON.stringify({
+      eduId: deleteState.eduId,
+    }),
+    headers: {
+      'Content-type': 'application/json;charset=UTF-8',
+    },
+  })
+    .then(res => res.json())
+    .then(json => {
+      const { result} = json;
+      console.log(result+"result")
+      if (result) 
+      {
+        present({
+          message: '教育机构黑名单删除成功',
+          position:'top',
+          duration:3000
+        })
+        onQuery();
+      } else 
+      present({
+        buttons: [{ text: '关闭', handler: () => dismiss() }],
+        message: '教育机构黑名单删除失败',
+        position:'top',
+      })
+      closeDeleteModal();
+    });
+};
   const ListEntry = ({ item, ...props }: { item: Black }) => (
-    <tr className="grid items-center grid-cols-5 gap-10 text-gray-600 border justify-items-center even:bg-white odd:bg-primary-100 ">
-      <td className="flex items-center justify-center leading-10">{item.orgName}</td>
-      <td className="flex items-center justify-center leading-10">{item.reason}</td>
-      <td className="flex items-center justify-center leading-10">{item.blackDate}</td>
-      <td className="flex items-center justify-center leading-10">{item.blackTime}</td>
-      <td className="flex items-center justify-center leading-10">
+    <tr className="grid items-center grid-cols-3 gap-10 text-gray-600 border justify-items-center even:bg-white odd:bg-primary-100 ">
+      <td className="flex items-center justify-center leading-10">{item.eduName}</td>
+      <td className="flex items-center justify-center leading-10">{item.blackEduCreateReason}</td>
+       <td className="flex items-center justify-center leading-10">
         <div className="flex gap-2 ">
           <button className="p-1 text-primary-600" onClick={onDetail(item)}>
             详情
@@ -229,14 +181,14 @@ const BlackEduOrgQuery: React.FC = () => {
             <IonRow className="flex items-center w-full mx-4 text-center bg-white rounded-md justify-items-center">
               <IonCol className="flex ml-8 text-gray-800">
                 <div className="flex items-center justify-center font-bold text-center text-gray-600 w-28">
-                  发布标题:
+                  机构名称:
                 </div>
                 <input
                   type="text"
                   className="flex w-56 h-12 font-bold text-center text-gray-600 bg-white border rounded-md focus:outline-none focus:glow-primary-600"
-                  placeholder="请输入发布标题"
+                  placeholder="请输入机构名称"
                   onChange={e =>
-                    setQueryInfo({ ...queryInfo, ...{ announcementTitle: e.target.value } })
+                    setQueryInfo({ ...queryInfo, ...{ eduName: e.target.value } })
                   }
                 />
               </IonCol>
@@ -247,109 +199,10 @@ const BlackEduOrgQuery: React.FC = () => {
                 >
                   查询
                 </button>
-                <button
-                  className="w-24 h-12 bg-gray-100 rounded-md shadow-md text-primary-600 focus:bg-gray-200"
-                  onClick={openCreateModal}
-                >
-                  新增
-                </button>
               </IonCol>
             </IonRow>
           </div>
         </div>
-
-        {/* 新增政策模态框 */}
-        <Transition appear show={isCreateOpen} as={Fragment}>
-          <Dialog as="div" className="relative z-10" onClose={closeCreateModal}>
-            <Transition.Child
-              as={Fragment}
-              enter="ease-out duration-300"
-              enterFrom="opacity-0"
-              enterTo="opacity-100"
-              leave="ease-in duration-200"
-              leaveFrom="opacity-100"
-              leaveTo="opacity-0"
-            >
-              <div className="fixed inset-0 bg-black bg-opacity-25" />
-            </Transition.Child>
-
-            <div className="fixed inset-0 overflow-y-auto">
-              <div className="flex items-center justify-center min-h-full p-4 text-center">
-                <Transition.Child
-                  as={Fragment}
-                  enter="ease-out duration-300"
-                  enterFrom="opacity-0 scale-95"
-                  enterTo="opacity-100 scale-100"
-                  leave="ease-in duration-200"
-                  leaveFrom="opacity-100 scale-100"
-                  leaveTo="opacity-0 scale-95"
-                >
-                  <Dialog.Panel className="w-full max-w-md p-4 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
-                    <Dialog.Title
-                      as="h3"
-                      className="text-lg font-medium leading-6 text-center text-gray-900"
-                    >
-                      用户新增
-                      <hr className="mt-2 mb-4" />
-                    </Dialog.Title>
-                    <form
-                      onSubmit={onCreate}
-                      className="flex flex-col items-center rounded-lg justify-items-center"
-                    >
-                      <div className="flex items-center mb-4 justify-items-center">
-                        <div className="flex leading-7 justify-items-center">
-                          <div className="flex justify-end p-1 w-36">教育机构名称:</div>
-                          <input
-                            className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
-                            name="supervisorLoginName"
-                            type="text"
-                            spellCheck={false}
-                            onChange={e =>
-                              setCreateState({
-                                ...createState,
-                                ...{ orgName: e.nativeEvent.target?.value },
-                              })
-                            }
-                          ></input>
-                        </div>
-                      </div>
-
-                      <div className="flex items-center mb-4 justify-items-center">
-                        <div className="flex justify-items-center">
-                          <span className="flex justify-end p-1 mr-1 w-36">加入黑名单原因:</span>
-                          <textarea
-                            className="w-64 h-32 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
-                            name="supervisorLoginName"
-                            onChange={e =>
-                              setCreateState({
-                                ...createState,
-                                ...{ reason: e.nativeEvent.target?.value },
-                              })
-                            }
-                          />
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-4 mt-2 justify-items-center">
-                        <input
-                          value="取消"
-                          type="button"
-                          className="px-6 py-2 border rounded-md "
-                          onClick={closeCreateModal}
-                        />
-                        <input
-                          value="确定"
-                          type="submit"
-                          className="px-6 py-2 text-white border rounded-md bg-primary-600"
-                        />
-                      </div>
-                    </form>
-                  </Dialog.Panel>
-                </Transition.Child>
-              </div>
-            </div>
-          </Dialog>
-        </Transition>
-
         {/* 删除课程模态框 */}
         <Transition appear show={isDeleteOpen} as={Fragment}>
           <Dialog as="div" className="relative z-10" onClose={closeDeleteModal}>
@@ -385,7 +238,7 @@ const BlackEduOrgQuery: React.FC = () => {
                       <hr className="mt-2 mb-4" />
                     </Dialog.Title>
                     <form
-                      onSubmit={onCreate}
+                      onSubmit={onCancel}
                       className="flex flex-col items-center rounded-lg justify-items-center"
                     >
                       <div className="flex items-center mb-4 justify-items-center">
@@ -404,10 +257,7 @@ const BlackEduOrgQuery: React.FC = () => {
                         />
                         <input
                           value="确定"
-                          onClick={() => {
-                            onCancel(state.black);
-                          }}
-                          type="button"
+                          type="submit"
                           className="px-6 py-2 text-white border rounded-md bg-primary-600"
                         />
                       </div>
@@ -423,11 +273,9 @@ const BlackEduOrgQuery: React.FC = () => {
         <div className="absolute w-full mt-10">
           <table className="w-11/12">
             <thead>
-              <tr className="grid items-center h-10 grid-cols-5 gap-2 font-bold text-gray-700 bg-white rounded-lg justify-items-center">
-                <th className="flex items-center justify-center">登录名称</th>
+              <tr className="grid items-center h-10 grid-cols-3 gap-2 font-bold text-gray-700 bg-white rounded-lg justify-items-center">
                 <th className="flex items-center justify-center">机构名称</th>
-                <th className="flex items-center justify-center">用户名</th>
-                <th className="flex items-center justify-center">用户电话</th>
+                <th className="flex items-center justify-center">加入原因</th> 
                 <th className="flex items-center justify-center">操作</th>
               </tr>
             </thead>
@@ -436,7 +284,7 @@ const BlackEduOrgQuery: React.FC = () => {
                 <ListEntry item={list} key={i} />
               ))}
               <tr>
-                {/* <td colSpan={5}> <Paging url={paramStr} page={page} pagesize={20} total={total} onPageChange={onPageChange}/></td> */}
+             <td colSpan={5}> <Paging url={paramStr} page={page} pagesize={10} total={total} onPageChange={onPageChange}/></td> 
               </tr>
             </tbody>
           </table>
