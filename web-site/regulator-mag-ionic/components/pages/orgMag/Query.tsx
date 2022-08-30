@@ -443,7 +443,7 @@ const OrgMagQuery: React.FC = () => {
                                 ...{ eduLegalPerson: e.nativeEvent.target?.value },
                               })
                             }
-                            required
+                            
                           ></input>
                         </div>
                       </div>
@@ -459,7 +459,7 @@ const OrgMagQuery: React.FC = () => {
                                 ...{ eduLegalPhone: e.nativeEvent.target?.value },
                               })
                             }
-                            required
+                            
                           ></input>
                         </div>
                       </div>
@@ -552,9 +552,7 @@ const OrgMagQuery: React.FC = () => {
                       </div>
                       <div className="flex items-center mb-4 justify-items-center">
                         <div className="flex justify-items-center">
-                          <div className="flex justify-end p-1 mr-1 w-36">
-                            <span className='px-1 text-red-600'>*</span>
-                          普通账户:</div>
+                          <div className="flex justify-end p-1 mr-1 w-36">普通账户:</div>
                           <input
                             className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
                             name="eduSupervisedAccount"
@@ -565,7 +563,6 @@ const OrgMagQuery: React.FC = () => {
                                 ...{ eduSupervisedAccount: e.nativeEvent.target?.value },
                               })
                             }
-                            required
                           ></input>
                         </div>
                       </div>
