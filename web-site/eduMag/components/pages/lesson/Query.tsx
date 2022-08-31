@@ -483,6 +483,7 @@ const LessonQuery: React.FC = () => {
                             name="eduId"
                             type="text"
                             value={window.eduName}
+                            // value={state.loginUser.orgName}
                             spellCheck={false}
                             readOnly
                           ></input>
