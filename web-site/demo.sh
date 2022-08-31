@@ -37,8 +37,8 @@ function waitStartComplete() {
 function start() {
     echo "start all demo"
     docker-compose -f ./docker/docker-compose-demo.yaml up -d --remove-orphans
-    echo "先等15秒, 再检查启动情况..."
-    sleep 15
+    echo "先等 20 秒, 再检查启动情况..."
+    sleep 20
     waitStartComplete consumer
     waitStartComplete edu
     waitStartComplete edb
