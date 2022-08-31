@@ -1,11 +1,6 @@
 //BaseInfo的详细页面
 import React, { useState } from 'react';
-import {
-  IonPage,
-  IonCard,
-  IonCardContent,
-  useIonToast
-} from '@ionic/react';
+import { IonPage, IonCard, IonCardContent, useIonToast } from '@ionic/react';
 import { Redirect } from 'react-router-dom';
 import { useCallback, useContext, useEffect } from 'react';
 import { AppContext, setEduOrgDetail } from '../../appState';
@@ -26,7 +21,7 @@ export const BaseInfoDetail: React.FC = () => {
   //     setBack()
   //   }
   // const onModify = async (e: React.FormEvent) => () => {
-    const onModify = () => {
+  const onModify = () => {
     // e.preventDefault();
     //todo fetch
     // fetch(modifyURL, {
@@ -39,21 +34,20 @@ export const BaseInfoDetail: React.FC = () => {
     // .then((json) => {
     //   alert(json.result)
     // })
-    const result={true:Boolean}
-    const msg={"网络异常":String}
-      if (result) 
-      {
-        present({
-          message:"密码修改成功",
-          duration:3000,
-          position:"top",
-        });
-      } else 
+    const result = { true: Boolean };
+    const msg = { 网络异常: String };
+    if (result) {
+      present({
+        message: '密码修改成功',
+        duration: 3000,
+        position: 'top',
+      });
+    } else
       present({
         buttons: [{ text: '关闭', handler: () => dismiss() }],
-        message: '密码修改失败,，失败原因：'+msg,
-        position:"top",
-      })
+        message: '密码修改失败,，失败原因：' + msg,
+        position: 'top',
+      });
   };
 
   return (
@@ -95,7 +89,7 @@ export const BaseInfoDetail: React.FC = () => {
                 name="pwd"
                 type="password"
                 value={pwd.pwd}
-                onChange={e => setPwd({ ...pwd, pwd: e.nativeEvent.target?.value })}
+                onChange={e => setPwd({ ...pwd, pwd: e.target?.value })}
                 placeholder="请输入原密码"
                 required
               />
@@ -108,7 +102,7 @@ export const BaseInfoDetail: React.FC = () => {
                 type="password"
                 value={pwd.newPwd}
                 placeholder="请输入新密码"
-                onChange={e => setPwd({ ...pwd, newPwd: e.nativeEvent.target?.value })}
+                onChange={e => setPwd({ ...pwd, newPwd: e.target?.value })}
                 required
               />
             </div>
@@ -120,7 +114,7 @@ export const BaseInfoDetail: React.FC = () => {
                 type="password"
                 value={pwd.newPwd2}
                 placeholder="请再次输入新密码"
-                onChange={e => setPwd({ ...pwd, newPwd2: e.nativeEvent.target?.value })}
+                onChange={e => setPwd({ ...pwd, newPwd2: e.target?.value })}
                 required
               />
             </div>

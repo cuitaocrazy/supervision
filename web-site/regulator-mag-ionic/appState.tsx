@@ -157,7 +157,7 @@ export const setUserInfoDetail = (userInfoDetail?: SupervisorUser) => {
   };
 };
 
-export const setUserInfoEdit = (userInfoEdit: SupervisorUser) => {
+export const setUserInfoEdit = (userInfoEdit: SupervisorUser | undefined) => {
   return {
     type: 'setUserInfoEdit',
     userInfoEdit: userInfoEdit,
@@ -185,7 +185,7 @@ export const setContractList = (contractList: Contract[]) => {
   };
 };
 
-export const setContractDetail = (contractDetail: Contract) => {
+export const setContractDetail = (contractDetail: Contract | undefined) => {
   return {
     type: 'setContractDetail',
     contractDetail: contractDetail,
@@ -239,7 +239,7 @@ export const setTransferList = (transferList: Transfer[]) => {
     transferList: transferList,
   };
 };
-export const setTransferDetail = (transferDetail: Transfer) => {
+export const setTransferDetail = (transferDetail: Transfer | undefined) => {
   return {
     type: 'setTransferDetail',
     transferDetail: transferDetail,
@@ -290,7 +290,7 @@ export const setBlackList = (blackList: Black[]) => {
     blackList: blackList,
   };
 };
-export const setBlackDetail = (blackDetail: Black) => {
+export const setBlackDetail = (blackDetail: Black | undefined) => {
   return {
     type: 'setBlackDetail',
     blackDetail: blackDetail,
@@ -303,7 +303,7 @@ export const setComplaintList = (complaintList: Complaint[]) => {
     complaintList: complaintList,
   };
 };
-export const setComplaintDetail = (complaintDetail: Complaint) => {
+export const setComplaintDetail = (complaintDetail: Complaint | undefined) => {
   return {
     type: 'setComplaintDetail',
     complaintDetail: complaintDetail,

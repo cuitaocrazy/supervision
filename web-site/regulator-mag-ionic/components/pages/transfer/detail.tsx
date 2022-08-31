@@ -17,7 +17,7 @@ import {
 import { Redirect } from 'react-router-dom';
 import { useCallback, useContext } from 'react';
 import { AppContext, setTransferDetail } from '../../../appState';
-import Quit from '../../Quit'
+import Quit from '../../Quit';
 
 export const TransferDetail: React.FC = () => {
   const { state, dispatch } = useContext(AppContext);

@@ -411,7 +411,7 @@ const OrgMagQuery: React.FC = () => {
                             onChange={e =>
                               setEduOrgState({
                                 ...eduOrgState,
-                                ...{ eduName: e.nativeEvent.target?.value },
+                                ...{ eduName: e.target?.value },
                               })
                             }
                             required
@@ -431,7 +431,7 @@ const OrgMagQuery: React.FC = () => {
                             onChange={e =>
                               setEduOrgState({
                                 ...eduOrgState,
-                                ...{ eduAddress: e.nativeEvent.target?.value },
+                                ...{ eduAddress: e.target?.value },
                               })
                             }
                             required
@@ -448,7 +448,7 @@ const OrgMagQuery: React.FC = () => {
                             onChange={e =>
                               setEduOrgState({
                                 ...eduOrgState,
-                                ...{ eduLegalPerson: e.nativeEvent.target?.value },
+                                ...{ eduLegalPerson: e.target?.value },
                               })
                             }
                           ></input>
@@ -463,7 +463,7 @@ const OrgMagQuery: React.FC = () => {
                             onChange={e =>
                               setEduOrgState({
                                 ...eduOrgState,
-                                ...{ eduLegalPhone: e.nativeEvent.target?.value },
+                                ...{ eduLegalPhone: e.target?.value },
                               })
                             }
                           ></input>
@@ -482,7 +482,7 @@ const OrgMagQuery: React.FC = () => {
                             onChange={e =>
                               setEduOrgState({
                                 ...eduOrgState,
-                                ...{ eduContact: e.nativeEvent.target?.value },
+                                ...{ eduContact: e.target?.value },
                               })
                             }
                             required
@@ -502,7 +502,7 @@ const OrgMagQuery: React.FC = () => {
                             onChange={e =>
                               setEduOrgState({
                                 ...eduOrgState,
-                                ...{ eduContactPhone: e.nativeEvent.target?.value },
+                                ...{ eduContactPhone: e.target?.value },
                               })
                             }
                             required
@@ -533,7 +533,7 @@ const OrgMagQuery: React.FC = () => {
                             onChange={e =>
                               setEduOrgState({
                                 ...eduOrgState,
-                                ...{ eduLicense: e.nativeEvent.target?.value },
+                                ...{ eduLicense: e.target?.value },
                               })
                             }
                           ></input>
@@ -552,7 +552,7 @@ const OrgMagQuery: React.FC = () => {
                             onChange={e =>
                               setEduOrgState({
                                 ...eduOrgState,
-                                ...{ eduSupervisedAccount: e.nativeEvent.target?.value },
+                                ...{ eduSupervisedAccount: e.target?.value },
                               })
                             }
                             required
@@ -572,7 +572,7 @@ const OrgMagQuery: React.FC = () => {
                             onChange={e =>
                               setEduOrgState({
                                 ...eduOrgState,
-                                ...{ eduNormalAccount: e.nativeEvent.target?.value },
+                                ...{ eduNormalAccount: e.target?.value },
                               })
                             }
                           ></input>
@@ -588,7 +588,7 @@ const OrgMagQuery: React.FC = () => {
                             onChange={e =>
                               setEduOrgState({
                                 ...eduOrgState,
-                                ...{ eduSupervisedMerNo: e.nativeEvent.target?.value },
+                                ...{ eduSupervisedMerNo: e.target?.value },
                               })
                             }
                           />
@@ -607,7 +607,7 @@ const OrgMagQuery: React.FC = () => {
                             onChange={e =>
                               setEduOrgState({
                                 ...eduOrgState,
-                                ...{ eduLoginName: e.nativeEvent.target?.value },
+                                ...{ eduLoginName: e.target?.value },
                               })
                             }
                           />
@@ -704,7 +704,7 @@ const OrgMagQuery: React.FC = () => {
                             onChange={e =>
                               setBackReasonState({
                                 ...backReasonInfo,
-                                blackEduCreateReason: e.nativeEvent.target?.value,
+                                blackEduCreateReason: e.target?.value,
                               })
                             }
                             required
