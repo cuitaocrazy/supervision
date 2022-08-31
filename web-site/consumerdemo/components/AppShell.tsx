@@ -73,7 +73,7 @@ window
 const AppShell = () => {
   return (
     <AppContextProvider>
-      <IonApp>
+      <IonApp className="max-w-lg min-w-min">
         <IonReactRouter basename={process.env.NEXT_PUBLIC_ROOT_PATH || "/"}>
           {/* <Menu></Menu> */}
 
