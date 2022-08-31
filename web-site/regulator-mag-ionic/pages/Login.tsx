@@ -3,6 +3,7 @@ import { useContext, useCallback } from 'react';
 import { AppContext, setloginUser } from '../appState';
 import { useRouter } from 'next/router';
 import { edbLoginURL } from 'const/const';
+import localforage from 'localforage';
 
 type FormData = {
   username: string;
@@ -36,9 +37,8 @@ const Login = () => {
       .then(async json => {
         const { result, msg, loginUser } = json;
         if (result) {
-          refreshUserInfo(result);
-          //todo 以后保存到localstorage
-          window.loginUser = result.loginName;
+          localforage.setItem('loginName', loginUser.loginName);
+          // window.loginUser = result.loginName;
           await router.push('./tabs/statistics/supervisorAccount');
           // router.reload();
         } else {
