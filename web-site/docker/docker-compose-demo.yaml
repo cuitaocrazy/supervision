@@ -92,7 +92,7 @@ services:
     environment:
       - NEXT_PUBLIC_SERVER_PATH=http://localhost:8080/api/edb
       - NEXT_PUBLIC_ROOT_PATH=/edb
-      # - ENV_RUNTIME=test
+      - ENV_RUNTIME=test
     volumes:
       - ../regulator-mag-ionic:/home/node/app/
       - ./wait_for.sh:/home/node/wait_for.sh
