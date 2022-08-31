@@ -8,8 +8,6 @@ import { edbTransactionFindURL } from 'const/const';
 const findURL = edbTransactionFindURL;
 
 const Transaction: React.FC = () => {
-  //todo 根据token获取LoginUser信息
-  const loginName = window.loginUser;
   const [page, setPage] = useState(0);
   const [total, setTotal] = useState(101); //todo
 
@@ -35,7 +33,6 @@ const Transaction: React.FC = () => {
       contractId: queryInfo.contractId,
       account: queryInfo.account,
       tranDate: queryInfo.tranDate,
-      loginName: loginName,
     },
     findURL
   );
