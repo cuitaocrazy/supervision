@@ -40,3 +40,6 @@ yarn-error.log*
 
 /android/
 /ios/
+
+/package-lock.json
+/yarn.lock
