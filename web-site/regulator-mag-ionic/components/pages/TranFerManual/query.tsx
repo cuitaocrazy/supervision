@@ -2,10 +2,7 @@ import { useEffect, useCallback, useContext, useState, Fragment } from 'react';
 import { Redirect } from 'react-router-dom';
 import { AppContext, setTransferManualList } from '../../../appState';
 import { Transfer } from '../../../types/types';
-import {
-  IonPage,
-  useIonToast
-} from '@ionic/react';
+import { IonPage, useIonToast } from '@ionic/react';
 import { Dialog, Transition } from '@headlessui/react';
 
 const queryURL = 'http://localhost:3003/attendannce/query';
@@ -77,21 +74,20 @@ const TransferManualQuery: React.FC = () => {
     })
       .then(res => res.json())
       .then(json => {
-        const result=json
-        console.log(result+"result")
-        if (result) 
-        {
+        const result = json;
+        console.log(result + 'result');
+        if (result) {
           present({
             message: '手动划拨成功',
-            position:'top',
-            duration:3000
-          })
-        } else 
-        present({
-          buttons: [{ text: '关闭', handler: () => dismiss() }],
-          message: '手动划拨失败',
-          position:'top',
-        })
+            position: 'top',
+            duration: 3000,
+          });
+        } else
+          present({
+            buttons: [{ text: '关闭', handler: () => dismiss() }],
+            message: '手动划拨失败',
+            position: 'top',
+          });
       });
   };
   const [queryInfo, setQueryInfo] = useState({});
@@ -170,7 +166,7 @@ const TransferManualQuery: React.FC = () => {
             // onClick={onTransfer(transfer)}
             onClick={() => {
               setTranFerManualState(transfer);
-              OpenConformModal()
+              OpenConformModal();
             }}
           >
             手动划拨
@@ -255,7 +251,7 @@ const TransferManualQuery: React.FC = () => {
                             onChange={e =>
                               setTranFerManualState({
                                 ...tranFerManualState,
-                                ...{ eduName: e.nativeEvent.target?.value },
+                                ...{ eduName: e.target?.value },
                               })
                             }
                             required
@@ -275,7 +271,7 @@ const TransferManualQuery: React.FC = () => {
                             onChange={e =>
                               setTranFerManualState({
                                 ...tranFerManualState,
-                                ...{ lessonName: e.nativeEvent.target?.value },
+                                ...{ lessonName: e.target?.value },
                               })
                             }
                             required
@@ -289,12 +285,12 @@ const TransferManualQuery: React.FC = () => {
                             className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
                             name="supervisorPhone"
                             type="text"
-                            value={tranFerManualState?.transferAmt}
+                            value={tranFerManualState?.transferAmt / 100}
                             spellCheck={false}
                             onChange={e =>
                               setTranFerManualState({
                                 ...tranFerManualState,
-                                ...{ transferAmt: e.nativeEvent.target?.value },
+                                ...{ transferAmt: 100 * Number.parseInt(e.target?.value) },
                               })
                             }
                             required

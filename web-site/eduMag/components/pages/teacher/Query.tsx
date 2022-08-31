@@ -6,6 +6,7 @@ import {
   useState,
   useRef,
   Fragment,
+  FormEventHandler,
 } from "react";
 import { Redirect } from "react-router-dom";
 import {
@@ -99,7 +100,7 @@ const TeacherQuery: React.FC = () => {
     [dispatch]
   );
 
-  const onCancel = (e) => {
+  const onCancel: FormEventHandler = (e) => {
     e.preventDefault();
     fetch(cancelURL, {
       method: "POST",
@@ -377,7 +378,7 @@ const TeacherQuery: React.FC = () => {
                             onChange={(e) =>
                               setCreateTeacher({
                                 ...createTeacher,
-                                ...{ teacherName: e.nativeEvent.target?.value },
+                                ...{ teacherName: e.target?.value },
                               })
                             }
                             spellCheck={false}
@@ -400,8 +401,7 @@ const TeacherQuery: React.FC = () => {
                               setCreateTeacher({
                                 ...createTeacher,
                                 ...{
-                                  teacherIdentityNo:
-                                    e.nativeEvent.target?.value,
+                                  teacherIdentityNo: e.target?.value,
                                 },
                               })
                             }
@@ -423,7 +423,7 @@ const TeacherQuery: React.FC = () => {
                               setCreateTeacher({
                                 ...createTeacher,
                                 ...{
-                                  teacherField: e.nativeEvent.target?.value,
+                                  teacherField: e.target?.value,
                                 },
                               })
                             }
@@ -445,8 +445,7 @@ const TeacherQuery: React.FC = () => {
                               setCreateTeacher({
                                 ...createTeacher,
                                 ...{
-                                  teacherExperience:
-                                    e.nativeEvent.target?.value,
+                                  teacherExperience: e.target?.value,
                                 },
                               })
                             }
@@ -468,7 +467,7 @@ const TeacherQuery: React.FC = () => {
                               setCreateTeacher({
                                 ...createTeacher,
                                 ...{
-                                  teacherIntroduce: e.nativeEvent.target?.value,
+                                  teacherIntroduce: e.target?.value,
                                 },
                               })
                             }

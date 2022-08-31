@@ -1,11 +1,6 @@
 //Announcement的详细页面
 import React, { useState, useRef } from 'react';
-import {
-  IonPage,
-  IonCard,
-  IonCardContent,
-  useIonToast,
-} from '@ionic/react';
+import { IonPage, IonCard, IonCardContent, useIonToast } from '@ionic/react';
 import { Redirect } from 'react-router-dom';
 import { useCallback, useContext } from 'react';
 import { AppContext, setAnnouncementEdit } from '../../../appState';
@@ -13,7 +8,7 @@ import { Announcement } from '../../../types/types';
 import { PickerColumn } from '@ionic/core';
 import RichText from '../../RichText';
 import { EditorState } from 'draft-js';
-import Quit from '../../Quit'
+import Quit from '../../Quit';
 
 export const AnnouncementEdit: React.FC = () => {
   const [present, dismiss] = useIonToast();
@@ -51,21 +46,20 @@ export const AnnouncementEdit: React.FC = () => {
     })
       .then(res => res.json())
       .then(json => {
-        const result=json
-        console.log(result+"result")
-        if (result) 
-        {
+        const result = json;
+        console.log(result + 'result');
+        if (result) {
           present({
             message: '政策公告编辑成功',
-            position:'top',
-            duration:3000
-          })
-        } else 
-        present({
-          buttons: [{ text: '关闭', handler: () => dismiss() }],
-          message: '政策公告编辑失败',
-          position:'top',
-        })
+            position: 'top',
+            duration: 3000,
+          });
+        } else
+          present({
+            buttons: [{ text: '关闭', handler: () => dismiss() }],
+            message: '政策公告编辑失败',
+            position: 'top',
+          });
       });
   };
   return (
@@ -127,7 +121,7 @@ export const AnnouncementEdit: React.FC = () => {
                   onChange={e =>
                     setAnnouncementEdit({
                       ...announcementState,
-                      ...{ announcementAnnouncer: e.nativeEvent.target?.value },
+                      ...{ announcementAnnouncer: e.target?.value },
                     })
                   }
                   readOnly
@@ -144,7 +138,7 @@ export const AnnouncementEdit: React.FC = () => {
                   onChange={e =>
                     setAnnouncementEdit({
                       ...announcementState,
-                      announcementTitle: e.nativeEvent.target?.value,
+                      announcementTitle: e.target?.value,
                     })
                   }
                   required
@@ -167,18 +161,18 @@ export const AnnouncementEdit: React.FC = () => {
             </div>
           </form>
           <div className="flex items-center justify-center gap-4 mt-10">
-                          <input
-                            value="取消"
-                            type="button"
-                            className="px-6 py-2 border rounded-md "
-                            onClick={onBack()}
-                          />
-                          <input
-                            value="确定"
-                            type="submit"
-                            className="px-6 py-2 text-white border rounded-md bg-primary-600"
-                          />
-                        </div>
+            <input
+              value="取消"
+              type="button"
+              className="px-6 py-2 border rounded-md "
+              onClick={onBack()}
+            />
+            <input
+              value="确定"
+              type="submit"
+              className="px-6 py-2 text-white border rounded-md bg-primary-600"
+            />
+          </div>
         </IonCardContent>
       </IonCard>
     </IonPage>

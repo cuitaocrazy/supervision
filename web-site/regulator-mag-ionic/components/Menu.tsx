@@ -17,6 +17,7 @@ import { flash, arrowDown, arrowUp } from 'ionicons/icons';
 import { useRouter } from 'next/router';
 import { AppContext } from '../appState';
 import { Link, Redirect, Route } from 'react-router-dom';
+import localforage from 'localforage';
 
 const pages = [
   // {
@@ -44,13 +45,12 @@ const Menu = () => {
   const [statisticVisible, setStatisticVisible] = useState(false);
   const { state } = useContext(AppContext);
   const router = useRouter();
-  console.log('window.loginUser');
-  //todo 以后根据保存到localstorage的信息判断
-  console.log(window.loginUser);
-  if (!window.loginUser) {
-    console.log('未登录');
-    router.push('/Login');
-  }
+
+  // console.log(window.loginUser);
+  // if (!window.loginUser) {
+  //   console.log('未登录');
+  //   router.push('/Login');
+  // }
 
   const handleOpen = async () => {
     try {
@@ -68,6 +68,12 @@ const Menu = () => {
   };
 
   useEffect(() => {
+    localforage.getItem('loginName').then(value => {
+      if (!value) {
+        router.push('/Login');
+      }
+      // setLoginName(value as string);
+    });
     setIsDark(window.matchMedia('(prefers-color-scheme: dark)').matches);
   }, []);
 
@@ -490,6 +496,26 @@ const Menu = () => {
               />
             </svg>
             <span>监管账户清算明细查询</span>
+          </Link>
+          <Link
+            className="flex items-center justify-start w-full px-3 py-2 mt-2 space-x-6 rounded-lg hover:text-white focus:bg-primary-500 focus:text-white hover:bg-primary-500 focus:rounded-lg md:w-52"
+            to="/tabs/tranSumQuery"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="w-6 h-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+              />
+            </svg>
+            <span>月交易汇总查询</span>
           </Link>
 
           {/* <Link className='flex items-center justify-start w-full px-3 py-2 mt-2 space-x-6 rounded-lg hover:text-white focus:bg-primary-500 focus:text-white hover:bg-primary-500 focus:rounded-lg md:w-52' 

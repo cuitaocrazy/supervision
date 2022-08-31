@@ -319,7 +319,7 @@ const BaseInfoQuery: React.FC = () => {
                               onChange={e =>
                                 setCreateUserInfo({
                                   ...createUserInfo,
-                                  ...{ supervisorUsername: e.nativeEvent.target?.value },
+                                  ...{ supervisorUsername: e.target?.value },
                                 })
                               }
                             ></input>
@@ -338,7 +338,7 @@ const BaseInfoQuery: React.FC = () => {
                               onChange={e =>
                                 setCreateUserInfo({
                                   ...createUserInfo,
-                                  ...{ supervisorUsername: e.nativeEvent.target?.value },
+                                  ...{ supervisorUsername: e.target?.value },
                                 })
                               }
                               required
@@ -357,7 +357,7 @@ const BaseInfoQuery: React.FC = () => {
                               onChange={e =>
                                 setCreateUserInfo({
                                   ...createUserInfo,
-                                  ...{ supervisorPhone: e.nativeEvent.target?.value },
+                                  ...{ supervisorPhone: e.target?.value },
                                 })
                               }
                             ></input>
@@ -375,7 +375,7 @@ const BaseInfoQuery: React.FC = () => {
                               onChange={e =>
                                 setCreateUserInfo({
                                   ...createUserInfo,
-                                  ...{ supervisorOrgName: e.nativeEvent.target?.value },
+                                  ...{ supervisorOrgName: e.target?.value },
                                 })
                               }
                             ></input>

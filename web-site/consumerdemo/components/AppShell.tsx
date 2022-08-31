@@ -74,7 +74,7 @@ const AppShell = () => {
   return (
     <AppContextProvider>
       <IonApp>
-        <IonReactRouter basename="/consumer">
+        <IonReactRouter basename={process.env.NEXT_PUBLIC_ROOT_PATH || "/"}>
           {/* <Menu></Menu> */}
 
           <IonSplitPane

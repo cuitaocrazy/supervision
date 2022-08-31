@@ -51,7 +51,8 @@ services:
     working_dir: /home/node/app/
     command: /home/node/wait_for.sh supervision_demo_server:3003 -- npm run demo
     environment:
-      - SERVER_PATH=http://localhost:8080/api
+      - NEXT_PUBLIC_SERVER_PATH=http://localhost:8080/api/consumer
+      - NEXT_PUBLIC_ROOT_PATH=/consumer
     volumes:
       - ../consumerdemo:/home/node/app/
       - ./wait_for.sh:/home/node/wait_for.sh
@@ -68,6 +69,10 @@ services:
     user: "node"
     working_dir: /home/node/app/
     command: /home/node/wait_for.sh supervision_demo_server:3003 -- npm run demo
+    environment:
+      - NEXT_PUBLIC_SERVER_PATH=http://localhost:8080/api/edu
+      - NEXT_PUBLIC_ROOT_PATH=/edu
+      - ENV_RUNTIME=test
     volumes:
       - ../eduMag:/home/node/app/
       - ./wait_for.sh:/home/node/wait_for.sh
@@ -79,17 +84,21 @@ services:
     networks:
       - supervision_demo
   # 监管机构
-  supervision_demo_regulator:
+  supervision_demo_edb:
     image: node:latest
     user: "node"
     working_dir: /home/node/app/
     command: /home/node/wait_for.sh supervision_demo_server:3003 -- npm run demo
+    environment:
+      - NEXT_PUBLIC_SERVER_PATH=http://localhost:8080/api/edb
+      - NEXT_PUBLIC_ROOT_PATH=/edb
+      - ENV_RUNTIME=test
     volumes:
       - ../regulator-mag-ionic:/home/node/app/
       - ./wait_for.sh:/home/node/wait_for.sh
     ports:
       - 3002:3002
-    container_name: supervision_demo_regulator
+    container_name: supervision_demo_edb
     depends_on:
       - supervision_demo_server
     networks:
@@ -100,10 +109,17 @@ services:
     container_name: supervision_demo_nginx
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./favicon.ico:/usr/share/nginx/html/favicon/favicon.ico
     ports:
       - 8080:8080
-      - 80:80
+      # - 80:80
     networks:
       - supervision_demo
+    depends_on:
+      - supervision_demo_server
+      - supervision_demo_consumer
+      - supervision_demo_edu
+      - supervision_demo_edb
+      
 
     

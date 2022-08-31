@@ -364,7 +364,7 @@ const LessonQuery: React.FC = () => {
                               setLessonState({
                                 ...lessonState,
                                 ...{
-                                  lessonTotalTimes: e.nativeEvent.target?.value,
+                                  lessonTotalTimes: e.target?.value,
                                 },
                               })
                             }

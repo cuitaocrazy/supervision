@@ -4,6 +4,7 @@ import { AppContext, setloginUser } from "../appState";
 import { Redirect } from "react-router-dom";
 import { useRouter } from "next/router";
 import { eduLoginURL } from "const/consts";
+import localforage from "localforage";
 
 type FormData = {
   username: string;
@@ -36,11 +37,9 @@ const Login = () => {
       .then(async (json) => {
         const { result, msg, loginUser } = json;
         if (result) {
-          refreshUserInfo(loginUser);
-          //todo 以后保存到localstorage
-          window.loginUser = loginUser.loginName;
-          // todo
-          window.eduName = loginUser.orgName;
+          localforage.setItem("loginName", loginUser.loginName);
+          localforage.setItem("eduName", loginUser.orgName);
+          localforage.setItem("eduId", loginUser.eduId);
           await router.push("./tabs/lesson/query");
           // router.reload();
         } else {

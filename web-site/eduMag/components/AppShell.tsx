@@ -36,6 +36,7 @@ import { DiscussDetail } from "./pages/Discuss/Detail";
 import { DiscussAudit } from "./pages/Discuss/Audit";
 import Transaction from "./pages/statistic/transaction";
 import Home from "./pages/Home";
+import TranSumQuery from "./pages/TranSumQuery";
 import { useContext } from "react";
 
 // 装载ionic样式，ionic6 必须执行。
@@ -54,7 +55,7 @@ const AppShell = () => {
   return (
     <AppContextProvider>
       <IonApp>
-        <IonReactRouter>
+        <IonReactRouter basename={process.env.NEXT_PUBLIC_ROOT_PATH || "/"}>
           <IonSplitPane
             when={true}
             contentId="main"
@@ -181,6 +182,11 @@ const AppShell = () => {
               <Route
                 path="/tabs/statistic/transaction"
                 component={Transaction}
+                exact={true}
+              />
+              <Route
+                path="/tabs/tranSumQuery"
+                component={TranSumQuery}
                 exact={true}
               />
               <Route path="/tabs/home" component={Home} exact={true} />

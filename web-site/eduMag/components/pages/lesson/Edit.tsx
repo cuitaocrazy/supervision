@@ -1,16 +1,9 @@
 //Lesson的详细页面
 import React, { useState } from "react";
-import {
-  IonPage,
-  IonCard,
-  IonCardContent,
-  IonButton,
-  useIonToast,
-} from "@ionic/react";
+import { IonPage, IonCard, IonCardContent, useIonToast } from "@ionic/react";
 import { Redirect } from "react-router-dom";
 import { useCallback, useContext } from "react";
 import { AppContext, setLessonEdit } from "../../../appState";
-import { Lesson } from "../../../types/types";
 import { PickerColumn } from "@ionic/core";
 import LessonTypeList from "../../components/LessonType";
 import LessonStateList from "../../components/LessonState";
@@ -120,7 +113,7 @@ export const LessonDetail: React.FC = () => {
                   onChange={(e) =>
                     setLessonState({
                       ...lessonState,
-                      lessonName: e.nativeEvent.target?.value,
+                      lessonName: e.target?.value,
                     })
                   }
                   value={lessonState.lessonName}
@@ -135,7 +128,7 @@ export const LessonDetail: React.FC = () => {
                   onChange={(e) =>
                     setLessonState({
                       ...lessonState,
-                      lessonTotalQuantity: e.nativeEvent.target?.value,
+                      lessonTotalQuantity: e.target?.value,
                     })
                   }
                   value={lessonState.lessonTotalQuantity}
@@ -150,12 +143,13 @@ export const LessonDetail: React.FC = () => {
                   onChange={(e) =>
                     setLessonState({
                       ...lessonState,
-                      lessonTotalPrice: e.nativeEvent.target?.value,
+                      lessonTotalPrice: e.target?.value,
                     })
                   }
                   value={lessonState.lessonTotalPrice}
                   required
                 />
+                一天
               </div>
               <div className="flex mb-4 leading-10">
                 <div className="flex justify-end w-32 mr-2">
@@ -167,7 +161,7 @@ export const LessonDetail: React.FC = () => {
                   onChange={(e) =>
                     setLessonState({
                       ...lessonState,
-                      lessonPerPrice: e.nativeEvent.target?.value,
+                      lessonPerPrice: e.target?.value,
                     })
                   }
                   value={lessonState.lessonPerPrice}
@@ -214,7 +208,7 @@ export const LessonDetail: React.FC = () => {
                   onChange={(e) =>
                     setLessonState({
                       ...lessonState,
-                      lessonStartDate: e.nativeEvent.target?.value,
+                      lessonStartDate: e.target?.value,
                     })
                   }
                   required
@@ -228,7 +222,7 @@ export const LessonDetail: React.FC = () => {
                   onChange={(e) =>
                     setLessonState({
                       ...lessonState,
-                      lessonStartTime: e.nativeEvent.target?.value,
+                      lessonStartTime: e.target?.value,
                     })
                   }
                   required
@@ -242,7 +236,7 @@ export const LessonDetail: React.FC = () => {
                   onChange={(e) =>
                     setLessonState({
                       ...lessonState,
-                      lessonEndDate: e.nativeEvent.target?.value,
+                      lessonEndDate: e.target?.value,
                     })
                   }
                   required
@@ -256,7 +250,7 @@ export const LessonDetail: React.FC = () => {
                   onChange={(e) =>
                     setLessonState({
                       ...lessonState,
-                      lessonEndTime: e.nativeEvent.target?.value,
+                      lessonEndTime: e.target?.value,
                     })
                   }
                   required
@@ -279,7 +273,7 @@ export const LessonDetail: React.FC = () => {
                       ...{
                         edu: {
                           ...lessonState.edu,
-                          eduName: e.nativeEvent.target?.value,
+                          eduName: e.target?.value,
                         },
                       },
                     })
@@ -296,7 +290,7 @@ export const LessonDetail: React.FC = () => {
                   onChange={(e) =>
                     setLessonState({
                       ...lessonState,
-                      teacherName: e.nativeEvent.target?.value,
+                      teacherName: e.target?.value,
                     })
                   }
                   required
@@ -311,7 +305,7 @@ export const LessonDetail: React.FC = () => {
                   onChange={(e) =>
                     setLessonState({
                       ...lessonState,
-                      lessonIntroduce: e.nativeEvent.target?.value,
+                      lessonIntroduce: e.target?.value,
                     })
                   }
                   required
