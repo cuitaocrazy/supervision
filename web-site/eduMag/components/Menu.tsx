@@ -19,6 +19,7 @@ import { useRouter } from "next/router";
 import { AppContext } from "../appState";
 import Router from "next/router";
 import { Link } from "react-router-dom";
+import localforage from "localforage";
 
 const Menu = () => {
   const [isDark, setIsDark] = useState(false);
@@ -28,11 +29,12 @@ const Menu = () => {
   const [statisticVisible, setStatisticVisible] = useState(false);
   const router = useRouter();
   //todo 以后根据保存到localstorage的信息判断
-  console.log(window.loginUser);
-  if (!window.loginUser) {
-    console.log("未登录");
-    router.push("/Login");
-  }
+
+  // console.log(window.loginUser);
+  // if (!window.loginUser) {
+  //   console.log("未登录");
+  //   router.push("/Login");
+  // }
 
   const handleOpen = async () => {
     try {
@@ -50,6 +52,12 @@ const Menu = () => {
   };
 
   useEffect(() => {
+    localforage.getItem("loginName").then((value) => {
+      if (!value) {
+        router.push("/Login");
+      }
+      // setLoginName(value as string);
+    });
     setIsDark(window.matchMedia("(prefers-color-scheme: dark)").matches);
   }, []);
 
