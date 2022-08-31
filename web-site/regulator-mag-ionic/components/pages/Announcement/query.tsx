@@ -1,10 +1,5 @@
-import React, { useState, Fragment, useEffect, useCallback, useContext,useRef } from 'react';
-import {
-  IonPage,
-  IonRow,
-  IonCol,
-  useIonToast,
-} from '@ionic/react';
+import React, { useState, Fragment, useEffect, useCallback, useContext, useRef } from 'react';
+import { IonPage, IonRow, IonCol, useIonToast } from '@ionic/react';
 import { Redirect } from 'react-router-dom';
 import {
   AppContext,
@@ -17,7 +12,7 @@ import { PickerColumn } from '@ionic/core';
 import { Dialog, Transition } from '@headlessui/react';
 import RichText from '../../RichText';
 import { EditorState } from 'draft-js';
-import Quit from '../../Quit'
+import Quit from '../../Quit';
 
 const queryURL = 'http://localhost:3003/announcement/query';
 const delURL = 'http://localhost:3003/announcement/del';
@@ -106,33 +101,32 @@ const AnnouncementQuery: React.FC = () => {
     })
       .then(res => res.json())
       .then(json => {
-        const result=json
-        console.log(result+"result")
-        if (result) 
-        {
+        const result = json;
+        console.log(result + 'result');
+        if (result) {
           present({
             message: '政策公告删除成功',
-            position:'top',
-            duration:3000
-          })
-        } else 
-        present({
-          buttons: [{ text: '关闭', handler: () => dismiss() }],
-          message: '政策公告删除失败',
-          position:'top',
-        })
+            position: 'top',
+            duration: 3000,
+          });
+        } else
+          present({
+            buttons: [{ text: '关闭', handler: () => dismiss() }],
+            message: '政策公告删除失败',
+            position: 'top',
+          });
       });
   };
 
   const doSetDetail = useCallback(
-    item => {
+    (item: Announcement | undefined) => {
       dispatch({ ...setAnnouncementDetail(item), ...{ backPage: '/tabs/announcement/query' } });
     },
     [dispatch]
   );
 
   const doSetEdit = useCallback(
-    item => {
+    (item: Announcement | undefined) => {
       dispatch({ ...setAnnouncementEdit(item), ...{ backPage: '/tabs/announcement/query' } });
     },
     [dispatch]
@@ -185,21 +179,20 @@ const AnnouncementQuery: React.FC = () => {
     })
       .then(res => res.json())
       .then(json => {
-        const result=json
-        console.log(result+"result")
-        if (result) 
-        {
+        const result = json;
+        console.log(result + 'result');
+        if (result) {
           present({
             message: '政策公告添加成功',
-            position:'top',
-            duration:3000
-          })
-        } else 
-        present({
-          buttons: [{ text: '关闭', handler: () => dismiss() }],
-          message: '政策公告添加失败',
-          position:'top',
-        })
+            position: 'top',
+            duration: 3000,
+          });
+        } else
+          present({
+            buttons: [{ text: '关闭', handler: () => dismiss() }],
+            message: '政策公告添加失败',
+            position: 'top',
+          });
       });
   };
 
@@ -358,7 +351,7 @@ const AnnouncementQuery: React.FC = () => {
                               onChange={e =>
                                 setCreateAnnouncement({
                                   ...createAnnouncement,
-                                  ...{ announcementDate: e.nativeEvent.target?.value },
+                                  ...{ announcementDate: e.target?.value },
                                 })
                               }
                             ></input>
@@ -377,7 +370,7 @@ const AnnouncementQuery: React.FC = () => {
                               onChange={e =>
                                 setCreateAnnouncement({
                                   ...createAnnouncement,
-                                  ...{ announcementTitle: e.nativeEvent.target?.value },
+                                  ...{ announcementTitle: e.target?.value },
                                 })
                               }
                               required
@@ -396,21 +389,21 @@ const AnnouncementQuery: React.FC = () => {
                               onChange={e =>
                                 setCreateAnnouncement({
                                   ...createAnnouncement,
-                                  ...{ announcementTitle: e.nativeEvent.target?.value },
+                                  ...{ announcementTitle: e.target?.value },
                                 })
                               }
                               required
                             ></input> */}
                             <div className="w-64 p-1 text-gray-600 justify-self-start focus:outline-none focus:glow-primary-600">
-                            <RichText
-                              ref={editor}
-                              editorState={editorState}
-                              onChange={(editorState: any) => {
-                                console.log(editorState);
-                                setEditorState(editorState);
-                              }}
-                            />
-                          </div>
+                              <RichText
+                                ref={editor}
+                                editorState={editorState}
+                                onChange={(editorState: any) => {
+                                  console.log(editorState);
+                                  setEditorState(editorState);
+                                }}
+                              />
+                            </div>
                           </div>
                         </div>
                         <div className="flex items-center gap-4 mt-2 justify-items-center">

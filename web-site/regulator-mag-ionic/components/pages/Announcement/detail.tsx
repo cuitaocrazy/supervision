@@ -19,7 +19,7 @@ import { useCallback, useContext } from 'react';
 import { AppContext, setAnnouncementDetail } from '../../../appState';
 import { Announcement } from '../../../types/types';
 import { PickerColumn } from '@ionic/core';
-import Quit from '../../Quit'
+import Quit from '../../Quit';
 
 export const AnnouncementDetail: React.FC = () => {
   const modifyURL = 'http://localhost:3003/announcement/modify';

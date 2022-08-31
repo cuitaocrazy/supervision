@@ -227,7 +227,7 @@ export const setAttendanceList = (attendanceList: Attendance[]) => {
     attendanceList: attendanceList,
   };
 };
-export const setAttendanceDetail = (attendanceDetail: Attendance) => {
+export const setAttendanceDetail = (attendanceDetail: Attendance | undefined) => {
   return {
     type: 'setAttendanceDetail',
     attendanceDetail: attendanceDetail,
@@ -270,14 +270,14 @@ export const setAnnouncementList = (announcementList: Announcement[]) => {
     announcementList: announcementList,
   };
 };
-export const setAnnouncementDetail = (announcementDetail: Announcement) => {
+export const setAnnouncementDetail = (announcementDetail: Announcement | undefined) => {
   return {
     type: 'setAnnouncementDetail',
     announcementDetail: announcementDetail,
   };
 };
 
-export const setAnnouncementEdit = (announcementEdit: Announcement) => {
+export const setAnnouncementEdit = (announcementEdit: Announcement | undefined) => {
   return {
     type: 'setAnnouncementEdit',
     announcementEdit: announcementEdit,
