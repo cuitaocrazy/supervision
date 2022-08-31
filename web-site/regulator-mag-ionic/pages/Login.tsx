@@ -37,7 +37,7 @@ const Login = () => {
       .then(async json => {
         const { result, msg, loginUser } = json;
         if (result) {
-          localforage.setItem('loginName', loginUser.loginName);
+          localforage.setItem('loginName', result.loginName);
           // window.loginUser = result.loginName;
           await router.push('./tabs/statistics/supervisorAccount');
           // router.reload();
