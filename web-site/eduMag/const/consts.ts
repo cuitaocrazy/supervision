@@ -1,4 +1,4 @@
-const serverPath = process.env.SERVER_PATH || 'http://localhost:3003/edu'
+const serverPath = process.env.NEXT_PUBLIC_SERVER_PATH || 'http://localhost:3003/edu'
 
 export const eduContractFindURL = `${serverPath}/contract/find`
 export const eduTransactionSumURL = `${serverPath}/transaction/sum`

@@ -4,6 +4,9 @@ MODE=$1
 function start() {
     echo "start all demo"
     docker-compose -f ./docker/docker-compose-demo.yaml up -d --remove-orphans
+    echo "消费者端: http://localhost:8080/consumer"
+    echo "教育机构端: http://localhost:8080/edu"
+    echo "监管端: http://localhost:8080/edb"
 }
 
 function cleanWebModule() {

@@ -1,4 +1,4 @@
-const serverPath = process.env.SERVER_PATH || 'http://localhost:3003/edb'
+const serverPath = process.env.NEXT_PUBLIC_SERVER_PATH || 'http://localhost:3003/edb'
 
 export const edbLessonAuditURL = `${serverPath}/lesson/audit`
 export const edbLessonDelURL = `${serverPath}/lesson/del`
