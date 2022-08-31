@@ -336,7 +336,7 @@ export const LessonAudit: React.FC = () => {
                               onChange={e =>
                                 setLessonAudit({
                                   ...lessonState,
-                                  lesson_update_reason: e.nativeEvent.target?.value,
+                                  lesson_update_reason: e.target?.value,
                                 })
                               }
                             ></textarea>

@@ -1,39 +1,54 @@
 import React from 'react';
-import { IonPage, IonCard, IonCardHeader, IonCardSubtitle, IonCardTitle, IonCardContent,IonItem,IonButton } from '@ionic/react';
+import {
+  IonPage,
+  IonCard,
+  IonCardHeader,
+  IonCardSubtitle,
+  IonCardContent,
+  IonItem,
+  IonButton,
+} from '@ionic/react';
 import { Redirect } from 'react-router-dom';
-import { useCallback,useContext } from 'react'
-import {AppContext,setDetail} from '../../appState';
-
+import { useCallback, useContext } from 'react';
+import { AppContext } from '../../appState';
 
 export const CardExamples: React.FC = () => {
-
   const { state, dispatch } = useContext(AppContext);
   const setBack = useCallback(() => {
-    dispatch(setDetail(undefined));
-  },[]);
-  const onBack = ()=>() => {
-    setBack()
+    // dispatch(setDetail(undefined));
+    dispatch(null);
+  }, []);
+  const onBack = () => () => {
+    setBack();
+  };
+  if (state.detail === undefined) {
+    return <Redirect to={state.backPage} />;
   }
-  if(state.detail===undefined){
-    return <Redirect to={state.backPage} />
-  }
-  const {SubscribeID,USVOrderNo,SubscribeDurationDays,TranAmt,USVOrgID,USVItemName,USVItemID,SubscribeStartDate} = state.detail
+  const {
+    SubscribeID,
+    USVOrderNo,
+    SubscribeDurationDays,
+    TranAmt,
+    USVOrgID,
+    USVItemName,
+    USVItemID,
+    SubscribeStartDate,
+  } = state.detail;
 
-  const onModify = ()=>() => {
-    setBack()
-  }
-  
+  const onModify = () => () => {
+    setBack();
+  };
+
   return (
     <IonPage>
       <IonCard>
-      <IonCardHeader>
-        <IonCardSubtitle className="mx-8 text-3xl text-gray-600">详细信息</IonCardSubtitle>
-        {/* <IonCardTitle className="mx-8 text-2xl text-gray-600">合约ID:{SubscribeID}</IonCardTitle> */}
-      </IonCardHeader>
-      <IonCardContent>
-      <form noValidate onSubmit={onModify}>
-        
-      {/* <table className='mx-8 mt-4'>
+        <IonCardHeader>
+          <IonCardSubtitle className="mx-8 text-3xl text-gray-600">详细信息</IonCardSubtitle>
+          {/* <IonCardTitle className="mx-8 text-2xl text-gray-600">合约ID:{SubscribeID}</IonCardTitle> */}
+        </IonCardHeader>
+        <IonCardContent>
+          <form noValidate onSubmit={onModify}>
+            {/* <table className='mx-8 mt-4'>
         <tr>
           <td className='flex gap-2 leading-6'>
               <div className='font-bold text-gray-600'>合约ID:</div>
@@ -84,15 +99,17 @@ export const CardExamples: React.FC = () => {
             </td>
         </tr>
      </table> */}
-     </form>
-        <IonItem className="">
-          <IonButton className="m-5 text-base " onClick={onBack()} fill="solid">返回</IonButton>
-        </IonItem>
-        {/* <Link to="/tabs/query"> 返回 </Link> */}
-      </IonCardContent>
-    </IonCard>
+          </form>
+          <IonItem className="">
+            <IonButton className="m-5 text-base " onClick={onBack()} fill="solid">
+              返回
+            </IonButton>
+          </IonItem>
+          {/* <Link to="/tabs/query"> 返回 </Link> */}
+        </IonCardContent>
+      </IonCard>
     </IonPage>
   );
 };
 
-export default CardExamples
+export default CardExamples;

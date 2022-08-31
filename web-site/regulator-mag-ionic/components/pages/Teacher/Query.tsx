@@ -50,7 +50,7 @@ const TeacherQuery: React.FC = () => {
   };
 
   const doSetDetail = useCallback(
-    teacher => {
+    (teacher: Teacher | undefined) => {
       dispatch({ ...setTeacherDetail(teacher), ...{ backPage: '/tabs/teacher/query' } });
     },
     [dispatch]

@@ -1,11 +1,9 @@
 //Teacher管理的详细页面
 import React, { useState } from "react";
-import { IonPage, IonCard, IonCardContent, useIonToast } from "@ionic/react";
+import { IonPage, IonCardContent, useIonToast } from "@ionic/react";
 import { Redirect } from "react-router-dom";
 import { useCallback, useContext } from "react";
 import { AppContext, setTeacherEdit } from "../../../appState";
-import { Teacher } from "../../../types/types";
-import { PickerColumn } from "@ionic/core";
 import Quit from "components/components/Quit";
 import { eduTeacherModifyURL } from "const/consts";
 
@@ -99,7 +97,7 @@ export const TeacherDetail: React.FC = () => {
                   onChange={(e) =>
                     setTeacherState({
                       ...teacherState,
-                      ...{ teacherName: e.nativeEvent.target?.value },
+                      ...{ teacherName: e.target?.value },
                     })
                   }
                   required
@@ -115,7 +113,7 @@ export const TeacherDetail: React.FC = () => {
                   onChange={(e) =>
                     setTeacherState({
                       ...teacherState,
-                      ...{ teacherIdentityNo: e.nativeEvent.target?.value },
+                      ...{ teacherIdentityNo: e.target?.value },
                     })
                   }
                 />
@@ -132,7 +130,7 @@ export const TeacherDetail: React.FC = () => {
                   onChange={(e) =>
                     setTeacherState({
                       ...teacherState,
-                      ...{ teacherField: e.nativeEvent.target?.value },
+                      ...{ teacherField: e.target?.value },
                     })
                   }
                   required
@@ -148,7 +146,7 @@ export const TeacherDetail: React.FC = () => {
                   onChange={(e) =>
                     setTeacherState({
                       ...teacherState,
-                      ...{ teacherExperience: e.nativeEvent.target?.value },
+                      ...{ teacherExperience: e.target?.value },
                     })
                   }
                 />
@@ -164,7 +162,7 @@ export const TeacherDetail: React.FC = () => {
                   onChange={(e) =>
                     setTeacherState({
                       ...teacherState,
-                      ...{ teacherIntroduce: e.nativeEvent.target?.value },
+                      ...{ teacherIntroduce: e.target?.value },
                     })
                   }
                 />

@@ -19,7 +19,7 @@ import { Transaction } from './entity/Transaction'
 import { Seq } from './entity/Seq'
 const datasource = new DataSource({
         type: "mysql",
-        host: "localhost",
+        host: process.env.DB_HOST || "localhost",
         port: 3306,
         username: "yadadb",
         password: "yadadb",
@@ -28,7 +28,7 @@ const datasource = new DataSource({
         logging: true,
         entities: [Announcement, Attendance, Complaint, Consumer, ConsumerStudent,
                 Contract, ContractNego, EduLesson, EduOrg, EduTeacher, SupervisorBlackEdu,
-                SupervisorOrg, SupervisorUser, Transfer, ChainCode, Transaction,Seq],
+                SupervisorOrg, SupervisorUser, Transfer, ChainCode, Transaction, Seq],
         subscribers: [],
         migrations: [],
         namingStrategy: new SnakeNamingStrategy(),

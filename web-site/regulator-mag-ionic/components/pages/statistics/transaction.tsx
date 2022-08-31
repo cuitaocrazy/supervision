@@ -8,8 +8,6 @@ import { edbTransactionFindURL } from 'const/const';
 const findURL = edbTransactionFindURL;
 
 const Transaction: React.FC = () => {
-  //todo 根据token获取LoginUser信息
-  const loginName = window.loginUser;
   const [page, setPage] = useState(0);
   const [total, setTotal] = useState(101); //todo
 
@@ -35,7 +33,6 @@ const Transaction: React.FC = () => {
       contractId: queryInfo.contractId,
       account: queryInfo.account,
       tranDate: queryInfo.tranDate,
-      loginName: loginName,
     },
     findURL
   );
@@ -72,9 +69,9 @@ const Transaction: React.FC = () => {
   useEffect(onQuery, []);
 
   const ListEntry = ({ record, ...props }: { record: any }) => (
-    <tr className="grid items-center grid-cols-7 gap-2 text-gray-600 border justify-items-center even:bg-white odd:bg-primary-100 ">
-      <td className="flex items-center justify-center leading-10">{record.transactionId}</td>
-      <td className="flex items-center justify-center leading-10">{record.contractId}</td>
+    <tr className="grid items-center grid-cols-6 gap-2 text-gray-600 border justify-items-center even:bg-white odd:bg-primary-100 ">
+      {/* <td className="flex items-center justify-center leading-10">{record.transactionId}</td> */}
+      <td className="flex items-center justify-center pl-20 leading-10">{record.contractId}</td>
       <td className="flex items-center justify-center leading-10">{record.transactionAmt}</td>
       <td className="flex items-center justify-center leading-10">{record.tranDate}</td>
       <td className="flex items-center justify-center leading-10">{record.tranTime}</td>
@@ -86,7 +83,7 @@ const Transaction: React.FC = () => {
   );
 
   return (
-    <IonPage>
+    <IonPage className="bg-gray-100">
       <Quit />
       <div className="relative w-full h-screen mx-6 overflow-auto">
         <div className="flex pt-2 my-2 text-gray-800">
@@ -108,7 +105,7 @@ const Transaction: React.FC = () => {
           </div>
           <div>
             <span className="pr-1 text-gray-600">监管机构管理</span>/
-            <span className="pl-1 text-primary-500">余额查询</span>
+            <span className="pl-1 text-primary-500">监管账户清算明细查询</span>
           </div>
         </div>
         <div className="w-11/12 px-4 py-2 mt-4 bg-white rounded-lg ">
@@ -168,10 +165,10 @@ const Transaction: React.FC = () => {
         <div className="absolute w-full mt-10">
           <table className="w-11/12">
             <thead>
-              <tr className="grid items-center h-10 grid-cols-7 gap-2 font-bold text-gray-700 bg-white rounded-lg justify-items-center">
-                <th className="flex items-center justify-center">交易ID</th>
+              <tr className="grid items-center h-10 grid-cols-6 gap-2 font-bold text-gray-700 bg-white rounded-lg justify-items-center">
+                {/* <th className="flex items-center justify-center">交易ID</th> */}
                 <th className="flex items-center justify-center">合同号</th>
-                <th className="flex items-center justify-center">金额</th>
+                <th className="flex items-center justify-center">金额（元）</th>
                 <th className="flex items-center justify-center">交易日期</th>
                 <th className="flex items-center justify-center">交易时间</th>
                 <th className="flex items-center justify-center">交易类型</th>

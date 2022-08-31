@@ -261,7 +261,7 @@ export const DiscussAudit: React.FC = () => {
                               onChange={(e) =>
                                 setDiscussAudit({
                                   ...discussState,
-                                  discussReason: e.nativeEvent.target?.value,
+                                  discussReason: e.target?.value,
                                 })
                               }
                             ></textarea>

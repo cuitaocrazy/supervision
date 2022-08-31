@@ -54,6 +54,7 @@ import BalanceStatistic from './pages/statistics/balance';
 import TransactionStatistic from './pages/statistics/transaction';
 
 import SupervisorAccount from './pages/statistics/SupervisorAccount';
+import TranSumQuery from './pages/TranSumQuery';
 
 // 装载ionic样式，ionic6 必须执行。
 setupIonicReact();
@@ -69,7 +70,7 @@ const AppShell = () => {
   return (
     <AppContextProvider>
       <IonApp>
-        <IonReactRouter>
+        <IonReactRouter basename={process.env.NEXT_PUBLIC_ROOT_PATH || '/'}>
           <IonSplitPane contentId="main" className="bg-gray-300 shadow-lg">
             <Menu />
             <IonRouterOutlet id="main">
@@ -124,6 +125,7 @@ const AppShell = () => {
 
               <Route path="/tabs/statistics/refund" component={RefundStatistic} exact={true} />
               <Route path="/tabs/statistics/balance" component={BalanceStatistic} exact={true} />
+              <Route path="/tabs/tranSumQuery" component={TranSumQuery} exact={true} />
               <Route
                 path="/tabs/statistics/transaction"
                 component={TransactionStatistic}

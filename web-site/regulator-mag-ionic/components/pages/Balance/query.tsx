@@ -1,4 +1,3 @@
-
 // import { useEffect,useCallback,useContext,useState } from 'react'
 // import { Redirect } from 'react-router-dom';
 // import {AppContext,setTransferList,setTransferDetail} from '../../../appState';
@@ -12,10 +11,11 @@
 //   IonCol,
 // } from '@ionic/react';
 
+import { IonPage } from '@ionic/react';
+import React from 'react';
+
 // const queryURL = 'http://localhost:3003/attendannce/query'
 // const handleTransfer = 'http://localhost:3003/attendannce/handleTransfer'
-
-
 
 // const demotransferList:Transfer[] = [
 //   {
@@ -36,7 +36,7 @@
 //     transferAmt:100,
 //     transferResult:'success',
 //     reason:''
-    
+
 //   },
 //   {
 //     transferId:'2',
@@ -56,7 +56,7 @@
 //     transferAmt:100,
 //     transferResult:'success',
 //     reason:''
-    
+
 //   },
 // ]
 
@@ -67,7 +67,7 @@
 //   const onDetail = (item:Transfer)=>() => {
 //     doSetDetail(item)
 //   }
-  
+
 //   const doSetDetail = useCallback(teacher => {
 //     dispatch({...setTransferDetail(teacher),...{backPage:'/tabs/teacher/query'}});
 //   },[dispatch]);
@@ -88,8 +88,6 @@
 //   doHandle(item)
 // }
 
-
-
 // const doHandle = async (item:Transfer)=>() => {
 //   fetch(handleTransfer, {
 //     method: 'POST',
@@ -104,7 +102,7 @@
 //     alert(json.result)
 //   })
 // }
-// useEffect(() => { 
+// useEffect(() => {
 //   fetch(paramStr, {
 //     method: 'GET',
 //   /* `teacher` is a property of `Lesson` */
@@ -114,8 +112,8 @@
 //   }).then(res => res.json())
 //   .then((json) => {
 //   const {transferList} = json //todo
-  
-//   return 
+
+//   return
 //   })
 // },[ paramStr, refreshList]);
 // const ListEntry = ({ transfer,key, ...props } : {transfer:Transfer,key:any}) => (
@@ -153,17 +151,17 @@
 //                       <IonCol className='flex ml-8'>
 //                         <IonLabel className='flex h-12 p-2 font-bold text-center text-primary-600 w-28'>教育机构名称查询：</IonLabel>
 //                         <input type='text' className="flex w-56 h-12 pt-2.5 font-bold text-center text-primary-600 bg-white rounded-md focus:outline-none focus:glow-secondary-500" onChange={e=>setQueryInfo({...queryInfo,...{eduName:e.target.value}})} />
-//                       </IonCol>   
+//                       </IonCol>
 //                       <IonCol className='flex ml-8'>
 //                         <IonLabel className='flex h-12 p-2 font-bold text-center text-primary-600 w-28'>课程名称查询：</IonLabel>
 //                         <input type='text' className="flex w-56 h-12 pt-2.5 font-bold text-center text-primary-600 bg-white rounded-md focus:outline-none focus:glow-secondary-500" onChange={e=>setQueryInfo({...queryInfo,...{lessonName:e.target.value}})} />
-//                       </IonCol>   
+//                       </IonCol>
 //                 </IonRow>
 //                 </div>
 //               <div className='absolute w-full mt-10'>
 //                 <IonList>
 //                   <IonItem key='title'>
-//                     <IonLabel> 
+//                     <IonLabel>
 //                       <div className='font-black text-center'>合同ID</div>
 //                     </IonLabel>
 //                     <IonLabel>
@@ -192,13 +190,15 @@
 //                   ))}
 //                     </div>
 //                 </IonList>
-//             </div> 
-//             </div>            
+//             </div>
+//             </div>
 //       </IonPage>
 //    }
 //    else{
 //      return <Redirect to="/tabs/transfer/detail" />
-//    }  
+//    }
 // }
-// export default TransferQuery;
-
+const TransferQuery: React.FC = () => {
+  return <IonPage>页面未完成</IonPage>;
+};
+export default TransferQuery;

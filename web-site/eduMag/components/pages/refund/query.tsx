@@ -130,7 +130,8 @@ const ContractNegoQuery: React.FC = () => {
     //   .then((json) => {
     //     const { result, msg } = json;
     //     console.log(result);
-    const result = { true: Boolean };
+    const result = true;
+    const msg = "测试";
     if (result) {
       present({
         message: "课程退订审批通过操作成功",
@@ -406,7 +407,7 @@ const ContractNegoQuery: React.FC = () => {
                                 ...detail,
                                 ...{
                                   negoRefundAmt: String(
-                                    100 * Number(e.detail.value!)
+                                    100 * Number(e.target.value!)
                                   ),
                                 },
                               })
@@ -430,7 +431,7 @@ const ContractNegoQuery: React.FC = () => {
                                 ...detail,
                                 ...{
                                   negoCompensationAmt: String(
-                                    100 * Number(e.detail.value!)
+                                    100 * Number(e.target.value!)
                                   ),
                                 },
                               })
