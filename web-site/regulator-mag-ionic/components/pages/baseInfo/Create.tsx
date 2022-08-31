@@ -1,10 +1,12 @@
-
 // //BaseInfo的创建页面
 // import React, { useState } from 'react';
 // import { IonPage, IonCard, IonCardHeader, IonCardSubtitle,IonLabel,IonInput, IonCardContent,IonItem,IonButton,IonList,IonDatetime,IonPicker } from '@ionic/react';
 // import { Redirect } from 'react-router-dom';
 // import { useCallback,useContext } from 'react'
 // import {AppContext,setUserInfoDetail} from '../../../appState';
+
+import { IonPage } from '@ionic/react';
+import { FC } from 'react';
 
 // import {SupervisorUser} from '../../../types/types'
 
@@ -34,7 +36,6 @@
 //     })
 //   }
 
-  
 //   return (
 //     <IonPage>
 //       <IonCard>
@@ -64,5 +65,7 @@
 //     </IonPage>
 //   );
 // };
-
-// export default BaseInfoDetail
+const BaseInfoDetail: FC = () => {
+  return <IonPage>regulator-mag-ionic/components/pages/baseInfo/Create.tsx</IonPage>;
+};
+export default BaseInfoDetail;

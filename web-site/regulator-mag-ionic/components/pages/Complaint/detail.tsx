@@ -1,24 +1,24 @@
 //complaint管理的详细页面
-import React, { useState } from 'react';
-import { IonPage, IonCard, IonCardHeader, IonCardSubtitle,IonLabel,IonInput, IonCardContent,IonItem,IonButton,IonList,IonDatetime,IonPicker } from '@ionic/react';
+import React from 'react';
+import { IonPage, IonCard, IonCardContent } from '@ionic/react';
 import { Redirect } from 'react-router-dom';
-import { useCallback,useContext } from 'react'
-import {AppContext,setComplaintDetail} from '../../../appState';
-import Quit from '../../Quit'
+import { useCallback, useContext } from 'react';
+import { AppContext, setComplaintDetail } from '../../../appState';
+import Quit from '../../Quit';
 
 export const ComplaintDetail: React.FC = () => {
   const { state, dispatch } = useContext(AppContext);
   const setBack = useCallback(() => {
     dispatch(setComplaintDetail(undefined));
-  },[]);
-  const onBack = ()=>() => {
-    setBack()
-  }
-  if(state.complaint.complaintDetail===undefined){
-    return <Redirect to={state.backPage} />
+  }, []);
+  const onBack = () => () => {
+    setBack();
+  };
+  if (state.complaint.complaintDetail === undefined) {
+    return <Redirect to={state.backPage} />;
   }
 
-  return (  
+  return (
     <IonPage className="bg-gray-100">
       <Quit />
       <IonCard className="h-screen mx-6 overflow-auto">
@@ -41,8 +41,8 @@ export const ComplaintDetail: React.FC = () => {
             </svg>
           </div>
           <div>
-          <span className="pr-1 text-gray-600">投诉管理</span>/
-          <span className="pl-1 pr-1 text-primary-500">投诉详情信息</span>
+            <span className="pr-1 text-gray-600">投诉管理</span>/
+            <span className="pl-1 pr-1 text-primary-500">投诉详情信息</span>
           </div>
         </div>
         <IonCardContent>
@@ -56,7 +56,7 @@ export const ComplaintDetail: React.FC = () => {
                 className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
                 name="contractId"
                 type="text"
-                value={state.contractId} 
+                value={state.contractId}
                 readOnly
               />
             </div>
@@ -66,7 +66,7 @@ export const ComplaintDetail: React.FC = () => {
                 className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
                 name="eduName"
                 type="text"
-                value={state.complaint.complaintDetail.eduName} 
+                value={state.complaint.complaintDetail.eduName}
                 readOnly
               />
             </div>
@@ -101,8 +101,8 @@ export const ComplaintDetail: React.FC = () => {
                 readOnly
               />
             </div>
-            </div>
-         
+          </div>
+
           <div className="flex justify-center">
             <input
               value="返回"
@@ -111,11 +111,10 @@ export const ComplaintDetail: React.FC = () => {
               className="flex w-20 px-6 py-2 font-bold text-white rounded-md bg-primary-600 focus:bg-primary-700"
             />
           </div>
-          
         </IonCardContent>
       </IonCard>
     </IonPage>
-      )
-    };
+  );
+};
 
-    export default ComplaintDetail
+export default ComplaintDetail;

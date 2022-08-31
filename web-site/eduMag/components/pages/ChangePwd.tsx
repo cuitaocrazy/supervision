@@ -3,22 +3,12 @@ import React, { useState } from "react";
 import {
   IonPage,
   IonCard,
-  IonRadioGroup,
-  IonRadio,
   IonCardHeader,
   IonCardSubtitle,
   IonCardContent,
-  IonItem,
-  IonButton,
-  IonList,
-  IonDatetime,
-  IonPicker,
-  td,
-  tr,
 } from "@ionic/react";
-import { Redirect } from "react-router-dom";
-import { useCallback, useContext, useEffect } from "react";
-import { AppContext, setEduOrgDetail } from "../../appState";
+import { useContext } from "react";
+import { AppContext } from "../../appState";
 
 export const BaseInfoDetail: React.FC = () => {
   const { state, dispatch } = useContext(AppContext);
@@ -65,9 +55,7 @@ export const BaseInfoDetail: React.FC = () => {
                   name="eduName"
                   value={pwd.pwd}
                   type="password"
-                  onChange={(e) =>
-                    setPwd({ ...pwd, pwd: e.nativeEvent.target?.value })
-                  }
+                  onChange={(e) => setPwd({ ...pwd, pwd: e.target?.value })}
                 ></input>
               </td>
             </tr>
@@ -81,9 +69,7 @@ export const BaseInfoDetail: React.FC = () => {
                   name="eduName"
                   value={pwd.newPwd}
                   type="password"
-                  onChange={(e) =>
-                    setPwd({ ...pwd, newPwd: e.nativeEvent.target?.value })
-                  }
+                  onChange={(e) => setPwd({ ...pwd, newPwd: e.target?.value })}
                 ></input>
               </td>
             </tr>
@@ -97,9 +83,7 @@ export const BaseInfoDetail: React.FC = () => {
                   name="eduName"
                   value={pwd.newPwd2}
                   type="password"
-                  onChange={(e) =>
-                    setPwd({ ...pwd, newPwd2: e.nativeEvent.target?.value })
-                  }
+                  onChange={(e) => setPwd({ ...pwd, newPwd2: e.target?.value })}
                 ></input>
               </td>
             </tr>

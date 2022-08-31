@@ -1,31 +1,15 @@
 //Contract的详细页面
 import React, { useState } from 'react';
-import {
-  IonPage,
-  IonCard,
-  IonCardHeader,
-  IonCardSubtitle,
-  IonLabel,
-  IonInput,
-  IonCardContent,
-  IonItem,
-  IonButton,
-  IonList,
-  IonDatetime,
-  IonPicker,
-} from '@ionic/react';
+import { IonPage, IonCard, IonCardContent } from '@ionic/react';
 import { Redirect } from 'react-router-dom';
 import { useCallback, useContext } from 'react';
 import { AppContext, setContractDetail } from '../../../appState';
-import { Contract } from '../../../types/types';
-import { Link } from 'react-router-dom';
-import Quit from '../../Quit'
+import Quit from '../../Quit';
 
 export const ContractDetail: React.FC = () => {
   const { state, dispatch } = useContext(AppContext);
 
   const [contractState, setContractState] = useState(state.contract.contractDetail);
-  const [isPickOpen, setPickOpen] = useState(false);
 
   const setBack = useCallback(() => {
     dispatch(setContractDetail(undefined));

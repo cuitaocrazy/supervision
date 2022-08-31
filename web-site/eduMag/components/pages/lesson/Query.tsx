@@ -311,7 +311,7 @@ const LessonQuery: React.FC = () => {
       </td>
       <td className="flex items-center justify-center leading-10">
         {/* {Number(lesson.lessonTotalPrice) / 100} */}
-        {lesson.lessonTotalQuantity}
+        {lesson.lessonAccumulationQuantity}
       </td>
       <td className="flex items-center justify-center leading-10">
         {lesson.lessonType}
@@ -508,7 +508,7 @@ const LessonQuery: React.FC = () => {
                             onChange={(e) =>
                               setCreateLesson({
                                 ...createLesson,
-                                ...{ lessonName: e.nativeEvent.target?.value },
+                                ...{ lessonName: e.target?.value },
                               })
                             }
                             required
@@ -531,7 +531,7 @@ const LessonQuery: React.FC = () => {
                               setCreateLesson({
                                 ...createLesson,
                                 ...{
-                                  lessonTotalTimes: e.nativeEvent.target?.value,
+                                  lessonTotalTimes: e.target?.value,
                                 },
                               })
                             }
@@ -555,7 +555,7 @@ const LessonQuery: React.FC = () => {
                               setCreateLesson({
                                 ...createLesson,
                                 ...{
-                                  lessonTotalPrice: e.nativeEvent.target?.value,
+                                  lessonTotalPrice: e.target?.value,
                                 },
                               })
                             }
@@ -579,7 +579,7 @@ const LessonQuery: React.FC = () => {
                               setCreateLesson({
                                 ...createLesson,
                                 ...{
-                                  lessonPerPrice: e.nativeEvent.target?.value,
+                                  lessonPerPrice: e.target?.value,
                                 },
                               })
                             }
@@ -601,7 +601,7 @@ const LessonQuery: React.FC = () => {
                             onChange={(e) =>
                               setCreateLesson({
                                 ...createLesson,
-                                ...{ lessonType: e.nativeEvent.target?.value },
+                                ...{ lessonType: e.target?.value },
                               })
                             }
                           ></input>
@@ -657,7 +657,7 @@ const LessonQuery: React.FC = () => {
                               setCreateLesson({
                                 ...createLesson,
                                 ...{
-                                  lessonIntroduce: e.nativeEvent.target?.value,
+                                  lessonIntroduce: e.target?.value,
                                 },
                               })
                             }
@@ -679,7 +679,7 @@ const LessonQuery: React.FC = () => {
                             onChange={(e) =>
                               setCreateLesson({
                                 ...createLesson,
-                                ...{ teacherId: e.nativeEvent.target?.value },
+                                ...{ teacherId: e.target?.value },
                               })
                             }
                             required
@@ -823,8 +823,7 @@ const LessonQuery: React.FC = () => {
                               setOffLesson({
                                 ...offLesson,
                                 ...{
-                                  lessonUpdateReason:
-                                    e.nativeEvent.target?.value,
+                                  lessonUpdateReason: e.target?.value,
                                 },
                               })
                             }

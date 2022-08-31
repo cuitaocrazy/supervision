@@ -26,6 +26,9 @@ app.get('/test', (req, res) => {
   res.send('test connect')
 })
 
+app.get('/api/test', (req, res) => {
+  res.send('api test connect')
+})
 
 
 
@@ -245,8 +248,8 @@ app.post('/edu/lesson/create', jsonParser, async (req, res) => {
   lesson.teacherId = "teacher00001";
   lesson.teacherName = "马老师";
   lesson.eduId = "edu0001";
-  lesson.eduName = "北京亚大教育机构";
-//  lesson.eduName = req.body.eduName
+  // lesson.eduName = "测试机构";
+  lesson.eduName = req.body.eduName
   lesson.lessonImages =
     "https://s3.bmp.ovh/imgs/2022/08/30/28f95385d82b4f7c.jpg"; //'http://placekitten.com/g/200/300'
   lesson.lessonOutline = false;

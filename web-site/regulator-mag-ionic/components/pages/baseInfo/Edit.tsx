@@ -1,11 +1,6 @@
 //BaseInfo的编辑页面
 import React, { useState } from 'react';
-import {
-  IonPage,
-  IonCard,
-  IonCardContent,
-  useIonToast,
-} from '@ionic/react';
+import { IonPage, IonCard, IonCardContent, useIonToast } from '@ionic/react';
 import { Redirect } from 'react-router-dom';
 import { useCallback, useContext } from 'react';
 import { AppContext, setUserInfoEdit } from '../../../appState';
@@ -28,8 +23,8 @@ export const BaseInfoEdit: React.FC = () => {
   if (state.userInfo.userInfoEdit === undefined) {
     return <Redirect to={state.backPage} />;
   }
-  const onModify =  () => {
-  // const onModify = async (e: React.FormEvent) => () => {
+  const onModify = () => {
+    // const onModify = async (e: React.FormEvent) => () => {
     // e.preventDefault();
     // fetch(modifyURL, {
     //   method: 'PUT',
@@ -40,24 +35,22 @@ export const BaseInfoEdit: React.FC = () => {
     // })
     //   .then(res => res.json())
     //   .then(json => {
-        const result={true:Boolean}
-    const msg={"网络异常":String}
-        if (result) 
-        {
-          present({
-            message: '编辑用户信息操作成功',
-            position:'top',
-            duration:3000
-          })
-
-        } else 
-        present({
-          buttons: [{ text: '关闭', handler: () => dismiss() }],
-          message: '编辑用户信息操作失败'+msg,
-          position:'top',
-        })
-        setBack();
-      // });
+    const result = { true: Boolean };
+    const msg = { 网络异常: String };
+    if (result) {
+      present({
+        message: '编辑用户信息操作成功',
+        position: 'top',
+        duration: 3000,
+      });
+    } else
+      present({
+        buttons: [{ text: '关闭', handler: () => dismiss() }],
+        message: '编辑用户信息操作失败' + msg,
+        position: 'top',
+      });
+    setBack();
+    // });
   };
 
   return (
@@ -103,7 +96,7 @@ export const BaseInfoEdit: React.FC = () => {
                   onChange={e =>
                     setBaseInfoState({
                       ...baseInfoState,
-                      supervisorLoginName: e.nativeEvent.target?.value,
+                      supervisorLoginName: e.target?.value,
                     })
                   }
                   readOnly
@@ -118,7 +111,7 @@ export const BaseInfoEdit: React.FC = () => {
                   onChange={e =>
                     setBaseInfoState({
                       ...baseInfoState,
-                      supervisorUsername: e.nativeEvent.target?.value,
+                      supervisorUsername: e.target?.value,
                     })
                   }
                   required
@@ -133,7 +126,7 @@ export const BaseInfoEdit: React.FC = () => {
                   onChange={e =>
                     setBaseInfoState({
                       ...baseInfoState,
-                      supervisorPhone: e.nativeEvent.target?.value,
+                      supervisorPhone: e.target?.value,
                     })
                   }
                   required
@@ -148,27 +141,27 @@ export const BaseInfoEdit: React.FC = () => {
                   onChange={e =>
                     setBaseInfoState({
                       ...baseInfoState,
-                      supervisorOrgName: e.nativeEvent.target?.value,
+                      supervisorOrgName: e.target?.value,
                     })
                   }
                   required
                 />
               </div>
             </div>
-         
-          <div className="flex items-center justify-center gap-4 mt-10">
-            <input
-              value="取消"
-              type="button"
-              className="px-6 py-2 border rounded-md "
-              onClick={onBack()}
-            />
-            <input
-              value="确定"
-              type="submit"
-              className="px-6 py-2 text-white border rounded-md bg-primary-600"
-            />
-          </div>
+
+            <div className="flex items-center justify-center gap-4 mt-10">
+              <input
+                value="取消"
+                type="button"
+                className="px-6 py-2 border rounded-md "
+                onClick={onBack()}
+              />
+              <input
+                value="确定"
+                type="submit"
+                className="px-6 py-2 text-white border rounded-md bg-primary-600"
+              />
+            </div>
           </form>
         </IonCardContent>
       </IonCard>

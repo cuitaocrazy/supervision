@@ -1,14 +1,10 @@
 //Announcement的详细页面
 import React, { useState } from 'react';
-import {
-  IonPage,
-  IonCard,
-  IonCardContent,
-} from '@ionic/react';
+import { IonPage, IonCard, IonCardContent } from '@ionic/react';
 import { Redirect } from 'react-router-dom';
 import { useCallback, useContext } from 'react';
 import { AppContext, setBlackDetail } from '../../../appState';
- import Quit from '../../Quit'
+import Quit from '../../Quit';
 
 export const BlackDetail: React.FC = () => {
   const { state, dispatch } = useContext(AppContext);
@@ -17,11 +13,11 @@ export const BlackDetail: React.FC = () => {
     dispatch(setBlackDetail(undefined));
   }, []);
   const onBack = () => () => {
-     setBack();
+    setBack();
   };
   if (state.black.blackDetail === undefined) {
     return <Redirect to={state.backPage} />;
-  } 
+  }
   return (
     <IonPage className="bg-gray-100">
       <Quit />
@@ -64,7 +60,6 @@ export const BlackDetail: React.FC = () => {
                   value={blackState.blackEduCreateDate}
                   readOnly
                 />
-                  
               </div>
               <div className="flex items-center mb-4 leading-10 justify-items-center">
                 <div className="flex justify-end w-32 mr-2">添加时间:</div>
