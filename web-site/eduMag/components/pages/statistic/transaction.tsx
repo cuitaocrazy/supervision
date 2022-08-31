@@ -232,7 +232,7 @@ const Transaction: React.FC = () => {
               <tr className="grid items-center h-10 grid-cols-6 gap-2 font-bold text-gray-700 bg-white rounded-lg justify-items-center">
                 {/* <th className="flex items-center justify-center ">交易ID</th> */}
                 <th className="flex items-center justify-center">合同号</th>
-                <th className="flex items-center justify-center">金额</th>
+                <th className="flex items-center justify-center">金额(元)</th>
                 <th className="flex items-center justify-center">交易日期</th>
                 <th className="flex items-center justify-center">交易时间</th>
                 <th className="flex items-center justify-center">交易类型</th>

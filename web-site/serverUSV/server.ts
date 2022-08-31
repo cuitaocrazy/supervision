@@ -289,8 +289,8 @@ app.post("/edu/lesson/edit", jsonParser, async (req, res) => {
   lesson.teacherId = "teacher00001";
   lesson.teacherName = "马老师";
   lesson.eduId = "edu0001";
-  // lesson.eduName = "测试机构";
-  lesson.eduName = req.body.eduName
+  lesson.eduName = "北京亚大教育机构";
+  // lesson.eduName = req.body.eduName
   lesson.lessonImages =
     "https://s3.bmp.ovh/imgs/2022/08/30/28f95385d82b4f7c.jpg"; //'http://placekitten.com/g/200/300'
   lesson.lessonOutline = false;
@@ -301,6 +301,7 @@ app.post("/edu/lesson/edit", jsonParser, async (req, res) => {
   lesson.lessonUpdateDate = moment().format("YYYYMMDD");
   lesson.lessonUpdateTime = moment().format("HHmmss");
   lesson.lessonUpdateReason = "编辑课程";
+  lesson.eduName = "北京亚大教育机构";
   try {
     console.log(lesson);
     const r = await eduLessonService.saveLesson(lesson);
@@ -778,10 +779,11 @@ app.post('/edb/login', async (req, res) => {
 
 
 app.post('/edb/lesson/audit', jsonParser, async (req, res) => {
-  console.log(`教育局: 课程审核: 条件[${JSON.stringify(req.body)}]`)
+  console.log(`教育局: 划拨查询: 条件[${JSON.stringify(req.body)}]`)
   const r = await edbEduLessonService.update(req.body)
   res.send(r)
 })
+
 
 //app.use(express.json())
 //新增
@@ -792,16 +794,12 @@ app.post("/edb/eduOrg/create", jsonParser, async (req, res) => {
   edu.eduCreateDate = moment().format("YYYYMMDD");
   edu.eduCreateTime = moment().format("HHmmss");
   edu.eduId = geneUSVOrderNo(); //await getUUIDWithEM(mysql.manager)
-  //默认年检
-  edu.eduAnnualInspectionDate = moment().format("YYYYMMDD");
-  edu.eduAnnualInspectionTime = moment().format("HHmmss");
-  edu.eduAnnualInspection = "qualified"; //年检状态默认合格
-  edu.supervisorOrgId = "123456789";
+
   const r = await edbEduOrgService.create(edu);
   res.send(r);
 });
 //编辑
-app.post("/edb/eduOrg/modify", jsonParser, async (req, res) => {
+app.post("/edb/eduOrg/modifyURL", jsonParser, async (req, res) => {
   console.log(`教育局: 更新教育机构: 更新信息[${JSON.stringify(req.body)}]`);
   const edu: EduOrg = req.body;
   edu.eduUpdateDate = moment().format("YYYYMMDD");
@@ -849,9 +847,3 @@ app.delete("/edb/supervisorBackEdu/remove", jsonParser, async (req, res) => {
   });
   res.send(r);
 });
-
-app.post('/edu/lesson/audit', jsonParser, async (req, res) => {
-  console.log(`教育机构: 课程审核: 条件[${JSON.stringify(req.body)}]`)
-  const r = await edbEduLessonService.update(req.body)
-  res.send(r)
-})
