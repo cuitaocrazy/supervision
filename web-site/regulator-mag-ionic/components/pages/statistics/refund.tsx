@@ -5,6 +5,7 @@ import Paging from '../../paging';
 import moment from 'moment';
 import { edbRefundFindURL } from 'const/const';
 
+
 const findURL = edbRefundFindURL;
 
 const Refund: React.FC = () => {
@@ -65,7 +66,7 @@ const Refund: React.FC = () => {
   );
 
   return (
-    <IonPage>
+    <IonPage className='bg-gray-100'>
       <Quit />
       <div className="relative w-full h-screen mx-6 overflow-auto">
         <div className="flex pt-2 my-2 text-gray-800">

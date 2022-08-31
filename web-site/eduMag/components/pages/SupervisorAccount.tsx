@@ -1,5 +1,5 @@
 //BaseInfo的详细页面
-import React, { useState } from "react";
+import React, { useState,FC } from "react";
 import {
   IonPage,
   IonCard,
