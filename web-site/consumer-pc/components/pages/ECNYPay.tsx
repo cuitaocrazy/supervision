@@ -5,17 +5,18 @@ import Navbar from "../Navbar";
 import { Contract } from "../../types/types";
 import { preOrderURL } from "../../const/const";
 import { AppContext, setContractDetail } from "../../appState";
-// import { io } from "socket.io-client";
+import { io } from "socket.io-client";
 import { Link } from "react-router-dom";
+import { QRCodeCanvas } from "qrcode.react";
 
 // 数币支付页面
 const ECNYPay = () => {
   const socketUrl = "http://localhost:3003";
   const history = useHistory();
-  // const socket = io(socketUrl);
+  const socket = io(socketUrl);
   const [contract, setContract] = useState({} as Contract);
   const { state, dispatch } = useContext(AppContext);
-  const [payUrl, setPayUrl] = useState("");
+  const [payUrl, setPayUrl] = useState("https://www.baidu.com");
   const refreshContract = useCallback(
     (contract: Contract) => {
       dispatch(setContractDetail(contract));
@@ -24,9 +25,9 @@ const ECNYPay = () => {
   );
 
   useEffect(() => {
-    // socket.on("open", () => {
-    //   console.log("socket io is open !");
-    // });
+    socket.on("open", () => {
+      console.log("socket io is open !");
+    });
     fetch(preOrderURL, {
       method: "POST",
       body: JSON.stringify({
@@ -93,9 +94,14 @@ const ECNYPay = () => {
               <span>{contract.lessonTotalPrice}</span>
             </p>
           </div>
+          <div className="grid justify-items-stretch">
+            <div className="justify-self-center">
+              <QRCodeCanvas value={payUrl} size={300}></QRCodeCanvas>
+            </div>
+          </div>
 
           <div className="flex mt-12 text-base">
-            <Link to="/eCNYPayResult" className="flex w-full h-10 py-2">
+            <Link to="/eCNYPayResult" className="flex w-full">
               <input
                 className="w-full h-10 py-2 mx-6 font-bold tracking-widest text-white shadow-md bg-primary-600 rounded-3xl bg-grimary-600 shadow-primary-600 focus:bg-primary-700"
                 type="submit"

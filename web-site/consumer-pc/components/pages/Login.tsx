@@ -105,7 +105,7 @@ const MyLoginTabs = () => {
   };
 
   if (username) {
-    return <Redirect to={"/tabs/home"} />;
+    return <Redirect to={"/home"} />;
   }
   return (
     <Tab.Group selectedIndex={selectedIndex} onChange={setSelectedIndex}>
