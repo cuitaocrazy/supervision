@@ -3,16 +3,7 @@ import React, { useState } from 'react';
 import {
   IonPage,
   IonCard,
-  IonCardHeader,
-  IonCardSubtitle,
-  IonLabel,
-  IonInput,
-  IonCardContent,
-  IonItem,
-  IonButton,
-  IonList,
-  IonDatetime,
-  IonPicker,
+  IonCardContent
 } from '@ionic/react';
 import { Redirect } from 'react-router-dom';
 import { useCallback, useContext } from 'react';
@@ -20,7 +11,7 @@ import { AppContext, setLessonDetail } from '../../../appState';
 import { Lesson } from '../../../types/types';
 import { PickerColumn } from '@ionic/core';
 import Quit from '../../Quit'
-
+import { getLessonType, getLessonStatusForList } from "const/dicData";
 export const LessonDetail: React.FC = () => {
   console.log('LessonDetail');
   const modifyURL = 'http://localhost:3003/lesson/modifyURL';
@@ -63,14 +54,6 @@ export const LessonDetail: React.FC = () => {
         alert(json.result);
       });
   };
-  const lessonTypePickerColumn = {
-    name: 'lessonTypePickerColumn',
-    options: [
-      { text: '语文', value: '0' },
-      { text: '数学', value: '1' },
-    ],
-  } as PickerColumn;
-
   return (
     <IonPage className="bg-gray-100">
       <Quit />
@@ -94,8 +77,8 @@ export const LessonDetail: React.FC = () => {
             </svg>
           </div>
           <div>
-          <span className="pr-1 text-gray-600">教育机构管理</span>/
-          <span className="pl-1 pr-1 text-primary-500">课程管理</span>/
+            <span className="pr-1 text-gray-600">教育机构管理</span>/
+            <span className="pl-1 pr-1 text-primary-500">课程管理</span>/
             <span className="pl-1 text-primary-500">课程详情</span>
           </div>
         </div>
@@ -150,7 +133,7 @@ export const LessonDetail: React.FC = () => {
                 className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
                 name="lessonType"
                 type="text"
-                value={lessonState.lessonType}
+                value={getLessonType(lessonState.lessonType)}
                 readOnly
               />
             </div>
@@ -231,10 +214,31 @@ export const LessonDetail: React.FC = () => {
                 className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
                 name="lessonState"
                 type="text"
-                value={lessonState.lessonState}
+                value={getLessonStatusForList(lessonState.lessonStatus)}
                 readOnly
               />
             </div>
+
+            <div className="flex mb-4 leading-10" hidden={lessonState.lessonStatus == 'off' ? false : true}>
+              <div className="flex justify-end w-32 mr-2">下架原因:</div>
+              <input
+                className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
+                type="text"
+                value={getLessonStatusForList(lessonState.lessonUpdateReason)}
+                readOnly
+              />
+            </div>
+
+            <div className="flex mb-4 leading-10 " hidden={lessonState.lessonStatus == 'reject' ? false : true}>
+              <div className="flex justify-end w-32 mr-2">下架原因:</div>
+              <input
+                className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
+                type="text"
+                value={getLessonStatusForList(lessonState.lessonUpdateReason)}
+                readOnly
+              />
+            </div>
+
             <div className="flex mb-4 leading-10">
               <div className="flex justify-end w-32 mr-2">更新日期:</div>
               <input
@@ -261,8 +265,8 @@ export const LessonDetail: React.FC = () => {
                 请查看课程大纲
               </a>
             </div>
-            </div>
-         
+          </div>
+
           <div className="flex justify-center">
             <input
               value="返回"
@@ -271,10 +275,10 @@ export const LessonDetail: React.FC = () => {
               className="flex w-20 px-6 py-2 font-bold text-white rounded-md bg-primary-600 focus:bg-primary-700"
             />
           </div>
-          
+
         </IonCardContent>
       </IonCard>
-    </IonPage>
+    </IonPage >
   );
 };
 

@@ -17,8 +17,6 @@ export const EduOrgEdit: React.FC = () => {
   const setBack = useCallback(() => {
     dispatch(setEduOrgEdit(undefined));
   }, []);
-  `                                                       `;
-
   if (state.eduOrg.eduOrgEdit === undefined) {
     return <Redirect to={state.backPage} />;
   }

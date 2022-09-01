@@ -7,17 +7,17 @@ import { IonPage, IonList, IonLabel, IonItem, IonRow, IonCol, useIonToast } from
 import { Dialog, Transition } from '@headlessui/react';
 import Paging from '../../paging';
 import Quit from '../../Quit';
-import { edbEduLessonFindURL, edbLessonAttendURL, edbLessonDelURL } from 'const/const';
-
+import { edbEduLessonFindURL, edbLessonOffURL } from 'const/const';
+import { getLessonStatusForList } from 'const/dicData';
 const findURL = edbEduLessonFindURL;
-const delURL = edbLessonDelURL;
-const attendURL = edbLessonAttendURL;
-
+const offURL = edbLessonOffURL;
 // 课程查询页面
 const LessonQuery: React.FC = () => {
   const [present, dismiss] = useIonToast();
   // 课程下架dialog页面状态
   let [isOffOpen, setIsOffOpen] = useState(false);
+  const [offLesson, setOffLesson] = useState({} as Lesson);
+
   function closeOffModal() {
     setIsOffOpen(false);
   }
@@ -25,7 +25,7 @@ const LessonQuery: React.FC = () => {
     setIsOffOpen(true);
   }
   const [page, setPage] = useState(0);
-  const [total, setTotal] = useState(101); //todo
+  const [total, setTotal] = useState(0);
   const onPageChange = (records: any, total: number, newPage: number) => {
     console.log(records);
     console.log(total);
@@ -35,65 +35,32 @@ const LessonQuery: React.FC = () => {
   };
   const { state, dispatch } = useContext(AppContext);
   const [lessonState, setLessonState] = useState(state.lesson.lessonList);
-  const onCreate = (e: React.FormEvent) => {
-    // e.preventDefault();
-    // fetch(createURL, {
-    //   method: 'PUT',
-    //   body: JSON.stringify(lessonState),
-    //   headers: {
-    //     'Content-type': 'application/json;charset=UTF-8',
-    //   },
-    // })
-    //   .then(res => res.json())
-    //   .then(json => {
-    //     alert(json)
-    const result = { true: Boolean };
-    if (result) {
-      present({
-        message: '课程下架成功',
-        position: 'top',
-        duration: 3000,
-      });
-      onQuery();
-    } else
-      present({
-        buttons: [{ text: '关闭', handler: () => dismiss() }],
-        message: '课程下架失败',
-        position: 'top',
-      });
-    closeOffModal();
-    onQuery();
-    // });
-  };
-  const onCancel = (item: Lesson) => () => {
-    fetch(delURL, {
-      method: 'PUT',
-      body: JSON.stringify({
-        lessonId: item.lessonId,
-      }),
+  const onOff = (e: React.FormEvent) => {
+    e.preventDefault();
+    fetch(offURL, {
+      method: 'POST',
+      body: JSON.stringify({ lessonId: offLesson.lessonId, lessonUpdateReason: offLesson.lessonUpdateReason }),
       headers: {
         'Content-type': 'application/json;charset=UTF-8',
       },
     })
       .then(res => res.json())
       .then(json => {
-        alert(json.result);
-      });
-  };
-
-  const onAttendance = (item: Lesson) => () => {
-    fetch(attendURL, {
-      method: 'PUT',
-      body: JSON.stringify({
-        lessonId: item.lessonId,
-      }),
-      headers: {
-        'Content-type': 'application/json;charset=UTF-8',
-      },
-    })
-      .then(res => res.json())
-      .then(json => {
-        alert(json.result);
+        const { result } = json;
+        if (result) {
+          present({
+            message: '课程下架成功',
+            position: 'top',
+            duration: 3000,
+          });
+          onQuery();
+        } else
+          present({
+            buttons: [{ text: '关闭', handler: () => dismiss() }],
+            message: '课程下架失败',
+            position: 'top',
+          });
+        closeOffModal();
       });
   };
 
@@ -153,30 +120,12 @@ const LessonQuery: React.FC = () => {
       .then(json => {
         const { result, records, total } = json;
         if (result) {
-          // todo 测试方便
-          // setTotal(total)
+          setTotal(total)
           refreshLessonList(records);
         }
       });
   };
   useEffect(onQuery, []);
-
-  const getStatus = (statusEnglish: any) => {
-    if (statusEnglish === 'pending') {
-      return '待审核';
-    }
-    if (statusEnglish === 'reject') {
-      return '审核未通过';
-    }
-    if (statusEnglish === 'on') {
-      return '上架';
-    }
-    if (statusEnglish === 'off') {
-      return '下架';
-    }
-    return statusEnglish;
-  };
-
   const ListEntry = ({ lesson, ...props }: { lesson: Lesson }) => (
     <tr className="grid items-center grid-cols-8 gap-2 text-gray-600 border justify-items-center even:bg-white odd:bg-primary-100 ">
       <td className="flex items-center justify-center leading-10">{lesson.eduName}</td>
@@ -190,7 +139,7 @@ const LessonQuery: React.FC = () => {
       <td className="flex items-center justify-center leading-10">{lesson.lessonStartDate}</td>
       <td className="flex items-center justify-center leading-10">{lesson.lessonEndDate}</td>
       <td className="flex items-center justify-center leading-10">
-        {getStatus(lesson.lessonStatus)}
+        {getLessonStatusForList(lesson.lessonStatus)}
       </td>
       <td className="flex items-center justify-center leading-10">
         <div className="flex gap-2 ">
@@ -198,7 +147,12 @@ const LessonQuery: React.FC = () => {
             详情
           </button>
           {lesson.lessonStatus === 'on' ? (
-            <button className="p-1 text-fuchsia-600" onClick={openOffModal}>
+            <button className="p-1 text-fuchsia-600"
+              onClick={() => {
+                setOffLesson(lesson);
+                openOffModal();
+              }}
+            >
               下架
             </button>
           ) : (
@@ -322,7 +276,7 @@ const LessonQuery: React.FC = () => {
                       <hr className="mt-2 mb-4" />
                     </Dialog.Title>
                     <form
-                      onSubmit={onCreate}
+                      onSubmit={onOff}
                       className="flex flex-col items-center rounded-lg justify-items-center"
                     >
                       <div className="flex items-center mb-4 justify-items-center">
@@ -330,9 +284,8 @@ const LessonQuery: React.FC = () => {
                           <div className="flex justify-end p-1 w-36">教育机构名称:</div>
                           <input
                             className="w-64 p-1 text-gray-600 bg-gray-100 border rounded-md justify-self-start focus:outline-none"
-                            name="eduId"
                             type="text"
-                            value={lessonState?.edu?.eduName}
+                            value={offLesson.eduName}
                             spellCheck={false}
                             readOnly
                           ></input>
@@ -346,7 +299,7 @@ const LessonQuery: React.FC = () => {
                             className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
                             name="lessonName"
                             type="text"
-                            value={lessonState.lessonName}
+                            value={offLesson.lessonName}
                             spellCheck={false}
                             readOnly
                           ></input>
@@ -354,16 +307,18 @@ const LessonQuery: React.FC = () => {
                       </div>
                       <div className="flex items-center mb-4 justify-items-center">
                         <div className="flex justify-items-center">
-                          <span className="flex justify-end p-1 mr-1 w-36">下架原因:</span>
+                          <span className="flex justify-end p-1 mr-1 w-36">
+                            <span className='px-1 text-red-600'>*</span>
+                            下架原因:</span>
                           <textarea
                             className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
-                            name="lessonTotalTimes"
-                            value={lessonState.lessonTotalTimes}
+                            name="lessonUpdateReason"
                             spellCheck={false}
                             onChange={e =>
-                              setLessonState({
-                                ...lessonState,
+                              setOffLesson({
+                                ...offLesson,
                                 ...{
+                                  lessonUpdateReason: e.nativeEvent.target?.value,
                                   lessonTotalTimes: e.target?.value,
                                 },
                               })

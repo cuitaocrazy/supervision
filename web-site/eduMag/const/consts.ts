@@ -6,6 +6,7 @@ export const eduTransactionFindURL = `${serverPath}/transaction/find`
 export const eduLessonEditURL = `${serverPath}/lesson/edit`;
 export const eduLessonCreateURL = `${serverPath}/lesson/create`;
 export const eduLessonFindURL = `${serverPath}/lesson/find`;
+export const eduLessonOffURL = `${serverPath}/lesson/off`;//课程下架
 export const eduLessonAuditURL = `${serverPath}/lesson/audit`;
 export const eduAttendanceApplyURL = `${serverPath}/attendance/apply`;
 export const eduAttendanceFindURL = `${serverPath}/attendance/find`;

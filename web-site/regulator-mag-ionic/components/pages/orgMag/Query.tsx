@@ -699,7 +699,8 @@ const OrgMagQuery: React.FC = () => {
                       </div>
                       <div className="flex items-center mb-4 justify-items-center">
                         <div className="flex justify-items-center">
-                          <span className="flex justify-end p-1 mr-1 w-36">加入黑名单原因:</span>
+                          <span className="flex justify-end p-1 mr-1 w-36">                  <span className="px-1 text-red-600">*</span>
+                            加入黑名单原因:</span>
                           <textarea
                             className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
                             name="blackEduCreateReason"

@@ -35,7 +35,7 @@ export const TeacherDetail: React.FC = () => {
     })
       .then((res) => res.json())
       .then((json) => {
-        const result = json;
+        const { result } = json;
         if (result) {
           present({
             message: "教师编辑成功",

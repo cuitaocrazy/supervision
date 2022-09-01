@@ -4,6 +4,7 @@ export const edbLessonAuditURL = `${serverPath}/lesson/audit`
 export const edbLessonDelURL = `${serverPath}/lesson/del`
 export const edbLessonAttendURL = `${serverPath}/lesson/attend`
 export const edbEduLessonFindURL = `${serverPath}/eduLesson/find`
+export const edbLessonOffURL= `${serverPath}/eduLesson/off`//下架
 
 export const edbChaincodeFindURL = `${serverPath}/chaincode/find`
 export const edbChaincodeCountURL = `${serverPath}/chaincode/count`
