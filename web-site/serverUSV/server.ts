@@ -799,7 +799,7 @@ app.post("/edb/eduOrg/create", jsonParser, async (req, res) => {
   res.send(r);
 });
 //编辑
-app.post("/edb/eduOrg/modifyURL", jsonParser, async (req, res) => {
+app.post("/edb/eduOrg/modify", jsonParser, async (req, res) => {
   console.log(`教育局: 更新教育机构: 更新信息[${JSON.stringify(req.body)}]`);
   const edu: EduOrg = req.body;
   edu.eduUpdateDate = moment().format("YYYYMMDD");
