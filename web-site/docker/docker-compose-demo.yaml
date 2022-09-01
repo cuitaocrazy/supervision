@@ -51,7 +51,7 @@ services:
     working_dir: /home/node/app/
     command: /home/node/wait_for.sh supervision_demo_server:3003 -- npm run demo
     environment:
-      - NEXT_PUBLIC_SERVER_PATH=http://localhost:8080/api/consumer
+      - NEXT_PUBLIC_SERVER_PATH=http://${host}:8080/api/consumer
       - NEXT_PUBLIC_ROOT_PATH=/consumer
     volumes:
       - ../consumerdemo:/home/node/app/
@@ -70,7 +70,7 @@ services:
     working_dir: /home/node/app/
     command: /home/node/wait_for.sh supervision_demo_server:3003 -- npm run demo
     environment:
-      - NEXT_PUBLIC_SERVER_PATH=http://localhost:8080/api/edu
+      - NEXT_PUBLIC_SERVER_PATH=http://${host}:8080/api/edu
       - NEXT_PUBLIC_ROOT_PATH=/edu
       - ENV_RUNTIME=test
     volumes:
@@ -90,7 +90,7 @@ services:
     working_dir: /home/node/app/
     command: /home/node/wait_for.sh supervision_demo_server:3003 -- npm run demo
     environment:
-      - NEXT_PUBLIC_SERVER_PATH=http://localhost:8080/api/edb
+      - NEXT_PUBLIC_SERVER_PATH=http://${host}:8080/api/edb
       - NEXT_PUBLIC_ROOT_PATH=/edb
       - ENV_RUNTIME=test
     volumes:
