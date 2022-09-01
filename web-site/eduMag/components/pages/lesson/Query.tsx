@@ -113,9 +113,11 @@ const LessonQuery: React.FC = () => {
   const onCreate = (e: any) => {
     e.preventDefault();
     console.log(createLesson);
+    const newCreateLesson : any = createLesson
+    newCreateLesson.eduName=eduName
     fetch(createUrl, {
       method: "POST",
-      body: JSON.stringify(createLesson),
+      body: JSON.stringify(newCreateLesson),
       headers: {
         "Content-type": "application/json;charset=UTF-8",
       },
