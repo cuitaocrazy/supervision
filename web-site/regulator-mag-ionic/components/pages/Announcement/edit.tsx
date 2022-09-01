@@ -16,6 +16,7 @@ export const AnnouncementEdit: React.FC = () => {
   const modifyURL = edbAnnouncementModifyURL;
   const { state, dispatch } = useContext(AppContext);
   const editor = useRef(null);
+
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [isPickOpen, setPickOpen] = useState(false);
   const statueTypePickerColumn = {
@@ -117,7 +118,7 @@ export const AnnouncementEdit: React.FC = () => {
                   type="text"
                   spellCheck={false}
                   onChange={e =>
-                    setAnnouncementEdit({
+                    setAnnouncementState({
                       ...announcementState,
                       ...{ announcementAnnouncer: e.target?.value },
                     })
@@ -134,7 +135,7 @@ export const AnnouncementEdit: React.FC = () => {
                   value={announcementState.announcementTitle}
                   spellCheck={false}
                   onChange={e =>
-                    setAnnouncementEdit({
+                    setAnnouncementState({
                       ...announcementState,
                       ...{ announcementTitle: e.target?.value },
                     })
@@ -147,12 +148,24 @@ export const AnnouncementEdit: React.FC = () => {
               <div className="flex mb-4 leading-10">
                 <div className="flex justify-end w-32 mr-2">政策内容:</div>
                 <div className="items-start w-64 p-1 text-gray-600 justify-self-start focus:outline-none focus:glow-primary-600">
-                  <RichText
+                  {/* todo <RichText
                     ref={editor}
                     editorState={editorState}
                   // onChange={(editorState: any) => {
                   //   setEditorState(editorState);
                   // }}
+                  /> */}
+                  <textarea
+                    className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
+                    value={announcementState.announcementContent}
+
+                    onChange={e =>
+                      setAnnouncementState({
+                        ...announcementState,
+                        announcementContent: e.target?.value,
+                      })
+                    }
+                    required
                   />
                 </div>
               </div>

@@ -4,7 +4,7 @@ export const edbLessonAuditURL = `${serverPath}/lesson/audit`
 export const edbLessonDelURL = `${serverPath}/lesson/del`
 export const edbLessonAttendURL = `${serverPath}/lesson/attend`
 export const edbEduLessonFindURL = `${serverPath}/eduLesson/find`
-export const edbLessonOffURL= `${serverPath}/eduLesson/off`//下架
+export const edbLessonOffURL = `${serverPath}/eduLesson/off`//下架
 
 export const edbChaincodeFindURL = `${serverPath}/chaincode/find`
 export const edbChaincodeCountURL = `${serverPath}/chaincode/count`
@@ -41,3 +41,4 @@ export const edbAnnouncementCreateURL = `${serverPath}/announcement/create`
 export const edbAnnouncementModifyURL = `${serverPath}/announcement/modify`
 export const edbAnnouncementDelURL = `${serverPath}/announcement/del`
 export const edbAnnouncementFindURL = `${serverPath}/announcement/find`
+export const edbAnnouncementStatusURL = `${serverPath}/announcement/offOn`

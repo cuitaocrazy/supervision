@@ -123,8 +123,8 @@ const yuanToFen = (tranAmtYuan: string | number) => {
 import eduLogin from "./src/edu/login";
 
 app.post('/edu/login', jsonParser, async (req, res) => {
-    const r = await eduLogin(req.body)
-    res.send(r)
+  const r = await eduLogin(req.body)
+  res.send(r)
 })
 import eduTeacherService from "./src/edu/TeacherService";
 import eduTransactionService from "./src/edu/TransactionService";
@@ -224,12 +224,12 @@ app.get('/edu/lesson/findAll', async (req, res) => {
 app.get('/edu/lesson/find', async (req, res) => {
   console.log(`教育机构: 搜索课程: 条件[${JSON.stringify(req.query)}]`)
   const r = await eduLessonService.find(req.query)
-    r.records.map((lesson: EduLesson) => {
-        lesson.lessonTotalPrice = fenToYuan(lesson.lessonTotalPrice);
-        lesson.lessonPerPrice = fenToYuan(lesson.lessonPerPrice);
-        lesson.lessonStartDate = dateFormat(lesson.lessonStartDate);
-        lesson.lessonEndDate = dateFormat(lesson.lessonEndDate);
-    });
+  r.records.map((lesson: EduLesson) => {
+    lesson.lessonTotalPrice = fenToYuan(lesson.lessonTotalPrice);
+    lesson.lessonPerPrice = fenToYuan(lesson.lessonPerPrice);
+    lesson.lessonStartDate = dateFormat(lesson.lessonStartDate);
+    lesson.lessonEndDate = dateFormat(lesson.lessonEndDate);
+  });
   res.send(r)
 })
 app.post('/edu/lesson/create', jsonParser, async (req, res) => {
@@ -285,9 +285,9 @@ app.post("/edu/lesson/edit", jsonParser, async (req, res) => {
   lesson.lessonAccumulationQuantity = 0;
   //  todo ;
   // lesson.teacherId = req.body.teacherId
-    lesson.teacherId = 'teacher00001';
-  lesson.teacherName=req.body.teacherName;
-  lesson.eduId =req.body.eduId;
+  lesson.teacherId = 'teacher00001';
+  lesson.teacherName = req.body.teacherName;
+  lesson.eduId = req.body.eduId;
   lesson.eduName = req.body.eduName
   lesson.lessonImages =
     "https://s3.bmp.ovh/imgs/2022/08/30/28f95385d82b4f7c.jpg"; //'http://placekitten.com/g/200/300'
@@ -861,30 +861,30 @@ app.post("/edu/lesson/audit", jsonParser, async (req, res) => {
   const r = await edbEduLessonService.update(req.body);
   res.send(r);
 });
-app.post("/edb/eduLesson/off", jsonParser,async (req, res) => {
+app.post("/edb/eduLesson/off", jsonParser, async (req, res) => {
   console.log(`教育局: 课程下架: 条件[${JSON.stringify(req.body)}]`);
   const r = await eduLessonService.off(req.body);
   res.send(r);
 });
 //日期格式话
-const dateFormat = (dateStr: string ) => {
-  if(dateStr!=null){
-  const y=dateStr.substring(0,4);
-  const m=dateStr.substring(4,6);
-  const d=dateStr.substring(6,8);
-   return y+'-'+m+'-'+d;
-  }else
-  return dateStr
+const dateFormat = (dateStr: string) => {
+  if (dateStr != null) {
+    const y = dateStr.substring(0, 4);
+    const m = dateStr.substring(4, 6);
+    const d = dateStr.substring(6, 8);
+    return y + '-' + m + '-' + d;
+  } else
+    return dateStr
 };
 //时间格式话
-const timeFormat = (dateStr: string ) => {
-  if(dateStr!=null){
-  const y=dateStr.substring(0,2);
-  const m=dateStr.substring(2,4);
-  const d=dateStr.substring(4,6);
-  return y+':'+m+':'+d;
-  }else
-  return dateStr
+const timeFormat = (dateStr: string) => {
+  if (dateStr != null) {
+    const y = dateStr.substring(0, 2);
+    const m = dateStr.substring(2, 4);
+    const d = dateStr.substring(4, 6);
+    return y + ':' + m + ':' + d;
+  } else
+    return dateStr
 };
 //监管端:公告政策
 
@@ -927,5 +927,11 @@ app.delete("/edb/announcement/del", jsonParser, async (req, res) => {
     ...new Announcement(),
     ...req.body,
   });
+  res.send(r);
+});
+app.post("/edb/announcement/offOn", jsonParser, async (req, res) => {
+  console.log(`教育局: 公告政策状态更新: 条件[${JSON.stringify(req.body)}]`);
+  const info: Announcement = req.body
+  const r = await announcementService.save(info);
   res.send(r);
 });

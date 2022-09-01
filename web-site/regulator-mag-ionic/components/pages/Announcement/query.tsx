@@ -14,12 +14,13 @@ import RichText from '../../RichText';
 import { EditorState, convertToRaw } from 'draft-js';
 import Quit from '../../Quit';
 import Paging from '../../paging';
-import { edbAnnouncementFindURL, edbAnnouncementCreateURL, edbAnnouncementDelURL, edbAnnouncementModifyURL } from 'const/const';
+import { edbAnnouncementFindURL, edbAnnouncementCreateURL, edbAnnouncementDelURL, edbAnnouncementStatusURL } from 'const/const';
 import localforage from 'localforage';
 
 const queryURL = edbAnnouncementFindURL
 const delURL = edbAnnouncementDelURL
 const createUrl = edbAnnouncementCreateURL
+const offOn = edbAnnouncementStatusURL
 
 const AnnouncementQuery: React.FC = () => {
   const [present, dismiss] = useIonToast();
@@ -40,6 +41,44 @@ const AnnouncementQuery: React.FC = () => {
   function openDeleteModal() {
     setIsDeleteOpen(true);
   }
+
+  let [isOffOpen, setIsOffOpen] = useState(false);
+  const [off, setOff] = useState({} as Announcement);
+  //撤回
+  function closeOffModal() {
+    setIsOffOpen(false);
+  }
+  function openOffModal() {
+    setIsOffOpen(true);
+  }
+  const onOff = (status: string) => (e: React.FormEvent) => {
+    e.preventDefault();
+    fetch(offOn, {
+      method: 'POST',
+      body: JSON.stringify({ announcementId: off.announcementId, announcementStatus: status }),
+      headers: {
+        'Content-type': 'application/json;charset=UTF-8',
+      },
+    })
+      .then(res => res.json())
+      .then(json => {
+        const { result } = json;
+        if (result) {
+          present({
+            message: '公告回撤成功',
+            position: 'top',
+            duration: 3000,
+          });
+          onQuery();
+        } else
+          present({
+            buttons: [{ text: '关闭', handler: () => dismiss() }],
+            message: '课程回撤失败',
+            position: 'top',
+          });
+        closeOffModal();
+      });
+  };
 
   const { state, dispatch } = useContext(AppContext);
   const editor = useRef(null);
@@ -149,7 +188,7 @@ const AnnouncementQuery: React.FC = () => {
 
   const onCreate = (e: any) => {
     e.preventDefault();
-    createAnnouncement.announcementContent = '政策公告呢'
+    // createAnnouncement.announcementContent = '政策公告呢'
     createAnnouncement.announcementAnnouncer = loginName
     fetch(createUrl, {
       method: 'POST',
@@ -194,18 +233,37 @@ const AnnouncementQuery: React.FC = () => {
           <button className="p-1 text-primary-600" onClick={onDetail(announcement)}>
             详情
           </button>
-          <button className="p-1 text-cyan-600" onClick={onEdit(announcement)}>
-            编辑
-          </button>
-          <button
-            className="p-1 text-red-600"
-            onClick={() => {
-              setDelAnnouncement(announcement)
-              openDeleteModal()
-            }}
-          >
-            删除
-          </button>
+
+
+          {announcement.announcementStatus === 'off' ? (
+            <button className="p-1 text-cyan-600" onClick={onEdit(announcement)}>
+              编辑
+            </button>
+          ) : (
+            <></>
+          )}
+          {announcement.announcementStatus === 'on' ? (
+            <button className="p-1 text-fuchsia-600"
+              onClick={() => {
+                setOff(announcement);
+                openOffModal();
+              }}
+            >
+              撤回
+            </button>
+          ) : (
+            <button
+              className="p-1 text-red-600"
+              onClick={() => {
+                setDelAnnouncement(announcement)
+                openDeleteModal()
+              }}
+            >
+              删除
+            </button>
+          )}
+
+
         </div>
       </td>
     </tr>
@@ -359,27 +417,23 @@ const AnnouncementQuery: React.FC = () => {
                         <div className="flex items-center mb-4 justify-items-center">
                           <div className="flex justify-items-center">
                             <span className="flex justify-end p-1 mr-1 w-36">政策内容:</span>
-                            {/* <input
-                              className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
-                              name="supervisorUsername"
-                              type="text"
-                              value={createAnnouncement.announcementTitle}
-                              spellCheck={false}
-                              onChange={e =>
-                                setCreateAnnouncement({
-                                  ...createAnnouncement,
-                                  ...{ announcementTitle: e.target?.value },
-                                })
-                              }
-                              required
-                            ></input> */}
                             <div className="w-64 p-1 text-gray-600 justify-self-start focus:outline-none focus:glow-primary-600">
-                              <RichText
+                              {/* todo <RichText
                                 ref={editor}
                                 editorState={editorState}
                                 onChange={(editorState: any) => {
                                   setEditorState(editorState);
                                 }}
+                              /> */}
+                              <textarea
+                                className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
+                                onChange={e =>
+                                  setCreateAnnouncement({
+                                    ...createAnnouncement,
+                                    announcementContent: e.target?.value,
+                                  })
+                                }
+
                               />
                             </div>
                           </div>
@@ -405,7 +459,7 @@ const AnnouncementQuery: React.FC = () => {
             </Dialog>
           </Transition>
 
-          {/* 删除课程模态框 */}
+          {/* 删除公告模态框 */}
           <Transition appear show={isDeleteOpen} as={Fragment}>
             <Dialog as="div" className="relative z-10" onClose={closeDeleteModal}>
               <Transition.Child
@@ -468,12 +522,74 @@ const AnnouncementQuery: React.FC = () => {
               </div>
             </Dialog>
           </Transition>
+          {/* 撤回公告模态框 */}
+          <Transition appear show={isOffOpen} as={Fragment}>
+            <Dialog as="div" className="relative z-10" onClose={closeOffModal}>
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0"
+                enterTo="opacity-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100"
+                leaveTo="opacity-0"
+              >
+                <div className="fixed inset-0 bg-black bg-opacity-25" />
+              </Transition.Child>
 
+              <div className="fixed inset-0 overflow-y-auto">
+                <div className="flex items-center justify-center min-h-full p-4 text-center">
+                  <Transition.Child
+                    as={Fragment}
+                    enter="ease-out duration-300"
+                    enterFrom="opacity-0 scale-95"
+                    enterTo="opacity-100 scale-100"
+                    leave="ease-in duration-200"
+                    leaveFrom="opacity-100 scale-100"
+                    leaveTo="opacity-0 scale-95"
+                  >
+                    <Dialog.Panel className="w-full max-w-md p-4 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
+                      <Dialog.Title
+                        as="h3"
+                        className="text-lg font-medium leading-6 text-center text-gray-900"
+                      >
+                        政策公告回撤
+                        <hr className="mt-2 mb-4" />
+                      </Dialog.Title>
+                      <form
+                        onSubmit={onOff('off')}
+                        className="flex flex-col items-center rounded-lg justify-items-center"
+                      >
+                        <div className="flex items-center mb-4 justify-items-center">
+                          <div className="flex leading-7 justify-items-center">
+                            <div className="flex justify-end p-1 ">确定要回撤该政策公告？</div>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-4 mt-2 justify-items-center">
+                          <input
+                            value="取消"
+                            type="button"
+                            className="px-6 py-2 border rounded-md "
+                            onClick={closeOffModal}
+                          />
+                          <input
+                            value="回撤"
+                            type="submit"
+                            className="px-6 py-2 text-white border rounded-md bg-primary-600"
+                          />
+                        </div>
+                      </form>
+                    </Dialog.Panel>
+                  </Transition.Child>
+                </div>
+              </div>
+            </Dialog>
+          </Transition>
           {/* 列表 */}
           <div className="absolute w-full mt-10">
             <table className="w-11/12">
               <thead>
-                <tr className="grid items-center h-10 grid-cols-4 gap-2 font-bold text-gray-700 bg-white rounded-lg justify-items-center">
+                <tr className="grid items-center h-10 grid-cols-5 gap-2 font-bold text-gray-700 bg-white rounded-lg justify-items-center">
                   <th className="flex items-center justify-center">政策标题</th>
                   <th className="flex items-center justify-center">政策内容</th>
                   <th className="flex items-center justify-center">发布日期</th>
