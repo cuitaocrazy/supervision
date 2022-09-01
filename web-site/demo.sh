@@ -36,7 +36,7 @@ function waitStartComplete() {
 
 function start() {
     echo "start all demo"
-    docker-compose -f ./docker/docker-compose-demo.yaml up -d --remove-orphans
+    docker compose -f ./docker/docker-compose-demo.yaml up -d --remove-orphans
     echo "先等 20 秒, 再检查启动情况..."
     sleep 20
     waitStartComplete consumer
@@ -51,7 +51,7 @@ function cleanWebModule() {
 
 function stop() {
     echo "stop all demo"
-    docker-compose -f ./docker/docker-compose-demo.yaml down -v
+    docker compose -f ./docker/docker-compose-demo.yaml down -v
     rm -rf ./serverUSV/dist
     cleanWebModule regulator-mag-ionic
     cleanWebModule consumerdemo
