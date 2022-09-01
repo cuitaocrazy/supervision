@@ -153,7 +153,7 @@ export const EduOrgEdit: React.FC = () => {
                   name="eduLegalPhone"
                   value={eduOrgState.eduLegalPhone}
                   onChange={e =>
-                    setEduOrgState({ ...eduOrgState, eduLegalPhone: e.nativeEvent.target?.value })
+                    setEduOrgState({ ...eduOrgState, eduLegalPhone: e.target?.value })
                   }
                 />
               </div>
@@ -229,7 +229,7 @@ export const EduOrgEdit: React.FC = () => {
                   name="eduNormalAccount"
                   value={eduOrgState.eduNormalAccount}
                   onChange={e =>
-                    setEduOrgState({ ...eduOrgState, eduNormalAccount: e.nativeEvent.target?.value })
+                    setEduOrgState({ ...eduOrgState, eduNormalAccount: e.target?.value })
                   }
                   required
                 />
@@ -243,7 +243,7 @@ export const EduOrgEdit: React.FC = () => {
                   name="eduAnnualInspectionTime"
                   value={eduOrgState.eduLoginName}
                   onChange={e =>
-                    setEduOrgState({ ...eduOrgState, eduLoginName: e.nativeEvent.target?.value })
+                    setEduOrgState({ ...eduOrgState, eduLoginName: e.target?.value })
                   }
                   required
                 />
@@ -269,7 +269,7 @@ export const EduOrgEdit: React.FC = () => {
                   name="supervisorOrgId"
                   value={eduOrgState.supervisorOrgId}
                   onChange={e =>
-                    setEduOrgState({ ...eduOrgState, supervisorOrgId: e.nativeEvent.target?.value })
+                    setEduOrgState({ ...eduOrgState, supervisorOrgId: e.target?.value })
                   }
                 />
               </div>

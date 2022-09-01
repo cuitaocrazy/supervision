@@ -886,3 +886,46 @@ const timeFormat = (dateStr: string ) => {
   }else
   return dateStr
 };
+//监管端:公告政策
+
+import announcementService from "./src/edb/AnnouncementService";
+import { Announcement } from './src/entity/Announcement';
+app.post("/edb/announcement/create", jsonParser, async (req, res) => {
+  console.log(`教育局: 公告政策添加: 条件[${JSON.stringify(req.body)}]`);
+  const info: Announcement = req.body
+  info.announcementStatus = 'on'
+  info.announcementDate = info.announcementDate?.replaceAll('-', '');
+
+  info.announcementId = randomUUID().replaceAll('-', '');
+  const r = await announcementService.save(info);
+  res.send(r);
+});
+app.post('/edb/announcement/modify', jsonParser, async (req, res) => {
+  console.log(`教育局: 更新教育机构: 更新信息[${JSON.stringify(req.body)}]`)
+  const info: Announcement = req.body
+  if (info.announcementId != null) {
+    info.announcementStatus = 'on'
+    info.announcementDate = info.announcementDate?.replaceAll('-', '');
+    const r = await announcementService.save(info)
+    res.send(r)
+  } else
+    res.send({ result: false, msg: "修改失败" })
+})
+
+app.get("/edb/announcement/find", async (req, res) => {
+  console.log(`教育局: 公告政策查询:条件[${JSON.stringify(req.query)}]`);
+  let r = await announcementService.find(req.query);
+  r.records.map((item: Announcement) => {
+    item.announcementDate = dateFormat(item.announcementDate);
+  });
+  res.send(r);
+});
+
+app.delete("/edb/announcement/del", jsonParser, async (req, res) => {
+  console.log(`教育局: 公告政策删除: 条件[${JSON.stringify(req.body)}]`);
+  const r = await announcementService.del({
+    ...new Announcement(),
+    ...req.body,
+  });
+  res.send(r);
+});

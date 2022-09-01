@@ -1,11 +1,6 @@
-import { stringify } from 'querystring'
 import { EduLesson } from '../entity/EduLesson'
-import { EduOrg } from '../entity/EduOrg'
 import mysql from '../mysql'
-
-const nullableFuzzy = (query:any)=>{
-    return '%'.concat(query?query:'').concat('%')
-}
+import {nullableFuzzy} from '../Util'
 class EduLessonService {
 
     async find(req) {

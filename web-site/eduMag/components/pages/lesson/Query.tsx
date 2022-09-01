@@ -503,7 +503,6 @@ const LessonQuery: React.FC = () => {
                         <div className="flex justify-items-center">
                           <div className="flex justify-end p-1 mr-1 w-36">
                             <span className="px-1 text-red-600">*</span>
-                            <span className='px-1 text-red-600'>*</span>
                             总价格(元):
                           </div>
                           <input

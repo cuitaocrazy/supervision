@@ -35,3 +35,9 @@ export const edbTeacherFindURL = `${serverPath}/teacher/find`
 export const edbTransferFindURL = `${serverPath}/transfer/find`
 
 export const edbLoginURL = `${serverPath}/login`
+
+//政策公告
+export const edbAnnouncementCreateURL = `${serverPath}/announcement/create`
+export const edbAnnouncementModifyURL = `${serverPath}/announcement/modify`
+export const edbAnnouncementDelURL = `${serverPath}/announcement/del`
+export const edbAnnouncementFindURL = `${serverPath}/announcement/find`

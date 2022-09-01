@@ -11,34 +11,15 @@ import { Announcement } from '../../../types/types';
 import { PickerColumn } from '@ionic/core';
 import { Dialog, Transition } from '@headlessui/react';
 import RichText from '../../RichText';
-import { EditorState } from 'draft-js';
+import { EditorState, convertToRaw } from 'draft-js';
 import Quit from '../../Quit';
+import Paging from '../../paging';
+import { edbAnnouncementFindURL, edbAnnouncementCreateURL, edbAnnouncementDelURL, edbAnnouncementModifyURL } from 'const/const';
+import localforage from 'localforage';
 
-const queryURL = 'http://localhost:3003/announcement/query';
-const delURL = 'http://localhost:3003/announcement/del';
-const modifyURL = 'http://localhost:3003/announcement/modifyURL';
-const createUrl = 'http://localhost:3003/announcement/createURL';
-
-const demoAnnouncementList: Announcement[] = [
-  {
-    announcementId: '1',
-    announcementDate: '2020-01-01',
-    announcementTime: '00:00:00',
-    announcementAnnouncer: '介绍',
-    announcementTitle: '标题',
-    announcementContent: '介绍',
-    announcementStatus: 'on',
-  },
-  {
-    announcementId: '2',
-    announcementDate: '2020-01-01',
-    announcementTime: '00:00:00',
-    announcementAnnouncer: '介绍2',
-    announcementTitle: '标题2',
-    announcementContent: '介绍2',
-    announcementStatus: 'on',
-  },
-];
+const queryURL = edbAnnouncementFindURL
+const delURL = edbAnnouncementDelURL
+const createUrl = edbAnnouncementCreateURL
 
 const AnnouncementQuery: React.FC = () => {
   const [present, dismiss] = useIonToast();
@@ -63,8 +44,17 @@ const AnnouncementQuery: React.FC = () => {
   const { state, dispatch } = useContext(AppContext);
   const editor = useRef(null);
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
-  const [queryInfo, setQueryInfo] = useState({ announcementTitle: '' });
   const [createAnnouncement, setCreateAnnouncement] = useState({} as Announcement);
+  const [delAnnouncement, setDelAnnouncement] = useState({} as Announcement);
+  const [loginName, setLoginName] = useState("");
+
+  const [page, setPage] = useState(0);
+  const [total, setTotal] = useState(0);
+  const onPageChange = (records: any, total: number, newPage: number) => {
+    setPage(newPage);
+    refreshList(records);
+  };
+  const [queryInfo, setQueryInfo] = useState({ announcementTitle: '' });
   const getParamStr = (params: any, url: string) => {
     let result = '?';
     Object.keys(params).forEach(key => (result = result + key + '=' + params[key] + '&'));
@@ -76,12 +66,35 @@ const AnnouncementQuery: React.FC = () => {
     },
     queryURL
   );
+
   const refreshList = useCallback(
-    (eduOrgs: Announcement[]) => {
-      dispatch(setAnnouncementList(eduOrgs));
+    (announList: Announcement[]) => {
+      dispatch(setAnnouncementList(announList));
     },
     [dispatch]
   );
+  const onQuery = () => {
+    fetch(paramStr, {
+      method: 'GET',
+      headers: {
+        'Content-type': 'application/json;charset=UTF-8',
+      },
+    })
+      .then(res => res.json())
+      .then(json => {
+        const { result, records, total } = json;
+        if (result) {
+          setTotal(total);
+          refreshList(records);
+        }
+      });
+  }
+  useEffect(() => {
+    localforage.getItem('loginName').then(value => {
+      setLoginName(value as string);
+    });
+    onQuery()
+  }, []);
   const onDetail = (item: Announcement) => () => {
     doSetDetail(item);
   };
@@ -89,11 +102,12 @@ const AnnouncementQuery: React.FC = () => {
     doSetEdit(item);
   };
 
-  const onCancel = (item: Announcement) => () => {
+  const onCancel = (e: any) => {
+    e.preventDefault();
     fetch(delURL, {
-      method: 'PUT',
+      method: 'delete',
       body: JSON.stringify({
-        announcementTitle: item.announcementTitle,
+        announcementId: delAnnouncement.announcementId,
       }),
       headers: {
         'Content-type': 'application/json;charset=UTF-8',
@@ -101,20 +115,21 @@ const AnnouncementQuery: React.FC = () => {
     })
       .then(res => res.json())
       .then(json => {
-        const result = json;
-        console.log(result + 'result');
+        const { result } = json;
         if (result) {
           present({
             message: '政策公告删除成功',
             position: 'top',
             duration: 3000,
           });
+          onQuery()
         } else
           present({
             buttons: [{ text: '关闭', handler: () => dismiss() }],
             message: '政策公告删除失败',
             position: 'top',
           });
+        closeDeleteModal()
       });
   };
 
@@ -131,45 +146,11 @@ const AnnouncementQuery: React.FC = () => {
     },
     [dispatch]
   );
-  useEffect(() => {
-    // fetch(paramStr, {
-    //   method: 'GET',
-    //   headers: {
-    //     'Content-type': 'application/json;charset=UTF-8',
-    //   },
-    // }).then(res => res.json())
-    // .then((json) => {
-    // const {TeacherList} = json
-
-    // refreshList(demoAnnouncementList.filter((announcement:Announcement)=>announcement.announcementTitle.indexOf(queryInfo.announcementTitle)>-1))
-    // })
-    refreshList(demoAnnouncementList);
-  }, []);
-
-  const onQuery = () => {
-    // fetch(paramStr, {
-    //   method: 'GET',
-    //   headers: {
-    //     'Content-type': 'application/json;charset=UTF-8',
-    //   },
-    // }).then(res => res.json())
-    // .then((json) => {
-    // const {TeacherList} = json
-
-    // refreshList(demoAnnouncementList.filter((announcement:Announcement)=>announcement.announcementTitle.indexOf(queryInfo.announcementTitle)>-1))
-    // return
-    // })
-
-    refreshList(
-      demoAnnouncementList.filter(
-        (announcement: Announcement) =>
-          announcement.announcementTitle.indexOf(queryInfo.announcementTitle) > -1
-      )
-    );
-  };
 
   const onCreate = (e: any) => {
     e.preventDefault();
+    createAnnouncement.announcementContent = '政策公告呢'
+    createAnnouncement.announcementAnnouncer = loginName
     fetch(createUrl, {
       method: 'POST',
       body: JSON.stringify(createAnnouncement),
@@ -179,25 +160,26 @@ const AnnouncementQuery: React.FC = () => {
     })
       .then(res => res.json())
       .then(json => {
-        const result = json;
-        console.log(result + 'result');
+        const { result } = json;
         if (result) {
           present({
             message: '政策公告添加成功',
             position: 'top',
             duration: 3000,
           });
+          onQuery()
         } else
           present({
             buttons: [{ text: '关闭', handler: () => dismiss() }],
             message: '政策公告添加失败',
             position: 'top',
           });
+        closeCreateModal()
       });
   };
 
   const ListEntry = ({ announcement, ...props }: { announcement: Announcement }) => (
-    <tr className="grid items-center grid-cols-5 gap-10 text-gray-600 border justify-items-center even:bg-white odd:bg-primary-100 ">
+    <tr className="grid items-center grid-cols-4 gap-10 text-gray-600 border justify-items-center even:bg-white odd:bg-primary-100 ">
       <td className="flex items-center justify-center leading-10">
         {announcement.announcementTitle}
       </td>
@@ -206,9 +188,6 @@ const AnnouncementQuery: React.FC = () => {
       </td>
       <td className="flex items-center justify-center leading-10">
         {announcement.announcementDate}
-      </td>
-      <td className="flex items-center justify-center leading-10">
-        {announcement.announcementTime}
       </td>
       <td className="flex items-center justify-center leading-10">
         <div className="flex gap-2 ">
@@ -220,8 +199,10 @@ const AnnouncementQuery: React.FC = () => {
           </button>
           <button
             className="p-1 text-red-600"
-            // onClick={onCancel(announcement)}
-            onClick={openDeleteModal}
+            onClick={() => {
+              setDelAnnouncement(announcement)
+              openDeleteModal()
+            }}
           >
             删除
           </button>
@@ -344,28 +325,26 @@ const AnnouncementQuery: React.FC = () => {
                             <div className="flex justify-end p-1 w-36">发布日期:</div>
                             <input
                               className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
-                              name="supervisorLoginName"
-                              type="text"
-                              value={createAnnouncement.announcementDate}
-                              spellCheck={false}
+                              type="date"
+                              name='announcementDate'
                               onChange={e =>
                                 setCreateAnnouncement({
                                   ...createAnnouncement,
-                                  ...{ announcementDate: e.target?.value },
+                                  announcementDate: e.target.value,
                                 })
                               }
-                            ></input>
+                            />
                           </div>
                         </div>
 
                         <div className="flex items-center mb-4 justify-items-center">
                           <div className="flex justify-items-center">
-                            <span className="flex justify-end p-1 mr-1 w-36">政策标题:</span>
+                            <span className="flex justify-end p-1 mr-1 w-36">
+                              <span className="px-1 text-red-600">*</span>
+                              政策标题:</span>
                             <input
                               className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
-                              name="supervisorUsername"
                               type="text"
-                              value={createAnnouncement.announcementTitle}
                               spellCheck={false}
                               onChange={e =>
                                 setCreateAnnouncement({
@@ -399,7 +378,6 @@ const AnnouncementQuery: React.FC = () => {
                                 ref={editor}
                                 editorState={editorState}
                                 onChange={(editorState: any) => {
-                                  console.log(editorState);
                                   setEditorState(editorState);
                                 }}
                               />
@@ -458,16 +436,16 @@ const AnnouncementQuery: React.FC = () => {
                         as="h3"
                         className="text-lg font-medium leading-6 text-center text-gray-900"
                       >
-                        用户删除
+                        政策公告删除
                         <hr className="mt-2 mb-4" />
                       </Dialog.Title>
                       <form
-                        // onSubmit={onCreate}
+                        onSubmit={onCancel}
                         className="flex flex-col items-center rounded-lg justify-items-center"
                       >
                         <div className="flex items-center mb-4 justify-items-center">
                           <div className="flex leading-7 justify-items-center">
-                            <div className="flex justify-end p-1 ">确定要删除该用户？</div>
+                            <div className="flex justify-end p-1 ">确定要删除该政策公告？</div>
                           </div>
                         </div>
                         <div className="flex items-center gap-4 mt-2 justify-items-center">
@@ -479,7 +457,7 @@ const AnnouncementQuery: React.FC = () => {
                           />
                           <input
                             value="确定"
-                            type="button"
+                            type="submit"
                             className="px-6 py-2 text-white border rounded-md bg-primary-600"
                           />
                         </div>
@@ -495,11 +473,10 @@ const AnnouncementQuery: React.FC = () => {
           <div className="absolute w-full mt-10">
             <table className="w-11/12">
               <thead>
-                <tr className="grid items-center h-10 grid-cols-5 gap-2 font-bold text-gray-700 bg-white rounded-lg justify-items-center">
+                <tr className="grid items-center h-10 grid-cols-4 gap-2 font-bold text-gray-700 bg-white rounded-lg justify-items-center">
                   <th className="flex items-center justify-center">政策标题</th>
                   <th className="flex items-center justify-center">政策内容</th>
                   <th className="flex items-center justify-center">发布日期</th>
-                  <th className="flex items-center justify-center">发布时间</th>
                   <th className="flex items-center justify-center">操作</th>
                 </tr>
               </thead>
@@ -508,7 +485,7 @@ const AnnouncementQuery: React.FC = () => {
                   <ListEntry announcement={list} key={i} />
                 ))}
                 <tr>
-                  {/* <td colSpan={5}> <Paging url={paramStr} page={page} pagesize={20} total={total} onPageChange={onPageChange}/></td> */}
+                  <td colSpan={5}> <Paging url={paramStr} page={page} pagesize={10} total={total} onPageChange={onPageChange} /></td>
                 </tr>
               </tbody>
             </table>
