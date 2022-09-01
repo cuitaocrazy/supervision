@@ -74,6 +74,12 @@ export const SupervisorAccount: React.FC = () => {
   const [contractFinish, setContractFinish] = useState("0");
   const onQuery = () => {
     //todo fetch
+     paramStr = getParamStr(
+      {
+        loginName: loginName,
+      },
+      findURL
+    );
     fetch(paramStr, {
       method: "GET",
       headers: {
@@ -108,8 +114,9 @@ export const SupervisorAccount: React.FC = () => {
   useEffect(() => {
     localforage.getItem("loginName").then((value) => {
       setLoginName(value as string);
+      console.log(value)
+      onQuery();
     });
-    onQuery();
   }, []);
 
   const findURL = eduTransactionSumURL;
@@ -122,12 +129,8 @@ export const SupervisorAccount: React.FC = () => {
   };
 
   //todo 从localStoge中取值
-  const paramStr = getParamStr(
-    {
-      loginName: loginName,
-    },
-    findURL
-  );
+  let paramStr="";
+
   const onClick = () => {
     //todo fetch
     setSupversingAccountAmt("1000");
