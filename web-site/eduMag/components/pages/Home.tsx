@@ -61,7 +61,7 @@ const Home: FC = () => {
       setLoginName(value as string);
       onQuery();
     });
-  }, []);
+  }, [loginName]);
 
   const findURL = "http://localhost:3003/edu/transaction/sum";
   const getParamStr = (params: any, url: string) => {

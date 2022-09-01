@@ -63,7 +63,7 @@ const TranSumQuery = () => {
       onQuery();
     });
     
-  }, []);
+  }, [loginName]);
 
   const findURL = eduTransactionSumURL;
   const getParamStr = (params: any, url: string) => {

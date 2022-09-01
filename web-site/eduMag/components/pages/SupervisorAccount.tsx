@@ -81,6 +81,7 @@ export const SupervisorAccount: React.FC = () => {
       findURL
     );
     console.log(paramStr)
+    console.log(loginName)
     fetch(paramStr, {
       method: "GET",
       headers: {
@@ -118,7 +119,7 @@ export const SupervisorAccount: React.FC = () => {
       console.log(value)
       onQuery();
     });
-  }, []);
+  }, [loginName]);
 
   const findURL = eduTransactionSumURL;
   const getParamStr = (params: any, url: string) => {
