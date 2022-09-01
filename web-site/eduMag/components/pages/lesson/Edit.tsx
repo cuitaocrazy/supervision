@@ -106,7 +106,7 @@ export const LessonDetail: React.FC = () => {
             <hr className="mt-2 mb-4" />
             <div className="grid grid-cols-2 justify-items-center ">
               <div className="flex items-center mb-4 leading-10 justify-items-center">
-                <div className="flex justify-end w-32 mr-2">课程名称:</div>
+                <div className="flex justify-end w-32 mr-2 ">课程名称:</div>
                 <input
                   type="text"
                   className="w-64 px-2 border rounded-md"
@@ -149,7 +149,6 @@ export const LessonDetail: React.FC = () => {
                   value={lessonState.lessonTotalPrice}
                   required
                 />
-                一天
               </div>
               <div className="flex mb-4 leading-10">
                 <div className="flex justify-end w-32 mr-2">
@@ -265,20 +264,20 @@ export const LessonDetail: React.FC = () => {
               <div className="flex mb-4 leading-10">
                 <div className="flex justify-end w-32 mr-2"> 教育机构名称:</div>
                 <input
-                  className="w-64 px-2 border rounded-md"
+                  className="w-64 px-2 bg-gray-100 border rounded-md focus:outline-none"
                   type="text"
-                  onChange={(e) =>
-                    setLessonState({
-                      ...lessonState,
-                      ...{
-                        edu: {
-                          ...lessonState.edu,
-                          eduName: e.target?.value,
-                        },
-                      },
-                    })
-                  }
-                  required
+                  // onChange={(e) =>
+                  //   setLessonState({
+                  //     ...lessonState,
+                  //     ...{
+                  //       edu: {
+                  //         ...lessonState.edu,
+                  //         eduName: e.target?.value,
+                  //       },
+                  //     },
+                  //   })
+                  // }
+                  readOnly
                   value={lessonState.eduName}
                 />
               </div>
