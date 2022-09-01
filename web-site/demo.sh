@@ -1,13 +1,16 @@
 #!/bin/bash
 MODE=$1
 
+function replaceAddr() {
+    export $(xargs <./docker/.env)
+    sed -i "s/http:\/\/\([0-9]\+\.\)\+[0-9]\+/http:\/\/${host}/g" ./docker/html/index.html
+    # sed -n "/http:\/\/\([0-9]\+\.\)\+[0-9]\+/p" ./docker/html/index.html
+}
+
 function start() {
     echo "start all demo"
+    replaceAddr
     docker compose -f ./docker/docker-compose-demo.yaml up -d --remove-orphans
-
-    waitStartComplete consumer
-    waitStartComplete edu
-    waitStartComplete edb
 }
 
 function cleanWebModule() {
