@@ -403,6 +403,20 @@ const OrgMagQuery: React.FC = () => {
                         <div className="flex leading-7 justify-items-center">
                           <div className="flex justify-end p-1 w-36">
                             <span className="px-1 text-red-600">*</span>
+                            监管机构名称:
+                          </div>
+                          <input
+                            className="w-64 p-1 text-gray-600 bg-gray-100 border rounded-md justify-self-start focus:outline-none"
+                            name="supervisorOrgName"
+                            value="北京市教育局"
+                            readOnly
+                          ></input>
+                        </div>
+                      </div>
+                      <div className="flex items-center mb-4 justify-items-center">
+                        <div className="flex leading-7 justify-items-center">
+                          <div className="flex justify-end p-1 w-36">
+                            <span className="px-1 text-red-600">*</span>
                             教育机构名称:
                           </div>
                           <input

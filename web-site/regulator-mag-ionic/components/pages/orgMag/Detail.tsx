@@ -57,7 +57,16 @@ const { state, dispatch } = useContext(AppContext);
             <div className="font-bold text-gray-800">机构详情</div>
             <hr className="mt-2 mb-4" />
             <div className="grid grid-cols-2 justify-items-center ">
-              <div className="flex items-center mb-4 leading-10 justify-items-center">
+            <div className="flex mb-4 leading-10">
+                <div className="flex justify-end w-32 mr-2">监管机构名称</div>
+                <input
+                  className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
+                  name="supervisorOrgName"
+                  value="北京市教育局"
+                  readOnly
+                />
+              </div>
+              {/* <div className="flex items-center mb-4 leading-10 justify-items-center">
                 <div className="flex justify-end w-32 mr-2">教育机构ID:</div>
                 <input
                   className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
@@ -65,7 +74,7 @@ const { state, dispatch } = useContext(AppContext);
                   value={eduOrgState.eduId}
                   readOnly
                 />
-              </div>
+              </div> */}
               <div className="flex mb-4 leading-10">
                 <div className="flex justify-end w-32 mr-2">教育机构名称:</div>
                 <input
@@ -140,7 +149,7 @@ const { state, dispatch } = useContext(AppContext);
                   readOnly
                 />
               </div>
-              <div className="flex mb-4 leading-10">
+              {/* <div className="flex mb-4 leading-10">
                 <div className="flex justify-end w-32 mr-2">年检日期:</div>
                 <input
                   className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
@@ -157,7 +166,7 @@ const { state, dispatch } = useContext(AppContext);
                   value={eduOrgState.eduAnnualInspectionTime}
                   readOnly
                 />
-              </div>
+              </div> */}
               <div className="flex mb-4 leading-10">
                 <div className="flex justify-end w-32 mr-2"> 监管账户:</div>
                 <input
@@ -191,15 +200,6 @@ const { state, dispatch } = useContext(AppContext);
                   className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
                   name="eduSupervisedMerNo"
                   value={eduOrgState.eduSupervisedMerNo}
-                  readOnly
-                />
-              </div>
-              <div className="flex mb-4 leading-10">
-                <div className="flex justify-end w-32 mr-2">监管机构ID:</div>
-                <input
-                  className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
-                  name="supervisorOrgId"
-                  value={eduOrgState.supervisorOrgId}
                   readOnly
                 />
               </div>

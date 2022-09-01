@@ -94,7 +94,15 @@ export const EduOrgEdit: React.FC = () => {
             <div className="font-bold text-gray-800">机构编辑</div>
             <hr className="mt-2 mb-4" />
             <div className="grid grid-cols-2 justify-items-center ">
-              <div className="flex items-center mb-4 leading-10 justify-items-center">
+            <div className="flex mb-4 leading-10">
+                <div className="flex justify-end w-32 mr-2">监管机构名:</div>
+                <input
+                  className="w-64 px-2 rounded-md bg-primary-300 focus:outline-none"
+                  name="supervisorOrgName"
+                  value="北京市教育局"
+                />
+              </div>
+              {/* <div className="flex items-center mb-4 leading-10 justify-items-center">
                 <div className="flex justify-end w-32 mr-2">教育机构ID:</div>
                 <input
                   className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
@@ -102,7 +110,7 @@ export const EduOrgEdit: React.FC = () => {
                   value={eduOrgState.eduId}
                   readOnly
                 />
-              </div>
+              </div> */}
               <div className="flex mb-4 leading-10">
                 <div className="flex justify-end w-32 mr-2">教育机构名称:</div>
                 <input
@@ -113,15 +121,15 @@ export const EduOrgEdit: React.FC = () => {
                   required
                 />
               </div>
-              <div className="flex mb-4 leading-10">
-                {/* <div className="flex justify-end w-32 mr-2">教育机构城市:</div>
+              {/* <div className="flex mb-4 leading-10">
+                <div className="flex justify-end w-32 mr-2">教育机构城市:</div>
                 <input
                   className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
                   name="eduAddress"
                   value={eduOrgState.eduAddress}
                   required
-                /> */}
-              </div>
+                />
+              </div> */}
               <div className="flex mb-4 leading-10">
                 <div className="flex justify-end w-32 mr-2">教育机构地址:</div>
                 <input
@@ -141,7 +149,6 @@ export const EduOrgEdit: React.FC = () => {
                   onChange={e =>
                     setEduOrgState({ ...eduOrgState, eduLegalPerson: e.target?.value })
                   }
-                  required
                 />
               </div>
 
@@ -152,7 +159,28 @@ export const EduOrgEdit: React.FC = () => {
                   name="eduLegalPhone"
                   value={eduOrgState.eduLegalPhone}
                   onChange={e => setEduOrgState({ ...eduOrgState, eduLegalPhone: e.target?.value })}
-                  required
+                />
+              </div>
+
+              <div className="flex mb-4 leading-10">
+                <div className="flex justify-end w-32 mr-2">教育机构联系人:</div>
+                <input
+                  className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
+                  name="eduContact"
+                  value={eduOrgState.eduContact}
+                  onChange={e =>
+                    setEduOrgState({ ...eduOrgState, eduContact: e.target?.value })
+                  }
+                />
+              </div>
+
+              <div className="flex mb-4 leading-10">
+                <div className="flex justify-end w-32 mr-2">教育机构联系方式:</div>
+                <input
+                  className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
+                  name="eduContactPhone"
+                  value={eduOrgState.eduContactPhone}
+                  onChange={e => setEduOrgState({ ...eduOrgState, eduContactPhone: e.target?.value })}
                 />
               </div>
               <div className="flex mb-4 leading-10">
@@ -222,19 +250,9 @@ export const EduOrgEdit: React.FC = () => {
                 <div className="flex justify-end w-32 mr-2">普通账户:</div>
                 <input
                   className="w-64 h-10 px-2 rounded-md bg-primary-100 focus:outline-none"
-                  name="normalAccount"
+                  name="eduNormalAccount"
                   value={eduOrgState.eduNormalAccount}
-                  onChange={e => setEduOrgState({ ...eduOrgState, normalAccount: e.target?.value })}
-                />
-              </div>
-              <div className="flex mb-4 leading-10">
-                <div className="flex justify-end w-32 mr-2">登录名:</div>
-                <input
-                  className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
-                  name="eduAnnualInspectionTime"
-                  value={eduOrgState.eduLoginName}
-                  onChange={e => setEduOrgState({ ...eduOrgState, eduLoginName: e.target?.value })}
-                  required
+                  onChange={e => setEduOrgState({ ...eduOrgState, eduNormalAccount: e.target?.value })}
                 />
               </div>
               <div className="flex mb-4 leading-10">
@@ -249,20 +267,19 @@ export const EduOrgEdit: React.FC = () => {
                       eduSupervisedMerNo: e.target?.value,
                     })
                   }
-                  required
                 />
               </div>
               <div className="flex mb-4 leading-10">
-                <div className="flex justify-end w-32 mr-2">监管机构名:</div>
+                <div className="flex justify-end w-32 mr-2">登录名:</div>
                 <input
                   className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
-                  name="Public"
-                  value={eduOrgState.supervisorOrgId}
-                  onChange={e =>
-                    setEduOrgState({ ...eduOrgState, supervisorOrgId: e.target?.value })
-                  }
+                  name="eduAnnualInspectionTime"
+                  value={eduOrgState.eduLoginName}
+                  onChange={e => setEduOrgState({ ...eduOrgState, eduLoginName: e.target?.value })}
+                  required
                 />
               </div>
+              
             </div>
             <div className="flex items-center justify-center gap-4 mt-10">
               <input
