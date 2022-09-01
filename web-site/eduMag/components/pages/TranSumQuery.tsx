@@ -24,6 +24,7 @@ const TranSumQuery = () => {
     },
     findURL
   );
+  console.log(paramStr)
     //todo fetch
     fetch(paramStr, {
       method: "GET",
@@ -59,8 +60,9 @@ const TranSumQuery = () => {
   useEffect(() => {
     localforage.getItem("loginName").then((value) => {
       setLoginName(value as string);
+      onQuery();
     });
-    onQuery();
+    
   }, []);
 
   const findURL = eduTransactionSumURL;

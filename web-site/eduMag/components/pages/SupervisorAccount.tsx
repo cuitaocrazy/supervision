@@ -80,6 +80,7 @@ export const SupervisorAccount: React.FC = () => {
       },
       findURL
     );
+    console.log(paramStr)
     fetch(paramStr, {
       method: "GET",
       headers: {
