@@ -17,6 +17,13 @@ const TranSumQuery = () => {
   const [contractValid, setContractValid] = useState("0");
   const [contractFinish, setContractFinish] = useState("0");
   const onQuery = () => {
+  //todo 从localStoge中取值
+  const paramStr = getParamStr(
+    {
+      loginName: loginName,
+    },
+    findURL
+  );
     //todo fetch
     fetch(paramStr, {
       method: "GET",
@@ -65,13 +72,7 @@ const TranSumQuery = () => {
     return url + result;
   };
 
-  //todo 从localStoge中取值
-  const paramStr = getParamStr(
-    {
-      loginName: loginName,
-    },
-    findURL
-  );
+
   const onClick = () => {
     //todo fetch
     setSupversingAccountAmt("1000");
