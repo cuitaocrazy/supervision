@@ -17,6 +17,14 @@ const TranSumQuery = () => {
   const [contractValid, setContractValid] = useState("0");
   const [contractFinish, setContractFinish] = useState("0");
   const onQuery = () => {
+    //todo 从localStoge中取值
+    const paramStr = getParamStr(
+      {
+        loginName: loginName,
+      },
+      findURL
+    );
+    console.log(paramStr);
     //todo fetch
     fetch(paramStr, {
       method: "GET",
@@ -52,9 +60,9 @@ const TranSumQuery = () => {
   useEffect(() => {
     localforage.getItem("loginName").then((value) => {
       setLoginName(value as string);
+      onQuery();
     });
-    onQuery();
-  }, []);
+  }, [loginName]);
 
   const findURL = eduTransactionSumURL;
   const getParamStr = (params: any, url: string) => {
@@ -65,13 +73,6 @@ const TranSumQuery = () => {
     return url + result;
   };
 
-  //todo 从localStoge中取值
-  const paramStr = getParamStr(
-    {
-      loginName: loginName,
-    },
-    findURL
-  );
   const onClick = () => {
     //todo fetch
     setSupversingAccountAmt("1000");
@@ -154,19 +155,19 @@ const TranSumQuery = () => {
                   购课数量
                 </th>
                 <th className="flex items-center justify-center flex-1 leading-10 ">
-                  购课金额
+                  购课金额(元)
                 </th>
                 <th className="flex items-center justify-center flex-1 leading-10 ">
                   退课数量
                 </th>
                 <th className="flex items-center justify-center flex-1 leading-10 ">
-                  退课金额
+                  退课金额(元)
                 </th>
                 <th className="flex items-center justify-center flex-1 leading-10 ">
                   划拨次数
                 </th>
                 <th className="flex items-center justify-center flex-1 leading-10 ">
-                  划拨金额
+                  划拨金额(元)
                 </th>
               </tr>
             </thead>

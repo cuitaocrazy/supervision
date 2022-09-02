@@ -15,12 +15,7 @@ import {
   setLessonEdit,
 } from "../../../appState";
 import { Lesson } from "../../../types/types";
-import {
-  IonPage,
-  IonRow,
-  IonCol,
-  useIonToast,
-} from "@ionic/react";
+import { IonPage, IonRow, IonCol, useIonToast } from "@ionic/react";
 import moment from "moment";
 import RichText from "components/components/RichText";
 import { EditorState } from "draft-js";
@@ -28,7 +23,11 @@ import { Dialog, Transition } from "@headlessui/react";
 import Paging from "../../paging";
 import Quit from "components/components/Quit";
 import localforage from "localforage";
-import { eduLessonCreateURL, eduLessonFindURL, eduLessonOffURL } from "const/consts";
+import {
+  eduLessonCreateURL,
+  eduLessonFindURL,
+  eduLessonOffURL,
+} from "const/consts";
 import LessonTypeList from "../../components/LessonType";
 import { getLessonType, getLessonStatusForList } from "const/dicData";
 const find = eduLessonFindURL;
@@ -85,16 +84,17 @@ const LessonQuery: React.FC = () => {
 
   const editor = useRef(null);
 
-
   const onCreate = (e: any) => {
     e.preventDefault();
-    createLesson.eduName = eduName
-    createLesson.eduId = eduId
+    createLesson.eduName = eduName;
+    createLesson.eduId = eduId;
 
     console.log(createLesson);
+    const newCreateLesson: any = createLesson;
+    newCreateLesson.eduName = eduName;
     fetch(createUrl, {
       method: "POST",
-      body: JSON.stringify(createLesson),
+      body: JSON.stringify(newCreateLesson),
       headers: {
         "Content-type": "application/json;charset=UTF-8",
       },
@@ -127,7 +127,8 @@ const LessonQuery: React.FC = () => {
     fetch(offUrl, {
       method: "POST",
       body: JSON.stringify({
-        lessonId: offLesson.lessonId, lessonUpdateReason: offLesson.lessonUpdateReason
+        lessonId: offLesson.lessonId,
+        lessonUpdateReason: offLesson.lessonUpdateReason,
       }),
       headers: {
         "Content-type": "application/json;charset=UTF-8",
@@ -249,8 +250,6 @@ const LessonQuery: React.FC = () => {
         return;
       });
   };
-
-
 
   const ListEntry = ({
     lesson,
@@ -439,7 +438,7 @@ const LessonQuery: React.FC = () => {
                       <div className="flex items-center mb-4 justify-items-center">
                         <div className="flex leading-7 justify-items-center">
                           <div className="flex justify-end p-1 w-36">
-                            <span className='px-1 text-red-600'>*</span>
+                            <span className="px-1 text-red-600">*</span>
                             教育机构名称:
                           </div>
                           <input
@@ -526,7 +525,7 @@ const LessonQuery: React.FC = () => {
                       <div className="flex items-center mb-4 justify-items-center">
                         <div className="flex justify-items-center">
                           <div className="flex justify-end p-1 mr-1 w-36">
-                            <span className='px-1 text-red-600'>*</span>
+                            <span className="px-1 text-red-600">*</span>
                             课程单价:
                           </div>
                           <input
@@ -554,12 +553,13 @@ const LessonQuery: React.FC = () => {
                           </span>
                           <LessonTypeList
                             lessonType={createLesson.lessonType}
-                            setlessonType={v => {
+                            setlessonType={(v) => {
                               setCreateLesson({
                                 ...createLesson,
                                 ...{ lessonType: v },
                               });
-                            }} />
+                            }}
+                          />
                         </div>
                       </div>
                       <div className="flex items-center mb-4 justify-items-center">
@@ -629,7 +629,7 @@ const LessonQuery: React.FC = () => {
                             className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
                             name="teacherName"
                             type="text"
-                            value={createLesson.teacherName}
+                            value={createLesson.teacherId}
                             spellCheck={false}
                             onChange={(e) =>
                               setCreateLesson({
@@ -669,9 +669,9 @@ const LessonQuery: React.FC = () => {
                           value="确定"
                           type="submit"
                           className="px-6 py-2 text-white border rounded-md bg-primary-600"
-                        // onClick={()=>{addLessonSuccessInfo();closeModal()}}
+                          // onClick={()=>{addLessonSuccessInfo();closeModal()}}
 
-                        // onClick={() => {resultFun()}}
+                          // onClick={() => {resultFun()}}
                         />
                       </div>
                     </form>
@@ -746,7 +746,7 @@ const LessonQuery: React.FC = () => {
                       <div className="flex items-center mb-4 justify-items-center">
                         <div className="flex justify-items-center">
                           <span className="flex justify-end p-1 mr-1 w-36">
-                            <span className='px-1 text-red-600'>*</span>
+                            <span className="px-1 text-red-600">*</span>
                             下架原因:
                           </span>
                           <textarea

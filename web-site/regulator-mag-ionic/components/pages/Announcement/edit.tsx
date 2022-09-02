@@ -129,7 +129,8 @@ export const AnnouncementEdit: React.FC = () => {
               <div className="flex mb-4 leading-10">
                 <div className="flex justify-end w-32 mr-2">
                   <span className="px-1 text-red-600">*</span>
-                  政策标题:</div>
+                  政策标题:
+                </div>
                 <input
                   className="w-64 p-1 h-10 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
                   value={announcementState.announcementTitle}
@@ -141,7 +142,6 @@ export const AnnouncementEdit: React.FC = () => {
                     })
                   }
                   required
-
                 ></input>
               </div>
               {/* TODO  */}
@@ -158,7 +158,6 @@ export const AnnouncementEdit: React.FC = () => {
                   <textarea
                     className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
                     value={announcementState.announcementContent}
-
                     onChange={e =>
                       setAnnouncementState({
                         ...announcementState,

@@ -144,8 +144,7 @@ app.get('/edu/transaction/find', async (req, res) => {
   console.log(`教育机构: 查询流水信息: 条件[${JSON.stringify(req.query)}]`)
   const loginName = req.query.loginName;
   const edu = await EduService.findByLoginName(loginName)
-
-  const r = await eduTransactionService.query(req.query, edu.eduSupervisedAccount)
+  const r = await eduTransactionService.query(req.query, edu.eduSupervisedAccount || "")
   r.records.map((record: any) => { record.transactionAmt = fenToYuan(record.transactionAmt) })
   res.send(r)
 })
@@ -154,7 +153,11 @@ app.get('/edu/transaction/sum', async (req, res) => {
   console.log(`教育机构: 查询汇总信息: 条件[${JSON.stringify(req.query)}]`)
   const loginName = req.query.loginName;
   const edu = await EduService.findByLoginName(loginName)
-  const contractSum = await eduContractService.sum(edu.eduId);
+  if (!edu) {
+    console.log(`教育机构: 查询汇总信息: 登陆名[${loginName}]没有找到教育机构`)
+    return { result: false, reason: `登陆名称[${loginName}]没有找到教育机构` }
+  }
+  const contractSum = await eduContractService.sum(edu.eduId || "");
   const r = await eduTransactionService.sum(edu.eduSupervisedAccount)
   const result = { ...contractSum, ...r }
   res.send(result)
@@ -247,8 +250,13 @@ app.post('/edu/lesson/create', jsonParser, async (req, res) => {
   lesson.lessonStatus = 'pending'
   lesson.lessonAccumulationQuantity = 0;
   //todo
-  lesson.teacherId = 'teacher00001';
+  // lesson.teacherId = req.body.teacherId
+  lesson.teacherId = "teacher00001";
+  // lesson.teacherName = "马老师";
   lesson.teacherName = req.body.teacherName;
+  lesson.eduId = "edu0001";
+  // lesson.eduName = "测试机构";
+  lesson.eduName = req.body.eduName
   lesson.lessonImages =
     "https://s3.bmp.ovh/imgs/2022/08/30/28f95385d82b4f7c.jpg"; //'http://placekitten.com/g/200/300'
   lesson.lessonOutline = false;
@@ -297,6 +305,7 @@ app.post("/edu/lesson/edit", jsonParser, async (req, res) => {
   lesson.lessonUpdateDate = moment().format("YYYYMMDD");
   lesson.lessonUpdateTime = moment().format("HHmmss");
   lesson.lessonUpdateReason = "编辑课程";
+  lesson.eduName = "北京亚大教育机构";
   try {
     console.log(lesson);
     const r = await eduLessonService.saveLesson(lesson);
@@ -704,7 +713,7 @@ app.get("/edb/eduOrg/find", async (req, res) => {
 });
 import edbEduLessonService from "./src/edb/EduLessonService";
 app.get("/edb/eduLesson/find", async (req, res) => {
-  console.log(`教育局: 查询课程: 条件[$a c{req.query}]`);
+  console.log(`教育局: 查询课程: 条件[${req.query}]`);
   const r = await edbEduLessonService.find(req.query);
   r.records.map((lesson: EduLesson) => {
     lesson.lessonStartDate = dateFormat(lesson.lessonStartDate);
@@ -784,10 +793,11 @@ app.post('/edb/login', async (req, res) => {
 
 
 app.post('/edb/lesson/audit', jsonParser, async (req, res) => {
-  console.log(`教育局: 课程审核: 条件[${JSON.stringify(req.body)}]`)
+  console.log(`教育局: 划拨查询: 条件[${JSON.stringify(req.body)}]`)
   const r = await edbEduLessonService.update(req.body)
   res.send(r)
 })
+
 
 //app.use(express.json())
 //新增
@@ -799,9 +809,9 @@ app.post('/edb/eduOrg/create', jsonParser, async (req, res) => {
   edu.eduCreateTime = moment().format("HHmmss")
   edu.eduId = geneUSVOrderNo(); //await getUUIDWithEM(mysql.manager)
 
-  const r = await edbEduOrgService.create(edu)
-  res.send(r)
-})
+  const r = await edbEduOrgService.create(edu);
+  res.send(r);
+});
 //编辑
 app.post('/edb/eduOrg/modify', jsonParser, async (req, res) => {
   console.log(`教育局: 更新教育机构: 更新信息[${JSON.stringify(req.body)}]`)
@@ -886,6 +896,24 @@ const timeFormat = (dateStr: string) => {
   } else
     return dateStr
 };
+//监管端:公告政策
+
+app.post("/edb/announcement/create", jsonParser, async (req, res) => {
+  console.log(`教育局: 公告政策添加: 条件[${JSON.stringify(req.body)}]`);
+  const info: Announcement = req.body
+  info.announcementStatus = 'on'
+  info.announcementDate = info.announcementDate?.replaceAll('-', '');
+});
+app.post("/edu/lesson/audit", jsonParser, async (req, res) => {
+  console.log(`教育机构: 课程审核: 条件[${JSON.stringify(req.body)}]`);
+  const r = await edbEduLessonService.update(req.body);
+  res.send(r);
+});
+app.post("/edb/eduLesson/off", jsonParser, async (req, res) => {
+  console.log(`教育局: 课程下架: 条件[${JSON.stringify(req.body)}]`);
+  const r = await eduLessonService.off(req.body);
+  res.send(r);
+});
 //监管端:公告政策
 
 import announcementService from "./src/edb/AnnouncementService";

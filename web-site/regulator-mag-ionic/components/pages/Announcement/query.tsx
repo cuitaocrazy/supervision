@@ -14,13 +14,18 @@ import RichText from '../../RichText';
 import { EditorState, convertToRaw } from 'draft-js';
 import Quit from '../../Quit';
 import Paging from '../../paging';
-import { edbAnnouncementFindURL, edbAnnouncementCreateURL, edbAnnouncementDelURL, edbAnnouncementStatusURL } from 'const/const';
+import {
+  edbAnnouncementFindURL,
+  edbAnnouncementCreateURL,
+  edbAnnouncementDelURL,
+  edbAnnouncementStatusURL,
+} from 'const/const';
 import localforage from 'localforage';
 
-const queryURL = edbAnnouncementFindURL
-const delURL = edbAnnouncementDelURL
-const createUrl = edbAnnouncementCreateURL
-const offOn = edbAnnouncementStatusURL
+const queryURL = edbAnnouncementFindURL;
+const delURL = edbAnnouncementDelURL;
+const createUrl = edbAnnouncementCreateURL;
+const offOn = edbAnnouncementStatusURL;
 
 const AnnouncementQuery: React.FC = () => {
   const [present, dismiss] = useIonToast();
@@ -85,7 +90,7 @@ const AnnouncementQuery: React.FC = () => {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [createAnnouncement, setCreateAnnouncement] = useState({} as Announcement);
   const [delAnnouncement, setDelAnnouncement] = useState({} as Announcement);
-  const [loginName, setLoginName] = useState("");
+  const [loginName, setLoginName] = useState('');
 
   const [page, setPage] = useState(0);
   const [total, setTotal] = useState(0);
@@ -127,12 +132,12 @@ const AnnouncementQuery: React.FC = () => {
           refreshList(records);
         }
       });
-  }
+  };
   useEffect(() => {
     localforage.getItem('loginName').then(value => {
       setLoginName(value as string);
     });
-    onQuery()
+    onQuery();
   }, []);
   const onDetail = (item: Announcement) => () => {
     doSetDetail(item);
@@ -161,14 +166,14 @@ const AnnouncementQuery: React.FC = () => {
             position: 'top',
             duration: 3000,
           });
-          onQuery()
+          onQuery();
         } else
           present({
             buttons: [{ text: '关闭', handler: () => dismiss() }],
             message: '政策公告删除失败',
             position: 'top',
           });
-        closeDeleteModal()
+        closeDeleteModal();
       });
   };
 
@@ -189,7 +194,7 @@ const AnnouncementQuery: React.FC = () => {
   const onCreate = (e: any) => {
     e.preventDefault();
     // createAnnouncement.announcementContent = '政策公告呢'
-    createAnnouncement.announcementAnnouncer = loginName
+    createAnnouncement.announcementAnnouncer = loginName;
     fetch(createUrl, {
       method: 'POST',
       body: JSON.stringify(createAnnouncement),
@@ -206,14 +211,14 @@ const AnnouncementQuery: React.FC = () => {
             position: 'top',
             duration: 3000,
           });
-          onQuery()
+          onQuery();
         } else
           present({
             buttons: [{ text: '关闭', handler: () => dismiss() }],
             message: '政策公告添加失败',
             position: 'top',
           });
-        closeCreateModal()
+        closeCreateModal();
       });
   };
 
@@ -234,7 +239,6 @@ const AnnouncementQuery: React.FC = () => {
             详情
           </button>
 
-
           {announcement.announcementStatus === 'off' ? (
             <button className="p-1 text-cyan-600" onClick={onEdit(announcement)}>
               编辑
@@ -243,7 +247,8 @@ const AnnouncementQuery: React.FC = () => {
             <></>
           )}
           {announcement.announcementStatus === 'on' ? (
-            <button className="p-1 text-fuchsia-600"
+            <button
+              className="p-1 text-fuchsia-600"
               onClick={() => {
                 setOff(announcement);
                 openOffModal();
@@ -255,15 +260,13 @@ const AnnouncementQuery: React.FC = () => {
             <button
               className="p-1 text-red-600"
               onClick={() => {
-                setDelAnnouncement(announcement)
-                openDeleteModal()
+                setDelAnnouncement(announcement);
+                openDeleteModal();
               }}
             >
               删除
             </button>
           )}
-
-
         </div>
       </td>
     </tr>
@@ -384,7 +387,7 @@ const AnnouncementQuery: React.FC = () => {
                             <input
                               className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
                               type="date"
-                              name='announcementDate'
+                              name="announcementDate"
                               onChange={e =>
                                 setCreateAnnouncement({
                                   ...createAnnouncement,
@@ -399,7 +402,8 @@ const AnnouncementQuery: React.FC = () => {
                           <div className="flex justify-items-center">
                             <span className="flex justify-end p-1 mr-1 w-36">
                               <span className="px-1 text-red-600">*</span>
-                              政策标题:</span>
+                              政策标题:
+                            </span>
                             <input
                               className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
                               type="text"
@@ -433,7 +437,6 @@ const AnnouncementQuery: React.FC = () => {
                                     announcementContent: e.target?.value,
                                   })
                                 }
-
                               />
                             </div>
                           </div>
@@ -601,7 +604,16 @@ const AnnouncementQuery: React.FC = () => {
                   <ListEntry announcement={list} key={i} />
                 ))}
                 <tr>
-                  <td colSpan={5}> <Paging url={paramStr} page={page} pagesize={10} total={total} onPageChange={onPageChange} /></td>
+                  <td colSpan={5}>
+                    {' '}
+                    <Paging
+                      url={paramStr}
+                      page={page}
+                      pagesize={10}
+                      total={total}
+                      onPageChange={onPageChange}
+                    />
+                  </td>
                 </tr>
               </tbody>
             </table>

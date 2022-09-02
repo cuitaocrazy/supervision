@@ -39,7 +39,10 @@ const LessonQuery: React.FC = () => {
     e.preventDefault();
     fetch(offURL, {
       method: 'POST',
-      body: JSON.stringify({ lessonId: offLesson.lessonId, lessonUpdateReason: offLesson.lessonUpdateReason }),
+      body: JSON.stringify({
+        lessonId: offLesson.lessonId,
+        lessonUpdateReason: offLesson.lessonUpdateReason,
+      }),
       headers: {
         'Content-type': 'application/json;charset=UTF-8',
       },
@@ -120,7 +123,7 @@ const LessonQuery: React.FC = () => {
       .then(json => {
         const { result, records, total } = json;
         if (result) {
-          setTotal(total)
+          setTotal(total);
           refreshLessonList(records);
         }
       });
@@ -147,7 +150,8 @@ const LessonQuery: React.FC = () => {
             详情
           </button>
           {lesson.lessonStatus === 'on' ? (
-            <button className="p-1 text-fuchsia-600"
+            <button
+              className="p-1 text-fuchsia-600"
               onClick={() => {
                 setOffLesson(lesson);
                 openOffModal();
@@ -308,8 +312,9 @@ const LessonQuery: React.FC = () => {
                       <div className="flex items-center mb-4 justify-items-center">
                         <div className="flex justify-items-center">
                           <span className="flex justify-end p-1 mr-1 w-36">
-                            <span className='px-1 text-red-600'>*</span>
-                            下架原因:</span>
+                            <span className="px-1 text-red-600">*</span>
+                            下架原因:
+                          </span>
                           <textarea
                             className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
                             name="lessonUpdateReason"
@@ -318,7 +323,7 @@ const LessonQuery: React.FC = () => {
                               setOffLesson({
                                 ...offLesson,
                                 ...{
-                                  lessonUpdateReason: e.nativeEvent.target?.value,
+                                  lessonUpdateReason: e.target?.value,
                                   lessonTotalTimes: e.target?.value,
                                 },
                               })

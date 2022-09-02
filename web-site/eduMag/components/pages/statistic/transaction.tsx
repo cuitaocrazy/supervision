@@ -23,10 +23,12 @@ import moment from "moment";
 import Clipboard from "react-clipboard.js";
 import Quit from "components/components/Quit";
 import { eduTransactionFindURL } from "const/consts";
+import localforage from "localforage";
 
 const findURL = eduTransactionFindURL;
 
 const Transaction: React.FC = () => {
+  const [loginName, setLoginName] = useState("");
   const [page, setPage] = useState(0);
   const [total, setTotal] = useState(101); //todo
   const [transactionStatState, setTransactionStatState] = useState([] as any[]);
@@ -48,6 +50,7 @@ const Transaction: React.FC = () => {
   };
   const paramStr = getParamStr(
     {
+      loginName: loginName,
       contractId: queryInfo.contractId,
       account: queryInfo.account,
       tranDate: queryInfo.tranDate,
@@ -94,7 +97,15 @@ const Transaction: React.FC = () => {
       cssClass: "text-center",
     });
   };
-  useEffect(onQuery, []);
+  // useEffect(onQuery, []);
+  console.log("111"+loginName)
+  useEffect(() => {
+    localforage.getItem("loginName").then((value) => {
+      setLoginName(value as string);
+      console.log("222"+value)
+      onQuery();
+    });
+  }, [loginName]);
 
   const ListEntry = ({ record, ...props }: { record: any }) => (
     <tr className="grid items-center grid-cols-6 gap-2 text-gray-600 border justify-items-center even:bg-white odd:bg-primary-100 ">

@@ -16,6 +16,13 @@ const Home: FC = () => {
   const [contractValid, setContractValid] = useState("0");
   const [contractFinish, setContractFinish] = useState("0");
   const onQuery = () => {
+    //todo 从localStoge中取值
+    const paramStr = getParamStr(
+      {
+        loginName: loginName,
+      },
+      findURL
+    );
     //todo fetch
     fetch(paramStr, {
       method: "GET",
@@ -52,9 +59,9 @@ const Home: FC = () => {
   useEffect(() => {
     localforage.getItem("loginName").then((value) => {
       setLoginName(value as string);
+      onQuery();
     });
-    onQuery();
-  }, []);
+  }, [loginName]);
 
   const findURL = "http://localhost:3003/edu/transaction/sum";
   const getParamStr = (params: any, url: string) => {
@@ -64,14 +71,6 @@ const Home: FC = () => {
     });
     return url + result;
   };
-
-  //todo 从localStoge中取值
-  const paramStr = getParamStr(
-    {
-      loginName: loginName,
-    },
-    findURL
-  );
 
   interface tranSumCardProps {
     d?: string;

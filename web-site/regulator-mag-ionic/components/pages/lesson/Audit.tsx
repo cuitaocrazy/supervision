@@ -8,7 +8,7 @@ import { Lesson } from '../../../types/types';
 import { Dialog, Transition } from '@headlessui/react';
 import Quit from '../../Quit';
 import { edbLessonAuditURL } from 'const/const';
-import { getLessonType, getLessonStatusForList } from "const/dicData";
+import { getLessonType, getLessonStatusForList } from 'const/dicData';
 //日期格式话
 const dateFormat = (dateStr: string) => {
   if (dateStr != null) {
@@ -16,8 +16,7 @@ const dateFormat = (dateStr: string) => {
     const m = dateStr.substring(4, 6);
     const d = dateStr.substring(6, 8);
     return y + '-' + m + '-' + d;
-  } else
-    return dateStr
+  } else return dateStr;
 };
 //时间格式话
 const timeFormat = (dateStr: string) => {
@@ -26,8 +25,7 @@ const timeFormat = (dateStr: string) => {
     const m = dateStr.substring(2, 4);
     const d = dateStr.substring(4, 6);
     return y + ':' + m + ':' + d;
-  } else
-    return dateStr
+  } else return dateStr;
 };
 export const LessonAudit: React.FC = () => {
   const [present, dismiss] = useIonToast();
@@ -58,11 +56,9 @@ export const LessonAudit: React.FC = () => {
 
   const onModify = (status: string) => (e: React.FormEvent) => {
     e.preventDefault();
-    let lessonUpdateReason: string = ''
-    if (status == 'on')
-      lessonUpdateReason = '审核通过'
-    else
-      lessonUpdateReason = lessonState.lessonUpdateReason
+    let lessonUpdateReason: string = '';
+    if (status == 'on') lessonUpdateReason = '审核通过';
+    else lessonUpdateReason = lessonState.lessonUpdateReason;
 
     fetch(modifyURL, {
       method: 'POST',
@@ -88,8 +84,7 @@ export const LessonAudit: React.FC = () => {
             message: '课程审核，操作失败',
             position: 'top',
           });
-        if (status == 'off')
-          closeRejectModal()
+        if (status == 'off') closeRejectModal();
         setBack();
       });
   };
@@ -162,7 +157,7 @@ export const LessonAudit: React.FC = () => {
                 className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
                 name="lessonTotalPrice"
                 type="text"
-                value={lessonState.lessonTotalPrice}
+                value={lessonState.lessonTotalPrice / 100}
                 readOnly
               />
             </div>
@@ -343,14 +338,17 @@ export const LessonAudit: React.FC = () => {
                         审核结果
                         <hr className="mt-2 mb-4" />
                       </Dialog.Title>
-                      <form className="flex flex-col items-center mt-8 rounded-lg justify-items-center"
-                        onSubmit=
-                        {onModify('reject')}
+                      <form
+                        className="flex flex-col items-center mt-8 rounded-lg justify-items-center"
+                        onSubmit={onModify('reject')}
                       >
                         <div className="flex items-center mb-4 justify-items-center">
                           <div className="flex leading-7 justify-items-center">
-                            <div className="flex justify-end w-24 p-1">                            <span className='px-1 text-red-600'>*</span>
-                              不合格原因:</div>
+                            <div className="flex justify-end w-24 p-1">
+                              {' '}
+                              <span className="px-1 text-red-600">*</span>
+                              不合格原因:
+                            </div>
                             <textarea
                               className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
                               name="lessonUpdateReason"
@@ -358,7 +356,7 @@ export const LessonAudit: React.FC = () => {
                               onChange={e =>
                                 setLessonState({
                                   ...lessonState,
-                                  lessonUpdateReason: e.nativeEvent.target?.value,
+                                  lessonUpdateReason: e.target?.value,
                                 })
                               }
                               required
