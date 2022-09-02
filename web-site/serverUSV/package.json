@@ -4,7 +4,7 @@
   "description": "",
   "type": "commonjs",
   "scripts": {
-    "devdb": "docker-compose -f ./docker/docker-compose.yml up -d",
+    "devdb": "docker compose -f ./docker/docker-compose.yml up -d",
     "cleandevdb": "docker-compose -f ./docker/docker-compose.yml down -v",
     "dev": "npx tsc && node ./dist/server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
