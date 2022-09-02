@@ -44,6 +44,7 @@ services:
       - supervision_demo_mysql
     networks:
       - supervision_demo
+    restart: always
   # 消费者端
   supervision_demo_consumer:
     image: node:latest
