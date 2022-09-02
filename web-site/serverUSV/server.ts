@@ -153,6 +153,10 @@ app.get('/edu/transaction/sum', async (req, res) => {
   console.log(`教育机构: 查询汇总信息: 条件[${JSON.stringify(req.query)}]`)
   const loginName = req.query.loginName;
   const edu = await EduService.findByLoginName(loginName)
+  if (!edu) {
+    console.log(`教育机构: 查询汇总信息: 登陆名[${loginName}]没有找到教育机构`)
+    return { result: false, reason: `登陆名称[${loginName}]没有找到教育机构` }
+  }
   const contractSum = await eduContractService.sum(edu.eduId || "");
   const r = await eduTransactionService.sum(edu.eduSupervisedAccount)
   const result = { ...contractSum, ...r }
@@ -709,7 +713,7 @@ app.get("/edb/eduOrg/find", async (req, res) => {
 });
 import edbEduLessonService from "./src/edb/EduLessonService";
 app.get("/edb/eduLesson/find", async (req, res) => {
-  console.log(`教育局: 查询课程: 条件[$a c{req.query}]`);
+  console.log(`教育局: 查询课程: 条件[${req.query}]`);
   const r = await edbEduLessonService.find(req.query);
   r.records.map((lesson: EduLesson) => {
     lesson.lessonStartDate = dateFormat(lesson.lessonStartDate);
