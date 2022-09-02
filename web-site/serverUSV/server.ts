@@ -7,6 +7,11 @@ import * as cors from "cors";
 import { EventEmitter } from "events";
 import { v4 } from "uuid";
 import fetch from "node-fetch";
+const { exec } = require("child_process");
+// import forge from "node-forge";
+
+const forge = require("node-forge");
+
 // const fetch = require("node-fetch");
 console.log("sssssssssss");
 console.log(typeof fetch);
@@ -752,6 +757,7 @@ import edbSupervisorUserService from "./src/edb/SupervisorService";
 import TransferService from "./src/edu/TransferService";
 import EduService from "./src/edu/EduService";
 import { Transaction } from "fabric-network";
+import { stdout } from "process";
 app.get("/edb/chaincode/count", async (req, res) => {
   console.log(`教育局: 查询考勤:`);
   const attendanceCount = await edbAttendanceService.count();
@@ -812,10 +818,8 @@ app.post("/edb/lesson/audit", jsonParser, async (req, res) => {
 
 //轮询队列
 
-const publicKey =
-  "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCJzDYAOKvZU66RSCFwc6L+/hwY/kp1ZK5otH1rIKBk6BFZBrtpOvby45y86WEIc4Dpjf9SKWg//YhzbmWhY9LGHivC2/+Ysy/qn7ndP9j+vyEZ51KVbmFEvXhlKqhuEnX5HvdxgLyV0/ZRDFOXFzKY7vrSUv4QAC7o7MiH1W4B5wIDAQAB";
-const privateKey =
-  "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCJzDYAOKvZU66RSCFwc6L+/hwY/kp1ZK5otH1rIKBk6BFZBrtpOvby45y86WEIc4Dpjf9SKWg//YhzbmWhY9LGHivC2/+Ysy/qn7ndP9j+vyEZ51KVbmFEvXhlKqhuEnX5HvdxgLyV0/ZRDFOXFzKY7vrSUv4QAC7o7MiH1W4B5wIDAQAB";
+// const publicKey =
+//   "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCJzDYAOKvZU66RSCFwc6L+/hwY/kp1ZK5otH1rIKBk6BFZBrtpOvby45y86WEIc4Dpjf9SKWg//YhzbmWhY9LGHivC2/+Ysy/qn7ndP9j+vyEZ51KVbmFEvXhlKqhuEnX5HvdxgLyV0/ZRDFOXFzKY7vrSUv4QAC7o7MiH1W4B5wIDAQAB";
 const remotePath = "http://47.94.12.189:80/zj/test/";
 
 // var test = "1234567";
@@ -832,32 +836,37 @@ const remotePayPath =
   "http://47.94.12.189:80/zj/test/rsaPositiveTran/applyDzzfQrCode/";
 const remoteQueryPath =
   "http://47.94.12.189:80/zj/test/rsaPositiveTran/applyDzzfQrCode/";
-const testMerId = "000000000000002";
+const testMerId = "000000000000000";
 const testTermId = "00000000";
 const queryList = new Map();
-setTimeout(() => {
-  for (let value of queryList.values()) {
-    const queryInfo = {
-      merId: testMerId,
-      termId: testTermId,
-      tranDate: moment().format("YYYYMMDD"),
-      tranTime: moment().format("HHmmss"),
-      merOrderNo: value.merOrderNo,
-    };
-    const plainText = "";
-    fetch(remoteQueryPath + testMerId, {
-      method: "POST",
-      body: JSON.stringify({
-        plainText: plainText,
-        merchantNo: testMerId,
-      }),
-      headers: {
-        "Content-type": "application/json;charset=UTF-8",
-        MerchantId: testMerId,
-      },
-    });
-  }
-}, 5000);
+// setTimeout(() => {
+//   for (let value of queryList.values()) {
+//     const queryInfo = {
+//       merId: testMerId,
+//       termId: testTermId,
+//       tranDate: moment().format("YYYYMMDD"),
+//       tranTime: moment().format("HHmmss"),
+//       merOrderNo: value.merOrderNo,
+//     };
+//     const plainText = "";
+//     fetch(remoteQueryPath + testMerId, {
+//       method: "POST",
+//       body: JSON.stringify({
+//         plainText: plainText,
+//         merchantNo: testMerId,
+//       }),
+//       headers: {
+//         "Content-type": "application/json;charset=UTF-8",
+//         MerchantId: testMerId,
+//       },
+//     });
+//   }
+// }, 5000);
+
+const newPublicKey =
+  "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC0FT/LTwXOx1GIwDcOjn8C7pL2Gjv5xhr7PXdEyzyoakiGNc4ed1njQiw/crOziAQpFLZEZfZ9yPi/9/EFQtnexPzqWynYr0Vga0caNVVHqxA7Eivyphv6Tq8H69ecd7umI+8CM9qvsxC/+4Podf3Xnvi5N0ux992ZJKv18RDB0wIDAQAB";
+const qianzhui = "-----BEGIN PUBLIC KEY-----\n";
+const houzhui = "\n-----END PUBLIC KEY-----";
 
 app.post("/consumer/pc/preOrder", jsonParser, async (req, res) => {
   //todo
@@ -901,7 +910,6 @@ app.post("/consumer/pc/preOrder", jsonParser, async (req, res) => {
       orderNo: "",
       lessonAccumulationQuantity: lesson.lessonAccumulationQuantity,
     };
-    console.log(newContract);
 
     //todo 由于测试交易会产生真实扣款，所以金额设定为1分
     const bankJson = {
@@ -914,30 +922,26 @@ app.post("/consumer/pc/preOrder", jsonParser, async (req, res) => {
       ccyCode: 156,
       orderDesc: newContract.lessonName,
     };
-    const plainText = "";
+
+    const plainText = encrypt(JSON.stringify(bankJson), newPublicKey);
     fetch(remotePayPath + testMerId, {
       method: "POST",
-      body: JSON.stringify({
-        plainText: plainText,
-        merchantNo: testMerId,
-      }),
+      body: plainText,
       headers: {
-        "Content-type": "application/json;charset=UTF-8",
         MerchantId: testMerId,
       },
-    })
-      .then((res) => {
-        console.log(res);
-        const deCodeRes = res;
-        deCodeRes.json();
-      })
-      .then((json: any) => {
-        queryList.set(newContract.contractId, newContract);
-        saveContract(newContract).then(() => {
-          newContract.lessonTotalPrice = fenToYuan(
-            newContract.lessonTotalPrice
-          );
-          newContract.lessonPerPrice = fenToYuan(newContract.lessonPerPrice);
+    }).then((res) => {
+      console.log(res);
+      res.text().then((text) => {
+        const cdCmd = `cd ${__dirname}\\..\ `;
+        const javaCmd = `java RSAEncryptByPubk ` + text;
+        const cmd = cdCmd + " && " + javaCmd;
+        exec(cmd, (error, stdout, stderr) => {
+          //todo window会有乱码，解决方法见http://t.zoukankan.com/daysme-p-15795143.html，其他系统应无乱码，因此暂不解决
+          console.log(stdout);
+          const json = JSON.parse(stdout);
+          //todo 失败暂不考虑
+          console.log(json.qrCode);
           res.send({
             status: "success",
             result: newContract,
@@ -945,6 +949,7 @@ app.post("/consumer/pc/preOrder", jsonParser, async (req, res) => {
           });
         });
       });
+    });
 
     //todo 数币完成后走下面
     // const payUrl = pay(newContract.contractId,newContract.contractDate.concat(newContract.contractTime),String(newContract.lessonTotalPrice),'merchantNo',newContract.lessonName)
@@ -954,35 +959,109 @@ app.post("/consumer/pc/preOrder", jsonParser, async (req, res) => {
   }
 });
 
-const pbkey = new NodeRSA(
-  "-----BEGIN PUBLIC KEY-----" + publicKey + "-----END PUBLIC KEY-----"
-);
-const bankJson = {
-  merId: "104123456712345",
-  trrmId: "12341234",
-  tranDate: moment().format("YYYYMMDD"),
-  tranTime: moment().format("HHmmss"),
-  merOrderNo: "00000000" + moment().format("YYYYMMDDHHmmss") + "000001",
-  tranAmt: 1,
-  ccyCode: 156,
-  orderDesc: "test",
+const encrypt = (plainText: string, publicKeyStr: string) => {
+  console.log("encrypt");
+  console.log(Buffer.from(publicKeyStr, "base64").length);
+  const publicK = forge.pki.publicKeyFromPem(qianzhui + publicKeyStr + houzhui);
+
+  const data = Buffer.from(plainText, "utf8");
+  console.log(data);
+  const inputLen = data.length;
+  let offSet = 0;
+  let cache;
+  let resultArray = [];
+
+  let i = 0;
+  while (inputLen - offSet > 0) {
+    if (inputLen - offSet > 117) {
+      let tempBuffer = Buffer.alloc(117);
+      data.copy(tempBuffer, 0, offSet, offSet + 117);
+      const cacheStr = publicK.encrypt(tempBuffer, "RSAES-PKCS1-V1_5");
+      cache = Buffer.from(cacheStr, "binary");
+    } else {
+      let tempBuffer = Buffer.alloc(inputLen - offSet);
+      data.copy(tempBuffer, 0, offSet, inputLen);
+      const cacheStr = publicK.encrypt(tempBuffer, "RSAES-PKCS1-V1_5");
+      cache = Buffer.from(cacheStr, "binary");
+    }
+    console.log(cache.length);
+    console.log(cache);
+    resultArray.push(cache);
+
+    i++;
+    offSet = i * 117;
+  }
+  const result = Buffer.concat(resultArray);
+  return result.toString("base64");
 };
 
-const plainText = pbkey.encrypt(JSON.stringify(bankJson), "base64");
-console.log(plainText);
-fetch(remotePayPath + testMerId, {
-  method: "POST",
-  body: JSON.stringify({
-    plainText: plainText,
-    merchantNo: testMerId,
-  }),
-  headers: {
-    "Content-type": "application/json;charset=UTF-8",
-    MerchantId: testMerId,
-  },
-}).then((res) => {
-  console.log(res);
-  res.text().then((text) => {
-    console.log(text);
-  });
-});
+const decrypt = (plainText: string, publicKeyStr: string) => {
+  const publicK = forge.pki.publicKeyFromPem(qianzhui + publicKeyStr + houzhui);
+
+  const data = Buffer.from(plainText, "base64");
+  console.log(data);
+  const inputLen = data.length;
+  let offSet = 0;
+  let cache;
+  let resultArray = [];
+  let i = 0;
+  while (inputLen - offSet > 0) {
+    if (inputLen - offSet > 128) {
+      let tempBuffer = Buffer.alloc(117);
+      data.copy(tempBuffer, 0, offSet, offSet + 117);
+      const cacheStr = publicK.decrypt(tempBuffer, "RSAES-PKCS1-V1_5");
+      cache = Buffer.from(cacheStr, "binary");
+      // cache = cipher.doFinal(encryptedData, offSet, 128);
+    } else {
+      let tempBuffer = Buffer.alloc(117);
+      data.copy(tempBuffer, 0, offSet, offSet + 117);
+      const cacheStr = publicK.decrypt(tempBuffer, "RSAES-PKCS1-V1_5");
+      cache = Buffer.from(cacheStr, "binary");
+    }
+    resultArray.push(cache);
+    i++;
+    offSet = i * 117;
+  }
+};
+
+// console.log("CCCCCCCCC");
+// const bankJson = {
+//   merId: testMerId,
+//   termId: testTermId,
+//   tranDate: moment().format("YYYYMMDD"),
+//   tranTime: moment().format("HHmmss"),
+//   merOrderNo: "00000000" + moment().format("YYYYMMDDHHmmss") + "000001",
+//   tranAmt: 1,
+//   ccyCode: 156,
+//   orderDesc: "test",
+// };
+// console.log(bankJson);
+
+// const plainText = encrypt(JSON.stringify(bankJson), newPublicKey);
+
+// const returnStr =
+//   "lM0FfXvb0NqlcTv5Jeu4H/Z1DcYYpqq/dZ8eVC3P7cDZTVxq//dOI4yX85Nr4HYPC8YwFwnJRGtw/TCrtubwuqI+f4CmYCQf5P7ZOy4xxjNa+naD2BhPYcoguqgPiJQCXWyWgikSWAZ6C40LpCATUIC6fTBiYBRRoKVVfBPjCbJ3QHzppAJl+wDG4kuPX25Qr88EC8CMiWD/kNDxVLof36Y/YzrUicxhErq4J5mxbIoYQW1Lka3zJTu3aR9ZPED+RkTHSvKDF0H452Zcz0Z9iAiST+R+7D7EEqWJ0HEfeFffnJYMhPnocdP0jDAGVPDAeuks/Z0RCkS6Q3d+lwwtZFLL3Eu9T4/Mu41tbJPyEge4qEsgSn3SGb3v5KH5zKU6x0Q7Jdgtef80eQ7TTe1aUez6exKY9qbCHjojLw0O07nsz2DxRu6XXbUwrLApxWaIT6BSzQDNwwc48mAfqvDD6h3MbedQyhbA3tHWC6bHarw2Lf8ZOcd/+iGHHx1/Ic4mZktKx/YJxWBKl4VrdfPOQ2x3RU6VyzASWlEvuz/aJvSctYODknQtSBqOjzGiGOMUbAmL07fTUlbF0KjvAa69FCqFQcUVaziDG3YQIUFeBecAgmUuaR0d20gLJtFMwqRrV2gvFtK+umZiwrBiu4hFteAmQd5AkvDNgW1DDATJcSQ=";
+
+// fetch(remotePayPath + testMerId, {
+//   method: "POST",
+//   body: plainText,
+//   headers: {
+//     MerchantId: testMerId,
+//   },
+// }).then((res) => {
+//   console.log(res);
+//   res.text().then((text) => {
+//     const cdCmd = `cd ${__dirname}\\..\ `;
+
+//     const javaCmd = `java RSAEncryptByPubk ` + returnStr;
+//     const cmd = cdCmd + " && " + javaCmd;
+//     // const result = decrypt(text, newPublicKey);
+//     exec(cmd, (error, stdout, stderr) => {
+//       //todo window会有乱码，解决方法见http://t.zoukankan.com/daysme-p-15795143.html，其他系统应无乱码，因此暂不解决
+//       console.log(stdout);
+//       const json = JSON.parse(stdout);
+//       //todo 失败暂不考虑
+//       console.log(json.qrCode);
+//     });
+//   });
+// });
