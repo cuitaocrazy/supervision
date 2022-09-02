@@ -3,7 +3,7 @@ import { IonPage, IonHeader, IonContent } from "@ionic/react";
 import { useHistory } from "react-router-dom";
 import Navbar from "../Navbar";
 import { Contract } from "../../types/types";
-import { preOrderURL } from "../../const/const";
+import { preOrderURL,socketUrl } from "../../const/const";
 import { AppContext, setContractDetail } from "../../appState";
 import { io } from "socket.io-client";
 import { Link } from "react-router-dom";
@@ -11,7 +11,7 @@ import { QRCodeCanvas } from "qrcode.react";
 
 // 数币支付页面
 const ECNYPay = () => {
-  const socketUrl = "http://localhost:3003";
+
   const history = useHistory();
   const socket = io(socketUrl);
   const [contract, setContract] = useState({} as Contract);
@@ -42,6 +42,7 @@ const ECNYPay = () => {
       .then((res) => res.json())
       .then((json) => {
         setContract(json.result);
+        setPayUrl(json.payUrl);
         refreshContract(json.result);
         // setPayUrl(json.payUrl);
         // socket.emit("pay", json.result.contractId);

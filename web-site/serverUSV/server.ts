@@ -911,10 +911,21 @@ app.post("/consumer/pc/preOrder", jsonParser, async (req, res) => {
       lessonAccumulationQuantity: lesson.lessonAccumulationQuantity,
     };
 
+    // const bankJson = {
+    //   merId: testMerId,
+    //   termId: testTermId,
+    //   tranDate: moment().format("YYYYMMDD"),
+    //   tranTime: moment().format("HHmmss"),
+    //   merOrderNo: "00000000" + moment().format("YYYYMMDDHHmmss") + "000001",
+    //   tranAmt: 1,
+    //   ccyCode: 156,
+    //   orderDesc: "test",
+    // };
+
     //todo 由于测试交易会产生真实扣款，所以金额设定为1分
     const bankJson = {
-      merId: "104123456712345",
-      trrmId: "12341234",
+      merId: testMerId,
+      trrmId: testTermId,
       tranDate: newContract.contractDate,
       tranTime: newContract.contractTime,
       merOrderNo: newContract.contractId,
@@ -933,6 +944,8 @@ app.post("/consumer/pc/preOrder", jsonParser, async (req, res) => {
     }).then((res) => {
       console.log(res);
       res.text().then((text) => {
+        console.log(text);
+        console.log("-------------");
         const cdCmd = `cd ${__dirname}\\..\ `;
         const javaCmd = `java RSAEncryptByPubk ` + text;
         const cmd = cdCmd + " && " + javaCmd;
