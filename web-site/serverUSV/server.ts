@@ -144,8 +144,7 @@ app.get('/edu/transaction/find', async (req, res) => {
   console.log(`教育机构: 查询流水信息: 条件[${JSON.stringify(req.query)}]`)
   const loginName = req.query.loginName;
   const edu = await EduService.findByLoginName(loginName)
-
-  const r = await eduTransactionService.query(req.query, edu.eduSupervisedAccount)
+  const r = await eduTransactionService.query(req.query, edu.eduSupervisedAccount || "")
   r.records.map((record: any) => { record.transactionAmt = fenToYuan(record.transactionAmt) })
   res.send(r)
 })
