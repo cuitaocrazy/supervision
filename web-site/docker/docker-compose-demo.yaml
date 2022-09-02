@@ -92,7 +92,7 @@ services:
     environment:
       - NEXT_PUBLIC_SERVER_PATH=http://${host}:8080/api/edb
       - NEXT_PUBLIC_ROOT_PATH=/edb
-      - ENV_RUNTIME=test
+      # - ENV_RUNTIME=test
     volumes:
       - ../regulator-mag-ionic:/home/node/app/
       - ./wait_for.sh:/home/node/wait_for.sh
@@ -120,12 +120,4 @@ services:
       - supervision_demo_consumer
       - supervision_demo_edu
       - supervision_demo_edb
-      
-    depends_on:
-      - supervision_demo_server
-      - supervision_demo_consumer
-      - supervision_demo_edu
-      - supervision_demo_edb
-      
-
     
