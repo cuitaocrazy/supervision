@@ -9,6 +9,7 @@ import LessonTypeList from "../../components/LessonType";
 import LessonStateList from "../../components/LessonState";
 import Quit from "components/components/Quit";
 import { eduLessonEditURL } from "const/consts";
+import { getLessonType, getLessonStatus } from "const/dicData";
 
 export const LessonDetail: React.FC = () => {
   const [present, dismiss] = useIonToast();
@@ -64,14 +65,6 @@ export const LessonDetail: React.FC = () => {
       });
     }
   };
-  const lessonTypePickerColumn = {
-    name: "lessonTypePickerColumn",
-    options: [
-      { text: "语文", value: "0" },
-      { text: "数学", value: "1" },
-    ],
-  } as PickerColumn;
-
   return (
     <IonPage className="bg-gray-100">
       <IonCard>
@@ -106,7 +99,10 @@ export const LessonDetail: React.FC = () => {
             <hr className="mt-2 mb-4" />
             <div className="grid grid-cols-2 justify-items-center ">
               <div className="flex items-center mb-4 leading-10 justify-items-center">
-                <div className="flex justify-end w-32 mr-2 ">课程名称:</div>
+                <div className="flex justify-end w-32 mr-2">
+                  {" "}
+                  <span className="px-1 text-red-600">*</span>课程名称:
+                </div>
                 <input
                   type="text"
                   className="w-64 px-2 border rounded-md"
@@ -121,7 +117,9 @@ export const LessonDetail: React.FC = () => {
                 />
               </div>
               <div className="flex mb-4 leading-10">
-                <div className="flex justify-end w-32 mr-2">总课时:</div>
+                <div className="flex justify-end w-32 mr-2">
+                  <span className="px-1 text-red-600">*</span>总课时:
+                </div>
                 <input
                   className="w-64 px-2 border rounded-md"
                   type="text"
@@ -136,7 +134,10 @@ export const LessonDetail: React.FC = () => {
                 />
               </div>
               <div className="flex mb-4 leading-10">
-                <div className="flex justify-end w-32 mr-2">总价格（元）:</div>
+                <div className="flex justify-end w-32 mr-2">
+                  {" "}
+                  <span className="px-1 text-red-600">*</span>总价格（元）:
+                </div>
                 <input
                   className="w-64 px-2 border rounded-md"
                   type="text"
@@ -149,10 +150,11 @@ export const LessonDetail: React.FC = () => {
                   value={lessonState.lessonTotalPrice}
                   required
                 />
+                一天
               </div>
               <div className="flex mb-4 leading-10">
                 <div className="flex justify-end w-32 mr-2">
-                  课程单价（元）:
+                  <span className="px-1 text-red-600">*</span>课程单价（元）:
                 </div>
                 <input
                   className="w-64 px-2 border rounded-md"
@@ -169,7 +171,15 @@ export const LessonDetail: React.FC = () => {
               </div>
               <div className="flex mb-4 leading-10">
                 <div className="flex justify-end w-32 mr-2">课程类型:</div>
-                <LessonTypeList />
+                <LessonTypeList
+                  lessonType={lessonState.lessonType}
+                  setlessonType={(v) => {
+                    setLessonState({
+                      ...lessonState,
+                      ...{ lessonType: v },
+                    });
+                  }}
+                />
                 {/* <input className='w-64 px-2 border rounded-md' type="text" onChange={e => setLessonState({ ...lessonState, lessonType: e.nativeEvent.target?.value })} required value={lessonState.lessonType} /> */}
                 {/* <div className='w-64 px-2 border rounded-md'>
                 <IonPicker 
@@ -203,7 +213,8 @@ export const LessonDetail: React.FC = () => {
               <div className="flex mb-4 leading-10">
                 <div className="flex justify-end w-32 mr-2">课程开始日期:</div>
                 <input
-                  className="w-64 px-2 border rounded-md"
+                  className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
+                  type="date"
                   onChange={(e) =>
                     setLessonState({
                       ...lessonState,
@@ -212,7 +223,7 @@ export const LessonDetail: React.FC = () => {
                   }
                   required
                   value={lessonState.lessonStartDate}
-                />
+                ></input>
               </div>
               <div className="flex mb-4 leading-10">
                 <div className="flex justify-end w-32 mr-2">课程开始时间:</div>
@@ -231,7 +242,8 @@ export const LessonDetail: React.FC = () => {
               <div className="flex mb-4 leading-10">
                 <div className="flex justify-end w-32 mr-2">课程结束日期:</div>
                 <input
-                  className="w-64 px-2 border rounded-md"
+                  className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
+                  type="date"
                   onChange={(e) =>
                     setLessonState({
                       ...lessonState,
@@ -259,33 +271,45 @@ export const LessonDetail: React.FC = () => {
               <div className="flex mb-4 leading-10">
                 <div className="flex justify-end w-32 mr-2">课程状态:</div>
                 {/* <input className='w-64 px-2 border rounded-md' type="text" onChange={e => setLessonState({ ...lessonState, lessonState: e.nativeEvent.target?.value })} required value={lessonState.lessonState} /> */}
-                <LessonStateList />
+                <LessonStateList
+                  lessonStatus={lessonState.lessonStatus}
+                  setlessonStatus={(v) => {
+                    setLessonState({
+                      ...lessonState,
+                      ...{ lessonStatus: v },
+                    });
+                  }}
+                />
               </div>
               <div className="flex mb-4 leading-10">
                 <div className="flex justify-end w-32 mr-2"> 教育机构名称:</div>
                 <input
                   className="w-64 px-2 bg-gray-100 border rounded-md focus:outline-none"
                   type="text"
-                  // onChange={(e) =>
-                  //   setLessonState({
-                  //     ...lessonState,
-                  //     ...{
-                  //       edu: {
-                  //         ...lessonState.edu,
-                  //         eduName: e.target?.value,
-                  //       },
-                  //     },
-                  //   })
-                  // }
-                  readOnly
+                  onChange={(e) =>
+                    setLessonState({
+                      ...lessonState,
+                      ...{
+                        edu: {
+                          ...lessonState.edu,
+                          eduName: e.target?.value,
+                        },
+                      },
+                    })
+                  }
+                  required
                   value={lessonState.eduName}
                 />
               </div>
               <div className="flex mb-4 leading-10">
-                <div className="flex justify-end w-32 mr-2">教师姓名:</div>
+                <div className="flex justify-end w-32 mr-2">
+                  {" "}
+                  <span className="px-1 text-red-600">*</span>教师姓名:
+                </div>
                 <input
                   className="w-64 h-10 px-2 border rounded-md"
                   type="text"
+                  name="teacherName"
                   onChange={(e) =>
                     setLessonState({
                       ...lessonState,
@@ -307,7 +331,6 @@ export const LessonDetail: React.FC = () => {
                       lessonIntroduce: e.target?.value,
                     })
                   }
-                  required
                   value={lessonState.lessonIntroduce}
                 />
               </div>

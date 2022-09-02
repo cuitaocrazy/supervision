@@ -120,27 +120,26 @@ const yuanToFen = (tranAmtYuan: string | number) => {
     return parseFloat(tranAmtYuan) * 100;
   }
 };
-
 import eduLogin from "./src/edu/login";
-
-
-
-
 
 app.post('/edu/login', jsonParser, async (req, res) => {
   const r = await eduLogin(req.body)
   res.send(r)
 })
-
-import eduTeacherService from './src/edu/TeacherService'
-import eduTransactionService from './src/edu/TransactionService'
-import eduEduService from './src/edu/EduService'
-app.get('/edu/teacher/find', async (req, res) => {
-  console.log(`教育机构: 查询教师: 条件[${JSON.stringify(req.query)}]`)
-  const r = await eduTeacherService.find(req.query)
-  res.send(r)
-})
-
+import eduTeacherService from "./src/edu/TeacherService";
+import eduTransactionService from "./src/edu/TransactionService";
+import eduEduService from "./src/edu/EduService";
+app.get("/edu/teacher/find", async (req, res) => {
+  console.log(`教育机构: 查询教师: 条件[${JSON.stringify(req.query)}]`);
+  const r = await eduTeacherService.find(req.query);
+  r.records.map((record: any) => {
+    record.teacherCreateDate = dateFormat(record.teacherCreateDate);
+    record.teacherCreateTime = timeFormat(record.teacherCreateTime);
+    record.teacherUpdateDate = dateFormat(record.teacherUpdateDate);
+    record.teacherUpdateTime = timeFormat(record.teacherUpdateTime);
+  });
+  res.send(r);
+});
 app.get('/edu/transaction/find', async (req, res) => {
   console.log(`教育机构: 查询流水信息: 条件[${JSON.stringify(req.query)}]`)
   const loginName = req.query.loginName;
@@ -225,8 +224,12 @@ app.get('/edu/lesson/findAll', async (req, res) => {
 app.get('/edu/lesson/find', async (req, res) => {
   console.log(`教育机构: 搜索课程: 条件[${JSON.stringify(req.query)}]`)
   const r = await eduLessonService.find(req.query)
-
-  r.records.map((lesson: EduLesson) => { lesson.lessonTotalPrice = fenToYuan(lesson.lessonTotalPrice); lesson.lessonPerPrice = fenToYuan(lesson.lessonPerPrice) })
+  r.records.map((lesson: EduLesson) => {
+    lesson.lessonTotalPrice = fenToYuan(lesson.lessonTotalPrice);
+    lesson.lessonPerPrice = fenToYuan(lesson.lessonPerPrice);
+    lesson.lessonStartDate = dateFormat(lesson.lessonStartDate);
+    lesson.lessonEndDate = dateFormat(lesson.lessonEndDate);
+  });
   res.send(r)
 })
 app.post('/edu/lesson/create', jsonParser, async (req, res) => {
@@ -246,7 +249,8 @@ app.post('/edu/lesson/create', jsonParser, async (req, res) => {
   //todo
   // lesson.teacherId = req.body.teacherId
   lesson.teacherId = "teacher00001";
-  lesson.teacherName = "马老师";
+  // lesson.teacherName = "马老师";
+  lesson.teacherName = req.body.teacherName;
   lesson.eduId = "edu0001";
   // lesson.eduName = "测试机构";
   lesson.eduName = req.body.eduName
@@ -282,22 +286,19 @@ app.post("/edu/lesson/edit", jsonParser, async (req, res) => {
   lesson.lessonIntroduce = req.body.lessonIntroduce;
   lesson.lessonStartDate = req.body.lessonStartDate?.replaceAll("-", "");
   lesson.lessonEndDate = req.body.lessonEndDate?.replaceAll("-", "");
-  lesson.lessonStatus = "pending";
+  lesson.lessonStatus = req.body.lessonStatus;
   lesson.lessonAccumulationQuantity = 0;
-  //todo
+  //  todo ;
   // lesson.teacherId = req.body.teacherId
-  lesson.teacherId = "teacher00001";
-  lesson.teacherName = "马老师";
-  lesson.eduId = "edu0001";
-  lesson.eduName = "北京亚大教育机构";
-  // lesson.eduName = req.body.eduName
+  lesson.teacherId = 'teacher00001';
+  lesson.teacherName = req.body.teacherName;
+  lesson.eduId = req.body.eduId;
+  lesson.eduName = req.body.eduName
   lesson.lessonImages =
     "https://s3.bmp.ovh/imgs/2022/08/30/28f95385d82b4f7c.jpg"; //'http://placekitten.com/g/200/300'
   lesson.lessonOutline = false;
   lesson.lessonStartTime = "000000";
   lesson.lessonEndTime = "000000";
-  lesson.lessonCreateDate = moment().format("YYYYMMDD");
-  lesson.lessonCreateTime = moment().format("HHmmss");
   lesson.lessonUpdateDate = moment().format("YYYYMMDD");
   lesson.lessonUpdateTime = moment().format("HHmmss");
   lesson.lessonUpdateReason = "编辑课程";
@@ -686,34 +687,44 @@ app.get('/edb/balance/find', async (req, res) => {
   res.send(r)
 })
 
-
-
 app.get('/edb/teacher/find', async (req, res) => {
   console.log(`教育局: 查询教师: 条件[${JSON.stringify(req.query)}]`)
   const r = await edbTeacherService.find(req.query)
+  r.records.map((record: any) => {
+    record.teacherCreateDate = dateFormat(record.teacherCreateDate)
+    record.teacherCreateTime = timeFormat(record.teacherCreateTime)
+    record.teacherUpdateDate = dateFormat(record.teacherUpdateDate)
+    record.teacherUpdateTime = timeFormat(record.teacherUpdateTime)
+  })
   res.send(r)
 })
 
+app.get("/edb/eduOrg/find", async (req, res) => {
+  console.log(`教育局: 查询教育机构: 条件[${req.query}]`);
+  const r = await edbEduOrgService.find({ ...new EduOrg(), ...req.query });
+  r.records.map((edu: EduOrg) => {
+    edu.eduAnnualInspectionDate = dateFormat(edu.eduAnnualInspectionDate);
+    edu.eduAnnualInspectionTime = timeFormat(edu.eduAnnualInspectionTime);
+  });
+  res.send(r);
+});
+import edbEduLessonService from "./src/edb/EduLessonService";
+app.get("/edb/eduLesson/find", async (req, res) => {
+  console.log(`教育局: 查询课程: 条件[$a c{req.query}]`);
+  const r = await edbEduLessonService.find(req.query);
+  r.records.map((lesson: EduLesson) => {
+    lesson.lessonStartDate = dateFormat(lesson.lessonStartDate);
+    lesson.lessonEndDate = dateFormat(lesson.lessonEndDate);
+  });
+  res.send(r);
+});
 
-
-app.get('/edb/eduOrg/find', async (req, res) => {
-  console.log(`教育局: 查询教育机构: 条件[${req.query}]`)
-  const r = await edbEduOrgService.find({ ...new EduOrg(), ...req.query })
-  res.send(r)
-})
-import edbEduLessonService from './src/edb/EduLessonService'
-app.get('/edb/eduLesson/find', async (req, res) => {
-  console.log(`教育局: 查询课程: 条件[${req.query}]`)
-  const r = await edbEduLessonService.find(req.query)
-  res.send(r)
-})
-
-app.get('/edb/contract/find', async (req, res) => {
-  console.log(`教育局: 合同查询: 条件[${{ ...req.query }}]`)
-  const r = await eduContractService.find(req.query)
-  r.records.map(contract => {
-    contract.lessonTotalPrice = fenToYuan(contract.lessonTotalPrice)
-    contract.lessonPerPrice = fenToYuan(contract.lessonPerPrice)
+app.get("/edb/contract/find", async (req, res) => {
+  console.log(`教育局: 合同查询: 条件[${{ ...req.query }}]`);
+  const r = await eduContractService.find(req.query);
+  r.records.map((contract) => {
+    contract.lessonTotalPrice = fenToYuan(contract.lessonTotalPrice);
+    contract.lessonPerPrice = fenToYuan(contract.lessonPerPrice);
     return contract;
   });
   res.send(r)
@@ -787,26 +798,26 @@ app.post('/edb/lesson/audit', jsonParser, async (req, res) => {
 
 //app.use(express.json())
 //新增
-app.post("/edb/eduOrg/create", jsonParser, async (req, res) => {
-  console.log(`教育局: 新增教育机构: 新增信息[${JSON.stringify(req.body)}]`);
-  const edu: EduOrg = req.body;
-  edu.eduStatus = "valid";
-  edu.eduCreateDate = moment().format("YYYYMMDD");
-  edu.eduCreateTime = moment().format("HHmmss");
+app.post('/edb/eduOrg/create', jsonParser, async (req, res) => {
+  console.log(`教育局: 新增教育机构: 新增信息[${JSON.stringify(req.body)}]`)
+  const edu: EduOrg = req.body
+  edu.eduStatus = "valid"
+  edu.eduCreateDate = moment().format("YYYYMMDD")
+  edu.eduCreateTime = moment().format("HHmmss")
   edu.eduId = geneUSVOrderNo(); //await getUUIDWithEM(mysql.manager)
 
   const r = await edbEduOrgService.create(edu);
   res.send(r);
 });
 //编辑
-app.post("/edb/eduOrg/modify", jsonParser, async (req, res) => {
-  console.log(`教育局: 更新教育机构: 更新信息[${JSON.stringify(req.body)}]`);
-  const edu: EduOrg = req.body;
-  edu.eduUpdateDate = moment().format("YYYYMMDD");
-  edu.eduUpdateTime = moment().format("HHmmss");
-  const r = await edbEduOrgService.editSave(edu);
-  res.send(r);
-});
+app.post('/edb/eduOrg/modify', jsonParser, async (req, res) => {
+  console.log(`教育局: 更新教育机构: 更新信息[${JSON.stringify(req.body)}]`)
+  const edu: EduOrg = req.body
+  edu.eduUpdateDate = moment().format('YYYYMMDD')
+  edu.eduUpdateTime = moment().format('HHmmss')
+  const r = await edbEduOrgService.editSave(edu)
+  res.send(r)
+})
 //删除
 app.post("/edb/eduOrg/del", jsonParser, async (req, res) => {
   console.log(`教育局: 删除教育机构: 条件[${JSON.stringify(req.body)}]`);
@@ -836,6 +847,10 @@ app.post("/edb/eduOrg/apply", jsonParser, async (req, res) => {
 app.get("/edb/supervisorBackEdu/find", async (req, res) => {
   console.log(`教育局: 黑名单管理查询[${JSON.stringify(req.query)}]`);
   let eduList = await blackEduService.findAll(req.query);
+  eduList.records.map((balck: SupervisorBlackEdu) => {
+    balck.blackEduCreateDate = dateFormat(balck.blackEduCreateDate);
+    balck.blackEduCreateTime = timeFormat(balck.blackEduCreateTime);
+  });
   res.send(eduList);
 });
 
@@ -845,5 +860,103 @@ app.delete("/edb/supervisorBackEdu/remove", jsonParser, async (req, res) => {
     ...new SupervisorBlackEdu(),
     ...req.body,
   });
+  res.send(r);
+});
+
+app.post("/edu/lesson/audit", jsonParser, async (req, res) => {
+  console.log(`教育机构: 课程审核: 条件[${JSON.stringify(req.body)}]`);
+  const r = await edbEduLessonService.update(req.body);
+  res.send(r);
+});
+app.post("/edb/eduLesson/off", jsonParser, async (req, res) => {
+  console.log(`教育局: 课程下架: 条件[${JSON.stringify(req.body)}]`);
+  const r = await eduLessonService.off(req.body);
+  res.send(r);
+});
+//日期格式话
+const dateFormat = (dateStr: string) => {
+  if (dateStr != null) {
+    const y = dateStr.substring(0, 4);
+    const m = dateStr.substring(4, 6);
+    const d = dateStr.substring(6, 8);
+    return y + '-' + m + '-' + d;
+  } else
+    return dateStr
+};
+//时间格式话
+const timeFormat = (dateStr: string) => {
+  if (dateStr != null) {
+    const y = dateStr.substring(0, 2);
+    const m = dateStr.substring(2, 4);
+    const d = dateStr.substring(4, 6);
+    return y + ':' + m + ':' + d;
+  } else
+    return dateStr
+};
+//监管端:公告政策
+
+app.post("/edb/announcement/create", jsonParser, async (req, res) => {
+  console.log(`教育局: 公告政策添加: 条件[${JSON.stringify(req.body)}]`);
+  const info: Announcement = req.body
+  info.announcementStatus = 'on'
+  info.announcementDate = info.announcementDate?.replaceAll('-', '');
+});
+app.post("/edu/lesson/audit", jsonParser, async (req, res) => {
+  console.log(`教育机构: 课程审核: 条件[${JSON.stringify(req.body)}]`);
+  const r = await edbEduLessonService.update(req.body);
+  res.send(r);
+});
+app.post("/edb/eduLesson/off", jsonParser, async (req, res) => {
+  console.log(`教育局: 课程下架: 条件[${JSON.stringify(req.body)}]`);
+  const r = await eduLessonService.off(req.body);
+  res.send(r);
+});
+//监管端:公告政策
+
+import announcementService from "./src/edb/AnnouncementService";
+import { Announcement } from './src/entity/Announcement';
+app.post("/edb/announcement/create", jsonParser, async (req, res) => {
+  console.log(`教育局: 公告政策添加: 条件[${JSON.stringify(req.body)}]`);
+  const info: Announcement = req.body
+  info.announcementStatus = 'on'
+  info.announcementDate = info.announcementDate?.replaceAll('-', '');
+
+  info.announcementId = randomUUID().replaceAll('-', '');
+  const r = await announcementService.save(info);
+  res.send(r);
+});
+app.post('/edb/announcement/modify', jsonParser, async (req, res) => {
+  console.log(`教育局: 更新教育机构: 更新信息[${JSON.stringify(req.body)}]`)
+  const info: Announcement = req.body
+  if (info.announcementId != null) {
+    info.announcementStatus = 'on'
+    info.announcementDate = info.announcementDate?.replaceAll('-', '');
+    const r = await announcementService.save(info)
+    res.send(r)
+  } else
+    res.send({ result: false, msg: "修改失败" })
+})
+
+app.get("/edb/announcement/find", async (req, res) => {
+  console.log(`教育局: 公告政策查询:条件[${JSON.stringify(req.query)}]`);
+  let r = await announcementService.find(req.query);
+  r.records.map((item: Announcement) => {
+    item.announcementDate = dateFormat(item.announcementDate);
+  });
+  res.send(r);
+});
+
+app.delete("/edb/announcement/del", jsonParser, async (req, res) => {
+  console.log(`教育局: 公告政策删除: 条件[${JSON.stringify(req.body)}]`);
+  const r = await announcementService.del({
+    ...new Announcement(),
+    ...req.body,
+  });
+  res.send(r);
+});
+app.post("/edb/announcement/offOn", jsonParser, async (req, res) => {
+  console.log(`教育局: 公告政策状态更新: 条件[${JSON.stringify(req.body)}]`);
+  const info: Announcement = req.body
+  const r = await announcementService.save(info);
   res.send(r);
 });

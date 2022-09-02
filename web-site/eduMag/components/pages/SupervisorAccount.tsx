@@ -1,5 +1,5 @@
 //BaseInfo的详细页面
-import React, { useState,FC } from "react";
+import React, { useState, FC } from "react";
 import {
   IonPage,
   IonCard,
@@ -74,14 +74,14 @@ export const SupervisorAccount: React.FC = () => {
   const [contractFinish, setContractFinish] = useState("0");
   const onQuery = () => {
     //todo fetch
-     paramStr = getParamStr(
+    paramStr = getParamStr(
       {
         loginName: loginName,
       },
       findURL
     );
-    console.log(paramStr)
-    console.log(loginName)
+    console.log(paramStr);
+    console.log(loginName);
     fetch(paramStr, {
       method: "GET",
       headers: {
@@ -116,7 +116,7 @@ export const SupervisorAccount: React.FC = () => {
   useEffect(() => {
     localforage.getItem("loginName").then((value) => {
       setLoginName(value as string);
-      console.log(value)
+      console.log(value);
       onQuery();
     });
   }, [loginName]);
@@ -131,7 +131,7 @@ export const SupervisorAccount: React.FC = () => {
   };
 
   //todo 从localStoge中取值
-  let paramStr="";
+  let paramStr = "";
 
   const onClick = () => {
     //todo fetch

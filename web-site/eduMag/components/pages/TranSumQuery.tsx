@@ -17,14 +17,14 @@ const TranSumQuery = () => {
   const [contractValid, setContractValid] = useState("0");
   const [contractFinish, setContractFinish] = useState("0");
   const onQuery = () => {
-  //todo 从localStoge中取值
-  const paramStr = getParamStr(
-    {
-      loginName: loginName,
-    },
-    findURL
-  );
-  console.log(paramStr)
+    //todo 从localStoge中取值
+    const paramStr = getParamStr(
+      {
+        loginName: loginName,
+      },
+      findURL
+    );
+    console.log(paramStr);
     //todo fetch
     fetch(paramStr, {
       method: "GET",
@@ -62,7 +62,6 @@ const TranSumQuery = () => {
       setLoginName(value as string);
       onQuery();
     });
-    
   }, [loginName]);
 
   const findURL = eduTransactionSumURL;
@@ -73,7 +72,6 @@ const TranSumQuery = () => {
     });
     return url + result;
   };
-
 
   const onClick = () => {
     //todo fetch

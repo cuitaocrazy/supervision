@@ -3,17 +3,17 @@ import { Entity, PrimaryColumn, Column } from 'typeorm'
 @Entity({ name: "t_b_announcement" })
 export class Announcement {
     @PrimaryColumn()
-    announcement_id: string
+    announcementId: string
     @Column()
-    announcement_date: string
+    announcementDate: string
     @Column()
-    announcement_time: number
+    announcementTime: string
     @Column()
-    announcement_announcer: number
+    announcementAnnouncer: number
     @Column()
-    announcement_title: number
+    announcementTitle: number
     @Column()
-    announcement_content: string
+    announcementContent: string
     @Column()
-    announcement_status: string
+    announcementStatus: string
 }

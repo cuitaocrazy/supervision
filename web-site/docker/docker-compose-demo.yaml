@@ -112,9 +112,15 @@ services:
       - ./html/:/usr/share/nginx/html/
     ports:
       - 8080:8080
-      # - 80:80
+      # # - 80:80
     networks:
       - supervision_demo
+    depends_on:
+      - supervision_demo_server
+      - supervision_demo_consumer
+      - supervision_demo_edu
+      - supervision_demo_edb
+      
     depends_on:
       - supervision_demo_server
       - supervision_demo_consumer

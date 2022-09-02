@@ -16,13 +16,13 @@ const Home: FC = () => {
   const [contractValid, setContractValid] = useState("0");
   const [contractFinish, setContractFinish] = useState("0");
   const onQuery = () => {
-     //todo 从localStoge中取值
-  const paramStr = getParamStr(
-    {
-      loginName: loginName,
-    },
-    findURL
-  );
+    //todo 从localStoge中取值
+    const paramStr = getParamStr(
+      {
+        loginName: loginName,
+      },
+      findURL
+    );
     //todo fetch
     fetch(paramStr, {
       method: "GET",
@@ -71,8 +71,6 @@ const Home: FC = () => {
     });
     return url + result;
   };
-
- 
 
   interface tranSumCardProps {
     d?: string;

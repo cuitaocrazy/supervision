@@ -4,20 +4,20 @@ import { IonPage, IonCard, IonCardContent, useIonToast } from '@ionic/react';
 import { Redirect } from 'react-router-dom';
 import { useCallback, useContext } from 'react';
 import { AppContext, setAnnouncementEdit } from '../../../appState';
-import { Announcement } from '../../../types/types';
 import { PickerColumn } from '@ionic/core';
 import RichText from '../../RichText';
 import { EditorState } from 'draft-js';
 import Quit from '../../Quit';
+import { edbAnnouncementModifyURL } from 'const/const';
 
 export const AnnouncementEdit: React.FC = () => {
   const [present, dismiss] = useIonToast();
-  let [isOffOpen, setIsOffOpen] = useState(false);
-  const modifyURL = 'http://localhost:3003/announcement/modify';
+  //let [isOffOpen, setIsOffOpen] = useState(false);
+  const modifyURL = edbAnnouncementModifyURL;
   const { state, dispatch } = useContext(AppContext);
   const editor = useRef(null);
+
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
-  const [announcementState, setAnnouncementState] = useState(state.announcement.announcementEdit);
   const [isPickOpen, setPickOpen] = useState(false);
   const statueTypePickerColumn = {
     name: 'statueTypePickerColumn',
@@ -26,19 +26,17 @@ export const AnnouncementEdit: React.FC = () => {
       { text: '下线', value: 'off' },
     ],
   } as PickerColumn;
+  const [announcementState, setAnnouncementState] = useState(state.announcement.announcementEdit);
   const setBack = useCallback(() => {
     dispatch(setAnnouncementEdit(undefined));
   }, []);
-  const onBack = () => () => {
-    setBack();
-  };
   if (state.announcement.announcementEdit === undefined) {
     return <Redirect to={state.backPage} />;
   }
-  const onModify = async (e: React.FormEvent) => () => {
+  const onModify = (e: React.FormEvent) => {
     e.preventDefault();
     fetch(modifyURL, {
-      method: 'PUT',
+      method: 'post',
       body: JSON.stringify(announcementState),
       headers: {
         'Content-type': 'application/json;charset=UTF-8',
@@ -46,7 +44,7 @@ export const AnnouncementEdit: React.FC = () => {
     })
       .then(res => res.json())
       .then(json => {
-        const result = json;
+        const { result } = json;
         console.log(result + 'result');
         if (result) {
           present({
@@ -60,6 +58,7 @@ export const AnnouncementEdit: React.FC = () => {
             message: '政策公告编辑失败',
             position: 'top',
           });
+        setBack();
       });
   };
   return (
@@ -119,7 +118,7 @@ export const AnnouncementEdit: React.FC = () => {
                   type="text"
                   spellCheck={false}
                   onChange={e =>
-                    setAnnouncementEdit({
+                    setAnnouncementState({
                       ...announcementState,
                       ...{ announcementAnnouncer: e.target?.value },
                     })
@@ -128,51 +127,63 @@ export const AnnouncementEdit: React.FC = () => {
                 />
               </div>
               <div className="flex mb-4 leading-10">
-                <div className="flex justify-end w-32 mr-2">标题:</div>
+                <div className="flex justify-end w-32 mr-2">
+                  <span className="px-1 text-red-600">*</span>
+                  政策标题:
+                </div>
                 <input
-                  className="w-64 h-10 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
-                  name="announcementTitle"
+                  className="w-64 p-1 h-10 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
                   value={announcementState.announcementTitle}
-                  type="text"
                   spellCheck={false}
                   onChange={e =>
-                    setAnnouncementEdit({
+                    setAnnouncementState({
                       ...announcementState,
-                      announcementTitle: e.target?.value,
+                      ...{ announcementTitle: e.target?.value },
                     })
                   }
                   required
-                />
+                ></input>
               </div>
               {/* TODO  */}
               <div className="flex mb-4 leading-10">
                 <div className="flex justify-end w-32 mr-2">政策内容:</div>
                 <div className="items-start w-64 p-1 text-gray-600 justify-self-start focus:outline-none focus:glow-primary-600">
-                  <RichText
+                  {/* todo <RichText
                     ref={editor}
                     editorState={editorState}
-                    onChange={(editorState: any) => {
-                      console.log(editorState);
-                      setEditorState(editorState);
-                    }}
+                  // onChange={(editorState: any) => {
+                  //   setEditorState(editorState);
+                  // }}
+                  /> */}
+                  <textarea
+                    className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
+                    value={announcementState.announcementContent}
+                    onChange={e =>
+                      setAnnouncementState({
+                        ...announcementState,
+                        announcementContent: e.target?.value,
+                      })
+                    }
+                    required
                   />
                 </div>
               </div>
             </div>
+
+            <div className="flex items-center justify-center gap-4 mt-10">
+              <input
+                value="取消"
+                type="button"
+                className="px-6 py-2 border rounded-md "
+                onClick={setBack}
+              />
+              <input
+                value="确定"
+                type="submit"
+                className="px-6 py-2 text-white border rounded-md bg-primary-600"
+              />
+            </div>
           </form>
-          <div className="flex items-center justify-center gap-4 mt-10">
-            <input
-              value="取消"
-              type="button"
-              className="px-6 py-2 border rounded-md "
-              onClick={onBack()}
-            />
-            <input
-              value="确定"
-              type="submit"
-              className="px-6 py-2 text-white border rounded-md bg-primary-600"
-            />
-          </div>
         </IonCardContent>
       </IonCard>
     </IonPage>

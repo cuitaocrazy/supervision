@@ -1,11 +1,6 @@
-import { stringify } from 'querystring'
 import { EduLesson } from '../entity/EduLesson'
-import { EduOrg } from '../entity/EduOrg'
 import mysql from '../mysql'
-
-const nullableFuzzy = (query:any)=>{
-    return '%'.concat(query?query:'').concat('%')
-}
+import {nullableFuzzy} from '../Util'
 class EduLessonService {
 
     async find(req) {
@@ -16,22 +11,22 @@ class EduLessonService {
         if(size==null){
             size=20
         }
-        req.page=undefined
-        req.size=undefined
+       
         const eduLessons =await mysql.getRepository(EduLesson).createQueryBuilder("eduLesson")
 
         .where("eduLesson.eduName like :name and eduLesson.lessonStatus like :status", { name: nullableFuzzy(eduName),status:nullableFuzzy(status) })
-        // .skip(page*size)
-        //todo 方便测试
-        .skip(0)
+        .orderBy("eduLesson.lessonCreateDate", "DESC")
+        .addOrderBy("eduLesson.lessonCreateTime", "DESC")
+        .skip(page*size)
         .take(size).getManyAndCount()
         return { result: true, records: eduLessons[0],total:eduLessons[1] }
     }
 
     async update(body){
-        const {lessonStatus,lessonId} = body;
+        const {lessonStatus,lessonId,lessonUpdateReason} = body;
         const eduLesson = await mysql.getRepository(EduLesson).findOneBy({lessonId:lessonId})
         eduLesson.lessonStatus = lessonStatus;
+        eduLesson.lessonUpdateReason=lessonUpdateReason;
         await mysql.getRepository(EduLesson).save(eduLesson)
         return { result: true }
     }

@@ -5,19 +5,36 @@ import { Redirect } from 'react-router-dom';
 import { useCallback, useContext } from 'react';
 import { AppContext, setLessonAudit } from '../../../appState';
 import { Lesson } from '../../../types/types';
-import { PickerColumn } from '@ionic/core';
 import { Dialog, Transition } from '@headlessui/react';
 import Quit from '../../Quit';
 import { edbLessonAuditURL } from 'const/const';
-
+import { getLessonType, getLessonStatusForList } from 'const/dicData';
+//日期格式话
+const dateFormat = (dateStr: string) => {
+  if (dateStr != null) {
+    const y = dateStr.substring(0, 4);
+    const m = dateStr.substring(4, 6);
+    const d = dateStr.substring(6, 8);
+    return y + '-' + m + '-' + d;
+  } else return dateStr;
+};
+//时间格式话
+const timeFormat = (dateStr: string) => {
+  if (dateStr != null) {
+    const y = dateStr.substring(0, 2);
+    const m = dateStr.substring(2, 4);
+    const d = dateStr.substring(4, 6);
+    return y + ':' + m + ':' + d;
+  } else return dateStr;
+};
 export const LessonAudit: React.FC = () => {
   const [present, dismiss] = useIonToast();
   // 课程审核dialog页面状态
   let [isAuditOpen, setIsAuditOpen] = useState(false);
-  function closeAuditModal() {
+  function closeRejectModal() {
     setIsAuditOpen(false);
   }
-  function openCreateModal() {
+  function openRejectModal() {
     setIsAuditOpen(true);
   }
   const modifyURL = edbLessonAuditURL;
@@ -37,7 +54,12 @@ export const LessonAudit: React.FC = () => {
     return <Redirect to={state.backPage} />;
   }
 
-  const onModify = (status: string) => () => {
+  const onModify = (status: string) => (e: React.FormEvent) => {
+    e.preventDefault();
+    let lessonUpdateReason: string = '';
+    if (status == 'on') lessonUpdateReason = '审核通过';
+    else lessonUpdateReason = lessonState.lessonUpdateReason;
+
     fetch(modifyURL, {
       method: 'POST',
       body: JSON.stringify({
@@ -52,28 +74,20 @@ export const LessonAudit: React.FC = () => {
       .then(json => {
         if (json.result) {
           present({
-            message: '课程审核通过，操作成功',
+            message: '课程审核，操作成功',
             position: 'top',
             duration: 3000,
           });
-          // onQuery();
         } else
           present({
             buttons: [{ text: '关闭', handler: () => dismiss() }],
-            message: '课程审核通过，操作失败',
+            message: '课程审核，操作失败',
             position: 'top',
           });
+        if (status == 'off') closeRejectModal();
         setBack();
       });
   };
-  const lessonTypePickerColumn = {
-    name: 'lessonTypePickerColumn',
-    options: [
-      { text: '语文', value: '0' },
-      { text: '数学', value: '1' },
-    ],
-  } as PickerColumn;
-
   return (
     <IonPage className="bg-gray-100">
       <Quit />
@@ -153,7 +167,7 @@ export const LessonAudit: React.FC = () => {
                 className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
                 name="lessonType"
                 type="text"
-                value={lessonState.lessonType}
+                value={getLessonType(lessonState.lessonType)}
                 readOnly
               />
             </div>
@@ -212,9 +226,8 @@ export const LessonAudit: React.FC = () => {
               <div className="flex justify-end w-32 mr-2">创建日期:</div>
               <input
                 className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
-                name="lessonCreateDate"
                 type="text"
-                value={lessonState.lessonCreateDate}
+                value={dateFormat(lessonState.lessonCreateDate)}
                 readOnly
               />
             </div>
@@ -222,9 +235,8 @@ export const LessonAudit: React.FC = () => {
               <div className="flex justify-end w-32 mr-2">创建时间:</div>
               <input
                 className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
-                name="lessonCreateTime"
                 type="text"
-                value={lessonState.lessonCreateTime}
+                value={timeFormat(lessonState.lessonCreateTime)}
                 readOnly
               />
             </div>
@@ -234,7 +246,7 @@ export const LessonAudit: React.FC = () => {
                 className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
                 name="lessonState"
                 type="text"
-                value={lessonState.lessonState}
+                value={getLessonStatusForList(lessonState.lessonStatus)}
                 readOnly
               />
             </div>
@@ -244,7 +256,7 @@ export const LessonAudit: React.FC = () => {
                 className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
                 name="lessonUpdateDate"
                 type="text"
-                value={lessonState.lessonUpdateDate}
+                value={dateFormat(lessonState.lessonUpdateDate)}
                 readOnly
               />
             </div>
@@ -286,13 +298,15 @@ export const LessonAudit: React.FC = () => {
             <input
               value="不通过"
               type="button"
-              onClick={openCreateModal}
+              onClick={() => {
+                openRejectModal();
+              }}
               className="flex w-20 px-6 py-2 font-bold bg-gray-100 rounded-md text-primary-600 focus:bg-gray-200"
             />
           </div>
           {/* 课程审核通过dialog */}
           <Transition appear show={isAuditOpen} as={Fragment}>
-            <Dialog as="div" className="relative z-10" onClose={closeAuditModal}>
+            <Dialog as="div" className="relative z-10" onClose={closeRejectModal}>
               <Transition.Child
                 as={Fragment}
                 enter="ease-out duration-300"
@@ -324,21 +338,28 @@ export const LessonAudit: React.FC = () => {
                         审核结果
                         <hr className="mt-2 mb-4" />
                       </Dialog.Title>
-                      <form className="flex flex-col items-center mt-8 rounded-lg justify-items-center">
+                      <form
+                        className="flex flex-col items-center mt-8 rounded-lg justify-items-center"
+                        onSubmit={onModify('reject')}
+                      >
                         <div className="flex items-center mb-4 justify-items-center">
                           <div className="flex leading-7 justify-items-center">
-                            <div className="flex justify-end w-24 p-1">不合格原因:</div>
+                            <div className="flex justify-end w-24 p-1">
+                              {' '}
+                              <span className="px-1 text-red-600">*</span>
+                              不合格原因:
+                            </div>
                             <textarea
-                              className="h-32 p-1 text-gray-600 bg-gray-100 border rounded-md w-72 justify-self-start focus:outline-none"
-                              name="eduName"
+                              className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
+                              name="lessonUpdateReason"
                               placeholder="请输入审核不通过原因"
-                              value={lessonState.lesson_update_reason}
                               onChange={e =>
-                                setLessonAudit({
+                                setLessonState({
                                   ...lessonState,
-                                  lesson_update_reason: e.target?.value,
+                                  lessonUpdateReason: e.target?.value,
                                 })
                               }
+                              required
                             ></textarea>
                           </div>
                         </div>
@@ -347,16 +368,12 @@ export const LessonAudit: React.FC = () => {
                             value="返回"
                             type="button"
                             className="px-6 py-2 border rounded-md "
-                            onClick={closeAuditModal}
+                            onClick={closeRejectModal}
                           />
                           <input
                             value="提交"
                             type="submit"
                             className="px-6 py-2 text-white border rounded-md bg-primary-600"
-                            onClick={() => {
-                              onModify('reject')();
-                              closeAuditModal();
-                            }}
                           />
                         </div>
                       </form>

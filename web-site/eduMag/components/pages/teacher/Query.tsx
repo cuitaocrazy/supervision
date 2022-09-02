@@ -405,7 +405,6 @@ const TeacherQuery: React.FC = () => {
                                 },
                               })
                             }
-                            required
                           ></input>
                         </div>
                       </div>
@@ -449,7 +448,6 @@ const TeacherQuery: React.FC = () => {
                                 },
                               })
                             }
-                            required
                           ></input>
                         </div>
                       </div>

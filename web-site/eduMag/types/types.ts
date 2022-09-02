@@ -60,6 +60,7 @@ export interface Lesson {
   lessonUpdateTime: string,
   lessonUpdateReason: string,
   eduId: string,
+  eduName: string,
   edu: EduOrg,
   teacherId: string,
   teacher: Teacher,
