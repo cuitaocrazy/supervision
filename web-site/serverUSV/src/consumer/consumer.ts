@@ -168,7 +168,7 @@ export const getNextSeq = async() =>{
     const result = await mysql.getRepository(Seq).createQueryBuilder("seq").select("count(*) countResult").getRawOne();
     console.log(result)
     const padZeroResult = String(result.countResult).padStart(6,"0")
-    return padZeroResult.substring((padZeroResult).length-3,((padZeroResult).length));
+    return padZeroResult.substring((padZeroResult).length-6,((padZeroResult).length));
 }
 
 

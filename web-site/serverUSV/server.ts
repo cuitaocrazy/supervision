@@ -54,6 +54,7 @@ app.post("/preorder", jsonParser, async (req, res) => {
     subscribeID + "_preorder",
     function (subscribe: SubscribeWithSign) {
       res.send({ SubscribeID: subscribeID, PayUrl: subscribe.PayUrl });
+
       // socket.emit(USVOrderNo + '_create', 'Success')
     }
   );
@@ -108,21 +109,9 @@ app.put("/cancel", jsonParser, async (req, res) => {
 const serverInstance = app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 });
-const io = require("socket.io")(serverInstance);
+const io = require("socket.io")(serverInstance,{cors: true});
 
-// io.on('connection', function (socket) { // socket相关
-//   console.log('somebody connection')
-//   socket.emit('open');
 
-//   socket.on('pay', async function (subscribeID) {
-//     cc.listenPayResult(subscribeID, "Edu1MSP", emitter)
-//     emitter.once(subscribeID + '_paySuccess', function () {
-//       console.log('do pay emit')
-//       socket.emit(subscribeID + '_pay', 'Success')
-//     });
-
-//   })
-// });
 
 const yuanToFen = (tranAmtYuan: string | number) => {
   if (typeof tranAmtYuan === "number") {
@@ -430,18 +419,18 @@ app.get("/consumer/lesson", jsonParser, async (req, res) => {
   res.send({ status: "success", result: convertLessonList });
 });
 
-io.on("connection", function (socket) {
-  // socket相关
-  console.log("some consumer connection");
-  socket.emit("open");
+// io.on("connection", function (socket) {
+//   // socket相关
+//   console.log("some consumer connection");
+//   socket.emit("open");
 
-  socket.on("pay", async function (contractId) {
-    emitter.once(contractId + "_paySuccess", function () {
-      console.log("do pay emit");
-      socket.emit(contractId + "_pay", "Success");
-    });
-  });
-});
+//   socket.on("pay", async function (contractId) {
+//     emitter.once(contractId + "_paySuccess", function () {
+//       console.log("do pay emit");
+//       socket.emit(contractId + "_pay", "Success");
+//     });
+//   });
+// });
 
 app.post("/consumer/preOrder", jsonParser, async (req, res) => {
   //todo
@@ -455,7 +444,7 @@ app.post("/consumer/preOrder", jsonParser, async (req, res) => {
     const seq = await getNextSeq();
     //todo 合同状态
     const newContract = {
-      contractId: getContractId("12345678", seq),
+      contractId: getContractId(testTermId, seq),
       contractDate: moment().format("YYYYMMDD"),
       contractTime: moment().format("HHmmss"),
       contractStatus: "valid",
@@ -835,33 +824,58 @@ const remotePath = "http://47.94.12.189:80/zj/test/";
 const remotePayPath =
   "http://47.94.12.189:80/zj/test/rsaPositiveTran/applyDzzfQrCode/";
 const remoteQueryPath =
-  "http://47.94.12.189:80/zj/test/rsaPositiveTran/applyDzzfQrCode/";
+  "http://47.94.12.189:80/zj/test/rsaPositiveTran/paymentQuery/";
 const testMerId = "000000000000000";
 const testTermId = "00000000";
-const queryList = new Map();
-// setTimeout(() => {
-//   for (let value of queryList.values()) {
-//     const queryInfo = {
-//       merId: testMerId,
-//       termId: testTermId,
-//       tranDate: moment().format("YYYYMMDD"),
-//       tranTime: moment().format("HHmmss"),
-//       merOrderNo: value.merOrderNo,
-//     };
-//     const plainText = "";
-//     fetch(remoteQueryPath + testMerId, {
-//       method: "POST",
-//       body: JSON.stringify({
-//         plainText: plainText,
-//         merchantNo: testMerId,
-//       }),
-//       headers: {
-//         "Content-type": "application/json;charset=UTF-8",
-//         MerchantId: testMerId,
-//       },
-//     });
-//   }
-// }, 5000);
+
+io.on('connection', function (socket) { // socket相关
+  console.log('somebody connection')
+  socket.emit('open');
+
+  socket.on('pcPay', async function (contractId) {
+    setInterval(() => {
+      console.log('pcPay')
+      console.log(contractId)
+        // socket.emit(contractId+'_pay')
+        const queryInfo = {
+          merId: testMerId,
+          termId: testTermId,
+          tranDate: moment().format("YYYYMMDD"),
+          tranTime: moment().format("HHmmss"),
+          merOrderNo: contractId,
+        };
+        const plainText = encrypt(JSON.stringify(queryInfo), newPublicKey);   
+        fetch(remoteQueryPath + testMerId, {
+          method: "POST",
+          body: plainText,
+          headers: {
+            MerchantId: testMerId,
+          },
+        }).then((serverRes) => {
+          console.log(serverRes);
+          serverRes.text().then((text) => {
+            console.log(text);
+            console.log("-------------");
+            const cdCmd = `cd ${__dirname}/../ `;
+            const javaCmd = `java RSAEncryptByPubk ` + text;
+            const cmd = cdCmd + " && " + javaCmd;
+            exec(cmd, (error, stdout, stderr) => {
+              //todo window会有乱码，解决方法见http://t.zoukankan.com/daysme-p-15795143.html，其他系统应无乱码，因此暂不解决
+              console.log(stdout);
+              const json = JSON.parse(stdout);
+              //todo 失败暂不考虑
+              console.log('json');
+              console.log(json);
+            });
+          });
+        });;
+    }, 10000);
+
+  })
+});
+
+
+
 
 const newPublicKey =
   "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC0FT/LTwXOx1GIwDcOjn8C7pL2Gjv5xhr7PXdEyzyoakiGNc4ed1njQiw/crOziAQpFLZEZfZ9yPi/9/EFQtnexPzqWynYr0Vga0caNVVHqxA7Eivyphv6Tq8H69ecd7umI+8CM9qvsxC/+4Podf3Xnvi5N0ux992ZJKv18RDB0wIDAQAB";
@@ -881,8 +895,9 @@ app.post("/consumer/pc/preOrder", jsonParser, async (req, res) => {
     const teacher = await findOneTeacher({ teacherId: lesson.teacherId });
     const seq = await getNextSeq();
     //todo 合同状态
+    //todo 测试方便终端号写死为00000000
     const newContract = {
-      contractId: getContractId(edu.merNo, seq),
+      contractId: getContractId("00000000", seq),
       contractDate: moment().format("YYYYMMDD"),
       contractTime: moment().format("HHmmss"),
       contractStatus: "valid",
@@ -923,16 +938,21 @@ app.post("/consumer/pc/preOrder", jsonParser, async (req, res) => {
     // };
 
     //todo 由于测试交易会产生真实扣款，所以金额设定为1分
+    //todo 中文会有问题
     const bankJson = {
-      merId: testMerId,
-      trrmId: testTermId,
+      merId: '000000000000000',
+      termId: '00000000',
       tranDate: newContract.contractDate,
       tranTime: newContract.contractTime,
       merOrderNo: newContract.contractId,
       tranAmt: 1,
       ccyCode: 156,
-      orderDesc: newContract.lessonName,
+      orderDesc: 'lessonName',
     };
+
+    console.log(bankJson)
+
+    console.log(newPublicKey)
 
     const plainText = encrypt(JSON.stringify(bankJson), newPublicKey);
     fetch(remotePayPath + testMerId, {
@@ -941,12 +961,12 @@ app.post("/consumer/pc/preOrder", jsonParser, async (req, res) => {
       headers: {
         MerchantId: testMerId,
       },
-    }).then((res) => {
-      console.log(res);
-      res.text().then((text) => {
+    }).then((serverRes) => {
+      console.log(serverRes);
+      serverRes.text().then((text) => {
         console.log(text);
         console.log("-------------");
-        const cdCmd = `cd ${__dirname}\\..\ `;
+        const cdCmd = `cd ${__dirname}/../ `;
         const javaCmd = `java RSAEncryptByPubk ` + text;
         const cmd = cdCmd + " && " + javaCmd;
         exec(cmd, (error, stdout, stderr) => {
@@ -954,7 +974,7 @@ app.post("/consumer/pc/preOrder", jsonParser, async (req, res) => {
           console.log(stdout);
           const json = JSON.parse(stdout);
           //todo 失败暂不考虑
-          console.log(json.qrCode);
+          console.log(json.qrCode)
           res.send({
             status: "success",
             result: newContract,
@@ -1037,18 +1057,18 @@ const decrypt = (plainText: string, publicKeyStr: string) => {
   }
 };
 
-// console.log("CCCCCCCCC");
-// const bankJson = {
-//   merId: testMerId,
-//   termId: testTermId,
-//   tranDate: moment().format("YYYYMMDD"),
-//   tranTime: moment().format("HHmmss"),
-//   merOrderNo: "00000000" + moment().format("YYYYMMDDHHmmss") + "000001",
-//   tranAmt: 1,
-//   ccyCode: 156,
-//   orderDesc: "test",
-// };
-// console.log(bankJson);
+console.log("CCCCCCCCC");
+const bankJson = {
+  merId: testMerId,
+  termId: testTermId,
+  tranDate: moment().format("YYYYMMDD"),
+  tranTime: moment().format("HHmmss"),
+  merOrderNo: "00000000" + moment().format("YYYYMMDDHHmmss") + "000001",
+  tranAmt: 1,
+  ccyCode: 156,
+  orderDesc: "test",
+};
+console.log(bankJson);
 
 // const plainText = encrypt(JSON.stringify(bankJson), newPublicKey);
 
@@ -1064,10 +1084,12 @@ const decrypt = (plainText: string, publicKeyStr: string) => {
 // }).then((res) => {
 //   console.log(res);
 //   res.text().then((text) => {
-//     const cdCmd = `cd ${__dirname}\\..\ `;
+//     console.log(text)
+//     const cdCmd = `cd ${__dirname}/../ `;
 
-//     const javaCmd = `java RSAEncryptByPubk ` + returnStr;
+//     const javaCmd = `java RSAEncryptByPubk ` + text;
 //     const cmd = cdCmd + " && " + javaCmd;
+//     console.log(cmd)
 //     // const result = decrypt(text, newPublicKey);
 //     exec(cmd, (error, stdout, stderr) => {
 //       //todo window会有乱码，解决方法见http://t.zoukankan.com/daysme-p-15795143.html，其他系统应无乱码，因此暂不解决

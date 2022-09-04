@@ -13,6 +13,7 @@ import { QRCodeCanvas } from "qrcode.react";
 const ECNYPay = () => {
 
   const history = useHistory();
+
   const socket = io(socketUrl);
   const [contract, setContract] = useState({} as Contract);
   const { state, dispatch } = useContext(AppContext);
@@ -28,6 +29,8 @@ const ECNYPay = () => {
     socket.on("open", () => {
       console.log("socket io is open !");
     });
+    console.log('socketUrl')
+    console.log(socketUrl)
     fetch(preOrderURL, {
       method: "POST",
       body: JSON.stringify({
@@ -43,13 +46,14 @@ const ECNYPay = () => {
       .then((json) => {
         setContract(json.result);
         setPayUrl(json.payUrl);
+
+        console.log("pcPay")
+        socket.emit("pcPay", json.result.contractId);
+        socket.on(json.result.contractId + "_pay", () => {
+          console.log("支付成功");
+          history.push("/eCNYPayResult");
+        });
         refreshContract(json.result);
-        // setPayUrl(json.payUrl);
-        // socket.emit("pay", json.result.contractId);
-        // socket.on(json.result.contractId + "_pay", () => {
-        //   console.log("支付成功");
-        //   history.push("/tabs/payResult");
-        // });
       });
   }, []);
 
