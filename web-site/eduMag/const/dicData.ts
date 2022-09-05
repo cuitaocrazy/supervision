@@ -18,6 +18,9 @@ export function getLessonType(lessonType: string | null) {
       case 'chinese':
         lessonType = '语文'
         break;
+      case 'other':
+        lessonType = '其他'
+        break;
     }
   } else {
     lessonType = "英语"

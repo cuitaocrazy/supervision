@@ -66,7 +66,7 @@ const Login = () => {
               type="text"
               value="edutest"
               className="relative block w-full px-1 py-2 pl-2 text-sm bg-white border rounded-lg border-primary-200 focus:outline-none focus:glow-primary-500"
-              {...register("username", { required: true })}
+              {...register("username", { required: false })}
               placeholder="请输入登录名"
             />
             {errors.username && (
@@ -80,7 +80,7 @@ const Login = () => {
               type="password"
               value="edutest"
               className="relative block w-full px-1 py-2 pl-2 text-sm bg-white border rounded-lg border-primary-200 focus:outline-none focus:glow-primary-500"
-              {...register("password", { required: true })}
+              {...register("password", { required: false })}
               placeholder="请输入密码"
             />
             {errors.password && (
