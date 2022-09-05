@@ -251,9 +251,9 @@ app.post('/edu/lesson/create', jsonParser, async (req, res) => {
   lesson.lessonAccumulationQuantity = 0;
   //todo
   // lesson.teacherId = req.body.teacherId
+  lesson.teacherName = req.body.teacherId;
   lesson.teacherId = "teacher00001";
   // lesson.teacherName = "马老师";
-  lesson.teacherName = req.body.teacherName;
   lesson.eduId = "edu0001";
   // lesson.eduName = "测试机构";
   lesson.eduName = req.body.eduName
