@@ -164,11 +164,11 @@ export const SupervisorAccount: React.FC = () => {
               {/* <img className="rounded-lg cursor-pointer" src='http://placekitten.com/g/200/300' alt="" /> */}
             </div>
             <div className="mt-2">
-              <span className="font-bold text-gray-800">数字人民币监管账号：</span>
-              <span className="text-lg text-gray-800">11234567890</span>
+              <span className="font-bold text-gray-900">数字人民币监管账号：</span>
+              <span className="text-lg text-gray-900">11234567890</span>
             </div>
             <div className="mt-2">
-              <span className="font-bold">教育机构监管账户余额：</span>
+              <span className="font-bold text-gray-900">账户余额：</span>
               <span className="text-lg text-orange-600 font-blod">
                 {supversingAccountAmt}
               </span>
