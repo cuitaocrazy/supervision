@@ -81,7 +81,7 @@ const AppShell = () => {
               <Route
                 exact={true}
                 path="/"
-                render={() => <Redirect to="/tabs/home" />}
+                render={() => <Redirect to="/home" />}
               />
             </IonRouterOutlet>
           </IonSplitPane>

@@ -3,7 +3,7 @@ import { IonPage, IonHeader, IonContent } from "@ionic/react";
 import { useHistory } from "react-router-dom";
 import Navbar from "../Navbar";
 import { Contract } from "../../types/types";
-import { preOrderURL,socketUrl } from "../../const/const";
+import { preOrderURL, socketUrl } from "../../const/const";
 import { AppContext, setContractDetail } from "../../appState";
 import { io } from "socket.io-client";
 import { Link } from "react-router-dom";
@@ -11,13 +11,13 @@ import { QRCodeCanvas } from "qrcode.react";
 
 // 数币支付页面
 const ECNYPay = () => {
-
   const history = useHistory();
 
-  const socket = io(socketUrl);
   const [contract, setContract] = useState({} as Contract);
   const { state, dispatch } = useContext(AppContext);
-  const [payUrl, setPayUrl] = useState("https://www.baidu.com");
+  const [payUrl, setPayUrl] = useState("");
+  const [pageReload, setPageReload] = useState("");
+
   const refreshContract = useCallback(
     (contract: Contract) => {
       dispatch(setContractDetail(contract));
@@ -26,11 +26,12 @@ const ECNYPay = () => {
   );
 
   useEffect(() => {
+    const socket = io(socketUrl);
     socket.on("open", () => {
       console.log("socket io is open !");
     });
-    console.log('socketUrl')
-    console.log(socketUrl)
+    console.log("socketUrl");
+    console.log(socketUrl);
     fetch(preOrderURL, {
       method: "POST",
       body: JSON.stringify({
@@ -47,19 +48,27 @@ const ECNYPay = () => {
         setContract(json.result);
         setPayUrl(json.payUrl);
 
-        console.log("pcPay")
         socket.emit("pcPay", json.result.contractId);
         socket.on(json.result.contractId + "_pay", () => {
           console.log("支付成功");
           history.push("/eCNYPayResult");
+          setPageReload(new Date().toUTCString());
         });
         refreshContract(json.result);
       });
-  }, []);
+  }, [pageReload]);
 
   // const onClick = ()=>{
   //   window.open(payUrl)
   // }
+  //
+  const myQrCode = (payUrl: string) => {
+    if (payUrl == "") {
+      return <a>二维码获取中</a>;
+    } else {
+      return <QRCodeCanvas value={payUrl} size={300}></QRCodeCanvas>;
+    }
+  };
 
   return (
     <IonPage>
@@ -100,12 +109,19 @@ const ECNYPay = () => {
             </p>
           </div>
           <div className="grid justify-items-stretch">
-            <div className="justify-self-center">
-              <QRCodeCanvas value={payUrl} size={300}></QRCodeCanvas>
+            <div
+              className="justify-self-center"
+              onClick={() => {
+                setPayUrl("");
+                setPageReload(new Date().toUTCString());
+              }}
+            >
+              {myQrCode(payUrl)}
+              {/* <QRCodeCanvas value={payUrl} size={300}></QRCodeCanvas> */}
             </div>
           </div>
 
-          <div className="flex mt-12 text-base">
+          {/* <div className="flex mt-12 text-base">
             <Link to="/eCNYPayResult" className="flex w-full">
               <input
                 className="w-full h-10 py-2 mx-6 font-bold tracking-widest text-white shadow-md bg-primary-600 rounded-3xl bg-grimary-600 shadow-primary-600 focus:bg-primary-700"
@@ -113,7 +129,7 @@ const ECNYPay = () => {
                 value="去支付"
               />
             </Link>
-          </div>
+          </div> */}
         </div>
       </IonContent>
     </IonPage>
