@@ -184,6 +184,8 @@ app.post('/edu/teacher/modify', jsonParser, async (req, res) => {
   try {
     let teacher: EduTeacher = await eduTeacherService.findOne(req.body.teacherId)
     teacher = { ...teacher, ...req.body }
+    teacher.teacherCreateDate = teacher.teacherCreateDate.replaceAll('-', '')
+    teacher.teacherCreateTime = teacher.teacherCreateTime.replaceAll(':', '')
     teacher.teacherUpdateDate = moment().format('YYYYMMDD')
     teacher.teacherUpdateTime = moment().format('HHmmss')
     const r = await eduTeacherService.saveEduTeacher(teacher)
