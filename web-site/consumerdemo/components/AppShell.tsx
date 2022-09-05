@@ -56,6 +56,7 @@ import CardUseRecordDetail from "./pages/CardUseRecordDetail";
 import CardDetail from "./pages/CardDetail";
 import CardProtocolDetail from "./pages/CardProtocolDetail";
 import CardQRcode from "./pages/CardQRcode";
+import ContentsOfContracts from "./pages/ContentsOfContracts"
 import { AppContextProvider } from "../appState";
 
 // 装载ionic样式，ionic6 必须执行。
@@ -168,6 +169,7 @@ const AppShell = () => {
                 render={() => <CardProtocolDetail />}
               />
               <Route path="/cardQRcode" render={() => <CardQRcode />} />
+              <Route path="/contract" render={() => <ContentsOfContracts />} />
               <Route
                 exact={true}
                 path="/"
