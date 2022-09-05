@@ -251,13 +251,12 @@ app.post('/edu/lesson/create', jsonParser, async (req, res) => {
   lesson.lessonEndDate = req.body.lessonEndDate?.replaceAll('-', '')
   lesson.lessonStatus = 'pending'
   lesson.lessonAccumulationQuantity = 0;
-  //todo
-  // lesson.teacherId = req.body.teacherId
-  lesson.teacherName = req.body.teacherId;
-  lesson.teacherId = "teacher00001";
-  // lesson.teacherName = "马老师";
-  lesson.eduId = "edu0001";
-  // lesson.eduName = "测试机构";
+
+  lesson.teacherId = req.body.teacherId
+  const teacher = await findOneTeacher({ teacherId: lesson.teacherId })
+  lesson.teacherName = teacher.teacherName;
+
+  lesson.eduId = req.body.eduId;
   lesson.eduName = req.body.eduName
   lesson.lessonImages =
     "https://s3.bmp.ovh/imgs/2022/08/30/28f95385d82b4f7c.jpg"; //'http://placekitten.com/g/200/300'
@@ -293,10 +292,9 @@ app.post("/edu/lesson/edit", jsonParser, async (req, res) => {
   lesson.lessonEndDate = req.body.lessonEndDate?.replaceAll("-", "");
   lesson.lessonStatus = req.body.lessonStatus;
   lesson.lessonAccumulationQuantity = 0;
-  //  todo ;
-  // lesson.teacherId = req.body.teacherId
-  lesson.teacherId = 'teacher00001';
-  lesson.teacherName = req.body.teacherName;
+  lesson.teacherId = req.body.teacherId
+  const teacher = await findOneTeacher({ teacherId: lesson.teacherId })
+  lesson.teacherName = teacher.teacherName;
   lesson.eduId = req.body.eduId;
   lesson.eduName = req.body.eduName
   lesson.lessonImages =
@@ -965,3 +963,9 @@ app.post("/edb/announcement/offOn", jsonParser, async (req, res) => {
   const r = await announcementService.save(info);
   res.send(r);
 });
+//教师下拉字典
+app.get('/edu/teacher/findAll', async (req, res) => {
+  console.log(`教育局: 查询教师下拉数据: 条件[${JSON.stringify(req.query)}]`)
+  const r = await edbTeacherService.findAll()
+  res.send(r)
+})

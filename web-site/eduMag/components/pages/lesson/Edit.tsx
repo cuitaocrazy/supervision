@@ -8,12 +8,14 @@ import { PickerColumn } from "@ionic/core";
 import LessonTypeList from "../../components/LessonType";
 import LessonStateList from "../../components/LessonState";
 import Quit from "components/components/Quit";
-import { eduLessonEditURL } from "const/consts";
+import { eduLessonEditURL, eduTeacherFindAllURL } from "const/consts";
 import { getLessonType, getLessonStatus } from "const/dicData";
+import CommonSelector from "../../components/CommonSelector";
 
 export const LessonDetail: React.FC = () => {
   const [present, dismiss] = useIonToast();
   const modifyURL = eduLessonEditURL;
+  const teacherAll = eduTeacherFindAllURL;
   const { state, dispatch } = useContext(AppContext);
   // const {SubscribeDurationDays,TranAmt,USVOrgID,USVItemName,USVItemID,USVItemDesc,SubscribeStartDate,LessonType} = state.lessonDetail
 
@@ -306,19 +308,19 @@ export const LessonDetail: React.FC = () => {
                   {" "}
                   <span className="px-1 text-red-600">*</span>教师姓名:
                 </div>
-                <input
-                  className="w-64 h-10 px-2 border rounded-md"
-                  type="text"
-                  name="teacherName"
-                  onChange={(e) =>
+                <CommonSelector
+                  dataUrl={teacherAll}
+                  setDataId={(v) => {
                     setLessonState({
                       ...lessonState,
-                      teacherName: e.target?.value,
-                    })
-                  }
-                  required
-                  value={lessonState.teacherName}
+                      ...{
+                        teacherId: v == null ? '' : v
+                      }
+                    });
+                  }}
+                  dataId={lessonState.teacherId}
                 />
+
               </div>
               <div className="flex mb-4 leading-10">
                 <div className="flex justify-end w-32 mr-2">课程介绍:</div>

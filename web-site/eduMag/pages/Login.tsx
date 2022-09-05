@@ -39,7 +39,7 @@ const Login = () => {
         if (result) {
           localforage.setItem("loginName", loginUser.loginName);
           localforage.setItem("eduName", loginUser.orgName);
-          localforage.setItem("eduId", loginUser.eduId);
+          localforage.setItem("eduId", loginUser.orgId);
           await router.push("./tabs/lesson/query");
           // router.reload();
         } else {
