@@ -292,17 +292,7 @@ export const EduOrgEdit: React.FC = () => {
                   }
                 />
               </div>
-              <div className="flex mb-4 leading-10">
-                <div className="flex justify-end w-32 mr-2">登录名:</div>
-                <input
-                  className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
-                  name="supervisorOrgId"
-                  value={eduOrgState.supervisorOrgId}
-                  onChange={e =>
-                    setEduOrgState({ ...eduOrgState, supervisorOrgId: e.target?.value })
-                  }
-                />
-              </div>
+              
             </div>
             <div className="flex items-center justify-center gap-4 mt-10">
               <input
