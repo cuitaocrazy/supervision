@@ -180,19 +180,19 @@ const TranSumQuery = () => {
                   购课数量
                 </th>
                 <th className="flex items-center justify-center flex-1 leading-10 ">
-                  购课金额
+                  购课金额(元)
                 </th>
                 <th className="flex items-center justify-center flex-1 leading-10 ">
                   退课数量
                 </th>
                 <th className="flex items-center justify-center flex-1 leading-10 ">
-                  退课金额
+                  退课金额(元)
                 </th>
                 <th className="flex items-center justify-center flex-1 leading-10 ">
                   划拨次数
                 </th>
                 <th className="flex items-center justify-center flex-1 leading-10 ">
-                  划拨金额
+                  划拨金额(元)
                 </th>
               </tr>
             </thead>
