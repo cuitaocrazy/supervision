@@ -5,6 +5,7 @@ import { Contract } from "../../types/types";
 import Paging from "../paging";
 import Quit from "components/components/Quit";
 import { eduContractFindURL } from "const/consts";
+import { getLessonType, getLessonStatusForList } from "const/dicData";
 
 const findUrl = eduContractFindURL;
 const getAttendanceType = (typeEnglish: any) => {
@@ -99,7 +100,7 @@ const OrderQuery = () => {
       </td>
 
       <td className="flex items-center justify-center flex-1 leading-10 ">
-        {contract.lessonType}
+        {getLessonType(contract.lessonType)}
       </td>
       <td className="flex items-center justify-center flex-1 leading-10 ">
         {contract.lessonTotalQuantity}
