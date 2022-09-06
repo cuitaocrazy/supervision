@@ -44,6 +44,7 @@ export interface Lesson {
   lessonName: string;
   lessonPerPrice: number;
   lessonTotalPrice: number;
+  lessonTotalQuantity: string;
   lessonIntroduce: string;
   lessonType: string;
   lessonOutline: string;

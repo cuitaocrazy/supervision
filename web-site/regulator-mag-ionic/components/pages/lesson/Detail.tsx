@@ -123,7 +123,7 @@ export const LessonDetail: React.FC = () => {
                 className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
                 name="lessonTotalPrice"
                 type="text"
-                value={lessonState.lessonTotalPrice}
+                value={lessonState.lessonTotalPrice / 100}
                 readOnly
               />
             </div>
