@@ -1,4 +1,4 @@
-import React, { useState,FC } from "react";
+import React, { useState, FC } from 'react';
 import {
   IonPage,
   IonCard,
@@ -16,37 +16,38 @@ import {
   IonPicker,
   IonCol,
   IonRow,
-} from "@ionic/react";
-import { Redirect } from "react-router-dom";
-import { useCallback, useContext, useEffect } from "react";
-import { AppContext, setEduOrgDetail } from "../../appState";
-import { PickerColumn } from "@ionic/core";
+} from '@ionic/react';
+import { Redirect } from 'react-router-dom';
+import { useCallback, useContext, useEffect } from 'react';
+import { AppContext, setEduOrgDetail } from '../../appState';
+import { PickerColumn } from '@ionic/core';
 import Quit from '../Quit';
 import { edbTransactionSumURL } from '../../const/const';
-import localforage from "localforage";
-
+import localforage from 'localforage';
+import moment from 'moment';
 
 const TranSumQuery = () => {
-  const [supversingAccountAmt, setSupversingAccountAmt] = useState("******");
-  const [buyCardNumber, setBuyCardNumber] = useState("0");
-  const [buyCardAmt, setBuyCardAmt] = useState("0");
-  const [refundNumber, setRefundNumber] = useState("0");
-  const [refundAmt, setRefundAmt] = useState("0");
-  const [transferNumber, setTranferNumber] = useState("0");
-  const [transferAmt, setTranferAmt] = useState("0");
-  const [loginName, setLoginName] = useState("");
-  const [contractValid, setContractValid] = useState("0");
-  const [contractFinish, setContractFinish] = useState("0");
+  const [supversingAccountAmt, setSupversingAccountAmt] = useState('******');
+  const [buyCardNumber, setBuyCardNumber] = useState('0');
+  const [buyCardAmt, setBuyCardAmt] = useState('0');
+  const [refundNumber, setRefundNumber] = useState('0');
+  const [refundAmt, setRefundAmt] = useState('0');
+  const [transferNumber, setTranferNumber] = useState('0');
+  const [transferAmt, setTranferAmt] = useState('0');
+  const [loginName, setLoginName] = useState('');
+  const [queryInfo, setQueryInfo] = useState({ date: moment().format('YYYYMM') });
+  const [contractValid, setContractValid] = useState('0');
+  const [contractFinish, setContractFinish] = useState('0');
   const onQuery = () => {
     //todo fetch
     fetch(paramStr, {
-      method: "GET",
+      method: 'GET',
       headers: {
-        "Content-type": "application/json;charset=UTF-8",
+        'Content-type': 'application/json;charset=UTF-8',
       },
     })
-      .then((res) => res.json())
-      .then((json) => {
+      .then(res => res.json())
+      .then(json => {
         const {
           result,
           buyCardNumber,
@@ -71,7 +72,7 @@ const TranSumQuery = () => {
       });
   };
   useEffect(() => {
-    localforage.getItem("loginName").then((value) => {
+    localforage.getItem('loginName').then(value => {
       setLoginName(value as string);
     });
     onQuery();
@@ -79,9 +80,9 @@ const TranSumQuery = () => {
 
   const findURL = edbTransactionSumURL;
   const getParamStr = (params: any, url: string) => {
-    let result = "?";
-    Object.keys(params).forEach((key) => {
-      if (params[key]) result = result + key + "=" + params[key] + "&";
+    let result = '?';
+    Object.keys(params).forEach(key => {
+      if (params[key]) result = result + key + '=' + params[key] + '&';
     });
     return url + result;
   };
@@ -89,36 +90,10 @@ const TranSumQuery = () => {
   //todo 从localStoge中取值
   const paramStr = getParamStr(
     {
-      loginName: loginName,
+      date: queryInfo.date,
     },
     findURL
   );
-  const onClick = () => {
-    //todo fetch
-    setSupversingAccountAmt("1000");
-  };
-
-  // const onQuery = () => {
-  //   state.contract?.contractList?.map(() => {
-  //     console.log("holy shit");
-  //   });
-  //   fetch(paramStr, {
-  //     method: "GET",
-  //     headers: {
-  //       "Content-type": "application/json;charset=UTF-8",
-  //     },
-  //   })
-  //     .then((res) => res.json())
-  //     .then((json) => {
-  //       const { result, records, total } = json;
-  //       if (result) {
-  //         setTotal(total);
-  //         refreshList(records);
-  //       }
-  //     });
-  // };
-  
- 
 
   return (
     <IonPage className="bg-gray-100">
@@ -159,12 +134,19 @@ const TranSumQuery = () => {
                   type="text"
                   className="flex w-56 h-12 font-bold text-center text-gray-600 bg-white border rounded-md focus:outline-none focus:glow-primary-600"
                   placeholder="请输入交易年月"
-                  
+                  defaultValue={queryInfo.date}
+                  onChange={e =>
+                    setQueryInfo({
+                      ...queryInfo,
+                      ...{ date: e.target.value },
+                    })
+                  }
                 />
               </IonCol>
               <IonCol className="flex ml-8">
                 <button
                   className="w-24 h-12 mr-6 text-white border-2 rounded-md shadow-md bg-primary-600 focus:bg-primary-700"
+                  onClick={onQuery}
                 >
                   查询
                 </button>
@@ -176,49 +158,38 @@ const TranSumQuery = () => {
           <table className="w-11/12">
             <thead>
               <tr className="grid items-end w-full h-10 grid-cols-6 font-bold text-gray-700 bg-white rounded-lg justify-items-center">
-                <th className="flex items-center flex-1 leading-10 justify-items-end ">
-                  购课数量
-                </th>
+                <th className="flex items-center flex-1 leading-10 justify-items-end ">购课数量</th>
                 <th className="flex items-center justify-center flex-1 leading-10 ">
                   购课金额(元)
                 </th>
-                <th className="flex items-center justify-center flex-1 leading-10 ">
-                  退课数量
-                </th>
+                <th className="flex items-center justify-center flex-1 leading-10 ">退课数量</th>
                 <th className="flex items-center justify-center flex-1 leading-10 ">
                   退课金额(元)
                 </th>
-                <th className="flex items-center justify-center flex-1 leading-10 ">
-                  划拨次数
-                </th>
+                <th className="flex items-center justify-center flex-1 leading-10 ">划拨次数</th>
                 <th className="flex items-center justify-center flex-1 leading-10 ">
                   划拨金额(元)
                 </th>
               </tr>
             </thead>
             <tbody>
-            <tr className="flex items-center justify-center text-gray-600 border justify-items-center even:bg-white odd:bg-primary-100">
-      <td className="flex items-center justify-center flex-1 leading-10 ">
-      {buyCardNumber}
-      </td>
-      <td className="flex items-center justify-center flex-1 leading-10">
-      {buyCardAmt}
-      </td>
-      <td className="flex items-center justify-center flex-1 leading-10">
-      {refundNumber}
-      </td>
-      <td className="flex items-center justify-center flex-1 leading-10 ">
-      {refundAmt}
-      </td>
+              <tr className="flex items-center justify-center text-gray-600 border justify-items-center even:bg-white odd:bg-primary-100">
+                <td className="flex items-center justify-center flex-1 leading-10 ">
+                  {buyCardNumber}
+                </td>
+                <td className="flex items-center justify-center flex-1 leading-10">{buyCardAmt}</td>
+                <td className="flex items-center justify-center flex-1 leading-10">
+                  {refundNumber}
+                </td>
+                <td className="flex items-center justify-center flex-1 leading-10 ">{refundAmt}</td>
 
-      <td className="flex items-center justify-center flex-1 leading-10 ">
-      {transferNumber}
-      </td>
-      <td className="flex items-center justify-center flex-1 leading-10 ">
-      {transferAmt}
-      </td>
-    </tr>
-              
+                <td className="flex items-center justify-center flex-1 leading-10 ">
+                  {transferNumber}
+                </td>
+                <td className="flex items-center justify-center flex-1 leading-10 ">
+                  {transferAmt}
+                </td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -227,4 +198,3 @@ const TranSumQuery = () => {
   );
 };
 export default TranSumQuery;
-

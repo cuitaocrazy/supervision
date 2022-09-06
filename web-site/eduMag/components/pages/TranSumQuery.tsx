@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import Quit from "components/components/Quit";
 import { eduTransactionSumURL } from "const/consts";
 import localforage from "localforage";
+import moment from "moment";
 
 const TranSumQuery = () => {
   const [supversingAccountAmt, setSupversingAccountAmt] = useState("******");
@@ -16,11 +17,15 @@ const TranSumQuery = () => {
   const [loginName, setLoginName] = useState("");
   const [contractValid, setContractValid] = useState("0");
   const [contractFinish, setContractFinish] = useState("0");
+  const [queryInfo, setQueryInfo] = useState({
+    date: moment().format("YYYYMM"),
+  });
   const onQuery = () => {
     //todo 从localStoge中取值
     const paramStr = getParamStr(
       {
         loginName: loginName,
+        date: queryInfo.date,
       },
       findURL
     );
@@ -137,10 +142,20 @@ const TranSumQuery = () => {
                   type="text"
                   className="flex w-56 h-12 font-bold text-center text-gray-600 bg-white border rounded-md focus:outline-none focus:glow-primary-600"
                   placeholder="请输入交易年月"
+                  defaultValue={queryInfo.date}
+                  onChange={(e) =>
+                    setQueryInfo({
+                      ...queryInfo,
+                      ...{ date: e.target.value },
+                    })
+                  }
                 />
               </IonCol>
               <IonCol className="flex ml-8">
-                <button className="w-24 h-12 mr-6 text-white border-2 rounded-md shadow-md bg-primary-600 focus:bg-primary-700">
+                <button
+                  className="w-24 h-12 mr-6 text-white border-2 rounded-md shadow-md bg-primary-600 focus:bg-primary-700"
+                  onClick={onQuery}
+                >
                   查询
                 </button>
               </IonCol>

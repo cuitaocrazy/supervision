@@ -1,26 +1,6 @@
-import React, { useState, FC } from "react";
-import {
-  IonPage,
-  IonCard,
-  IonRadioGroup,
-  IonRadio,
-  IonCardHeader,
-  IonCardSubtitle,
-  IonLabel,
-  IonInput,
-  IonCardContent,
-  IonItem,
-  IonButton,
-  IonList,
-  IonDatetime,
-  IonPicker,
-  IonCol,
-  IonRow,
-} from "@ionic/react";
-import { Redirect } from "react-router-dom";
-import { useCallback, useContext, useEffect } from "react";
-import { AppContext, setEduOrgDetail } from "../../appState";
-import { PickerColumn } from "@ionic/core";
+import React, { useState } from "react";
+import { IonPage } from "@ionic/react";
+import { useEffect } from "react";
 import Quit from "components/components/Quit";
 import { eduTransactionSumURL } from "const/consts";
 import localforage from "localforage";
@@ -71,6 +51,9 @@ export const SupervisorAccount: React.FC = () => {
   const [loginName, setLoginName] = useState("");
   const [contractValid, setContractValid] = useState("0");
   const [contractFinish, setContractFinish] = useState("0");
+
+  const [supervisedAccount, setSupervisedAccount] = useState("");
+  const [balance, setBalance] = useState("0");
   const onQuery = () => {
     //todo fetch
     paramStr = getParamStr(
@@ -99,6 +82,8 @@ export const SupervisorAccount: React.FC = () => {
           transferAmt,
           contractValid,
           contractFinish,
+          supervisedAccount,
+          balance,
         } = json;
         if (result) {
           setBuyCardNumber(buyCardNumber);
@@ -109,6 +94,8 @@ export const SupervisorAccount: React.FC = () => {
           setTranferAmt(transferAmt);
           setContractFinish(contractFinish);
           setContractValid(contractValid);
+          setSupervisedAccount(supervisedAccount);
+          setBalance(balance);
         }
       });
   };
@@ -134,7 +121,8 @@ export const SupervisorAccount: React.FC = () => {
 
   const onClick = () => {
     //todo fetch
-    setSupversingAccountAmt("1000");
+    console.log(balance);
+    setSupversingAccountAmt(balance);
   };
 
   return (
@@ -164,8 +152,10 @@ export const SupervisorAccount: React.FC = () => {
               {/* <img className="rounded-lg cursor-pointer" src='http://placekitten.com/g/200/300' alt="" /> */}
             </div>
             <div className="mt-2">
-              <span className="font-bold text-gray-900">数字人民币监管账号：</span>
-              <span className="text-lg text-gray-900">11234567890</span>
+              <span className="font-bold text-gray-900">
+                数字人民币监管账号：
+              </span>
+              <span className="text-lg text-gray-900">{supervisedAccount}</span>
             </div>
             <div className="mt-2">
               <span className="font-bold text-gray-900">账户余额：</span>
