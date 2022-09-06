@@ -1,9 +1,9 @@
 -- 插入教育机构
 INSERT INTO yadadb.t_b_edu_org (edu_id,edu_logo,edu_name,edu_address,edu_legal_person,edu_legal_phone,edu_contact,edu_contact_phone,edu_is_public,edu_license,edu_status,edu_annual_inspection,edu_annual_inspection_date,edu_annual_inspection_time,edu_supervised_account,edu_normal_account,edu_supervised_mer_no,edu_create_date,edu_create_time,edu_update_date,edu_update_time,edu_rating,edu_login_name,edu_password,supervisor_org_id,edu_province,edu_city,edu_area,mer_no) VALUES
-	 ('edu0001',NULL,'北京亚大教育机构','北京市海淀区大钟寺东路','黄先生','19890987890','李女士','010-284778989',NULL,'无','valid','qualified','20220628','152000','1234567890',NULL,NULL,'20220629','150000',NULL,NULL,9.5,'edutest','edutest','supervisor0001',NULL,NULL,NULL,'104456789012345');
+	 ('edu0001',NULL,'北京亚大教育机构','北京市海淀区大钟寺东路','黄先生','19890987890','李女士','010-284778989',0,'无','valid','qualified','20220628','152000','1234567890','111111111','123456789012345','20220629','150000',NULL,NULL,9.5,'edutest','edutest','supervisor0001',NULL,NULL,NULL,'104456789012345');
 -- 插入老师
 INSERT INTO yadadb.t_b_edu_teacher (teacher_id,teacher_name,teacher_identity_no,teacher_field,teacher_experience,teacher_introduce,teacher_rating,teacher_create_date,teacher_create_time,teacher_update_date,teacher_update_time) VALUES
-	 ('teacher00001','马老师','2310000000000','english',5,'马老师有10年的教学经验，在英语方面在国内大型比赛中多次获得奖章',8.9,'20220630','000000',NULL,NULL);
+	 ('teacher00001','马老师','2310000000000','english',5,'马老师有10年的教学经验，在在国内大型比赛中多次获得奖章',8.9,'20220630','000000','20220101','090809');
 -- 插入课程
 
 
@@ -19,15 +19,15 @@ INSERT INTO yadadb.t_b_consumer_student (consumer_login_name,consumer_stu_name,c
 
 -- 监管机构插入
 INSERT INTO yadadb.t_b_supervisor_org (supervisor_org_id,supervisor_org_name,parent_supervisor_org_id) VALUES
-	 ('supervisor0001','北京市教育部',NULL);
+	 ('supervisor0001','北京市教育部','supervisorParent0001');
 -- 监管用户插入
 INSERT INTO yadadb.t_b_supervisor_user (supervisor_login_name,supervisor_password,supervisor_username,supervisor_phone,supervisor_org_id) VALUES
 	 ('suptest','suptest','教育部管理员',NULL,'supervisor0001');
 
 Insert INTO yadadb.t_b_chaincode(chaincode_desc,version,deploy_date,sn,chaincode_name,node_number) VALUES
-('消费链码','1.0.0','20220701','1','consumerChainCode',3),
-('签到链码','1.0.0','20220701','1','attendanceChainCode',3),
-('划拨链码','1.0.0','20220701','1','transFerChainCode',3);	  
+('消费智能合约','1.0.0','20220701','1','consumerChainCode',3),
+-- ('签到链码','1.0.0','20220701','1','attendanceChainCode',3),
+-- ('划拨链码','1.0.0','20220701','1','transFerChainCode',3);	  
 
 -- -- 合约插入
 -- INSERT INTO yadadb.t_l_contract (contract_id,fabric_contract_id,contract_date,contract_time,contract_status,contract_update_date,contract_update_time,contract_update_reason,edu_id,edu_name,lesson_id,lesson_name,lesson_type,lesson_introduce,lesson_outline,lesson_start_date,lesson_start_time,lesson_end_date,lesson_end_time,lesson_attendance_type,lesson_total_quantity,lesson_total_price,lesson_per_price,teacher_id,teacher_name,consumer_id,consumer_name,consumer_stu_name,order_no) VALUES
