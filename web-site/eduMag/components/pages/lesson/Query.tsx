@@ -112,7 +112,6 @@ const LessonQuery: React.FC = () => {
     createLesson.eduName = eduName;
     createLesson.eduId = eduId;
     const newCreateLesson: any = createLesson;
-    newCreateLesson.eduName = eduName;
     fetch(createUrl, {
       method: "POST",
       body: JSON.stringify(newCreateLesson),
@@ -293,7 +292,7 @@ const LessonQuery: React.FC = () => {
       </td>
       <td className="flex items-center justify-center leading-10">
         {/* {Number(lesson.lessonTotalPrice) / 100} */}
-        {lesson.lessonAccumulationQuantity}
+        {lesson.lessonTotalQuantity}
       </td>
       <td className="flex items-center justify-center leading-10">
         {getLessonType(lesson.lessonType)}

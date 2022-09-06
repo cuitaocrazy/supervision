@@ -134,7 +134,8 @@ const LessonQuery: React.FC = () => {
       <td className="flex items-center justify-center leading-10">{lesson.eduName}</td>
       <td className="flex items-center justify-center leading-10">{lesson.lessonName}</td>
       <td className="flex items-center justify-center leading-10">
-        {lesson.lessonTotalPrice / lesson.lessonPerPrice}
+        {/* {lesson.lessonTotalPrice / lesson.lessonPerPrice} */}
+        {lesson.lessonTotalQuantity}
       </td>
       <td className="flex items-center justify-center leading-10">
         {lesson.lessonTotalPrice / 100}
@@ -359,7 +360,7 @@ const LessonQuery: React.FC = () => {
               <tr className="grid items-center h-10 grid-cols-8 gap-2 font-bold text-gray-700 bg-white rounded-lg justify-items-center">
                 <th className="flex items-center justify-center">教育机构名称</th>
                 <th className="flex items-center justify-center">课程名称</th>
-                <th className="flex items-center justify-center">总课时</th>
+                <th className="flex items-center justify-center">总课时(个)</th>
                 <th className="flex items-center justify-center">总价格（元）</th>
                 <th className="flex items-center justify-center">开课日期</th>
                 <th className="flex items-center justify-center">结束日期</th>
