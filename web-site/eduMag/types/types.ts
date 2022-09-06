@@ -46,6 +46,7 @@ export interface Lesson {
   lessonPerPrice: string,
   lessonTotalPrice: string,
   lessonTotalTimes: string,
+  lessonTotalQuantity: string,
   lessonIntroduce: string,
   lessonType: string,
   lessonOutline: string,
@@ -78,7 +79,7 @@ export interface Teacher {
   teacherUpdateDate?: string,
   teacherCreateTime?: string,
   teacherUpdateTime?: string,
-  teacherField?:string,
+  teacherField?: string,
 }
 
 
@@ -229,24 +230,24 @@ export interface ContractNego {
   contract: Contract,
 }
 
-export interface LessonDiscussInfo{
-  lessonImages?:string,
-  lessonName?:string,
-  lessonQuantity?:string,
-  lessonDate?:string,
-  lessonTime?:string,
-  lessonContent?:string,
-  discussTitle?:string,
-  attendanceState?:string,
-  discussContent?:string,
-  discussDate?:string,
-  discussTime?:string,
-  consumerName?:string,
-  consumerPhone?:string,
-  stuName?:string,
-  teacherName?:string,
-  discussStatus?:string,
-  discussReason?:string,
+export interface LessonDiscussInfo {
+  lessonImages?: string,
+  lessonName?: string,
+  lessonQuantity?: string,
+  lessonDate?: string,
+  lessonTime?: string,
+  lessonContent?: string,
+  discussTitle?: string,
+  attendanceState?: string,
+  discussContent?: string,
+  discussDate?: string,
+  discussTime?: string,
+  consumerName?: string,
+  consumerPhone?: string,
+  stuName?: string,
+  teacherName?: string,
+  discussStatus?: string,
+  discussReason?: string,
 }
 
 
