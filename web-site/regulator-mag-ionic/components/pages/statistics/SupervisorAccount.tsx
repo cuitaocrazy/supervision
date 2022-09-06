@@ -107,6 +107,37 @@ export const SupervisorAccount: React.FC = () => {
         <div className="w-11/12 h-screen px-4 py-2 mt-4 bg-white rounded-lg">
           <span className="font-bold">监管交易汇总</span>
           <hr className="mt-2 mb-4" />
+          <div className="flex flex-col items-center justify-center">
+            <div className="flex items-center justify-center w-screen h-48">
+              <svg
+                className="rounded-lg cursor-pointer"
+                viewBox="0 0 1024 1024"
+                version="1.1"
+                xmlns="http://www.w3.org/2000/svg"
+                p-id="1876"
+                width="150"
+                height="150"
+              >
+                <path
+                  d="M512 0c282.7776 0 512 229.2224 512 512s-229.2224 512-512 512S0 794.7776 0 512 229.2224 0 512 0z m121.856 260.2496c-19.3536-10.3936-44.3904-1.024-55.7056 20.992l-20.6848 40.0896c-0.3072 0.512-0.768 1.0752-1.0752 1.8432l-21.248 41.1648h-0.2048l-21.5552 41.728-21.6064-41.728h-0.2048l-21.248-41.1648-1.0752-1.8432-20.6848-40.0896c-11.1616-21.76-36.352-31.2832-55.7056-20.992-19.4048 10.3936-25.856 36.5568-14.592 58.5728l25.6 49.7664 21.8112 42.1888H366.8992c-24.4224 0-44.3392 18.1248-44.3392 40.2432 0 22.2208 19.968 40.2944 44.3392 40.2944h105.984v58.0096h-105.984c-24.4224 0-44.3392 18.176-44.3392 40.2944 0 22.2208 19.968 40.2944 44.3392 40.2944h105.984v97.28c0 24.7808 17.92 45.1072 39.7312 45.1072 21.76 0 39.7312-20.3264 39.7312-45.056v-97.536h106.1888c24.3712 0 44.3392-18.176 44.3392-40.2944 0-22.2208-19.968-40.2944-44.3392-40.2944h-106.2912V491.3152h106.3936c24.4224 0 44.3392-18.176 44.3392-40.2944 0-22.2208-19.968-40.2432-44.3392-40.2432h-57.6l21.8112-42.1888 25.6-49.7664c11.264-22.016 4.8128-48.2816-14.5408-58.5728z"
+                  p-id="1877"
+                  fill="#5045E4"
+                ></path>
+              </svg>
+              {/* <img className="rounded-lg cursor-pointer" src='http://placekitten.com/g/200/300' alt="" /> */}
+            </div>
+            <div className="mt-2">
+              
+              <span className="font-bold text-gray-900">教育局监管数字人民币账户余额总和：</span>
+              <span className="text-lg text-orange-600 font-blod">
+                {supversingAccountAmt}
+              </span>
+              <span className="pl-1 font-bold">元</span>
+              <a className="pl-2 text-sm text-blue-600" onClick={onClick}>
+                点击查看
+              </a>
+            </div>
+          </div>
           <div className="grid justify-center grid-cols-2 px-6 py-4 gap-x-10 gap-y-6">
             <TranSumCard
               tranDesc="今日购课数量"
