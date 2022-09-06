@@ -4,7 +4,7 @@ import mysql from "../mysql";
 import { nullableFuzzy } from "../Util";
 class LessonService {
   async find(reqParams) {
-    let { page, size, lessonName } = reqParams;
+    let { page, size, lessonName, eduId } = reqParams;
     if (page == null) {
       page = 0;
     }
@@ -16,8 +16,9 @@ class LessonService {
       .getRepository(EduLesson)
       .createQueryBuilder("eduLesson")
 
-      .where("eduLesson.lessonName like :name ", {
+      .where("eduLesson.lessonName like :name and eduLesson.eduId = :eduId ", {
         name: nullableFuzzy(lessonName),
+        eduId: eduId,
       })
       .orderBy("eduLesson.lessonCreateDate", "DESC")
       .addOrderBy("eduLesson.lessonCreateTime", "DESC")

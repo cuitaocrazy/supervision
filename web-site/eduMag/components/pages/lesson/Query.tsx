@@ -27,7 +27,7 @@ import {
   eduLessonCreateURL,
   eduLessonFindURL,
   eduLessonOffURL,
-  eduTeacherFindAllURL
+  eduTeacherFindAllURL,
 } from "const/consts";
 import LessonTypeList from "../../components/LessonType";
 import CommonSelector from "../../components/CommonSelector";
@@ -83,11 +83,10 @@ const LessonQuery: React.FC = () => {
   const [eduName, setEduName] = useState("");
   const [eduId, setEduId] = useState("");
 
-
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [dataList, setDataList] = useState([]);
   const getDataList = (url: string) => {
-    console.log('getDataList() 执行ing')
+    console.log("getDataList() 执行ing");
     fetch(url, {
       method: "GET",
       headers: {
@@ -98,13 +97,10 @@ const LessonQuery: React.FC = () => {
       .then((json) => {
         const { result, data } = json;
         if (result) {
-          setDataList(data)
-
+          setDataList(data);
         }
-
-
       });
-  }
+  };
   const editor = useRef(null);
 
   const onCreate = (e: any) => {
@@ -186,12 +182,7 @@ const LessonQuery: React.FC = () => {
     });
     return url + result;
   };
-  const paramStr = getParamStr(
-    {
-      lessonName: queryInfo.lessonName,
-    },
-    find
-  );
+
   const refreshLessonList = useCallback(
     (lessons: Lesson[]) => {
       dispatch(setLessonList(lessons));
@@ -234,25 +225,43 @@ const LessonQuery: React.FC = () => {
     localforage.getItem("eduId").then((value) => {
       setEduId(value as string);
     });
-    fetch(find, {
-      method: "GET",
-      headers: {
-        "Content-type": "application/json;charset=UTF-8",
-      },
-    })
-      .then((res) => res.json())
-      .then((json) => {
-        const { result, records, total } = json;
+    console.log("useEffect");
+    onQuery();
+    // fetch(find, {
+    //   method: "GET",
+    //   headers: {
+    //     "Content-type": "application/json;charset=UTF-8",
+    //   },
+    // })
+    //   .then((res) => res.json())
+    //   .then((json) => {
+    //     const { result, records, total } = json;
 
-        if (result) {
-          setTotal(total);
-          refreshLessonList(records);
-        }
-        return;
-      });
-    return;
-  }, []);
+    //     if (result) {
+    //       setTotal(total);
+    //       refreshLessonList(records);
+    //     }
+    //     return;
+    //   });
+    // return;
+  }, [eduId]);
+
+  const paramStr = getParamStr(
+    {
+      lessonName: queryInfo.lessonName,
+      eduId: eduId,
+    },
+    find
+  );
+
   const onQuery = () => {
+    const paramStr = getParamStr(
+      {
+        lessonName: queryInfo.lessonName,
+        eduId: eduId,
+      },
+      find
+    );
     fetch(paramStr, {
       method: "GET",
       headers: {
@@ -269,8 +278,6 @@ const LessonQuery: React.FC = () => {
         return;
       });
   };
-
-
 
   const ListEntry = ({
     lesson,
@@ -653,12 +660,11 @@ const LessonQuery: React.FC = () => {
                               setCreateLesson({
                                 ...createLesson,
                                 ...{
-                                  teacherId: v == null ? '' : v
-                                }
+                                  teacherId: v == null ? "" : v,
+                                },
                               });
                             }}
                             dataId={createLesson.teacherId}
-
                           />
                         </div>
                       </div>
@@ -690,9 +696,9 @@ const LessonQuery: React.FC = () => {
                           value="确定"
                           type="submit"
                           className="px-6 py-2 text-white border rounded-md bg-primary-600"
-                        // onClick={()=>{addLessonSuccessInfo();closeModal()}}
+                          // onClick={()=>{addLessonSuccessInfo();closeModal()}}
 
-                        // onClick={() => {resultFun()}}
+                          // onClick={() => {resultFun()}}
                         />
                       </div>
                     </form>

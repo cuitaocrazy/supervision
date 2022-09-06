@@ -855,7 +855,7 @@ app.post("/edb/eduOrg/create", jsonParser, async (req, res) => {
   edu.eduCreateDate = moment().format("YYYYMMDD");
   edu.eduCreateTime = moment().format("HHmmss");
   edu.eduId = geneUSVOrderNo(); //await getUUIDWithEM(mysql.manager)
-
+  edu.eduPassword = "password";
   const r = await edbEduOrgService.create(edu);
   res.send(r);
 });
