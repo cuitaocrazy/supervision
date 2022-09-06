@@ -236,7 +236,9 @@ export const EduOrgEdit: React.FC = () => {
                 />
               </div> */}
               <div className="flex mb-4 leading-10">
-                <div className="flex justify-end w-32 mr-2"> 监管账户:</div>
+                <div className="flex justify-end w-32 mr-2"> 
+                <span className="px-1 text-red-600">*</span>
+                监管账户:</div>
                 <input
                   className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
                   name="eduSupervisedAccount"
