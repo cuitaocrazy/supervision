@@ -12,6 +12,7 @@ export const eduAttendanceApplyURL = `${serverPath}/attendance/apply`;
 export const eduAttendanceFindURL = `${serverPath}/attendance/find`;
 export const eduTeacherModifyURL = `${serverPath}/teacher/modify`;
 export const eduTeacherFindURL = `${serverPath}/teacher/find`;
+export const eduTeacherFindAllURL = `${serverPath}/teacher/findAll`;
 export const eduTeacherCreateURL = `${serverPath}/teacher/create`;
 export const eduTeacherDelURL = `${serverPath}/teacher/del`;
 export const eduTransferFindURL = `${serverPath}/transfer/find`;

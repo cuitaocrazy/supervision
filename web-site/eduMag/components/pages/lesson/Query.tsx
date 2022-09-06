@@ -27,12 +27,16 @@ import {
   eduLessonCreateURL,
   eduLessonFindURL,
   eduLessonOffURL,
+  eduTeacherFindAllURL
 } from "const/consts";
 import LessonTypeList from "../../components/LessonType";
+import CommonSelector from "../../components/CommonSelector";
+
 import { getLessonType, getLessonStatusForList } from "const/dicData";
 const find = eduLessonFindURL;
 const createUrl = eduLessonCreateURL;
 const offUrl = eduLessonOffURL;
+const teacherAll = eduTeacherFindAllURL;
 
 // 课程查询页面
 const LessonQuery: React.FC = () => {
@@ -45,7 +49,6 @@ const LessonQuery: React.FC = () => {
     setTotal(total);
     refreshLessonList(records);
   };
-
   // 添加课程dialog状态
   let [isOpen, setIsOpen] = useState(false);
   function closeModal() {
@@ -80,16 +83,34 @@ const LessonQuery: React.FC = () => {
   const [eduName, setEduName] = useState("");
   const [eduId, setEduId] = useState("");
 
-  const [editorState, setEditorState] = useState(EditorState.createEmpty());
 
+  const [editorState, setEditorState] = useState(EditorState.createEmpty());
+  const [dataList, setDataList] = useState([]);
+  const getDataList = (url: string) => {
+    console.log('getDataList() 执行ing')
+    fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-type": "application/json;charset=UTF-8",
+      },
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        const { result, data } = json;
+        if (result) {
+          setDataList(data)
+
+        }
+
+
+      });
+  }
   const editor = useRef(null);
 
   const onCreate = (e: any) => {
     e.preventDefault();
     createLesson.eduName = eduName;
     createLesson.eduId = eduId;
-
-    console.log(createLesson);
     const newCreateLesson: any = createLesson;
     newCreateLesson.eduName = eduName;
     fetch(createUrl, {
@@ -206,6 +227,7 @@ const LessonQuery: React.FC = () => {
     },
     [dispatch]
   );
+
   useEffect(() => {
     localforage.getItem("eduName").then((value) => {
       setEduName(value as string);
@@ -213,7 +235,6 @@ const LessonQuery: React.FC = () => {
     localforage.getItem("eduId").then((value) => {
       setEduId(value as string);
     });
-
     fetch(find, {
       method: "GET",
       headers: {
@@ -232,7 +253,6 @@ const LessonQuery: React.FC = () => {
       });
     return;
   }, []);
-
   const onQuery = () => {
     fetch(paramStr, {
       method: "GET",
@@ -250,6 +270,8 @@ const LessonQuery: React.FC = () => {
         return;
       });
   };
+
+
 
   const ListEntry = ({
     lesson,
@@ -625,20 +647,20 @@ const LessonQuery: React.FC = () => {
                             <span className="px-1 text-red-600">*</span>
                             教师姓名:
                           </div>
-                          <input
-                            className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
-                            name="teacherName"
-                            type="text"
-                            value={createLesson.teacherId}
-                            spellCheck={false}
-                            onChange={(e) =>
+
+                          <CommonSelector
+                            dataUrl={teacherAll}
+                            setDataId={(v) => {
                               setCreateLesson({
                                 ...createLesson,
-                                ...{ teacherId: e.target?.value },
-                              })
-                            }
-                            required
-                          ></input>
+                                ...{
+                                  teacherId: v == null ? '' : v
+                                }
+                              });
+                            }}
+                            dataId={createLesson.teacherId}
+
+                          />
                         </div>
                       </div>
                       <div className="flex items-center mb-4 justify-items-center">
@@ -669,9 +691,9 @@ const LessonQuery: React.FC = () => {
                           value="确定"
                           type="submit"
                           className="px-6 py-2 text-white border rounded-md bg-primary-600"
-                          // onClick={()=>{addLessonSuccessInfo();closeModal()}}
+                        // onClick={()=>{addLessonSuccessInfo();closeModal()}}
 
-                          // onClick={() => {resultFun()}}
+                        // onClick={() => {resultFun()}}
                         />
                       </div>
                     </form>
