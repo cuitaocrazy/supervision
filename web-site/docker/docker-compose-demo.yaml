@@ -36,6 +36,7 @@ services:
       - DB_HOST=supervision_demo_mysql
     volumes:
       - ../serverUSV:/home/node/app/
+      - ../serverUSV/node_modules:/home/node/app/node_modules
       - ./wait_for.sh:/home/node/wait_for.sh
     ports:
       - 3003:3003
@@ -56,6 +57,7 @@ services:
       - NEXT_PUBLIC_ROOT_PATH=/consumer
     volumes:
       - ../consumerdemo:/home/node/app/
+      - ../consumerdemo/node_modules:/home/node/app/node_modules
       - ./wait_for.sh:/home/node/wait_for.sh
     ports:
       - 3000:3000
@@ -76,6 +78,7 @@ services:
       - ENV_RUNTIME=test
     volumes:
       - ../eduMag:/home/node/app/
+      - ../eduMag/node_modules:/home/node/app/node_modules
       - ./wait_for.sh:/home/node/wait_for.sh
     ports:
       - 3001:3001
@@ -96,6 +99,7 @@ services:
       # - ENV_RUNTIME=test
     volumes:
       - ../regulator-mag-ionic:/home/node/app/
+      - ../regulator-mag-ionic/node_modules:/home/node/app/node_modules
       - ./wait_for.sh:/home/node/wait_for.sh
     ports:
       - 3002:3002
