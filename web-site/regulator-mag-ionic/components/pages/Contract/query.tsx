@@ -70,7 +70,7 @@ const ContractQuery: React.FC = () => {
     [dispatch]
   );
   useEffect(onQuery, []);
-  const ListEntry = ({ contract, myKey, ...props }: { contract: Contract; myKey: any }) => (
+  const ListEntry = ({ contract, myKey }: { contract: Contract; myKey: any }) => (
     <tr
       key={myKey}
       className="grid items-center grid-cols-6 gap-10 text-gray-600 border justify-items-center even:bg-white odd:bg-primary-100 "

@@ -4,7 +4,6 @@ import { IonPage, IonCard, IonCardContent, useIonToast } from '@ionic/react';
 import { Redirect } from 'react-router-dom';
 import { useCallback, useContext } from 'react';
 import { AppContext, setLessonAudit } from '../../../appState';
-import { Lesson } from '../../../types/types';
 import { Dialog, Transition } from '@headlessui/react';
 import Quit from '../../Quit';
 import { edbLessonAuditURL } from 'const/const';
@@ -39,8 +38,6 @@ export const LessonAudit: React.FC = () => {
   }
   const modifyURL = edbLessonAuditURL;
   const { state, dispatch } = useContext(AppContext);
-  // const {SubscribeDurationDays,TranAmt,USVOrgID,USVItemName,USVItemID,USVItemDesc,SubscribeStartDate,LessonType} = state.lessonDetail
-
   const [lessonState, setLessonState] = useState(state.lesson.lessonAudit);
   const [isPickOpen, setPickOpen] = useState(false);
   const setBack = useCallback(() => {
@@ -56,7 +53,7 @@ export const LessonAudit: React.FC = () => {
 
   const onModify = (status: string) => (e: React.FormEvent) => {
     e.preventDefault();
-    let lessonUpdateReason: string = '';
+    let lessonUpdateReason: string;
     if (status == 'on') lessonUpdateReason = '审核通过';
     else lessonUpdateReason = lessonState.lessonUpdateReason;
 

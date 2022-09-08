@@ -381,6 +381,7 @@ export const reducer = (state: any, action: any) => {
           ...state.eduOrg,
           eduOrgDetail: action.eduOrgDetail,
         },
+        backPage: action.backPage || state.backPage,
       };
     }
     case 'setSupervisorOrgList': {

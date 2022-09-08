@@ -1,17 +1,13 @@
 //eduOrg管理的详细页面
 import React, { useState } from 'react';
-import {
-  IonPage,
-  IonCard,
-  IonCardContent
-} from '@ionic/react';
+import { IonPage, IonCard, IonCardContent } from '@ionic/react';
 import { Redirect } from 'react-router-dom';
 import { useCallback, useContext } from 'react';
 import { AppContext, setEduOrgDetail } from '../../../appState';
-import Quit from '../../Quit'
+import Quit from '../../Quit';
 
 export const EduOrgDetail: React.FC = () => {
-const { state, dispatch } = useContext(AppContext);
+  const { state, dispatch } = useContext(AppContext);
   const [eduOrgState, setEduOrgState] = useState(state.eduOrg.eduOrgDetail);
   const setBack = useCallback(() => {
     dispatch(setEduOrgDetail(undefined));
@@ -21,7 +17,7 @@ const { state, dispatch } = useContext(AppContext);
   };
   if (state.eduOrg.eduOrgDetail === undefined) {
     return <Redirect to={state.backPage} />;
-  }  
+  }
   /**todo 教育机构所在城市*/
   return (
     <IonPage className="bg-gray-100">
@@ -57,7 +53,7 @@ const { state, dispatch } = useContext(AppContext);
             <div className="font-bold text-gray-800">机构详情</div>
             <hr className="mt-2 mb-4" />
             <div className="grid grid-cols-2 justify-items-center ">
-            <div className="flex mb-4 leading-10">
+              <div className="flex mb-4 leading-10">
                 <div className="flex justify-end w-32 mr-2">监管机构名称</div>
                 <input
                   className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
@@ -66,15 +62,6 @@ const { state, dispatch } = useContext(AppContext);
                   readOnly
                 />
               </div>
-              {/* <div className="flex items-center mb-4 leading-10 justify-items-center">
-                <div className="flex justify-end w-32 mr-2">教育机构ID:</div>
-                <input
-                  className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
-                  name="eduId"
-                  value={eduOrgState.eduId}
-                  readOnly
-                />
-              </div> */}
               <div className="flex mb-4 leading-10">
                 <div className="flex justify-end w-32 mr-2">教育机构名称:</div>
                 <input
@@ -126,7 +113,7 @@ const { state, dispatch } = useContext(AppContext);
                 <input
                   className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
                   name="Public"
-                  value={eduOrgState.eduIsPublic ==0 ? '否':'是'}
+                  value={eduOrgState.eduIsPublic == 0 ? '否' : '是'}
                   readOnly
                 />
               </div>
@@ -136,7 +123,6 @@ const { state, dispatch } = useContext(AppContext);
                   className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
                   name="eduLicense"
                   value={eduOrgState.eduLicense}
-
                   readOnly
                 />
               </div>
@@ -145,28 +131,10 @@ const { state, dispatch } = useContext(AppContext);
                 <input
                   className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
                   name="eduAnnualInspection"
-                  value={eduOrgState.eduAnnualInspection == 'qualified' ?'合格':'不合格'}
+                  value={eduOrgState.eduAnnualInspection == 'qualified' ? '合格' : '不合格'}
                   readOnly
                 />
               </div>
-              {/* <div className="flex mb-4 leading-10">
-                <div className="flex justify-end w-32 mr-2">年检日期:</div>
-                <input
-                  className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
-                  name="Public"
-                  value={eduOrgState.eduAnnualInspectionDate}
-                  readOnly
-                />
-              </div>
-              <div className="flex mb-4 leading-10">
-                <div className="flex justify-end w-32 mr-2">年检时间:</div>
-                <input
-                  className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
-                  name="eduAnnualInspectionTime"
-                  value={eduOrgState.eduAnnualInspectionTime}
-                  readOnly
-                />
-              </div> */}
               <div className="flex mb-4 leading-10">
                 <div className="flex justify-end w-32 mr-2"> 监管账户:</div>
                 <input
@@ -207,7 +175,7 @@ const { state, dispatch } = useContext(AppContext);
                 <div className="flex justify-end w-32 mr-2">是否为黑名单:</div>
                 <input
                   className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
-                  value={eduOrgState.blackEdu==null?'否':'是'}
+                  value={eduOrgState.blackEdu == null ? '否' : '是'}
                   readOnly
                 />
               </div>

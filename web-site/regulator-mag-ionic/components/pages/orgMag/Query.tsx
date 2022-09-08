@@ -3,7 +3,6 @@ import { useEffect, useCallback, useContext, useState, Fragment } from 'react';
 import { Redirect } from 'react-router-dom';
 import { AppContext, setEduOrgList, setEduOrgDetail, setEduOrgEdit } from '../../../appState';
 import { EduOrg } from '../../../types/types';
-import { modalController } from '@ionic/core';
 import { IonPage, IonRow, IonCol, useIonToast } from '@ionic/react';
 import { Dialog, Transition } from '@headlessui/react';
 import EduIsPublic from '../../EduIsPublic';
@@ -134,6 +133,7 @@ const OrgMagQuery: React.FC = () => {
   };
 
   const { state, dispatch } = useContext(AppContext);
+  console.log(state);
   const [page, setPage] = useState(0);
   const [total, setTotal] = useState(0); //todo
   const onPageChange = (records: any, total: number, newPage: number) => {
@@ -713,8 +713,11 @@ const OrgMagQuery: React.FC = () => {
                       </div>
                       <div className="flex items-center mb-4 justify-items-center">
                         <div className="flex justify-items-center">
-                          <span className="flex justify-end p-1 mr-1 w-36">                  <span className="px-1 text-red-600">*</span>
-                            加入黑名单原因:</span>
+                          <span className="flex justify-end p-1 mr-1 w-36">
+                            {' '}
+                            <span className="px-1 text-red-600">*</span>
+                            加入黑名单原因:
+                          </span>
                           <textarea
                             className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
                             name="blackEduCreateReason"
@@ -819,7 +822,6 @@ const OrgMagQuery: React.FC = () => {
           <table className="w-11/12">
             <thead>
               <tr className="grid items-center h-10 grid-cols-4 gap-10 font-bold text-gray-700 bg-white rounded-lg justify-items-center">
-                {/* <th className="flex items-center justify-center">教育机构ID</th>  */}
                 <th className="flex items-center justify-center">名称</th>
                 <th className="flex items-center justify-center">公立</th>
                 <th className="flex items-center justify-center">状态</th>
