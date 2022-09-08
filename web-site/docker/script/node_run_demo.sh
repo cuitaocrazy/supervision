@@ -1,4 +1,4 @@
-#/bin/bash
+#!/usr/bin/env bash
 export MODE=$1
 
 function run() {

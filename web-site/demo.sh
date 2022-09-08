@@ -7,9 +7,22 @@ function replaceAddr() {
     # sed -n "/http:\/\/\([0-9]\+\.\)\+[0-9]\+/p" ./docker/html/index.html
 }
 
+function chmodDir() {
+    local user=$USER
+    if [ "$USER" == "root" ]; then
+        chmod 777 ./serverUSV
+        chmod 777 ./consumerdemo
+        chmod 777 ./eduMag
+        chmod 777 ./regulator-mag-ionic
+    else
+        echo "non root user, skip chmod dir"
+    fi
+}
+
 function start() {
     echo "start all demo"
     replaceAddr
+    chmodDir
     docker compose -f ./docker/docker-compose-demo.yaml up -d --remove-orphans
 }
 
@@ -57,10 +70,8 @@ function doCheck() {
             echo "$name 启动成功: $url"
             break
         else
-            docker logs -n 20 supervision_demo_$parameter
-            echo "$name 近20行日志---------------------------------"
-            echo "$name 启动未完成: $code , 5秒后重试"
-            sleep 5
+            echo "$name 启动未完成: $code , 10秒后再看"
+            sleep 10
         fi
     done
 }
