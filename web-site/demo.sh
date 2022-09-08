@@ -16,12 +16,18 @@ function start() {
 function cleanWebModule() {
     local path=$1
     rm -rf ./$path/.next
+    rm -rf ./$path/node_modules
+}
+
+function cleanServer() {
+    rm -rf ./serverUSV/dist
+    rm -rf ./serverUSV/node_modules
 }
 
 function stop() {
     echo "stop all demo"
     docker compose -f ./docker/docker-compose-demo.yaml down -v
-    rm -rf ./serverUSV/dist
+    cleanServer
     cleanWebModule regulator-mag-ionic
     cleanWebModule consumerdemo
     cleanWebModule eduMag
@@ -51,6 +57,8 @@ function doCheck() {
             echo "$name 启动成功: $url"
             break
         else
+            docker logs -n 20 supervision_demo_$parameter
+            echo "$name 近20行日志---------------------------------"
             echo "$name 启动未完成: $code , 5秒后重试"
             sleep 5
         fi

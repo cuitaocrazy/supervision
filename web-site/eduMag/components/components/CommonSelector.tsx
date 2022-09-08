@@ -16,7 +16,7 @@ const CommonSelector = ({
   dataUrl: string
 }) => {
 
-  const [dataList, setDataList] = useState([]);
+  const [dataList, setDataList] = useState<{ dataId: string, dataName: string }[]>([]);
   const getDataList = (url: string) => {
     console.log('getDataList() 执行ing')
     fetch(url, {
@@ -40,7 +40,7 @@ const CommonSelector = ({
     let dname = ''
     console.log('getDataname:' + dataId)
     if (dataId != null) {
-      dataList.forEach(item => {
+      dataList.forEach((item) => {
         if (item.dataId == dataId) {
           dname = item.dataName;
           return;
@@ -60,7 +60,7 @@ const CommonSelector = ({
     if (_dataId == null)
       return null
     dataList.forEach(item => {
-      const [dataId, dataName] = item;
+      const { dataId, dataName } = item;
       if (dataId == _dataId) {
         curItm = item
         return curItm;
