@@ -1,58 +1,59 @@
 import moment = require("moment");
 import { EduTeacher } from "../entity/EduTeacher";
-import mysql from '../mysql'
-import { nullableFuzzy } from '../Util'
+import mysql from "../mysql";
+import { nullableFuzzy } from "../Util";
 class EduTeacherService {
+  async findOne(teacherId) {
+    const result = await mysql.getRepository(EduTeacher).findOneBy({
+      teacherId: teacherId,
+    });
+    return result;
+  }
 
+  async remove(teacher: EduTeacher) {
+    const result = await mysql.getRepository(EduTeacher).remove(teacher);
+    return { result: true };
+  }
 
-    async findOne(teacherId) {
-        const result = await mysql.getRepository(EduTeacher).findOneBy({
-            teacherId: teacherId
-        })
-        return result
+  async find(reqParams) {
+    let { page, size, teacherName } = reqParams;
+    if (page == null) {
+      page = 0;
     }
-
-    async remove(teacher: EduTeacher) {
-        const result = await mysql.getRepository(EduTeacher).remove(teacher)
-        return { result: true }
+    if (size == null) {
+      size = 20;
     }
+    const eduTeachers = await mysql
+      .getRepository(EduTeacher)
+      .createQueryBuilder("teacher")
+      .where("teacher.teacherName like :name ", {
+        name: nullableFuzzy(teacherName),
+      })
+      .orderBy("teacher.teacher_create_date", "DESC")
+      .addOrderBy("teacher.teacher_create_time", "DESC")
+      .skip(page * size)
+      .take(size)
+      .getManyAndCount();
+    return { result: true, records: eduTeachers[0], total: eduTeachers[1] };
+  }
 
-    async find(reqParams) {
-        let { page, size, teacherName } = reqParams
-        if (page == null) {
-            page = 0
-        }
-        if (size == null) {
-            size = 20
-        }
-        const eduTeachers = await mysql.getRepository(EduTeacher).createQueryBuilder("teacher")
-            .where("teacher.teacherName like :name ", { name: nullableFuzzy(teacherName) })
-            .orderBy("eduOrg.teacherCreateDate", "DESC")
-            .addOrderBy("eduOrg.teacherCreateTime", "DESC")
-            .skip(page * size)
-            .take(size).getManyAndCount()
-        return { result: true, records: eduTeachers[0], total: eduTeachers[1] }
+  async save(eduTeacher: EduTeacher) {
+    await mysql.manager.save(eduTeacher);
+  }
+  async saveEduTeacher(eduTeacher: EduTeacher) {
+    const result = await mysql.getRepository(EduTeacher).save(eduTeacher);
+    return result;
+  }
 
-    }
-
-
-    async save(eduTeacher: EduTeacher) {
-        await mysql.manager.save(eduTeacher)
-    }
-    async saveEduTeacher(eduTeacher: EduTeacher) {
-        const result = await mysql.getRepository(EduTeacher).save(eduTeacher)
-        return result
-    }
-
-    async findAll() {
-        const data = await mysql.getRepository(EduTeacher).createQueryBuilder("teacher")
-            .select('teacher_id as dataId, teacher_name as dataName')
-            .orderBy("teacher_create_date", "DESC")
-            .addOrderBy("teacher_create_time", "DESC")
-            .getRawMany()
-        return { result: true, data }
-
-    }
-
+  async findAll() {
+    const data = await mysql
+      .getRepository(EduTeacher)
+      .createQueryBuilder("teacher")
+      .select("teacher_id as dataId, teacher_name as dataName")
+      .orderBy("teacher_create_date", "DESC")
+      .addOrderBy("teacher_create_time", "DESC")
+      .getRawMany();
+    return { result: true, data };
+  }
 }
-export default new EduTeacherService()
+export default new EduTeacherService();

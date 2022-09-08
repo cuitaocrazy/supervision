@@ -1,25 +1,16 @@
 //Lesson的详细页面
 import React, { useState } from 'react';
-import {
-  IonPage,
-  IonCard,
-  IonCardContent
-} from '@ionic/react';
+import { IonPage, IonCard, IonCardContent } from '@ionic/react';
 import { Redirect } from 'react-router-dom';
 import { useCallback, useContext } from 'react';
 import { AppContext, setLessonDetail } from '../../../appState';
-import { Lesson } from '../../../types/types';
-import { PickerColumn } from '@ionic/core';
-import Quit from '../../Quit'
-import { getLessonType, getLessonStatusForList } from "const/dicData";
+import Quit from '../../Quit';
+import { getLessonType, getLessonStatusForList } from 'const/dicData';
 export const LessonDetail: React.FC = () => {
-  console.log('LessonDetail');
   const modifyURL = 'http://localhost:3003/lesson/modifyURL';
   const { state, dispatch } = useContext(AppContext);
-  // const {SubscribeDurationDays,TranAmt,USVOrgID,USVItemName,USVItemID,USVItemDesc,SubscribeStartDate,LessonType} = state.lessonDetail
 
   const [lessonState, setLessonState] = useState(state.lesson.lessonDetail);
-  const [isPickOpen, setPickOpen] = useState(false);
   const setBack = useCallback(() => {
     dispatch(setLessonDetail(undefined));
   }, []);
@@ -30,30 +21,6 @@ export const LessonDetail: React.FC = () => {
   if (state.lesson.lessonDetail === undefined) {
     return <Redirect to={state.backPage} />;
   }
-
-  const onModify = async (e: React.FormEvent) => () => {
-    e.preventDefault();
-    fetch(modifyURL, {
-      method: 'PUT',
-      body: JSON.stringify({
-        USVItemID: lessonState.USVItemID,
-        USVItemName: lessonState.USVItemName,
-        USVOrgID: lessonState.USVOrgID,
-        USVItemDesc: lessonState.USVItemDesc,
-        TranAmt: lessonState.TranAmt,
-        SubscribeDurationDays: lessonState.SubscribeDurationDays,
-        SubscribeStartDate: lessonState.SubscribeStartDate,
-        LessonType: lessonState.LessonType,
-      }),
-      headers: {
-        'Content-type': 'application/json;charset=UTF-8',
-      },
-    })
-      .then(res => res.json())
-      .then(json => {
-        alert(json.result);
-      });
-  };
   return (
     <IonPage className="bg-gray-100">
       <Quit />
@@ -219,7 +186,10 @@ export const LessonDetail: React.FC = () => {
               />
             </div>
 
-            <div className="flex mb-4 leading-10" hidden={lessonState.lessonStatus == 'off' ? false : true}>
+            <div
+              className="flex mb-4 leading-10"
+              hidden={lessonState.lessonStatus == 'off' ? false : true}
+            >
               <div className="flex justify-end w-32 mr-2">下架原因:</div>
               <input
                 className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
@@ -229,7 +199,10 @@ export const LessonDetail: React.FC = () => {
               />
             </div>
 
-            <div className="flex mb-4 leading-10 " hidden={lessonState.lessonStatus == 'reject' ? false : true}>
+            <div
+              className="flex mb-4 leading-10 "
+              hidden={lessonState.lessonStatus == 'reject' ? false : true}
+            >
               <div className="flex justify-end w-32 mr-2">下架原因:</div>
               <input
                 className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
@@ -275,10 +248,9 @@ export const LessonDetail: React.FC = () => {
               className="flex w-20 px-6 py-2 font-bold text-white rounded-md bg-primary-600 focus:bg-primary-700"
             />
           </div>
-
         </IonCardContent>
       </IonCard>
-    </IonPage >
+    </IonPage>
   );
 };
 

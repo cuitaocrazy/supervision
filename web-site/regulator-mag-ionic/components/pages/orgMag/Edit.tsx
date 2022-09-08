@@ -21,7 +21,6 @@ export const EduOrgEdit: React.FC = () => {
     return <Redirect to={state.backPage} />;
   }
 
-  // const onModify = async (e: React.FormEvent) => () => {
   const onModify = (e: React.FormEvent) => {
     e.preventDefault();
     fetch(modifyURL, {
@@ -53,10 +52,6 @@ export const EduOrgEdit: React.FC = () => {
         setBack();
       });
   };
-  // const eduOrgTypePickerColumn = {
-  //   name: "eduOrgTypePickerColumn",
-  //   options: [{'text':'','value':'0'},{'text':'数学','value':'1'}],
-  // } as PickerColumn;
 
   return (
     <IonPage>
@@ -100,15 +95,6 @@ export const EduOrgEdit: React.FC = () => {
                   value="北京市教育局"
                 />
               </div>
-              {/* <div className="flex items-center mb-4 leading-10 justify-items-center">
-                <div className="flex justify-end w-32 mr-2">教育机构ID:</div>
-                <input
-                  className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
-                  name="eduId"
-                  value={eduOrgState.eduId}
-                  readOnly
-                />
-              </div> */}
               <div className="flex mb-4 leading-10">
                 <div className="flex justify-end w-32 mr-2">
                   <span className="px-1 text-red-600">*</span>
@@ -122,15 +108,7 @@ export const EduOrgEdit: React.FC = () => {
                   required
                 />
               </div>
-              {/*<div className="flex mb-4 leading-10">
-                <div className="flex justify-end w-32 mr-2">教育机构城市:</div>
-                <input
-                  className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
-                  name="eduAddress"
-                  value={eduOrgState.eduAddress}
-                  required
-                />
-              </div>*/}
+
               <div className="flex mb-4 leading-10">
                 <div className="flex justify-end w-32 mr-2">
                   <span className="px-1 text-red-600">*</span>
@@ -236,9 +214,10 @@ export const EduOrgEdit: React.FC = () => {
                 />
               </div> */}
               <div className="flex mb-4 leading-10">
-                <div className="flex justify-end w-32 mr-2"> 
-                <span className="px-1 text-red-600">*</span>
-                监管账户:</div>
+                <div className="flex justify-end w-32 mr-2">
+                  <span className="px-1 text-red-600">*</span>
+                  监管账户:
+                </div>
                 <input
                   className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
                   name="eduSupervisedAccount"
@@ -294,7 +273,6 @@ export const EduOrgEdit: React.FC = () => {
                   }
                 />
               </div>
-              
             </div>
             <div className="flex items-center justify-center gap-4 mt-10">
               <input

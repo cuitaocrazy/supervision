@@ -146,7 +146,6 @@ const Balance: React.FC = () => {
               </tr>
             </tbody>
           </table>
-          {/* <Paging url={paramStr} page={page} pagesize={20} total={total} onPageChange={onPageChange}/> */}
         </div>
       </div>
     </IonPage>
