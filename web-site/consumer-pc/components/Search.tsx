@@ -1,5 +1,10 @@
-import { FC } from "react";
+import { FC,useState,Fragment,useCallback,useContext } from "react";
 import { Link } from "react-router-dom";
+import { Dialog, Transition } from "@headlessui/react";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { loginURL } from "../const/const";
+import { AppContext, setloginUser } from "../appState";
+import { Redirect } from "react-router-dom";
 
 interface searchProps {
   setQueryStr: Function;
@@ -14,7 +19,83 @@ const Search: FC<searchProps> = (props) => {
     e.preventDefault();
     onQuery();
   };
+  // 添加登录dialog状态
+  let [isOpen, setIsOpen] = useState(false);
+  function closeModal() {
+    setIsOpen(false);
+  }
+  function openModal() {
+    setIsOpen(true);
+  }
+  type FormPwd = {
+    username: string;
+    password: string;
+  };
+  const useFormPwd = useForm<FormPwd>();
+  const registerPwd = useFormPwd.register;
+  const handleSubmitPwd = useFormPwd.handleSubmit;
+  const [username, setUserName] = useState(undefined as string | undefined);
+  const { state, dispatch } = useContext(AppContext);
+  const refreshLoginUser = useCallback(
+    (loginUser: any) => {
+      dispatch(setloginUser(loginUser));
+    },
+    [dispatch]
+  );
+  const onSubmitLogin = (loginType: string) => (data: any) => {
+    console.log("login");
+    console.log(loginType);
+    if (loginType === "verfiyCode") {
+      fetch(loginURL, {
+        method: "POST",
+        body: JSON.stringify({
+          phone: data.phone,
+          verifyCode: data.verifyCode,
+        }),
+        headers: {
+          "Content-type": "application/json;charset=UTF-8",
+        },
+      })
+        .then((res) => res.json())
+        .then((json) => {
+          console.log("asda");
+          console.log(json);
+          setUserName(json.result.username);
+          refreshLoginUser({
+            loginName: json.result.loginName,
+            username: json.result.username,
+            userId: json.result.userId,
+          });
+        });
+    } else {
+      fetch(loginURL, {
+        method: "POST",
+        body: JSON.stringify({
+          username: data.username,
+          password: data.password,
+        }),
+        headers: {
+          "Content-type": "application/json;charset=UTF-8",
+        },
+      })
+        .then((res) => res.json())
+        .then((json) => {
+          setUserName(json.result.username);
+          refreshLoginUser({
+            loginName: json.result.loginName,
+            username: json.result.username,
+            userId: json.result.userId,
+          });
+        });
+    }
+  };
+  if (username) {
+    return <Redirect to={"/home"} />;
+  }
+
   return (
+    
+    <div>
     <form onSubmit={onSubmit} className="pt-3 ">
       <div className="fixed left-0 right-0 w-3/4 pb-2 mx-auto mt-1 bg-white ">
         <div className="flex items-center justify-around gap-10 pt-3 text-xs justify-items-stretch">
@@ -48,16 +129,110 @@ const Search: FC<searchProps> = (props) => {
             </button>
           </div>
           <div className="flex flex-row justify-end ">
-            <Link to="./login" className="h-10 px-2 mt-5 mr-3 text-base text-gray-800 rounded-md ">
+            <button  className="h-10 px-2 mt-5 mr-3 text-base text-gray-800 rounded-md "
+            onClick={openModal}>
               登录
-            </Link>
-            <Link to="" className="h-10 px-2 mt-5 text-base text-gray-800 rounded-md ">
+            </button>
+            <button  className="h-10 px-2 mt-5 text-base text-gray-800 rounded-md ">
               注册
-            </Link>
+            </button>
           </div>
         </div>
       </div>
     </form>
+    {/* 新增课程模态框 */}
+    <Transition appear show={isOpen} as={Fragment}>
+          <Dialog as="div" className="relative z-10" onClose={closeModal}>
+            <Transition.Child
+              as={Fragment}
+              enter="ease-out duration-300"
+              enterFrom="opacity-0"
+              enterTo="opacity-100"
+              leave="ease-in duration-200"
+              leaveFrom="opacity-100"
+              leaveTo="opacity-0"
+            >
+              <div className="fixed inset-0 bg-black bg-opacity-25" />
+            </Transition.Child>
+
+            <div className="fixed inset-0 overflow-y-auto">
+              <div className="flex items-center justify-center min-h-full p-4 text-center">
+                <Transition.Child
+                  as={Fragment}
+                  enter="ease-out duration-300"
+                  enterFrom="opacity-0 scale-95"
+                  enterTo="opacity-100 scale-100"
+                  leave="ease-in duration-200"
+                  leaveFrom="opacity-100 scale-100"
+                  leaveTo="opacity-0 scale-95"
+                >
+                  <Dialog.Panel className="w-full max-w-md p-4 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
+                    <Dialog.Title
+                      as="h3"
+                      className="text-lg font-medium leading-6 text-center text-gray-900"
+                    >
+                      账号登录
+                      <hr className="mt-2 mb-4" />
+                    </Dialog.Title>
+                    <form id="2" onSubmit={handleSubmitPwd(onSubmitLogin("account"))}
+                      className="flex flex-col items-center rounded-lg justify-items-center"
+                    >
+                      <div className="flex items-center mb-4 justify-items-center">
+                        <div className="flex leading-7 justify-items-center">
+                          <div className="flex justify-end p-1 w-36">
+                            用户名:
+                          </div>
+                          <input
+                            className="w-64 p-1 text-gray-600 bg-gray-100 border rounded-md justify-self-start focus:outline-none"
+                            {...registerPwd("username", { required: true })}
+                // className="inline w-full border-b focus:outline-none"
+                onChange={(e) => {
+                  console.log(e.target.value);
+                }}
+                placeholder="请输入账号"
+                           
+                          ></input>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center mb-4 justify-items-center">
+                        <div className="flex justify-items-center">
+                          <span className="flex justify-end p-1 mr-1 w-36">
+                            密码:
+                          </span>
+                          <input
+                            className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
+                            type="password"
+                {...registerPwd("password", { required: true })}
+                // className="inline w-full py-1 border-b focus:outline-none"
+                placeholder="请输入密码"
+                          ></input>
+                        </div>
+                      </div>
+                     
+                    
+                      <div className="flex items-center gap-4 mt-2 justify-items-center">
+                        <input
+                          value="取消"
+                          type="button"
+                          className="px-6 py-2 border rounded-md "
+                          onClick={closeModal}
+                        />
+                        <input
+                          value="确定"
+                          type="submit"
+                          className="px-6 py-2 text-white border rounded-md bg-primary-600"
+                        />
+                      </div>
+                    </form>
+                  </Dialog.Panel>
+                </Transition.Child>
+              </div>
+            </div>
+            
+          </Dialog>
+        </Transition>
+    </div>
   );
 };
 

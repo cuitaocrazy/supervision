@@ -65,7 +65,7 @@ const ConOrder = () => {
   return (
     <IonPage>
       <IonHeader>
-        <Navbar title="确认订单" />
+
       </IonHeader>
       <IonContent>
         <div className="mb-3 bg-white pb-14 scroll-auto">
