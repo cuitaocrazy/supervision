@@ -17,7 +17,7 @@ const SearchlessonlistCard = () => {
         >
           <img
             className="w-24 h-24 col-span-1 mt-2 ml-1 rounded-xl"
-            src="http://placekitten.com/g/200/300"
+            src="https://s3.bmp.ovh/imgs/2022/09/06/0b135f490618173d.jpg"
           ></img>
         </a>
         <div className="flex flex-col col-span-2 mt-2 justify-items-start">

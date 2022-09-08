@@ -17,7 +17,7 @@ import { Redirect } from "react-router-dom"
 // 首页
 const Home = () => {
   // 轮播图数据
-  let lesson: Lesson = { lessonImgs: "http://placekitten.com/g/200/300" }
+  let lesson: Lesson = { lessonImgs: "https://s3.bmp.ovh/imgs/2022/09/07/10c800bced69deb7.png" }
   // let lesson: Lesson = { lessonImgs: "../../img/shuffling_1.png" }
   // 课程列表数据
 
@@ -81,18 +81,23 @@ const Home = () => {
   }
   return <IonPage>
     <IonHeader>
-      <NavbarNoGoBackBtn title="教育资金监管平台" />
+     
     </IonHeader>
     <IonContent>
-      <div className='relative bg-primary-600'>
-        <RoundedCornersStyles />
+      <div className='relative '>
         <div className='bg-white'>
           <Search setQueryStr={setQueryStr} onQuery={onQuery} />
-          <LessonImages lessonImages={lesson.lessonImgs} />
+          {/* <LessonImages lessonImages={lesson.lessonImgs} /> */}
+         
+          <div className='flex items-center justify-center pt-24'>
+      <img className="rounded-md cursor-pointer " src="https://s3.bmp.ovh/imgs/2022/09/07/10c800bced69deb7.png" />
+    </div>
+  )
+
           <FeaturedRecommendAndMore />
 
             <PullToRefresh onRefresh={onRefresh}>
-            <div className="grid py-2 sm1:grid-cols-2 sm2:grid-cols-2 sm3:grid-cols-2">
+            <div className="grid col-span-4 py-16 m-auto space-x-2 space-y-2 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 max-w-7xl">
               {lessonList.map((item, index) => {
                 return <LessonListCard key={index} lesson_imgs={item.lessonImgs} lesson_name={item.lessonName} lesson_introduce={item.lessonIntroduce} item={item} edu_address={item.edu?.eduAddress} />
               })}

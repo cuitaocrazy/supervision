@@ -72,9 +72,6 @@ const ECNYPay = () => {
 
   return (
     <IonPage>
-      <IonHeader>
-        <Navbar title="数币支付页面" />
-      </IonHeader>
       <IonContent>
         <div>
           <div className="px-4 py-4 mx-2 my-2 text-base leading-7 rounded-md shadow-md">
@@ -103,12 +100,12 @@ const ECNYPay = () => {
           </p> */}
             <hr className="my-4 text-gray-300" />
             <p className="font-bold text-right text-gray-800">
-              <span className="pr-1">实付金额:</span>
-              <span>¥</span>
-              <span>{contract.lessonTotalPrice}</span>
+              <span className="pr-1 ">实付金额:</span>
+              <span className="text-red-600">¥</span>
+              <span className="text-red-600">{contract.lessonTotalPrice}</span>
             </p>
           </div>
-          <div className="grid justify-items-stretch">
+          <div className="grid mt-20 justify-items-stretch">
             <div
               className="justify-self-center"
               onClick={() => {
@@ -119,6 +116,7 @@ const ECNYPay = () => {
               {myQrCode(payUrl)}
               {/* <QRCodeCanvas value={payUrl} size={300}></QRCodeCanvas> */}
             </div>
+            <div className="mt-6 text-center text-red-600">请使用数字人民币APP扫一扫以上二维码进行数币支付</div>
           </div>
 
           {/* <div className="flex mt-12 text-base">

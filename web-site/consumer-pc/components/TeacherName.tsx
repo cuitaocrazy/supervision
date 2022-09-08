@@ -6,7 +6,7 @@ interface teacherProps {
 // 老师名字组件
 const TeacherName: FC<teacherProps> = (props) => {
   return (
-    <div className='flex pt-1'>
+    <div className='flex'>
       <div className='text-sm text-gray-500'>讲师:</div>
       <div className='text-sm'>&nbsp;&nbsp;{props.teacherName}</div>
       <div className='flex flex-auto justify-self-end'>
