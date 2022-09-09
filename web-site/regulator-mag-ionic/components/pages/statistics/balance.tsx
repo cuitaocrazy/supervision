@@ -1,6 +1,5 @@
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { IonPage, IonRow, IonCol } from '@ionic/react';
-import { AppContext } from '../../../appState';
 import Quit from '../../Quit';
 import moment from 'moment';
 import { edbBalanceFindURL } from 'const/const';
@@ -46,7 +45,7 @@ const Balance: React.FC = () => {
     })
       .then(res => res.json())
       .then(json => {
-        const { result, records, total } = json;
+        const { result, records } = json;
         if (result) {
           // todo 测试方便
           // setTotal(total)
@@ -56,7 +55,7 @@ const Balance: React.FC = () => {
   };
 
   return (
-    <IonPage className='bg-gray-100'>
+    <IonPage className="bg-gray-100">
       <Quit />
       <div className="relative w-full h-screen mx-6 overflow-auto">
         <div className="flex pt-2 my-2 text-gray-800">

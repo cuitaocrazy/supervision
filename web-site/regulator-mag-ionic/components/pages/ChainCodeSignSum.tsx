@@ -44,7 +44,6 @@ const ChinCodeSignSumQuery: React.FC = () => {
   );
 
   const onQuery = () => {
-    console.log('111');
     fetch(paramStr, {
       method: 'GET',
       headers: {
@@ -53,11 +52,9 @@ const ChinCodeSignSumQuery: React.FC = () => {
     })
       .then(res => res.json())
       .then(json => {
-        console.log('222');
         const { result, records } = json;
         console.log('result' + result);
         if (result) {
-          console.log('333');
           refreshList(records);
         }
         return;
@@ -66,13 +63,6 @@ const ChinCodeSignSumQuery: React.FC = () => {
 
   console.log(state);
   useEffect(onQuery, []);
-  // const ListEntry = ({ chainCode }: { chainCode: ChainCode }) => (
-  //   <tr className="grid items-center grid-cols-6 gap-10 text-gray-600 border justify-items-center even:bg-white odd:bg-primary-100 ">
-  //     <td className="flex items-center justify-center leading-10">{chainCode.transferCount}</td>
-  //     <td className="flex items-center justify-center leading-10">{chainCode.attendanceTotal}</td>
-  //     <td className="flex items-center justify-center leading-10">{chainCode.contractCount}</td>
-  //   </tr>
-  // );
 
   return (
     <IonPage className="bg-gray-100">
@@ -99,35 +89,6 @@ const ChinCodeSignSumQuery: React.FC = () => {
             <span className="pr-1 text-gray-600">智能合约签署汇总信息</span>
           </div>
         </div>
-        {/* <div className="w-11/12 px-4 py-2 mt-4 bg-white rounded-lg ">
-          <div className="text-base font-bold">快速查询</div>
-          <hr className="mt-2 mb-4" />
-          <div className="flex">
-            <IonRow className="flex items-center w-full mx-4 text-center bg-white rounded-md justify-items-center">
-              <IonCol className="flex ml-8 text-gray-800">
-                <div className="flex items-center justify-center font-bold text-center text-gray-600 w-28">
-                  链码描述：
-                </div>
-                <input
-                  type="text"
-                  className="flex w-56 h-12 font-bold text-center text-gray-600 bg-white border rounded-md focus:outline-none focus:glow-primary-600"
-                  placeholder="请输入链码描述"
-                  onChange={e =>
-                    setQueryInfo({ ...queryInfo, ...{ chaincodeDesc: e.target.value } })
-                  }
-                />
-              </IonCol>
-              <IonCol className="flex ml-8">
-                <button
-                  className="w-24 h-12 mr-6 text-white border-2 rounded-md shadow-md bg-primary-600 focus:bg-primary-700"
-                  onClick={() => onQuery()}
-                >
-                  查询
-                </button>
-              </IonCol>
-            </IonRow>
-          </div>
-        </div> */}
 
         <div className="absolute w-full mt-10">
           <table className="w-11/12">

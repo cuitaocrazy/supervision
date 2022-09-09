@@ -40,20 +40,7 @@ const demoLessonList: SupervisorOrg[] = [
 
 // 课程查询页面
 const LessonQuery: React.FC = () => {
-  const onCancel = (item: SupervisorOrg) => () => {
-    // fetch(delURL, {
-    //   method: 'PUT',
-    //   body: JSON.stringify({
-    //     "supervisorLoginName":item.supervisorLoginName,
-    //   }),
-    //   headers: {
-    //     'Content-type': 'application/json;charset=UTF-8',
-    //   },
-    // }).then(res => res.json())
-    // .then((json) => {
-    //   alert(json.result)
-    // })
-  };
+  const onCancel = (item: SupervisorOrg) => () => {};
 
   const { state, dispatch } = useContext(AppContext);
   const [newOrgState, setNewOrgState] = useState({ supervisorOrgName: '' });

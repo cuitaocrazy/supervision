@@ -1,19 +1,6 @@
 //transfer管理的详细页面
 import React, { useState } from 'react';
-import {
-  IonPage,
-  IonCard,
-  IonCardHeader,
-  IonCardSubtitle,
-  IonLabel,
-  IonInput,
-  IonCardContent,
-  IonItem,
-  IonButton,
-  IonList,
-  IonDatetime,
-  IonPicker,
-} from '@ionic/react';
+import { IonPage, IonCard, IonCardContent } from '@ionic/react';
 import { Redirect } from 'react-router-dom';
 import { useCallback, useContext } from 'react';
 import { AppContext, setTransferDetail } from '../../../appState';
@@ -24,7 +11,6 @@ export const TransferDetail: React.FC = () => {
   const setBack = useCallback(() => {
     dispatch(setTransferDetail(undefined));
   }, []);
-  `                                                       `;
   const onBack = () => () => {
     setBack();
   };
