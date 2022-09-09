@@ -1,6 +1,5 @@
 package com.yada.encryptByPubk.controller;
 
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
@@ -13,13 +12,24 @@ import java.security.PublicKey;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.X509EncodedKeySpec;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 public class EncryptByPubkController {
 
-    @RequestMapping(value = "encrypt", method = RequestMethod.GET)
+    @RequestMapping(value = "/test", method = RequestMethod.GET)
+    public String test() {
+        return "hello world";
+    }
+
+    @RequestMapping(value = "/encrypt", method = RequestMethod.GET)
     public String encrypt(String plainText) {
         try {
+            // if(plainText==null||plainText.isEmpty()) {
+            // plainText =
+            // "Cj2MfGmBwRTpCP8OdaqDS2XErktzdkV9h01SHBxeJIKWPNVqaKcffdPjoUv7JCz/uroG93YY+yidyjC5SlhwBbesw6UIXZu3Ggufewli6nKWBxyUwK7Rc97cBZSfDcEhtGzt3SN/q06ZbK9I2+5phbOrqlugwCrW+Z9J3c6CzaWvMXo1s9ClxyJ60l9XJWq2KS+Nd1apQYFs/J7PoLRCNDdC6dpECWDxfYYIwD5KtgfoeUjMeOV8GUcMWpaz9Wq3+TWkkxZN5ZVPyOHMYWyTcN2IdWUkLioDZuHk36y85JEkjXflECB5c0x0dZMG6AFqXy1pSoaKVpB7e++zxjo48gGzUMAuJ5JVx2P4qyQD/+kNsEdtfxmM9D5AoEVtWZOTHOeDEYw376Iu1AfIJqTDOxaXpXYCC6kHH+NiVtehVOGRneBZaAFMH3MQYPD8AuukgFD8dySIqLaNBembYR2BMKA/3rRlMIq2pzz+ivxPkGcSu2RwOayo1wdB8WjwoASlgOc3zsgSM4UqpbblacVFn3bcwBlo3QNYwksNpUNTUGgsNjL3LlnNDP1fQ6U6aATmd82n4YDhEkj836m+m9UgjzKIg152gY0rbHRR6lDjDCPPuymz4xAvTiagki3NTZGfYwjwoH4AyRIHlz2ARP2rSW25wY89CSZTCD9KSs9mvKgcx01/CRmadjKXhZmZnC392nkBBwlTocAkSL6AsDujGRBx5LPo1h93+YxdQ4+jjAE/W+qjYP+zxcsFBy2Y2HRDIobxBDD1uOm10n3/ZVKujx5yqDL2bACpfYZOXDisuNySpPZPu2Z26SlYphvJI980C5SRiatfUgJep9N6YL+IWgZtESASrwFNbp/FoRq26UUozFv+vXv5NtHtKPBUIISTrkx74253EOLypKHuk4XUS1pszVtyuCt7omtbWa12qyI4V37js6xjTYyZaI0a6Z8EZqXASiHRw1fus4v42V/gEvzic2d/BIW9EEf137fVvADEPp95FmmHT9+9kAJ2lDW3";
+            // }
+            System.out.println(plainText);
             String pubkStr = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC0FT/LTwXOx1GIwDcOjn8C7pL2Gjv5xhr7PXdEyzyoakiGNc4ed1njQiw/crOziAQpFLZEZfZ9yPi/9/EFQtnexPzqWynYr0Vga0caNVVHqxA7Eivyphv6Tq8H69ecd7umI+8CM9qvsxC/+4Podf3Xnvi5N0ux992ZJKv18RDB0wIDAQAB";
             Key key = getPublicKeyByBase64Str(pubkStr);
             String result = decrypt(plainText, key);
