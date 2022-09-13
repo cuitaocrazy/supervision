@@ -31,9 +31,9 @@ export const searchLesson = async (reqParams) =>{
     const lessons =await mysql.getRepository(EduLesson).createQueryBuilder("eduLesson")
 
     .where("eduLesson.lessonStatus = 'on' and (eduLesson.lessonName like :queryStr or eduLesson.eduName like :queryStr) ", { queryStr: nullableFuzzy(queryStr) })
-    // .skip(page*size)
+    .skip(page*size)
     //todo 方便测试
-    .skip(0)
+    // .skip(0)
     .take(size).getManyAndCount()
     return lessons[0]
 }
