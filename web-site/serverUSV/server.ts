@@ -1,18 +1,11 @@
 import * as express from "express";
 import * as bodyParser from "body-parser";
-import * as http from "http";
 import { SubscribeWithSign } from "./API";
-import { sign } from "jws";
 import * as cors from "cors";
 import { EventEmitter } from "events";
-import { v4 } from "uuid";
 import fetch from "node-fetch";
-const { exec } = require("child_process");
-// import forge from "node-forge";
-// crypto.constants;
 const forge = require("node-forge");
 
-// const fetch = require("node-fetch");
 console.log("sssssssssss");
 console.log(typeof fetch);
 const NodeRSA = require("node-rsa");
@@ -73,7 +66,7 @@ const getStartDateAndDurDaysByItemId = (body: SubscribeWithSign) => {
 
 const geneUSVOrderNo = () => {
   //获取预订单号
-  return v4().replaceAll("-", "");
+  return randomUUID().replaceAll("-", "");
 };
 
 // const signSubscribe = (body: SubscribeWithSign) => {
