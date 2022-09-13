@@ -87,17 +87,11 @@ const Home = () => {
       <div className='relative '>
         <div className='bg-white'>
           <Search setQueryStr={setQueryStr} onQuery={onQuery} />
-          {/* <LessonImages lessonImages={lesson.lessonImgs} /> */}
-         
-          <div className='flex items-center justify-center pt-24'>
-      <img className="rounded-md cursor-pointer " src="https://s3.bmp.ovh/imgs/2022/09/07/10c800bced69deb7.png" />
-    </div>
-  )
-
+          <LessonImages lessonImages={lesson.lessonImgs} />
           <FeaturedRecommendAndMore />
 
             <PullToRefresh onRefresh={onRefresh}>
-            <div className="grid col-span-4 py-16 m-auto space-x-2 space-y-2 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 max-w-7xl">
+            <div className="grid col-span-4 py-8 m-auto space-x-2 space-y-2 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 max-w-7xl">
               {lessonList.map((item, index) => {
                 return <LessonListCard key={index} lesson_imgs={item.lessonImgs} lesson_name={item.lessonName} lesson_introduce={item.lessonIntroduce} item={item} edu_address={item.edu?.eduAddress} />
               })}

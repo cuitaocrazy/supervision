@@ -133,23 +133,25 @@ const StuInfoList = () => {
 
   return (
     <IonPage>
-      <IonHeader>
-        <Navbar title="学生信息管理" />
-      </IonHeader>
-      <IonContent>
-        <div className="mb-3 bg-white pb-14 scroll-auto">
+      <IonHeader></IonHeader>
+      <IonContent className="flex items-center justify-center ">
+        <div className="flex flex-col w-3/4 mx-auto mb-3 bg-white shadow-lg pb-14 scroll-auto">
+          <div className="mt-4 ml-4 text-lg font-bold">
+            学生信息
+          </div>
           <StudentInfoRadioGroup />
-        </div>
-        <div className="flex w-full mb-20 justify-items-center">
-          <Link to="/conOrder" className="flex self-center w-full ">
-            <button className="self-center w-full h-10 mt-1 text-sm font-medium text-white mx-36 bg-primary-600 rounded-3xl">
+          <div className="flex items-center justify-center justify-items-center h-14">
+            <Link
+              to="/conOrder"
+              className="flex items-center justify-center w-full h-10 px-8 mt-1 text-sm font-medium text-white mx-96 bg-primary-600 rounded-3xl"
+            >
               返回
-            </button>
-          </Link>
+            </Link>
+          </div>
         </div>
-        <div className="fixed bottom-0 flex w-full mt-6 bg-white border-t h-14 justify-items-center">
+        <div className="fixed flex bg-white top-4 right-60 justify-items-center">
           <button
-            className="self-center w-full h-10 mx-6 mt-1 text-sm font-medium text-white bg-primary-600 rounded-3xl"
+            className="self-center px-10 py-2 text-sm font-medium text-gray-600 rounded-3xl"
             onClick={() => {
               router.push("addStuInfo");
             }}

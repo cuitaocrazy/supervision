@@ -22,10 +22,10 @@ const ECNYPayResult = () => {
   return (
     <IonPage>
       <IonHeader>
-        <Navbar title="支付结果" />
+       
       </IonHeader>
       <IonContent>
-        <div className="relative ">
+        <div className="relative w-1/4 mx-auto">
           <div className="grid justify-center grid-rows-1">
             <div className="mt-20 ">
               {/* <img

@@ -11,21 +11,25 @@ const AddStuInfo = () => {
   return (
     <IonPage>
       <IonHeader>
-        <Navbar title="添加学生信息" />
       </IonHeader>
       <IonContent>
         <form>
-          <div className="mt-2 mb-3 ml-4 mr-3 text-base bg-white pb-15 scroll-auto">
+          <div className="w-3/4 mx-auto mt-2 mb-3 text-base bg-white pb-15 scroll-auto">
+          <div className="flex px-2 py-2 mt-6 text-sm text-gray-400 bg-gray-100">
+          <div className="flex items-center ">
+            <span className="pr-2">添加学生</span>
+          </div>
+          </div>
             <div className="p-2 px-2 pt-4 pb-4 rounded-lg shadow-md">
               <RelationRadio />
-              <div className="grid grid-cols-2 mt-3 justify-items-stretch">
+              <div className="flex items-center justify-center mt-3 justify-items-center">
                 <span className="pr-2 text-gray-400 ">学生姓名:</span>
                 <input
                   className="py-1 pl-2 text-gray-800 border rounded-md focus:outline-none"
                   placeholder="请输入学生姓名"
                 ></input>
               </div>
-              <div className="grid grid-cols-2 mt-3 justify-items-stretch">
+              <div className="flex items-center justify-center mt-3 justify-items-center">
                 <span className="flex pr-2 text-gray-400 ">出生日期:</span>
                 <input
                   className="flex py-1 pl-2 text-gray-800 border rounded-md focus:outline-none"
@@ -33,26 +37,23 @@ const AddStuInfo = () => {
                 ></input>
               </div>
 
-              <div className="grid grid-cols-2 mt-3 justify-items-stretch">
+              <div className="flex items-center justify-center mt-3 justify-items-center">
                 <span className="pr-2 text-gray-400">学生性别:</span>
                 <SexDownList />
               </div>
             </div>
           </div>
-          <div className="fixed bottom-0 flex w-full mt-6 bg-white border-t h-14 justify-items-center">
-            <Link to="stuInfoList">
-              <button
-                className="self-center w-full h-10 mx-6 mt-1 text-sm font-medium text-white bg-gray-400 rounded-3xl text-center"
-                onClick={() => {}}
-              >
+          <div className="flex items-center justify-center w-1/2 mx-auto mt-10 bg-white h-14 justify-items-center">
+            <Link to="stuInfoList" className="flex items-center justify-center w-full h-10 mx-6 mt-1 text-sm font-medium text-center text-white bg-gray-400 rounded-3xl">
+              <div>
                 取消
-              </button>
+              </div>
             </Link>
             <Link
               to="stuInfoList"
-              className="self-center w-full h-10 mx-6 mt-1 text-sm font-medium text-white bg-primary-500 rounded-3xl text-center"
+              className="flex items-center justify-center w-full h-10 mx-6 mt-1 text-sm font-medium text-center text-white bg-primary-500 rounded-3xl"
             >
-              <button onClick={() => {}}>确定</button>
+              <div >确定</div>
             </Link>
           </div>
         </form>

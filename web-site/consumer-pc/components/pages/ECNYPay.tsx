@@ -73,8 +73,13 @@ const ECNYPay = () => {
   return (
     <IonPage>
       <IonContent>
-        <div>
-          <div className="px-4 py-4 mx-2 my-2 text-base leading-7 rounded-md shadow-md">
+        <div className="flex flex-col w-3/4 mx-auto">
+        <div className="flex px-2 py-2 mt-6 text-sm text-gray-400 bg-gray-100">
+          <div className="flex items-center ">
+            <span className="pr-2">订单支付</span>
+          </div>
+        </div>
+          <div className="px-4 py-4 text-base leading-7 shadow-md rounded-b-md">
             <p>
               <span className="pr-3 text-gray-400">订单编号</span>
               <span className="text-gray-800">{contract.contractId}</span>
@@ -106,6 +111,7 @@ const ECNYPay = () => {
             </p>
           </div>
           <div className="grid mt-20 justify-items-stretch">
+            <div className="mb-10 text-2xl font-bold justify-self-center">扫码支付</div>
             <div
               className="justify-self-center"
               onClick={() => {
@@ -116,7 +122,7 @@ const ECNYPay = () => {
               {myQrCode(payUrl)}
               {/* <QRCodeCanvas value={payUrl} size={300}></QRCodeCanvas> */}
             </div>
-            <div className="mt-6 text-center text-red-600">请使用数字人民币APP扫一扫以上二维码进行数币支付</div>
+            <div className="mt-6 text-center text-gray-600">请使用数字人民币APP扫一扫完成付款</div>
           </div>
 
           {/* <div className="flex mt-12 text-base">
@@ -124,7 +130,7 @@ const ECNYPay = () => {
               <input
                 className="w-full h-10 py-2 mx-6 font-bold tracking-widest text-white shadow-md bg-primary-600 rounded-3xl bg-grimary-600 shadow-primary-600 focus:bg-primary-700"
                 type="submit"
-                value="去支付"
+                value="支付完成"
               />
             </Link>
           </div> */}

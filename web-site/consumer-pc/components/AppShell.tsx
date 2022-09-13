@@ -28,6 +28,7 @@ import MyPersonalInfo from "./pages/MyPersonalInfo";
 import ECNYPay from "./pages/ECNYPay";
 import ECNYPayResult from "./pages/ECNYPayResult";
 import StuInfoLIst from "./pages/StuInfoList";
+import AddStuInfo from "./pages/AddStuInfo";
 
 import { AppContextProvider } from "../appState";
 
@@ -79,6 +80,7 @@ const AppShell = () => {
               <Route path="/eCNYPay" render={() => <ECNYPay />} />
               <Route path="/eCNYPayResult" render={() => <ECNYPayResult />} />
               <Route path="/stuInfoLIst" render={() => <StuInfoLIst />} />
+              <Route path="/addStuInfo" render={() => <AddStuInfo />} />
 
               <Route
                 exact={true}

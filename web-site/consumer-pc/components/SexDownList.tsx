@@ -12,7 +12,7 @@ const sex = [
 const SexDownList = () => {
   const [selected, setSelected] = useState(sex[0])
   return (
-    <div className="border rounded-md ">
+    <div className="h-8 border rounded-md w-44">
       <Listbox value={selected} onChange={setSelected} >
         <div className="relative h-8 mt-1">
           <Listbox.Button className="relative w-full py-1 pl-3 pr-10 text-left bg-white rounded-lg shadow-md cursor-default focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
