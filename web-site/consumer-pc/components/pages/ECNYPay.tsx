@@ -116,7 +116,9 @@ const ECNYPay = () => {
               {myQrCode(payUrl)}
               {/* <QRCodeCanvas value={payUrl} size={300}></QRCodeCanvas> */}
             </div>
-            <div className="mt-6 text-center text-red-600">请使用数字人民币APP扫一扫以上二维码进行数币支付</div>
+            <div className="mt-6 text-center text-red-600">
+              请使用数字人民币APP扫一扫以上二维码进行数币支付
+            </div>
           </div>
 
           {/* <div className="flex mt-12 text-base">

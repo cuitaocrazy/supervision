@@ -24,8 +24,8 @@ import * as cc from "./ccClientService/USVClient";
 const port = 3003;
 const jsonParser = bodyParser.json();
 //查询后台是否交易成功的最大次数。
-const QUERYPAYMENTMAX = 6;
-
+const QUERYPAYMENTMAX = 60;
+const decryptServiceUrl = "http://localhost:2999/encrypt?plainText=";
 const appID = "12345";
 
 var emitter = new EventEmitter();
@@ -885,25 +885,39 @@ io.on("connection", function (socket) {
           if (text.indexOf("原交易不存在") > -1) {
             return;
           }
-
           try {
             console.log("-------------");
-            const cdCmd = `cd ${__dirname}/../ `;
-            const javaCmd = `java RSAEncryptByPubk ` + text;
-            const cmd = cdCmd + " && " + javaCmd;
-            exec(cmd, (error, stdout, stderr) => {
-              //todo window会有乱码，解决方法见http://t.zoukankan.com/daysme-p-15795143.html，其他系统应无乱码，因此暂不解决
-              const json = JSON.parse(stdout);
-              //todo 失败暂不考虑
-              console.log("json");
-              if (json.respCode == "000000" && json.oldRespCode == "000000") {
-                updateContractAndSaveTransaction(contractId).then(() => {
-                  socket.emit(contractId + "_pay");
-                  clearInterval(intervalId);
-                  return;
-                });
-              }
+            fetch(decryptServiceUrl + text).then((dncryptRes) => {
+              dncryptRes.text().then((dncryptText) => {
+                console.log(dncryptText);
+                const json = JSON.parse(dncryptText);
+                console.log(json);
+                if (json.respCode == "000000" && json.oldRespCode == "000000") {
+                  updateContractAndSaveTransaction(contractId).then(() => {
+                    socket.emit(contractId + "_pay");
+                    clearInterval(intervalId);
+                    return;
+                  });
+                }
+              });
             });
+            // const cdCmd = `cd ${__dirname}/../ `;
+            // const javaCmd = `java RSAEncryptByPubk ` + text;
+            // const cmd = cdCmd + " && " + javaCmd;
+
+            // exec(cmd, (error, stdout, stderr) => {
+            //   //todo window会有乱码，解决方法见http://t.zoukankan.com/daysme-p-15795143.html，其他系统应无乱码，因此暂不解决
+            //   const json = JSON.parse(stdout);
+            //   //todo 失败暂不考虑
+            //   console.log("json");
+            //   if (json.respCode == "000000" && json.oldRespCode == "000000") {
+            //     updateContractAndSaveTransaction(contractId).then(() => {
+            //       socket.emit(contractId + "_pay");
+            //       clearInterval(intervalId);
+            //       return;
+            //     });
+            //   }
+            // });
           } catch (e) {
             console.log(e);
             clearInterval(intervalId);
@@ -961,6 +975,7 @@ app.post("/consumer/pc/preOrder", jsonParser, async (req, res) => {
       lessonAccumulationQuantity: lesson.lessonAccumulationQuantity,
     };
     await saveContract(newContract);
+    newContract.lessonTotalPrice = fenToYuan(newContract.lessonTotalPrice);
 
     // const bankJson = {
     //   merId: testMerId,
@@ -998,19 +1013,21 @@ app.post("/consumer/pc/preOrder", jsonParser, async (req, res) => {
       serverRes.text().then((text) => {
         console.log(text);
         console.log("-------------");
-        const cdCmd = `cd ${__dirname}/../ `;
-        const javaCmd = `java RSAEncryptByPubk ` + text;
-        const cmd = cdCmd + " && " + javaCmd;
-        exec(cmd, (error, stdout, stderr) => {
-          //todo window会有乱码，解决方法见http://t.zoukankan.com/daysme-p-15795143.html，其他系统应无乱码，因此暂不解决
-          console.log(stdout);
-          const json = JSON.parse(stdout);
-          //todo 失败暂不考虑
-          console.log(json);
-          res.send({
-            status: "success",
-            result: newContract,
-            payUrl: json.qrCode,
+        if (text.indexOf("原交易不存在") > -1) {
+          return;
+        }
+        fetch(decryptServiceUrl + text).then((dncryptRes) => {
+          dncryptRes.text().then((dncryptText) => {
+            console.log(dncryptText);
+            const json = JSON.parse(dncryptText);
+            console.log(json);
+            if (json.qrCode) {
+              res.send({
+                status: "success",
+                result: newContract,
+                payUrl: json.qrCode,
+              });
+            }
           });
         });
       });
@@ -1086,15 +1103,26 @@ const decrypt = (plainText: string, publicKeyStr: string) => {
   }
 };
 
-// 测试交易订单号0000000020220905100905000051;
-// const testCId = "0000000020220905104043000052";
-// const test2aa = "049202209051040440410920067";
+// let testStr =
+//   "Cj2MfGmBwRTpCP8OdaqDS2XErktzdkV9h01SHBxeJIKWPNVqaKcffdPjoUv7JCz/uroG93YY+yidyjC5SlhwBbesw6UIXZu3Ggufewli6nKWBxyUwK7Rc97cBZSfDcEhtGzt3SN/q06ZbK9I2+5phbOrqlugwCrW+Z9J3c6CzaWvMXo1s9ClxyJ60l9XJWq2KS+Nd1apQYFs/J7PoLRCNDdC6dpECWDxfYYIwD5KtgfoeUjMeOV8GUcMWpaz9Wq3+TWkkxZN5ZVPyOHMYWyTcN2IdWUkLioDZuHk36y85JEkjXflECB5c0x0dZMG6AFqXy1pSoaKVpB7e++zxjo48gGzUMAuJ5JVx2P4qyQD/+kNsEdtfxmM9D5AoEVtWZOTHOeDEYw376Iu1AfIJqTDOxaXpXYCC6kHH+NiVtehVOGRneBZaAFMH3MQYPD8AuukgFD8dySIqLaNBembYR2BMKA/3rRlMIq2pzz+ivxPkGcSu2RwOayo1wdB8WjwoASlgOc3zsgSM4UqpbblacVFn3bcwBlo3QNYwksNpUNTUGgsNjL3LlnNDP1fQ6U6aATmd82n4YDhEkj836m+m9UgjzKIg152gY0rbHRR6lDjDCPPuymz4xAvTiagki3NTZGfYwjwoH4AyRIHlz2ARP2rSW25wY89CSZTCD9KSs9mvKgcx01/CRmadjKXhZmZnC392nkBBwlTocAkSL6AsDujGRBx5LPo1h93+YxdQ4+jjAE/W+qjYP+zxcsFBy2Y2HRDIobxBDD1uOm10n3/ZVKujx5yqDL2bACpfYZOXDisuNySpPZPu2Z26SlYphvJI980C5SRiatfUgJep9N6YL+IWgZtESASrwFNbp/FoRq26UUozFv+vXv5NtHtKPBUIISTrkx74253EOLypKHuk4XUS1pszVtyuCt7omtbWa12qyI4V37js6xjTYyZaI0a6Z8EZqXASiHRw1fus4v42V/gEvzic2d/BIW9EEf137fVvADEPp95FmmHT9+9kAJ2lDW3";
+// //  testStr = "";
+// fetch(decryptServiceUrl + testStr).then((dncryptRes) => {
+//   dncryptRes.text().then((dncryptText) => {
+//     console.log(dncryptText);
+//     const json = JSON.parse(dncryptText);
+//     console.log(json);
+//   });
+// });
+
+// // 测试交易订单号0000000020220905100905000051;
+// const testCId = "0000000020220912104043000052";
+// const test2aa = "049202209131040440410920067";
 // const queryInfo = {
 //   merId: testMerId,
 //   termId: testTermId,
 //   tranDate: moment().format("YYYYMMDD"),
 //   tranTime: moment().format("HHmmss"), //104043
-//   merOrderNo: "0000000020220905111705000155", //getContractId("00000000", "000001"),
+//   merOrderNo: "0000000020220905111705000255", //getContractId("00000000", "000001"),
 //   oldMerOrderNo: "0000000020220905144237000059",
 // };
 // console.log(queryInfo);
@@ -1115,21 +1143,29 @@ const decrypt = (plainText: string, publicKeyStr: string) => {
 //       return;
 //     }
 
-//     try {
-//       console.log("-------------");
-//       const cdCmd = `cd ${__dirname}/../ `;
-//       const javaCmd = `java RSAEncryptByPubk ` + text;
-//       const cmd = cdCmd + " && " + javaCmd;
-//       exec(cmd, (error, stdout, stderr) => {
-//         //todo window会有乱码，解决方法见http://t.zoukankan.com/daysme-p-15795143.html，其他系统应无乱码，因此暂不解决
-//         console.log(stdout);
-//         const json = JSON.parse(stdout);
-//         //todo 失败暂不考虑
-//         console.log("json");
+//     fetch(decryptServiceUrl + text).then((dncryptRes) => {
+//       dncryptRes.text().then((dncryptText) => {
+//         console.log(dncryptText);
+//         const json = JSON.parse(dncryptText);
 //         console.log(json);
 //       });
-//     } catch (e) {
-//       console.log(e);
-//     }
+//     });
+
+//     // try {
+//     //   console.log("-------------");
+//     //   const cdCmd = `cd ${__dirname}/../ `;
+//     //   const javaCmd = `java RSAEncryptByPubk ` + text;
+//     //   const cmd = cdCmd + " && " + javaCmd;
+//     //   exec(cmd, (error, stdout, stderr) => {
+//     //     //todo window会有乱码，解决方法见http://t.zoukankan.com/daysme-p-15795143.html，其他系统应无乱码，因此暂不解决
+//     //     console.log(stdout);
+//     //     const json = JSON.parse(stdout);
+//     //     //todo 失败暂不考虑
+//     //     console.log("json");
+//     //     console.log(json);
+//     //   });
+//     // } catch (e) {
+//     //   console.log(e);
+//     // }
 //   });
 // });
