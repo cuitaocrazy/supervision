@@ -75,7 +75,7 @@ const ConOrder = () => {
             </div>
             <div className="grid items-center grid-cols-2 py-3 pl-2 text-base bg-white rounded-lg shadow-md">
               <div className="items-center justify-center font-medium text-gray-700 ">
-                {/* {state.stuName ? state.stuName : "可新增或修改学生信息"} */}
+               
                 {state.stuName ? state.stuName : state.loginUser.username}
               </div>
               <Link to="/stuInfoList" className="pt-3 mr-2 cursor-pointer justify-self-end">
@@ -101,7 +101,7 @@ const ConOrder = () => {
 
             <ConOrderLessCard />
 
-            {/* <div className='flex justify-between gap-4 p-3 mt-2 border rounded-md'>
+            <div className='flex justify-between gap-4 p-3 mt-2 border rounded-md'>
                     <div  className='w-24 p-5 border border-orange-300 rounded-md glow-secondary-400'>
                       <div className='font-semibold text-orange-400'>张小云</div>
                       <div className='pt-1 text-xs text-center text-gray-500'>12周岁</div>
@@ -113,7 +113,7 @@ const ConOrder = () => {
                     <div className='w-24 p-5 border'>
                     <svg className="w-8 h-8 mt-1 ml-3 text-secondary-300"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  strokeWidth="1.5"  strokeLinecap="round"  strokeLinejoin="round">  <circle cx="12" cy="12" r="10" />  <line x1="12" y1="8" x2="12" y2="16" />  <line x1="8" y1="12" x2="16" y2="12" /></svg>
                     </div>
-                  </div> */}
+                  </div>
           </div>
         </div>
 
