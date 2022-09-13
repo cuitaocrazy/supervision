@@ -29,7 +29,7 @@ import ECNYPay from "./pages/ECNYPay";
 import ECNYPayResult from "./pages/ECNYPayResult";
 import StuInfoLIst from "./pages/StuInfoList";
 import AddStuInfo from "./pages/AddStuInfo";
-
+import ContentsOfContracts from "./pages/ContentsOfContracts";
 import { AppContextProvider } from "../appState";
 
 // 装载ionic样式，ionic6 必须执行。
@@ -81,7 +81,7 @@ const AppShell = () => {
               <Route path="/eCNYPayResult" render={() => <ECNYPayResult />} />
               <Route path="/stuInfoLIst" render={() => <StuInfoLIst />} />
               <Route path="/addStuInfo" render={() => <AddStuInfo />} />
-
+              <Route path="/contract" render={() => <ContentsOfContracts />} />
               <Route
                 exact={true}
                 path="/"

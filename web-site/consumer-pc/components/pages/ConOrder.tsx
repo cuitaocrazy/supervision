@@ -167,7 +167,11 @@ const ConOrder = () => {
         <ConOrderLessCard />
 
         {/* 底部菜单 */}
-        <div className="flex w-3/4 mx-auto mt-10 bg-white border-t h-14">
+        <div className="flex  pt-4 w-3/4 mx-auto ">
+            <input type="radio" className="mr-2 mt-1" />
+            <Link to="/contract" className="text-gray-500 hover:text-primary-600 ">同意本教育机构的合同</Link>
+          </div>
+        <div className="flex w-3/4 mx-auto  bg-white border-t h-14 mt-4">
           <div className="self-center justify-around text-xs text-gray-500">
             合计：
           </div>
