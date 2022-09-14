@@ -74,6 +74,46 @@ const ECNYPay = () => {
     <IonPage>
       <IonContent>
         <div className="flex flex-col w-3/4 mx-auto">
+        <div className="flex items-center justify-around gap-10 pt-3 text-xs justify-items-stretch">
+          <div className="flex flex-col justify-start">
+            <div className="text-xl tracking-widest text-gray-900">
+              资金监管平台
+            </div>
+            <div className="text-sm tracking-widest text-gray-400">我的课堂</div>
+          </div>
+          <div className="flex flex-row items-center w-96">
+            {/* <input
+              type="text"
+              className="flex items-center justify-center h-10 pl-2 ml-3 text-sm text-gray-300 border border-gray-400 shadow-lg rounded-l-3xl grow focus:outline-none focus:glow-primary-600"
+              placeholder="请输入机构名称/课程名称/教师姓名关键词"
+              x-model="search"
+              onChange={(e) => setQueryStr(e.target.value)}
+            />
+            <button
+              type="submit"
+              className="flex items-center justify-center flex-none w-20 h-10 mr-3 bg-primary-600 rounded-r-3xl focus:outline-none hover:bg-primary-700 "
+            >
+              <svg
+                className="w-5 h-5 text-white"
+                fill="currentColor"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+              >
+                <path d="M16.32 14.9l5.39 5.4a1 1 0 0 1-1.42 1.4l-5.38-5.38a8 8 0 1 1 1.41-1.41zM10 16a6 6 0 1 0 0-12 6 6 0 0 0 0 12z" />
+              </svg>
+              <span className="pr-2 ml-1 text-sm text-white">搜索</span>
+            </button> */}
+          </div>
+          <div className="flex flex-row justify-end ">
+            {/* <button  className="h-10 px-2 mt-5 mr-3 text-base text-gray-800 rounded-md "
+            onClick={openModal}>
+              登录
+            </button>
+            <button  className="h-10 px-2 mt-5 text-base text-gray-800 rounded-md ">
+              注册
+            </button> */}
+          </div>
+        </div>
         <div className="flex px-2 py-2 mt-6 text-sm text-gray-400 bg-gray-100">
           <div className="flex items-center ">
             <span className="pr-2">订单支付</span>
@@ -113,7 +153,7 @@ const ECNYPay = () => {
           <div className="grid mt-20 justify-items-stretch">
             <div className="mb-10 text-2xl font-bold justify-self-center">扫码支付</div>
             <div
-              className="justify-self-center"
+              className="justify-self-center border-2 border-primary-600 p-2"
               onClick={() => {
                 setPayUrl("");
                 setPageReload(new Date().toUTCString());

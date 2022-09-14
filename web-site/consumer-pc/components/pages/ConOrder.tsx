@@ -94,15 +94,62 @@ const ConOrder = () => {
     <IonPage>
       <IonHeader></IonHeader>
       <IonContent className="flex items-center justify-center justify-items-center scroll-auto">
-        <div className="flex w-3/4 mx-auto mt-6 text-sm text-gray-400">
+      <div className="fixed left-0 right-0 w-3/4 pb-2 mx-auto mt-1 bg-white ">
+        <div className="flex items-center justify-around gap-10 pt-3 text-xs justify-items-stretch">
+          <div className="flex flex-col justify-start">
+            <div className="text-xl tracking-widest text-gray-900">
+              资金监管平台
+            </div>
+            <div className="text-sm tracking-widest text-gray-400">我的课堂</div>
+          </div>
+          <div className="flex flex-row items-center w-96">
+            {/* <input
+              type="text"
+              className="flex items-center justify-center h-10 pl-2 ml-3 text-sm text-gray-300 border border-gray-400 shadow-lg rounded-l-3xl grow focus:outline-none focus:glow-primary-600"
+              placeholder="请输入机构名称/课程名称/教师姓名关键词"
+              x-model="search"
+              onChange={(e) => setQueryStr(e.target.value)}
+            />
+            <button
+              type="submit"
+              className="flex items-center justify-center flex-none w-20 h-10 mr-3 bg-primary-600 rounded-r-3xl focus:outline-none hover:bg-primary-700 "
+            >
+              <svg
+                className="w-5 h-5 text-white"
+                fill="currentColor"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+              >
+                <path d="M16.32 14.9l5.39 5.4a1 1 0 0 1-1.42 1.4l-5.38-5.38a8 8 0 1 1 1.41-1.41zM10 16a6 6 0 1 0 0-12 6 6 0 0 0 0 12z" />
+              </svg>
+              <span className="pr-2 ml-1 text-sm text-white">搜索</span>
+            </button> */}
+          </div>
+          <div className="flex flex-row justify-end ">
+            {/* <button  className="h-10 px-2 mt-5 mr-3 text-base text-gray-800 rounded-md "
+            onClick={openModal}>
+              登录
+            </button>
+            <button  className="h-10 px-2 mt-5 text-base text-gray-800 rounded-md ">
+              注册
+            </button> */}
+          </div>
+        </div>
+      </div>
+        <div className="flex w-3/4 mx-auto mt-20 text-sm text-gray-400 py-2 px-2 bg-gray-100">
           <div className="flex items-center ">
             <span className="pr-2">确认订单</span>
             <span className="pr-2">/</span>
             <span className="pr-2">人员选择</span>
           </div>
         </div>
+        {/* <div className="flex w-3/4 mx-auto text-sm text-gray-400 mt-28 bg-gray-100 py-2 px-2">
+        <div className="flex items-center ">
+          <span className="pr-2">首页</span> <span className="pr-2">/</span><span className="pr-2">搜索结果</span><span className="pr-2">/</span><span>课程详情</span>
+        </div>
+      </div> */}
         {/* <div className="mb-3 bg-white pb-14 scroll-auto"> */}
-        <div className="flex w-3/4 gap-4 p-3 mx-auto mt-2 rounded-md">
+        <div className="flex w-3/4 gap-4 py-3 mx-auto mt-2 rounded-md">
           <div className="flex flex-row items-center justify-center p-5 border rounded-md shadow-lg w-44">
             <input type="checkbox" className="mr-4 border-2" defaultChecked />
             <div className="font-semibold text-gray-600">
