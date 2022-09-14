@@ -105,5 +105,17 @@ services:
       - 80:80
     networks:
       - supervision_demo
+  # java 加解密通信
+  supervision_demo_encrypt:
+    image: maven:3.8.6-openjdk-18
+    container_name: supervision_demo_encrypt
+    command: /root/run_java.sh
+    volumes:
+      - ../encryptByPubk:/root/app/
+      - ./run_java.sh:/root/run_java.sh
+    ports:
+      - 2999:2999
+    networks:
+      - supervision_demo
 
     
