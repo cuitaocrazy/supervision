@@ -85,7 +85,7 @@ const SearchLessonDetail= (props:LessonProps) => {
       </div> */}
 
 
-      <div className="flex w-3/4 mx-auto text-sm text-gray-400 mt-28 bg-gray-100 py-2 px-2">
+      <div className="flex w-3/4 mx-auto text-sm text-gray-400 mt-24 bg-gray-100 py-2 px-2">
         <div className="flex items-center ">
           <span className="pr-2">首页</span> <span className="pr-2">/</span><span className="pr-2">搜索结果</span><span className="pr-2">/</span><span>课程详情</span>
         </div>

@@ -1,9 +1,13 @@
-import React from "react";
+import React,{useEffect,useState,useContext} from "react";
 import { IonPage, IonHeader, IonContent } from "@ionic/react";
 import { motion } from "framer-motion";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Link } from "react-router-dom";
 import Navbar from "../Navbar";
+import Search from '../Search'
+import {searchLessonURL} from '../../const/const'
+import { Lesson } from '../../types/types'
+import { AppContext } from "../../appState";
 
 type FormData = {
   name: string;
@@ -19,14 +23,46 @@ const ECNYPayResult = () => {
   const onSubmit: SubmitHandler<FormData> = (data: FormData) => {
     // router.push('/searchLessonList')
   };
+  const { state, dispatch } = useContext(AppContext);
+  const [lessonList,setLessonList] = useState([] as Lesson[])
+  const onQuery = ()=>{
+    fetch(paramStr, {
+      method: 'GET',
+      headers: {
+        'Content-type': 'application/json;charset=UTF-8',
+      },
+    }).then(res => res.json())
+    .then((json) => {
+      setLessonList(json.result)  
+    })
+  }
+  useEffect(onQuery,[])
+  
+  const [queryStr,setQueryStr] = useState('')
+  const [page,setPage] = useState(0)
+  const getParamStr = (params: any, url: string) => {
+    let result = '?';
+    Object.keys(params).forEach(key => (result = result + key + '=' + params[key] + '&'));
+    return url + result;
+  };
+  const paramStr = getParamStr(
+    {
+      queryStr: queryStr,
+      page:page,
+      size:10
+    },
+    searchLessonURL
+  );
+
   return (
     <IonPage>
       <IonHeader>
        
       </IonHeader>
       <IonContent>
-        <div className="relative w-1/4 mx-auto">
-          <div className="grid justify-center grid-rows-1">
+        <div className="relative w-3/4 mx-auto">
+        <Search username={state.loginUser.username} setQueryStr={setQueryStr} onQuery={onQuery} />
+          <div className="grid justify-center grid-rows-1 mt-36">
             <div className="mt-20 ">
               {/* <img
                 className="w-48 h-32 rounded-lg"
@@ -53,7 +89,7 @@ const ECNYPayResult = () => {
             </div>
           </div>
 
-          <div className="flex mt-12 text-base">
+          <div className="flex mt-12 text-base w-1/4 mx-auto">
             <Link to="/home" className="flex w-full h-10 py-2">
               <input
                 className="w-full h-10 py-2 mx-6 font-bold tracking-widest text-white shadow-md bg-primary-600 rounded-3xl bg-grimary-600 shadow-primary-600 focus:bg-primary-700"
