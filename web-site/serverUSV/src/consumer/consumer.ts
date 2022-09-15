@@ -193,9 +193,9 @@ export const getNextSeq = async () => {
     .select("count(*) countResult")
     .getRawOne();
   console.log(result);
-  const padZeroResult = String(result.countResult).padStart(3, "0");
+  const padZeroResult = String(result.countResult).padStart(6, "0");
   return padZeroResult.substring(
-    padZeroResult.length - 3,
+    padZeroResult.length - 6,
     padZeroResult.length
   );
 };

@@ -5,12 +5,15 @@ import { SubscribeWithSign } from "./API";
 import { sign } from "jws";
 import * as cors from "cors";
 import { EventEmitter } from "events";
-
+const forge = require("node-forge");
+const NodeRSA = require("node-rsa");
 const app = express();
 app.use(cors());
 app.use(express.static("out"));
 import * as cc from "./ccClientService/USVClient";
-
+//查询后台是否交易成功的最大次数。
+const QUERYPAYMENTMAX = 60;
+const decryptServiceUrl = "http://localhost:2999/encrypt?plainText=";
 const port = 3003;
 const jsonParser = bodyParser.json();
 
@@ -1161,3 +1164,276 @@ app.get("/edu/teacher/findAll", async (req, res) => {
   const r = await edbTeacherService.findAll();
   res.send(r);
 });
+
+//轮询队列
+
+const remotePath = "http://47.94.12.189:80/zj/test/";
+
+const remotePayPath =
+  "http://47.94.12.189:80/zj/test/rsaPositiveTran/applyDzzfQrCode/";
+const remoteQueryPath =
+  "http://47.94.12.189:80/zj/test/rsaPositiveTran/paymentQuery/";
+const testMerId = "000000000000000";
+const testTermId = "00000000";
+
+const updateContractAndSaveTransaction = async (contractId) => {
+  const contract = await findOneContract({
+    contractId: contractId,
+  });
+  contract.contractStatus = "valid";
+  saveContract(contract);
+  const edu = await findOneEdu({ eduId: contract.eduId });
+  const newTransaction = {
+    transactionId: getTransactionId(),
+    contractId: contract.contractId,
+    transactionAmt: contract.lessonTotalPrice,
+    tranType: "buycard",
+    tranDate: contract.contractDate,
+    tranTime: contract.contractTime,
+    eduSupervisedAccount: edu.eduSupervisedAccount,
+  };
+  await saveTransaction(newTransaction);
+};
+
+io.on("connection", function (socket) {
+  // socket相关
+  console.log("somebody connection");
+  socket.emit("open");
+
+  socket.on("pcPay", async function (contractId) {
+    var count = 0;
+    const intervalId = setInterval(() => {
+      console.log("pcPay");
+      console.log(contractId);
+      if (count > QUERYPAYMENTMAX) {
+        console.log("clear Interval");
+        clearInterval(intervalId);
+        return;
+      }
+      count++;
+      // socket.emit(contractId+'_pay')
+      const queryInfo = {
+        merId: testMerId,
+        termId: testTermId,
+        tranDate: moment().format("YYYYMMDD"),
+        tranTime: moment().format("HHmmss"),
+        merOrderNo: getContractId(testTermId, "000000"),
+        oldMerOrderNo: contractId,
+      };
+      const plainText = encrypt(JSON.stringify(queryInfo), newPublicKey);
+      fetch(remoteQueryPath + testMerId, {
+        method: "POST",
+        body: plainText,
+        headers: {
+          MerchantId: testMerId,
+        },
+      }).then((serverRes) => {
+        serverRes.text().then((text) => {
+          if (text.indexOf("原交易不存在") > -1) {
+            return;
+          }
+          try {
+            console.log("-------------");
+            fetch(decryptServiceUrl + text).then((dncryptRes) => {
+              dncryptRes.text().then((dncryptText) => {
+                console.log(dncryptText);
+                const json = JSON.parse(dncryptText);
+                console.log(json);
+                if (json.respCode == "000000" && json.oldRespCode == "000000") {
+                  updateContractAndSaveTransaction(contractId).then(() => {
+                    socket.emit(contractId + "_pay");
+                    clearInterval(intervalId);
+                    return;
+                  });
+                }
+              });
+            });
+            // const cdCmd = `cd ${__dirname}/../ `;
+            // const javaCmd = `java RSAEncryptByPubk ` + text;
+            // const cmd = cdCmd + " && " + javaCmd;
+
+            // exec(cmd, (error, stdout, stderr) => {
+            //   //todo window会有乱码，解决方法见http://t.zoukankan.com/daysme-p-15795143.html，其他系统应无乱码，因此暂不解决
+            //   const json = JSON.parse(stdout);
+            //   //todo 失败暂不考虑
+            //   console.log("json");
+            //   if (json.respCode == "000000" && json.oldRespCode == "000000") {
+            //     updateContractAndSaveTransaction(contractId).then(() => {
+            //       socket.emit(contractId + "_pay");
+            //       clearInterval(intervalId);
+            //       return;
+            //     });
+            //   }
+            // });
+          } catch (e) {
+            console.log(e);
+            clearInterval(intervalId);
+          }
+        });
+      });
+    }, 10000);
+  });
+});
+
+const newPublicKey =
+  "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC0FT/LTwXOx1GIwDcOjn8C7pL2Gjv5xhr7PXdEyzyoakiGNc4ed1njQiw/crOziAQpFLZEZfZ9yPi/9/EFQtnexPzqWynYr0Vga0caNVVHqxA7Eivyphv6Tq8H69ecd7umI+8CM9qvsxC/+4Podf3Xnvi5N0ux992ZJKv18RDB0wIDAQAB";
+const qianzhui = "-----BEGIN PUBLIC KEY-----\n";
+const houzhui = "\n-----END PUBLIC KEY-----";
+
+app.post("/consumer/pc/preOrder", jsonParser, async (req, res) => {
+  //todo
+  const { userId, username } = await getUserInfoByToken();
+  const { lessonId, studentName } = req.body;
+
+  try {
+    const lesson = await findOneLesson({ lessonId: lessonId });
+    const edu = await findOneEdu({ eduId: lesson.eduId });
+    const teacher = await findOneTeacher({ teacherId: lesson.teacherId });
+    const seq = await getNextSeq();
+    //todo 合同状态
+    //todo 测试方便终端号写死为00000000
+    const newContract = {
+      contractId: getContractId(testTermId, seq),
+      contractDate: moment().format("YYYYMMDD"),
+      contractTime: moment().format("HHmmss"),
+      contractStatus: "wait",
+      eduId: lesson.eduId,
+      eduName: edu.eduName,
+      lessonId: lessonId,
+      lessonName: lesson.lessonName,
+      lessonType: lesson.lessonType,
+      lessonIntroduce: lesson.lessonIntroduce,
+      lessonOutline: lesson.lessonOutline,
+      lessonStartDate: lesson.lessonStartDate,
+      lessonStartTime: lesson.lessonStartTime,
+      lessonEndDate: lesson.lessonEndDate,
+      lessonEndTime: lesson.lessonEndTime,
+      // lessonAttendanceType:lesson.lessonAttendanceType,
+      lessonTotalQuantity: lesson.lessonTotalQuantity,
+      lessonTotalPrice: lesson.lessonTotalPrice,
+      lessonAttendanceType: "manual",
+      lessonPerPrice: lesson.lessonPerPrice,
+      teacherId: lesson.teacherId,
+      teacherName: teacher.teacherName,
+      consumerId: userId,
+      consumerName: username,
+      consumerStuName: studentName,
+      orderNo: "",
+      lessonAccumulationQuantity: lesson.lessonAccumulationQuantity,
+    };
+    await saveContract(newContract);
+    newContract.lessonTotalPrice = fenToYuan(newContract.lessonTotalPrice);
+
+
+    //todo 由于测试交易会产生真实扣款，所以金额设定为1分
+    //todo 中文会有问题
+    const bankJson = {
+      merId: "000000000000000",
+      termId: "00000000",
+      tranDate: newContract.contractDate,
+      tranTime: newContract.contractTime,
+      merOrderNo: newContract.contractId,
+      tranAmt: 1,
+      ccyCode: 156,
+      orderDesc: "lessonName",
+    };
+
+    console.log(bankJson);
+    const plainText = encrypt(JSON.stringify(bankJson), newPublicKey);
+    fetch(remotePayPath + testMerId, {
+      method: "POST",
+      body: plainText,
+      headers: {
+        MerchantId: testMerId,
+      },
+    }).then((serverRes) => {
+      serverRes.text().then((text) => {
+        console.log(text);
+        console.log("-------------");
+        if (text.indexOf("原交易不存在") > -1) {
+          return;
+        }
+        fetch(decryptServiceUrl + text).then((dncryptRes) => {
+          dncryptRes.text().then((dncryptText) => {
+            console.log(dncryptText);
+            const json = JSON.parse(dncryptText);
+            console.log(json);
+            if (json.qrCode) {
+              res.send({
+                status: "success",
+                result: newContract,
+                payUrl: json.qrCode,
+              });
+            }
+          });
+        });
+      });
+    });
+
+  } catch (e) {
+    res.send({ status: "fail", result: "未知异常" });
+  }
+});
+
+const encrypt = (plainText: string, publicKeyStr: string) => {
+  const publicK = forge.pki.publicKeyFromPem(qianzhui + publicKeyStr + houzhui);
+
+  const data = Buffer.from(plainText, "utf8");
+  const inputLen = data.length;
+  let offSet = 0;
+  let cache;
+  let resultArray = [];
+
+  let i = 0;
+  while (inputLen - offSet > 0) {
+    if (inputLen - offSet > 117) {
+      let tempBuffer = Buffer.alloc(117);
+      data.copy(tempBuffer, 0, offSet, offSet + 117);
+      const cacheStr = publicK.encrypt(tempBuffer, "RSAES-PKCS1-V1_5");
+      cache = Buffer.from(cacheStr, "binary");
+    } else {
+      let tempBuffer = Buffer.alloc(inputLen - offSet);
+      data.copy(tempBuffer, 0, offSet, inputLen);
+      const cacheStr = publicK.encrypt(tempBuffer, "RSAES-PKCS1-V1_5");
+      cache = Buffer.from(cacheStr, "binary");
+    }
+    console.log(cache.length);
+    console.log(cache);
+    resultArray.push(cache);
+
+    i++;
+    offSet = i * 117;
+  }
+  const result = Buffer.concat(resultArray);
+  return result.toString("base64");
+};
+
+const decrypt = (plainText: string, publicKeyStr: string) => {
+  const publicK = forge.pki.publicKeyFromPem(qianzhui + publicKeyStr + houzhui);
+
+  const data = Buffer.from(plainText, "base64");
+  console.log(data);
+  const inputLen = data.length;
+  let offSet = 0;
+  let cache;
+  let resultArray = [];
+  let i = 0;
+  while (inputLen - offSet > 0) {
+    if (inputLen - offSet > 128) {
+      let tempBuffer = Buffer.alloc(117);
+      data.copy(tempBuffer, 0, offSet, offSet + 117);
+      const cacheStr = publicK.decrypt(tempBuffer, "RSAES-PKCS1-V1_5");
+      cache = Buffer.from(cacheStr, "binary");
+      // cache = cipher.doFinal(encryptedData, offSet, 128);
+    } else {
+      let tempBuffer = Buffer.alloc(117);
+      data.copy(tempBuffer, 0, offSet, offSet + 117);
+      const cacheStr = publicK.decrypt(tempBuffer, "RSAES-PKCS1-V1_5");
+      cache = Buffer.from(cacheStr, "binary");
+    }
+    resultArray.push(cache);
+    i++;
+    offSet = i * 117;
+  }
+};
+
