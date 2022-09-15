@@ -1,1 +1,13 @@
 .DS_Store
+.cache
+.npm
+package-lock.json
+.node_modules
+node_modules
+.next
+.vscode
+package-lock.json
+.idea
+.mvn
+encryptByPubk/target
+web-site/encryptByPubk/target/*
