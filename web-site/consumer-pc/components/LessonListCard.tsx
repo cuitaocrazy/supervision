@@ -9,6 +9,7 @@ interface LessonListCardProps {
   lesson_introduce?: string;
   edu_address?: string;
   item?: Lesson;
+  username?:string;
 }
 // 首页课程列表card组件
 const LessonListCard: FC<LessonListCardProps> = (props) => {
@@ -48,12 +49,16 @@ const LessonListCard: FC<LessonListCardProps> = (props) => {
               <p className="text-xs font-bold text-gray-900 truncate cursor-pointer ">
                 {props.item?.lessonName}
               </p>
+              <p className="text-xs text-gray-400 truncate">
+                {props.username}
+              </p>
               <p className="text-xs text-gray-400 truncate ">
                 {props.item?.lessonIntroduce}
               </p>
               <p className="text-xs text-gray-400 truncate">
                 {props.item?.edu?.eduAddress}
               </p>
+              
             </div>
           </div>
         </div>

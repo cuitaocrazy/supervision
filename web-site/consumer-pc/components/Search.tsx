@@ -102,8 +102,8 @@ const Search: FC<searchProps> = (props) => {
 
   return (
     <div>
-      <form onSubmit={onSubmit} className="pt-3 ">
-        <div className="fixed left-0 right-0 w-3/4 pb-2 mx-auto mt-1 bg-white ">
+      <form onSubmit={onSubmit} className="pb-4">
+        <div className="fixed left-0 right-0 w-3/4 pb-2 mx-auto bg-white pt-4">
           <div className="flex items-center justify-around gap-10 pt-3 text-xs justify-items-stretch">
             <div className="flex flex-col justify-start">
               <div className="text-xl tracking-widest text-gray-900">
@@ -134,15 +134,15 @@ const Search: FC<searchProps> = (props) => {
                 <span className="pr-2 ml-1 text-sm text-white">搜索</span>
               </button>
             </div>
-            <div className="flex flex-row justify-end ">
-              <button className="h-10 px-2 mt-5 mr-3 text-base text-gray-800 rounded-md " hidden={username != null}
+            <div className="flex flex-row justify-end items-center text-white">
+              <button className="h-10  mr-3 text-base   rounded-md  px-4 py-2 bg-primary-600 focus:bg-primary-800 hover:bg-primary-700" hidden={username != null}
                 onClick={openModal}>
                 登录
               </button>
-              <button className="h-10 px-2 mt-5 text-base text-gray-800 rounded-md " hidden={username != null}>
+              <button className="h-10 px-4 py-2  text-base  rounded-md bg-primary-600 focus:bg-primary-800 hover:bg-primary-700" hidden={username != null}>
                 注册
               </button>
-              <button className="h-10 px-2 mt-5 mr-3 text-base text-gray-800 rounded-md" hidden={username == null}
+              <button className="h-10 px-4 py-2  mr-3 text-base  rounded-md bg-primary-600focus:bg-primary-800 hover:bg-primary-700 " hidden={username == null}
                 onClick={logout}>
                 退出
               </button>
