@@ -17,7 +17,6 @@ const Home = () => {
   let lesson: Lesson = { lessonImgs: "https://s3.bmp.ovh/imgs/2022/09/07/10c800bced69deb7.png" }
   // let lesson: Lesson = { lessonImgs: "../../img/shuffling_1.png" }
   // 课程列表数据
-
   const [lessonList, setLessonList] = useState([] as Lesson[])
   const [page, setPage] = useState(0)
   const onQuery = () => {
@@ -75,7 +74,7 @@ const Home = () => {
     <IonContent>
       <div className='relative '>
         <div className='bg-white'>
-          <Search setQueryStr={setQueryStr} onQuery={onQuery} />
+          <Search username={state.loginUser.username} setQueryStr={setQueryStr} onQuery={onQuery} />
           <LessonImages lessonImages={lesson.lessonImgs} />
           <FeaturedRecommendAndMore />
 

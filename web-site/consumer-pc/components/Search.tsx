@@ -7,6 +7,7 @@ import { AppContext, setloginUser } from "../appState";
 interface searchProps {
   setQueryStr: Function;
   onQuery: Function;
+  username:string;
 }
 {
   /* 搜索框 */
@@ -135,14 +136,14 @@ const Search: FC<searchProps> = (props) => {
               </button>
             </div>
             <div className="flex flex-row justify-end items-center text-white">
-              <button className="h-10  mr-3 text-base   rounded-md  px-4 py-2 bg-primary-600 focus:bg-primary-800 hover:bg-primary-700" hidden={username != null}
+              <button className="h-10  mr-3 text-base   rounded-md  px-4 py-2 bg-primary-600 focus:bg-primary-800 hover:bg-primary-700" hidden={props.username != null}
                 onClick={openModal}>
                 登录
               </button>
-              <button className="h-10 px-4 py-2  text-base  rounded-md bg-primary-600 focus:bg-primary-800 hover:bg-primary-700" hidden={username != null}>
+              <button className="h-10 px-4 py-2  text-base  rounded-md bg-primary-600 focus:bg-primary-800 hover:bg-primary-700" hidden={props.username != null}>
                 注册
               </button>
-              <button className="h-10 px-4 py-2  mr-3 text-base  rounded-md bg-primary-600 focus:bg-primary-800 hover:bg-primary-700 " hidden={username == null}
+              <button className="h-10 px-4 py-2  mr-3 text-base  rounded-md bg-primary-600 focus:bg-primary-800 hover:bg-primary-700 " hidden={props.username == null}
                 onClick={logout}>
                 退出
               </button>
