@@ -7,8 +7,6 @@ import {
 import { StatusBar, Style } from "@capacitor/status-bar";
 import { IonReactRouter } from "@ionic/react-router";
 import { Route, Redirect } from "react-router-dom";
-import Menu from "./pages/Menu";
-import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Home from "./pages/Home";
 
@@ -41,7 +39,7 @@ window
       await StatusBar.setStyle({
         style: status.matches ? Style.Dark : Style.Light,
       });
-    } catch {}
+    } catch { }
   });
 
 const AppShell = () => {
@@ -56,7 +54,6 @@ const AppShell = () => {
             className="rounded-tl-xl rounded-tr-xl"
           >
             <IonRouterOutlet id="main">
-              <Route path="/login" render={() => <Login />} />
               <Route path="/register" render={() => <Register />} />
               <Route path="/home" render={() => <Home />} />
 

@@ -1,10 +1,8 @@
-import { FC,useState,Fragment,useCallback,useContext } from "react";
-import { Link } from "react-router-dom";
+import { FC, useState, Fragment, useCallback, useContext } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { loginURL } from "../const/const";
 import { AppContext, setloginUser } from "../appState";
-import { Redirect } from "react-router-dom";
 
 interface searchProps {
   setQueryStr: Function;
@@ -86,153 +84,165 @@ const Search: FC<searchProps> = (props) => {
             username: json.result.username,
             userId: json.result.userId,
           });
+          closeModal()
         });
     }
   };
-  if (username) {
-    return <Redirect to={"/home"} />;
+
+  function logout() {
+    refreshLoginUser({//登录用户信息
+      userId: null,
+      loginName: null,
+      username: null,
+      phone: null,
+      role: null
+    });
+    setUserName(undefined)
   }
 
   return (
-    
     <div>
-    <form onSubmit={onSubmit} className="pt-3 ">
-      <div className="fixed left-0 right-0 w-3/4 pb-2 mx-auto mt-1 bg-white ">
-        <div className="flex items-center justify-around gap-10 pt-3 text-xs justify-items-stretch">
-          <div className="flex flex-col justify-start">
-            <div className="text-xl tracking-widest text-gray-900">
-              资金监管平台
+      <form onSubmit={onSubmit} className="pt-3 ">
+        <div className="fixed left-0 right-0 w-3/4 pb-2 mx-auto mt-1 bg-white ">
+          <div className="flex items-center justify-around gap-10 pt-3 text-xs justify-items-stretch">
+            <div className="flex flex-col justify-start">
+              <div className="text-xl tracking-widest text-gray-900">
+                资金监管平台
+              </div>
+              <div className="text-sm tracking-widest text-gray-400">我的课堂</div>
             </div>
-            <div className="text-sm tracking-widest text-gray-400">我的课堂</div>
-          </div>
-          <div className="flex flex-row items-center w-96">
-            <input
-              type="text"
-              className="flex items-center justify-center h-10 pl-2 ml-3 text-sm text-gray-300 border border-gray-400 shadow-lg rounded-l-3xl grow focus:outline-none focus:glow-primary-600"
-              placeholder="请输入机构名称/课程名称/教师姓名关键词"
-              x-model="search"
-              onChange={(e) => setQueryStr(e.target.value)}
-            />
-            <button
-              type="submit"
-              className="flex items-center justify-center flex-none w-20 h-10 mr-3 bg-primary-600 rounded-r-3xl focus:outline-none hover:bg-primary-700 "
-            >
-              <svg
-                className="w-5 h-5 text-white"
-                fill="currentColor"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
+            <div className="flex flex-row items-center w-96">
+              <input
+                type="text"
+                className="flex items-center justify-center h-10 pl-2 ml-3 text-sm text-gray-300 border border-gray-400 shadow-lg rounded-l-3xl grow focus:outline-none focus:glow-primary-600"
+                placeholder="请输入机构名称/课程名称/教师姓名关键词"
+                x-model="search"
+                onChange={(e) => setQueryStr(e.target.value)}
+              />
+              <button
+                type="submit"
+                className="flex items-center justify-center flex-none w-20 h-10 mr-3 bg-primary-600 rounded-r-3xl focus:outline-none hover:bg-primary-700 "
               >
-                <path d="M16.32 14.9l5.39 5.4a1 1 0 0 1-1.42 1.4l-5.38-5.38a8 8 0 1 1 1.41-1.41zM10 16a6 6 0 1 0 0-12 6 6 0 0 0 0 12z" />
-              </svg>
-              <span className="pr-2 ml-1 text-sm text-white">搜索</span>
-            </button>
-          </div>
-          <div className="flex flex-row justify-end ">
-            <button  className="h-10 px-2 mt-5 mr-3 text-base text-gray-800 rounded-md "
-            onClick={openModal}>
-              登录
-            </button>
-            <button  className="h-10 px-2 mt-5 text-base text-gray-800 rounded-md ">
-              注册
-            </button>
+                <svg
+                  className="w-5 h-5 text-white"
+                  fill="currentColor"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M16.32 14.9l5.39 5.4a1 1 0 0 1-1.42 1.4l-5.38-5.38a8 8 0 1 1 1.41-1.41zM10 16a6 6 0 1 0 0-12 6 6 0 0 0 0 12z" />
+                </svg>
+                <span className="pr-2 ml-1 text-sm text-white">搜索</span>
+              </button>
+            </div>
+            <div className="flex flex-row justify-end ">
+              <button className="h-10 px-2 mt-5 mr-3 text-base text-gray-800 rounded-md " hidden={username != null}
+                onClick={openModal}>
+                登录
+              </button>
+              <button className="h-10 px-2 mt-5 text-base text-gray-800 rounded-md " hidden={username != null}>
+                注册
+              </button>
+              <button className="h-10 px-2 mt-5 mr-3 text-base text-gray-800 rounded-md" hidden={username == null}
+                onClick={logout}>
+                退出
+              </button>
+            </div>
           </div>
         </div>
-      </div>
-    </form>
-    {/* 新增课程模态框 */}
-    <Transition appear show={isOpen} as={Fragment}>
-          <Dialog as="div" className="relative z-10" onClose={closeModal}>
-            <Transition.Child
-              as={Fragment}
-              enter="ease-out duration-300"
-              enterFrom="opacity-0"
-              enterTo="opacity-100"
-              leave="ease-in duration-200"
-              leaveFrom="opacity-100"
-              leaveTo="opacity-0"
-            >
-              <div className="fixed inset-0 bg-black bg-opacity-25" />
-            </Transition.Child>
+      </form >
+      {/* 新增课程模态框 */}
+      < Transition appear show={isOpen} as={Fragment}>
+        <Dialog as="div" className="relative z-10" onClose={closeModal}>
+          <Transition.Child
+            as={Fragment}
+            enter="ease-out duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="ease-in duration-200"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <div className="fixed inset-0 bg-black bg-opacity-25" />
+          </Transition.Child>
 
-            <div className="fixed inset-0 overflow-y-auto">
-              <div className="flex items-center justify-center min-h-full p-4 text-center">
-                <Transition.Child
-                  as={Fragment}
-                  enter="ease-out duration-300"
-                  enterFrom="opacity-0 scale-95"
-                  enterTo="opacity-100 scale-100"
-                  leave="ease-in duration-200"
-                  leaveFrom="opacity-100 scale-100"
-                  leaveTo="opacity-0 scale-95"
-                >
-                  <Dialog.Panel className="w-full max-w-md p-4 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
-                    <Dialog.Title
-                      as="h3"
-                      className="text-lg font-medium leading-6 text-center text-gray-900"
-                    >
-                      账号登录
-                      <hr className="mt-2 mb-4" />
-                    </Dialog.Title>
-                    <form id="2" onSubmit={handleSubmitPwd(onSubmitLogin("account"))}
-                      className="flex flex-col items-center rounded-lg justify-items-center"
-                    >
-                      <div className="flex items-center mb-4 justify-items-center">
-                        <div className="flex leading-7 justify-items-center">
-                          <div className="flex justify-end p-1 w-36">
-                            用户名:
-                          </div>
-                          <input
-                            className="w-64 p-1 text-gray-600 bg-gray-100 border rounded-md justify-self-start focus:outline-none"
-                            {...registerPwd("username", { required: true })}
-                // className="inline w-full border-b focus:outline-none"
-                onChange={(e) => {
-                  console.log(e.target.value);
-                }}
-                placeholder="请输入账号"
-                           
-                          ></input>
+          <div className="fixed inset-0 overflow-y-auto">
+            <div className="flex items-center justify-center min-h-full p-4 text-center">
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0 scale-95"
+                enterTo="opacity-100 scale-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100 scale-100"
+                leaveTo="opacity-0 scale-95"
+              >
+                <Dialog.Panel className="w-full max-w-md p-4 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
+                  <Dialog.Title
+                    as="h3"
+                    className="text-lg font-medium leading-6 text-center text-gray-900"
+                  >
+                    账号登录
+                    <hr className="mt-2 mb-4" />
+                  </Dialog.Title>
+                  <form id="2" onSubmit={handleSubmitPwd(onSubmitLogin("account"))}
+                    className="flex flex-col items-center rounded-lg justify-items-center"
+                  >
+                    <div className="flex items-center mb-4 justify-items-center">
+                      <div className="flex leading-7 justify-items-center">
+                        <div className="flex justify-end p-1 w-36">
+                          用户名:
                         </div>
-                      </div>
+                        <input
+                          className="w-64 p-1 text-gray-600 bg-gray-100 border rounded-md justify-self-start focus:outline-none"
+                          {...registerPwd("username", { required: true })}
+                          // className="inline w-full border-b focus:outline-none"
+                          onChange={(e) => {
+                            console.log(e.target.value);
+                          }}
+                          placeholder="请输入账号"
 
-                      <div className="flex items-center mb-4 justify-items-center">
-                        <div className="flex justify-items-center">
-                          <span className="flex justify-end p-1 mr-1 w-36">
-                            密码:
-                          </span>
-                          <input
-                            className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
-                            type="password"
-                {...registerPwd("password", { required: true })}
-                // className="inline w-full py-1 border-b focus:outline-none"
-                placeholder="请输入密码"
-                          ></input>
-                        </div>
+                        ></input>
                       </div>
-                     
-                    
-                      <div className="flex items-center gap-4 mt-2 justify-items-center">
+                    </div>
+
+                    <div className="flex items-center mb-4 justify-items-center">
+                      <div className="flex justify-items-center">
+                        <span className="flex justify-end p-1 mr-1 w-36">
+                          密码:
+                        </span>
                         <input
-                          value="取消"
-                          type="button"
-                          className="px-6 py-2 border rounded-md "
-                          onClick={closeModal}
-                        />
-                        <input
-                          value="确定"
-                          type="submit"
-                          className="px-6 py-2 text-white border rounded-md bg-primary-600"
-                        />
+                          className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
+                          type="password"
+                          {...registerPwd("password", { required: true })}
+                          // className="inline w-full py-1 border-b focus:outline-none"
+                          placeholder="请输入密码"
+                        ></input>
                       </div>
-                    </form>
-                  </Dialog.Panel>
-                </Transition.Child>
-              </div>
+                    </div>
+
+
+                    <div className="flex items-center gap-4 mt-2 justify-items-center">
+                      <input
+                        value="取消"
+                        type="button"
+                        className="px-6 py-2 border rounded-md "
+                        onClick={closeModal}
+                      />
+                      <input
+                        value="确定"
+                        type="submit"
+                        className="px-6 py-2 text-white border rounded-md bg-primary-600"
+                      />
+                    </div>
+                  </form>
+                </Dialog.Panel>
+              </Transition.Child>
             </div>
-            
-          </Dialog>
-        </Transition>
-    </div>
+          </div>
+
+        </Dialog>
+      </Transition >
+    </div >
   );
 };
 
