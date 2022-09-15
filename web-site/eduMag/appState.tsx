@@ -12,7 +12,7 @@ import {
   Announcement,
   Complaint,
   ContractNego,
-  LessonDiscussInfo
+  LessonDiscussInfo,
 } from "./types/types";
 /**
  * This is a simple redux-like state management pattern for React using hooks
@@ -97,12 +97,12 @@ const initialState = {
     contractNegoList: [],
     contractNegoDetail: null,
   },
-  discuss:{
+  discuss: {
     // 课程协商
-    discussList:[],
-    discussDetail:null,
-    discussAudit:null,
-  }
+    discussList: [],
+    discussDetail: null,
+    discussAudit: null,
+  },
 };
 export const AppContext = React.createContext<{
   state: any;
@@ -291,6 +291,14 @@ export const setContractNegoDetail = (contractNegoDetail: ContractNego) => {
   return {
     type: "setContractNegoDetail",
     contractNegoDetail: contractNegoDetail,
+  };
+};
+export const setContractNegoAudit = (
+  contractNegoAudit: ContractNego | undefined
+) => {
+  return {
+    type: "setContractNegoAudit",
+    contractNegoAudit: contractNegoAudit,
   };
 };
 
@@ -554,6 +562,7 @@ export const reducer = (state: any, action: any) => {
         contractNego: {
           contractNegoList: action.contractNegoList,
           contractNegoDetail: state.contractNego.contractNegoDetail,
+          contractNegoAudit: state.contractNego.contractNegoAudit,
         },
         backPage: action.backPage || state.backPage,
       };
@@ -564,6 +573,18 @@ export const reducer = (state: any, action: any) => {
         contractNego: {
           contractNegoList: state.contractNego.contractNegoList,
           contractNegoDetail: action.contractNegoDetail,
+          contractNegoAudit: state.contractNego.contractNegoAudit,
+        },
+        backPage: action.backPage || state.backPage,
+      };
+    }
+    case "setContractNegoAudit": {
+      return {
+        ...state,
+        contractNego: {
+          contractNegoList: state.contractNego.contractNegoList,
+          contractNegoDetail: state.contractNego.contractNegoDetail,
+          contractNegoAudit: action.contractNegoAudit,
         },
         backPage: action.backPage || state.backPage,
       };

@@ -42,9 +42,6 @@ const teacherAll = eduTeacherFindAllURL;
 const LessonQuery: React.FC = () => {
   const [present, dismiss] = useIonToast();
   const onPageChange = (records: any, total: number, newPage: number) => {
-    console.log(records);
-    console.log(total);
-    console.log(newPage);
     setPage(newPage);
     setTotal(total);
     refreshLessonList(records);

@@ -32,6 +32,22 @@ class ContractService {
     // return { result: true, records: records }
   }
 
+  async findOne(contractId) {
+    const eduLesson = await mysql
+      .getRepository(Contract)
+      .createQueryBuilder("contract")
+
+      .where("contract.contractId like :contractId ", {
+        contractId: nullableFuzzy(contractId),
+      })
+      // .skip(page*size)
+      //todo 方便测试
+      .getOne();
+    return eduLesson;
+    // const records = await mysql.getRepository(Contract).findBy(req)
+    // return { result: true, records: records }
+  }
+
   async sum(eduId) {
     const result = { contractValid: 0, contractFinish: 0 };
     var where = " contract.edu_id = :eduId ";

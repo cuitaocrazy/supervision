@@ -6,8 +6,6 @@ import { sign } from "jws";
 import * as cors from "cors";
 import { EventEmitter } from "events";
 
-import { v4 } from "uuid";
-
 const app = express();
 app.use(cors());
 app.use(express.static("out"));
@@ -67,7 +65,7 @@ const getStartDateAndDurDaysByItemId = (body: SubscribeWithSign) => {
 
 const geneUSVOrderNo = () => {
   //获取预订单号
-  return v4().replaceAll("-", "");
+  return randomUUID().replaceAll("-", "");
 };
 
 const signSubscribe = (body: SubscribeWithSign) => {
@@ -137,6 +135,7 @@ app.post("/edu/login", jsonParser, async (req, res) => {
 import eduTeacherService from "./src/edu/TeacherService";
 import eduTransactionService from "./src/edu/TransactionService";
 import eduEduService from "./src/edu/EduService";
+import eduContractNegoService from "./src/edu/ContractNegoService";
 app.get("/edu/teacher/find", async (req, res) => {
   console.log(`教育机构: 查询教师: 条件[${JSON.stringify(req.query)}]`);
   const r = await eduTeacherService.find(req.query);
@@ -160,6 +159,77 @@ app.get("/edu/transaction/find", async (req, res) => {
     record.transactionAmt = fenToYuan(record.transactionAmt);
   });
   res.send(r);
+});
+
+app.get("/edu/contractNego/find", async (req, res) => {
+  console.log(`教育机构: 查询争议合同信息: 条件[${JSON.stringify(req.query)}]`);
+  const loginName = req.query.loginName;
+  const lessonName = req.query.lessonName;
+  const edu = await EduService.findByLoginName(loginName);
+  console.log(edu);
+  console.log("edu");
+  if (edu == null) {
+    res.send({ records: [], result: "fail", total: 0 });
+    return;
+  }
+  const r = await eduContractNegoService.find({
+    lessonName: lessonName,
+    eduId: edu.eduId,
+  });
+
+  await Promise.all(
+    r.records.map(async (record: any) => {
+      record.negoRefundAmt = fenToYuan(record.negoRefundAmt);
+      record.negoCompensationAmt = fenToYuan(record.negoCompensationAmt);
+      record.contract = await eduContractService.findOne(record.contractId);
+      return record;
+    })
+  );
+
+  res.send(r);
+});
+
+app.post("/edu/contractNego/audit", jsonParser, async (req, res) => {
+  // record.negoRefundAmt = fenToYuan(record.negoRefundAmt);
+  // record.negoCompensationAmt = fenToYuan(record.negoCompensationAmt);
+  const { negoRefundAmt, negoCompensationAmt, negoId } = req.body;
+  const oldNego = await eduContractNegoService.findOne({
+    negoId: negoId,
+  });
+  console.log(
+    parseInt(String(oldNego.negoCompensationAmt)) +
+      parseInt(String(oldNego.negoRefundAmt))
+  );
+  console.log(yuanToFen(negoRefundAmt) + yuanToFen(negoCompensationAmt));
+  if (
+    parseInt(String(oldNego.negoCompensationAmt)) +
+      parseInt(String(oldNego.negoRefundAmt)) !=
+    yuanToFen(negoRefundAmt) + yuanToFen(negoCompensationAmt)
+  ) {
+    res.send({ result: false, msg: "未知异常" });
+    return;
+  } else if (
+    parseInt(String(oldNego.negoRefundAmt)) == yuanToFen(negoRefundAmt)
+  ) {
+    //todo 进行退货交易
+    oldNego.negoEduAgree = true;
+    oldNego.negoEduAgreeDate = moment().format("YYYYMMDD");
+    oldNego.negoEduAgreeDate = moment().format("HHmmss");
+    oldNego.negoStatus = "complete";
+    await eduContractNegoService.save(oldNego);
+    res.send({ result: true, msg: "已退货" });
+    return;
+  } else {
+    oldNego.negoEduAgree = true;
+    oldNego.negoEduAgreeDate = moment().format("YYYYMMDD");
+    oldNego.negoEduAgreeDate = moment().format("HHmmss");
+    oldNego.negoConsumerAgree = false;
+    oldNego.negoCompensationAmt = fenToYuan(negoCompensationAmt);
+    oldNego.negoRefundAmt = fenToYuan(negoRefundAmt);
+    await eduContractNegoService.save(oldNego);
+    res.send({ result: true, msg: "已将诉求告知消费者" });
+    return;
+  }
 });
 
 app.get("/edu/transaction/sum", async (req, res) => {
@@ -390,6 +460,8 @@ import {
   saveAttendance,
   saveTransaction,
   getNextSeq,
+  findTransactions,
+  saveContractNego,
 } from "./src/consumer/consumer";
 import { Attendance } from "./src/entity/Attendance";
 // import {pay,orderQuery} from './src/pay/pay'
@@ -405,10 +477,14 @@ const fenToYuan = (tranAmtYuan: string | number) => {
 // import eduLogin from './src/edu/login'
 
 //todo
-const get3rdOrder = async () => {
+const get3order = async () => {
   return {
     orderNo: randomUUID().replaceAll("-", ""),
   };
+};
+
+const getRandomId = () => {
+  return randomUUID().replaceAll("-", "");
 };
 
 const getContractId = (eduMerNo, seq) => {
@@ -447,6 +523,76 @@ app.get("/consumer/lesson", jsonParser, async (req, res) => {
   res.send({ status: "success", result: convertLessonList });
 });
 
+app.put("/consumer/refund", jsonParser, async (req, res) => {
+  console.log(`教育局: 查询教师: 条件[${JSON.stringify(req.body)}]`);
+  const { contractId, userId, refundAmt, reason } = req.body;
+  const refundAmtfen = yuanToFen(refundAmt);
+
+  var negoTransfered = 0;
+  const contract = await findOneContract(contractId);
+  console.log(contract);
+  if (contract.contractStatus == "nego") {
+    res.send({
+      status: "false",
+      result: "该订单目前已处于协商中，不可再次发起退货",
+    });
+    return;
+  }
+  if (contract.contractStatus != "valid") {
+    res.send({ status: "false", result: "该订单目前不可发起退货" });
+    return;
+  }
+  const transactions = await findTransactions({
+    contractId: contractId,
+  });
+  // console.log(transactions);
+  console.log(transactions.length);
+  transactions.map((record) => {
+    negoTransfered = negoTransfered + parseInt(String(record.transactionAmt));
+  });
+
+  var negoRemain = contract.lessonTotalPrice - negoTransfered;
+  console.log(negoRemain);
+  console.log(contract.lessonTotalPrice);
+  console.log(negoTransfered);
+  if (negoRemain <= 0 || negoRemain < refundAmtfen) {
+    res.send({ status: "false", result: "剩余金额不足退还所需金额" });
+    return;
+  }
+  contract.contractStatus = "nego";
+  await saveContract(contract);
+  console.log("saveContract");
+  const contractNego: ContractNego = {
+    negoId: getRandomId(),
+    contractId: contractId,
+    negoType: "refund",
+    negoReason: reason,
+    negoCreator: "consumer",
+    negoStatus: "negotiating",
+    negoCreateDate: moment().format("YYYYMMDD"),
+    negoCreateTime: moment().format("HHmmss"),
+    negoUpdateDate: moment().format("YYYYMMDD"),
+    negoUpdateTime: moment().format("HHmmss"),
+    negoRefundAmt: refundAmtfen,
+    negoCompensationAmt: negoRemain - refundAmtfen,
+    negoConsumerAgree: true,
+    negoConsumerAgreeDate: moment().format("YYYYMMDD"),
+    negoConsumerAgreeTime: moment().format("HHmmss"),
+    negoEduAgree: false,
+    negoEduAgreeDate: "",
+    negoEduAgreeTime: "",
+    lessonName: contract.lessonName,
+    lessonId: contract.lessonId,
+    eduId: contract.eduId,
+    eduName: contract.eduName,
+    consumerId: contract.consumerId,
+    consumerName: contract.consumerName,
+  };
+  saveContractNego(contractNego);
+  console.log("saveContractNego");
+  res.send({ status: "success", result: "退货申请成功" });
+});
+
 io.on("connection", function (socket) {
   // socket相关
   console.log("some consumer connection");
@@ -464,7 +610,7 @@ app.post("/consumer/preOrder", jsonParser, async (req, res) => {
   //todo
   const { userId, username } = await getUserInfoByToken();
   const { lessonId, studentName } = req.body;
-  const otherSystemInfo = await get3rdOrder();
+  const otherSystemInfo = await get3order();
   try {
     const lesson = await findOneLesson({ lessonId: lessonId });
     const edu = await findOneEdu({ eduId: lesson.eduId });
@@ -592,7 +738,7 @@ app.post("/consumer/checkIn", jsonParser, async (req, res) => {
     const newTransaction = {
       transactionId: getTransactionId(),
       contractId: contract.contractId,
-      transactionAmt: transfer.transferAmt,
+      transactionAmt: -1 * transfer.transferAmt,
       tranType: "transfer",
       tranDate: attendance.attendanceDate,
       tranTime: attendance.attendanceTime,
@@ -963,6 +1109,8 @@ app.post("/edb/eduLesson/off", jsonParser, async (req, res) => {
 
 import announcementService from "./src/edb/AnnouncementService";
 import { Announcement } from "./src/entity/Announcement";
+import { ContractNego } from "./src/entity/ContractNego";
+import EduLessonService from "./src/edb/EduLessonService";
 app.post("/edb/announcement/create", jsonParser, async (req, res) => {
   console.log(`教育局: 公告政策添加: 条件[${JSON.stringify(req.body)}]`);
   const info: Announcement = req.body;

@@ -21,6 +21,7 @@ import Router from "next/router";
 import { Link } from "react-router-dom";
 import localforage from "localforage";
 
+
 const Menu = () => {
   const [isDark, setIsDark] = useState(false);
   const [lessonVisible, setLessonVisible] = useState(false);
@@ -249,7 +250,7 @@ const Menu = () => {
           </Link>
           <Link
             className="flex items-center justify-start w-full px-3 py-2 mt-2 space-x-6 rounded-lg hover:text-white focus:bg-primary-500 focus:text-white hover:bg-primary-500 focus:rounded-lg md:w-52"
-            to="/tabs/refund/query"
+            to="/tabs/contractNego/query"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"

@@ -25,6 +25,8 @@ import Attendance from "./pages/attendance/query";
 import { AttendanceDetail } from "./pages/attendance/detail";
 import AttendanceLaunch from "./pages/attendance/launch";
 import ContractNego from "./pages/contractNego/query";
+import ContractNegoAudit from "./pages/contractNego/audit";
+// import ContractNegoDetail from "./pages/contractNego/Detail";
 import Teacher from "./pages/teacher/Query";
 import TeacherDetail from "./pages/teacher/Detail";
 import TeacherEdit from "./pages/teacher/Edit";
@@ -109,6 +111,16 @@ const AppShell = () => {
                 component={ContractNego}
                 exact={true}
               />
+              <Route
+                path="/tabs/contractNego/audit"
+                component={ContractNegoAudit}
+                exact={true}
+              />
+              {/* <Route
+                path="/tabs/contractNego/detail"
+                component={ContractNegoDetail}
+                exact={true}
+              /> */}
               <Route
                 path="/tabs/attendance/query"
                 component={Attendance}

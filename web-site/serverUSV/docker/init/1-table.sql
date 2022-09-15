@@ -216,6 +216,12 @@ CREATE TABLE yadadb.t_b_contract_nego (
 	nego_edu_agree BOOL NULL,
 	nego_edu_agree_date char(8) NULL,
 	nego_edu_agree_time char(6) NULL,
+	edu_id varchar2(32) NULL,
+	edu_name varchar(64) NULL,
+	consumer_id varchar2(32) NULL,
+	consumer_name varchar(64) NULL,
+	lesson_id varchar2(32) NULL,
+	lesson_name varchar(64) NULL,
 	CONSTRAINT t_b_contract_nego_PK PRIMARY KEY (nego_id)
 )
 ENGINE=InnoDB
