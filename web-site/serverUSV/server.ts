@@ -1,6 +1,7 @@
 import * as express from "express";
 import * as bodyParser from "body-parser";
 import * as http from "http";
+import fetch from "node-fetch";
 import { SubscribeWithSign } from "./API";
 import { sign } from "jws";
 import * as cors from "cors";
@@ -106,7 +107,7 @@ app.put("/cancel", jsonParser, async (req, res) => {
 const serverInstance = app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 });
-const io = require("socket.io")(serverInstance);
+const io = require("socket.io")(serverInstance, { cors: true });
 
 // io.on('connection', function (socket) { // socket相关
 //   console.log('somebody connection')
@@ -532,7 +533,7 @@ app.put("/consumer/refund", jsonParser, async (req, res) => {
   const refundAmtfen = yuanToFen(refundAmt);
 
   var negoTransfered = 0;
-  const contract = await findOneContract(contractId);
+  const contract = await findOneContract({ contractId: contractId });
   console.log(contract);
   if (contract.contractStatus == "nego") {
     res.send({
@@ -1324,7 +1325,6 @@ app.post("/consumer/pc/preOrder", jsonParser, async (req, res) => {
     await saveContract(newContract);
     newContract.lessonTotalPrice = fenToYuan(newContract.lessonTotalPrice);
 
-
     //todo 由于测试交易会产生真实扣款，所以金额设定为1分
     //todo 中文会有问题
     const bankJson = {
@@ -1338,8 +1338,8 @@ app.post("/consumer/pc/preOrder", jsonParser, async (req, res) => {
       orderDesc: "lessonName",
     };
 
-    console.log(bankJson);
     const plainText = encrypt(JSON.stringify(bankJson), newPublicKey);
+    console.log(plainText);
     fetch(remotePayPath + testMerId, {
       method: "POST",
       body: plainText,
@@ -1348,14 +1348,11 @@ app.post("/consumer/pc/preOrder", jsonParser, async (req, res) => {
       },
     }).then((serverRes) => {
       serverRes.text().then((text) => {
-        console.log(text);
-        console.log("-------------");
         if (text.indexOf("原交易不存在") > -1) {
           return;
         }
         fetch(decryptServiceUrl + text).then((dncryptRes) => {
           dncryptRes.text().then((dncryptText) => {
-            console.log(dncryptText);
             const json = JSON.parse(dncryptText);
             console.log(json);
             if (json.qrCode) {
@@ -1369,7 +1366,6 @@ app.post("/consumer/pc/preOrder", jsonParser, async (req, res) => {
         });
       });
     });
-
   } catch (e) {
     res.send({ status: "fail", result: "未知异常" });
   }
@@ -1408,32 +1404,31 @@ const encrypt = (plainText: string, publicKeyStr: string) => {
   return result.toString("base64");
 };
 
-const decrypt = (plainText: string, publicKeyStr: string) => {
-  const publicK = forge.pki.publicKeyFromPem(qianzhui + publicKeyStr + houzhui);
+// const decrypt = (plainText: string, publicKeyStr: string) => {
+//   const publicK = forge.pki.publicKeyFromPem(qianzhui + publicKeyStr + houzhui);
 
-  const data = Buffer.from(plainText, "base64");
-  console.log(data);
-  const inputLen = data.length;
-  let offSet = 0;
-  let cache;
-  let resultArray = [];
-  let i = 0;
-  while (inputLen - offSet > 0) {
-    if (inputLen - offSet > 128) {
-      let tempBuffer = Buffer.alloc(117);
-      data.copy(tempBuffer, 0, offSet, offSet + 117);
-      const cacheStr = publicK.decrypt(tempBuffer, "RSAES-PKCS1-V1_5");
-      cache = Buffer.from(cacheStr, "binary");
-      // cache = cipher.doFinal(encryptedData, offSet, 128);
-    } else {
-      let tempBuffer = Buffer.alloc(117);
-      data.copy(tempBuffer, 0, offSet, offSet + 117);
-      const cacheStr = publicK.decrypt(tempBuffer, "RSAES-PKCS1-V1_5");
-      cache = Buffer.from(cacheStr, "binary");
-    }
-    resultArray.push(cache);
-    i++;
-    offSet = i * 117;
-  }
-};
-
+//   const data = Buffer.from(plainText, "base64");
+//   console.log(data);
+//   const inputLen = data.length;
+//   let offSet = 0;
+//   let cache;
+//   let resultArray = [];
+//   let i = 0;
+//   while (inputLen - offSet > 0) {
+//     if (inputLen - offSet > 128) {
+//       let tempBuffer = Buffer.alloc(117);
+//       data.copy(tempBuffer, 0, offSet, offSet + 117);
+//       const cacheStr = publicK.decrypt(tempBuffer, "RSAES-PKCS1-V1_5");
+//       cache = Buffer.from(cacheStr, "binary");
+//       // cache = cipher.doFinal(encryptedData, offSet, 128);
+//     } else {
+//       let tempBuffer = Buffer.alloc(117);
+//       data.copy(tempBuffer, 0, offSet, offSet + 117);
+//       const cacheStr = publicK.decrypt(tempBuffer, "RSAES-PKCS1-V1_5");
+//       cache = Buffer.from(cacheStr, "binary");
+//     }
+//     resultArray.push(cache);
+//     i++;
+//     offSet = i * 117;
+//   }
+// };

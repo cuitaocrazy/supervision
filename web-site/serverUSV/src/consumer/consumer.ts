@@ -81,35 +81,13 @@ export const saveTransfer = async (transfer) => {
   return result;
 };
 
-export const findOneContract = async (contractId) => {
+export const findOneContract = async ({ contractId }) => {
   const result = await mysql.getRepository(Contract).findOneBy({
     contractId: contractId,
   });
   if (result === null) throw e;
   return result;
 };
-
-// export const findAttendance = async ({ lessonId,consumerId,lessonQuantity }) => {
-//     const result = await mysql.getRepository(Attendance).findOneBy({
-//         lessonId: lessonId,
-//         consumerId:consumerId,
-//         attendanceLessonQuantity:lessonQuantity
-//     })
-
-//     if (result === null)
-//     throw e;
-//     return result
-// }
-
-// export const findAttendance = async ({ lessonId,consumerId }) => {
-//     const result = await mysql.getRepository(Attendance).findBy({
-//         lessonId: lessonId,
-//         consumerId:consumerId
-//     })
-//     if (result === null)
-//     throw e;
-//     return result
-// }
 
 export const findAttendance = async ({ lessonId, consumerId }) => {
   const result = await mysql
