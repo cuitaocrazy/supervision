@@ -64,13 +64,26 @@ const SearchLessonDetail= (props:LessonProps) => {
   
 
   return <IonPage>
-    <IonHeader>
-
-    </IonHeader>
     <IonContent>
     
       <div className='relative flex flex-col items-center mb-3 bg-white pb-14 scroll-auto'>
-      <Search setQueryStr={setQueryStr} onQuery={onQuery} />
+      {/* <Search setQueryStr={setQueryStr} onQuery={onQuery} /> */}
+      <div className="fixed left-0 right-0 w-3/4 pb-2 mx-auto mt-1 bg-white ">
+        <div className="flex items-center justify-around gap-10 pt-3 text-xs justify-items-stretch">
+          <div className="flex flex-col justify-start">
+            <div className="text-xl tracking-widest text-gray-900">
+              资金监管平台
+            </div>
+            <div className="text-sm tracking-widest text-gray-400">我的课堂</div>
+          </div>
+          <div className="flex flex-row items-center w-96">
+          </div>
+          <div className="flex flex-row justify-end ">
+          </div>
+        </div>
+      </div>
+
+
       <div className="flex w-3/4 mx-auto text-sm text-gray-400 mt-28 bg-gray-100 py-2 px-2">
         <div className="flex items-center ">
           <span className="pr-2">首页</span> <span className="pr-2">/</span><span className="pr-2">搜索结果</span><span className="pr-2">/</span><span>课程详情</span>
