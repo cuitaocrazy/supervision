@@ -1,32 +1,21 @@
-import { FC, useState, Fragment, useCallback, useContext } from "react";
+import { FC, Fragment, useCallback, useContext } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { useForm } from "react-hook-form";
 import { loginURL } from "../const/const";
-import { AppContext, setloginUser,setloginIsOpen } from "../appState";
+import { AppContext, setloginUser, setOpenLogin } from "../appState";
 
 interface searchProps {
   setQueryStr: Function;
   onQuery: Function;
-  username:string;
-  isOpen:boolean;
 }
-{
-  /* 搜索框 */
-}
+/* 搜索框 */
 const Search: FC<searchProps> = (props) => {
   const { setQueryStr, onQuery } = props;
   const onSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
     onQuery();
   };
-  // 添加登录dialog状态
-  let [isOpen, setIsOpen] = useState(false);
-  function closeModal() {
-    setIsOpen(false);
-  }
-  function openModal() {
-    setIsOpen(true);
-  }
+
   type FormPwd = {
     username: string;
     password: string;
@@ -34,25 +23,28 @@ const Search: FC<searchProps> = (props) => {
   const useFormPwd = useForm<FormPwd>();
   const registerPwd = useFormPwd.register;
   const handleSubmitPwd = useFormPwd.handleSubmit;
-  const [username, setUserName] = useState(undefined as string | undefined);
   // const [LoginDialogIsOrNotOpen,setLoginDialogIsOrNotOpen]=useState(undefined as boolean | undefined);
-  const { state, dispatch } = useContext(AppContext);
+  const { state: { loginUser: { username }, openLogin }, dispatch } = useContext(AppContext);
   const refreshLoginUser = useCallback(
     (loginUser: any) => {
       dispatch(setloginUser(loginUser));
     },
     [dispatch]
   );
-  const refreshLoginIsOpen = useCallback(
-    (isOpen: any) => {
-       dispatch(setloginIsOpen(isOpen));
-    },
-    [dispatch]
-  );
-
+  // 添加登录dialog状态
+  const setIsOpen = useCallback(
+    (isOpen: boolean) => {
+      dispatch(setOpenLogin(isOpen))
+    }, [dispatch]
+  )
+  function closeModal() {
+    setIsOpen(false);
+  }
+  function openModal() {
+    setIsOpen(true);
+  }
+  console.log(`openLogin:${openLogin}`)
   const onSubmitLogin = (loginType: string) => (data: any) => {
-    console.log("login");
-    console.log(loginType);
     if (loginType === "verfiyCode") {
       fetch(loginURL, {
         method: "POST",
@@ -66,9 +58,6 @@ const Search: FC<searchProps> = (props) => {
       })
         .then((res) => res.json())
         .then((json) => {
-          console.log("asda");
-          console.log(json);
-          setUserName(json.result.username);
           refreshLoginUser({
             loginName: json.result.loginName,
             username: json.result.username,
@@ -88,7 +77,6 @@ const Search: FC<searchProps> = (props) => {
       })
         .then((res) => res.json())
         .then((json) => {
-          setUserName(json.result.username);
           refreshLoginUser({
             loginName: json.result.loginName,
             username: json.result.username,
@@ -107,10 +95,6 @@ const Search: FC<searchProps> = (props) => {
       phone: null,
       role: null
     });
-    refreshLoginIsOpen({
-      isOpen:null
-    })
-    setUserName(undefined)
   }
 
   return (
@@ -148,14 +132,14 @@ const Search: FC<searchProps> = (props) => {
               </button>
             </div>
             <div className="flex flex-row justify-end items-center text-white">
-              <button className="h-10  mr-3 text-base   rounded-md  px-4 py-2 bg-primary-600 focus:bg-primary-800 hover:bg-primary-700" hidden={props.username != null}
+              <button className="h-10  mr-3 text-base   rounded-md  px-4 py-2 bg-primary-600 focus:bg-primary-800 hover:bg-primary-700" hidden={username != null}
                 onClick={openModal}>
                 登录
               </button>
-              <button className="h-10 px-4 py-2  text-base  rounded-md bg-primary-600 focus:bg-primary-800 hover:bg-primary-700" hidden={props.username != null}>
+              <button className="h-10 px-4 py-2  text-base  rounded-md bg-primary-600 focus:bg-primary-800 hover:bg-primary-700" hidden={username != null}>
                 注册
               </button>
-              <button className="h-10 px-4 py-2  mr-3 text-base  rounded-md bg-primary-600 focus:bg-primary-800 hover:bg-primary-700 " hidden={props.username == null}
+              <button className="h-10 px-4 py-2  mr-3 text-base  rounded-md bg-primary-600 focus:bg-primary-800 hover:bg-primary-700 " hidden={username == null}
                 onClick={logout}>
                 退出
               </button>
@@ -164,7 +148,7 @@ const Search: FC<searchProps> = (props) => {
         </div>
       </form >
       {/* 新增课程模态框 */}
-      < Transition appear show={isOpen} as={Fragment}>
+      < Transition appear show={openLogin} as={Fragment}>
         <Dialog as="div" className="relative z-10" onClose={closeModal}>
           <Transition.Child
             as={Fragment}
@@ -245,7 +229,7 @@ const Search: FC<searchProps> = (props) => {
                         value="确定"
                         type="submit"
                         className="px-6 py-2 text-white border rounded-md bg-primary-600"
-                        onClick={()=>setIsOpen(!isOpen)} 
+                        onClick={() => closeModal()}
                       />
                     </div>
                   </form>

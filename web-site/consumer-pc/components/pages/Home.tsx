@@ -4,10 +4,9 @@ import { Lesson } from '../../types/types'
 import LessonListCard from '../LessonListCard'
 import LessonImages from "components/LessonImages"
 import FeaturedRecommendAndMore from '../FeaturedRecommendAndMore'
-import { useEffect, useState, useContext } from "react"
+import { useEffect, useState } from "react"
 import { searchLessonURL } from '../../const/const'
 import PullToRefresh from 'react-simple-pull-to-refresh';
-import { AppContext } from '../../appState';
 // import Menu from '../pages/Menu';
 // import PulldownRefresh from '@nuonuonuonuoyan/react-pulldown-refresh'
 
@@ -30,7 +29,6 @@ const Home = () => {
         setLessonList(json.result)
       })
   }
-  const { state } = useContext(AppContext);
 
   useEffect(onQuery, [])
 
@@ -74,7 +72,7 @@ const Home = () => {
     <IonContent>
       <div className='relative '>
         <div className='bg-white'>
-          <Search isOpen={state.isOpen} username={state.loginUser.username} setQueryStr={setQueryStr} onQuery={onQuery} />
+          <Search setQueryStr={setQueryStr} onQuery={onQuery} />
           <LessonImages lessonImages={lesson.lessonImgs} />
           <FeaturedRecommendAndMore />
 
