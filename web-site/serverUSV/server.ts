@@ -555,7 +555,7 @@ app.put("/consumer/refund", jsonParser, async (req, res) => {
     negoTransfered = negoTransfered + parseInt(String(record.transactionAmt));
   });
 
-  var negoRemain = contract.lessonTotalPrice - negoTransfered;
+  var negoRemain = negoTransfered;
   console.log(negoRemain);
   console.log(contract.lessonTotalPrice);
   console.log(negoTransfered);
