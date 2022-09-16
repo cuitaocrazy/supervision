@@ -25,7 +25,7 @@ INSERT INTO yadadb.t_b_supervisor_user (supervisor_login_name,supervisor_passwor
 	 ('suptest','suptest','教育部管理员',NULL,'supervisor0001');
 
 Insert INTO yadadb.t_b_chaincode(chaincode_desc,version,deploy_date,sn,chaincode_name,node_number) VALUES
-('消费智能合约','1.0.0','20220701','1','consumerChainCode',3),
+('消费智能合约','1.0.0','20220701','1','consumerChainCode',3);
 -- ('签到链码','1.0.0','20220701','1','attendanceChainCode',3),
 -- ('划拨链码','1.0.0','20220701','1','transFerChainCode',3);	  
 
