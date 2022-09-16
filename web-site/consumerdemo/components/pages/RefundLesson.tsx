@@ -40,7 +40,7 @@ const RefoundLesson = () => {
       {
         present({
           message:"提交退货成功",
-          duration:3000,
+          duration:1000,
           position:"middle",
           cssClass:"text-center"
           
@@ -51,7 +51,7 @@ const RefoundLesson = () => {
         buttons: [{ text: '关闭', handler: () => dismiss() }],
         message: '提交退货失败',
       })
-      // history.push("./home")
+      history.push("./myLessonDetail")
       });
   };
 
