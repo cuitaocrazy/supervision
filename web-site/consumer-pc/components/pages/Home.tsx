@@ -74,7 +74,7 @@ const Home = () => {
     <IonContent>
       <div className='relative '>
         <div className='bg-white'>
-          <Search username={state.loginUser.username} setQueryStr={setQueryStr} onQuery={onQuery} />
+          <Search isOpen={state.isOpen} username={state.loginUser.username} setQueryStr={setQueryStr} onQuery={onQuery} />
           <LessonImages lessonImages={lesson.lessonImgs} />
           <FeaturedRecommendAndMore />
 

@@ -122,7 +122,7 @@ const ConOrder = () => {
           </div>
         </div>
       </div> */}
-      <Search username={state.loginUser.username} setQueryStr={setQueryStr} onQuery={onQuery} />
+      <Search isOpen={state.isOpen} username={state.loginUser.username} setQueryStr={setQueryStr} onQuery={onQuery} />
         <div className="flex w-3/4 mx-auto mt-24 text-sm text-gray-400 py-2 px-2 bg-gray-100">
           <div className="flex items-center ">
             <span className="pr-2">确认订单</span>

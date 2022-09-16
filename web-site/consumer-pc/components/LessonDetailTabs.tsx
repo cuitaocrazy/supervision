@@ -5,15 +5,25 @@ import LessonFrame from "./LessonFrame";
 import { Tab } from "@headlessui/react";
 import { Lesson, Teacher, EduOrg } from "../types/types";
 import { useRouter } from "next/router";
-import { AppContext } from "../appState";
-import { useContext } from "react";
+import { AppContext,setloginIsOpen } from "../appState";
+import { useContext,Fragment,useState } from "react";
 import LessonDetailBottomMenu from "./LessonDetailBottomMenu";
 import { Link, Redirect,useHistory } from "react-router-dom";
+import { Dialog, Transition } from "@headlessui/react";
 
 // 课程详情标签选项卡
 const LessonDetailTabs = () => {
+  // 添加提示登录dialog状态
+  let [isRemindOpen, setIsRemindOpen] = useState(false);
+  function closeRemindModal() {
+    setIsRemindOpen(false);
+  }
+  function openRemindModal() {
+    setIsRemindOpen(true);
+  }
   const { state } = useContext(AppContext);
   const username=state.loginUser.username;
+  let isOpen=state.isOpen;
   const history = useHistory();
   console.log(state);
   const router = useRouter();
@@ -43,7 +53,11 @@ const LessonDetailTabs = () => {
           className="px-8 py-2 mr-8 text-sm font-medium text-center text-white grow bg-primary-500 rounded-3xl"
           onClick={()=>{
             if(username){history.push("/conOrder")}
-            else history.push("/searchLessonDetail")
+            else {
+              openRemindModal()
+              setloginIsOpen(true)
+              // history.push("/searchLessonDetail")
+            }
           }}
           
         >
@@ -51,7 +65,74 @@ const LessonDetailTabs = () => {
         </button>
         </div>
       </div>
+       {/* 提示登录模态框  */}
+     <Transition appear show={isRemindOpen} as={Fragment}>
+     <Dialog as="div" className="relative z-10" onClose={closeRemindModal}>
+       <Transition.Child
+         as={Fragment}
+         enter="ease-out duration-300"
+         enterFrom="opacity-0"
+         enterTo="opacity-100"
+         leave="ease-in duration-200"
+         leaveFrom="opacity-100"
+         leaveTo="opacity-0"
+       >
+         <div className="fixed inset-0 bg-black bg-opacity-25" />
+       </Transition.Child>
+
+       <div className="fixed inset-0 overflow-y-auto">
+         <div className="flex items-center justify-center min-h-full p-4 text-center">
+           <Transition.Child
+             as={Fragment}
+             enter="ease-out duration-300"
+             enterFrom="opacity-0 scale-95"
+             enterTo="opacity-100 scale-100"
+             leave="ease-in duration-200"
+             leaveFrom="opacity-100 scale-100"
+             leaveTo="opacity-0 scale-95"
+           >
+             <Dialog.Panel className="w-full max-w-md p-4 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
+               <Dialog.Title
+                 as="h3"
+                 className="text-lg font-medium leading-6 text-center text-gray-900"
+               >
+                 提示登录
+                 <hr className="mt-2 mb-4" />
+               </Dialog.Title>
+               <form
+                 // onSubmit={setAgree(Number(disAgree)+1)}
+                 className="flex flex-col items-center rounded-lg justify-items-center"
+               >
+                 <div className="flex items-center mb-4 justify-items-center">
+                   <div className="flex leading-7 justify-items-center">
+                     <div className="flex justify-center p-1 w-52">购买之前，请先登录</div>
+                   </div>
+                 </div>
+                 <div className="flex items-center gap-4 mt-2 justify-items-center">
+                   <input
+                     value="好的"
+                     type="button"
+                     className="px-6 py-2 border rounded-md "
+                     onClick={closeRemindModal}
+                   />
+                   {/* <Link to="/eCNYPay">
+                   <input 
+                     value="同意"
+                     type="button"
+                     className="px-6 py-2 text-white border rounded-md bg-primary-600"
+                     onClick={closeRemindModal}
+                   />
+                   </Link> */}
+                 </div>
+               </form>
+             </Dialog.Panel>
+           </Transition.Child>
+         </div>
+       </div>
+     </Dialog>
+   </Transition>
     </div>
+    
   );
 };
 

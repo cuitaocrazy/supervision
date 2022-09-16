@@ -31,6 +31,7 @@ const initialState = {
     username:null,
     phone:null,
     role:null,
+    isOpen:false,
   },
 
   lessonDetail:null,
@@ -53,6 +54,13 @@ export const setloginUser = (loginUser:any) => {
   return {
     type: 'setloginUser',
     loginUser:loginUser
+  }
+};
+
+export const setloginIsOpen = (isOpen:any) => {
+  return {
+    type: 'setloginIsOpen',
+    isOpen:isOpen
   }
 };
 
@@ -91,6 +99,12 @@ export const reducer = (state: any, action: any) => {
         ...state,
         stuName:action.loginUser.username,
         loginUser:action.loginUser
+      }
+    }
+    case 'setloginIsOpen': {
+      return {
+        ...state,
+        isOpen:action.isOpen
       }
     }
     case 'setLessonDetail': {

@@ -61,7 +61,7 @@ const ECNYPayResult = () => {
       </IonHeader>
       <IonContent>
         <div className="relative w-3/4 mx-auto">
-        <Search username={state.loginUser.username} setQueryStr={setQueryStr} onQuery={onQuery} />
+        <Search isOpen={state.isOpen} username={state.loginUser.username} setQueryStr={setQueryStr} onQuery={onQuery} />
           <div className="grid justify-center grid-rows-1 mt-36">
             <div className="mt-20 ">
               {/* <img

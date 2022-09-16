@@ -120,7 +120,7 @@ const ECNYPay = () => {
           
           </div>
         </div> */}
-        <Search username={state.loginUser.username} setQueryStr={setQueryStr} onQuery={onQuery} />
+        <Search isOpen={state.isOpen} username={state.loginUser.username} setQueryStr={setQueryStr} onQuery={onQuery} />
         <div className="flex px-2 py-2 mt-24 text-sm text-gray-400 bg-gray-100">
           <div className="flex items-center ">
             <span className="pr-2">订单支付</span>

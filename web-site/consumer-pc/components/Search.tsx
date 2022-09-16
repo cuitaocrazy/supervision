@@ -2,12 +2,13 @@ import { FC, useState, Fragment, useCallback, useContext } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { useForm } from "react-hook-form";
 import { loginURL } from "../const/const";
-import { AppContext, setloginUser } from "../appState";
+import { AppContext, setloginUser,setloginIsOpen } from "../appState";
 
 interface searchProps {
   setQueryStr: Function;
   onQuery: Function;
   username:string;
+  isOpen:boolean;
 }
 {
   /* 搜索框 */
@@ -34,6 +35,7 @@ const Search: FC<searchProps> = (props) => {
   const registerPwd = useFormPwd.register;
   const handleSubmitPwd = useFormPwd.handleSubmit;
   const [username, setUserName] = useState(undefined as string | undefined);
+  // const [LoginDialogIsOrNotOpen,setLoginDialogIsOrNotOpen]=useState(undefined as boolean | undefined);
   const { state, dispatch } = useContext(AppContext);
   const refreshLoginUser = useCallback(
     (loginUser: any) => {
@@ -41,6 +43,13 @@ const Search: FC<searchProps> = (props) => {
     },
     [dispatch]
   );
+  const refreshLoginIsOpen = useCallback(
+    (isOpen: any) => {
+       dispatch(setloginIsOpen(isOpen));
+    },
+    [dispatch]
+  );
+
   const onSubmitLogin = (loginType: string) => (data: any) => {
     console.log("login");
     console.log(loginType);
@@ -98,6 +107,9 @@ const Search: FC<searchProps> = (props) => {
       phone: null,
       role: null
     });
+    refreshLoginIsOpen({
+      isOpen:null
+    })
     setUserName(undefined)
   }
 
@@ -233,6 +245,7 @@ const Search: FC<searchProps> = (props) => {
                         value="确定"
                         type="submit"
                         className="px-6 py-2 text-white border rounded-md bg-primary-600"
+                        onClick={()=>setIsOpen(!isOpen)} 
                       />
                     </div>
                   </form>
