@@ -1,13 +1,16 @@
 import React, { useState } from "react";
-import { IonPage, IonHeader, IonContent } from "@ionic/react";
+import { IonPage, IonHeader, IonContent,IonToast,useIonToast } from "@ionic/react";
 import Navbar from "components/Navbar";
 import { AppContext } from "../../appState";
 import { useContext } from "react";
 import { Contract } from "../../types/types";
 import { refundURL } from "../../const/const";
+import { useHistory } from "react-router-dom";
 
 // 退订课程页面
 const RefoundLesson = () => {
+  const history=useHistory();
+  const [present, dismiss] = useIonToast();
   const { state } = useContext(AppContext);
   console.log(state.loginUser);
   let order: Contract = state.contractDetail;
@@ -31,9 +34,29 @@ const RefoundLesson = () => {
     })
       .then((res) => res.json())
       .then((json) => {
-        alert(json.result);
+        // alert(json.result);
+        const result=json.result
+        if (result) 
+      {
+        present({
+          message:"提交退货成功",
+          duration:3000,
+          position:"middle",
+          cssClass:"text-center"
+          
+        });
+        
+      } else 
+      present({
+        buttons: [{ text: '关闭', handler: () => dismiss() }],
+        message: '提交退货失败',
+      })
+      // history.push("./home")
       });
   };
+
+   // 退课结果Toast
+  const [showRefundtToast, setShowRefundtToast] = useState(false);
 
   return (
     <IonPage>
@@ -91,7 +114,15 @@ const RefoundLesson = () => {
               value="提交申请"
             />
           </div>
+          <IonToast
+              isOpen={showRefundtToast}
+              onDidDismiss={() => setShowRefundtToast(false)}
+              message="课程签到成功."
+              duration={300}
+              position="middle"
+            />
         </form>
+        
       </IonContent>
     </IonPage>
   );

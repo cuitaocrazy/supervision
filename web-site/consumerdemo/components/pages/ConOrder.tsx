@@ -121,7 +121,7 @@ const ConOrder = () => {
         <div className="fixed bottom-0 flex flex-col w-full h-24 pl-5 mt-6 bg-white border-t justify-items-stretch">
           <div className="flex items-center justify-center pt-4">
             <input type="radio" className="mr-2 " />
-            <Link to="/contract" className="text-gray-500">同意本教育机构的合同</Link>
+            <Link to="/contract" className="text-gray-500 ">同意本教育机构的合同</Link>
           </div>
           <div className="flex">
             <div className="self-center justify-around text-xs text-gray-500">
