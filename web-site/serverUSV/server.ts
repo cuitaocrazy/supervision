@@ -622,7 +622,8 @@ app.post("/consumer/preOrder", jsonParser, async (req, res) => {
     const seq = await getNextSeq();
     //todo 合同状态
     const newContract = {
-      contractId: getContractId(edu.merNo, seq),
+      //todo 实际的终端ID
+      contractId: getContractId(testTermId, seq),
       contractDate: moment().format("YYYYMMDD"),
       contractTime: moment().format("HHmmss"),
       contractStatus: "valid",
@@ -678,6 +679,19 @@ app.post("/consumer/preOrder", jsonParser, async (req, res) => {
 app.get("/consumer/contractList", jsonParser, async (req, res) => {
   let orderList = await searchContract(req.query);
 
+  orderList.map((contract) => {
+    contract.lessonTotalPrice = fenToYuan(contract.lessonTotalPrice);
+    contract.lessonPerPrice = fenToYuan(contract.lessonPerPrice);
+    return contract;
+  });
+  res.send({ status: "success", result: orderList });
+});
+
+app.get("/consumer/refundContractList", jsonParser, async (req, res) => {
+  let orderList = await searchContract({
+    ...req.query,
+    ...{ contractStatus: "nego" },
+  });
   orderList.map((contract) => {
     contract.lessonTotalPrice = fenToYuan(contract.lessonTotalPrice);
     contract.lessonPerPrice = fenToYuan(contract.lessonPerPrice);
