@@ -5,6 +5,9 @@ INSERT INTO yadadb.t_b_edu_org (edu_id,edu_logo,edu_name,edu_address,edu_legal_p
 INSERT INTO yadadb.t_b_edu_teacher (teacher_id,teacher_name,teacher_identity_no,teacher_field,teacher_experience,teacher_introduce,teacher_rating,teacher_create_date,teacher_create_time,teacher_update_date,teacher_update_time) VALUES
 	 ('teacher00001','马老师','2310000000000','english',5,'马老师有10年的教学经验，在英语方面在国内大型比赛中多次获得奖章',8.9,'20220630','000000',NULL,NULL);
 -- 插入课程
+INSERT INTO yadadb.t_b_edu_lesson (lesson_images,lesson_id,lesson_name,lesson_total_quantity,lesson_per_price,lesson_total_price,lesson_type,lesson_introduce,lesson_imgs,lesson_outline,lesson_start_date,lesson_start_time,lesson_end_date,lesson_end_time,lesson_status,lesson_create_date,lesson_create_time,lesson_update_date,lesson_update_time,lesson_update_reason,edu_id,edu_name,teacher_id,teacher_name,lesson_accumulation_quantity) VALUES
+	 ('https://s3.bmp.ovh/imgs/2022/08/30/28f95385d82b4f7c.jpg','20592340e55b4e24ac7fca6070b5dfe1','3213213',321321,2132132100,31231300,NULL,'3213123',NULL,'0','20220913','000000','20220913','000000','on','20220913','165542','20220913','165542','创建课程','edu0001','北京亚大教育机构','teacher00001','马老师',0),
+	 ('https://s3.bmp.ovh/imgs/2022/08/30/28f95385d82b4f7c.jpg','aeff45b5cf734c5e9229b9279c47bf3b','机器人编程课',30,10000,300000,NULL,'课外兴趣',NULL,'0','20220913','000000','20220913','000000','on','20220913','165609','20220913','165609','创建课程','edu0001','北京亚大教育机构','teacher00001','马老师',0);
 
 
 -- INSERT INTO yadadb.t_b_edu_lesson (lesson_images,lesson_id,lesson_name,lesson_total_quantity,lesson_per_price,lesson_total_price,lesson_type,lesson_introduce,lesson_imgs,lesson_outline,lesson_start_date,lesson_start_time,lesson_end_date,lesson_end_time,lesson_status,lesson_create_date,lesson_create_time,lesson_update_date,lesson_update_time,lesson_update_reason,edu_id,edu_name,teacher_id,teacher_name,lesson_accumulation_quantity) VALUES
