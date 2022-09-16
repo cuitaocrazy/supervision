@@ -218,9 +218,21 @@ app.post("/edu/contractNego/audit", jsonParser, async (req, res) => {
     //todo 进行退货交易
     oldNego.negoEduAgree = true;
     oldNego.negoEduAgreeDate = moment().format("YYYYMMDD");
-    oldNego.negoEduAgreeDate = moment().format("HHmmss");
+    oldNego.negoEduAgreeTime = moment().format("HHmmss");
     oldNego.negoStatus = "complete";
     await eduContractNegoService.save(oldNego);
+    const edu = await EduService.findByEduId(oldNego.eduId);
+    oldNego.eduId;
+    const newTransaction = {
+      transactionId: getTransactionId(),
+      contractId: oldNego.contractId,
+      transactionAmt: -1 * oldNego.negoRefundAmt,
+      tranType: "refund",
+      tranDate: moment().format("YYYYMMDD"),
+      tranTime: moment().format("HHmmss"),
+      eduSupervisedAccount: edu.eduSupervisedAccount,
+    };
+    saveTransaction(newTransaction);
     res.send({ result: true, msg: "已退货" });
     return;
   } else {
@@ -466,6 +478,7 @@ import {
   getNextSeq,
   findTransactions,
   saveContractNego,
+  searchContractNego,
 } from "./src/consumer/consumer";
 import { Attendance } from "./src/entity/Attendance";
 // import {pay,orderQuery} from './src/pay/pay'
@@ -698,6 +711,15 @@ app.get("/consumer/refundContractList", jsonParser, async (req, res) => {
     return contract;
   });
   res.send({ status: "success", result: orderList });
+});
+
+app.get("/consumer/contractNego", jsonParser, async (req, res) => {
+  let nego = await searchContractNego({
+    ...req.query,
+  });
+  nego.negoRefundAmt = fenToYuan(nego.negoRefundAmt);
+  nego.negoCompensationAmt = fenToYuan(nego.negoCompensationAmt);
+  res.send({ status: "success", result: nego });
 });
 
 app.post("/consumer/checkIn", jsonParser, async (req, res) => {
@@ -1129,6 +1151,7 @@ import announcementService from "./src/edb/AnnouncementService";
 import { Announcement } from "./src/entity/Announcement";
 import { ContractNego } from "./src/entity/ContractNego";
 import EduLessonService from "./src/edb/EduLessonService";
+import { Contract } from "./src/entity/Contract";
 app.post("/edb/announcement/create", jsonParser, async (req, res) => {
   console.log(`教育局: 公告政策添加: 条件[${JSON.stringify(req.body)}]`);
   const info: Announcement = req.body;
