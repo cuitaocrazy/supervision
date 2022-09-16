@@ -51,11 +51,11 @@ const RefoundLesson = () => {
               <div className="pr-4 text-gray-500">学生姓名</div>
               <div>{order.consumerStuName}</div>
             </div>
-            <div className="flex px-4 py-2 mb-2 text-sm rounded-md bg-primary-50">
-              <div className="pr-4 text-gray-500">退订金额¥</div>
+            <div className="flex items-center px-4 py-2 mb-2 text-sm rounded-md bg-primary-50">
+              <div className="pr-4 text-gray-500 ">退订金额</div>
               <input
-                className="border-0 bg-primary-50"
-                type="number"
+                className="h-8 pl-1 rounded-md outline-none bg-primary-50 focus:outline-none focus:glow-primary-600"
+                // type="number"
                 name="refundAmt"
                 onChange={(e) => {
                   setRefundState({
@@ -64,7 +64,7 @@ const RefoundLesson = () => {
                   });
                 }}
               ></input>
-              <div className="text-gray-700">元</div>
+              <div className="ml-2 text-gray-700">元</div>
             </div>
             <p className="mb-3 text-xs leading-4 text-primary-600">
               按照当地政府要求，监管账户的资金已部分划拨到机构账户中本系统仅支持未划拨部分退款，其余部分与机构进行沟通协商。退款金额会按原交易渠道进行退回。
@@ -72,7 +72,8 @@ const RefoundLesson = () => {
             <div className="text-sm text-gray-700">协商原因</div>
             <textarea
               name="reason"
-              className="w-full h-40 px-4 py-4 mt-2 text-xs rounded-md bg-primary-50"
+               className="w-full h-40 px-4 py-4 mt-2 text-xs border-0 border-none rounded-md outline-none focus:border-0 focus:border-none bg-primary-50 focus:outline-none focus:glow-primary-600"
+
               placeholder="请告诉我们您退订课程的原因，让我们进一步改进!"
               onChange={(e) => {
                 setRefundState({
