@@ -26,6 +26,9 @@ import Complaint from './pages/Complaint/query';
 import Contract from './pages/Contract/query';
 import { ContractDetail } from './pages/Contract/detail';
 import ContractNego from './pages/contractNego/query';
+import ContractNegoAudit from './pages/contractNego/Audit';
+// import ContractNegoDetail from './pages/contractNego/Detail';
+
 import Lesson from './pages/lesson/Query';
 import LessonDetail from './pages/lesson/Detail';
 import LessonAudit from './pages/lesson/Audit';
@@ -100,6 +103,8 @@ const AppShell = () => {
               <Route path="/tabs/contract/query" component={Contract} exact={true} />
               <Route path="/tabs/contract/detail" component={ContractDetail} exact={true} />
               <Route path="/tabs/contractNego/query" component={ContractNego} exact={true} />
+              <Route path="/tabs/contractNego/audit" component={ContractNegoAudit} exact={true} />
+              {/* <Route path="/tabs/contractNego/detail" conponent={ContractNegoDetail} exact={true} /> */}
               <Route path="/tabs/lesson/query" component={Lesson} exact={true} />
               <Route path="/tabs/lesson/detail" component={LessonDetail} exact={true} />
               <Route path="/tabs/lesson/audit" component={LessonAudit} exact={true} />

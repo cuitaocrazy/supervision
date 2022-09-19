@@ -971,6 +971,7 @@ import { Transfer } from "./src/entity/Transfer";
 import { EduLesson } from "./src/entity/EduLesson";
 import { EduTeacher } from "./src/entity/EduTeacher";
 import edbSupervisorUserService from "./src/edb/SupervisorService";
+import edbContractNegoService from "./src/edb/ContractNegoService";
 import TransferService from "./src/edu/TransferService";
 import EduService from "./src/edu/EduService";
 import { Transaction } from "fabric-network";
@@ -1109,6 +1110,70 @@ app.post("/edb/eduLesson/off", jsonParser, async (req, res) => {
   const r = await eduLessonService.off(req.body);
   res.send(r);
 });
+
+app.get("/edb/contractNego/find", async (req, res) => {
+  console.log(`教育局: 查询争议合同信息: 条件[${JSON.stringify(req.query)}]`);
+
+  const r = await edbContractNegoService.find(req.query);
+  await Promise.all(
+    r.records.map(async (record: any) => {
+      record.negoRefundAmt = fenToYuan(record.negoRefundAmt);
+      record.negoCompensationAmt = fenToYuan(record.negoCompensationAmt);
+      record.contract = await edbContractService.findOne(record.contractId);
+      return record;
+    })
+  );
+
+  res.send(r);
+});
+
+app.post("/edb/contractNego/audit", jsonParser, async (req, res) => {
+  // record.negoRefundAmt = fenToYuan(record.negoRefundAmt);
+  // record.negoCompensationAmt = fenToYuan(record.negoCompensationAmt);
+  const { negoRefundAmt, negoCompensationAmt, negoId } = req.body;
+  const oldNego = await eduContractNegoService.findOne({
+    negoId: negoId,
+  });
+  console.log(
+    parseInt(String(oldNego.negoCompensationAmt)) +
+      parseInt(String(oldNego.negoRefundAmt))
+  );
+  console.log(yuanToFen(negoRefundAmt) + yuanToFen(negoCompensationAmt));
+  if (
+    parseInt(String(oldNego.negoCompensationAmt)) +
+      parseInt(String(oldNego.negoRefundAmt)) !=
+    yuanToFen(negoRefundAmt) + yuanToFen(negoCompensationAmt)
+  ) {
+    res.send({ result: false, msg: "未知异常" });
+    return;
+  } else {
+    oldNego.negoEduAgree = true;
+    oldNego.negoEduAgreeDate = moment().format("YYYYMMDD");
+    oldNego.negoEduAgreeDate = moment().format("HHmmss");
+    oldNego.negoConsumerAgree = true;
+    oldNego.negoConsumerAgreeDate = moment().format("YYYYMMDD");
+    oldNego.negoConsumerAgreeTime = moment().format("HHmmss");
+    oldNego.negoStatus = "complete";
+    oldNego.negoCompensationAmt = fenToYuan(negoCompensationAmt);
+    oldNego.negoRefundAmt = fenToYuan(negoRefundAmt);
+    await eduContractNegoService.save(oldNego);
+    const edu = await EduService.findByEduId(oldNego.eduId);
+    const newTransaction = {
+      transactionId: getTransactionId(),
+      contractId: oldNego.contractId,
+      transactionAmt: -1 * oldNego.negoRefundAmt,
+      tranType: "refund",
+      tranDate: moment().format("YYYYMMDD"),
+      tranTime: moment().format("HHmmss"),
+      eduSupervisedAccount: edu.eduSupervisedAccount,
+    };
+    saveTransaction(newTransaction);
+
+    res.send({ result: true, msg: "已退货" });
+    return;
+  }
+});
+
 //日期格式话
 const dateFormat = (dateStr: string) => {
   if (dateStr != null) {

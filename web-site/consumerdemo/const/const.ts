@@ -8,3 +8,5 @@ export const checkInURL = `${serverPath}/checkIn`;
 export const leaveURL = `${serverPath}/leave`;
 export const searchAttendanceURL = `${serverPath}/attendance`;
 export const refundURL = `${serverPath}/refund`;
+export const searchRefundContractURL = `${serverPath}/refundContractList`;
+export const searchContractNegoURL = `${serverPath}/ContractNego`;

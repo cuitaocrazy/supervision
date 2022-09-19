@@ -28,6 +28,7 @@ export interface Contract {
   consumerStuName: string;
   orderNo: string;
   subscribeID: string;
+  consumerPhone: string;
 }
 // export interface TranSum{
 //   USVOrgID?: string,

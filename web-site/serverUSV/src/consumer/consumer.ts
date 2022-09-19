@@ -47,7 +47,7 @@ export const searchLesson = async (reqParams) => {
 };
 
 export const searchContract = async (reqParams) => {
-  let { page, size } = reqParams;
+  let { page, size, contractStatus } = reqParams;
   if (page == null) {
     page = 0;
   }
@@ -62,7 +62,10 @@ export const searchContract = async (reqParams) => {
   const contracts = await mysql
     .getRepository(Contract)
     .createQueryBuilder("contract")
-
+    .where("contract.contractStatus = :contractStatus or 1=:flag", {
+      contractStatus: contractStatus,
+      flag: contractStatus == null ? 1 : 2,
+    })
     // .skip(page*size)
     //todo 方便测试
     .skip(0)
@@ -74,6 +77,21 @@ export const searchContract = async (reqParams) => {
 export const saveContract = async (contract) => {
   const result = await mysql.getRepository(Contract).save(contract);
   return result;
+};
+
+export const searchContractNego = async (reqParams) => {
+  let { contractId } = reqParams;
+
+  // const result = await mysql.getRepository(Contract).findBy(searchValue)
+
+  const nego = await mysql
+    .getRepository(ContractNego)
+    .createQueryBuilder("nego")
+    .where("nego.contractId = :contractId", {
+      contractId: contractId,
+    })
+    .getOne();
+  return nego;
 };
 
 export const saveTransfer = async (transfer) => {

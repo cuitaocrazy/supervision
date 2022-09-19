@@ -106,6 +106,7 @@ const initialState = {
     //合同谈判
     contractNegoList: [],
     contractNegoDetail: null,
+    contractNegoAudit: null,
   },
   transferManual: {
     // 手动划拨
@@ -325,6 +326,12 @@ export const setContractNegoDetail = (contractNegoDetail: ContractNego) => {
   return {
     type: 'setContractNegoDetail',
     contractNegoDetail: contractNegoDetail,
+  };
+};
+export const setContractNegoAudit = (contractNegoAudit: ContractNego | undefined) => {
+  return {
+    type: 'setContractNegoAudit',
+    contractNegoAudit: contractNegoAudit,
   };
 };
 
@@ -592,6 +599,7 @@ export const reducer = (state: any, action: any) => {
         contractNego: {
           contractNegoList: action.contractNegoList,
           contractNegoDetail: state.contractNego.contractNegoDetail,
+          contractNegoAudit: state.contractNego.contractNegoAudit,
         },
         backPage: action.backPage || state.backPage,
       };
@@ -602,6 +610,18 @@ export const reducer = (state: any, action: any) => {
         contractNego: {
           contractNegoList: state.contractNego.contractNegoList,
           contractNegoDetail: action.contractNegoDetail,
+          contractNegoAudit: state.contractNego.contractNegoAudit,
+        },
+        backPage: action.backPage || state.backPage,
+      };
+    }
+    case 'setContractNegoAudit': {
+      return {
+        ...state,
+        contractNego: {
+          contractNegoList: state.contractNego.contractNegoList,
+          contractNegoDetail: state.contractNego.contractNegoDetail,
+          contractNegoAudit: action.contractNegoAudit,
         },
         backPage: action.backPage || state.backPage,
       };
