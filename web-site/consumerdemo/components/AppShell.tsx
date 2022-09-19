@@ -74,7 +74,7 @@ window
 const AppShell = () => {
   return (
     <AppContextProvider>
-      <IonApp>
+      <IonApp className="max-w-lg min-w-min">
         <IonReactRouter basename="/consumer">
           {/* <Menu></Menu> */}
 
