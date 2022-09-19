@@ -240,8 +240,8 @@ app.post("/edu/contractNego/audit", jsonParser, async (req, res) => {
     oldNego.negoEduAgreeDate = moment().format("YYYYMMDD");
     oldNego.negoEduAgreeDate = moment().format("HHmmss");
     oldNego.negoConsumerAgree = false;
-    oldNego.negoCompensationAmt = fenToYuan(negoCompensationAmt);
-    oldNego.negoRefundAmt = fenToYuan(negoRefundAmt);
+    oldNego.negoCompensationAmt = yuanToFen(negoCompensationAmt);
+    oldNego.negoRefundAmt = yuanToFen(negoRefundAmt);
     await eduContractNegoService.save(oldNego);
     res.send({ result: true, msg: "已将诉求告知消费者" });
     return;
@@ -1154,8 +1154,8 @@ app.post("/edb/contractNego/audit", jsonParser, async (req, res) => {
     oldNego.negoConsumerAgreeDate = moment().format("YYYYMMDD");
     oldNego.negoConsumerAgreeTime = moment().format("HHmmss");
     oldNego.negoStatus = "complete";
-    oldNego.negoCompensationAmt = fenToYuan(negoCompensationAmt);
-    oldNego.negoRefundAmt = fenToYuan(negoRefundAmt);
+    oldNego.negoCompensationAmt = yuanToFen(negoCompensationAmt);
+    oldNego.negoRefundAmt = yuanToFen(negoRefundAmt);
     await eduContractNegoService.save(oldNego);
     const edu = await EduService.findByEduId(oldNego.eduId);
     const newTransaction = {
