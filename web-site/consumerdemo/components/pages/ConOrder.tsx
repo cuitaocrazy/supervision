@@ -118,18 +118,24 @@ const ConOrder = () => {
         </div>
 
         {/* 底部菜单 */}
-        <div className="fixed bottom-0 flex w-full pl-5 mt-6 bg-white border-t h-14 justify-items-stretch">
-          <div className="self-center justify-around text-xs text-gray-500">
-            合计：
+        <div className="fixed bottom-0 flex flex-col w-full h-24 pl-5 mt-6 bg-white border-t justify-items-stretch">
+          <div className="flex items-center justify-center pt-4">
+            <input type="radio" className="mr-2 " />
+            <Link to="/contentsOfContracts" className="text-gray-500">同意本教育机构的合同</Link>
           </div>
-          <div className="self-center mr-4 text-2xl font-black text-red-500 grow justify-self-end">
-            ¥{state.lessonDetail.lessonTotalPrice}
+          <div className="flex">
+            <div className="self-center justify-around text-xs text-gray-500">
+              合计：
+            </div>
+            <div className="self-center mr-4 text-2xl font-black text-red-500 grow justify-self-end">
+              ¥{state.lessonDetail.lessonTotalPrice}
+            </div>
+            <Link to="/eCNYPay">
+              <button className="self-center h-10 px-6 mt-1 mr-2 text-sm font-medium text-white justify-self-end bg-primary-500 rounded-3xl">
+                立即支付
+              </button>
+            </Link>
           </div>
-          <Link to="/eCNYPay">
-            <button className="self-center h-10 px-6 mt-1 mr-2 text-sm font-medium text-white justify-self-end bg-primary-500 rounded-3xl">
-              立即支付
-            </button>
-          </Link>
         </div>
       </IonContent>
     </IonPage>
