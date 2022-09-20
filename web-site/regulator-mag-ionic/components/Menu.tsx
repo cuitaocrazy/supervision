@@ -99,9 +99,9 @@ const Menu = () => {
       title: '系统管理',
       subMenu: [
         { title: '修改密码', path: '/tabs/changePwd' },
-        { title: '政策公告', path: '/tabs/announcement/query' },
-        { title: '黑名单管理', path: '/tabs/black/query' },
         { title: '用户管理', path: '/tabs/baseInfo/query' },
+        { title: '政策公告', path: '/tabs/announcement/query' },
+        { title: '黑名单管理', path: '/tabs/black/query' },  
       ],
     },
     {
@@ -110,7 +110,7 @@ const Menu = () => {
         { title: '教育机构管理', path: '/tabs/orgMag/query' },
         { title: '课程管理', path: '/tabs/orgMag/query' },
         { title: '教师管理', path: '/tabs/teacher/query' },
-        { title: '手动退课', path: '/tabs/contractNego/query' },
+        { title: '退课管理', path: '/tabs/contractNego/query' },
         { title: '投诉管理', path: '/tabs/complaint/query' },
       ],
     },
