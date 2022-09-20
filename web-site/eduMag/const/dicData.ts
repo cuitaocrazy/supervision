@@ -16,7 +16,7 @@ export function getLessonType(lessonType: string | null) {
         lessonType = '数学'
         break;
       case 'chinese':
-        lessonType = '语文'
+        lessonType = '其他'
         break;
       case 'other':
         lessonType = '其他'

@@ -42,11 +42,11 @@ const Menu = () => {
     {
       title: "业务管理",
       subMenu: [
-        { title: "退课管理", path: "/tabs/contractNego/query" },
-        { title: "课程协商管理", path: "/tabs/discussQuery" },
         { title: "教师管理", path: "/tabs/teacher/query" },
         { title: "课程管理", path: "/tabs/lesson/query" },
         { title: "课程签到发起", path: "/tabs/attendance/launch" },
+        { title: "退课管理", path: "/tabs/contractNego/query" },
+        { title: "课程协商管理", path: "/tabs/discussQuery" },
         { title: "考勤明细", path: "/tabs/attendance/query" },
       ],
     },
@@ -101,7 +101,7 @@ const Menu = () => {
       let svgHidden = true;
       if (subMenu) {
         className =
-          "flex items-center justify-start w-full text-sm px-6 py-2 mt-2 space-x-6 rounded-lg hover:text-white focus:bg-primary-500 focus:text-white hover:bg-primary-500 focus:rounded-lg md:w-52";
+          "flex items-center justify-start w-full px-6 py-2 mt-2 space-x-6 text-sm rounded-lg hover:text-white focus:bg-primary-500 focus:text-white hover:bg-primary-500 focus:rounded-lg md:w-52";
         svgHidden = false;
       }
 
