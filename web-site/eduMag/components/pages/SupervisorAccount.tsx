@@ -201,7 +201,7 @@ export const SupervisorAccount: React.FC = () => {
             />
             <TranSumCard
               tranDesc="今日划拨金额（元）"
-              tranCount={transferAmt}
+              tranCount={Math.abs(Number(transferAmt))}
               d="M9 7.5l3 4.5m0 0l3-4.5M12 12v5.25M15 12H9m6 3H9m12-3a9 9 0 11-18 0 9 9 0 0118 0z"
               logoClassName="w-16 h-16 text-orange-400"
             />
