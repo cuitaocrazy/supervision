@@ -303,7 +303,7 @@ const AnnouncementQuery: React.FC = () => {
               </svg>
             </div>
             <div>
-              <span className="pr-1 text-gray-600">教育机构管理</span>/
+              <span className="pr-1 text-gray-600">系统管理</span>/
               <span className="pl-1 text-primary-500">政策公告</span>
             </div>
           </div>

@@ -84,7 +84,7 @@ export const AnnouncementEdit: React.FC = () => {
             </svg>
           </div>
           <div>
-            <span className="pr-1 text-gray-600 ">教育机构管理</span>/
+            <span className="pr-1 text-gray-600 ">系统管理</span>/
             <span className="pr-1 text-gray-600 ">政策公告</span>/
             <span className="pl-1 text-primary-500">公告编辑</span>
           </div>
@@ -132,7 +132,7 @@ export const AnnouncementEdit: React.FC = () => {
                   政策标题:
                 </div>
                 <input
-                  className="w-64 p-1 h-10 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
+                  className="w-64 h-10 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
                   value={announcementState.announcementTitle}
                   spellCheck={false}
                   onChange={e =>

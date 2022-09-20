@@ -41,6 +41,7 @@ export const BlackDetail: React.FC = () => {
             </svg>
           </div>
           <div>
+            <span className="pr-1 text-gray-600 ">系统管理</span>/
             <span className="pr-1 text-gray-600 ">黑名单管理</span>/
             <span className="pr-1 text-gray-600 ">黑名单详情</span>
           </div>

@@ -75,7 +75,7 @@ export const BaseInfoDetail: React.FC = () => {
             </svg>
           </div>
           <div>
-          <span className="pr-1 text-gray-600">基础信息维护</span>/
+          <span className="pr-1 text-gray-600">系统管理</span>/
           <span className="pl-1 pr-1 text-primary-500">用户管理</span>/
             <span className="pl-1 text-primary-500">用户详情</span>
           </div>
