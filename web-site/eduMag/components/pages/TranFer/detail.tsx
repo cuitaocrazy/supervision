@@ -30,7 +30,8 @@ export const TransferDetail: React.FC = () => {
             </svg>
           </div>
           <div>
-            <span className='pr-1 text-gray-600 '>课程管理</span>/<span className='pl-1 text-primary-500'>课程划拨详情</span>
+            <span className='pr-1 text-gray-600 '>数币管理</span>/
+            <span className='pl-1 text-primary-500'>资金划拨详情</span>
           </div>
         </div>
         <IonCardContent className="m-4 bg-white rounded-lg">

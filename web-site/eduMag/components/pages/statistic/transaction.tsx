@@ -163,7 +163,7 @@ const Transaction: React.FC = () => {
             </svg>
           </div>
           <div>
-            <span className="pr-1 text-gray-600">监管机构管理</span>/
+            <span className="pr-1 text-gray-600">数币管理</span>/
             <span className="pl-1 text-primary-500">监管账户明细</span>
           </div>
         </div>

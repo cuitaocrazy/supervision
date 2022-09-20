@@ -125,7 +125,7 @@ const TranSumQuery = () => {
             </svg>
           </div>
           <div>
-            <span className="pr-1 text-gray-600">报表</span>/
+            <span className="pr-1 text-gray-600">数币管理</span>/
             <span className="pl-1 text-primary-500">月交易汇总查询</span>
           </div>
         </div>

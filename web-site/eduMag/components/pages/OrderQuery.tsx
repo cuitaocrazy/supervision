@@ -145,7 +145,7 @@ const OrderQuery = () => {
             </svg>
           </div>
           <div>
-            <span className="pr-1 text-gray-600">报表</span>/
+            <span className="pr-1 text-gray-600">数币管理</span>/
             <span className="pl-1 text-primary-500">订单查询</span>
           </div>
         </div>

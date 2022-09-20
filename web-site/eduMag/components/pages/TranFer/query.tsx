@@ -175,8 +175,8 @@ const TransferQuery: React.FC = () => {
             </svg>
           </div>
           <div>
-            <span className="pr-1 text-gray-600">课程管理</span>/
-            <span className="pl-1 text-primary-500">课程划拨</span>
+            <span className="pr-1 text-gray-600">数币管理</span>/
+            <span className="pl-1 text-primary-500">资金划拨查询</span>
           </div>
         </div>
         <div className="w-11/12 px-4 py-2 mt-4 bg-white rounded-lg ">
