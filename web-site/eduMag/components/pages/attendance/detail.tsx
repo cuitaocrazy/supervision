@@ -53,7 +53,7 @@ export const AttendanceDetail: React.FC = () => {
             </svg>
           </div>
           <div>
-            <span className="pr-1 text-gray-600 ">考勤管理</span>/
+            <span className="pr-1 text-gray-600 ">业务管理</span>/
             <span className="pl-1 text-primary-500">课程考勤详情</span>
           </div>
         </div>

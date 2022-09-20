@@ -75,7 +75,8 @@ export const TeacherDetail: React.FC = () => {
             </svg>
           </div>
           <div>
-            <span className="pr-1 text-gray-600 ">教师管理</span>/
+            <span className="pr-1 text-gray-600 ">业务管理</span>/
+            <span className="px-1 text-gray-600 ">教师管理</span>/
             <span className="pl-1 text-primary-500">教师信息编辑</span>
           </div>
         </div>

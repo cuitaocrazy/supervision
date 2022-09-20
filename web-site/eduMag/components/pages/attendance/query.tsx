@@ -241,7 +241,7 @@ const AttendanceQuery: React.FC = () => {
             </svg>
           </div>
           <div>
-            <span className="pr-1 text-gray-600">课程考勤</span>/
+            <span className="pr-1 text-gray-600">业务管理</span>/
             <span className="pl-1 text-primary-500">考勤明细</span>
           </div>
         </div>
