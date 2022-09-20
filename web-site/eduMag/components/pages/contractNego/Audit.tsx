@@ -169,7 +169,7 @@ export const DiscussAudit: React.FC = () => {
                         state.contractNego.contractNegoAudit
                           .negoCompensationAmt -
                         parseFloat(
-                          isNaN(e.target?.value) ? "0" : e.target?.value
+                          isNaN(+e.target?.value) ? "0" : e.target?.value
                         ),
                     },
                   })
@@ -192,7 +192,7 @@ export const DiscussAudit: React.FC = () => {
                         state.contractNego.contractNegoAudit
                           .negoCompensationAmt -
                         parseFloat(
-                          isNaN(e.target?.value) ? "0" : e.target?.value
+                          isNaN(+e.target?.value) ? "0" : e.target?.value
                         ),
                     },
                   })

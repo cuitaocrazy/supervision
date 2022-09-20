@@ -25,7 +25,7 @@ import Attendance from "./pages/attendance/query";
 import { AttendanceDetail } from "./pages/attendance/detail";
 import AttendanceLaunch from "./pages/attendance/launch";
 import ContractNego from "./pages/contractNego/query";
-import ContractNegoAudit from "./pages/contractNego/audit";
+import ContractNegoAudit from "./pages/contractNego/Audit";
 // import ContractNegoDetail from "./pages/contractNego/Detail";
 import Teacher from "./pages/teacher/Query";
 import TeacherDetail from "./pages/teacher/Detail";
@@ -50,7 +50,7 @@ window
       await StatusBar.setStyle({
         style: status.matches ? Style.Dark : Style.Light,
       });
-    } catch {}
+    } catch { }
   });
 
 const AppShell = () => {

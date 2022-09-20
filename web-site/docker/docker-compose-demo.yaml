@@ -123,10 +123,8 @@ services:
     command: /root/run_java.sh
     volumes:
       - ../encryptByPubk:/root/app/
-      - ./run_java.sh:/root/run_java.sh
+      - ./script/run_java.sh:/root/run_java.sh
     ports:
       - 2999:2999
     networks:
       - supervision_demo
-
-    
