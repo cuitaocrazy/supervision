@@ -1,4 +1,4 @@
-import React from "react";
+import React,{Fragment,useState} from "react";
 import { IonPage, IonHeader, IonContent } from "@ionic/react";
 import { motion } from "framer-motion";
 // import { useRouter } from 'next/router'
@@ -7,6 +7,8 @@ import Navbar from "../Navbar";
 import { AppContext } from "../../appState";
 import { useContext } from "react";
 import { State } from "ionicons/dist/types/stencil-public-runtime";
+import { Dialog, Transition } from '@headlessui/react';
+import { useHistory } from "react-router-dom";
 
 // 订单课程信息card
 const ConOrderLessCard = () => {
@@ -62,6 +64,17 @@ const ConOrderLessCard = () => {
 const ConOrder = () => {
   const { state } = useContext(AppContext);
   console.log(state)
+  const history = useHistory();
+  // const [disAgree, setAgree] = useState(IsOrNotAgree[0].unavailable)
+  const [disAgree, setAgree] = useState(false)
+    // 是否同意合同dialog页面状态
+    let [isOpen, setIsOpen] = useState(false);
+    function closeModal() {
+      setIsOpen(false);
+    }
+    function openModal() {
+      setIsOpen(true);
+    }
   return (
     <IonPage>
       <IonHeader>
@@ -120,8 +133,8 @@ const ConOrder = () => {
         {/* 底部菜单 */}
         <div className="fixed bottom-0 flex flex-col w-full h-24 pl-5 mt-6 bg-white border-t justify-items-stretch">
           <div className="flex items-center justify-center pt-4">
-            <input type="radio" className="mr-2 " />
-            <Link to="/contract" className="text-gray-500 ">同意本教育机构的合同</Link>
+            <input type="radio" className="mr-2 " onClick={()=>setAgree(!disAgree)}  />
+            <Link to="/contentsOfContracts" className="text-gray-500">同意本教育机构的合同</Link>
           </div>
           <div className="flex">
             <div className="self-center justify-around text-xs text-gray-500">
@@ -130,13 +143,95 @@ const ConOrder = () => {
             <div className="self-center mr-4 text-2xl font-black text-red-500 grow justify-self-end">
               ¥{state.lessonDetail.lessonTotalPrice}
             </div>
-            <Link to="/eCNYPay">
-              <button className="self-center h-10 px-6 mt-1 mr-2 text-sm font-medium text-white justify-self-end bg-primary-500 rounded-3xl">
+           
+              <button className="self-center h-10 px-6 mt-1 mr-2 text-sm font-medium text-white justify-self-end bg-primary-500 rounded-3xl"
+              onClick={()=>{
+                if(disAgree){history.push("/eCNYPay")}
+                else 
+                openModal()
+                
+                
+              }}>
                 立即支付
               </button>
-            </Link>
+          
           </div>
         </div>
+        {/* 是否同意签订合同模态框  */}
+        <Transition appear show={isOpen} as={Fragment}>
+          <Dialog as="div" className="relative z-10" onClose={closeModal}>
+            <Transition.Child
+              as={Fragment}
+              enter="ease-out duration-300"
+              enterFrom="opacity-0"
+              enterTo="opacity-100"
+              leave="ease-in duration-200"
+              leaveFrom="opacity-100"
+              leaveTo="opacity-0"
+            >
+              <div className="fixed inset-0 bg-black bg-opacity-25" />
+            </Transition.Child>
+
+            <div className="fixed inset-0 overflow-y-auto">
+              <div className="flex items-center justify-center min-h-full p-4 text-center">
+                <Transition.Child
+                  as={Fragment}
+                  enter="ease-out duration-300"
+                  enterFrom="opacity-0 scale-95"
+                  enterTo="opacity-100 scale-100"
+                  leave="ease-in duration-200"
+                  leaveFrom="opacity-100 scale-100"
+                  leaveTo="opacity-0 scale-95"
+                >
+                  <Dialog.Panel className="w-full max-w-md p-4 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
+                    <Dialog.Title
+                      as="h3"
+                      className="text-lg font-medium leading-6 text-center text-gray-900"
+                    >
+                      是否同意合同
+                      <hr className="mt-2 mb-4" />
+                    </Dialog.Title>
+                    <form
+                      // onSubmit={setAgree(Number(disAgree)+1)}
+                      className="flex flex-col items-center rounded-lg justify-items-center"
+                    >
+                      <div className="flex items-center mb-4 justify-items-center">
+                        <div className="flex leading-7 justify-items-center">
+                          <div className="flex justify-end p-1 w-52">是否同意本教育机构的合同?</div>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-4 mt-2 justify-items-center">
+                        <input
+                          value="不同意"
+                          type="button"
+                          className="px-6 py-2 border rounded-md "
+                          onClick={()=>{
+                            closeModal();
+                            history.push("/conOrder")
+
+                          }}
+                        />
+                        <Link to="/eCNYPay">
+                        <input 
+                          value="同意"
+                          type="button"
+                          className="px-6 py-2 text-white border rounded-md bg-primary-600"
+                          onClick={()=>{
+                            closeModal();
+                            history.push("/eCNYPay")
+
+                          }}
+                          
+                        />
+                        </Link>
+                      </div>
+                    </form>
+                  </Dialog.Panel>
+                </Transition.Child>
+              </div>
+            </div>
+          </Dialog>
+        </Transition>
       </IonContent>
     </IonPage>
   );

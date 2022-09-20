@@ -1,4 +1,4 @@
-import React,{Fragment} from "react";
+import React,{Fragment,useEffect} from "react";
 import { IonPage, IonHeader, IonContent } from "@ionic/react";
 import { motion } from "framer-motion";
 // import { useRouter } from 'next/router'
@@ -9,6 +9,9 @@ import { useContext,useState } from "react";
 import { State } from "ionicons/dist/types/stencil-public-runtime";
 import { Dialog, Transition } from '@headlessui/react';
 import { useHistory } from "react-router-dom";
+import Search from '../Search'
+import {searchLessonURL} from '../../const/const'
+import { Lesson } from '../../types/types'
 
 // 订单课程信息card
 const ConOrderLessCard = () => {
@@ -70,11 +73,42 @@ const ConOrder = () => {
     setIsOpen(true);
   }
   console.log(state);
+  const [lessonList,setLessonList] = useState([] as Lesson[])
+  const onQuery = ()=>{
+    fetch(paramStr, {
+      method: 'GET',
+      headers: {
+        'Content-type': 'application/json;charset=UTF-8',
+      },
+    }).then(res => res.json())
+    .then((json) => {
+      setLessonList(json.result)  
+    })
+  }
+  useEffect(onQuery,[])
+  
+  const [queryStr,setQueryStr] = useState('')
+  const [page,setPage] = useState(0)
+  const getParamStr = (params: any, url: string) => {
+    let result = '?';
+    Object.keys(params).forEach(key => (result = result + key + '=' + params[key] + '&'));
+    return url + result;
+  };
+  const paramStr = getParamStr(
+    {
+      queryStr: queryStr,
+      page:page,
+      size:10
+    },
+    searchLessonURL
+  );
+  
+
   return (
     <IonPage>
       <IonHeader></IonHeader>
       <IonContent className="flex items-center justify-center justify-items-center scroll-auto">
-      <div className="fixed left-0 right-0 w-3/4 pb-2 mx-auto mt-1 bg-white ">
+      {/* <div className="fixed left-0 right-0 w-3/4 pb-2 mx-auto mt-1 bg-white ">
         <div className="flex items-center justify-around gap-10 pt-3 text-xs justify-items-stretch">
           <div className="flex flex-col justify-start">
             <div className="text-xl tracking-widest text-gray-900">
@@ -87,8 +121,9 @@ const ConOrder = () => {
           <div className="flex flex-row justify-end ">
           </div>
         </div>
-      </div>
-        <div className="flex w-3/4 mx-auto mt-20 text-sm text-gray-400 py-2 px-2 bg-gray-100">
+      </div> */}
+      <Search isOpen={state.isOpen} username={state.loginUser.username} setQueryStr={setQueryStr} onQuery={onQuery} />
+        <div className="flex w-3/4 mx-auto mt-24 text-sm text-gray-400 py-2 px-2 bg-gray-100">
           <div className="flex items-center ">
             <span className="pr-2">确认订单</span>
             <span className="pr-2">/</span>
