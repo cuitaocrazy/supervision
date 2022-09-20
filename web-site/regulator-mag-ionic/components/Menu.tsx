@@ -99,7 +99,6 @@ const Menu = () => {
       title: '系统管理',
       subMenu: [
         { title: '修改密码', path: '/tabs/changePwd' },
-
         { title: '政策公告', path: '/tabs/announcement/query' },
         { title: '黑名单管理', path: '/tabs/black/query' },
         { title: '用户管理', path: '/tabs/baseInfo/query' },
@@ -110,9 +109,7 @@ const Menu = () => {
       subMenu: [
         { title: '教育机构管理', path: '/tabs/orgMag/query' },
         { title: '课程管理', path: '/tabs/orgMag/query' },
-        { title: '考勤管理', path: '/tabs/attendance/query' },
         { title: '教师管理', path: '/tabs/teacher/query' },
-        { title: '手动划拨', path: '/tabs/tranferManual/query' },
         { title: '手动退课', path: '/tabs/contractNego/query' },
         { title: '投诉管理', path: '/tabs/complaint/query' },
       ],
@@ -122,8 +119,10 @@ const Menu = () => {
       title: '合约管理',
       subMenu: [
         { title: '合同管理', path: '/tabs/contract/query' },
-        { title: '智能合约部署查询', path: '/tabs/chainCode/query' },
-        { title: '智能合约签署汇总查询', path: '/tabs/chainCodeSignSum/query' },
+        { title: '合约执行', path: '/tabs/attendance/query' },
+        { title: '合约资金划拨', path: '/tabs/tranferManual/query' },
+        { title: '合约部署信息', path: '/tabs/chainCode/query' },
+        { title: '合约签署汇总', path: '/tabs/chainCodeSignSum/query' },
       ],
     },
     {
@@ -133,7 +132,7 @@ const Menu = () => {
         { title: '监管账户余额查询', path: '/tabs/statistics/balance' },
         { title: '监管账户流水查询', path: '/tabs/statistics/transaction' },
         { title: '监管账户清算明细查询', path: '/tabs/statistics/transaction' },
-        { title: '月交易汇总查询', path: '/tabs/tranSumQuery' },
+        { title: '月数币交易汇总查询', path: '/tabs/tranSumQuery' },
       ],
     },
   ];
@@ -152,7 +151,7 @@ const Menu = () => {
       let svgHidden = true;
       if (subMenu) {
         className =
-          'flex items-center justify-start w-full text-sm px-6 py-2 mt-2 space-x-6 rounded-lg hover:text-white focus:bg-primary-500 focus:text-white hover:bg-primary-500 focus:rounded-lg md:w-52';
+          'flex items-center justify-start w-full px-6 py-2 mt-2 space-x-6 text-sm rounded-lg hover:text-white focus:bg-primary-500 focus:text-white hover:bg-primary-500 focus:rounded-lg md:w-52';
         svgHidden = false;
       }
 
