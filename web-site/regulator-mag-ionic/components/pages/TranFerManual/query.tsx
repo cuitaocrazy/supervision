@@ -4,6 +4,7 @@ import { AppContext, setTransferManualList } from '../../../appState';
 import { Transfer } from '../../../types/types';
 import { IonPage, useIonToast } from '@ionic/react';
 import { Dialog, Transition } from '@headlessui/react';
+import Quit from '../../Quit';
 
 const queryURL = 'http://localhost:3003/attendannce/query';
 const handleTransfer = 'http://localhost:3003/attendannce/handleTransfer';
@@ -178,6 +179,7 @@ const TransferManualQuery: React.FC = () => {
   console.log(state);
   return (
     <IonPage className="bg-gray-100">
+      <Quit />
       <div className="relative w-full h-screen mx-6 overflow-auto">
         <div className="flex pt-2 my-2 text-gray-800">
           <div className="mr-2 text-gray-600">
@@ -197,8 +199,8 @@ const TransferManualQuery: React.FC = () => {
             </svg>
           </div>
           <div>
-            <span className="pr-1 text-gray-600">资金管理</span>/
-            <span className="pl-1 text-primary-500">手动划拨</span>
+            <span className="pr-1 text-gray-600">合约管理</span>/
+            <span className="pl-1 text-primary-500">合约资金划拨</span>
           </div>
         </div>
         {/* 手动划拨-确认模态框 */}

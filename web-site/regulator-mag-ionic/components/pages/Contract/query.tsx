@@ -116,7 +116,8 @@ const ContractQuery: React.FC = () => {
               </svg>
             </div>
             <div>
-              <span className="pr-1 text-gray-600">合同管理</span>
+              <span className="pr-1 text-gray-600">合约管理</span>/
+              <span className="pl-1 text-primary-500">合同管理</span>
             </div>
           </div>
           <div className="w-11/12 px-4 py-2 mt-4 bg-white rounded-lg ">

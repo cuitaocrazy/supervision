@@ -94,7 +94,8 @@ const ChinCodeQuery: React.FC = () => {
             </svg>
           </div>
           <div>
-            <span className="pr-1 text-gray-600">智能合约部署信息</span>
+            <span className="pr-1 text-gray-600">合约管理</span>/
+            <span className="pl-1 text-primary-600">合约部署信息</span>
           </div>
         </div>
         {/* <div className="w-11/12 px-4 py-2 mt-4 bg-white rounded-lg ">

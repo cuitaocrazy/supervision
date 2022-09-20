@@ -86,7 +86,8 @@ const ChinCodeSignSumQuery: React.FC = () => {
             </svg>
           </div>
           <div>
-            <span className="pr-1 text-gray-600">智能合约签署汇总信息</span>
+            <span className="pr-1 text-gray-600">合约管理</span>/
+            <span className="pl-1 text-primary-600">合约签署汇总</span>
           </div>
         </div>
 
