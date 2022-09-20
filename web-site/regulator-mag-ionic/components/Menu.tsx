@@ -101,7 +101,7 @@ const Menu = () => {
         { title: '修改密码', path: '/tabs/changePwd' },
         { title: '用户管理', path: '/tabs/baseInfo/query' },
         { title: '政策公告', path: '/tabs/announcement/query' },
-        { title: '黑名单管理', path: '/tabs/black/query' },  
+        { title: '黑名单管理', path: '/tabs/black/query' },
       ],
     },
     {
@@ -189,11 +189,11 @@ const Menu = () => {
               }
               const upElement = document.getElementById(menuItem.title + 'arrowUp');
               if (upElement != null) {
-                upElement.hidden = !upElement.hidden;
+                upElement.hidden = element?.hidden || false;
               }
               const downElement = document.getElementById(menuItem.title + 'arrowDown');
               if (downElement != null) {
-                downElement.hidden = !downElement.hidden;
+                downElement.hidden = !element?.hidden;
               }
             }}
           >
