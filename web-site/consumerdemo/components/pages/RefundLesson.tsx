@@ -1,5 +1,11 @@
 import React, { useState } from "react";
-import { IonPage, IonHeader, IonContent,IonToast,useIonToast } from "@ionic/react";
+import {
+  IonPage,
+  IonHeader,
+  IonContent,
+  IonToast,
+  useIonToast,
+} from "@ionic/react";
 import Navbar from "components/Navbar";
 import { AppContext } from "../../appState";
 import { useContext } from "react";
@@ -9,7 +15,7 @@ import { useHistory } from "react-router-dom";
 
 // 退订课程页面
 const RefoundLesson = () => {
-  const history=useHistory();
+  const history = useHistory();
   const [present, dismiss] = useIonToast();
   const { state } = useContext(AppContext);
   console.log(state.loginUser);
@@ -35,27 +41,24 @@ const RefoundLesson = () => {
       .then((res) => res.json())
       .then((json) => {
         // alert(json.result);
-        const result=json.result
-        if (result) 
-      {
-        present({
-          message:"提交退货成功",
-          duration:1000,
-          position:"middle",
-          cssClass:"text-center"
-          
-        });
-        
-      } else 
-      present({
-        buttons: [{ text: '关闭', handler: () => dismiss() }],
-        message: '提交退货失败',
-      })
-      history.push("./myLessonDetail")
+        const { result, status } = json;
+        if (status == "true") {
+          present({
+            message: "提交退货成功",
+            duration: 1000,
+            position: "middle",
+            cssClass: "text-center",
+          });
+        } else
+          present({
+            buttons: [{ text: "关闭", handler: () => dismiss() }],
+            message: result,
+          });
+        history.push("./myLessonDetail");
       });
   };
 
-   // 退课结果Toast
+  // 退课结果Toast
   const [showRefundtToast, setShowRefundtToast] = useState(false);
 
   return (
@@ -95,8 +98,7 @@ const RefoundLesson = () => {
             <div className="text-sm text-gray-700">协商原因</div>
             <textarea
               name="reason"
-               className="w-full h-40 px-4 py-4 mt-2 text-xs border-0 border-none rounded-md outline-none focus:border-0 focus:border-none bg-primary-50 focus:outline-none focus:glow-primary-600"
-
+              className="w-full h-40 px-4 py-4 mt-2 text-xs border-0 border-none rounded-md outline-none focus:border-0 focus:border-none bg-primary-50 focus:outline-none focus:glow-primary-600"
               placeholder="请告诉我们您退订课程的原因，让我们进一步改进!"
               onChange={(e) => {
                 setRefundState({
@@ -115,14 +117,13 @@ const RefoundLesson = () => {
             />
           </div>
           <IonToast
-              isOpen={showRefundtToast}
-              onDidDismiss={() => setShowRefundtToast(false)}
-              message="课程签到成功."
-              duration={300}
-              position="middle"
-            />
+            isOpen={showRefundtToast}
+            onDidDismiss={() => setShowRefundtToast(false)}
+            message="课程签到成功."
+            duration={300}
+            position="middle"
+          />
         </form>
-        
       </IonContent>
     </IonPage>
   );

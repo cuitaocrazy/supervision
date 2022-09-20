@@ -107,6 +107,14 @@ export const findOneContract = async ({ contractId }) => {
   return result;
 };
 
+export const findOneContractNego = async ({ contractId }) => {
+  const result = await mysql.getRepository(ContractNego).findOneBy({
+    contractId: contractId,
+  });
+  if (result === null) throw e;
+  return result;
+};
+
 export const findAttendance = async ({ lessonId, consumerId }) => {
   const result = await mysql
     .getRepository(Attendance)

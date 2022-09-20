@@ -473,6 +473,7 @@ import {
   saveContract,
   searchContract,
   findOneContract,
+  findOneContractNego,
   saveAttendance,
   saveTransaction,
   getNextSeq,
@@ -535,8 +536,6 @@ app.get("/consumer/lesson", jsonParser, async (req, res) => {
       return lesson;
     })
   );
-  console.log("xxxx");
-  console.log(convertLessonList);
   res.send({ status: "success", result: convertLessonList });
 });
 
@@ -547,35 +546,44 @@ app.put("/consumer/refund", jsonParser, async (req, res) => {
 
   var negoTransfered = 0;
   const contract = await findOneContract({ contractId: contractId });
-  console.log(contract);
-  if (contract.contractStatus == "nego") {
-    res.send({
-      status: "false",
-      result: "该订单目前已处于协商中，不可再次发起退货",
-    });
-    return;
-  }
-  if (contract.contractStatus != "valid") {
-    res.send({ status: "false", result: "该订单目前不可发起退货" });
-    return;
-  }
+
   const transactions = await findTransactions({
     contractId: contractId,
   });
-  // console.log(transactions);
   console.log(transactions.length);
   transactions.map((record) => {
     negoTransfered = negoTransfered + parseInt(String(record.transactionAmt));
   });
 
   var negoRemain = negoTransfered;
-  console.log(negoRemain);
-  console.log(contract.lessonTotalPrice);
-  console.log(negoTransfered);
   if (negoRemain <= 0 || negoRemain < refundAmtfen) {
     res.send({ status: "false", result: "剩余金额不足退还所需金额" });
     return;
   }
+  if (contract.contractStatus == "nego") {
+    const contractNego = await findOneContractNego({ contractId: contractId });
+    if (contractNego == null || contractNego.negoConsumerAgree) {
+      res.send({
+        status: "false",
+        result: "该订单目前已处于协商中，不可再次发起退货",
+      });
+    } else {
+      var negoRemain = negoTransfered;
+      contractNego.negoConsumerAgree = true;
+      contractNego.negoEduAgree = false;
+      contractNego.negoRefundAmt = refundAmtfen;
+      contractNego.negoCompensationAmt = negoRemain - refundAmtfen;
+      saveContractNego(contractNego);
+      console.log("saveContractNego");
+      res.send({ status: "success", result: "退货申请成功" });
+    }
+    return;
+  }
+  if (contract.contractStatus != "valid") {
+    res.send({ status: "false", result: "该订单目前不可发起退货" });
+    return;
+  }
+
   contract.contractStatus = "nego";
   await saveContract(contract);
   console.log("saveContract");
