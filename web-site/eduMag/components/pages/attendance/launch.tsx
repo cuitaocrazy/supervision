@@ -16,12 +16,14 @@ import moment from "moment";
 import { Dialog, Transition } from "@headlessui/react";
 import Paging from "../../paging";
 import Quit from "components/components/Quit";
+import localforage from "localforage";
 
 const queryURL = eduLessonFindURL;
 const attendanceApplyURL = eduAttendanceApplyURL;
 
 const ContractNegoQuery: React.FC = () => {
   const [present, dismiss] = useIonToast();
+  const [eduId, setEduId] = useState("");
   //  结果状态
   const resultState = "000";
   // 展示操作结果
@@ -67,6 +69,7 @@ const ContractNegoQuery: React.FC = () => {
   const paramStr = getParamStr(
     {
       lessonName: queryInfo.lessonName,
+      eduId: eduId,
     },
     queryURL
   );
@@ -115,6 +118,13 @@ const ContractNegoQuery: React.FC = () => {
   };
 
   const onQuery = () => {
+    const paramStr = getParamStr(
+      {
+        lessonName: queryInfo.lessonName,
+        eduId: eduId,
+      },
+      queryURL
+    );
     fetch(paramStr, {
       method: "GET",
       headers: {
@@ -130,7 +140,12 @@ const ContractNegoQuery: React.FC = () => {
         }
       });
   };
-  useEffect(onQuery, []);
+  useEffect(() => {
+    localforage.getItem("eduId").then((value) => {
+      setEduId(value as string);
+    });
+    onQuery();
+  }, [eduId]);
   const ListEntry = ({
     lesson,
     myKey,
