@@ -128,11 +128,11 @@ const Menu = () => {
     {
       title: '数币管理',
       subMenu: [
-        { title: '商户退款信息查询', path: '/tabs/statistics/refund' },
+        { title: '教育机构退款查询', path: '/tabs/statistics/refund' },
         { title: '监管账户余额查询', path: '/tabs/statistics/balance' },
         { title: '监管账户流水查询', path: '/tabs/statistics/transaction' },
         { title: '监管账户清算明细查询', path: '/tabs/statistics/transaction' },
-        { title: '月数币交易汇总查询', path: '/tabs/tranSumQuery' },
+        { title: '数币交易汇总查询（月）', path: '/tabs/tranSumQuery' },
       ],
     },
   ];

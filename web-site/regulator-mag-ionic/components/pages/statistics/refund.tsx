@@ -87,8 +87,8 @@ const Refund: React.FC = () => {
             </svg>
           </div>
           <div>
-            <span className="pr-1 text-gray-600">监管机构管理</span>/
-            <span className="pl-1 text-primary-500">余额查询</span>
+            <span className="pr-1 text-gray-600">数币管理</span>/
+            <span className="pl-1 text-primary-500">教育机构退款查询</span>
           </div>
         </div>
         <div className="w-11/12 px-4 py-2 mt-4 bg-white rounded-lg ">
