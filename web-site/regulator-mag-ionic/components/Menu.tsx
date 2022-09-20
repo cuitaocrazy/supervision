@@ -108,7 +108,7 @@ const Menu = () => {
       title: '业务管理',
       subMenu: [
         { title: '教育机构管理', path: '/tabs/orgMag/query' },
-        { title: '课程管理', path: '/tabs/orgMag/query' },
+        { title: '课程管理', path: '/tabs/lesson/query' },
         { title: '教师管理', path: '/tabs/teacher/query' },
         { title: '退课管理', path: '/tabs/contractNego/query' },
         { title: '投诉管理', path: '/tabs/complaint/query' },

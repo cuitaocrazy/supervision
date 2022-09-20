@@ -41,6 +41,7 @@ export const ComplaintDetail: React.FC = () => {
             </svg>
           </div>
           <div>
+            <span className="pr-1 text-gray-600">业务管理</span>/
             <span className="pr-1 text-gray-600">投诉管理</span>/
             <span className="pl-1 pr-1 text-primary-500">投诉详情信息</span>
           </div>

@@ -224,8 +224,8 @@ const ContractNegoQuery: React.FC = () => {
             </svg>
           </div>
           <div>
-            <span className="pr-1 text-gray-600">课程协商管理</span>/
-            <span className="pl-1 text-primary-500">协商列表</span>
+            <span className="pr-1 text-gray-600">业务管理</span>/
+            <span className="pl-1 text-primary-500">退课管理</span>
           </div>
         </div>
         <div className="w-11/12 px-4 py-2 mt-4 bg-white rounded-lg ">
