@@ -1,6 +1,6 @@
-import dynamic from 'next/dynamic';
+import dynamic from "next/dynamic";
 
-const App = dynamic(() => import('../components/AppShell'), {
+const App = dynamic(() => import("../components/AppShell"), {
   ssr: false,
 });
 

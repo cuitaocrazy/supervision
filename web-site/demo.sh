@@ -14,6 +14,7 @@ function chmodDir() {
         chmod 777 ./consumerdemo
         chmod 777 ./eduMag
         chmod 777 ./regulator-mag-ionic
+        chmod 777 ./consumer-pc
     else
         echo "non root user, skip chmod dir"
     fi
@@ -44,6 +45,7 @@ function stop() {
     cleanWebModule regulator-mag-ionic
     cleanWebModule consumerdemo
     cleanWebModule eduMag
+    cleanWebModule consumer-pc
 }
 
 function doCheck() {
@@ -59,8 +61,11 @@ function doCheck() {
     elif [ "${parameter}" == "edb" ]; then
         name="监管端"
         url="http://localhost:8080/edb"
+    elif [ "${parameter}" == "consumerpc" ]; then
+        name="消费者pc"
+        url="http://localhost:8080/consumerpc"
     else
-        echo "error parameter, [ consumer | edu | edb ]"
+        echo "error parameter, [ consumer | edu | edb | consumerpc]"
         exit 1
     fi
 
@@ -80,6 +85,7 @@ function check() {
     doCheck "consumer"
     doCheck "edu"
     doCheck "edb"
+    doCheck "consumerpc"
 }
 
 if [ "${MODE}" == "start" ]; then

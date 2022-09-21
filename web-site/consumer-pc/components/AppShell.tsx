@@ -9,19 +9,15 @@ import { IonReactRouter } from "@ionic/react-router";
 import { Route, Redirect } from "react-router-dom";
 import Register from "./pages/Register";
 import Home from "./pages/Home";
-
 import SearchLessonList from "./pages/SearchLessonList";
 import SearchLessonDetail from "./pages/SearchLessonDetail";
-
 import ConOrder from "./pages/ConOrder";
-
 import EditStuInfo from "./pages/EditStuInfo";
 import PayResult from "./pages/PayResult";
 import MyLessonList from "./pages/MyLessonList";
 import MyLessonDetail from "./pages/MyLessonDetail";
 import MyNoticeDetail from "./pages/MyNoticeDetail";
 import EditPwd from "./pages/EditPwd";
-
 import MyPersonalInfo from "./pages/MyPersonalInfo";
 import ECNYPay from "./pages/ECNYPay";
 import ECNYPayResult from "./pages/ECNYPayResult";
@@ -39,14 +35,14 @@ window
       await StatusBar.setStyle({
         style: status.matches ? Style.Dark : Style.Light,
       });
-    } catch { }
+    } catch {}
   });
 
 const AppShell = () => {
   return (
     <AppContextProvider>
       <IonApp>
-        <IonReactRouter basename="/consumer">
+        <IonReactRouter basename="/consumerpc">
           {/* <Menu></Menu> */}
 
           <IonSplitPane

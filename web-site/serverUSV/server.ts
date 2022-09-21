@@ -14,7 +14,10 @@ app.use(express.static("out"));
 import * as cc from "./ccClientService/USVClient";
 //查询后台是否交易成功的最大次数。
 const QUERYPAYMENTMAX = 60;
-const decryptServiceUrl = "http://localhost:2999/encrypt?plainText=";
+// const decryptServiceUrl = "http://localhost:2999/encrypt?plainText=";
+const decryptServiceUrl =
+  "http://supervision-demo-encrypt:2999/encrypt?plainText=";
+
 const port = 3003;
 const jsonParser = bodyParser.json();
 
@@ -53,7 +56,6 @@ app.post("/preorder", jsonParser, async (req, res) => {
     subscribeID + "_preorder",
     function (subscribe: SubscribeWithSign) {
       res.send({ SubscribeID: subscribeID, PayUrl: subscribe.PayUrl });
-      // socket.emit(USVOrderNo + '_create', 'Success')
     }
   );
   // res.send(result.data);

@@ -6,7 +6,6 @@ import { Link } from "react-router-dom";
 import Navbar from "../Navbar";
 import { AppContext } from "../../appState";
 import { useContext,useState } from "react";
-import { State } from "ionicons/dist/types/stencil-public-runtime";
 import { Dialog, Transition } from '@headlessui/react';
 import { useHistory } from "react-router-dom";
 import Search from '../Search'

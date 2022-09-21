@@ -6,6 +6,8 @@ export const searchContractURL = `${serverPath}/contractList`;
 export const checkInURL = `${serverPath}/checkIn`;
 export const leaveURL = `${serverPath}/leave`;
 export const searchAttendanceURL = `${serverPath}/attendance`;
- const socketUrlOrigin = `${serverPath}`;
-export const socketUrl = socketUrlOrigin.substring(0,socketUrlOrigin.lastIndexOf('/') )
-
+const socketUrlOrigin = `${serverPath}`;
+export const socketUrl = socketUrlOrigin.substring(
+  0,
+  socketUrlOrigin.lastIndexOf("/")
+);

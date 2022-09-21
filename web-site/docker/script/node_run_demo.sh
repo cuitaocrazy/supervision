@@ -14,8 +14,11 @@ function run() {
     elif [ "$MODE" == "edb" ]; then
         npx next build
         npx next start -p 3002
+    elif [ "$MODE" == "consumerpc" ]; then
+        npx next build
+        npx next start -p 3004
     else
-        echo "parameter must be [ server | consumer | edu | edb ]"
+        echo "parameter must be [ server | consumer | edu | edb | consumerpc ]"
         exit '1'
     fi
 }

@@ -64,6 +64,8 @@ services:
       - supervision_demo_server
     networks:
       - supervision_demo
+
+  
   # 教育机构端
   supervision_demo_edu:
     image: node:latest
@@ -117,14 +119,33 @@ services:
     networks:
       - supervision_demo
   # java 加解密通信
-  supervision_demo_encrypt:
+  supervision-demo-encrypt:
     image: maven:3.8.6-openjdk-18
-    container_name: supervision_demo_encrypt
+    container_name: supervision-demo-encrypt
     command: /root/run_java.sh
     volumes:
       - ../encryptByPubk:/root/app/
       - ./script/run_java.sh:/root/run_java.sh
     ports:
       - 2999:2999
+    networks:
+      - supervision_demo
+  # 消费者pc端
+  supervision_demo_consumerpc:
+    image: node:latest
+    user: "node"
+    working_dir: /home/node/
+    command: /home/script/wait_for.sh -t 0 supervision_demo_edb:3002 -- /home/script/node_run_demo.sh consumerpc
+    environment:
+      - NEXT_PUBLIC_SERVER_PATH=http://${host}:8080/api/consumer
+      - NEXT_PUBLIC_ROOT_PATH=/consumerpc
+    volumes:
+      - ../consumer-pc:/home/node/
+      - ./script/:/home/script/
+    ports:
+      - 3004:3004
+    container_name: supervision_demo_consumerpc
+    depends_on:
+      - supervision_demo_server
     networks:
       - supervision_demo

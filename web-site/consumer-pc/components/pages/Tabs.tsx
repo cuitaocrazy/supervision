@@ -1,22 +1,26 @@
-import { Route } from 'react-router-dom';
-import { IonRouterOutlet, IonTabs, IonTabBar, IonTabButton, IonIcon, IonLabel } from '@ionic/react';
+import { Route } from "react-router-dom";
 import {
-  home,
-  school,
-  cart,
-  person,
-  list
-} from 'ionicons/icons';
-import Home from './Home'
-import MyLessonList from './MyLessonList'
-import Login from './Login'
+  IonRouterOutlet,
+  IonTabs,
+  IonTabBar,
+  IonTabButton,
+  IonIcon,
+  IonLabel,
+} from "@ionic/react";
+import { home, school, cart, person, list } from "ionicons/icons";
+import Home from "./Home";
+import MyLessonList from "./MyLessonList";
 
 const Tabs = () => {
   return (
     <IonTabs>
       <IonRouterOutlet>
         <Route path="/tabs/home" component={Home} exact={true} />
-        <Route path="/tabs/myLessonList" component={MyLessonList} exact={true} />
+        <Route
+          path="/tabs/myLessonList"
+          component={MyLessonList}
+          exact={true}
+        />
       </IonRouterOutlet>
       <IonTabBar slot="bottom">
         <IonTabButton tab="首页" href="/tabs/home">

@@ -7,6 +7,8 @@ import { AppContext, setloginUser, setOpenLogin } from "../appState";
 interface searchProps {
   setQueryStr: Function;
   onQuery: Function;
+  isOpen?: Function;
+  username?: string;
 }
 /* 搜索框 */
 const Search: FC<searchProps> = (props) => {
@@ -24,7 +26,13 @@ const Search: FC<searchProps> = (props) => {
   const registerPwd = useFormPwd.register;
   const handleSubmitPwd = useFormPwd.handleSubmit;
   // const [LoginDialogIsOrNotOpen,setLoginDialogIsOrNotOpen]=useState(undefined as boolean | undefined);
-  const { state: { loginUser: { username }, openLogin }, dispatch } = useContext(AppContext);
+  const {
+    state: {
+      loginUser: { username },
+      openLogin,
+    },
+    dispatch,
+  } = useContext(AppContext);
   const refreshLoginUser = useCallback(
     (loginUser: any) => {
       dispatch(setloginUser(loginUser));
@@ -34,16 +42,17 @@ const Search: FC<searchProps> = (props) => {
   // 添加登录dialog状态
   const setIsOpen = useCallback(
     (isOpen: boolean) => {
-      dispatch(setOpenLogin(isOpen))
-    }, [dispatch]
-  )
+      dispatch(setOpenLogin(isOpen));
+    },
+    [dispatch]
+  );
   function closeModal() {
     setIsOpen(false);
   }
   function openModal() {
     setIsOpen(true);
   }
-  console.log(`openLogin:${openLogin}`)
+  console.log(`openLogin:${openLogin}`);
   const onSubmitLogin = (loginType: string) => (data: any) => {
     if (loginType === "verfiyCode") {
       fetch(loginURL, {
@@ -82,18 +91,19 @@ const Search: FC<searchProps> = (props) => {
             username: json.result.username,
             userId: json.result.userId,
           });
-          closeModal()
+          closeModal();
         });
     }
   };
 
   function logout() {
-    refreshLoginUser({//登录用户信息
+    refreshLoginUser({
+      //登录用户信息
       userId: null,
       loginName: null,
       username: null,
       phone: null,
-      role: null
+      role: null,
     });
   }
 
@@ -106,7 +116,9 @@ const Search: FC<searchProps> = (props) => {
               <div className="text-xl tracking-widest text-gray-900">
                 资金监管平台
               </div>
-              <div className="text-sm tracking-widest text-gray-400">我的课堂</div>
+              <div className="text-sm tracking-widest text-gray-400">
+                我的课堂
+              </div>
             </div>
             <div className="flex flex-row items-center w-96">
               <input
@@ -132,23 +144,32 @@ const Search: FC<searchProps> = (props) => {
               </button>
             </div>
             <div className="flex flex-row justify-end items-center text-white">
-              <button className="h-10  mr-3 text-base   rounded-md  px-4 py-2 bg-primary-600 focus:bg-primary-800 hover:bg-primary-700" hidden={username != null}
-                onClick={openModal}>
+              <button
+                className="h-10  mr-3 text-base   rounded-md  px-4 py-2 bg-primary-600 focus:bg-primary-800 hover:bg-primary-700"
+                hidden={username != null}
+                onClick={openModal}
+              >
                 登录
               </button>
-              <button className="h-10 px-4 py-2  text-base  rounded-md bg-primary-600 focus:bg-primary-800 hover:bg-primary-700" hidden={username != null}>
+              <button
+                className="h-10 px-4 py-2  text-base  rounded-md bg-primary-600 focus:bg-primary-800 hover:bg-primary-700"
+                hidden={username != null}
+              >
                 注册
               </button>
-              <button className="h-10 px-4 py-2  mr-3 text-base  rounded-md bg-primary-600 focus:bg-primary-800 hover:bg-primary-700 " hidden={username == null}
-                onClick={logout}>
+              <button
+                className="h-10 px-4 py-2  mr-3 text-base  rounded-md bg-primary-600 focus:bg-primary-800 hover:bg-primary-700 "
+                hidden={username == null}
+                onClick={logout}
+              >
                 退出
               </button>
             </div>
           </div>
         </div>
-      </form >
+      </form>
       {/* 新增课程模态框 */}
-      < Transition appear show={openLogin} as={Fragment}>
+      <Transition appear show={openLogin} as={Fragment}>
         <Dialog as="div" className="relative z-10" onClose={closeModal}>
           <Transition.Child
             as={Fragment}
@@ -181,14 +202,14 @@ const Search: FC<searchProps> = (props) => {
                     账号登录
                     <hr className="mt-2 mb-4" />
                   </Dialog.Title>
-                  <form id="2" onSubmit={handleSubmitPwd(onSubmitLogin("account"))}
+                  <form
+                    id="2"
+                    onSubmit={handleSubmitPwd(onSubmitLogin("account"))}
                     className="flex flex-col items-center rounded-lg justify-items-center"
                   >
                     <div className="flex items-center mb-4 justify-items-center">
                       <div className="flex leading-7 justify-items-center">
-                        <div className="flex justify-end p-1 w-36">
-                          用户名:
-                        </div>
+                        <div className="flex justify-end p-1 w-36">用户名:</div>
                         <input
                           className="w-64 p-1 text-gray-600 bg-gray-100 border rounded-md justify-self-start focus:outline-none"
                           {...registerPwd("username", { required: true })}
@@ -197,7 +218,6 @@ const Search: FC<searchProps> = (props) => {
                             console.log(e.target.value);
                           }}
                           placeholder="请输入账号"
-
                         ></input>
                       </div>
                     </div>
@@ -216,7 +236,6 @@ const Search: FC<searchProps> = (props) => {
                         ></input>
                       </div>
                     </div>
-
 
                     <div className="flex items-center gap-4 mt-2 justify-items-center">
                       <input
@@ -237,10 +256,9 @@ const Search: FC<searchProps> = (props) => {
               </Transition.Child>
             </div>
           </div>
-
         </Dialog>
-      </Transition >
-    </div >
+      </Transition>
+    </div>
   );
 };
 
