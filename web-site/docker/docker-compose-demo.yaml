@@ -34,6 +34,7 @@ services:
     command: /home/script/wait_for.sh -t 0 supervision_demo_mysql:3306 -- /home/script/node_run_demo.sh server
     environment:
       - DB_HOST=supervision_demo_mysql
+      - DECRYPT_SERVER_PATH=supervision-demo-encrypt:2999
     volumes:
       - ../serverUSV:/home/node/
       - ./script/:/home/script/

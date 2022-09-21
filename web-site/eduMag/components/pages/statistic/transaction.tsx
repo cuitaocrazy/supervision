@@ -98,11 +98,11 @@ const Transaction: React.FC = () => {
     });
   };
   // useEffect(onQuery, []);
-  console.log("111"+loginName)
+  console.log("111" + loginName);
   useEffect(() => {
     localforage.getItem("loginName").then((value) => {
       setLoginName(value as string);
-      console.log("222"+value)
+      console.log("222" + value);
       onQuery();
     });
   }, [loginName]);

@@ -14,9 +14,11 @@ app.use(express.static("out"));
 import * as cc from "./ccClientService/USVClient";
 //查询后台是否交易成功的最大次数。
 const QUERYPAYMENTMAX = 60;
+const DECRYPT_SERVER_PATH = process.env.DECRYPT_SERVER_PATH || "localhost:2999";
+console.log(process.env.DECRYPT_SERVER_PATH);
 // const decryptServiceUrl = "http://localhost:2999/encrypt?plainText=";
-const decryptServiceUrl =
-  "http://supervision-demo-encrypt:2999/encrypt?plainText=";
+const decryptServiceUrl = `http://${DECRYPT_SERVER_PATH}/encrypt?plainText=`;
+// ("http://supervision-demo-encrypt:2999/encrypt?plainText=");
 
 const port = 3003;
 const jsonParser = bodyParser.json();
@@ -1227,6 +1229,7 @@ import { Announcement } from "./src/entity/Announcement";
 import { ContractNego } from "./src/entity/ContractNego";
 import EduLessonService from "./src/edb/EduLessonService";
 import { Contract } from "./src/entity/Contract";
+import { SimpleConsoleLogger } from "typeorm";
 app.post("/edb/announcement/create", jsonParser, async (req, res) => {
   console.log(`教育局: 公告政策添加: 条件[${JSON.stringify(req.body)}]`);
   const info: Announcement = req.body;

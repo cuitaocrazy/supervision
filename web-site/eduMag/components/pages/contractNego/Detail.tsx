@@ -8,7 +8,6 @@ import {
 import { Redirect } from "react-router-dom";
 import { useCallback, useContext } from "react";
 import { AppContext, setDiscussDetail } from "../../../appState";
-import { Link } from "react-router-dom";
 import Quit from "components/components/Quit";
 
 export const DiscussDetail: React.FC = () => {

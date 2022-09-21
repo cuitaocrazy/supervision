@@ -5,7 +5,6 @@ import Paging from '../../paging';
 import moment from 'moment';
 import { edbRefundFindURL } from 'const/const';
 
-
 const findURL = edbRefundFindURL;
 
 const Refund: React.FC = () => {
@@ -58,7 +57,9 @@ const Refund: React.FC = () => {
     <tr className="grid items-center grid-cols-6 gap-2 text-gray-600 border justify-items-center even:bg-white odd:bg-primary-100 ">
       <td className="flex items-center justify-center leading-10">{record.transactionId}</td>
       <td className="flex items-center justify-center leading-10">{record.lessonName}</td>
-      <td className="flex items-center justify-center leading-10">{Math.abs(record.transactionAmt)}</td>
+      <td className="flex items-center justify-center leading-10">
+        {Math.abs(record.transactionAmt)}
+      </td>
       <td className="flex items-center justify-center leading-10">{record.tranDate}</td>
       <td className="flex items-center justify-center leading-10">{record.tranTime}</td>
       <td className="flex items-center justify-center leading-10">{record.eduSupervisedAccount}</td>
@@ -66,7 +67,7 @@ const Refund: React.FC = () => {
   );
 
   return (
-    <IonPage className='bg-gray-100'>
+    <IonPage className="bg-gray-100">
       <Quit />
       <div className="relative w-full h-screen mx-6 overflow-auto">
         <div className="flex pt-2 my-2 text-gray-800">

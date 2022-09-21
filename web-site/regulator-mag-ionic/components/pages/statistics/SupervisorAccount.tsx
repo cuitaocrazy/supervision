@@ -127,11 +127,8 @@ export const SupervisorAccount: React.FC = () => {
               {/* <img className="rounded-lg cursor-pointer" src='http://placekitten.com/g/200/300' alt="" /> */}
             </div>
             <div className="mt-2">
-              
               <span className="font-bold text-gray-900">教育局监管数字人民币账户余额总和：</span>
-              <span className="text-lg text-orange-600 font-blod">
-                {supversingAccountAmt}
-              </span>
+              <span className="text-lg text-orange-600 font-blod">{supversingAccountAmt}</span>
               <span className="pl-1 font-bold">元</span>
               <a className="pl-2 text-sm text-blue-600" onClick={onClick}>
                 点击查看
@@ -171,7 +168,7 @@ export const SupervisorAccount: React.FC = () => {
             />
             <TranSumCard
               tranDesc="今日划拨金额（元）"
-              tranCount={Math.abs(Number(transferAmt))}
+              tranCount={transferAmt.replaceAll('-', '')}
               d="M9 7.5l3 4.5m0 0l3-4.5M12 12v5.25M15 12H9m6 3H9m12-3a9 9 0 11-18 0 9 9 0 0118 0z"
               logoClassName="w-16 h-16 text-orange-400"
             />
