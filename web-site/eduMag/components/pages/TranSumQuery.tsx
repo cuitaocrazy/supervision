@@ -198,14 +198,14 @@ const TranSumQuery = () => {
                   {refundNumber}
                 </td>
                 <td className="flex items-center justify-center flex-1 leading-10 ">
-                  {refundAmt}
+                  {Math.abs(Number(refundAmt))}
                 </td>
 
                 <td className="flex items-center justify-center flex-1 leading-10 ">
                   {transferNumber}
                 </td>
                 <td className="flex items-center justify-center flex-1 leading-10 ">
-                  {transferAmt}
+                  {Math.abs(Number(transferAmt))}
                 </td>
               </tr>
             </tbody>
