@@ -124,7 +124,7 @@ const Transaction: React.FC = () => {
         </Clipboard>
       </td>
       <td className="flex items-center justify-center leading-10">
-        {record.transactionAmt}
+        {Math.abs(Number(record.transactionAmt))}
       </td>
       <td className="flex items-center justify-center leading-10">
         {record.tranDate}
