@@ -1,4 +1,5 @@
-const serverPath = process.env.SERVER_PATH || "http://localhost:3003/consumer";
+const serverPath =
+  process.env.NEXT_PUBLIC_SERVER_PATH || "http://localhost:3003/consumer";
 export const loginURL = `${serverPath}/login`;
 export const searchLessonURL = `${serverPath}/lesson`;
 export const preOrderURL = `${serverPath}/pc/preOrder`;
