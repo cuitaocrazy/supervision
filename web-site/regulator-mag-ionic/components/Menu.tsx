@@ -1,42 +1,25 @@
 import { StatusBar, Style } from '@capacitor/status-bar';
 import {
-  IonButton,
   IonContent,
   IonHeader,
   IonIcon,
-  IonItem,
-  IonLabel,
-  IonList,
   IonMenu,
-  IonMenuToggle,
   IonTitle,
   IonToolbar,
 } from '@ionic/react';
+import { arrowDownOutline, arrowUpOutline } from 'ionicons/icons'
 import {
   useEffect,
   useState,
-  useContext,
-  JSXElementConstructor,
-  ReactElement,
-  ReactFragment,
-  ReactPortal,
 } from 'react';
-import { flash, arrowDown, arrowUp } from 'ionicons/icons';
 import { useRouter } from 'next/router';
-import { AppContext } from '../appState';
-import { Link, Redirect, Route } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import localforage from 'localforage';
-import { LocationDescriptor, Location } from 'history';
 
 const pages = [];
 
 const Menu = () => {
   const [isDark, setIsDark] = useState(false);
-  const [baseInfoVisible, setBaseInfoVisible] = useState(false);
-  const [eduOrgMagVisible, setEduOrgMagVisible] = useState(false);
-  const [fundVisible, setFundVisible] = useState(false);
-  const [statisticVisible, setStatisticVisible] = useState(false);
-  const { state } = useContext(AppContext);
   const router = useRouter();
 
   // console.log(window.loginUser);
@@ -50,14 +33,14 @@ const Menu = () => {
       await StatusBar.setStyle({
         style: isDark ? Style.Dark : Style.Light,
       });
-    } catch {}
+    } catch { }
   };
   const handleClose = async () => {
     try {
       await StatusBar.setStyle({
         style: isDark ? Style.Dark : Style.Light,
       });
-    } catch {}
+    } catch { }
   };
 
   useEffect(() => {
@@ -69,29 +52,6 @@ const Menu = () => {
     });
     setIsDark(window.matchMedia('(prefers-color-scheme: dark)').matches);
   }, []);
-
-  // const MeunPage = [
-  //   { title: '首页', path: '/tabs/statistics/supervisorAccount' },
-  //   { title: '教育机构管理', path: '/tabs/orgMag/query' },
-  //   { title: '课程管理', path: '/tabs/orgMag/query' },
-  //   { title: '合同管理', path: '/tabs/contract/query' },
-  //   { title: '考勤管理', path: '/tabs/attendance/query' },
-  //   { title: '划拨清单', path: '/tabs/teacher/query' },
-  //   { title: '修改密码', path: '/tabs/changePwd' },
-  //   { title: '用户管理', path: '/tabs/baseInfo/query' },
-  //   { title: '手动划拨', path: '/tabs/tranferManual/query' },
-  //   { title: '手动退课', path: '/tabs/contractNego/query' },
-  //   { title: '政策公告', path: '/tabs/announcement/query' },
-  //   { title: '黑名单管理', path: '/tabs/black/query' },
-  //   { title: '投诉管理', path: '/tabs/complaint/query' },
-  //   { title: '智能合约部署查询', path: '/tabs/chainCode/query' },
-  //   { title: '智能合约签署汇总查询', path: '/tabs/chainCodeSignSum/query' },
-  //   { title: '商户退款信息查询', path: '/tabs/statistics/refund' },
-  //   { title: '监管账户余额查询', path: '/tabs/statistics/balance' },
-  //   { title: '监管账户流水查询', path: '/tabs/statistics/transaction' },
-  //   { title: '监管账户清算明细查询', path: '/tabs/statistics/transaction' },
-  //   { title: '月交易汇总查询', path: '/tabs/tranSumQuery' },
-  // ];
 
   const MeunPage = [
     { title: '首页', path: '/tabs/statistics/supervisorAccount' },
@@ -199,13 +159,13 @@ const Menu = () => {
           >
             {menuItem.title}
             <IonIcon
-              name="arrow-down-outline"
+              icon={arrowDownOutline}
               id={menuItem.title + 'arrowDown'}
               hidden={false}
             ></IonIcon>
             <IonIcon
+              icon={arrowUpOutline}
               id={menuItem.title + 'arrowUp'}
-              name="arrow-up-outline"
               hidden={true}
             ></IonIcon>
             {/* <ion-icon name="arrow-down-outline" id={menuItem.title + 'arrowDown'} hidden={false}></ion-icon>

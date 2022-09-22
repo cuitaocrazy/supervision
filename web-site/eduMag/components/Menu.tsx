@@ -1,32 +1,20 @@
 import { StatusBar, Style } from "@capacitor/status-bar";
 import {
-  IonButton,
   IonContent,
   IonHeader,
   IonIcon,
-  IonItem,
-  IonLabel,
-  IonList,
   IonMenu,
-  IonMenuToggle,
   IonTitle,
   IonToolbar,
-  IonCard,
 } from "@ionic/react";
-import { useEffect, useState, useContext } from "react";
-import { flash, arrowDown, arrowUp } from "ionicons/icons";
+import { useEffect, useState } from "react";
+import { arrowDownOutline, arrowUpOutline } from "ionicons/icons";
 import { useRouter } from "next/router";
-import { AppContext } from "../appState";
-import Router from "next/router";
 import { Link } from "react-router-dom";
 import localforage from "localforage";
 
 const Menu = () => {
   const [isDark, setIsDark] = useState(false);
-  const [lessonVisible, setLessonVisible] = useState(false);
-
-  const [attendanceVisible, setAttendanceVisible] = useState(false);
-  const [statisticVisible, setStatisticVisible] = useState(false);
   const router = useRouter();
   //todo 以后根据保存到localstorage的信息判断
 
@@ -67,14 +55,14 @@ const Menu = () => {
       await StatusBar.setStyle({
         style: isDark ? Style.Dark : Style.Light,
       });
-    } catch {}
+    } catch { }
   };
   const handleClose = async () => {
     try {
       await StatusBar.setStyle({
         style: isDark ? Style.Dark : Style.Light,
       });
-    } catch {}
+    } catch { }
   };
 
   useEffect(() => {
@@ -153,13 +141,13 @@ const Menu = () => {
           >
             {menuItem.title}
             <IonIcon
-              name="arrow-down-outline"
+              icon={arrowDownOutline}
               id={menuItem.title + "arrowDown"}
               hidden={false}
             ></IonIcon>
             <IonIcon
               id={menuItem.title + "arrowUp"}
-              name="arrow-up-outline"
+              icon={arrowUpOutline}
               hidden={true}
             ></IonIcon>
           </div>
