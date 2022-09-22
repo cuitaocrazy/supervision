@@ -66,7 +66,6 @@ services:
     networks:
       - supervision_demo
 
-  
   # 教育机构端
   supervision_demo_edu:
     image: node:latest
@@ -119,6 +118,7 @@ services:
       - 80:80
     networks:
       - supervision_demo
+    restart: always
   # java 加解密通信
   supervision-demo-encrypt:
     image: maven:3.8.6-openjdk-18

@@ -48,6 +48,17 @@ function stop() {
     cleanWebModule consumer-pc
 }
 
+function loadingAnimation() {
+    frames="/ | \\ -"
+    for i in {1..5}
+    do
+        for frame in $frames; do
+            printf "\r $frame 检查服务中..."
+            sleep 0.5
+        done
+    done
+}
+
 function doCheck() {
     local parameter=$1
     local name
@@ -75,8 +86,8 @@ function doCheck() {
             echo "$name 启动成功: $url"
             break
         else
-            echo "$name 启动未完成: $code , 10秒后再看"
-            sleep 10
+            # echo "$name 启动未完成: $code , 10秒后再看"
+            loadingAnimation
         fi
     done
 }
