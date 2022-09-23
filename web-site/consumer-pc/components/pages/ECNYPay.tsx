@@ -9,7 +9,7 @@ import { io } from "socket.io-client";
 import { Link } from "react-router-dom";
 import { QRCodeCanvas } from "qrcode.react";
 import Search from '../Search'
-import {searchLessonURL} from '../../const/const'
+import { searchLessonURL } from '../../const/const'
 import { Lesson } from '../../types/types'
 
 // 数币支付页面
@@ -33,8 +33,7 @@ const ECNYPay = () => {
     socket.on("open", () => {
       console.log("socket io is open !");
     });
-    console.log("socketUrl");
-    console.log(socketUrl);
+    console.log(`socketUrl is: [${socketUrl}]`);
     fetch(preOrderURL, {
       method: "POST",
       body: JSON.stringify({
@@ -73,22 +72,22 @@ const ECNYPay = () => {
     }
   };
 
-  const [lessonList,setLessonList] = useState([] as Lesson[])
-  const onQuery = ()=>{
+  const [lessonList, setLessonList] = useState([] as Lesson[])
+  const onQuery = () => {
     fetch(paramStr, {
       method: 'GET',
       headers: {
         'Content-type': 'application/json;charset=UTF-8',
       },
     }).then(res => res.json())
-    .then((json) => {
-      setLessonList(json.result)  
-    })
+      .then((json) => {
+        setLessonList(json.result)
+      })
   }
-  useEffect(onQuery,[])
-  
-  const [queryStr,setQueryStr] = useState('')
-  const [page,setPage] = useState(0)
+  useEffect(onQuery, [])
+
+  const [queryStr, setQueryStr] = useState('')
+  const [page, setPage] = useState(0)
   const getParamStr = (params: any, url: string) => {
     let result = '?';
     Object.keys(params).forEach(key => (result = result + key + '=' + params[key] + '&'));
@@ -97,8 +96,8 @@ const ECNYPay = () => {
   const paramStr = getParamStr(
     {
       queryStr: queryStr,
-      page:page,
-      size:10
+      page: page,
+      size: 10
     },
     searchLessonURL
   );
@@ -107,7 +106,7 @@ const ECNYPay = () => {
     <IonPage>
       <IonContent>
         <div className="flex flex-col w-3/4 mx-auto">
-        {/* <div className="flex items-center justify-around gap-10 pt-3 text-xs justify-items-stretch">
+          {/* <div className="flex items-center justify-around gap-10 pt-3 text-xs justify-items-stretch">
           <div className="flex flex-col justify-start">
             <div className="text-xl tracking-widest text-gray-900">
               资金监管平台
@@ -120,12 +119,12 @@ const ECNYPay = () => {
           
           </div>
         </div> */}
-        <Search isOpen={state.isOpen} username={state.loginUser.username} setQueryStr={setQueryStr} onQuery={onQuery} />
-        <div className="flex px-2 py-2 mt-24 text-sm text-gray-400 bg-gray-100">
-          <div className="flex items-center ">
-            <span className="pr-2">订单支付</span>
+          <Search isOpen={state.isOpen} username={state.loginUser.username} setQueryStr={setQueryStr} onQuery={onQuery} />
+          <div className="flex px-2 py-2 mt-24 text-sm text-gray-400 bg-gray-100">
+            <div className="flex items-center ">
+              <span className="pr-2">订单支付</span>
+            </div>
           </div>
-        </div>
           <div className="px-4 py-4 text-base leading-7 shadow-md rounded-b-md">
             <p>
               <span className="pr-3 text-gray-400">订单编号</span>

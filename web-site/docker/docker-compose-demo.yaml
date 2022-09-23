@@ -139,6 +139,7 @@ services:
     command: /home/script/wait_for.sh -t 0 supervision_demo_edb:3002 -- /home/script/node_run_demo.sh consumerpc
     environment:
       - NEXT_PUBLIC_SERVER_PATH=http://${host}:8080/api/consumer
+      - NEXT_PUBLIC_SERVER_WS_PATH=http://${host}:8080
       - NEXT_PUBLIC_ROOT_PATH=/consumerpc
     volumes:
       - ../consumer-pc:/home/node/
