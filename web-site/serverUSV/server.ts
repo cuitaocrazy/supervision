@@ -1297,7 +1297,7 @@ const updateContractAndSaveTransaction = async (contractId) => {
     contractId: contractId,
   });
   contract.contractStatus = "valid";
-  saveContract(contract);
+  await saveContract(contract);
   const edu = await findOneEdu({ eduId: contract.eduId });
   const newTransaction = {
     transactionId: getTransactionId(),
@@ -1316,6 +1316,7 @@ io.on("connection", function (socket) {
   console.log("somebody connection");
   socket.emit("open");
 
+  //todo 不能依赖前台告知
   socket.on("pcPay", async function (contractId) {
     var count = 0;
     const intervalId = setInterval(() => {
@@ -1364,23 +1365,6 @@ io.on("connection", function (socket) {
                 }
               });
             });
-            // const cdCmd = `cd ${__dirname}/../ `;
-            // const javaCmd = `java RSAEncryptByPubk ` + text;
-            // const cmd = cdCmd + " && " + javaCmd;
-
-            // exec(cmd, (error, stdout, stderr) => {
-            //   //todo window会有乱码，解决方法见http://t.zoukankan.com/daysme-p-15795143.html，其他系统应无乱码，因此暂不解决
-            //   const json = JSON.parse(stdout);
-            //   //todo 失败暂不考虑
-            //   console.log("json");
-            //   if (json.respCode == "000000" && json.oldRespCode == "000000") {
-            //     updateContractAndSaveTransaction(contractId).then(() => {
-            //       socket.emit(contractId + "_pay");
-            //       clearInterval(intervalId);
-            //       return;
-            //     });
-            //   }
-            // });
           } catch (e) {
             console.log(e);
             clearInterval(intervalId);

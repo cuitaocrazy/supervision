@@ -11,9 +11,12 @@ class ContractService {
       .getRepository(Contract)
       .createQueryBuilder("contract")
 
-      .where("contract.contractId = :contractId ", {
-        contractId: contractId,
-      })
+      .where(
+        "contract.contractId = :contractId  and contract.contractStatus != 'wait' ",
+        {
+          contractId: contractId,
+        }
+      )
       // .skip(page*size)
       //todo 方便测试
       .getOne();

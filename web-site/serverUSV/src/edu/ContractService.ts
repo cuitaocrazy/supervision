@@ -18,9 +18,12 @@ class ContractService {
       .getRepository(Contract)
       .createQueryBuilder("contract")
 
-      .where("contract.contractId like :contractId ", {
-        contractId: nullableFuzzy(contractId),
-      })
+      .where(
+        "contract.contractId like :contractId and contract.contractStatus != 'wait' ",
+        {
+          contractId: nullableFuzzy(contractId),
+        }
+      )
       // .skip(page*size)
       //todo 方便测试
       .skip(0)

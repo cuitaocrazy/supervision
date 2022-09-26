@@ -62,10 +62,13 @@ export const searchContract = async (reqParams) => {
   const contracts = await mysql
     .getRepository(Contract)
     .createQueryBuilder("contract")
-    .where("contract.contractStatus = :contractStatus or 1=:flag", {
-      contractStatus: contractStatus,
-      flag: contractStatus == null ? 1 : 2,
-    })
+    .where(
+      "contract.contractStatus != 'wait' and (contract.contractStatus = :contractStatus or 1=:flag)",
+      {
+        contractStatus: contractStatus,
+        flag: contractStatus == null ? 1 : 2,
+      }
+    )
     // .skip(page*size)
     //todo 方便测试
     .skip(0)
