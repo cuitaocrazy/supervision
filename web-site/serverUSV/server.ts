@@ -971,8 +971,13 @@ app.get("/edb/transaction/sum", async (req, res) => {
   const loginName = req.query.loginName;
   const contractSum = await edbContractService.sum();
   const r = await edbTransactionService.sum(req.query.date);
-  const result = { ...contractSum, ...r };
-
+  const saBalance = await edbTransactionService.balanceQuery({});
+  console.log(saBalance);
+  const result = {
+    ...contractSum,
+    ...r,
+    ...{ balance: saBalance.records[0].sum },
+  };
   res.send(result);
 });
 

@@ -46,7 +46,7 @@ export const SupervisorAccount: React.FC = () => {
   const [refundAmt, setRefundAmt] = useState('0');
   const [transferNumber, setTranferNumber] = useState('0');
   const [transferAmt, setTranferAmt] = useState('0');
-
+  const [balance, setBalance] = useState('0');
   const [contractValid, setContractValid] = useState('0');
   const [contractFinish, setContractFinish] = useState('0');
   const onQuery = () => {
@@ -69,6 +69,7 @@ export const SupervisorAccount: React.FC = () => {
           transferAmt,
           contractValid,
           contractFinish,
+          balance,
         } = json;
         if (result) {
           setBuyCardNumber(buyCardNumber);
@@ -79,6 +80,7 @@ export const SupervisorAccount: React.FC = () => {
           setTranferAmt(transferAmt);
           setContractFinish(contractFinish);
           setContractValid(contractValid);
+          setBalance(balance);
         }
       });
   };
@@ -97,7 +99,7 @@ export const SupervisorAccount: React.FC = () => {
   const paramStr = getParamStr({}, findURL);
   const onClick = () => {
     //todo fetch
-    setSupversingAccountAmt('1000');
+    setSupversingAccountAmt(balance);
   };
 
   return (
@@ -156,7 +158,7 @@ export const SupervisorAccount: React.FC = () => {
             />
             <TranSumCard
               tranDesc="今日退课金额（元）"
-              tranCount={refundAmt? String(refundAmt).replace('-', ''):"0"}
+              tranCount={refundAmt ? String(refundAmt).replace('-', '') : '0'}
               d="M9 7.5l3 4.5m0 0l3-4.5M12 12v5.25M15 12H9m6 3H9m12-3a9 9 0 11-18 0 9 9 0 0118 0z"
               logoClassName="w-16 h-16 text-green-400"
             />
@@ -168,7 +170,7 @@ export const SupervisorAccount: React.FC = () => {
             />
             <TranSumCard
               tranDesc="今日划拨金额（元）"
-              tranCount={transferAmt? String(transferAmt).replace('-', ''):"0"}
+              tranCount={transferAmt ? String(transferAmt).replace('-', '') : '0'}
               d="M9 7.5l3 4.5m0 0l3-4.5M12 12v5.25M15 12H9m6 3H9m12-3a9 9 0 11-18 0 9 9 0 0118 0z"
               logoClassName="w-16 h-16 text-orange-400"
             />
