@@ -976,7 +976,7 @@ app.get("/edb/transaction/sum", async (req, res) => {
   const result = {
     ...contractSum,
     ...r,
-    ...{ balance: saBalance.records[0].sum },
+    ...{ balance: fenToYuan(saBalance.records[0].sum) },
   };
   res.send(result);
 });
