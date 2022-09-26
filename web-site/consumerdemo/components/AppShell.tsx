@@ -171,7 +171,7 @@ const AppShell = () => {
                 render={() => <CardProtocolDetail />}
               />
               <Route path="/cardQRcode" render={() => <CardQRcode />} />
-              <Route path="/contract" render={() => <ContentsOfContracts />} />
+              <Route path="/contentsOfContracts" render={() => <ContentsOfContracts />} />
               <Route path="/refundList" render={() => <RefundList />} />
               <Route
                 path="/refundLessonDetail"
