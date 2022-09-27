@@ -518,7 +518,7 @@ const getTransactionId = () => {
 };
 //todo
 const getUserInfoByToken = async () => {
-  return { username: "用户1", loginName: "登录名1", userId: 1 };
+  return { username: "用户1", loginName: "edutest", userId: 1 };
 };
 
 app.get("/consumer/lesson", jsonParser, async (req, res) => {
@@ -847,7 +847,7 @@ app.get("/consumer/attendance", jsonParser, async (req, res) => {
 app.post("/consumer/login", jsonParser, async (req, res) => {
   res.send({
     status: "success",
-    result: { username: "用户1", loginName: "登录名1", userId: 1 },
+    result: { username: "用户1", loginName: "edutest", userId: 1 },
   });
 });
 
