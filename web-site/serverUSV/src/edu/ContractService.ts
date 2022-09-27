@@ -51,6 +51,11 @@ class ContractService {
     // return { result: true, records: records }
   }
 
+  async saveContract(contract) {
+    const result = await mysql.getRepository(Contract).save(contract);
+    return result;
+  }
+
   async sum(eduId) {
     const result = { contractValid: 0, contractFinish: 0 };
     var where = " contract.edu_id = :eduId ";

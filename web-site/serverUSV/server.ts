@@ -226,7 +226,9 @@ app.post("/edu/contractNego/audit", jsonParser, async (req, res) => {
     oldNego.negoStatus = "complete";
     await eduContractNegoService.save(oldNego);
     const edu = await EduService.findByEduId(oldNego.eduId);
-    oldNego.eduId;
+    const contract = await eduContractService.findOne(oldNego.contractId);
+    contract.contractStatus = "terminnated";
+    await eduContractService.saveContract(contract);
     const newTransaction = {
       transactionId: getTransactionId(),
       contractId: oldNego.contractId,
@@ -1185,6 +1187,10 @@ app.post("/edb/contractNego/audit", jsonParser, async (req, res) => {
       eduSupervisedAccount: edu.eduSupervisedAccount,
     };
     saveTransaction(newTransaction);
+
+    const contract = await eduContractService.findOne(oldNego.contractId);
+    contract.contractStatus = "terminnated";
+    await eduContractService.saveContract(contract);
 
     res.send({ result: true, msg: "已退货" });
     return;

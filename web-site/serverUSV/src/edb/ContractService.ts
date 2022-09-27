@@ -25,6 +25,11 @@ class ContractService {
     // return { result: true, records: records }
   }
 
+  async saveContract(contract){
+    const result = await mysql.getRepository(Contract).save(contract);
+    return result;
+  };
+
   async sum() {
     const result = { contractValid: 0, contractFinish: 0 };
     const infos = await mysql
@@ -39,6 +44,10 @@ class ContractService {
     infos.map((info) => {
       switch (info.status) {
         case "valid": {
+          result.contractValid = info.count;
+          break;
+        }
+        case "nego": {
           result.contractValid = info.count;
           break;
         }
