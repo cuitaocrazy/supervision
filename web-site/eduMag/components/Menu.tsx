@@ -25,7 +25,7 @@ const Menu = () => {
   // }
 
   const MeunPage = [
-    { title: "首页", path: "/tabs/home" },
+    { title: "首页", path: "/tabs/supervisorAccount" },
     { title: "基础信息维护", path: "/tabs/baseInfo" },
     {
       title: "业务管理",
