@@ -50,8 +50,7 @@ function stop() {
 
 function loadingAnimation() {
     frames="/ | \\ -"
-    for i in {1..5}
-    do
+    for i in {1..5}; do
         for frame in $frames; do
             printf "\r $frame 检查服务中..."
             sleep 0.5
