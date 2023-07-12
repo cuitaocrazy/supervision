@@ -20,8 +20,8 @@ services:
       MYSQL_ROOT_PASSWORD: root
       LANG: C.UTF-8
     ports:
-      - 3306:3306
-      - 33060:33060
+      - 4306:3306
+      - 43060:33060
     networks:
       - supervision_demo
     volumes:
@@ -31,9 +31,10 @@ services:
     image: node:latest
     user: "node"
     working_dir: /home/node/
-    command: /home/script/wait_for.sh -t 0 supervision_demo_mysql:3306 -- /home/script/node_run_demo.sh server
+    command: /home/script/wait_for.sh -t 0 supervision_demo_mysql:4306 -- /home/script/node_run_demo.sh server
     environment:
       - DB_HOST=supervision_demo_mysql
+      - DB_PORT=4306
       - DECRYPT_SERVER_PATH=supervision-demo-encrypt:2999
     volumes:
       - ../serverUSV:/home/node/
@@ -51,7 +52,7 @@ services:
     image: node:latest
     user: "node"
     working_dir: /home/node/
-    command: /home/script/wait_for.sh -t 0 supervision_demo_server:3003 -- /home/script/node_run_demo.sh consumer
+    command: /home/script/wait_for.sh -t 0 supervision_demo_server:4003 -- /home/script/node_run_demo.sh consumer
     environment:
       - NEXT_PUBLIC_SERVER_PATH=http://${host}:8080/api/consumer
       - NEXT_PUBLIC_ROOT_PATH=/consumer
@@ -59,7 +60,7 @@ services:
       - ../consumerdemo:/home/node/
       - ./script/:/home/script/
     ports:
-      - 3000:3000
+      - 4000:3000
     container_name: supervision_demo_consumer
     depends_on:
       - supervision_demo_server
@@ -71,7 +72,7 @@ services:
     image: node:latest
     user: "node"
     working_dir: /home/node/
-    command: /home/script/wait_for.sh -t 0 supervision_demo_consumer:3000 -- /home/script/node_run_demo.sh edu
+    command: /home/script/wait_for.sh -t 0 supervision_demo_consumer:4000 -- /home/script/node_run_demo.sh edu
     environment:
       - NEXT_PUBLIC_SERVER_PATH=http://${host}:8080/api/edu
       - NEXT_PUBLIC_ROOT_PATH=/edu
@@ -80,7 +81,7 @@ services:
       - ../eduMag:/home/node/
       - ./script/:/home/script/
     ports:
-      - 3001:3001
+      - 4001:3001
     container_name: supervision_demo_edu
     depends_on:
       - supervision_demo_server
@@ -91,7 +92,7 @@ services:
     image: node:latest
     user: "node"
     working_dir: /home/node/
-    command: /home/script/wait_for.sh -t 0 supervision_demo_edu:3001 -- /home/script/node_run_demo.sh edb
+    command: /home/script/wait_for.sh -t 0 supervision_demo_edu:4001 -- /home/script/node_run_demo.sh edb
     environment:
       - NEXT_PUBLIC_SERVER_PATH=http://${host}:8080/api/edb
       - NEXT_PUBLIC_ROOT_PATH=/edb
@@ -100,7 +101,7 @@ services:
       - ../regulator-mag-ionic:/home/node/
       - ./script/:/home/script/
     ports:
-      - 3002:3002
+      - 4002:3002
     container_name: supervision_demo_edb
     depends_on:
       - supervision_demo_server
@@ -115,7 +116,6 @@ services:
       - ./html/:/usr/share/nginx/html/
     ports:
       - 8080:8080
-      - 80:80
     networks:
       - supervision_demo
     restart: always
@@ -136,7 +136,7 @@ services:
     image: node:latest
     user: "node"
     working_dir: /home/node/
-    command: /home/script/wait_for.sh -t 0 supervision_demo_edb:3002 -- /home/script/node_run_demo.sh consumerpc
+    command: /home/script/wait_for.sh -t 0 supervision_demo_edb:4002 -- /home/script/node_run_demo.sh consumerpc
     environment:
       - NEXT_PUBLIC_SERVER_PATH=http://${host}:8080/api/consumer
       - NEXT_PUBLIC_SERVER_WS_PATH=http://${host}:8080
@@ -145,7 +145,7 @@ services:
       - ../consumer-pc:/home/node/
       - ./script/:/home/script/
     ports:
-      - 3004:3004
+      - 4004:3004
     container_name: supervision_demo_consumerpc
     depends_on:
       - supervision_demo_server
