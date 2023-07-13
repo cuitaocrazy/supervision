@@ -30,8 +30,8 @@ const stuInfo = [
 ];
 function StudentInfoRadioGroup() {
   const router = useRouter();
-  const [selected, setSelected] = useState(stuInfo[0]);
   const { state, dispatch } = useContext(AppContext);
+  const [selected, setSelected] = useState(stuInfo[0]);
   const refreshstuName = useCallback(
     (constuName: String) => {
       dispatch(setStuName(constuName));
@@ -44,29 +44,27 @@ function StudentInfoRadioGroup() {
       <div className="w-full max-w-md mx-auto">
         <RadioGroup
           value={selected}
-          onChange={setSelected}
-          onClick={() => {
-            refreshstuName(selected.name);
+          onChange={(selectedValue: any) => {
+            setSelected(selectedValue)
+            refreshstuName(selectedValue.name);
           }}
         >
           <RadioGroup.Label className="text-gray-800 sr-only">
             学生信息
           </RadioGroup.Label>
           <div className="space-y-2">
-            {stuInfo.map((stu) => (
+            {stuInfo.map((stu, index) => (
               <RadioGroup.Option
-                key={stu.name}
+                key={index}
                 value={stu}
                 className={({ active, checked }) =>
-                  `${
-                    active
-                      ? "ring-2 ring-white ring-opacity-60 ring-offset-2 ring-offset-primary-300"
-                      : ""
+                  `${active
+                    ? "ring-2 ring-white ring-opacity-60 ring-offset-2 ring-offset-primary-300"
+                    : ""
                   }
-                  ${
-                    checked
-                      ? "bg-primary-600 bg-opacity-75 text-white"
-                      : "bg-white"
+                  ${checked
+                    ? "bg-primary-600 bg-opacity-75 text-white"
+                    : "bg-white"
                   }
                     relative flex cursor-pointer rounded-lg px-5 py-4 shadow-md focus:outline-none`
                 }
@@ -78,18 +76,16 @@ function StudentInfoRadioGroup() {
                         <div className="text-sm">
                           <RadioGroup.Label
                             as="p"
-                            className={`font-medium  ${
-                              checked ? "text-white" : "text-gray-900"
-                            }`}
+                            className={`font-medium  ${checked ? "text-white" : "text-gray-900"
+                              }`}
                           >
                             {stu.name} <span aria-hidden="true">&middot;</span>{" "}
                             {stu.age}
                           </RadioGroup.Label>
                           <RadioGroup.Description
                             as="span"
-                            className={`inline ${
-                              checked ? "text-sky-100" : "text-gray-500"
-                            }`}
+                            className={`inline ${checked ? "text-sky-100" : "text-gray-500"
+                              }`}
                           >
                             <span>
                               {stu.consumer_name}/{stu.relation}
