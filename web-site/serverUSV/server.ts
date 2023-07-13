@@ -206,12 +206,12 @@ app.post("/edu/contractNego/audit", jsonParser, async (req, res) => {
   });
   console.log(
     parseInt(String(oldNego.negoCompensationAmt)) +
-      parseInt(String(oldNego.negoRefundAmt))
+    parseInt(String(oldNego.negoRefundAmt))
   );
   console.log(yuanToFen(negoRefundAmt) + yuanToFen(negoCompensationAmt));
   if (
     parseInt(String(oldNego.negoCompensationAmt)) +
-      parseInt(String(oldNego.negoRefundAmt)) !=
+    parseInt(String(oldNego.negoRefundAmt)) !=
     yuanToFen(negoRefundAmt) + yuanToFen(negoCompensationAmt)
   ) {
     res.send({ result: false, msg: "未知异常" });
@@ -1155,12 +1155,12 @@ app.post("/edb/contractNego/audit", jsonParser, async (req, res) => {
   });
   console.log(
     parseInt(String(oldNego.negoCompensationAmt)) +
-      parseInt(String(oldNego.negoRefundAmt))
+    parseInt(String(oldNego.negoRefundAmt))
   );
   console.log(yuanToFen(negoRefundAmt) + yuanToFen(negoCompensationAmt));
   if (
     parseInt(String(oldNego.negoCompensationAmt)) +
-      parseInt(String(oldNego.negoRefundAmt)) !=
+    parseInt(String(oldNego.negoRefundAmt)) !=
     yuanToFen(negoRefundAmt) + yuanToFen(negoCompensationAmt)
   ) {
     res.send({ result: false, msg: "未知异常" });
@@ -1327,65 +1327,73 @@ io.on("connection", function (socket) {
   console.log("somebody connection");
   socket.emit("open");
 
-  //todo 不能依赖前台告知
+  //todo 不能依赖前台告知，这个是连接后台的
+  //   socket.on("pcPay", async function (contractId) {
+  //     var count = 0;
+  //     const intervalId = setInterval(() => {
+  //       console.log("pcPay");
+  //       console.log(contractId);
+  //       if (count > QUERYPAYMENTMAX) {
+  //         console.log("clear Interval");
+  //         clearInterval(intervalId);
+  //         return;
+  //       }
+  //       count++;
+  //       // socket.emit(contractId+'_pay')
+  //       const queryInfo = {
+  //         merId: testMerId,
+  //         termId: testTermId,
+  //         tranDate: moment().format("YYYYMMDD"),
+  //         tranTime: moment().format("HHmmss"),
+  //         merOrderNo: getContractId(testTermId, "000000"),
+  //         oldMerOrderNo: contractId,
+  //       };
+  //       const plainText = encrypt(JSON.stringify(queryInfo), newPublicKey);
+  //       fetch(remoteQueryPath + testMerId, {
+  //         method: "POST",
+  //         body: plainText,
+  //         headers: {
+  //           MerchantId: testMerId,
+  //         },
+  //       }).then((serverRes) => {
+  //         serverRes.text().then((text) => {
+  //           if (text.indexOf("原交易不存在") > -1) {
+  //             return;
+  //           }
+  //           try {
+  //             console.log("-------------");
+  //             fetch(decryptServiceUrl + text).then((dncryptRes) => {
+  //               dncryptRes.text().then((dncryptText) => {
+  //                 console.log(dncryptText);
+  //                 const json = JSON.parse(dncryptText);
+  //                 console.log(json);
+  //                 if (json.respCode == "000000" && json.oldRespCode == "000000") {
+  //                   updateContractAndSaveTransaction(contractId).then(() => {
+  //                     socket.emit(contractId + "_pay");
+  //                     clearInterval(intervalId);
+  //                     return;
+  //                   });
+  //                 }
+  //               });
+  //             });
+  //           } catch (e) {
+  //             console.log(e);
+  //             clearInterval(intervalId);
+  //           }
+  //         });
+  //       });
+  //     }, 10000);
+  //   });
+
+  // 这是一个后台模拟pc端支付的情况
   socket.on("pcPay", async function (contractId) {
-    var count = 0;
-    const intervalId = setInterval(() => {
-      console.log("pcPay");
-      console.log(contractId);
-      if (count > QUERYPAYMENTMAX) {
-        console.log("clear Interval");
-        clearInterval(intervalId);
-        return;
-      }
-      count++;
-      // socket.emit(contractId+'_pay')
-      const queryInfo = {
-        merId: testMerId,
-        termId: testTermId,
-        tranDate: moment().format("YYYYMMDD"),
-        tranTime: moment().format("HHmmss"),
-        merOrderNo: getContractId(testTermId, "000000"),
-        oldMerOrderNo: contractId,
-      };
-      const plainText = encrypt(JSON.stringify(queryInfo), newPublicKey);
-      fetch(remoteQueryPath + testMerId, {
-        method: "POST",
-        body: plainText,
-        headers: {
-          MerchantId: testMerId,
-        },
-      }).then((serverRes) => {
-        serverRes.text().then((text) => {
-          if (text.indexOf("原交易不存在") > -1) {
-            return;
-          }
-          try {
-            console.log("-------------");
-            fetch(decryptServiceUrl + text).then((dncryptRes) => {
-              dncryptRes.text().then((dncryptText) => {
-                console.log(dncryptText);
-                const json = JSON.parse(dncryptText);
-                console.log(json);
-                if (json.respCode == "000000" && json.oldRespCode == "000000") {
-                  updateContractAndSaveTransaction(contractId).then(() => {
-                    socket.emit(contractId + "_pay");
-                    clearInterval(intervalId);
-                    return;
-                  });
-                }
-              });
-            });
-          } catch (e) {
-            console.log(e);
-            clearInterval(intervalId);
-          }
-        });
-      });
-    }, 10000);
+    console.log(`模拟支付`)
+    updateContractAndSaveTransaction(contractId).then(() => {
+      socket.emit(contractId + "_pay");
+      return;
+    });
   });
 });
-
 const newPublicKey =
   "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC0FT/LTwXOx1GIwDcOjn8C7pL2Gjv5xhr7PXdEyzyoakiGNc4ed1njQiw/crOziAQpFLZEZfZ9yPi/9/EFQtnexPzqWynYr0Vga0caNVVHqxA7Eivyphv6Tq8H69ecd7umI+8CM9qvsxC/+4Podf3Xnvi5N0ux992ZJKv18RDB0wIDAQAB";
 const qianzhui = "-----BEGIN PUBLIC KEY-----\n";
@@ -1450,32 +1458,38 @@ app.post("/consumer/pc/preOrder", jsonParser, async (req, res) => {
 
     const plainText = encrypt(JSON.stringify(bankJson), newPublicKey);
     console.log(plainText);
-    fetch(remotePayPath + testMerId, {
-      method: "POST",
-      body: plainText,
-      headers: {
-        MerchantId: testMerId,
-      },
-    }).then((serverRes) => {
-      serverRes.text().then((text) => {
-        if (text.indexOf("原交易不存在") > -1) {
-          return;
-        }
-        fetch(decryptServiceUrl + text).then((dncryptRes) => {
-          dncryptRes.text().then((dncryptText) => {
-            const json = JSON.parse(dncryptText);
-            console.log(json);
-            if (json.qrCode) {
-              res.send({
-                status: "success",
-                result: newContract,
-                payUrl: json.qrCode,
-              });
-            }
-          });
-        });
-      });
+    res.send({
+      status: "success",
+      result: newContract,
+      payUrl: 'this is a test',
     });
+    // 
+    // fetch(remotePayPath + testMerId, {
+    //   method: "POST",
+    //   body: plainText,
+    //   headers: {
+    //     MerchantId: testMerId,
+    //   },
+    // }).then((serverRes) => {
+    //   serverRes.text().then((text) => {
+    //     if (text.indexOf("原交易不存在") > -1) {
+    //       return;
+    //     }
+    //     fetch(decryptServiceUrl + text).then((dncryptRes) => {
+    //       dncryptRes.text().then((dncryptText) => {
+    //         const json = JSON.parse(dncryptText);
+    //         console.log(json);
+    //         if (json.qrCode) {
+    //           res.send({
+    //             status: "success",
+    //             result: newContract,
+    //             payUrl: json.qrCode,
+    //           });
+    //         }
+    //       });
+    //     });
+    //   });
+    // });
   } catch (e) {
     res.send({ status: "fail", result: "未知异常" });
   }
