@@ -54,8 +54,6 @@ services:
     volumes:
       - ../consumerdemo:/home/node/
       - ./script/:/home/script/
-    ports:
-      - 4000:3000
     container_name: supervision_demo_consumer
     depends_on:
       - supervision_demo_server

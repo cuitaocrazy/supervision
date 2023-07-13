@@ -20,7 +20,7 @@ import { Seq } from './entity/Seq'
 const datasource = new DataSource({
         type: "mysql",
         host: process.env.DB_HOST || "localhost",
-        port: process.env.DB_PORT || 3306,
+        port: parseInt(process.env.DB_PORT) || 3306,
         username: "yadadb",
         password: "yadadb",
         database: "yadadb",
