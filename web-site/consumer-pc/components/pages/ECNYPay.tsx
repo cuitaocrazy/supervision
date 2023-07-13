@@ -49,16 +49,21 @@ const ECNYPay = () => {
       .then((json) => {
         setContract(json.result);
         setPayUrl(json.payUrl);
+        console.log('准备 3 秒后跳转')
         // 模拟 3 秒后支付完成
         setTimeout(() => {
+          console.log('获取pc支付结果')
           socket.emit("pcPay", json.result.contractId);
           socket.on(json.result.contractId + "_pay", () => {
             console.log("支付成功");
             history.push("/eCNYPayResult");
-            setPageReload(new Date().toUTCString());
+            // setPageReload(new Date().toUTCString());
+            // socket.disconnect()
+            // console.log('socket disconnect!!!')
           });
+
           refreshContract(json.result);
-          socket.close()
+
         }, 3000)
 
       });
