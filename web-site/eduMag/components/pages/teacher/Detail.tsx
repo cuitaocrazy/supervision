@@ -93,7 +93,7 @@ export const TeacherDetail: React.FC = () => {
                 />
               </div>
               <div className="flex mb-4 leading-10">
-                <div className="flex justify-end w-32 mr-2">身份证号:</div>
+                <div className="flex justify-end w-32 mr-2">教师编号:</div>
                 <input
                   className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
                   value={teacherState.teacherIdentityNo}
