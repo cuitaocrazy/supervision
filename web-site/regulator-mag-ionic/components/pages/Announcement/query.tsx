@@ -592,7 +592,7 @@ const AnnouncementQuery: React.FC = () => {
           <div className="absolute w-full mt-10">
             <table className="w-11/12">
               <thead>
-                <tr className="grid items-center h-10 grid-cols-5 gap-2 font-bold text-gray-700 bg-white rounded-lg justify-items-center">
+                <tr className="grid items-center h-10 grid-cols-4 gap-2 font-bold text-gray-700 bg-white rounded-lg justify-items-center">
                   <th className="flex items-center justify-center">政策标题</th>
                   <th className="flex items-center justify-center">政策内容</th>
                   <th className="flex items-center justify-center">发布日期</th>
