@@ -118,55 +118,55 @@ const OrgListCard: FC<OrgListProps> = (props) => {
 
 let orgListDemo: EduOrg[] = [
   {
-    eduImage: "http://placekitten.com/g/200/300",
+    eduImage: "https://s3.bmp.ovh/imgs/2022/08/22/281ec3695ed000e6.png",
     eduName: "核桃编程",
     eduAddress: "海淀区大钟寺东路中嘉大厦",
     eduContactPhone: "010-101192",
   },
   {
-    eduImage: "http://placekitten.com/g/200/300",
+    eduImage: "https://s3.bmp.ovh/imgs/2022/08/22/281ec3695ed000e6.png",
     eduName: "核桃编程",
     eduAddress: "海淀区大钟寺东路中嘉大厦",
     eduContactPhone: "010-101192",
   },
   {
-    eduImage: "http://placekitten.com/g/200/300",
+    eduImage: "https://s3.bmp.ovh/imgs/2022/08/22/281ec3695ed000e6.png",
     eduName: "核桃编程",
     eduAddress: "海淀区大钟寺东路中嘉大厦",
     eduContactPhone: "010-101192",
   },
   {
-    eduImage: "http://placekitten.com/g/200/300",
+    eduImage: "https://s3.bmp.ovh/imgs/2022/08/22/281ec3695ed000e6.png",
     eduName: "核桃编程",
     eduAddress: "海淀区大钟寺东路中嘉大厦",
     eduContactPhone: "010-101192",
   },
   {
-    eduImage: "http://placekitten.com/g/200/300",
+    eduImage: "https://s3.bmp.ovh/imgs/2022/08/22/281ec3695ed000e6.png",
     eduName: "核桃编程",
     eduAddress: "海淀区大钟寺东路中嘉大厦",
     eduContactPhone: "010-101192",
   },
   {
-    eduImage: "http://placekitten.com/g/200/300",
+    eduImage: "https://s3.bmp.ovh/imgs/2022/08/22/281ec3695ed000e6.png",
     eduName: "核桃编程",
     eduAddress: "海淀区大钟寺东路中嘉大厦",
     eduContactPhone: "010-101192",
   },
   {
-    eduImage: "http://placekitten.com/g/200/300",
+    eduImage: "https://s3.bmp.ovh/imgs/2022/08/22/281ec3695ed000e6.png",
     eduName: "核桃编程",
     eduAddress: "海淀区大钟寺东路中嘉大厦",
     eduContactPhone: "010-101192",
   },
   {
-    eduImage: "http://placekitten.com/g/200/300",
+    eduImage: "https://s3.bmp.ovh/imgs/2022/08/22/281ec3695ed000e6.png",
     eduName: "核桃编程",
     eduAddress: "海淀区大钟寺东路中嘉大厦",
     eduContactPhone: "010-101192",
   },
   {
-    eduImage: "http://placekitten.com/g/200/300",
+    eduImage: "https://s3.bmp.ovh/imgs/2022/08/22/281ec3695ed000e6.png",
     eduName: "核桃编程",
     eduAddress: "海淀区大钟寺东路中嘉大厦",
     eduContactPhone: "010-101192",
@@ -193,7 +193,7 @@ const OrgList = () => {
             <div className="pt-20 mx-3">
               <img
                 className="w-full h-32 rounded-lg cursor-pointer "
-                src="http://placekitten.com/g/200/300"
+                src="https://s3.bmp.ovh/imgs/2022/08/22/281ec3695ed000e6.png"
                 alt=""
               />
             </div>
