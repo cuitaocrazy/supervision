@@ -48,6 +48,7 @@ CREATE TABLE yadadb.t_b_edu_teacher (
 	teacher_create_time char(6) NULL,
 	teacher_update_date char(8) NULL,
 	teacher_update_time char(6) NULL,
+	edu_org_edu_id varchar(32) NULL,
 	CONSTRAINT t_b_edu_teacher_PK PRIMARY KEY (teacher_id)
 )
 ENGINE=InnoDB

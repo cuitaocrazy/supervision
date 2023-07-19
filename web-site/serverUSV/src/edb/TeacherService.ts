@@ -2,7 +2,7 @@ import moment = require("moment");
 import { EduTeacher } from "../entity/EduTeacher";
 import mysql from "../mysql";
 import { nullableFuzzy } from "../Util";
-class EduTeacherService {
+class EdbTeacherService {
   async findOne(teacherId) {
     const result = await mysql.getRepository(EduTeacher).findOneBy({
       teacherId: teacherId,
@@ -26,11 +26,13 @@ class EduTeacherService {
     const eduTeachers = await mysql
       .getRepository(EduTeacher)
       .createQueryBuilder("teacher")
+      .leftJoinAndSelect("teacher.eduOrg", "eduOrg")
+      .leftJoinAndSelect("eduOrg.supervisorOrg", "supervisorOrg")
       .where("teacher.teacherName like :name ", {
         name: nullableFuzzy(teacherName),
       })
-      .orderBy("teacher.teacher_create_date", "DESC")
-      .addOrderBy("teacher.teacher_create_time", "DESC")
+      .orderBy("teacher.teacherCreateDate", "DESC")
+      .addOrderBy("teacher.teacherCreateTime", "DESC")
       .skip(page * size)
       .take(size)
       .getManyAndCount();
@@ -56,4 +58,4 @@ class EduTeacherService {
     return { result: true, data };
   }
 }
-export default new EduTeacherService();
+export default new EdbTeacherService();

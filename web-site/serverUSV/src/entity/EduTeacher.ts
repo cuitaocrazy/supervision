@@ -1,4 +1,5 @@
-import { Entity, PrimaryColumn, Column } from 'typeorm'
+import { Entity, PrimaryColumn, Column, ManyToOne } from 'typeorm'
+import { EduOrg } from './EduOrg'
 
 @Entity({ name: "t_b_edu_teacher" })
 export class EduTeacher {
@@ -27,4 +28,6 @@ export class EduTeacher {
     teacherUpdateDate: string
     @Column()
     teacherUpdateTime: string
+    @ManyToOne(() => EduOrg, (eduOrg) => eduOrg.eduTeachers)
+    eduOrg: EduOrg
 }

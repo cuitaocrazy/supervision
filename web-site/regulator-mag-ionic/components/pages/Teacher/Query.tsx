@@ -79,12 +79,12 @@ const TeacherQuery: React.FC = () => {
 
   const ListEntry = ({ teacher, ...props }: { teacher: Teacher }) => (
     <tr className="grid items-center grid-cols-6 gap-2 text-gray-600 border justify-items-center even:bg-white odd:bg-primary-100 ">
-      <td className="flex items-center justify-center leading-10">{teacher.orgName}</td>
-      <td className="flex items-center justify-center leading-10">{teacher.eduName}</td>
+      <td className="flex items-center justify-center leading-10">{teacher.eduOrg.supervisorOrg.supervisorOrgName}</td>
+      <td className="flex items-center justify-center leading-10">{teacher.eduOrg.eduName}</td>
       <td className="flex items-center justify-center leading-10">{teacher.teacherName}</td>
       {/* <td className="flex items-center justify-center leading-10">{teacher.teacherIntroduce}</td> */}
       <td className="flex items-center justify-center leading-10">{teacher.teacherExperience}</td>
-      <td className="flex items-center justify-center leading-10">{teacher.teacherCreatedDate}</td>
+      <td className="flex items-center justify-center leading-10">{teacher.teacherCreateDate}</td>
       <td className="flex items-center justify-center leading-10">
         <div className="flex gap-2 ">
           <button className="p-1 text-primary-600" onClick={onDetail(teacher)}>

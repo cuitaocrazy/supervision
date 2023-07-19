@@ -1,5 +1,7 @@
-import { Entity, PrimaryColumn, Column } from 'typeorm'
+import { Entity, PrimaryColumn, Column, OneToMany, OneToOne, ManyToOne, JoinColumn } from 'typeorm'
 import { SupervisorBlackEdu } from "./SupervisorBlackEdu";
+import { EduTeacher } from './EduTeacher';
+import { SupervisorOrg } from './SupervisorOrg';
 @Entity({ name: "t_b_edu_org" })
 export class EduOrg {
   @PrimaryColumn()
@@ -65,4 +67,12 @@ export class EduOrg {
   merNo: string
   //黑名单
   blackEdu: SupervisorBlackEdu;
+  // 教师
+  @OneToMany(() => EduTeacher, (eduTeacher) => eduTeacher.eduOrg)
+  eduTeachers: EduTeacher[]
+  // 所属机构
+  @ManyToOne(() => SupervisorOrg, (supervisorOrg) => supervisorOrg.eduOrgs)
+  // 机构信息
+  @JoinColumn({ name: "supervisor_org_id" })
+  supervisorOrg: SupervisorOrg
 }

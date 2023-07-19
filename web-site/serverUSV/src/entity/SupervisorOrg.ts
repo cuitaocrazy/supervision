@@ -1,4 +1,5 @@
-import { Entity, PrimaryColumn, Column } from 'typeorm'
+import { Entity, PrimaryColumn, Column, ManyToOne, OneToMany } from 'typeorm'
+import { EduOrg } from './EduOrg'
 
 @Entity({ name: "t_b_supervisor_org" })
 export class SupervisorOrg {
@@ -9,4 +10,6 @@ export class SupervisorOrg {
     @Column()
     parentSupervisorOrgId: string
 
+    @OneToMany(() => EduOrg, (eduOrg) => eduOrg.supervisorOrg)
+    eduOrgs: EduOrg[]
 }

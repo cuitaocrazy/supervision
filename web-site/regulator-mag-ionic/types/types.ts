@@ -72,12 +72,11 @@ export interface Teacher {
   teacherExperience?: number;
   teacherIntroduce?: string;
   teacherRating?: number;
-  teacherCreatedDate?: string;
-  teacherUpdatedDate?: string;
+  teacherCreateDate?: string;
+  teacherUpdateDate?: string;
   teacherCreateTime?: string;
   teacherUpdateTime?: string;
-  eduName: string;
-  orgName: string;
+  eduOrg: EduOrg;
   teacherField?: string;
 }
 
@@ -150,6 +149,7 @@ export interface EduOrg {
   blackEduCreateDate?: string;
   blackEduCreateTime?: string;
   blackEdu?: object;
+  supervisorOrg: SupervisorOrg
 }
 
 export interface SupervisorOrg {
