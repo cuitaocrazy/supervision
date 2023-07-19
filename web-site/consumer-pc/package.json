@@ -16,7 +16,7 @@
     "@capacitor/core": "^3.5.1",
     "@capacitor/ios": "^3.5.1",
     "@capacitor/status-bar": "^1.0.8",
-    "@headlessui/react": "^1.7.0",
+    "@headlessui/react": "^1.7.15",
     "@heroicons/react": "^1.0.6",
     "@ionic/react": "^6.1.6",
     "@ionic/react-router": "^6.1.6",

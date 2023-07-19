@@ -1,11 +1,11 @@
-import React,{useEffect,useState,useContext} from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { IonPage, IonHeader, IonContent } from "@ionic/react";
 import { motion } from "framer-motion";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Link } from "react-router-dom";
 import Navbar from "../Navbar";
 import Search from '../Search'
-import {searchLessonURL} from '../../const/const'
+import { searchLessonURL } from '../../const/const'
 import { Lesson } from '../../types/types'
 import { AppContext } from "../../appState";
 
@@ -24,22 +24,22 @@ const ECNYPayResult = () => {
     // router.push('/searchLessonList')
   };
   const { state, dispatch } = useContext(AppContext);
-  const [lessonList,setLessonList] = useState([] as Lesson[])
-  const onQuery = ()=>{
+  const [lessonList, setLessonList] = useState([] as Lesson[])
+  const onQuery = () => {
     fetch(paramStr, {
       method: 'GET',
       headers: {
         'Content-type': 'application/json;charset=UTF-8',
       },
     }).then(res => res.json())
-    .then((json) => {
-      setLessonList(json.result)  
-    })
+      .then((json) => {
+        setLessonList(json.result)
+      })
   }
-  useEffect(onQuery,[])
-  
-  const [queryStr,setQueryStr] = useState('')
-  const [page,setPage] = useState(0)
+  useEffect(onQuery, [])
+
+  const [queryStr, setQueryStr] = useState('')
+  const [page, setPage] = useState(0)
   const getParamStr = (params: any, url: string) => {
     let result = '?';
     Object.keys(params).forEach(key => (result = result + key + '=' + params[key] + '&'));
@@ -48,8 +48,8 @@ const ECNYPayResult = () => {
   const paramStr = getParamStr(
     {
       queryStr: queryStr,
-      page:page,
-      size:10
+      page: page,
+      size: 10
     },
     searchLessonURL
   );
@@ -57,11 +57,11 @@ const ECNYPayResult = () => {
   return (
     <IonPage>
       <IonHeader>
-       
+
       </IonHeader>
       <IonContent>
         <div className="relative w-3/4 mx-auto">
-        <Search isOpen={state.isOpen} username={state.loginUser.username} setQueryStr={setQueryStr} onQuery={onQuery} />
+          <Search username={state.loginUser.username} setQueryStr={setQueryStr} onQuery={onQuery} />
           <div className="grid justify-center grid-rows-1 mt-36">
             <div className="mt-20 ">
               {/* <img

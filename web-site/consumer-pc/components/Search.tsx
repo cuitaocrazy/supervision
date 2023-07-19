@@ -1,17 +1,16 @@
-import { FC, Fragment, useCallback, useContext } from "react";
+import { Fragment, forwardRef, useCallback, useContext, useImperativeHandle, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { useForm } from "react-hook-form";
 import { loginURL } from "../const/const";
-import { AppContext, setloginUser, setOpenLogin } from "../appState";
+import { AppContext, setloginUser } from "../appState";
 
 interface searchProps {
   setQueryStr: Function;
   onQuery: Function;
-  isOpen?: Function;
   username?: string;
 }
 /* 搜索框 */
-const Search: FC<searchProps> = (props) => {
+const Search = forwardRef<{ openLoginModal: () => void }, searchProps>((props, ref) => {
   const { setQueryStr, onQuery } = props;
   const onSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
@@ -29,7 +28,6 @@ const Search: FC<searchProps> = (props) => {
   const {
     state: {
       loginUser: { username },
-      openLogin,
     },
     dispatch,
   } = useContext(AppContext);
@@ -39,20 +37,21 @@ const Search: FC<searchProps> = (props) => {
     },
     [dispatch]
   );
-  // 添加登录dialog状态
-  const setIsOpen = useCallback(
-    (isOpen: boolean) => {
-      dispatch(setOpenLogin(isOpen));
-    },
-    [dispatch]
-  );
+  const [isOpen, setIsOpen] = useState(false)
+
   function closeModal() {
     setIsOpen(false);
   }
   function openModal() {
     setIsOpen(true);
   }
-  console.log(`openLogin:${openLogin}`);
+  useImperativeHandle(ref, () => {
+    return {
+      openLoginModal: openModal,
+      // closeLoginModal: closeModal,
+    }
+  })
+  console.log(`login modal is open :${isOpen}`);
   const onSubmitLogin = (loginType: string) => (data: any) => {
     if (loginType === "verfiyCode") {
       fetch(loginURL, {
@@ -169,7 +168,7 @@ const Search: FC<searchProps> = (props) => {
         </div>
       </form>
       {/* 新增课程模态框 */}
-      <Transition appear show={openLogin} as={Fragment}>
+      <Transition appear show={isOpen} as={Fragment}>
         <Dialog as="div" className="relative z-10" onClose={closeModal}>
           <Transition.Child
             as={Fragment}
@@ -203,12 +202,11 @@ const Search: FC<searchProps> = (props) => {
                     <hr className="mt-2 mb-4" />
                   </Dialog.Title>
                   <form
-                    id="2"
                     onSubmit={handleSubmitPwd(onSubmitLogin("account"))}
                     className="flex flex-col items-center rounded-lg justify-items-center"
                   >
                     <div className="flex items-center mb-4 justify-items-center">
-                      <div className="flex leading-7 justify-items-center">
+                      <div className="flex leading-7 justify-items-center" >
                         <div className="flex justify-end p-1 w-36">用户名:</div>
                         <input
                           className="w-64 p-1 text-gray-600 bg-gray-100 border rounded-md justify-self-start focus:outline-none"
@@ -260,6 +258,6 @@ const Search: FC<searchProps> = (props) => {
       </Transition>
     </div>
   );
-};
+});
 
 export default Search;

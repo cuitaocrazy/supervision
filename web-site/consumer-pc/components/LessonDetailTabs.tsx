@@ -2,13 +2,13 @@ import OrgLessonInfo from "./OrgLessonInfo";
 
 import { Lesson, Teacher, EduOrg } from "../types/types";
 import { useRouter } from "next/router";
-import { AppContext, setOpenLogin } from "../appState";
+import { AppContext } from "../appState";
 import { useContext, Fragment, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { Dialog, Transition } from "@headlessui/react";
 
 // 课程详情标签选项卡
-const LessonDetailTabs = () => {
+const LessonDetailTabs = ({ openLoginModal }: { openLoginModal: () => void }) => {
   // 添加提示登录dialog状态
   let [isRemindOpen, setIsRemindOpen] = useState(false);
   function closeRemindModal() {
@@ -107,7 +107,7 @@ const LessonDetailTabs = () => {
                         value="好的"
                         type="button"
                         className="px-6 py-2 border rounded-md "
-                        onClick={() => { closeRemindModal(); dispatch(setOpenLogin(true)) }}
+                        onClick={() => { closeRemindModal(); openLoginModal() }}
                       />
                       {/* <Link to="/eCNYPay">
                    <input 

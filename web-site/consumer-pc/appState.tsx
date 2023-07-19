@@ -19,7 +19,6 @@ const initialState = {
     phone: null,
     role: null,
   },
-  openLogin: false,
   lessonDetail: null,
   CarList: [],
   stuName: null,
@@ -40,13 +39,6 @@ export const setloginUser = (loginUser: any) => {
   return {
     type: 'setloginUser',
     loginUser: loginUser
-  }
-};
-
-export const setOpenLogin = (openLogin: boolean) => {
-  return {
-    type: 'setOpenLogin',
-    openLogin: openLogin
   }
 };
 
@@ -87,12 +79,6 @@ export const reducer = (state: any, action: any) => {
         ...state,
         stuName: action.loginUser.username,
         loginUser: action.loginUser
-      }
-    }
-    case 'setOpenLogin': {
-      return {
-        ...state,
-        openLogin: action.openLogin
       }
     }
     case 'setLessonDetail': {

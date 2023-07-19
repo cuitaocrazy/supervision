@@ -1,15 +1,15 @@
-import React,{Fragment,useEffect} from "react";
+import React, { Fragment, useEffect } from "react";
 import { IonPage, IonHeader, IonContent } from "@ionic/react";
 import { motion } from "framer-motion";
 // import { useRouter } from 'next/router'
 import { Link } from "react-router-dom";
 import Navbar from "../Navbar";
 import { AppContext } from "../../appState";
-import { useContext,useState } from "react";
+import { useContext, useState } from "react";
 import { Dialog, Transition } from '@headlessui/react';
 import { useHistory } from "react-router-dom";
 import Search from '../Search'
-import {searchLessonURL} from '../../const/const'
+import { searchLessonURL } from '../../const/const'
 import { Lesson } from '../../types/types'
 
 // 订单课程信息card
@@ -35,9 +35,9 @@ const ConOrderLessCard = () => {
                     src="https://s3.bmp.ovh/imgs/2022/09/07/7745c096bcbd3af9.jpg"
                   ></img>
                   <div className="flex flex-col ml-2">
-                  <span>{state.lessonDetail.edu.eduName}</span>
-                  <span>{state.lessonDetail.lessonName}</span>
-                  <span>{state.lessonDetail.lessonIntroduce}</span>
+                    <span>{state.lessonDetail.edu.eduName}</span>
+                    <span>{state.lessonDetail.lessonName}</span>
+                    <span>{state.lessonDetail.lessonIntroduce}</span>
                   </div>
                 </td>
                 <td>{state.lessonDetail.lessonTotalQuantity}</td>
@@ -62,7 +62,7 @@ const ConOrder = () => {
   const history = useHistory();
   // const [disAgree, setAgree] = useState(IsOrNotAgree[0].unavailable)
   const [disAgree, setAgree] = useState(false)
-  console.log("disAgree"+disAgree)
+  console.log("disAgree" + disAgree)
   // 是否同意合同dialog页面状态
   let [isOpen, setIsOpen] = useState(false);
   function closeModal() {
@@ -72,22 +72,22 @@ const ConOrder = () => {
     setIsOpen(true);
   }
   console.log(state);
-  const [lessonList,setLessonList] = useState([] as Lesson[])
-  const onQuery = ()=>{
+  const [lessonList, setLessonList] = useState([] as Lesson[])
+  const onQuery = () => {
     fetch(paramStr, {
       method: 'GET',
       headers: {
         'Content-type': 'application/json;charset=UTF-8',
       },
     }).then(res => res.json())
-    .then((json) => {
-      setLessonList(json.result)  
-    })
+      .then((json) => {
+        setLessonList(json.result)
+      })
   }
-  useEffect(onQuery,[])
-  
-  const [queryStr,setQueryStr] = useState('')
-  const [page,setPage] = useState(0)
+  useEffect(onQuery, [])
+
+  const [queryStr, setQueryStr] = useState('')
+  const [page, setPage] = useState(0)
   const getParamStr = (params: any, url: string) => {
     let result = '?';
     Object.keys(params).forEach(key => (result = result + key + '=' + params[key] + '&'));
@@ -96,18 +96,18 @@ const ConOrder = () => {
   const paramStr = getParamStr(
     {
       queryStr: queryStr,
-      page:page,
-      size:10
+      page: page,
+      size: 10
     },
     searchLessonURL
   );
-  
+
 
   return (
     <IonPage>
       <IonHeader></IonHeader>
       <IonContent className="flex items-center justify-center justify-items-center scroll-auto">
-      {/* <div className="fixed left-0 right-0 w-3/4 pb-2 mx-auto mt-1 bg-white ">
+        {/* <div className="fixed left-0 right-0 w-3/4 pb-2 mx-auto mt-1 bg-white ">
         <div className="flex items-center justify-around gap-10 pt-3 text-xs justify-items-stretch">
           <div className="flex flex-col justify-start">
             <div className="text-xl tracking-widest text-gray-900">
@@ -121,7 +121,7 @@ const ConOrder = () => {
           </div>
         </div>
       </div> */}
-      <Search isOpen={state.isOpen} username={state.loginUser.username} setQueryStr={setQueryStr} onQuery={onQuery} />
+        <Search username={state.loginUser.username} setQueryStr={setQueryStr} onQuery={onQuery} />
         <div className="flex w-3/4 mx-auto mt-24 text-sm text-gray-400 py-2 px-2 bg-gray-100">
           <div className="flex items-center ">
             <span className="pr-2">确认订单</span>
@@ -164,9 +164,9 @@ const ConOrder = () => {
 
         {/* 底部菜单 */}
         <div className="flex  pt-4 w-3/4 mx-auto ">
-            <input type="radio" className="mr-2 mt-1"  onClick={()=>setAgree(!disAgree)}  />
-            <Link to="/contract"  className="text-gray-500 hover:text-primary-600 ">同意本教育机构的合同</Link>
-          </div>
+          <input type="radio" className="mr-2 mt-1" onClick={() => setAgree(!disAgree)} />
+          <Link to="/contract" className="text-gray-500 hover:text-primary-600 ">同意本教育机构的合同</Link>
+        </div>
         <div className="flex w-3/4 mx-auto  bg-white border-t h-14 mt-4">
           <div className="self-center justify-around text-xs text-gray-500">
             合计：
@@ -174,17 +174,17 @@ const ConOrder = () => {
           <div className="self-center mr-4 text-2xl font-black text-red-500 grow justify-self-end">
             ¥{state.lessonDetail.lessonTotalPrice}
           </div>
-          
-            <button className="self-center h-10 px-6 mt-2 mr-2 text-sm font-medium text-white justify-self-end bg-primary-500 rounded-3xl"
-            onClick={()=>{
-              if(disAgree){history.push("/eCNYPay")}
+
+          <button className="self-center h-10 px-6 mt-2 mr-2 text-sm font-medium text-white justify-self-end bg-primary-500 rounded-3xl"
+            onClick={() => {
+              if (disAgree) { history.push("/eCNYPay") }
               else openModal()
-              
+
             }}
-            >
-              立即支付
-            </button>
-          
+          >
+            立即支付
+          </button>
+
         </div>
 
         {/* 是否同意签订合同模态框  */}
@@ -238,12 +238,12 @@ const ConOrder = () => {
                           onClick={closeModal}
                         />
                         <Link to="/eCNYPay">
-                        <input 
-                          value="同意"
-                          type="button"
-                          className="px-6 py-2 text-white border rounded-md bg-primary-600"
-                          onClick={closeModal}
-                        />
+                          <input
+                            value="同意"
+                            type="button"
+                            className="px-6 py-2 text-white border rounded-md bg-primary-600"
+                            onClick={closeModal}
+                          />
                         </Link>
                       </div>
                     </form>

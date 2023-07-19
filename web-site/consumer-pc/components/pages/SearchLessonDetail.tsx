@@ -1,7 +1,7 @@
 import { IonPage, IonContent } from "@ionic/react"
 import LessonDetailTabs from '../LessonDetailTabs'
 import Search from '../Search'
-import { useEffect, useState, useContext } from "react"
+import { useEffect, useState, useContext, useRef } from "react"
 import { searchLessonURL } from '../../const/const'
 import LessonIntroduce from 'components/LessonIntroduce';
 import TeacherIntroduce from 'components/TeacherIntroduce';
@@ -57,13 +57,16 @@ const SearchLessonDetail = (props: LessonProps) => {
     },
     searchLessonURL
   );
-
-
+  // 定义搜索的框的引用
+  const searchRef = useRef<{
+    openLoginModal: () => void;
+  }>(null)
+  const openLoginModal = () => searchRef.current?.openLoginModal()
   return <IonPage>
     <IonContent>
 
       <div className='relative flex flex-col items-center mb-3 bg-white pb-14 scroll-auto'>
-        <Search setQueryStr={setQueryStr} onQuery={onQuery} />
+        <Search setQueryStr={setQueryStr} onQuery={onQuery} ref={searchRef} />
         <div className="flex w-3/4 mx-auto text-sm text-gray-400 mt-24 bg-gray-100 py-2 px-2">
           <div className="flex items-center ">
             <span className="pr-2">首页</span> <span className="pr-2">/</span><span className="pr-2">搜索结果</span><span className="pr-2">/</span><span>课程详情</span>
@@ -71,7 +74,7 @@ const SearchLessonDetail = (props: LessonProps) => {
         </div>
         {/* 课程图片 */}
         {/* <LessonImage lessonImage={lesson.lessonImgs} /> */}
-        <LessonDetailTabs />
+        <LessonDetailTabs openLoginModal={openLoginModal} />
 
       </div>
       <div className="flex flex-col w-3/4 mx-auto mt-2 bg-white rounded-lg shadow-md">
