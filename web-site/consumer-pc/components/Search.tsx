@@ -3,6 +3,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { useForm } from "react-hook-form";
 import { loginURL } from "../const/const";
 import { AppContext, setloginUser } from "../appState";
+import { useHistory } from "react-router-dom";
 
 interface searchProps {
   setQueryStr: Function;
@@ -11,6 +12,7 @@ interface searchProps {
 }
 /* 搜索框 */
 const Search = forwardRef<{ openLoginModal: () => void }, searchProps>((props, ref) => {
+  const history = useHistory();
   const { setQueryStr, onQuery } = props;
   const onSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
@@ -155,6 +157,15 @@ const Search = forwardRef<{ openLoginModal: () => void }, searchProps>((props, r
                 hidden={username != null}
               >
                 注册
+              </button>
+              <button
+                className="h-10 px-4 py-2  mr-3 text-base  rounded-md bg-primary-600 focus:bg-primary-800 hover:bg-primary-700 "
+                hidden={username == null}
+                onClick={() => {
+                  if (username) { history.push("/orderList") }
+                }}
+              >
+                我的订单
               </button>
               <button
                 className="h-10 px-4 py-2  mr-3 text-base  rounded-md bg-primary-600 focus:bg-primary-800 hover:bg-primary-700 "
