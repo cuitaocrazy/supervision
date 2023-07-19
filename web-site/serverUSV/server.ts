@@ -1215,14 +1215,7 @@ const timeFormat = (dateStr: string) => {
     return y + ":" + m + ":" + d;
   } else return dateStr;
 };
-//监管端:公告政策
 
-app.post("/edb/announcement/create", jsonParser, async (req, res) => {
-  console.log(`教育局: 公告政策添加: 条件[${JSON.stringify(req.body)}]`);
-  const info: Announcement = req.body;
-  info.announcementStatus = "on";
-  info.announcementDate = info.announcementDate?.replaceAll("-", "");
-});
 app.post("/edu/lesson/audit", jsonParser, async (req, res) => {
   console.log(`教育机构: 课程审核: 条件[${JSON.stringify(req.body)}]`);
   const r = await edbEduLessonService.update(req.body);
