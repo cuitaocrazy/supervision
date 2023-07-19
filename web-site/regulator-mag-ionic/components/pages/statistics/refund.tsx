@@ -56,7 +56,7 @@ const Refund: React.FC = () => {
   const ListEntry = ({ record, ...props }: { record: any }) => (
     <tr className="grid items-center grid-cols-6 gap-2 text-gray-600 border justify-items-center even:bg-white odd:bg-primary-100 ">
       <td className="flex items-center justify-center leading-10">{record.transactionId}</td>
-      <td className="flex items-center justify-center leading-10">{record.lessonName}</td>
+      <td className="flex items-center justify-center leading-10">{record.contractId}</td>
       <td className="flex items-center justify-center leading-10">
         {Math.abs(record.transactionAmt)}
       </td>
