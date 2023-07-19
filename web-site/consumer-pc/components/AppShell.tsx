@@ -25,6 +25,8 @@ import StuInfoLIst from "./pages/StuInfoList";
 import AddStuInfo from "./pages/AddStuInfo";
 import ContentsOfContracts from "./pages/ContentsOfContracts";
 import { AppContextProvider } from "../appState";
+import MyApplyComp from "./pages/MyApplyComp";
+import RefundLesson from "./pages/RefundLesson";
 
 // 装载ionic样式，ionic6 必须执行。
 setupIonicReact();
@@ -35,7 +37,7 @@ window
       await StatusBar.setStyle({
         style: status.matches ? Style.Dark : Style.Light,
       });
-    } catch {}
+    } catch { }
   });
 
 const AppShell = () => {
@@ -75,6 +77,8 @@ const AppShell = () => {
               <Route path="/stuInfoLIst" render={() => <StuInfoLIst />} />
               <Route path="/addStuInfo" render={() => <AddStuInfo />} />
               <Route path="/contract" render={() => <ContentsOfContracts />} />
+              <Route path="/myApplyComp" render={() => <MyApplyComp />} />
+              <Route path="/refoundLesson" render={() => <RefundLesson />} />
               <Route
                 exact={true}
                 path="/"
