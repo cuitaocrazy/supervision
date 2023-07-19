@@ -1,10 +1,10 @@
 //Teacher管理的详细页面
 import React, { useState } from 'react';
-import { IonPage, IonCard,IonRadioGroup,IonRadio, IonCardHeader, IonCardSubtitle,IonLabel,IonInput, IonCardContent,IonItem,IonButton,IonList,IonDatetime,IonPicker } from '@ionic/react';
+import { IonPage, IonCard, IonRadioGroup, IonRadio, IonCardHeader, IonCardSubtitle, IonLabel, IonInput, IonCardContent, IonItem, IonButton, IonList, IonDatetime, IonPicker } from '@ionic/react';
 import { Redirect } from 'react-router-dom';
-import { useCallback,useContext } from 'react'
-import {AppContext,setTeacherDetail} from '../../../appState';
-import {Teacher} from '../../../types/types'
+import { useCallback, useContext } from 'react'
+import { AppContext, setTeacherDetail } from '../../../appState';
+import { Teacher } from '../../../types/types'
 import { PickerColumn } from "@ionic/core";
 import Quit from '../../Quit'
 
@@ -12,19 +12,18 @@ export const TeacherDetail: React.FC = () => {
   const modifyURL = 'http://localhost:3003/teacher/modifyURL'
   const { state, dispatch } = useContext(AppContext);
 
-  const [teacherState, setTeacherState] = useState(state.teacher.teacherDetail);
-  const [isPickOpen, setPickOpen] = useState(false);
+  const [teacherState] = useState<Teacher>(state.teacher.teacherDetail);
   const setBack = useCallback(() => {
     dispatch(setTeacherDetail(undefined));
-  },[]);`                                                       `
-  const onBack = ()=>() => {
+  }, []); `                                                       `
+  const onBack = () => () => {
     setBack()
   }
-  if(state.teacher.teacherDetail===undefined){
+  if (state.teacher.teacherDetail === undefined) {
     return <Redirect to={state.backPage} />
   }
 
-  const onModify = async (e: React.FormEvent)=>() => {
+  const onModify = async (e: React.FormEvent) => () => {
     e.preventDefault();
     fetch(modifyURL, {
       method: 'PUT',
@@ -33,11 +32,10 @@ export const TeacherDetail: React.FC = () => {
         'Content-type': 'application/json;charset=UTF-8',
       },
     }).then(res => res.json())
-    .then((json) => {
-      alert(json.result)
-    })
+      .then((json) => {
+        alert(json.result)
+      })
   }
-  
   return (
     <IonPage className="bg-gray-100">
       <Quit />
@@ -61,8 +59,8 @@ export const TeacherDetail: React.FC = () => {
             </svg>
           </div>
           <div>
-          <span className="pr-1 text-gray-600">业务管理</span>/
-          <span className="pl-1 pr-1 text-primary-500">教师管理</span>/
+            <span className="pr-1 text-gray-600">业务管理</span>/
+            <span className="pl-1 pr-1 text-primary-500">教师管理</span>/
             <span className="pl-1 text-primary-500">教师详情</span>
           </div>
         </div>
@@ -72,22 +70,22 @@ export const TeacherDetail: React.FC = () => {
           <hr className="mt-2 mb-4" />
           <div className="grid grid-cols-2 justify-items-center ">
             <div className="flex items-center mb-4 leading-10 justify-items-center">
-              <div className="flex justify-end w-32 mr-2">所属机构:</div>
+              <div className="flex justify-end w-32 mr-2">监管机构名称:</div>
               <input
                 className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
                 name="orgName"
                 type="text"
-                value={teacherState.orgName}
+                value={teacherState.eduOrg.supervisorOrg.supervisorOrgName}
                 readOnly
               />
             </div>
             <div className="flex mb-4 leading-10">
-              <div className="flex justify-end w-32 mr-2">教学课程:</div>
+              <div className="flex justify-end w-32 mr-2">教育机构名称:</div>
               <input
                 className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
                 name="lessonName"
                 type="text"
-                value={teacherState.lessonName}
+                value={teacherState.eduOrg.eduName}
                 readOnly
               />
             </div>
@@ -102,7 +100,7 @@ export const TeacherDetail: React.FC = () => {
               />
             </div>
             <div className="flex mb-4 leading-10">
-              <div className="flex justify-end w-32 mr-2">身份证号:</div>
+              <div className="flex justify-end w-32 mr-2">教师编号:</div>
               <input
                 className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
                 name="teacherIdentityNo"
@@ -116,9 +114,9 @@ export const TeacherDetail: React.FC = () => {
               <div className="flex justify-end w-32 mr-2">专业领域:</div>
               <input
                 className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
-                name="teacherFiled"
+                name="teacherField"
                 type="text"
-                value={teacherState.teacherFiled}
+                value={teacherState.teacherField}
                 readOnly
               />
             </div>
@@ -137,7 +135,7 @@ export const TeacherDetail: React.FC = () => {
               <input
                 className="w-64 h-12 px-2 rounded-md bg-primary-100 focus:outline-none"
                 name="teacherCreatedDate"
-                value={teacherState.teacherCreatedDate}
+                value={teacherState.teacherCreateDate}
                 readOnly
               />
             </div>
@@ -155,7 +153,7 @@ export const TeacherDetail: React.FC = () => {
               <input
                 className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
                 name="teacherUpdatedDate"
-                value={teacherState.teacherUpdatedDate}
+                value={teacherState.teacherUpdateDate}
                 readOnly
               />
             </div>
@@ -177,8 +175,8 @@ export const TeacherDetail: React.FC = () => {
                 readOnly
               />
             </div>
-            </div>
-         
+          </div>
+
           <div className="flex justify-center">
             <input
               value="返回"
@@ -187,11 +185,11 @@ export const TeacherDetail: React.FC = () => {
               className="flex w-20 px-6 py-2 font-bold text-white rounded-md bg-primary-600 focus:bg-primary-700"
             />
           </div>
-          
+
         </IonCardContent>
       </IonCard>
     </IonPage>
-      )
-    };
+  )
+};
 
-    export default TeacherDetail
+export default TeacherDetail
