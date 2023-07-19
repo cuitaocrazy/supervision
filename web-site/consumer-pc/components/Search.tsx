@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { loginURL } from "../const/const";
 import { AppContext, setloginUser } from "../appState";
 import { useHistory } from "react-router-dom";
+import { Link } from 'react-router-dom';
 
 interface searchProps {
   setQueryStr: Function;
@@ -113,14 +114,14 @@ const Search = forwardRef<{ openLoginModal: () => void }, searchProps>((props, r
       <form onSubmit={onSubmit} className="pb-4">
         <div className="fixed left-0 right-0 w-3/4 pb-2 mx-auto bg-white pt-4">
           <div className="flex items-center justify-around gap-10 pt-3 text-xs justify-items-stretch">
-            <div className="flex flex-col justify-start">
+            <Link to="/" className="flex flex-col justify-start" >
               <div className="text-xl tracking-widest text-gray-900">
                 资金监管平台
               </div>
               <div className="text-sm tracking-widest text-gray-400">
                 我的课堂
               </div>
-            </div>
+            </Link>
             <div className="flex flex-row items-center w-96">
               <input
                 type="text"
@@ -162,7 +163,7 @@ const Search = forwardRef<{ openLoginModal: () => void }, searchProps>((props, r
                 className="h-10 px-4 py-2  mr-3 text-base  rounded-md bg-primary-600 focus:bg-primary-800 hover:bg-primary-700 "
                 hidden={username == null}
                 onClick={() => {
-                  if (username) { history.push("/orderList") }
+                  if (username) { history.push("/myLessonList") }
                 }}
               >
                 我的订单

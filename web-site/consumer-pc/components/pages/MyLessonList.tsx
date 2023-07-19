@@ -5,8 +5,9 @@ import Navbar from 'components/Navbar'
 import { Contract } from '../../types/types'
 import { Link } from 'react-router-dom';
 import {AppContext,setContractDetail} from '../../appState';
-import {searchContractURL} from'../../const/const';
+import {searchLessonURL} from'../../const/const';
 import PullToRefresh from 'react-simple-pull-to-refresh';
+import Search from '../Search'
 
 interface OrderListProps {
   lessonImages?: string
@@ -24,7 +25,7 @@ const LessonListCard: FC<OrderListProps> = (props) => {
     dispatch(setContractDetail(contract));
   },[dispatch]);
 
-  return <div className='pb-3 mx-3 mt-2 bg-white rounded-lg shadow-md'>
+  return <div className='pb-3 mx-3 mt-6 bg-white rounded-lg shadow-md'>
     <div className='flex pb-1 mx-2 mb-2 rounde-xl'>
       <img className='w-20 h-20 mt-2 ml-1 rounded-xl' src={props.lessonImages}></img>
       <div className='mt-3 ml-3'>
@@ -56,6 +57,7 @@ const LessonListCard: FC<OrderListProps> = (props) => {
 // 课程列表页面
 const MyLessonList = () => {
   const [orderList,setOrderList] = useState([] as Contract[])
+  const [queryStr, setQueryStr] = useState('')
   const [page,setPage] = useState(0)
   const getParamStr = (params: any, url: string) => {
     let result = '?';
@@ -64,10 +66,11 @@ const MyLessonList = () => {
   };
   const paramStr = getParamStr(
     {
+      queryStr: queryStr,
       page:page,
       size:10
     },
-    searchContractURL
+    searchLessonURL
   );
 useEffect(()=>{
   onQuery()
@@ -105,7 +108,12 @@ const onInfiniteScrolldown = (ev:any)=>{
 }
   return <IonPage>
     <IonHeader>
-      <Navbar title="课程列表" />
+    <Search setQueryStr={setQueryStr} onQuery={onQuery} />
+    <div className="flex w-3/4 mx-auto text-sm text-gray-400 mt-24 bg-gray-100 py-2 px-2">
+          <div className="flex items-center ">
+            <span className="pr-2">首页</span> <span className="pr-2">/</span><span className="pr-2">课程列表</span>
+          </div>
+    </div>
     </IonHeader>
     <IonContent>
       <PullToRefresh onRefresh={onRefresh}>
