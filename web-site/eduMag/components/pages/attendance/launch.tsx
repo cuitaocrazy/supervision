@@ -87,8 +87,8 @@ const ContractNegoQuery: React.FC = () => {
   const onManual = () => {
     const reqBody = JSON.stringify({
       ...attendance,
-      attendanceDate: attendance.attendanceDate?.replace("-", ""),
-      attendanceTime: attendance.attendanceTime?.replace(":", "") + "00",
+      attendanceDate: attendance.attendanceDate?.replaceAll("-", ""),
+      attendanceTime: attendance.attendanceTime?.replaceAll(":", "") + "00",
     });
     fetch(attendanceApplyURL, {
       method: "POST",
