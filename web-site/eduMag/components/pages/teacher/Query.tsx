@@ -391,7 +391,7 @@ const TeacherQuery: React.FC = () => {
                       <div className="flex items-center mb-4 justify-items-center">
                         <div className="flex justify-items-center">
                           <span className="flex justify-end p-1 mr-1 w-36">
-                            教师身份证:
+                            教师编号:
                           </span>
                           <input
                             className="w-64 p-1 text-gray-600 border rounded-md justify-self-start focus:outline-none focus:glow-primary-600"
@@ -569,7 +569,7 @@ const TeacherQuery: React.FC = () => {
               <tr className="grid items-center h-10 grid-cols-5 gap-10 font-bold text-gray-700 bg-white rounded-lg justify-items-center">
                 <th className="flex items-center justify-center">教师姓名</th>
                 <th className="flex items-center justify-center">
-                  教师身份证号码
+                  教师编号
                 </th>
                 <th className="flex items-center justify-center">专业领域</th>
                 {/* <th className="flex items-center justify-center">从业经历</th> */}

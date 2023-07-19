@@ -198,7 +198,7 @@ const Menu = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent>
-        <div className="flex flex-col items-center justify-start w-full h-full px-6 text-white bg-primary-600 scroll-auto">
+        <div className="flex flex-col items-center justify-start min-h-[calc(100vh-56px)] w-full px-6 text-white bg-primary-600 scroll-auto">
           {MeunPage.map(menuItem => {
             return showMenuItem(menuItem);
           })}
