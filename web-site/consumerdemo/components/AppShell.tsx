@@ -70,7 +70,7 @@ window
       await StatusBar.setStyle({
         style: status.matches ? Style.Dark : Style.Light,
       });
-    } catch {}
+    } catch { }
   });
 
 const AppShell = () => {
@@ -88,7 +88,7 @@ const AppShell = () => {
               <Route path="/tabs" render={() => <Tabs />} />
               <Route path="/login" render={() => <Login />} />
               <Route path="/register" render={() => <Register />} />
-              <Route path="/home" render={() => <Home />} />
+              {/* <Route path="/home" render={() => <Home />} /> */}
               <Route path="/orgList" render={() => <OrgList />} />
               <Route path="/orgLessonList" render={() => <OrgLessonList />} />
               <Route
