@@ -5,7 +5,7 @@ import Navbar from 'components/Navbar'
 import { Contract } from '../../types/types'
 import { Link } from 'react-router-dom';
 import {AppContext,setContractDetail} from '../../appState';
-import {searchLessonURL} from'../../const/const';
+import {searchContractURL} from'../../const/const';
 import PullToRefresh from 'react-simple-pull-to-refresh';
 import Search from '../Search'
 
@@ -70,7 +70,7 @@ const MyLessonList = () => {
       page:page,
       size:10
     },
-    searchLessonURL
+    searchContractURL
   );
 useEffect(()=>{
   onQuery()

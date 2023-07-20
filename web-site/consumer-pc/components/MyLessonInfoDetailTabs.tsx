@@ -17,6 +17,7 @@ const LessonDetailTabs = () => {
   const { item } = router.query
   const { state } = useContext(AppContext);
   let order :Contract=state.contractDetail
+  // console.log('pc端课程详情页面:'+JSON.stringify(order))
   return (
     <Tab.Group defaultIndex={0}>
       <Tab.List className="grid items-center grid-cols-3 gap-10 py-2 mx-10 mt-3 text-sm text-gray-500 justify-items-center ">
