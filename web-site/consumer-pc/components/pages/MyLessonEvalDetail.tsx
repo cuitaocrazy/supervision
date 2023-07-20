@@ -3,7 +3,7 @@ import { IonPage, IonHeader, IonContent } from '@ionic/react'
 import { useRouter } from 'next/router'
 import Navbar from 'components/Navbar'
 import Search from '../Search'
-import {searchContractURL} from'../../const/const';
+import {searchLessonURL} from'../../const/const';
 import { Lesson } from '../../types/types'
 
 // 申请课程评价
@@ -22,7 +22,7 @@ const MyLessonEvalDetail = () => {
       page:page,
       size:10
     },
-    searchContractURL
+    searchLessonURL
   );
   useEffect(()=>{
     onQuery()
