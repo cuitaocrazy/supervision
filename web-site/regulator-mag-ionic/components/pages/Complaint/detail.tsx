@@ -5,6 +5,7 @@ import { Redirect } from 'react-router-dom';
 import { useCallback, useContext } from 'react';
 import { AppContext, setComplaintDetail } from '../../../appState';
 import Quit from '../../Quit';
+import { Complaint } from '@/types/types';
 
 export const ComplaintDetail: React.FC = () => {
   const { state, dispatch } = useContext(AppContext);
@@ -14,7 +15,8 @@ export const ComplaintDetail: React.FC = () => {
   const onBack = () => () => {
     setBack();
   };
-  if (state.complaint.complaintDetail === undefined) {
+  const complaintDetail: Complaint = state.complaint.complaintDetail
+  if (complaintDetail === undefined) {
     return <Redirect to={state.backPage} />;
   }
 
@@ -52,22 +54,38 @@ export const ComplaintDetail: React.FC = () => {
           <hr className="mt-2 mb-4" />
           <div className="grid grid-cols-2 justify-items-center ">
             <div className="flex items-center mb-4 leading-10 justify-items-center">
-              <div className="flex justify-end w-32 mr-2">合同ID:</div>
+              <div className="flex justify-end w-32 mr-2">教育机构名称:</div>
               <input
                 className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
-                name="contractId"
                 type="text"
-                value={state.contractId}
+                value={complaintDetail.eduName}
                 readOnly
               />
             </div>
             <div className="flex mb-4 leading-10">
-              <div className="flex justify-end w-32 mr-2">课程名称:</div>
+              <div className="flex justify-end w-32 mr-2">投诉日期:</div>
               <input
                 className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
-                name="eduName"
                 type="text"
-                value={state.complaint.complaintDetail.eduName}
+                value={complaintDetail.complaintDate}
+                readOnly
+              />
+            </div>
+            <div className="flex mb-4 leading-10">
+              <div className="flex justify-end w-32 mr-2">教育机构联系人:</div>
+              <input
+                className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
+                type="text"
+                value={complaintDetail.eduContact}
+                readOnly
+              />
+            </div>
+            <div className="flex mb-4 leading-10">
+              <div className="flex justify-end w-32 mr-2">教育机构联系人电话:</div>
+              <input
+                className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
+                type="text"
+                value={complaintDetail.eduContactPhone}
                 readOnly
               />
             </div>
@@ -75,30 +93,36 @@ export const ComplaintDetail: React.FC = () => {
               <div className="flex justify-end w-32 mr-2">客户姓名:</div>
               <input
                 className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
-                name="consumerName"
                 type="text"
-                value={state.complaint.complaintDetail.consumerName}
+                value={complaintDetail.consumerName}
                 readOnly
               />
             </div>
             <div className="flex mb-4 leading-10">
-              <div className="flex justify-end w-32 mr-2">划拨结果:</div>
+              <div className="flex justify-end w-32 mr-2">客户电话:</div>
               <input
                 className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
-                name="complaintResult"
                 type="text"
-                value={state.complaint.complaintDetail.complaintResult}
+                value={complaintDetail.consumerPhone}
+                readOnly
+              />
+            </div>
+            <div className="flex mb-4 leading-10">
+              <div className="flex justify-end w-32 mr-2">投诉标题:</div>
+              <input
+                className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
+                type="text"
+                value={complaintDetail.complaintTitle}
                 readOnly
               />
             </div>
 
             <div className="flex mb-4 leading-10">
-              <div className="flex justify-end w-32 mr-2">划拨金额:</div>
+              <div className="flex justify-end w-32 mr-2">投诉内容:</div>
               <input
                 className="w-64 px-2 rounded-md bg-primary-100 focus:outline-none"
-                name="complaintAmt"
                 type="text"
-                value={state.complaint.complaintDetail.complaintAmt}
+                value={complaintDetail.complaintContent}
                 readOnly
               />
             </div>

@@ -5,7 +5,7 @@ import { Redirect } from 'react-router-dom';
 import { useCallback, useContext } from 'react';
 import { AppContext, setContractNegoAudit } from '../../../appState';
 import Quit from '../../Quit';
-import { eduContractNegoAudit } from '../../../const/const';
+import { edbContractNegoAudit } from '../../../const/const';
 
 export const DiscussAudit: React.FC = () => {
   const [present, dismiss] = useIonToast();
@@ -17,7 +17,7 @@ export const DiscussAudit: React.FC = () => {
   function openCreateModal() {
     setIsAuditOpen(true);
   }
-  const modifyURL = eduContractNegoAudit;
+  const modifyURL = edbContractNegoAudit;
   const { state, dispatch } = useContext(AppContext);
 
   const [negoState, setNegoState] = useState(state.contractNego.contractNegoAudit);

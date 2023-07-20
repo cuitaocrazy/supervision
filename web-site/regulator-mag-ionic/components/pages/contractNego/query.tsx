@@ -10,7 +10,7 @@ import { IonPage, IonRow, IonCol, useIonToast } from '@ionic/react';
 // import Quit from "components/components/Quit";
 import { ContractNego } from '../../../types/types';
 import localforage from 'localforage';
-import { eduContractNegoFindURL } from '../../../const/const';
+import { edbContractNegoFindURL } from '../../../const/const';
 import Quit from '../../Quit';
 
 // const queryURL = "http://localhost:3003/edu/contractNego/query";
@@ -38,7 +38,7 @@ const ContractNegoQuery: React.FC = () => {
     {
       lessonName: queryInfo.lessonName,
     },
-    eduContractNegoFindURL
+    edbContractNegoFindURL
   );
   const refreshList = useCallback(
     (negos: ContractNego[]) => {
@@ -119,7 +119,7 @@ const ContractNegoQuery: React.FC = () => {
         lessonName: queryInfo.lessonName,
         loginName: loginName,
       },
-      eduContractNegoFindURL
+      edbContractNegoFindURL
     );
     fetch(paramStr, {
       method: 'GET',

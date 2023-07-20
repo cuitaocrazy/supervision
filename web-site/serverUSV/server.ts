@@ -1552,4 +1552,5 @@ const encrypt = (plainText: string, publicKeyStr: string) => {
 
 // 投诉路由
 import { complaintRouter } from './src/router/ComplaintRouter';
-app.use('/consumer/complaint', jsonParser, complaintRouter);
+app.use('/consumer/complaint', complaintRouter);
+app.use('/edb/complaint', complaintRouter);

@@ -5,46 +5,8 @@ import { Complaint } from '../../../types/types';
 import { IonPage, IonRow, IonCol, useIonToast } from '@ionic/react';
 import { Dialog, Transition } from '@headlessui/react';
 import Quit from '../../Quit';
-
-const queryURL = 'http://localhost:3003/complaint/query';
+import { edbComplainFindURL } from 'const/const'
 const createURL = 'http://localhost:3003/complaint/detail';
-
-const demoComplaintList: Complaint[] = [
-  {
-    complaintId: '1',
-    eduId: '1',
-    eduName: '教育机构1',
-    eduContact: '1',
-    eduContactPhone: 'asasa',
-    complaintDate: '2020-01-01',
-    complaintTime: '00:00:00',
-    complaintType: '1',
-    consumerName: '消费者1',
-    consumerPhone: '1233442121',
-    complaintTitle: '不合理',
-    complaintContent: '课程不合理',
-    complaintStatus: '1',
-    complaintGrade: 'aaa',
-    complaintDescResu: '',
-  },
-  {
-    complaintId: '2',
-    eduId: '1',
-    eduName: '教育机构1',
-    eduContact: '1',
-    eduContactPhone: 'asasa',
-    complaintDate: '2020-01-01',
-    complaintTime: '00:00:00',
-    complaintType: '1',
-    consumerName: '消费者1',
-    consumerPhone: '1233442121',
-    complaintTitle: '不合理',
-    complaintContent: '课程不合理',
-    complaintStatus: '1',
-    complaintGrade: 'aaa',
-    complaintDescResu: '',
-  },
-];
 
 const ComplaintQuery: React.FC = () => {
   const [present, dismiss] = useIonToast();
@@ -57,14 +19,6 @@ const ComplaintQuery: React.FC = () => {
     setIsDealOpen(true);
   }
 
-  // 退出dialog页面状态
-  let [isQuitOpen, setIsQuitOpen] = useState(false);
-  function closeQuitModal() {
-    setIsQuitOpen(false);
-  }
-  function openQuitModal() {
-    setIsQuitOpen(true);
-  }
   const { state, dispatch } = useContext(AppContext);
   const [complaintState, setComplaintState] = useState({} as Complaint);
   const onCreate = async (e: React.FormEvent) => () => {
@@ -94,20 +48,9 @@ const ComplaintQuery: React.FC = () => {
           });
       });
   };
-  const [queryInfo, setQueryInfo] = useState({
-    eduName: '',
-    complaintDate: '',
-    complaintStatus: '',
-    complaintTitle: '',
-  });
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  type QueryInfo = Partial<Pick<Complaint, 'complaintTitle'>>
+  const [queryInfo, setQueryInfo] = useState<QueryInfo>();
 
-  const [handleState, setHandleState] = useState({
-    complaintResult: '',
-    complaintId: '',
-    complaintTitle: '',
-    complaintContent: '',
-  });
   const onDetail = (item: Complaint) => () => {
     doSetDetail(item);
   };
@@ -118,19 +61,15 @@ const ComplaintQuery: React.FC = () => {
     },
     [dispatch]
   );
-  const getParamStr = (params: any, url: string) => {
+  const getParamStr = (params: QueryInfo | undefined, url: string) => {
+    if (!params) return url;
     let result = '?';
-    Object.keys(params).forEach(key => (result = result + key + '=' + params[key] + '&'));
+    Object.entries(params).forEach(([key, value]) => result = `${result}${key}=${value}&`)
     return url + result;
   };
   const paramStr = getParamStr(
-    {
-      eduName: queryInfo.eduName,
-      complaintDate: queryInfo.complaintDate,
-      complaintStatus: queryInfo.complaintStatus,
-      complaintTitle: queryInfo.complaintTitle,
-    },
-    queryURL
+    queryInfo,
+    edbComplainFindURL
   );
   const refreshList = useCallback(
     (eduOrgs: Complaint[]) => {
@@ -139,22 +78,20 @@ const ComplaintQuery: React.FC = () => {
     [dispatch]
   );
 
-  const onHandle = () => () => {};
-
   useEffect(() => {
-    refreshList(demoComplaintList);
+    onQuery()
   }, []);
 
   const onQuery = () => {
-    // fetch(paramStr, {
-    //   method: 'GET',
-    //   headers: {
-    //     'Content-type': 'application/json;charset=UTF-8',
-    //   },
-    // }).then(res => res.json())
-    // .then((json) => {
-    // const {ComplaintList} = json
-    refreshList(demoComplaintList);
+    fetch(paramStr, {
+      method: 'GET',
+      headers: {
+        'Content-type': 'application/json;charset=UTF-8',
+      },
+    }).then(res => res.json())
+      .then(({ result, page: { objs, pageNumber } }) => {
+        refreshList(objs);
+      })
   };
 
   const ListEntry = ({ complaint, ...props }: { complaint: Complaint }) => (
@@ -217,14 +154,14 @@ const ComplaintQuery: React.FC = () => {
               <IonRow className="flex items-center w-full mx-4 text-center bg-white rounded-md justify-items-center">
                 <IonCol className="flex ml-8 text-gray-800">
                   <div className="flex items-center justify-center font-bold text-center text-gray-600 w-28">
-                    教师姓名:
+                    投诉标题:
                   </div>
                   <input
                     type="text"
                     className="flex w-56 h-12 font-bold text-center text-gray-600 bg-white border rounded-md focus:outline-none focus:glow-primary-600"
-                    placeholder="请输入教师姓名"
+                    placeholder="请输入标题"
                     onChange={e =>
-                      setQueryInfo({ ...queryInfo, ...{ teacherName: e.target.value } })
+                      setQueryInfo(pre => ({ ...pre, complaintTitle: e.target.value }))
                     }
                   />
                 </IonCol>

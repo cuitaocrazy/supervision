@@ -20,4 +20,17 @@ export type ServiceResult = {
      * 提示信息
      */
     msg: string
+    /**
+     * 分页
+     */
+    page?: {
+        /**
+         * 对象列表
+         */
+        objs: any[]
+        /**
+         * 页号
+         */
+        pageNum: number
+    }
 }

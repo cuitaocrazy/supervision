@@ -43,5 +43,8 @@ export const edbAnnouncementDelURL = `${serverPath}/announcement/del`;
 export const edbAnnouncementFindURL = `${serverPath}/announcement/find`;
 export const edbAnnouncementStatusURL = `${serverPath}/announcement/offOn`;
 
-export const eduContractNegoFindURL = `${serverPath}/contractNego/find`;
-export const eduContractNegoAudit = `${serverPath}/contractNego/audit`;
+export const edbContractNegoFindURL = `${serverPath}/contractNego/find`;
+export const edbContractNegoAudit = `${serverPath}/contractNego/audit`;
+
+// 教育局,投诉查询
+export const edbComplainFindURL = `${serverPath}/complaint/find`
