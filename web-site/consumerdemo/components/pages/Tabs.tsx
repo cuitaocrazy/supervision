@@ -10,6 +10,7 @@ import {
 import Home from './Home'
 import MyLessonList from './MyLessonList'
 import Login from './Login'
+import MyPersonalCenter from './MyPersonalCenter';
 
 const Tabs = () => {
   return (
@@ -17,6 +18,10 @@ const Tabs = () => {
       <IonRouterOutlet>
         <Route path="/tabs/home" component={Home} exact={true} />
         <Route path="/tabs/myLessonList" component={MyLessonList} exact={true} />
+        <Route
+          path="/tabs/myPersonalCenter"
+          render={() => <MyPersonalCenter />}
+        />
       </IonRouterOutlet>
       <IonTabBar slot="bottom">
         <IonTabButton tab="首页" href="/tabs/home">
@@ -35,7 +40,7 @@ const Tabs = () => {
           <IonIcon icon={cart} />
           <IonLabel>购物车</IonLabel>
         </IonTabButton>
-        <IonTabButton tab="我的" href="/myPersonalCenter">
+        <IonTabButton tab="我的" href="/tabs/myPersonalCenter">
           <IonIcon icon={person} />
           <IonLabel>我的</IonLabel>
         </IonTabButton>
