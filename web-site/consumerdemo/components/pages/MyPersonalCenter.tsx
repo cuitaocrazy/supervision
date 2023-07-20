@@ -164,7 +164,7 @@ const MyPersonalCenter = () => {
 
               <NavLink
                 className="flex flex-col items-center w-24 h-24 mt-4 bg-red-100 rounded-md shadow-md justify-items-center shadow-red-200"
-                to="./myLessonList"
+                to="/tabs/myLessonList"
               >
                 {/* <motion.div key="2" className={'reactive ' } animate={{ scale: [1, 1.2, 1] }} transition={{ duration: 0.2 }}><span className="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full">2</span></motion.div> */}
                 <p className="mt-4">

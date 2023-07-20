@@ -105,7 +105,6 @@ const AppShell = () => {
               <Route path="/addStuInfo" render={() => <AddStuInfo />} />
               <Route path="/editStuInfo" render={() => <EditStuInfo />} />
               <Route path="/payResult" render={() => <PayResult />} />
-              <Route path="/myLessonList" render={() => <MyLessonList />} />
               <Route path="/myLessonDetail" render={() => <MyLessonDetail />} />
               <Route path="/refoundLesson" render={() => <RefoundLesson />} />
               <Route
@@ -118,10 +117,7 @@ const AppShell = () => {
                 path="/myLessonEvalDetail"
                 render={() => <MyLessonEvalDetail />}
               />
-              <Route
-                path="/myPersonalCenter"
-                render={() => <MyPersonalCenter />}
-              />
+
               <Route
                 path="/myNoticeInfoList"
                 render={() => <MyNoticeInfoList />}
