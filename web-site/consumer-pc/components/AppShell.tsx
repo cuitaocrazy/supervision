@@ -30,6 +30,7 @@ import RefundLesson from "./pages/RefundLesson";
 import MyLessonEvalDetail from "./pages/MyLessonEvalDetail"
 import MyCheckInList from "./pages/MyCheckInList"
 import CheckInAndLeave from "./pages/CheckInAndLeave"
+import MyLessonEvalList from "./pages/MyLessonEvalList"
 
 // 装载ionic样式，ionic6 必须执行。
 setupIonicReact();
@@ -85,6 +86,8 @@ const AppShell = () => {
               <Route path="/myLessonEvalDetail" render={() => <MyLessonEvalDetail />} />
               <Route path="/myCheckInList" render={() => <MyCheckInList />} />
               <Route path="/checkInAndLeave" render={() => <CheckInAndLeave />} />
+              <Route path="/myLessonEvalList" render={() => <MyLessonEvalList />} />
+              
               <Route
                 exact={true}
                 path="/"

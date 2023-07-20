@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useContext, useState } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import { IonPage, IonContent, IonHeader } from "@ionic/react";
 // import Calendar from '../Calendar'
 import CheckInResultListCard from "components/CheckInResultListCard";
@@ -9,9 +9,13 @@ import Calendar from "react-calendar";
 import { Attendance } from "@/types/types";
 import { compassSharp } from "ionicons/icons";
 import "react-calendar/dist/Calendar.css";
+import Search from '../Search'
+import {searchLessonURL} from'../../const/const';
+import { Lesson } from '../../types/types'
 
 // 一门课程的签到结果列表页面----
 const MyCheckInList = () => {
+  const [queryStr, setQueryStr] = useState('')
   const { state, dispatch } = useContext(AppContext);
   const [attendanceList, setAttendanceList] = useState([] as Attendance[]);
   const [date, setDate] = useState(new Date());
@@ -25,6 +29,36 @@ const MyCheckInList = () => {
     });
     return url + result;
   };
+  const [page,setPage] = useState(0)
+  const getParamStrSearch = (params: any, url: string) => {
+    let result = '?';
+    Object.keys(params).forEach(key => (result = result + key + '=' + params[key] + '&'));
+    return url + result;
+  };
+  const paramStrSearch = getParamStrSearch(
+    {
+      queryStr: queryStr,
+      page:page,
+      size:10
+    },
+    searchLessonURL
+  );
+  useEffect(()=>{
+    onQuery()
+  },[])
+    // 课程列表数据
+    const [lessonList, setLessonList] = useState([] as Lesson[])
+  const onQuery = ()=>{
+    fetch(paramStrSearch, {
+      method: 'GET',
+      headers: {
+        'Content-type': 'application/json;charset=UTF-8',
+      },
+    }).then(res => res.json())
+    .then((json) => {
+      setLessonList(json.result)
+    })
+  }
 
   // lessonId,consumerId,lessonQuantity
   console.log(state)
@@ -50,7 +84,25 @@ const MyCheckInList = () => {
       .then((json) => {
         setAttendanceList(json.result);
       });
-  }, []);
+  }, []
+  );
+
+  useEffect(() => {
+  fetch(paramStrSearch, {
+    method: "GET",
+    // body: JSON.stringify({
+
+    // }),
+    headers: {
+      "Content-type": "application/json;charset=UTF-8",
+    },
+  })
+    .then((res) => res.json())
+    .then((json) => {
+      setLessonList(json.result);
+    });
+}, []
+  );
 
   const checkDateEqueal = (stringDate: string, date: Date) => {
     if (
@@ -89,10 +141,10 @@ const MyCheckInList = () => {
   return (
     <IonPage>
       <IonHeader>
-        <Navbar title="签到列表" />
+      <Search setQueryStr={setQueryStr} onQuery={onQuery} />
       </IonHeader>
       <IonContent>
-        <div className="">
+        <div className="mt-24">
           <Calendar
             className="w-full px-2 py-2 mt-2 border-0 rounded-lg shadow-md"
             onClickDay={()=>alert()}
