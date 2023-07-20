@@ -23,64 +23,78 @@ import {
  * Learn more:
  * https://ionicframework.com/blog/a-state-management-pattern-for-ionic-react-with-react-hooks/
  */
-const initialState = {
-  backPage:undefined,
-  loginUser:{//登录用户信息
-    userId:null,
-    loginName:null,
-    username:null,
-    phone:null,
-    role:null,
+type MyState = {
+  backPage: undefined | string,
+  loginUser: {
+    userId: string | null,
+    loginName: string | null,
+    username: string | null,
+    phone: string | null,
+    role: string | null
+  },
+  lessonDetail: any,
+  CarList: any[],
+  stuName: string | null,
+  contractDetail: Contract | null
+};
+const initialState: MyState = {
+  backPage: undefined,
+  loginUser: {//登录用户信息
+    userId: null,
+    loginName: null,
+    username: null,
+    phone: null,
+    role: null,
   },
 
-  lessonDetail:null,
-  CarList:[],
-  stuName:null,
-  contractDetail:null,
+  lessonDetail: null,
+  CarList: [],
+  stuName: null,
+  contractDetail: null,
 };
-export const AppContext = React.createContext<{state:any,dispatch:React.Dispatch<any>}>({state:initialState,dispatch:()=>{}});
+export const AppContext = React.createContext<{ state: MyState, dispatch: React.Dispatch<any> }>({ state: initialState, dispatch: () => { } });
 
 export const AppContextProvider = (props: { children: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined; }) => {
   const fullInitialState = {
     ...initialState,
   }
   let [state, dispatch] = React.useReducer(reducer, fullInitialState);
-  let value = { state:state, dispatch:dispatch };
+  let value = { state: state, dispatch: dispatch };
   return <AppContext.Provider value={value}>{props.children}</AppContext.Provider>
-} 
+}
 
-export const setloginUser = (loginUser:any) => {
+export const setloginUser = (loginUser: any) => {
   return {
     type: 'setloginUser',
-    loginUser:loginUser
+    loginUser: loginUser
   }
 };
 
-export const setLessonDetail =(lessonDetail:any)=>{
+export const setLessonDetail = (lessonDetail: any) => {
   return {
     type: 'setLessonDetail',
-    lessonDetail:lessonDetail
+    lessonDetail: lessonDetail
   }
 }
 
-export const setContractDetail =(contractDetail:any)=>{
+export const setContractDetail = (contractDetail: any) => {
   return {
     type: 'setContractDetail',
-    contractDetail:contractDetail
+    contractDetail: contractDetail
   }
 }
 
-export const setDiscussDetail =(discussDetail:any)=>{
+export const setDiscussDetail = (discussDetail: any) => {
   return {
     type: 'setDiscussDetail',
-    contractDetail:discussDetail
+    contractDetail: discussDetail
   }
 }
 
-export const setStuName = (stuName:any)=>{
+export const setStuName = (stuName: any) => {
   return {
     type: 'setStuName',
-    stuName:stuName
+    stuName: stuName
   }
 }
 
@@ -89,32 +103,32 @@ export const reducer = (state: any, action: any) => {
     case 'setloginUser': {
       return {
         ...state,
-        stuName:action.loginUser.username,
-        loginUser:action.loginUser
+        stuName: action.loginUser.username,
+        loginUser: action.loginUser
       }
     }
     case 'setLessonDetail': {
       return {
         ...state,
-        lessonDetail:action.lessonDetail
+        lessonDetail: action.lessonDetail
       }
     }
     case 'setContractDetail': {
       return {
         ...state,
-        contractDetail:action.contractDetail
+        contractDetail: action.contractDetail
       }
     }
     case 'setDiscussDetail': {
       return {
         ...state,
-        discussDetail:action.discussDetail
+        discussDetail: action.discussDetail
       }
     }
-    case 'setStuName':{
+    case 'setStuName': {
       return {
         ...state,
-        stuName:action.stuName
+        stuName: action.stuName
       }
     }
   }

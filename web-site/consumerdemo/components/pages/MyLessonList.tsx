@@ -90,7 +90,6 @@ const MyLessonList = () => {
         setOrderList(json.result)
       })
   }
-
   const onRefresh = async () => {
     setPage(0)
     onQuery()
@@ -105,7 +104,9 @@ const MyLessonList = () => {
       },
     }).then(res => res.json())
       .then((json) => {
-        setOrderList([...orderList, ...json.result])
+        setOrderList([...json.result])
+        // todo 下面代码存在重复数据的问题，暂时注释掉
+        // setOrderList([...orderList, ...json.result])
         ev.target.complete();
       })
   }

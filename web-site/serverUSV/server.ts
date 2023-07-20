@@ -520,7 +520,7 @@ const getTransactionId = () => {
 };
 //todo
 const getUserInfoByToken = async () => {
-  return { username: "用户1", loginName: "edutest", userId: 1 };
+  return { username: "李白", loginName: "testuser", userId: "testuser" };
 };
 
 app.get("/consumer/lesson", jsonParser, async (req, res) => {
@@ -849,7 +849,7 @@ app.get("/consumer/attendance", jsonParser, async (req, res) => {
 app.post("/consumer/login", jsonParser, async (req, res) => {
   res.send({
     status: "success",
-    result: { username: "用户1", loginName: "edutest", userId: 1 },
+    result: { username: "李白", loginName: "testuser", userId: 'testuser' },
   });
 });
 
@@ -1549,3 +1549,7 @@ const encrypt = (plainText: string, publicKeyStr: string) => {
 //     offSet = i * 117;
 //   }
 // };
+
+// 投诉路由
+import { complaintRouter } from './src/router/ComplaintRouter';
+app.use('/consumer/complaint', jsonParser, complaintRouter);

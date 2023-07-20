@@ -5,6 +5,19 @@ export const getUUIDWithEM: (entityManager: EntityManager) => Promise<string> = 
     return rs[0].uuid
 }
 
-export const nullableFuzzy = (query:any)=>{
-    return '%'.concat(query?query:'').concat('%')
+export const nullableFuzzy = (query: any) => {
+    return '%'.concat(query ? query : '').concat('%')
+}
+/**
+ * 服务处理结果
+ */
+export type ServiceResult = {
+    /**
+     * 结果
+     */
+    result: boolean
+    /**
+     * 提示信息
+     */
+    msg: string
 }
