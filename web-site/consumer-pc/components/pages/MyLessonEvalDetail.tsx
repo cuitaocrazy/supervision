@@ -1,17 +1,56 @@
-import React from 'react'
+import React, { useState,useEffect } from "react";
 import { IonPage, IonHeader, IonContent } from '@ionic/react'
 import { useRouter } from 'next/router'
 import Navbar from 'components/Navbar'
+import Search from '../Search'
+import {searchLessonURL} from'../../const/const';
+import { Lesson } from '../../types/types'
 
 // 申请课程评价
 const MyLessonEvalDetail = () => {
+  const [queryStr, setQueryStr] = useState('')
   const router=useRouter();
+  const [page,setPage] = useState(0)
+  const getParamStr = (params: any, url: string) => {
+    let result = '?';
+    Object.keys(params).forEach(key => (result = result + key + '=' + params[key] + '&'));
+    return url + result;
+  };
+  const paramStr = getParamStr(
+    {
+      queryStr: queryStr,
+      page:page,
+      size:10
+    },
+    searchLessonURL
+  );
+  useEffect(()=>{
+    onQuery()
+  },[])
+    // 课程列表数据
+    const [lessonList, setLessonList] = useState([] as Lesson[])
+  const onQuery = ()=>{
+    fetch(paramStr, {
+      method: 'GET',
+      headers: {
+        'Content-type': 'application/json;charset=UTF-8',
+      },
+    }).then(res => res.json())
+    .then((json) => {
+      setLessonList(json.result)
+    })
+  }
   return <IonPage>
     <IonHeader>
-      <Navbar title="课程评价" />
+    <Search setQueryStr={setQueryStr} onQuery={onQuery} />
+        {/* <div className="flex w-3/4 mx-auto text-sm text-gray-400 mt-24 bg-gray-100 py-2 px-2">
+          <div className="flex items-center ">
+            <span className="pr-2">首页</span> <span className="pr-2">/</span><span className="pr-2">课程评价</span>
+          </div>
+        </div> */}
     </IonHeader>
     <IonContent>
-      <form className='text-sm'>
+      <form className='text-sm mt-24'>
         <div className='px-4 py-4 mx-2 rounded-md shadow-md '>
           <p className='text-gray-800'>您的评价会让老师做的更好~~</p>
           <div className='flex items-center justify-center gap-3 mt-2'>

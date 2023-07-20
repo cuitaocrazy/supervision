@@ -7,22 +7,56 @@ import {
   IonButton,
   useIonToast,
 } from "@ionic/react";
-import { Link, Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import Navbar from "../Navbar";
-import { AppContext, setContractDetail } from "../../appState";
+import { AppContext } from "../../appState";
 import moment from "moment";
 import { checkInURL, leaveURL } from "../../const/const";
-import { informationCircle, star } from "ionicons/icons";
 import { Dialog, Transition } from '@headlessui/react';
-import { strictEqual } from "assert";
+
+import Search from '../Search'
+import {searchContractURL} from'../../const/const';
+import { Lesson } from '../../types/types'
 
 // 签到和请假页面
 const CheckInAndLeave = () => {
   const { state } = useContext(AppContext);
+  const [queryStr, setQueryStr] = useState('')
   const [date, setDate] = useState(moment().format("YYYY年MM月DD日"));
   const [time, setTime] = useState(moment().format("HH:mm:ss"));
   const [back, setBack] = useState(null as unknown);
   const [isLeave,setIsLeave]=useState(false)
+  const [page,setPage] = useState(0)
+  const getParamStr = (params: any, url: string) => {
+    let result = '?';
+    Object.keys(params).forEach(key => (result = result + key + '=' + params[key] + '&'));
+    return url + result;
+  };
+  const paramStr = getParamStr(
+    {
+      queryStr: queryStr,
+      page:page,
+      size:10
+    },
+    searchContractURL
+  );
+  useEffect(()=>{
+    onQuery()
+  },[])
+    // 课程列表数据
+    const [lessonList, setLessonList] = useState([] as Lesson[])
+  const onQuery = ()=>{
+    fetch(paramStr, {
+      method: 'GET',
+      headers: {
+        'Content-type': 'application/json;charset=UTF-8',
+      },
+    }).then(res => res.json())
+    .then((json) => {
+      setLessonList(json.result)
+    })
+  }
+
   // 课程签到Toast
   const [showCheckInToast, setShowCheckInToast] = useState(false);
   // 课程请假Toast
@@ -98,10 +132,10 @@ const CheckInAndLeave = () => {
   return (
     <IonPage>
       <IonHeader>
-        <Navbar title="签到/请假" />
+       <Search setQueryStr={setQueryStr} onQuery={onQuery} />
       </IonHeader>
       <IonContent>
-        <div className="py-3 text-sm text-center shadow-md text-secondary-400">
+        <div className="py-3 text-sm text-center shadow-md text-secondary-400 mt-24">
           <div className="inline">{date}</div>
           <div className="inline pl-2">{time}</div>
         </div>

@@ -27,6 +27,10 @@ import ContentsOfContracts from "./pages/ContentsOfContracts";
 import { AppContextProvider } from "../appState";
 import MyApplyComp from "./pages/MyApplyComp";
 import RefundLesson from "./pages/RefundLesson";
+import MyLessonEvalDetail from "./pages/MyLessonEvalDetail"
+import MyCheckInList from "./pages/MyCheckInList"
+import CheckInAndLeave from "./pages/CheckInAndLeave"
+import MyLessonEvalList from "./pages/MyLessonEvalList"
 
 // 装载ionic样式，ionic6 必须执行。
 setupIonicReact();
@@ -78,7 +82,12 @@ const AppShell = () => {
               <Route path="/addStuInfo" render={() => <AddStuInfo />} />
               <Route path="/contract" render={() => <ContentsOfContracts />} />
               <Route path="/myApplyComp" render={() => <MyApplyComp />} />
-              <Route path="/refoundLesson" render={() => <RefundLesson />} />
+              <Route path="/refundLesson" render={() => <RefundLesson />} />
+              <Route path="/myLessonEvalDetail" render={() => <MyLessonEvalDetail />} />
+              <Route path="/myCheckInList" render={() => <MyCheckInList />} />
+              <Route path="/checkInAndLeave" render={() => <CheckInAndLeave />} />
+              <Route path="/myLessonEvalList" render={() => <MyLessonEvalList />} />
+              
               <Route
                 exact={true}
                 path="/"

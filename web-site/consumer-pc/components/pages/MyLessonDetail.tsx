@@ -6,8 +6,11 @@ import { Lesson } from "../../types/types";
 import MyLessonDetailBottomMenu from "../MyLessonDetailBottomMenu";
 import { Popover, Transition } from "@headlessui/react";
 import { Fragment } from "react";
-import React from "react";
+import React, { useEffect, useContext, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import Search from '../Search'
+import {searchLessonURL} from'../../const/const';
+
 
 let lesson: Lesson = { lessonImgs: "https://s3.bmp.ovh/imgs/2022/08/22/281ec3695ed000e6.png" };
 const solutions = [
@@ -53,9 +56,40 @@ function IconOne() {
 
 // 我的课程详情页面
 const MyLessonDetail = () => {
+  const [queryStr, setQueryStr] = useState('')
   const location = useLocation<{ backPage: string }>();
-  console.log("MyLessonDetail");
-  console.log(location);
+  const [page,setPage] = useState(0)
+  const getParamStr = (params: any, url: string) => {
+    let result = '?';
+    Object.keys(params).forEach(key => (result = result + key + '=' + params[key] + '&'));
+    return url + result;
+  };
+  const paramStr = getParamStr(
+    {
+      queryStr: queryStr,
+      page:page,
+      size:10
+    },
+    searchLessonURL
+  );
+  useEffect(()=>{
+    onQuery()
+  },[])
+    // 课程列表数据
+    const [lessonList, setLessonList] = useState([] as Lesson[])
+  const onQuery = ()=>{
+    fetch(paramStr, {
+      method: 'GET',
+      headers: {
+        'Content-type': 'application/json;charset=UTF-8',
+      },
+    }).then(res => res.json())
+    .then((json) => {
+      setLessonList(json.result)
+    })
+  }
+  // console.log("MyLessonDetail");
+  // console.log(location);
   let backPage = undefined;
   if (location.state && location.state.backPage) {
     backPage = location.state.backPage;
@@ -63,74 +97,7 @@ const MyLessonDetail = () => {
   return (
     <IonPage>
       <IonHeader>
-      <div className="fixed left-0 right-0 w-3/4 pb-2 mx-auto bg-white pt-4">
-          <div className="flex items-center justify-around gap-10 pt-3 text-xs justify-items-stretch">
-            <Link to="/" className="flex flex-col justify-start" >
-              <div className="text-xl tracking-widest text-gray-900">
-                资金监管平台
-              </div>
-              <div className="text-sm tracking-widest text-gray-400">
-                我的课堂
-              </div>
-            </Link>
-          </div>
-        </div>
-        {/* <div className="absolute top-0 right-0 max-w-sm ">
-          <Popover className="relative">
-            {({ open }) => (
-              <>
-                <Popover.Button
-                  className={`
-                ${open ? "" : "text-opacity-90"}
-                group inline-flex items-center   px-3 py-2 text-base font-medium text-white hover:text-opacity-100 `}
-                >
-                  <span>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="w-6 h-6"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"
-                      />
-                    </svg>
-                  </span>
-                </Popover.Button>
-                <Transition
-                  as={Fragment}
-                  enter="transition ease-out duration-200"
-                  enterFrom="opacity-0 translate-y-1"
-                  enterTo="opacity-100 translate-y-0"
-                  leave="transition ease-in duration-150"
-                  leaveFrom="opacity-100 translate-y-0"
-                  leaveTo="opacity-0 translate-y-1"
-                >
-                  <Popover.Panel className="absolute z-10 max-w-sm mt-1 transform -translate-x-1/2 w-44 sm:px-0 lg:max-w-3xl">
-                    <div className="w-32 overflow-hidden rounded-lg shadow-lg">
-                      <div className="p-1 bg-gray-900 opacity-75">
-                        <Link
-                          to="/refoundLesson"
-                          className="flow-root py-2 transition duration-150 ease-in-out rounded-md focus:bg-gray-500"
-                        >
-                          <span className="flex items-center justify-center">
-                            <span className="text-sm font-medium text-white">
-                              退订课程
-                            </span>
-                          </span>
-                        </Link>
-                      </div>
-                    </div>
-                  </Popover.Panel>
-                </Transition>
-              </>
-            )}
-          </Popover>
-        </div> */}
+        <Search setQueryStr={setQueryStr} onQuery={onQuery} />
       </IonHeader>
       <IonContent>
         <div className="relative mb-3 bg-white pb-14 scroll-auto mt-24">
