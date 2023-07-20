@@ -2,7 +2,7 @@ import React from "react";
 
 // 课程评价组件card
 const LessonEvalCard = () => {
-  return <div className='px-2 pt-2 pb-3 mx-3 mt-2 mb-2 '>
+  return <div className='px-2 pt-2 pb-3 mx-48 mt-2 mb-2 '>
     <div className='grid grid-cols-2 justify-items-stretch'>
       <div className='flex flex-auto text-xs font-bold text-gray-600 justify-self-start'>源远流长</div>
       <div className='grid w-full grid-flow-col pl-20'>
