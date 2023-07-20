@@ -16,8 +16,8 @@ interface lessonDetailProps {
 
 const OrgLessonInfo: FC<lessonDetailProps> = (props) => {
   return (
-    <div className="">
-      <div className="text-lg font-bold ">{props.lessonName}</div>
+    <div className="flex flex-col items-center justify-center ">
+      <div className="text-lg font-bold">{props.lessonName}</div>
       <div className="flex mt-3">
         <div className="mr-4 text-sm text-gray-500">
           {props.lessonTotalQuantity}

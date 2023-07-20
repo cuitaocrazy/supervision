@@ -10,7 +10,7 @@
     ```
 - 上传代码
     ```shell
-    scp supervision.tar.gz root@123.57.226.90:~/
+    scp supervision.tar.gz root@47.94.222.219:~/application
     ```
 ## 服务器安装docker过程(debian)
 - 更新apt包索引，并安装apt通过https安装包的基础包

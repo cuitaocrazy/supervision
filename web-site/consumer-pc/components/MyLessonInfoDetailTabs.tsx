@@ -88,7 +88,7 @@ const LessonDetailTabs = () => {
         }>评价(<span>14</span><span>)</span></Tab>
       </Tab.List>
       <Tab.Panels>
-        <Tab.Panel>
+        <Tab.Panel className="flex justify-center flex-col justify-items-center">
           <OrgLessonInfo lessonName={order.lessonName} teacherName={order.teacherName} lessonTotalPrice={order.lessonTotalPrice} lessonTotalQuantity={order.lessonTotalQuantity} eduAddress={order.eduAddress} eduContactPhone={order.eduContactPhone} />
           <LessonIntroduce lessonIntroduce={order.lessonIntroduce} />
           <TeacherIntroduce teacherIntroduce={order.teacherIntroduce} />

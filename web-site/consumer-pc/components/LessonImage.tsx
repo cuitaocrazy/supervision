@@ -8,7 +8,7 @@ interface LessonImageProps{
 const LessonImage:FC<LessonImageProps> = (props) => {
   return (
     <div className='mt-2'>
-      <img className="w-1/2 mx-auto rounded-md cursor-pointer h-52" src={props.lessonImage}></img>
+      <img className="w-4/5 mx-auto rounded-lg cursor-pointer h-56" src={props.lessonImage}></img>
     </div>
   )
 }
