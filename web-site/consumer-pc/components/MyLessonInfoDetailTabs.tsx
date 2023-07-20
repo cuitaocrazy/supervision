@@ -35,7 +35,7 @@ const LessonDetailTabs = () => {
           <OrgLessonInfo lessonName={order.lessonName} teacherName={order.teacherName} lessonTotalPrice={order.lessonTotalPrice} lessonTotalQuantity={order.lessonTotalQuantity} eduAddress={order.eduAddress} eduContactPhone={order.eduContactPhone} />
           <LessonIntroduce lessonIntroduce={order.lessonIntroduce} />
           <TeacherIntroduce teacherIntroduce={order.teacherIntroduce} />
-          <OrderInfo orderNo={order.orderNo} contractDate={order.contractDate} contractTime={order.contractTime} consumerName={order.consumerName} consumerStuName={order.consumerStuName} lessonTotalPrice={order.lessonTotalPrice} />
+          <OrderInfo orderNo={order.contractId} contractDate={order.contractDate} contractTime={order.contractTime} consumerName={order.consumerName} consumerStuName={order.consumerStuName} lessonTotalPrice={order.lessonTotalPrice} />
         </Tab.Panel>
         <Tab.Panel>
           <LessonFrame />
