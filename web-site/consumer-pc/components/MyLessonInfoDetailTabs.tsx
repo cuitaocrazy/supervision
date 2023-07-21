@@ -32,17 +32,17 @@ const LessonDetailTabs = () => {
         }>评价(<span>14</span><span>)</span></Tab>
       </Tab.List>
       <Tab.Panels>
-        <Tab.Panel className="grid grid-cols-4 justify-center  justify-items-center w-3/4 mx-auto mt-10">
-          <div className='mx-3 text-sm rounded-lg shadow-md '>
-            <OrgLessonInfo lessonName={order.lessonName} teacherName={order.teacherName} lessonTotalPrice={order.lessonTotalPrice} lessonTotalQuantity={order.lessonTotalQuantity} eduAddress={order.eduAddress} eduContactPhone={order.eduContactPhone} />
+        <Tab.Panel className="grid grid-cols-4 justify-center  justify-items-center w-3/4 mx-auto mt-10 gap-y-4">
+          <div className='mx-3 text-sm rounded-lg shadow-md 2xl:col-span-1 sm:col-span-2 col-span-4'>
+            <OrgLessonInfo lessonName={order.lessonName} teacherName={order.teacherName} lessonTotalPrice={order.lessonTotalPrice} lessonTotalQuantity={order.lessonTotalQuantity} eduAddress={order.eduOrg.eduAddress} eduContactPhone={order.eduOrg.eduContactPhone} />
           </div>
-          <div className='mx-3 text-sm rounded-lg shadow-md '>
+          <div className='mx-3 text-sm rounded-lg shadow-md 2xl:col-span-1 sm:col-span-2 col-span-4'>
             <LessonIntroduce lessonIntroduce={order.lessonIntroduce} />
           </div>
-          <div className='mx-3 text-sm rounded-lg shadow-md '>
+          <div className='mx-3 text-sm rounded-lg shadow-md 2xl:col-span-1 sm:col-span-2 col-span-4'>
             <TeacherIntroduce teacherIntroduce={order.teacherIntroduce} />
           </div>
-          <div className='mx-3 text-sm rounded-lg shadow-md '>
+          <div className='mx-3 text-sm rounded-lg shadow-md 2xl:col-span-1 sm:col-span-2 col-span-4'>
            <OrderInfo orderNo={order.contractId} contractDate={order.contractDate} contractTime={order.contractTime} consumerName={order.consumerName} consumerStuName={order.consumerStuName} lessonTotalPrice={order.lessonTotalPrice} />
           </div>
           

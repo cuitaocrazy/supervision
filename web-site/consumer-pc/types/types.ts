@@ -32,6 +32,7 @@ export interface Contract {
   orderNo?:string,
   lessonAccumulationQuantity?:number,
   lessonImages?:string,
+  eduOrg:EduOrg,
 
 }
 // export interface TranSum{
