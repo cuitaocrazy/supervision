@@ -2,6 +2,7 @@ import { Entity, PrimaryColumn, Column, OneToMany, OneToOne, ManyToOne, JoinColu
 import { SupervisorBlackEdu } from "./SupervisorBlackEdu";
 import { EduTeacher } from './EduTeacher';
 import { SupervisorOrg } from './SupervisorOrg';
+import { Contract } from './Contract';
 @Entity({ name: "t_b_edu_org" })
 export class EduOrg {
   @PrimaryColumn()
@@ -75,4 +76,7 @@ export class EduOrg {
   // 机构信息
   @JoinColumn({ name: "supervisor_org_id" })
   supervisorOrg: SupervisorOrg
+  // 合约列表
+  @OneToMany(() => Contract, (contract) => contract.eduOrg)
+  contracts: Contract[]
 }

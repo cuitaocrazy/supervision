@@ -1,4 +1,5 @@
-import { Entity, PrimaryColumn, Column } from 'typeorm'
+import { Entity, PrimaryColumn, Column, OneToMany } from 'typeorm'
+import { Contract } from './Contract'
 
 @Entity({ name: "t_b_edu_lesson" })
 export class EduLesson {

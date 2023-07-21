@@ -1,4 +1,5 @@
-import { Entity, PrimaryColumn, Column } from 'typeorm'
+import { Entity, PrimaryColumn, Column, ManyToOne, JoinColumn } from 'typeorm'
+import { EduOrg } from './EduOrg'
 
 @Entity({ name: "t_l_contract" })
 export class Contract {
@@ -68,6 +69,8 @@ export class Contract {
     orderNo: string
     @Column()
     lessonAccumulationQuantity: string
-    
 
+    @ManyToOne(() => EduOrg, (eduOrg) => eduOrg.contracts)
+    @JoinColumn({ name: 'edu_id' })
+    eduOrg: EduOrg
 }

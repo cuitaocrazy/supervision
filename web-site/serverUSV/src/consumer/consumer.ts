@@ -62,6 +62,7 @@ export const searchContract = async (reqParams) => {
   const contracts = await mysql
     .getRepository(Contract)
     .createQueryBuilder("contract")
+    .leftJoinAndSelect("contract.eduOrg", "eduOrg")
     .where(
       "contract.contractStatus != 'wait' and (contract.contractStatus = :contractStatus or 1=:flag)",
       {
