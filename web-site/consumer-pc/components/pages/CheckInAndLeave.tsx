@@ -136,11 +136,11 @@ const CheckInAndLeave = () => {
       </IonHeader>
       <IonContent>
        <div className="mx-32">
-       <div className="py-3 text-sm text-center shadow-md text-secondary-400 mt-24">
+       <div className="py-3 text-sm text-center shadow-md text-secondary-400 mt-24 rounded-lg">
           <div className="inline">{date}</div>
           <div className="inline pl-2">{time}</div>
         </div>
-        <div className="pt-6 pb-6 mx-2 mt-2 mb-4 text-center rounded-lg shadow-md">
+        <div className="pt-6 pb-6 mt-2 mb-4 text-center rounded-lg shadow-md">
           <div className="grid grid-cols-1 justify-items-center">
             <button
               className="text-base font-bold text-white rounded-full w-28 h-28 bg-primary-600"

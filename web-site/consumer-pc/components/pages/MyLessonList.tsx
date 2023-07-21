@@ -1,7 +1,6 @@
 import { FC,useContext,useCallback,useState,useEffect } from 'react';
 import { IonPage, IonHeader, IonContent,IonInfiniteScroll,IonInfiniteScrollContent } from "@ionic/react"
-import Router, { useRouter } from 'next/router'
-import Navbar from 'components/Navbar'
+import Router from 'next/router'
 import { Contract } from '../../types/types'
 import { Link } from 'react-router-dom';
 import {AppContext,setContractDetail} from '../../appState';
@@ -25,7 +24,7 @@ const LessonListCard: FC<OrderListProps> = (props) => {
     dispatch(setContractDetail(contract));
   },[dispatch]);
 
-  return <div className='pb-3 mx-32 mt-6 bg-white rounded-lg shadow-md'>
+  return <div className='pb-3 w-3/4 mx-auto mt-6 bg-white rounded-lg shadow-md'>
     <div className='flex pb-1 mx-2 mb-2 rounde-xl'>
       <img className='w-20 h-20 mt-2 ml-1 rounded-xl' src={props.lessonImages}></img>
       <div className='mt-3 ml-3'>
@@ -41,13 +40,13 @@ const LessonListCard: FC<OrderListProps> = (props) => {
         </div>
       </div>
     </div>
-    <div className='grid grid-cols-3 gap-2 text-xs text-white justify-items-center'>
-      <div className='px-6 py-1 shadow-md rounded-3xl bg-primary-500 shadow-primary-300'
-        onClick={() => { Router.push({ pathname: ("./myLessonEvalDetail"), query: { item: JSON.stringify(props.item) } }) }}>去评价</div>
-      <div className='px-6 py-1 shadow-md rounded-3xl bg-secondary-300 shadow-secondary-300'
+    <div className='grid grid-cols-2 gap-6 text-xs text-white justify-items-center'>
+      {/* <div className='h-10 px-4 py-2  mr-3 text-sm  rounded-md bg-primary-600 focus:bg-primary-800 hover:bg-primary-700 '
+        onClick={() => { Router.push({ pathname: ("./myLessonEvalDetail"), query: { item: JSON.stringify(props.item) } }) }}>去评价</div> */}
+      <div className='h-10 px-4 py-2  mr-3 text-sm  rounded-md bg-remind-400 shadow-remind-400'
         onClick={() => { Router.push({ pathname: ("./myApplyComp"), query: { item: JSON.stringify(props.item) } }) }}>去投诉</div>
       <Link to='/myLessonDetail'>
-        <div className='px-4 py-1 shadow-md rounded-3xl bg-remind-400 shadow-remind-400'
+        <div className='h-10 px-4 py-2  mr-3 text-sm  rounded-md bg-primary-600'
           onClick={() => {refreshContractDetail(props.item as Contract)  }}>查看详情</div>
       </Link>  
     </div>

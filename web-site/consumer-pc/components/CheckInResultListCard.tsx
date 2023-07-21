@@ -7,7 +7,7 @@ const CheckInResultListCard = (props:{attendance:Attendance}) => {
   const {attendance}= props
   const router=useRouter();
   
-  return <div className='pl-2 mx-3 mt-3'>
+  return <div className='pl-2 mt-3 w-3/4 mx-auto'>
     <div className='text-sm leading-7'>
       <span className='text-green-500 '>已签到</span>
       <span className='pl-2 text-gray-500 '>签到类型：</span>
