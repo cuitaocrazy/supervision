@@ -32,11 +32,16 @@ const LessonDetailTabs = () => {
         }>评价(<span>14</span><span>)</span></Tab>
       </Tab.List>
       <Tab.Panels>
-        <Tab.Panel className="flex justify-center flex-col justify-items-center">
-          <OrgLessonInfo lessonName={order.lessonName} teacherName={order.teacherName} lessonTotalPrice={order.lessonTotalPrice} lessonTotalQuantity={order.lessonTotalQuantity} eduAddress={order.eduAddress} eduContactPhone={order.eduContactPhone} />
-          <LessonIntroduce lessonIntroduce={order.lessonIntroduce} />
-          <TeacherIntroduce teacherIntroduce={order.teacherIntroduce} />
-          <OrderInfo orderNo={order.contractId} contractDate={order.contractDate} contractTime={order.contractTime} consumerName={order.consumerName} consumerStuName={order.consumerStuName} lessonTotalPrice={order.lessonTotalPrice} />
+        <Tab.Panel className="flex justify-center flex-row justify-items-center ">
+          <div className='px-3 pt-3 pb-4 mx-3 mt-2 text-xs rounded-lg shadow-md flex flex-col items-center justify-center'>
+            <OrgLessonInfo lessonName={order.lessonName} teacherName={order.teacherName} lessonTotalPrice={order.lessonTotalPrice} lessonTotalQuantity={order.lessonTotalQuantity} eduAddress={order.eduAddress} eduContactPhone={order.eduContactPhone} />
+            <LessonIntroduce lessonIntroduce={order.lessonIntroduce} />
+            <TeacherIntroduce teacherIntroduce={order.teacherIntroduce} />
+          </div>
+          <div>
+           <OrderInfo orderNo={order.contractId} contractDate={order.contractDate} contractTime={order.contractTime} consumerName={order.consumerName} consumerStuName={order.consumerStuName} lessonTotalPrice={order.lessonTotalPrice} />
+          </div>
+          
         </Tab.Panel>
         <Tab.Panel>
           <LessonFrame />

@@ -105,7 +105,7 @@ const RefoundLesson = () => {
       </IonHeader>
       <IonContent>
         <form onSubmit={onSubmit}>
-          <div className="px-3 py-4 mx-2 mt-3 mb-6 rounded-lg shadow-md">
+          <div className="px-3 py-4 mx-32 mt-3 mb-6 rounded-lg shadow-md grid grid-cols-3 gap-6">
             <div className="flex px-4 py-2 mb-3 text-sm rounded-md bg-primary-50">
               <div className="pr-4 text-gray-500">课程名称</div>
               <div className="text-gray-700">{order.lessonName}</div>
@@ -115,11 +115,12 @@ const RefoundLesson = () => {
               <div>{order.consumerStuName}</div>
             </div>
             <div className="flex items-center px-4 py-2 mb-2 text-sm rounded-md bg-primary-50">
-              <div className="pr-4 text-gray-500 ">退订金额</div>
+              <div className="pr-4 text-gray-500 ">退订金额(元)</div>
               <input
-                className="h-8 pl-1 rounded-md outline-none bg-primary-50 focus:outline-none focus:glow-primary-600"
-                // type="number"
+                className="h-8 pl-1 rounded-md outline-none bg-primary-50 focus:outline-none focus:glow-primary-600 "
+                //  type="number"
                 name="refundAmt"
+                placeholder="请输入退款金额"
                 onChange={(e) => {
                   setRefundState({
                     ...refundState,
@@ -127,9 +128,9 @@ const RefoundLesson = () => {
                   });
                 }}
               ></input>
-              <div className="ml-2 text-gray-700">元</div>
             </div>
-            <p className="mb-3 text-xs leading-4 text-primary-600">
+            <div className="col-span-3">
+            <p className="mb-3 text-xs leading-2 text-primary-600">
               按照当地政府要求，监管账户的资金已部分划拨到机构账户中本系统仅支持未划拨部分退款，其余部分与机构进行沟通协商。退款金额会按原交易渠道进行退回。
             </p>
             <div className="text-sm text-gray-700">协商原因</div>
@@ -144,12 +145,13 @@ const RefoundLesson = () => {
                 });
               }}
             />
+            </div>
           </div>
           <div className="flex items-center justify-items-center">
             {/* <button className='py-2 font-bold text-center text-white shadow-md shadow-primary-600 px-28 rounded-3xl bg-primary-600'>提交申请</button> */}
             <input
               type="submit"
-              className="w-full py-3 mx-5 mt-8 mb-1 text-sm font-bold text-white shadow-lg rounded-3xl bg-primary-500 focus:outline-none hover:bg-primary-700 hover:shadow-none"
+              className="w-80 mx-auto py-3 mt-8 mb-1 text-sm font-bold text-white shadow-lg rounded-3xl bg-primary-500 focus:outline-none hover:bg-primary-700 hover:shadow-none"
               value="提交申请"
             />
           </div>

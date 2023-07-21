@@ -16,7 +16,7 @@ interface lessonDetailProps {
 
 const OrgLessonInfo: FC<lessonDetailProps> = (props) => {
   return (
-    <div className="flex flex-col items-center justify-center ">
+    <div className="flex flex-col  justify-center ">
       <div className="text-lg font-bold">{props.lessonName}</div>
       <div className="flex mt-3">
         <div className="mr-4 text-sm text-gray-500">
@@ -29,8 +29,9 @@ const OrgLessonInfo: FC<lessonDetailProps> = (props) => {
         eduContactPhone={props.eduContactPhone}
         eduAddress={props.eduAddress}
       />
-      <div className="flex items-center pt-1 text-xs justify-items-center">
+      <div className="flex items-center pt-1 text-sm justify-items-center">
         <div className="text-2xl text-center text-gray-800">
+          <span className="text-sm text-gray-500">课程费用：</span>
           <span className="pr-1">¥</span>
           {props.lessonTotalPrice}
         </div>

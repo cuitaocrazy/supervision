@@ -144,7 +144,7 @@ const MyCheckInList = () => {
       <Search setQueryStr={setQueryStr} onQuery={onQuery} />
       </IonHeader>
       <IonContent>
-        <div className="mt-24">
+        <div className="mt-24 mx-32">
           <Calendar
             className="w-full px-2 py-2 mt-2 border-0 rounded-lg shadow-md"
             onClickDay={()=>alert()}

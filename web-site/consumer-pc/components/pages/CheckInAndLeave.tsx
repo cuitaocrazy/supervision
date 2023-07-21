@@ -15,7 +15,7 @@ import { checkInURL, leaveURL } from "../../const/const";
 import { Dialog, Transition } from '@headlessui/react';
 
 import Search from '../Search'
-import {searchContractURL} from'../../const/const';
+import {searchLessonURL} from'../../const/const';
 import { Lesson } from '../../types/types'
 
 // 签到和请假页面
@@ -38,7 +38,7 @@ const CheckInAndLeave = () => {
       page:page,
       size:10
     },
-    searchContractURL
+    searchLessonURL
   );
   useEffect(()=>{
     onQuery()
@@ -135,7 +135,8 @@ const CheckInAndLeave = () => {
        <Search setQueryStr={setQueryStr} onQuery={onQuery} />
       </IonHeader>
       <IonContent>
-        <div className="py-3 text-sm text-center shadow-md text-secondary-400 mt-24">
+       <div className="mx-32">
+       <div className="py-3 text-sm text-center shadow-md text-secondary-400 mt-24">
           <div className="inline">{date}</div>
           <div className="inline pl-2">{time}</div>
         </div>
@@ -171,7 +172,7 @@ const CheckInAndLeave = () => {
         </div>
         <div className="flex mt-4">
           <input
-            className="w-full py-2 mx-5 font-bold tracking-widest text-white shadow-md shadow-remind-400 bg-remind-400 rounded-3xl"
+            className="w-80 mx-auto mt-20  py-2 font-bold tracking-widest text-white shadow-md shadow-remind-400 bg-remind-400 rounded-3xl"
             type="button"
             value="请假"
             // onClick={() => LeaveFun()}
@@ -250,6 +251,7 @@ const CheckInAndLeave = () => {
             </div>
           </Dialog>
         </Transition>
+       </div>
       </IonContent>
     </IonPage>
   );

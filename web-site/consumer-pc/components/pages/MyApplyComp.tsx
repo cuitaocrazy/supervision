@@ -1,21 +1,78 @@
-import { FC, useState } from 'react'
+import React, { useState,useEffect } from "react";
 import { IonPage, IonHeader, IonContent } from '@ionic/react'
 import { RadioGroup } from '@headlessui/react'
 import {useRouter} from 'next/router'
 import CompTypeRadioGroup from '../CompTypeRadioGroup'
 import Navbar from 'components/Navbar'
+import Search from '../Search'
+import {searchLessonURL} from'../../const/const';
+import { Lesson } from '../../types/types'
 
 // 申请投诉页面
 const MyApplyComp = () => {
+  const [queryStr, setQueryStr] = useState('')
   const router=useRouter();
+  const [page,setPage] = useState(0)
+  const getParamStr = (params: any, url: string) => {
+    let result = '?';
+    Object.keys(params).forEach(key => (result = result + key + '=' + params[key] + '&'));
+    return url + result;
+  };
+  let [plan, setPlan] = useState('startup')
+  const paramStr = getParamStr(
+    {
+      queryStr: queryStr,
+      page:page,
+      size:10
+    },
+    searchLessonURL
+  );
+  useEffect(()=>{
+    onQuery()
+  },[])
+    // 课程列表数据
+    const [lessonList, setLessonList] = useState([] as Lesson[])
+  const onQuery = ()=>{
+    fetch(paramStr, {
+      method: 'GET',
+      headers: {
+        'Content-type': 'application/json;charset=UTF-8',
+      },
+    }).then(res => res.json())
+    .then((json) => {
+      setLessonList(json.result)
+    })
+  }
   return <IonPage>
     <IonHeader>
-      <Navbar title="投诉内容" />
+    <Search setQueryStr={setQueryStr} onQuery={onQuery} />
     </IonHeader>
     <IonContent>
-      <form className='text-sm bg-white'>
+      <form className='text-sm bg-white mt-24'>
         <p className=''>
-          <CompTypeRadioGroup />
+          {/* <CompTypeRadioGroup /> */}
+              <RadioGroup value={plan} onChange={setPlan} 
+            className="flex items-center justify-between px-4 py-2 mx-2 shadow-md">
+          <RadioGroup.Label className="px-2 py-2">投诉类型</RadioGroup.Label>
+          <RadioGroup.Option value="startup">
+            {({ checked }) => (
+              <span className={checked ? ' px-5 py-1 text-white bg-secondary-300 rounded-3xl' : 'px-5 py-1 text-gray-500 border rounded-3xl'}>
+                课程</span>
+            )}
+          </RadioGroup.Option>
+          <RadioGroup.Option value="business">
+            {({ checked }) => (
+              <span className={checked ? ' px-5 py-1 text-white bg-secondary-300 rounded-3xl' : 'px-5 py-1 text-gray-500 border rounded-3xl'}>
+                老师</span>
+            )}
+          </RadioGroup.Option>
+          <RadioGroup.Option value="enterprise">
+            {({ checked }) => (
+              <span className={checked ? ' px-5 py-1 text-white bg-secondary-300 rounded-3xl' : 'px-5 py-1 text-gray-500 border rounded-3xl'}>
+                其他</span>
+            )}
+          </RadioGroup.Option>
+        </RadioGroup>
         </p>
         <div className='px-4 pt-2 mx-2 mt-2 rounded-md shadow-md'>
           <p className='px-3 py-2 mt-2 leading-7 rounded-md bg-primary-50'>

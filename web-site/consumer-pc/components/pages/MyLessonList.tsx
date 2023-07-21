@@ -25,7 +25,7 @@ const LessonListCard: FC<OrderListProps> = (props) => {
     dispatch(setContractDetail(contract));
   },[dispatch]);
 
-  return <div className='pb-3 mx-3 mt-6 bg-white rounded-lg shadow-md'>
+  return <div className='pb-3 mx-32 mt-6 bg-white rounded-lg shadow-md'>
     <div className='flex pb-1 mx-2 mb-2 rounde-xl'>
       <img className='w-20 h-20 mt-2 ml-1 rounded-xl' src={props.lessonImages}></img>
       <div className='mt-3 ml-3'>
