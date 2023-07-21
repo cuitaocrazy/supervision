@@ -5,9 +5,9 @@ interface teacherProps{
 }
 
 const TeacherIntroduce:FC<teacherProps> =(props)=>{
-  return <div className='flex flex-col p-3 mt-2 text-xs justify-center items-center'>
-  <div className='text-sm font-bold text-gray-600'>教师简介</div>
-  <div className='pt-1 leading-5 text-gray-500'>{props.teacherIntroduce}</div>
+  return <div className='w-80 h-80'>
+    <div className="text-lg font-bold bg-red-500 text-white  text-center py-10 rounded-lg">教师简介</div>
+    <div className='pt-1 mx-2 leading-5 text-gray-500'>{props.teacherIntroduce}</div>
 </div>
 }
 

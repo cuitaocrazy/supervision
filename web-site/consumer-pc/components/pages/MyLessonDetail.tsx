@@ -98,7 +98,7 @@ const MyLessonDetail = () => {
       </IonHeader>
       <IonContent>
         <div className="relative mb-3 bg-white pb-14 scroll-auto mt-24">
-          <LessonImage lessonImage={lesson.lessonImgs} />
+          {/* <LessonImage lessonImage={lesson.lessonImgs} /> */}
           <MyLessonInfoDetailTabs />
         </div>
         <MyLessonDetailBottomMenu />

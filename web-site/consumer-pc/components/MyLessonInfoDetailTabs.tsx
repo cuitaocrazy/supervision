@@ -32,13 +32,17 @@ const LessonDetailTabs = () => {
         }>评价(<span>14</span><span>)</span></Tab>
       </Tab.List>
       <Tab.Panels>
-        <Tab.Panel className="flex justify-center flex-row justify-items-center ">
-          <div className='px-3 pt-3 pb-4 mx-3 mt-2 text-xs rounded-lg shadow-md flex flex-col items-center justify-center'>
+        <Tab.Panel className="grid grid-cols-4 justify-center  justify-items-center w-3/4 mx-auto mt-10">
+          <div className='mx-3 text-sm rounded-lg shadow-md '>
             <OrgLessonInfo lessonName={order.lessonName} teacherName={order.teacherName} lessonTotalPrice={order.lessonTotalPrice} lessonTotalQuantity={order.lessonTotalQuantity} eduAddress={order.eduAddress} eduContactPhone={order.eduContactPhone} />
+          </div>
+          <div className='mx-3 text-sm rounded-lg shadow-md '>
             <LessonIntroduce lessonIntroduce={order.lessonIntroduce} />
+          </div>
+          <div className='mx-3 text-sm rounded-lg shadow-md '>
             <TeacherIntroduce teacherIntroduce={order.teacherIntroduce} />
           </div>
-          <div>
+          <div className='mx-3 text-sm rounded-lg shadow-md '>
            <OrderInfo orderNo={order.contractId} contractDate={order.contractDate} contractTime={order.contractTime} consumerName={order.consumerName} consumerStuName={order.consumerStuName} lessonTotalPrice={order.lessonTotalPrice} />
           </div>
           

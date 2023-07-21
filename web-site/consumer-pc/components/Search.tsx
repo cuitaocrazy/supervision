@@ -166,7 +166,7 @@ const Search = forwardRef<{ openLoginModal: () => void }, searchProps>((props, r
                   if (username) { history.push("/myLessonList") }
                 }}
               >
-                我的订单
+                我的课程
               </button>
               <button
                 className="h-10 px-4 py-2  mr-3 text-base  rounded-md bg-primary-600 focus:bg-primary-800 hover:bg-primary-700 "
