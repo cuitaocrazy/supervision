@@ -38,7 +38,7 @@ const MyApplyComp = () => {
       .then(({ result }) => {
         if (result) {
           setToastMsg('已提交');
-          setTimeout(() => { history.push("./tabs/myLessonList") }, 1000)
+          setTimeout(() => { history.push("./myLessonList") }, 1000)
           return;
         }
         setToastMsg('未知异常')

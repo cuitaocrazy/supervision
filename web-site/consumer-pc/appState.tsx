@@ -1,4 +1,17 @@
 import React from 'react';
+import {
+  Contract,
+  Lesson,
+  Teacher,
+  Attendance,
+  Transfer,
+  EduOrg,
+  SupervisorUser,
+  ConsumerStudent,
+  Announcement,
+  Complaint,
+  ContractNego
+} from './types/types'
 /**
  * This is a simple redux-like state management pattern for React using hooks
  * that might be useful in your simpler Ionic React apps that don't
@@ -10,6 +23,20 @@ import React from 'react';
  * Learn more:
  * https://ionicframework.com/blog/a-state-management-pattern-for-ionic-react-with-react-hooks/
  */
+// type MyState = {
+//   backPage: undefined | string,
+//   loginUser: {
+//     userId: string | null,
+//     loginName: string | null,
+//     username: string | null,
+//     phone: string | null,
+//     role: string | null
+//   },
+//   lessonDetail: any,
+//   CarList: any[],
+//   stuName: string | null,
+//   contractDetail: Contract | null
+// };
 const initialState = {
   backPage: undefined,
   loginUser: {//登录用户信息

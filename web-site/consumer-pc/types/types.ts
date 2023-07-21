@@ -240,6 +240,23 @@ export interface LessonDiscussInfo{
   discussTime?:string,
   item?: LessonDiscussInfo
 }
+export interface Complaint {
+  complaintId: string,
+  eduId: string,
+  eduName: string,
+  eduContact: string,
+  eduContactPhone: string,
+  complaintDate: string,
+  complaintTime: string,
+  complaintType: string,
+  consumerId: string,
+  consumerName: string,
+  consumerPhone: string,
+  complaintTitle: string,
+  complaintContent: string,
+  complaintStatus: string,
+  complaintGrade: string,
+}
 
 
 

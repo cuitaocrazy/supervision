@@ -41,10 +41,14 @@ const LessonListCard: FC<OrderListProps> = (props) => {
       </div>
     </div>
     <div className='grid grid-cols-2 gap-6 text-xs text-white justify-items-center'>
-      {/* <div className='h-10 px-4 py-2  mr-3 text-sm  rounded-md bg-primary-600 focus:bg-primary-800 hover:bg-primary-700 '
-        onClick={() => { Router.push({ pathname: ("./myLessonEvalDetail"), query: { item: JSON.stringify(props.item) } }) }}>去评价</div> */}
-      <div className='h-10 px-4 py-2  mr-3 text-sm  rounded-md bg-remind-400 shadow-remind-400'
-        onClick={() => { Router.push({ pathname: ("./myApplyComp"), query: { item: JSON.stringify(props.item) } }) }}>去投诉</div>
+     {/* <Link to='/myLessonEvalDetail' >
+      <div className='h-10 px-4 py-2  mr-3 text-sm  rounded-md bg-primary-600 focus:bg-primary-800 hover:bg-primary-700 '
+        onClick={() => {refreshContractDetail(props.item as Contract)  }}>去评价</div>
+     </Link> */}
+      <Link to='/myApplyComp'>
+        <div className='h-10 px-4 py-2  mr-3 text-sm  rounded-md bg-remind-400 shadow-remind-400'
+          onClick={() => { refreshContractDetail(props.item as Contract) }}>去投诉</div>
+     </Link>
       <Link to='/myLessonDetail'>
         <div className='h-10 px-4 py-2  mr-3 text-sm  rounded-md bg-primary-600'
           onClick={() => {refreshContractDetail(props.item as Contract)  }}>查看详情</div>
@@ -101,7 +105,9 @@ const onInfiniteScrolldown = (ev:any)=>{
     },
   }).then(res => res.json())
   .then((json) => {
-    setOrderList([...orderList,...json.result])  
+    setOrderList([...json.result])
+    // todo 下面代码存在重复数据的问题，暂时注释掉
+    // setOrderList([...orderList, ...json.result])
     ev.target.complete();
   })
 }

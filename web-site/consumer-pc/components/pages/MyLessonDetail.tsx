@@ -1,13 +1,10 @@
 import { IonPage, IonHeader, IonContent } from "@ionic/react";
-import Navbar from "components/Navbar";
 import MyLessonInfoDetailTabs from "../MyLessonInfoDetailTabs";
 import LessonImage from "../LessonImage";
 import { Lesson } from "../../types/types";
 import MyLessonDetailBottomMenu from "../MyLessonDetailBottomMenu";
-import { Popover, Transition } from "@headlessui/react";
-import { Fragment } from "react";
-import React, { useEffect, useContext, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import Search from '../Search'
 import {searchLessonURL} from'../../const/const';
 
