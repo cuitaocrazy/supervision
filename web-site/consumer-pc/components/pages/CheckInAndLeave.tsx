@@ -135,7 +135,7 @@ const CheckInAndLeave = () => {
        <Search setQueryStr={setQueryStr} onQuery={onQuery} />
       </IonHeader>
       <IonContent>
-       <div className="mx-32">
+       <div className="w-3/4 mx-auto">
        <div className="py-3 text-sm text-center shadow-md text-secondary-400 mt-24 rounded-lg">
           <div className="inline">{date}</div>
           <div className="inline pl-2">{time}</div>
