@@ -77,7 +77,7 @@ const SearchLessonDetail = (props: LessonProps) => {
         <LessonDetailTabs openLoginModal={openLoginModal} />
 
       </div>
-      <div className="flex flex-col w-3/4 mx-auto mt-2 bg-white rounded-lg shadow-md">
+      <div className="grid grid-cols-2 w-3/4 mx-auto mt-2 bg-white rounded-lg shadow-md">
         <LessonIntroduce lessonIntroduce={lesson.lessonIntroduce} />
         <TeacherIntroduce teacherIntroduce={teacher.teacherIntroduce} />
       </div>
