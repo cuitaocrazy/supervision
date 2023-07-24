@@ -136,9 +136,9 @@ const ConOrder = () => {
             <div className="font-semibold text-gray-600">
               {state.stuName ? state.stuName : state.loginUser.username}
             </div>
-            <div className="pt-1 text-xs text-center text-gray-500">
+            {/* <div className="pt-1 text-xs text-center text-gray-500">
               {state.stuAge}
-            </div>
+            </div> */}
           </div>
           <Link
             to="/stuInfoList"

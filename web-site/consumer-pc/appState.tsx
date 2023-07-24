@@ -23,20 +23,20 @@ import {
  * Learn more:
  * https://ionicframework.com/blog/a-state-management-pattern-for-ionic-react-with-react-hooks/
  */
-// type MyState = {
-//   backPage: undefined | string,
-//   loginUser: {
-//     userId: string | null,
-//     loginName: string | null,
-//     username: string | null,
-//     phone: string | null,
-//     role: string | null
-//   },
-//   lessonDetail: any,
-//   CarList: any[],
-//   stuName: string | null,
-//   contractDetail: Contract | null
-// };
+type MyState = {
+  backPage: undefined | string,
+  loginUser: {
+    userId: string | null,
+    loginName: string | null,
+    username: string | null,
+    phone: string | null,
+    role: string | null
+  },
+  lessonDetail: any,
+  CarList: any[],
+  stuName: string | null,
+  contractDetail: Contract | null
+};
 const initialState = {
   backPage: undefined,
   loginUser: {//登录用户信息
@@ -51,7 +51,7 @@ const initialState = {
   stuName: null,
   contractDetail: null,
 };
-export const AppContext = React.createContext<{ state: any, dispatch: React.Dispatch<any> }>({ state: initialState, dispatch: () => { } });
+export const AppContext = React.createContext<{ state: MyState, dispatch: React.Dispatch<any> }>({ state: initialState, dispatch: () => { } });
 
 export const AppContextProvider = (props: { children: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined; }) => {
   const fullInitialState = {

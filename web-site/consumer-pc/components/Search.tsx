@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 interface searchProps {
   setQueryStr: Function;
   onQuery: Function;
-  username?: string;
+  username?: string | null;
 }
 /* 搜索框 */
 const Search = forwardRef<{ openLoginModal: () => void }, searchProps>((props, ref) => {

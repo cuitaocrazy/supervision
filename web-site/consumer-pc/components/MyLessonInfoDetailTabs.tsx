@@ -10,16 +10,20 @@ import {useRouter} from 'next/router'
 import {AppContext} from '../appState';
 import { useContext } from 'react';
  import OrderInfo from './OrderInfo';
+ import { Link } from 'react-router-dom';
 
 // 课程详情标签选项卡
 const LessonDetailTabs = () => {
   const router = useRouter();
   const { item } = router.query
   const { state } = useContext(AppContext);
-  let order :Contract=state.contractDetail
+  let order =state.contractDetail
   // console.log('pc端课程详情页面:'+JSON.stringify(order))
   return (
-    <Tab.Group defaultIndex={0}>
+    <>
+    {
+      order ? 
+      <Tab.Group defaultIndex={0}>
       <Tab.List className="grid items-center grid-cols-3 gap-10 py-2 mx-10 mt-3 text-sm text-gray-500 justify-items-center ">
         <Tab className={({ selected }) =>
           selected ? 'font-medium text-primary-600 flex justify-center focus:outline-none' : 'bg-white text-gray-500'
@@ -55,6 +59,13 @@ const LessonDetailTabs = () => {
         </Tab.Panel>
       </Tab.Panels>
     </Tab.Group>
+    :
+    <div>
+      <div>页面错误，请点击返回首页</div>
+      <Link to="/">返回首页</Link>
+    </div>
+    }
+    </>
   )
 }
 

@@ -65,7 +65,7 @@ const MyCheckInList = () => {
   const paramStr = getParamStr(
     {
       consumerId: state.loginUser.userId,
-      lessonId: state.contractDetail.lessonId,
+      lessonId: state.contractDetail?.lessonId,
     },
     searchAttendanceURL
   );
