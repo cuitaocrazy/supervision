@@ -95,6 +95,11 @@ const MyLessonDetail = () => {
     <IonPage>
       <IonHeader>
         <Search setQueryStr={setQueryStr} onQuery={onQuery} />
+        <div className="flex w-3/4 mx-auto text-sm text-gray-400 mt-24 bg-gray-100 py-2 px-2">
+          <div className="flex items-center ">
+            <span className="pr-2">首页</span> <span className="pr-2">/</span><span className="pr-2">我的课程</span><span className="pr-2">/</span><span className="pr-2">课程列表</span><span className="pr-2">/</span><span className="pr-2">课程详情</span>
+          </div>
+    </div>
       </IonHeader>
       <IonContent>
         <div className="relative mb-3 bg-white pb-14 scroll-auto mt-24">

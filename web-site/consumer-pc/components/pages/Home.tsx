@@ -17,6 +17,7 @@ const Home = () => {
   // let lesson: Lesson = { lessonImgs: "../../img/shuffling_1.png" }
   // 课程列表数据
   const [lessonList, setLessonList] = useState([] as Lesson[])
+  console.log("home主页lessonList"+JSON.stringify(lessonList))
   const [page, setPage] = useState(0)
   const onQuery = () => {
     fetch(paramStr, {

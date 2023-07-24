@@ -133,6 +133,11 @@ const CheckInAndLeave = () => {
     <IonPage>
       <IonHeader>
        <Search setQueryStr={setQueryStr} onQuery={onQuery} />
+       <div className="flex w-3/4 mx-auto text-sm text-gray-400 mt-24 bg-gray-100 py-2 px-2">
+          <div className="flex items-center ">
+            <span className="pr-2">首页</span> <span className="pr-2">/</span><span className="pr-2">我的课程</span><span className="pr-2">/</span><span className="pr-2">课程列表</span><span className="pr-2">/</span><span className="pr-2">签到/请假</span>
+          </div>
+    </div>
       </IonHeader>
       <IonContent>
        <div className="w-3/4 mx-auto">

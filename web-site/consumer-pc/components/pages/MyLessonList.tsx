@@ -60,6 +60,7 @@ const LessonListCard: FC<OrderListProps> = (props) => {
 // 课程列表页面
 const MyLessonList = () => {
   const [orderList,setOrderList] = useState([] as Contract[])
+  // console.log("我的课程列表PC"+JSON.stringify(orderList))
   const [queryStr, setQueryStr] = useState('')
   const [page,setPage] = useState(0)
   const getParamStr = (params: any, url: string) => {
@@ -116,7 +117,7 @@ const onInfiniteScrolldown = (ev:any)=>{
     <Search setQueryStr={setQueryStr} onQuery={onQuery} />
     <div className="flex w-3/4 mx-auto text-sm text-gray-400 mt-24 bg-gray-100 py-2 px-2">
           <div className="flex items-center ">
-            <span className="pr-2">首页</span> <span className="pr-2">/</span><span className="pr-2">课程列表</span>
+            <span className="pr-2">首页</span> <span className="pr-2">/</span><span className="pr-2">我的课程</span><span className="pr-2">/</span><span className="pr-2">课程列表</span>
           </div>
     </div>
     </IonHeader>
@@ -124,7 +125,7 @@ const onInfiniteScrolldown = (ev:any)=>{
       <PullToRefresh onRefresh={onRefresh}>
         <div>
           {orderList.map((item, index) => {
-            return <LessonListCard key={index} lessonImages={item.lessonImages} lessonName={item.lessonName} consumerStuName={item.consumerStuName} lessonTotalQuantity={item.lessonTotalQuantity} lessonCompletedQuantity={item.lessonAccumulationQuantity} item={item} />
+            return <LessonListCard key={index} lessonImages={item.lessonImages || "https://s3.bmp.ovh/imgs/2022/08/30/28f95385d82b4f7c.jpg"} lessonName={item.lessonName} consumerStuName={item.consumerStuName} lessonTotalQuantity={item.lessonTotalQuantity} lessonCompletedQuantity={item.lessonAccumulationQuantity} item={item} />
           })}
         </div>
       </PullToRefresh>
