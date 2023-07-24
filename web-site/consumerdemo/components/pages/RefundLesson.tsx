@@ -19,9 +19,9 @@ const RefoundLesson = () => {
   const [present, dismiss] = useIonToast();
   const { state } = useContext(AppContext);
   console.log(state.loginUser);
-  let order: Contract = state.contractDetail;
+  let order = state.contractDetail;
   const [refundState, setRefundState] = useState({
-    contractId: order.contractId,
+    contractId: order?.contractId,
     consumerId: state.loginUser.userId,
     refundAmt: "0",
     reason: "",
@@ -71,11 +71,11 @@ const RefoundLesson = () => {
           <div className="px-3 py-4 mx-2 mt-3 mb-6 rounded-lg shadow-md">
             <div className="flex px-4 py-2 mb-3 text-sm rounded-md bg-primary-50">
               <div className="pr-4 text-gray-500">课程名称</div>
-              <div className="text-gray-700">{order.lessonName}</div>
+              <div className="text-gray-700">{order?.lessonName}</div>
             </div>
             <div className="flex px-4 py-2 mb-3 text-sm rounded-md bg-primary-50">
               <div className="pr-4 text-gray-500">学生姓名</div>
-              <div>{order.consumerStuName}</div>
+              <div>{order?.consumerStuName}</div>
             </div>
             <div className="flex items-center px-4 py-2 mb-2 text-sm rounded-md bg-primary-50">
               <div className="pr-4 text-gray-500 ">退订金额</div>

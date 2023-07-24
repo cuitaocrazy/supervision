@@ -51,7 +51,7 @@ const CheckInAndLeave = () => {
       body: JSON.stringify({
         date: date,
         time: time,
-        contractId: state.contractDetail.contractId,
+        contractId: state.contractDetail?.contractId,
       }),
       headers: {
         "Content-type": "application/json;charset=UTF-8",
@@ -80,7 +80,7 @@ const CheckInAndLeave = () => {
         body: JSON.stringify({
           date: date,
           time: time,
-          contractId: state.contractDetail.contractId,
+          contractId: state.contractDetail?.contractId,
         }),
         headers: {
           "Content-type": "application/json;charset=UTF-8",
@@ -127,10 +127,10 @@ const CheckInAndLeave = () => {
           </div>
           <div className="mt-6 text-sm text-gray-500">
             <div className="inline">
-              【{state.contractDetail.lessonName}】第
+              【{state.contractDetail?.lessonName}】第
             </div>
             <div className="inline">
-              {state.contractDetail.lessonAccumulationQuantity + 1}
+              {state.contractDetail?.lessonAccumulationQuantity ? state.contractDetail?.lessonAccumulationQuantity : "" + 1}
             </div>
             <div className="inline">课即将开课，请您尽快签到！</div>
           </div>
@@ -185,7 +185,7 @@ const CheckInAndLeave = () => {
                       <div className="flex items-center mb-4 justify-items-center">
                         <div className="flex leading-7 justify-items-center">
                           <div className="p-1 text-gray-600 w-72 justify-self-start focus:outline-none">
-                            您确定要给学生<span className="font-bold">{state.contractDetail.consumerName}</span>请<span className="font-bold">{state.contractDetail.lessonName}</span>假吗？ </div>
+                            您确定要给学生<span className="font-bold">{state.contractDetail?.consumerName}</span>请<span className="font-bold">{state.contractDetail?.lessonName}</span>假吗？ </div>
                         </div>
                       </div>
                       <div className="flex items-center gap-4 mt-2 justify-items-center">

@@ -68,7 +68,7 @@ const RefundLessonDetail = () => {
   };
   const paramStr = getParamStr(
     {
-      contractId: state.contractDetail.contractId,
+      contractId: state.contractDetail?.contractId,
     },
     searchContractNegoURL
   );
